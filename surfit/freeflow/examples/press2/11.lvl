@@ -1,0 +1,13 @@
+LVL2
+'Level Flags LColor LStyle LWidth FFGColor FBGColor FPattern FMode
+10 1 "Black" "Solid" 0 "Black" "Black" "Solid" 1 1 1
+10.5 0 "Black" "Solid" 0 "90% Black" "Black" "Solid" 1 1 1
+11 0 "Black" "Solid" 0 "80% Black" "R11 G11 B11" "Solid" 1 1 1
+11.5 0 "Black" "Solid" 0 "R76 G76 B76" "R23 G23 B23" "Solid" 1 1 1
+12 0 "Black" "Solid" 0 "60% Black" "R34 G34 B34" "Solid" 1 1 1
+12.5 1 "Black" "Solid" 0 "R127 G127 B127" "R46 G46 B46" "Solid" 1 1 1
+13 0 "Black" "Solid" 0 "40% Black" "R57 G57 B57" "Solid" 1 1 1
+13.5 0 "Black" "Solid" 0 "R178 G178 B178" "R69 G69 B69" "Solid" 1 1 1
+14 0 "Black" "Solid" 0 "20% Black" "R81 G81 B81" "Solid" 1 1 1
+14.5 0 "Black" "Solid" 0 "R229 G229 B229" "R92 G92 B92" "Solid" 1 1 1
+15 1 "Black" "Solid" 0 "White" "R104 G104 B104" "Solid" 1 1 1

@@ -1,0 +1,29 @@
+LVL2
+'Level Flags LColor LStyle LWidth FFGColor FBGColor FPattern FMode
+130 1 "Black" "Solid" 0 "Black" "Black" "Solid" 2 1 1
+135 1 "Black" "Solid" 0 "Black" "Black" "Solid" 2 1 1
+140 1 "Black" "Solid" 0 "R10 G10 B10" "R10 G10 B10" "Solid" 2 1 1
+145 1 "Black" "Solid" 0 "R21 G21 B21" "R21 G21 B21" "Solid" 2 1 1
+150 1 "Black" "Solid" 0 "R31 G31 B31" "R31 G31 B31" "Solid" 2 1 1
+155 1 "Black" "Solid" 0 "R42 G42 B42" "R42 G42 B42" "Solid" 2 1 1
+160 1 "Black" "Solid" 0 "R53 G53 B53" "R53 G53 B53" "Solid" 2 1 1
+165 1 "Black" "Solid" 0 "R63 G63 B63" "R63 G63 B63" "Solid" 2 1 1
+170 1 "Black" "Solid" 0 "R74 G74 B74" "R74 G74 B74" "Solid" 2 1 1
+175 1 "Black" "Solid" 0 "R85 G85 B85" "R85 G85 B85" "Solid" 2 1 1
+180 1 "Black" "Solid" 0 "R95 G95 B95" "R95 G95 B95" "Solid" 2 1 1
+185 1 "Black" "Solid" 0 "R106 G106 B106" "R106 G106 B106" "Solid" 2 1 1
+190 1 "Black" "Solid" 0 "R116 G116 B116" "R116 G116 B116" "Solid" 2 1 1
+195 1 "Black" "Solid" 0 "R127 G127 B127" "R127 G127 B127" "Solid" 2 1 1
+200 1 "Black" "Solid" 0 "R138 G138 B138" "R138 G138 B138" "Solid" 2 1 1
+205 1 "Black" "Solid" 0 "R148 G148 B148" "R148 G148 B148" "Solid" 2 1 1
+210 1 "Black" "Solid" 0 "R159 G159 B159" "R159 G159 B159" "Solid" 2 1 1
+215 1 "Black" "Solid" 0 "R170 G170 B170" "R170 G170 B170" "Solid" 2 1 1
+220 1 "Black" "Solid" 0 "R180 G180 B180" "R180 G180 B180" "Solid" 2 1 1
+225 1 "Black" "Solid" 0 "R191 G191 B191" "R191 G191 B191" "Solid" 2 1 1
+230 1 "Black" "Solid" 0 "R201 G201 B201" "R201 G201 B201" "Solid" 2 1 1
+235 1 "Black" "Solid" 0 "R212 G212 B212" "R212 G212 B212" "Solid" 2 1 1
+240 1 "Black" "Solid" 0 "R223 G223 B223" "R223 G223 B223" "Solid" 2 1 1
+245 1 "Black" "Solid" 0 "R233 G233 B233" "R233 G233 B233" "Solid" 2 1 1
+250 1 "Black" "Solid" 0 "R244 G244 B244" "R244 G244 B244" "Solid" 2 1 1
+255 1 "Black" "Solid" 0 "White" "White" "Solid" 2 1 1
+260 1 "Black" "Solid" 0 "White" "White" "Solid" 2 1 1

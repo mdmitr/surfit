@@ -1,0 +1,246 @@
+<HTML>
+<HEAD>
+<TITLE>surfit homepage </TITLE>
+<meta name="KeyWords" meta content="interpolation, mapping, gridding, approximation, spline, spline-interpolation, MINC, mininum curvature, visualization, geology maps, surfit">
+</HEAD>
+<BODY leftMargin="70">
+<P align="center"><IMG height="150" alt="surfit logo" src="logo.jpg" width="180" align="bottom" border="0">
+<BR>
+<TT>surfit 1.0</TT>
+<BR>
+
+<a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=surfit&amp;type=4" width="125" height="37" border="0" alt="SourceForge.net Logo" /></a>
+<A href="http://www.tcl.tk/"><IMG alt=Tcl src="tclp.gif" border=0></A>
+<BR>
+<HR>
+<H1>Contents</H1>
+<OL>
+<H2><LI><A href="#description"><TT>surfit</TT> short description.</A></H2>
+<H2><LI><A href="#speed_table">Compares <TT>surfit</TT> by speed with other programms.</A></H2>
+<H2><LI><A href="#download">Download.</A></H2>
+<H2><LI><A href="#todo">Future work.</A></H2>
+</OL>
+
+<HR>
+
+<P align="center"><A name="description"><H2><TT>surfit</TT> short description.</H2></A></P>
+<BR>
+
+<TT>surfit</TT> provides the algorithms for high-detail maps calculation by source data of 
+different extent of truth. Then making a map, it is necessary to apply a universal method 
+of usage of different data - from precise to inconsistent. Such a problem of usage of any 
+more or less reliable information arises when it is insufficient, which is actual in oil-fields 
+researches. 
+<BR>
+We provide our realisation of the theory of step-by-step minimization of functional sequences. 
+This theory takes into account information of different extent of truth about object of interest.
+<TT>surfit</TT> is a computer-programs for gridding, able to work with great amount of geological, 
+geophysical, expert and other kinds of information.
+<BR>
+
+<H3>What <TT>surfit</TT> can do:</H3>
+<UL>
+<LI> save maps to Surfer ASCII format
+<LI> save maps to binary ROFF (Roxar open file format). This format uses as surfit-internal format.
+<LI> <TT>surfit</TT> uses Tcl as internal script language. So, if you want to calc the map, you
+must to write a script-programm (see examples).
+</UL>
+
+<H3>What  <TT>surfit</TT> can not do:</H3>
+<UL>
+<LI> maps printing.
+<LI> programm for map calculation with user-friendly interface. 
+</UL>
+</P>
+
+<P>
+<H3><TT>surfit</TT> consists of:</H3>
+<UL>
+    <LI> 
+    <B><TT>libsurfit.dll</TT></B>
+    <P>library with 1D and 2D algorithms: 
+             <UL>
+                     <LI>
+		     algorithms for maps calculation by source data of 
+                     different extent of truth (method of step-by-step minimization of functional sequences)
+                     <LI>
+		     wavelet-analysis algorithms (decomposition and reconstruction), applicable to maps.
+                     <LI>
+		     
+                     Systems of linear algebraic equations solvers:
+                     <UL>
+                               <LI> conjugate gradients (cg)
+                               <LI> simple iterations (Richardson)
+                               <LI> special multi-grid iterative method
+                     </UL>
+                     <LI>
+                     isolines tracing algorithm (<A HREF="http://www.swin.edu.au/astronomy/pbourke/projection/conrec/conrec.cxx">conrec</A>).
+             </UL>
+    </P>
+
+    <LI>
+    <B><TT>libsurfit_gl.dll</TT></B>
+    <P>Visualisation library. Uses for display of 1d and 2d functions (maps) with isolines.</P>
+
+    <LI>
+    <B><TT>bula.exe</TT></B>
+    <P><TT>surfit</TT> graphical console.</P>
+
+    <LI>
+    <B><TT>funner1d.exe</TT></B>
+    <P>Programm with user-friendly :) interface. Provides easy visualisation of 1d-functions with different detalisation (uses wavelet-analysis).</P>
+
+    <LI>
+    <B><TT>funner2d.exe</TT></B>
+    <P>Programm with user-friendly :) interface. Provides easy visualisation of 2d-functions (maps) with different detalisation (uses wavelet-analysis).</P></P>
+
+    <LI>
+    <B><TT>tclsh84.exe, tcl84.dll</TT></B>
+    <A HREF="http://tcl.sourceforge.net/">Tcl</A> - scripting language. <TT>libsurfit</TT> and <TT>libsurfit_gl</TT>
+    extend tcl with additional commands.
+
+</UL>
+</P>
+<BR>
+
+<HR>
+
+
+
+
+
+
+
+
+<BR>
+<P align="center"><A name="speed_table"><H2>Compares <TT>surfit</TT> by speed with other programms.</H2></A>
+<TABLE border="1">
+<TR>
+	<TD align="center">¹</TD>
+	<TD align="center">Programm<BR>name</TD>
+	<TD align="center">Operating<BR>company</TD>
+	<TD align="center">Work<BR>time</TD>
+	<TD align="center">Result<BR>(map)</TD>
+</TR>
+<TR>
+	<TD align="center">1.</TD>
+	<TD align="center"><A HREF="www.goldensoftware.com">Surfer 7.0</A></TD>
+	<TD align="center">Golden Software Inc. USA</TD>
+	<TD align="center"> 25 sec. </TD>
+	<TD align="center"><A HREF="surfer_map.jpg"><IMG alt=gmt src="surfer_tumb.jpg" border=1></A></TD>
+</TR>
+<TR>
+	<TD align="center">2.</TD>
+	<TD align="center"><A HREF="http://gmt.soest.hawaii.edu/">General Mapping<BR>
+                           Tools 3.4.3 (GMT)</A></TD>
+	<TD align="center">P. Wessel and W.H.F. Smith.<BR>freeware</TD>
+	<TD align="center"> 12 sec. </TD>
+	<TD align="center"><A HREF="gmt_map.jpg"><IMG alt=gmt src="gmt_tumb.jpg" border=1></A></TD>
+</TR>
+<TR>
+	<TD align="center">3.</TD>
+	<TD align="center">Geoline<BR>(part of Baspro)</TD>
+	<TD align="center">ZAO "INK", Tyumen, Russia</TD>
+	<TD align="center"> 5 min. </TD>
+	<TD align="center"><A HREF="baspro_map.jpg"><IMG alt=gmt src="baspro_tumb.jpg" border=1></A></TD>
+</TR>
+<TR>
+	<TD align="center">4.</TD>
+	<TD align="center"><A HREF="www.roxar.com">Irap RMS</A></TD>
+	<TD align="center">Roxar, Norway</TD>
+	<TD align="center"> 35 min. </TD>
+	<TD align="center"><A HREF="iraprms_map.jpg"><IMG alt=gmt src="iraprms_tumb.jpg" border=1></A></TD>
+</TR>
+<TR>
+	<TD align="center">5.</TD>
+	<TD align="center"><A HREF="surfit.sourceforge.net"><TT>surfit</TT></A></TD>
+	<TD align="center">Tyumen State University<BR>freeware</TD>
+	<TD align="center"> 5 sec. </TD>
+	<TD align="center"><A HREF="surfit_map.jpg"><IMG alt=gmt src="surfit_tumb.jpg" border=1></A></TD>
+</TR>
+</TABLE>
+
+<BR>
+
+<HR>
+
+
+
+
+
+
+
+
+
+
+
+
+<BR>
+<P align="center"><A name="download"><H2>Download.</H2></A>
+<BR>
+<TT>surfit</TT> : <A HREF="surfit.exe">surfit.exe</A>.<BR>
+<TT>surfit</TT> documentation :  <A HREF="surfit_docs.exe">surfit_docs.exe</A>.<BR>
+</P>
+
+
+
+
+
+
+<HR>
+
+
+
+<BR>
+<P align="center"><A name="todo"><H2>Future work.</H2></A>
+</P>
+<UL>
+<LI> Short-term plans.
+<OL>
+     <LI> Extend color-scale.
+
+     <LI> Some speed-up optimization of map calculation algrithm.
+
+     <LI> debug simpiter (Richardson method).
+
+     <LI> Completition of Earth global topographic map calculation (GLOBE analogue) by data
+          from <A HREF="http://www.ngdc.noaa.gov">NGCD</A>.
+
+</OL>
+
+<LI> Long-term plans.
+     <OL>
+
+     <LI>
+     Integration with <A HREF="http://gmt.soest.hawaii.edu/">General Mapping Tools (GMT)</A> by data-formats and
+     creation of analogue to "surface" programm.
+
+     <LI> Unix-porting.
+
+     <LI> Calculation maps with respect of tectonical fault lines.
+
+     <LI> Applying wavelet-analysis for adaptinve triangular grid creation.
+
+     <LI>
+     Writing programm with user-friendly interface for map calculation.
+    
+     <LI> 3D geological modeling (approx in 2005 year).
+
+     </OL>
+</UL>
+
+<HR>
+
+<ADDRESS>
+<CENTER>
+authors homepages (russian only):
+<BR>
+<A HREF="mdmitr/index.html">Mikhail Dmitrievsky</A>
+<BR>
+<A HREF="http://www.utmn.ru/departments/math/Matmodel/kutrunov.shtml">Vladimir Kutrunov</A>
+</CENTER>
+<CENTER>e-mail: <A href="mailto:mvd@tgu.ru">mvd@tgu.ru</A><BR>
+last updated 19.12.2003</CENTER>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,43 @@
+/** \example map_wtask.tcl
+
+This example shows how one goes from randomly spaced data points to an evenly sampled surface.
+We have 13504 approximation points (file <TT>surfit/examples/test/task.txt</TT>) and equidistant grid 
+with more than 250000 nodes. To approximate points to evenly sampled surface we do the 
+following things:	
+\li load scattered points to the memory
+\li create equidistant grid of 512x512 nodes
+\li set some additional parameters (\ref tol "tolerance", \ref surfit_completer "surface behaviour between scattered points")
+\li run CMOFS algorithm
+\li save results to file
+
+After gridding we calculate residuals in approximation points, mean residual value and standart deviation.
+
+Here is image of resulting surface:
+
+\htmlonly
+<P ALIGN=CENTER>
+<IMG alt="interpolation surface" src="../../../gallery/maps/map_wtask_full.gif" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. approximation surface </P>
+
+<P ALIGN=CENTER>
+<IMG alt="surfit logo" src="../../../gallery/maps/map_wtask.gif" border="0">
+</P>
+<P ALIGN=CENTER> Pic 2. small part of approximation surface </P>
+\endhtmlonly
+
+This result was obtained with <TT>"surfit/examples/test/map_wtask.tcl"</TT> script. 
+
+Some comments to script:
+\li \ref map_name variable used to set name of resulting surface
+\li we use \ref tol variable to manage tolerance of iterative linear system solver algorithm.
+If this value is too big, iterative algorithm will make low number of iterations. It leads
+to rought result.
+\li \ref grid_unload function call to remove grid from result file.
+\li we use \ref surfit_wtask variable to hold points instead of \ref surfit_task, because we need
+approximation instead of interpolation
+\li to produce more smooth surface reduce weight value in \ref task_to_wtask command. To produce more
+precise approximation (tends to interpolation) enlarge weight value in \ref task_to_wtask command.
+
+*/
+

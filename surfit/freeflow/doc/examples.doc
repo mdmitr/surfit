@@ -1,0 +1,137 @@
+/*! \page example freeflow examples
+
+
+\par Two main ways of pressure fields reconstruction
+
+There are two widely-used ways of solving pressure reconstruction problem:
+\li Interpolation of the so-called "formation pressures", pressures 
+measured  in wells after two or three days of shut-down.
+
+\li Creation of the mathematical model describing fluid filtration 
+using the language of partial differential equations. 
+
+Due to the simplicity of usage, the first way is much more widely used PU 
+(performance unit): there is no necessity in model tuning and algorithms 
+are simply to use. Obtained pressure field is often physically inadequate, 
+nevertheless it is used to analyze energy state of oil formation, to detect 
+boundaries of reduced and raised pressure zones and calculate weighted 
+average pressures within areas. The second way is usually used in research 
+institutes and model creation is well-expensive. Usually it takes about 
+one year. The significant constraint involuntarily set up to mathematical 
+models described by the terms of partial differential equations is connected 
+with the correctness of a boundary problem. For example, to describe a well 
+in mathematical model we set only fluid rate/injectivity or bottom hole 
+pressure. The simultaneous setting of rates and pressures may lead to 
+incorrect (overdetermined) boundary problem.  However, the simultaneous 
+setting of inconsistent data is frequent for solving of underground fluid 
+filtration problems - there is a lot of inconsistent data with different 
+levels of errors.  Existent mathematical models require precise data with no 
+errors (rates, pressures, permeability), but it is impossible in the real 
+life. That's why the ability of mathematical model to take into account 
+inconsistent data and data with errors is of high-interest for authors.
+
+This example shows the method, which has the features of
+the both considered ways and has the ability to take into account often
+inconsistent values of rates and bottom hole pressures in wells.
+
+\par Classical statement of the problem in the differential form.
+
+We are considering the task of calculating an isobar map for a homogeneous
+productive oil formation with a relatively small thickness \f$h\f$.
+In this case the function \f$u(x,y)\f$ of the formation pressure can be 
+considered two-dimensional. \f$u(x,y)\f$ is obtained by solving the boundary 
+problem:
+\f[
+\frac{k}{\mu} \Delta u  = \sum_{i=1}^N Q_i \delta(P-P_i) +
+\sum_{j=1}^M \int\limits_{l_j} S_j(l) \delta(P-l) dl,
+\f]
+where $k$ is permeability, $\mu$ - liquid viscosity. The vertical wells
+are described as point sources with flowrates of $Q_i$. The position of
+horizontal (slanting) wells and formation fractures is described by a
+curve with the curved source density of $S_j$. The boundary conditions are:
+
+\li \f$u|_{\Gamma}=u_0\f$ - value of pressure on the boundary (oil
+bearing outer contour);
+
+\li \f$u(P_k)=u_k, \ k=1,\ldots,K\f$ - downhole pressures;
+
+\li \f$\nabla u \cdot n_{l_f} = 0 |_{l_f}, \  f=1,\ldots,F\f$ -
+condition of non-filtration on the curves (boundaries of
+non-productive formations, tectonic zones).
+
+For a differential equation of elliptical type the simultaneous setting of
+rates and pressures for the same points and/or curves of the area is
+incorrect but it is frequent when the formation energy state is studied. In
+order to use the overdetermined conditions and avoid the incorrectness the
+boundary problem is re-formulated as a variational problem.
+
+\par Variational statement of the problem.
+
+The pressure field is determined as cells of equidistant grid with values:
+\f[
+u(x,y) = \sum_{i=1}^N \sum_{j=1}^M u_{i,j} \phi_{i,j}(x,y)
+\f]
+For each cell we can write one of the two functionals:
+
+\li Pressure in the cell:
+\f[
+P_{i,j}  = \sum\limits_{p = 1}^P {\alpha _p \left( {u_{i,j}  - u_p } \right)^2 }  = \min 
+\f]
+This functional describes the way of  taking into account pressures of the
+wells, which  belong to the (i,j) cell. Differentiation of this functional
+by  \f$u_{i,j}\f$ leads to the equation:
+\f[
+u_{i,j}  = \frac{{\sum\limits_{p = 1}^P {\alpha _p u_p } }}{{\sum\limits_{p = 1}^P {\alpha _p } }}
+\f]
+
+\li Cell rate: we use well-known variational principle describing
+filtration in porous medium: among all possible isothermal laminar flows of
+homogeneous incompressible liquid in cell with heterogeneous borders with
+filtration speed set, the real filtration flow is that the pressure forces
+work spent for filtration resistance is minimal.
+
+For work of pressure forces in the cell we can write:
+\f[
+A_{i,j}  = \frac{1}{2}\bar F_{i,j}  \cdot \bar v_{i,j}  - \frac{{q_{i,j} }}{{\rho _{i,j} }}u_{i,j}  = \min 
+\f]
+Differentiation of this expression by \f$u_{i,j}\f$ leads to law of
+conservation of mass written for the cell (i,j). To represent impermeable
+lines it is necessary to set zero filtration speed via suitable cell
+borders. It is effective to use Brezengham algorithm for that.
+
+CMOFS algorithm considers 3 situations:
+
+\li We know exact pressure for the cell. 
+\f[
+\left\{ \begin{array}{l}
+ P_{i,j}  = \min , \\ 
+ A_{i,j}  = \min . \\ 
+ \end{array} \right.
+\f]
+The functional describing pressure is the first to be minimized, the
+functional describing rate is the second.
+
+\li We know exact cell rate and permeable cell borders.
+\f[
+\left\{ \begin{array}{l}
+ A_{i,j}  = \min , \\ 
+ P_{i,j}  = \min . \\ 
+ \end{array} \right.
+\f]
+The functional describing rate is the first to be  minimized, the
+functional describing pressure is the second.
+
+\li We know cell debit with permeable cell borders and pressure for the
+cell. When we minimize combination of functionals:
+\f[
+\beta A_{i,j}  + P_{i,j}  = \min,
+\f]
+where \f$beta\f$ determines degree of reliability for each of the functionals.
+
+In case if we use only 1 and 2 types of functionals to obtain the solution,
+the solution will be the same as for corresponding boundary problem because
+we use only consistent data. In case of redundant and inconsistent data we
+use the third functional.
+
+
+*/

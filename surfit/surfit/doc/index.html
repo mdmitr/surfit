@@ -1,0 +1,162 @@
+<HTML>
+	<HEAD>
+		<TITLE>surfit - gridding software</TITLE>
+		<meta content="True" name="vs_showGrid">
+		<META content="Interpolation and approximation of surface. Result is comparable with the surface created by Kriging or Minimum curvature method.&#13;&#10;  "
+			name="description">
+		<META content="mapping, gridding, interpolation, approximation, surface interpolation, Kriging, Minimum curvature"
+			name="keywords">
+	</HEAD>
+	<BODY text="#000000" vLink="#676465" link="#00671c" bgColor="#376392" width="100%" marginwidth="0"
+		marginheight="0">
+		<font color="#ffffff" size="+2">
+			<center><B><TT><FONT size="7">surfit docs</FONT></TT></B>
+			&nbsp; </font>
+		<table id="Table1" cellSpacing="6" cellPadding="6" width="100%" border="0">
+			<tr>
+				<td vAlign="top" bgColor="#ffffff"><font><font>
+							<p align="justify">
+								<H2 align="center"><FONT face="Verdana"> <IMG alt="surfit logo" src="../../gallery/surfit_logo.jpg" border="0"></FONT>
+								</H2>
+							<P align="center"><FONT face="Verdana" size="2"><STRONG>surfit-1.0.0pre</STRONG></FONT></P>
+							<P align="left"><FONT face="Verdana" size="5"><STRONG>Introduction</STRONG></FONT></P>
+							<FONT face="Verdana">
+								<P align="justify"><FONT size="2"><TT><STRONG><FONT size="3">surfit</FONT></STRONG></TT>
+										<FONT face="Verdana">is a computer program which enables to recalculate scattered 
+											data to regular grid (gridding). <TT><STRONG><FONT size="3">surfit</FONT></STRONG></TT>
+											implements the original gridding method </FONT></FONT><A href="cmofs.html"><B><FONT face="Verdana" size="2">
+												CMOFS</FONT></B></A><FONT face="Verdana" size="2">, which can deal with 
+										various data of different extent of truth. <TT><STRONG><FONT size="3">surfit</FONT></STRONG></TT>
+										is an </FONT><A href="http://www.opensource.org"><FONT face="Verdana" size="2">Open 
+											Source</FONT></A><FONT face="Verdana" size="2"> and </FONT><A href="http://www.gnu.org/philosophy/free-sw.html">
+										<FONT face="Verdana" size="2">Free Software</FONT></A><FONT face="Verdana" size="2">, 
+										the source code is available free of charge under the Free Software </FONT><A href="http://www.gnu.org/copyleft/licenses.html">
+										<FONT face="Verdana" size="2">GPL license</FONT></A><FONT face="Verdana" size="2">.
+									</FONT>
+								</P>
+								<P align="justify"><FONT face="Verdana" size="2">The code is written in C++ with STL 
+										usage. Careful attention is paid to performance related issues. The initial 
+										goal of <TT><STRONG><FONT size="3">surfit</FONT></STRONG></TT> is to provide 
+										an&nbsp;efficient tool&nbsp;to scientists&nbsp;dealing with 3D surfaces 
+										computational tasks.</FONT></P>
+								<P align="justify"><FONT face="Verdana" size="2">The program has the following basic 
+										features:</FONT></P>
+								<UL>
+									<LI>
+										<DIV align="justify"><FONT face="Verdana" size="2">Basic input is a simple ASCII file 
+												containing &nbsp;<TT>(X,Y,Z)</TT>&nbsp; coordinates of data-points irregularly 
+												spaced in some region. </FONT>
+										</DIV>
+									<LI>
+										<DIV align="justify"><FONT face="Verdana" size="2">The surface can be defined not only 
+												by points, but also by: </FONT>
+										</DIV>
+										<UL>
+											<LI>
+												<DIV align="justify"><FONT face="Verdana"><FONT size="2"><B>trend surfaces</B>, which can 
+															define surface behaviour in areas of low density data. </FONT></FONT>
+												</DIV>
+											<LI>
+												<DIV align="justify"><FONT face="Verdana" size="2">so called <B>fault lines</B>, which 
+														can define discontinuity in the generated surface. </FONT>
+												</DIV>
+											<LI>
+												<DIV align="justify"><FONT face="Verdana"><FONT size="2"><B>isolines</B> and <B>contours</B>, 
+															which can define surface values on curves. </FONT></FONT>
+												</DIV>
+											</LI>
+										</UL>
+									<LI>
+										<DIV align="justify"><FONT face="Verdana" size="2">It is possible to set for each 
+												data-object (point, curve, function) how the generated surface should pass 
+												through them (exactly or approximative). </FONT>
+										</DIV>
+									<LI>
+										<DIV align="justify"><FONT face="Verdana" size="2">Smoothness of resulting surface can 
+												be controlled by one parameter, like in Splines with Tension method. </FONT>
+										</DIV>
+									<LI>
+										<DIV align="justify"><FONT face="Verdana" size="2">Can deal with <B>HUGE</B> data sets. </FONT>
+										</DIV>
+									<LI>
+										<DIV align="justify"><FONT face="Verdana" size="2">Huge grid can be displayed with help 
+												of wavelet analysis. </FONT>
+										</DIV>
+									<LI>
+										<DIV align="justify"><FONT face="Verdana" size="2">Quality of resulting surface is <A href="compare.html">
+													comparable</A> with a surface created by Kriging or Minimum curvature 
+												method. </FONT>
+										</DIV>
+									</LI>
+								</UL>
+								<P align="justify"><STRONG><FONT size="5">Manual sections</FONT></STRONG></P>
+							</FONT>
+							<UL>
+								<LI>
+									<DIV align="left"><a href="install.html"><FONT face="Verdana"><STRONG>installation</STRONG></FONT></a></DIV>
+								<LI>
+									<DIV align="left"><a href="get_start.html"><FONT face="Verdana"><STRONG>getting started</STRONG></FONT></a></DIV>
+								<LI>
+									<DIV align="left"><a href="features.html"><FONT face="Verdana"><STRONG>surfit features</STRONG></FONT></a></DIV>
+								<LI>
+									<DIV align="left"><A href="CMOFS.html"><FONT face="Verdana"><STRONG>description of the CMOFS 
+													method</STRONG></FONT></A></DIV>
+								<LI>
+									<DIV align="left"><a href="../surfit_src/html/group__surfit__variables.html"><FONT face="Verdana"><STRONG>surfit variables for Tcl</STRONG></FONT></a></DIV>
+								<LI>
+									<DIV align="left"><a href="../surfit_src/html/group__tcl.html"><FONT face="Verdana"><STRONG>surfit 
+													functions for Tcl</STRONG></FONT></a></DIV>
+								<LI>
+									<DIV align="left"><a href="examples.html"><FONT face="Verdana"><STRONG>examples</STRONG></FONT></a></DIV>
+								<LI>
+									<DIV align="left"><a href="../../gallery.html"><FONT face="Verdana"><STRONG>screenshots</STRONG></FONT></a></DIV>
+								<LI>
+									<DIV align="left"><A href="http://sourceforge.net/project/showfiles.php?group_id=57520"><FONT face="Verdana"><STRONG>download</STRONG></FONT></a></DIV>
+								<LI>
+									<DIV align="left"><a href="../surfit_src/html/index.html"><FONT face="Verdana"><STRONG>surfit 
+													source code reference</STRONG></FONT></a></DIV>
+								</LI>
+							</UL>
+							<P align="left"><FONT face="Verdana"><STRONG><FONT size="5">surfit license</FONT></STRONG>
+								</FONT>
+							</P>
+							<P align="justify"><FONT face="Verdana" size="2">Copyright c 1997-2005 by M.V. 
+									Dmitrievsky &amp; V.N. Kutrunov. Permission to use, copy, modify, and 
+									distribute this software and its documentation under the terms of the GNU 
+									General Public License is hereby granted. No representations are made about the 
+									suitability of this software for any purpose. It is provided "as is" without 
+									express or implied warranty. See the GNU General Public License for more 
+									details. Documents produced by doxygen are derivative works derived from the 
+									input used in their production; they are not affected by this license.</FONT></P>
+							<P align="left"><FONT face="Verdana" size="5"><STRONG>Future work</STRONG></FONT></P>
+							<P align="left"><FONT face="Verdana" size="5"><STRONG>Links</STRONG></FONT></P>
+							<UL>
+								<LI>
+									<DIV align="left">
+										<a href="../../freeflow/html/index.html"><FONT face="Verdana"><STRONG>freeflow docs</STRONG></FONT></a></DIV>
+								<LI>
+									<DIV align="left">
+										<a href="../../globe/html/index.html"><FONT face="Verdana"><STRONG>globe docs</STRONG></FONT></a></DIV>
+								<LI>
+									<DIV align="left">
+										<a href="../../surfit_gl/html/index.html"><FONT face="Verdana"><STRONG>surfit_gl docs</STRONG></FONT></a></DIV>
+								<LI>
+									<DIV align="left">
+										<a href="../../funner/html/index.html"><FONT face="Verdana"><STRONG>funner docs</STRONG></FONT></a></DIV>
+								<LI>
+									<DIV align="left">
+										<a href="../../bula/html/index.html"><FONT face="Verdana"><STRONG>bula docs</STRONG></FONT></a></DIV>
+								</LI>
+							</UL>
+							<P align="center">
+								<font><font size="-1"><FONT face="Verdana"><FONT size="1">Please send any comments about this 
+												site to</FONT> <tt>surfit at bluebottle dot com</tt>. </FONT>
+							</P>
+							<P></P>
+						</font></font></FONT></FONT>
+				</td>
+			</tr>
+		</table>
+		</TD></TR></TABLE></CENTER>
+	</BODY>
+</HTML>

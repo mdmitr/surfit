@@ -1,0 +1,16 @@
+/** \example map_cntr.tcl   
+
+This example shows how to build surface, which interpolates 3d contours. 
+It was 3 contours to interpolate: one contour in center (cntr_center.txt),
+and two circle contours (cntr_small_circle.txt and cntr_big_circle.txt).
+
+Here is image of resulting surface:
+
+<IMG alt="surfit logo" src="../../../gallery/maps/map_cntr.gif" border="0">
+
+Some comments to script:
+\li \ref map_name variable used to set name of resulting surface
+\li \ref grid_unload function call to remove grid from result file.
+
+*/
+

@@ -1,0 +1,51 @@
+/*! \page examples surfit examples
+
+\htmlonly
+<UL>
+<LI> <B>Test (<TT>surfit/examples/test</TT>)</B>: tests base surfit features
+	<UL>
+	<LI>
+	<a href="../surfit_src/html/map__task_8tcl-example.html">Interpolation of scattered data points</a>
+	<LI>
+	<a href="../surfit_src/html/map__flt_8tcl-example.html">Interpolation of scattered data points with faults</a>
+	<LI>
+	<a href="../surfit_src/html/map__trend_8tcl-example.html">Interpolation of scattered data points with trend and fault</a>
+	<LI>
+	<a href="../surfit_src/html/map__wtask_8tcl-example.html">Approximation of scattered data points</a>
+	<LI>
+	<a href="../surfit_src/html/map__iso_8tcl-example.html">Interpolation of isolines</a>
+	<LI>
+	<a href="../surfit_src/html/map__wiso_8tcl-example.html">Approximation of isolines</a>
+	<LI>
+	<a href="../surfit_src/html/map__cntr_8tcl-example.html">Interpolation of contours</a>
+	<LI>
+	<a href="../surfit_src/html/map__wcntr_8tcl-example.html">Approximation of contours</a>
+	<LI>
+	<a href="../surfit_src/html/map__area_8tcl-example.html">Interpolation of areas</a>
+	<LI>
+	<a href="../surfit_src/html/map__warea_8tcl-example.html">Approximation of areas</a>
+	<LI>
+	<a href="../surfit_src/html/map__func_8tcl-example.html">Interpolation of ordered data points</a>
+	<LI>
+	<a href="../surfit_src/html/map__wfunc_8tcl-example.html">Approximation of ordered data points</a>
+	<LI>
+	<a href="../surfit_src/html/map__defarea_8tcl-example.html">Setting domain of definition</a>
+        </LI>
+	</UL>
+<LI> <B>Seism (<TT>surfit/examples/seism</TT>)</B>: examples of structural modeling for reservoir Top and Base depth maps reconstruction
+	<UL>
+	<LI>
+	<a href="../surfit_src/html/map__T0_8tcl-example.html">map of T0</a>
+	<LI>
+	<a href="../surfit_src/html/map__speed_8tcl-example.html">map of speed</a>
+	<LI>
+	<a href="../surfit_src/html/map__aoup_8tcl-example.html">Reservoir Top Depth</a>
+	<LI>
+	<a href="../surfit_src/html/map__aobt_8tcl-example.html">Reservoir Base Depth</a>
+	</UL>
+<LI> <B>Volumetrics (<TT>surfit/examples/volumetrics</TT>)</B>: examples of calculation volumes of oil and water in a reservoir, based on surface
+sets of structural and property data.
+</LI>
+</UL>
+\endhtmlonly
+*/

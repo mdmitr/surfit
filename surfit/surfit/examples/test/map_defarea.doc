@@ -1,0 +1,14 @@
+/** \example map_defarea.tcl
+
+This example show how to set domain of definition for surface. In this
+example we use example function from binary ROFF file "func.func". We use
+command \ref func_to_defarea to make domain of the function. After that 
+we load function from file "func.func" again and recalculate it with respect
+of constructed domain of definition. Result on the picture below:
+
+<IMG alt="surfit logo" src="../../../gallery/maps/map_defarea.gif" border="0">
+
+Script to obtain the result (file surfit/examples/test/map_defarea.tcl)
+
+*/
+

@@ -1,0 +1,19 @@
+/** \example map_wcntr.tcl  
+
+This example shows how to build surface, which approximates 3d contours. 
+It was 3 contours to approximate with different levels of approximation: 
+\li hi level for contour in center (<TT>surfit/examples/test/cntr_center.txt</TT>),
+\li average level for small circle (<TT>surfit/examples/test/cntr_small_circle.txt</TT>)
+\li low level for big circle (<TT>surfit/examples/test/cntr_big_circle.txt</TT>).
+
+Here is image of resulting surface:
+
+<IMG alt="surfit logo" src="../../../gallery/maps/map_wcntr.gif" border="0">
+
+Some comments to script:
+\li \ref map_name variable used to set name of resulting surface
+\li \ref grid_unload function call to remove grid from result file.
+
+*/
+
+

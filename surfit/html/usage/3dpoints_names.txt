@@ -1,0 +1,5 @@
+point1	3.2	10	7
+point2	5.1 	-7	7
+point3	13.2	8	7
+point4	7.6	0.2	7
+point5	1.8	-6	7
