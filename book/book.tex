@@ -1,0 +1,110 @@
+\documentclass[12pt,a4paper]{book}
+\usepackage[T2A]{fontenc}
+\usepackage[cp1251]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amsxtra}      % ^
+\usepackage{amsthm}       % proof
+\usepackage{indentfirst}
+\usepackage[dvips]{graphicx}
+\usepackage{float}
+
+\title{Методы расчета карт геолого-геофизических признаков: математика и эксперт.}
+
+\date{}
+%\author{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\renewcommand{\labelenumi}{\arabic{enumi}.}
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}.}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}
+\renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}.}
+\newcommand {\ol}{\overline}
+\newcommand {\ot}{\widetilde}
+\newcommand {\ov}{\overrightarrow}
+\newcommand {\oh}{\widehat}
+\newcommand {\sumi}{\sum\limits_{i=1}^N}
+\newcommand {\sumj}{\sum\limits_{j=1}^N}
+\newcommand {\sumk}{\sum\limits_{k=1}^N}
+\newcommand {\xk}{\ol{x}_k}
+\newcommand {\pd}{\partial}
+\newcommand {\infint}{\int\limits_{-\infty}^\infty}
+\newcommand {\of}{\ot{f}}
+\newcommand {\oa}{\ot{a}}
+\newcommand {\eps}{\varepsilon}
+
+\newtheorem{definition}{Определение}
+\theoremstyle{break}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem{corollary}{Следствие}
+\newtheorem{remark}{Замечание}
+\theoremstyle{remark}
+\newtheorem{assert}{Утверждение}
+\newtheorem*{theorem_off}{Теорема}
+\newtheorem*{assert_off}{Утверждение}
+\newtheorem*{remark_off}{Замечание}
+\newtheorem{example}{Пример}
+\newtheorem*{example_off}{Пример}
+
+\chapter*{Введение (философия всего этого дела)}
+
+\chapter{Классические методы гридинга с точки зрения математика и эксперта:
+информация, явно или неявно вносимая в карту}
+\section{Метод крайгинга}
+\section{Метод ближайшего соседа}
+\section{CPS-3}
+\section{Метод Шепарда}
+\section{Метод B-сплайн аппроксимации}
+\section{Метод сплайн-интерполяции}
+
+\chapter{Метод последовательной минимизации функционалов (ПМФ) или
+как построить ''наилучшую'' карту.}
+
+\section{Критерии оценки качества (достоверности) карты}
+\section{Метод ПМФ}
+\subsection{Конструирование последовательности функционалов или что такое ''наилучшая'' карта}
+\subsection{Математическое описание ПМФ}
+\subsection{ФУНКЦИОНАЛЫ на все случаи жизни}
+
+\chapter{Метод ПМФ в задачах расчета карт
+геолого-геофизических признаков}
+
+\section{Структурное моделирование}
+    \subsection{Расчет структурных карт}
+    \subsection{Задача оконтуривания залежей}
+\section{Карта эффективных толщин}
+\section{Карта эффективных нефте-(газо-) насыщенных толщин}
+\section{Карта коэффициента пористости}
+\section{Карта коэффициента нефте-(газо-) насыщенности}
+\section{Карта изобар}
+\section{Карта коэффициента проницаемости}
+
+\chapter{surfit}
+
+\begin{thebibliography}{99}
+
+\bibitem{rozanov}Розанов Ю.А. Случайные процессы (краткий курс), Главная редакция
+физико-математической литературы изд-ва ''Наука'', 1971.
+
+\bibitem{fomel}Fomel, S. Three-dimensional seismic data
+regularization. Stanford Exploration Project,
+http://sepwww.stanford.edu/sep/prof
+
+\bibitem{wahba}Wahba G., An Introduction to Model Building with
+Reproducing Kernel Hilbert Spaces. Technical Report NO. 1020,
+April 18, 2000, Departament of Statistics, University of
+Wisconsin.
+
+\bibitem{vasilenko} Василенко В.А., Сплайн-функции: теория, алгоритмы, программы.
+Новосибирск: Наука, 1983.
+
+\end{thebibliography}
+
+
+\end{document}
