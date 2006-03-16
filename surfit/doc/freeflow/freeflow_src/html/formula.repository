@@ -1,9 +1,0 @@
-\form#0:$ m^3/sec $
-\form#1:$ (x_i, y_i, z_i) $
-\form#2:\[ A_{i,j} - \sum\limits_{p=1}^P z_p = \min, \]
-\form#3:$A_i,j=0$
-\form#4:$ \sum\limits_{p=1}^P z_p $
-\form#5:$ z_i $
-\form#6:\[ W_{i,j} = - z_p u_{i,j} \]
-\form#7:\[ A_{i,j} + W_{i,j} = \min \]
-\form#8:$ u_{i,j} $
