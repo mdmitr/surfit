@@ -1,290 +1,319 @@
-!define MUI_PRODUCT "surfit" ;Define your own software name here
-!define MUI_VERSION "1.0" ;Define your own software version here
+;NSIS Modern User Interface
 
-!include "MUI.nsh"
 
 ;--------------------------------
-;Configuration
+;Include Modern UI
 
-  ;General
-  OutFile "surfit.exe"
+  !include "MUI.nsh"
+  !include "path_man.nsi"
 
-  ;Folder selection page
-  InstallDir "$PROGRAMFILES\${MUI_PRODUCT}"
+;--------------------------------
+;General
+
+  ;Name and file
+  Name "surfit"
+  OutFile "surfit-1.0-setup.exe"
+
+  ;Default installation folder
+  InstallDir "$PROGRAMFILES\surfit-1.0"
   
-  ;Remember install folder
-  InstallDirRegKey HKCU "Software\${MUI_PRODUCT}" ""
+  ;Get installation folder from registry if available
+  InstallDirRegKey HKCU "Software\surfit" ""
 
-;Remember the Start Menu Folder
+
+;--------------------------------
+;Variables
+
+  Var MUI_TEMP
+  Var STARTMENU_FOLDER
+  Var VERSION
+
+;--------------------------------
+;Interface Settings
+
+  !define MUI_ABORTWARNING
+
+Function ConnectInternet
+
+  Push $R0
+    
+    ClearErrors
+    Dialer::AttemptConnect
+    IfErrors noie3
+    
+    Pop $R0
+    StrCmp $R0 "online" connected
+      MessageBox MB_OK|MB_ICONSTOP "Cannot connect to the internet."
+      Quit
+    
+    noie3:
+  
+    ; IE3 not installed
+    MessageBox MB_OK|MB_ICONINFORMATION "Please connect to the internet now."
+    
+    connected:
+  
+  Pop $R0
+  
+FunctionEnd
+
+Function .onInit
+
+  StrCpy $STARTMENU_FOLDER "surfit-1.0"
+  StrCpy $VERSION "1.0"
+
+  InitPluginsDir
+  SearchPath $1 tclsh83.exe
+
+  StrCmp $1 "" wanna_tcl
+  Goto end
+  
+  wanna_tcl:
+
+  	MessageBox MB_YESNOCANCEL "Installer can't find Tcl8.3 library! Installation will be aborted. Do you want to automatically download Active Tcl8.3.5 (about 7mb)? Press NO to download manually, CANCEL to abort installation" IDYES auto IDNO manual
+
+		Abort 
+
+		manual:
+
+		ExecShell "open" "http://downloads.activestate.com/ActiveTcl/Windows/8.3.5/"
+		Abort
+
+		auto:
+
+        	Call ConnectInternet ;Make an internet connection (if no connection available)
+		StrCpy $2 "$TEMP\ActiveTcl8.3.5.0-2-win32-ix86.exe"
+ 		StrCpy $3 http://downloads.activestate.com/ActiveTcl/Windows/8.3.5/ActiveTcl8.3.5.0-win32-ix86.exe 
+		NSISdl::download $3 $2
+		Pop $R0 ;Get the return value
+
+		StrCmp $R0 "success" tcl_success tcl_failed
+
+		  tcl_success:
+		  Exec '$2'
+
+		  tcl_failed:
+                  MessageBox MB_OK "Download failed: $R0, you can download it manually from $3" IDYES true2 IDNO false2
+		  
+		  true2:
+		  ExecShell "open" "http://downloads.activestate.com/ActiveTcl/Windows/8.3.5/"
+
+		  false2:
+
+		Abort
+  
+	Abort
+  end:
+
+FunctionEnd
+
+
+;--------------------------------
+;Pages
+
+  !insertmacro MUI_PAGE_LICENSE "..\copying"
+  !insertmacro MUI_PAGE_COMPONENTS
+  !insertmacro MUI_PAGE_DIRECTORY
+
+  ;Start Menu Folder Page Configuration
   !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU" 
-  !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\${MUI_PRODUCT}" 
+  !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\Modern UI Test" 
   !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
 
+ 
+  !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
 
-;--------------------------------
-;Modern UI Configuration
 
-; !define MUI_LICENSEPAGE
-  !define MUI_COMPONENTSPAGE
-  !define MUI_DIRECTORYPAGE
+  !insertmacro MUI_PAGE_INSTFILES
   
-  !define MUI_ABORTWARNING
-	
-  !define MUI_STARTMENUPAGE
-  
-  !define MUI_UNINSTALLER
-  !define MUI_UNCONFIRMPAGE
-  
-  !define MUI_HEADERBITMAP "surfit-1.0.0\images\nsis_logo.bmp"
-
-
-  !define TEMP $R0
+  !insertmacro MUI_UNPAGE_CONFIRM
+  !insertmacro MUI_UNPAGE_INSTFILES
   
 ;--------------------------------
 ;Languages
  
   !insertmacro MUI_LANGUAGE "English"
-  
-;--------------------------------
-;Language Strings
-
-  ;Description
-  LangString DESC_SecCopyCalc ${LANG_ENGLISH} "Copy base surfit package."
-  LangString DESC_SecCopyVis ${LANG_ENGLISH} "Copy visualization tools."
-  LangString DESC_SecCopyData ${LANG_ENGLISH} "Copy sample data."
-  LangString DESC_SecCopyExamples ${LANG_ENGLISH} "Copy scripts with exapmles"
-  LangString DESC_SecCopyDoc ${LANG_ENGLISH} "Copy surfit documentation"
-
-;--------------------------------
-;Data
-  
-  ;LicenseData "${NSISDIR}\Contrib\Modern UI\License.txt"
-
-;--------------------------------
-;Reserve Files
-  
-  ;Things that need to be extracted on first (keep these lines before any File command!)
-  ;Only useful for BZIP2 compression
-  
-  ;ReserveFile "surfit-1.0.0\images\logo.bmp"
 
 ;--------------------------------
 ;Installer Sections
 
-Section "calculation" SecCopyCalc
+SectionGroup "binaries" SecBinary
 
-  ;ADD YOUR OWN STUFF HERE!
-  SectionIn RO
+	Section "libsurfit" SecSurfitDll
 
-  SetOutPath "$INSTDIR\bin\library"
-  File "bin\library\*"
+	  SetOutPath "$INSTDIR\bin"
+	  SectionIn RO
 
-  SetOutPath "$INSTDIR\bin"
-  File "bin\tclsh83.exe"
-  File "bin\tcl83.dll"
-  File "bin\libsurfit.dll"
-  File "bin\grd2dat.bat"
-  File "bin\dat2grd.bat"
-  File "bin\run_examples.bat"
-   
-
-  ReadRegStr $1 HKCU "Environment" PATH
-                     
-  WriteRegStr HKCU "Environment" PATH $1;$INSTDIR\bin
-
-  ReadRegStr $1 HKCU "Environment" TCL_LIBRARY
-
-  WriteRegStr HKCU "Environment" TCL_LIBRARY $1;$INSTDIR\bin\library
-  File "surfit-1.0.0\tools\setpath.exe"
+	  ;Store installation folder
+	  WriteRegStr HKCU "Software\surfit" "" $INSTDIR
+	  ;Store startmenu folder
+	  WriteRegStr HKCU "Software\surfit" "StartMenuFolder" $STARTMENU_FOLDER
+	  ;Store version
+	  WriteRegStr HKCU "Software\surfit" "Version" $VERSION
   
-  ;Store install folder
-  WriteRegStr HKCU "Software\${MUI_PRODUCT}" "" $INSTDIR
+	  ;Create uninstaller
+	  WriteUninstaller "$INSTDIR\Uninstall.exe"
 
-!insertmacro MUI_STARTMENU_WRITE_BEGIN
+	  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     
-    ;Create shortcuts
-    CreateDirectory "$SMPROGRAMS\${MUI_STARTMENUPAGE_VARIABLE}"
-    CreateShortCut "$SMPROGRAMS\${MUI_STARTMENUPAGE_VARIABLE}\tclsh.lnk" "$INSTDIR\bin\tclsh84.exe"
-    CreateShortCut "$SMPROGRAMS\${MUI_STARTMENUPAGE_VARIABLE}\run_examples.lnk" "$INSTDIR\bin\run_examples.bat"
-    CreateShortCut "$SMPROGRAMS\${MUI_STARTMENUPAGE_VARIABLE}\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
+	    ;Create shortcuts
+	    CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
+	    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   
-  !insertmacro MUI_STARTMENU_WRITE_END
-  
-  ;Create uninstaller
-  WriteUninstaller "$INSTDIR\Uninstall.exe"
+	  !insertmacro MUI_STARTMENU_WRITE_END
 
-SectionEnd
+	  File "..\bin\libsstuff.dll"
+	  File "..\bin\libsurfit.dll"
 
-Section "visualization" SecCopyVis
-  SetOutPath "$INSTDIR\bin"
-  File "bin\funner.exe"
-  File "bin\Bula.exe"
-  File "bin\libsurfit_gl.dll"
-  CreateShortCut "$SMPROGRAMS\${MUI_STARTMENUPAGE_VARIABLE}\bula.lnk" "$INSTDIR\bin\Bula.exe"
-  CreateShortCut "$SMPROGRAMS\${MUI_STARTMENUPAGE_VARIABLE}\funner.lnk" "$INSTDIR\bin\funner.exe"
-SectionEnd
+	  Push $INSTDIR/bin
+	  Call AddToPath
 
-Section "sample data" SecCopyData
-  SetOutPath "$INSTDIR\data\"
-  File "data\make_all_bins.bat"
+	SectionEnd
 
-  ; 1d
-  SetOutPath "$INSTDIR\data\1d"
-  File "data\1d\make_all_bins.bat"
-  File "data\1d\make_bin.bat"
-  File "data\1d\make_bin.tcl"
-  File "data\1d\sin.txt"
-  File "data\1d\sin1000.txt"
-  SetOutPath "$INSTDIR\data\1d\test1d"
-  File "data\1d\test1d\ex2.txt"
-  File "data\1d\test1d\make_bin.bat"
-  File "data\1d\test1d\make_bin.tcl"
-  File "data\1d\test1d\trend1.txt"
-  File "data\1d\test1d\trend2.txt"
+	Section "libfreeflow" SecFreeflowDll
+	  SetOutPath "$INSTDIR\bin"
+	  File "..\bin\libsstuff.dll"
+	  File "..\bin\libfreeflow.dll"
+	SectionEnd
 
-  ; 2d
-  SetOutPath "$INSTDIR\data\2d"
-  File "data\2d\make_all_bins.bat"
-  SetOutPath "$INSTDIR\data\2d\oilfield1"
-  File "data\2d\oilfield1\aobt.xyz"
-  File "data\2d\oilfield1\make_sin.m"
-  File "data\2d\oilfield1\sin_trend.xyz"
-  File "data\2d\oilfield1\make_bin.bat"
-  File "data\2d\oilfield1\make_bin.tcl"
+	Section "libglobe" SecGlobeDll
+	  SetOutPath "$INSTDIR\bin"
+	  File "..\bin\libsstuff.dll"
+	  File "..\bin\libglobe.dll"
+	  File "..\..\zlib123-dll\zlib1.dll"
+	SectionEnd
 
-  SetOutPath "$INSTDIR\data\2d\oilfield2"
-  File "data\2d\oilfield2\2d_seism.xyz"
-  File "data\2d\oilfield2\3d_seism.xyz"
-  File "data\2d\oilfield2\aoup.xyz"
-  File "data\2d\oilfield2\make_bin.bat"
-  File "data\2d\oilfield2\make_bin.tcl"
+SectionGroupEnd
 
-  SetOutPath "$INSTDIR\data\2d\oilfield3"
-  File "data\2d\oilfield3\aobt.xyz"
-  File "data\2d\oilfield3\aoup.xyz"
-  File "data\2d\oilfield3\heff.xyz"
-  File "data\2d\oilfield3\heffoil.xyz"
-  File "data\2d\oilfield3\make_bin.bat"
-  File "data\2d\oilfield3\make_bin.tcl"
-  File "data\2d\oilfield3\trend.m"
-  File "data\2d\oilfield3\trend.xyz"
-  File "data\2d\oilfield3\woc.xyz"
+Section "examples" SecExamples
 
-SectionEnd
-
-Section "examples" SecCopyExamples
   SetOutPath "$INSTDIR\examples"
-  File "examples\run.bat"
-  File "examples\surfit.tcl"
-  File "examples\surfit_1d.tcl"
-  File "examples\surfit_2d.tcl"
-
-  SetOutPath "$INSTDIR\examples\1d"
-  File "examples\1d\pre_trend.tcl"
-  File "examples\1d\sin.tcl"
-  File "examples\1d\sin1000.tcl"
-  File "examples\1d\use_trend.tcl"
-
-  SetOutPath "$INSTDIR\examples\2d"
-  File "examples\2d\oilfield1.tcl"
-  File "examples\2d\oilfield2.tcl"
-  File "examples\2d\oilfield3.tcl"
-
-  SetOutPath "$INSTDIR\examples\2d\oilfield1"
-  File "examples\2d\oilfield1\map_trend.tcl"
-  File "examples\2d\oilfield1\map_aobt.tcl"
-  File "examples\2d\oilfield1\map_aobt_wtrend.tcl"
-  File "examples\2d\oilfield1\map_aobt_noised.tcl"
-  File "examples\2d\oilfield1\set_params.tcl"
-
-  SetOutPath "$INSTDIR\examples\2d\oilfield2"
-  File "examples\2d\oilfield2\map_2d_seism.tcl"
-  File "examples\2d\oilfield2\map_3d_seism.tcl"
-  File "examples\2d\oilfield2\map_aoup.tcl"
-  File "examples\2d\oilfield2\map_aoup_wrong.tcl"
-  File "examples\2d\oilfield2\set_params.tcl"
-
-  SetOutPath "$INSTDIR\examples\2d\oilfield3"
-  File "examples\2d\oilfield3\map_aobt.tcl"
-  File "examples\2d\oilfield3\map_aoup.tcl"
-  File "examples\2d\oilfield3\map_aoup_wrong.tcl"
-  File "examples\2d\oilfield3\map_heff.tcl"
-  File "examples\2d\oilfield3\map_heffoil.tcl"
-  File "examples\2d\oilfield3\map_hoil.tcl"
-  File "examples\2d\oilfield3\map_htotal.tcl"
-  File "examples\2d\oilfield3\map_oil.tcl"
-  File "examples\2d\oilfield3\map_water.tcl"
-  File "examples\2d\oilfield3\map_watoil.tcl"
-  File "examples\2d\oilfield3\map_woc.tcl"
-  File "examples\2d\oilfield3\map_trend.tcl"
-  File "examples\2d\oilfield3\set_params.tcl"
-
-  SetOutPath "$INSTDIR\results\1d"
-  
-  SetOutPath "$INSTDIR\results\2d\oilfield1"
-  
-  SetOutPath "$INSTDIR\results\2d\oilfield2"
-  
-  SetOutPath "$INSTDIR\results\2d\oilfield3"
+  File /r /x CVS "..\examples\*.*"
+  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
+  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\examples.lnk" "$INSTDIR\examples\"
 
 SectionEnd
 
-;Section "documentation" SecCopyDoc
-;  SetOutPath "$INSTDIR\doc"
-;  File /r "doc\html\*.*"
-;  CreateShortCut "$SMPROGRAMS\${MUI_STARTMENUPAGE_VARIABLE}\documentation.lnk" "$INSTDIR\doc\index.html"
-;SectionEnd
+SectionGroup "sources" SecSources
 
-;Display the Finish header
-;Insert this macro after the sections if you are not using a finish page
-!insertmacro MUI_SECTIONS_FINISHHEADER
+	Section "surfit" SecSurfitSources
+	  SetOutPath "$INSTDIR\src\sstuff"
+	  File /r /x CVS "..\src\sstuff\*.*"
+	  SetOutPath "$INSTDIR\src\surfit"
+	  File /r /x CVS "..\src\surfit\*.*"
+	SectionEnd
+
+	Section "freeflow" SecFreeflowSources
+	  SetOutPath "$INSTDIR\src\freeflow\"
+	  File /r /x CVS "..\src\freeflow\*.*"
+	SectionEnd
+
+	Section "globe" SecGlobeSources
+	  SetOutPath "$INSTDIR\src\globe"
+	  File /r /x CVS "..\src\globe\*.*"
+	SectionEnd
+
+	Section "VC6 project files" SecVC6
+	  SetOutPath "$INSTDIR\vc6"
+	  File /r /x CVS "..\vc6\*.bat"
+	  File /r /x CVS "..\vc6\*.dsp"
+	  File /r /x CVS "..\vc6\*.dsw"
+	  File /r /x CVS "..\vc6\*.mak"
+	  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
+	  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\build"
+	  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\build\surfit.lnk" "$INSTDIR\vc6\surfit.dsw"
+        SectionEnd
+
+	Section "configure scripts" SecLinux
+          SetOutPath "$INSTDIR"
+	  File ..\*.*
+        SectionEnd
+
+SectionGroupEnd
+
+Section "documentation" SecDocs
+  SetOutPath "$INSTDIR\doc\"
+  File /x CVS "..\bin\surfit.chm"
+  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
+  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\surfit.lnk" "$INSTDIR\doc\surfit.chm"
+SectionEnd
+
 
 ;--------------------------------
 ;Descriptions
 
-!insertmacro MUI_FUNCTIONS_DESCRIPTION_BEGIN
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecCopyCalc} $(DESC_SecCopyCalc)
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecCopyVis} $(DESC_SecCopyVis)
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecCopyData} $(DESC_SecCopyData)
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecCopyExamples} $(DESC_SecCopyExamples)
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecCopyDoc} $(DESC_SecCopyDoc)
-!insertmacro MUI_FUNCTIONS_DESCRIPTION_END
- 
+  ;Language strings
+  LangString DESC_SecSurfitDll ${LANG_ENGLISH} "libsurfit.dll"
+  LangString DESC_SecFreeflowDll ${LANG_ENGLISH} "libfreeflow.dll"
+  LangString DESC_SecGlobeDll ${LANG_ENGLISH} "libglobe.dll"
+  LangString DESC_SecSurfitSources ${LANG_ENGLISH} "surfit sources."
+  LangString DESC_SecFreeflowSources ${LANG_ENGLISH} "freeflow sources."
+  LangString DESC_SecGlobeSources ${LANG_ENGLISH} "globe sources."
+  LangString DESC_SecDocs ${LANG_ENGLISH} "documentation for surfit, freeflow and globe"
+  LangString DESC_Src ${LANG_ENGLISH} "source files (*.cpp, *.h, ...)"
+  LangString DESC_Examples ${LANG_ENGLISH} "set of scripts for example"
+  LangString DESC_Binary ${LANG_ENGLISH} "libsstuff.dll libsurfit.dll libfreeflow.dll libglobe.dll"
+  LangString DESC_VC6 ${LANG_ENGLISH} "Contains *.dsw and *.dsp files"
+
+
+  ;Assign language strings to sections
+  !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecSurfitDll} $(DESC_SecSurfitDll)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecFreeflowDll} $(DESC_SecFreeflowDll)    
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecGlobeDll} $(DESC_SecGlobeDll)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecSurfitSources} $(DESC_SecSurfitSources)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecFreeflowSources} $(DESC_SecFreeflowSources)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecGlobeSources} $(DESC_SecGlobeSources)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecDocs} $(DESC_SecDocs)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecSources} $(DESC_Src)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecExamples} $(DESC_Examples)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecBinary} $(DESC_Binary)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecVC6} $(DESC_VC6)
+  !insertmacro MUI_FUNCTION_DESCRIPTION_END
+
 ;--------------------------------
 ;Uninstaller Section
 
 Section "Uninstall"
 
+  ;ADD YOUR OWN FILES HERE...
+
   Delete "$INSTDIR\Uninstall.exe"
 
-  ;Remove shortcut
-  ReadRegStr ${TEMP} "${MUI_STARTMENUPAGE_REGISTRY_ROOT}" "${MUI_STARTMENUPAGE_REGISTRY_KEY}" "${MUI_STARTMENUPAGE_REGISTRY_VALUENAME}"
-  
-  StrCmp ${TEMP} "" noshortcuts
-  
-    Delete "$SMPROGRAMS\${TEMP}\tclsh.lnk"
-    Delete "$SMPROGRAMS\${TEMP}\run_examples.lnk"
-    Delete "$SMPROGRAMS\${TEMP}\bula.lnk"
-    Delete "$SMPROGRAMS\${TEMP}\funner1d.lnk"
-    Delete "$SMPROGRAMS\${TEMP}\funner2d.lnk"
-    Delete "$SMPROGRAMS\${TEMP}\documentation.lnk"
-    Delete "$SMPROGRAMS\${TEMP}\Uninstall.lnk"
-    RMDir "$SMPROGRAMS\${TEMP}" ;Only if empty, so it won't delete other shortcuts
+  RMDir /r /REBOOTOK "$INSTDIR"
+
+  DeleteRegKey /ifempty HKCU "Software\surfit"
+
+  !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
     
-  noshortcuts:
+  Delete "$SMPROGRAMS\$MUI_TEMP\Uninstall.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\doc.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\surfit_examples.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\freeflow_examples.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\globe_examples.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\surfit.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\build\surfit.lnk"
+  RMDir "$SMPROGRAMS\$MUI_TEMP\build"
 
-  RMDir /r "$INSTDIR"
+  RMDir /r /REBOOTOK "$SMPROGRAMS\$MUI_TEMP"
 
-  DeleteRegKey /ifempty HKCU "Software\${MUI_PRODUCT}"
+; ;Delete empty start menu parent diretories
+;  StrCpy $MUI_TEMP "$SMPROGRAMS\$MUI_TEMP"
+ 
+;  startMenuDeleteLoop:
+;	ClearErrors
+;    RMDir $MUI_TEMP
+;    GetFullPathName $MUI_TEMP "$MUI_TEMP\.."
+    
+;    IfErrors startMenuDeleteLoopDone
+  
+;    StrCmp $MUI_TEMP $SMPROGRAMS startMenuDeleteLoopDone startMenuDeleteLoop
+;  startMenuDeleteLoopDone:
 
-  DeleteRegKey /ifempty HKCU "Software\${MUI_PRODUCT}"
+  Push $INSTDIR/bin
+  Call un.RemoveFromPath
 
-  ;Display the Finish header
-  !insertmacro MUI_UNFINISHHEADER
 
 SectionEnd
 
- Function .onInstSuccess
-    Exec "$INSTDIR\bin\setpath.exe"
-    Delete "$INSTDIR\bin\setpath.exe"
- FunctionEnd
+

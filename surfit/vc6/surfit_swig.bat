@@ -1,4 +1,4 @@
 cd ..
-cd surfit
 cd src
-swig -c++ -tcl -o surfit_wrap.cxx interface/surfit.i
+cd surfit
+swig.exe -c++ -tcl -o surfit_wrap.cxx interface/surfit.i

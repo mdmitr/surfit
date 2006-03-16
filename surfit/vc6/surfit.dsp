@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SURFIT_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MT /W3 /GR /GX /O2 /Op /Ob0 /I "surfit" /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr /FD /Gs /Gs /c
+# ADD CPP /nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../src/sstuff" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr /FD /Gs /Gs /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x419 /d "NDEBUG"
@@ -53,8 +53,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 tcl83.lib opengl32.lib fltk.lib fltkgl.lib gdi32.lib comctl32.lib wsock32.lib ole32.lib shell32.lib user32.lib /nologo /dll /machine:I386 /nodefaultlib:"libcmt" /out:"../bin/libsurfit.dll"
-# SUBTRACT LINK32 /incremental:yes /map /debug /nodefaultlib
+# ADD LINK32 tcl83.lib /nologo /dll /machine:I386 /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib"
+# SUBTRACT LINK32 /pdb:none /debug
 
 !ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
 
@@ -70,8 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SURFIT_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MTd /W3 /Gm /GR /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /FD /GZ /c
-# SUBTRACT CPP /Gf /Gy /Fr
+# ADD CPP /nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x419 /d "_DEBUG"
@@ -81,8 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 tcl83d.lib opengl32.lib fltkd.lib fltkgld.lib gdi32.lib comctl32.lib wsock32.lib ole32.lib shell32.lib user32.lib /nologo /dll /pdb:none /map /debug /machine:I386 /nodefaultlib:"libcd" /nodefaultlib:"libcmtd" /out:"../bin/libsurfit.dll" /libpath:"D:\fltk\lib"
-# SUBTRACT LINK32 /profile
+# ADD LINK32 tcl83d.lib /nologo /dll /pdb:none /map /debug /machine:I386 /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib"
 
 !ENDIF 
 
@@ -98,47 +96,39 @@ LINK32=link.exe
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\boolvec.cpp
+SOURCE=.\..\src\surfit\matlab.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\intvec.cpp
+SOURCE=..\src\surfit\matr.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\matlab.cpp
+SOURCE=..\src\surfit\matr_diag.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\oper.cpp
+SOURCE=..\src\surfit\matr_eye.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\oper_points.cpp
+SOURCE=..\src\surfit\matr_onesrow.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\operD1.cpp
+SOURCE=..\src\surfit\matrD1.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\operD1_rect.cpp
+SOURCE=..\src\surfit\matrD1_rect.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\operD2.cpp
+SOURCE=..\src\surfit\matrD2.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\operD2_rect.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\vec.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\vec_alg.cpp
+SOURCE=..\src\surfit\matrD2_rect.cpp
 # End Source File
 # End Group
 # Begin Group "common_cpp"
@@ -146,48 +136,47 @@ SOURCE=.\..\surfit\src\vec_alg.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\datafile.cpp
+SOURCE=..\src\surfit\free_elements.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\fileio.cpp
-
-!IF  "$(CFG)" == "surfit - Win32 Release"
-
-# ADD CPP /O2
-
-!ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\license.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\read_txt.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\rnd.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\sort_alg.cpp
+SOURCE=.\..\src\surfit\license.cpp
 # End Source File
 # End Group
 # Begin Group "methods_cpp"
 
 # PROP Default_Filter ""
+# Begin Group "solvers_cpp"
+
+# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\geom_alg.cpp
+SOURCE=..\src\surfit\solvers\CG.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\main_method.cpp
+SOURCE=..\src\surfit\solvers\J.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\solvers\JCG.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\solvers\RF.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\solvers\SSOR.cpp
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=..\src\surfit\cmofs.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\solvers.cpp
 # End Source File
 # End Group
 # Begin Group "grid_cpp"
@@ -195,23 +184,19 @@ SOURCE=.\..\surfit\src\main_method.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\grid.cpp
+SOURCE=.\..\src\surfit\grid.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\grid_internal.cpp
+SOURCE=.\..\src\surfit\grid_internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\grid_show.cpp
+SOURCE=.\..\src\surfit\grid_tcl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\grid_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\grid_user.cpp
+SOURCE=.\..\src\surfit\grid_user.cpp
 # End Source File
 # End Group
 # Begin Group "variables_cpp"
@@ -219,7 +204,7 @@ SOURCE=.\..\surfit\src\grid_user.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\variables.cpp
+SOURCE=.\..\src\surfit\variables.cpp
 # End Source File
 # End Group
 # Begin Group "data_cpp"
@@ -228,93 +213,25 @@ SOURCE=.\..\surfit\src\variables.cpp
 # Begin Group "func_cpp"
 
 # PROP Default_Filter ""
-# Begin Group "trend_cpp"
+# Begin Group "mask_cpp"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\trend.cpp
+SOURCE=..\src\surfit\mask.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\trend_internal.cpp
+SOURCE=..\src\surfit\mask_internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\trend_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\trend_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\trend_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\trends.cpp
-# End Source File
-# End Group
-# Begin Group "defarea_cpp"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\defarea.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\defarea_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\defarea_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\defarea_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\defarea_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\defareas.cpp
-# End Source File
-# End Group
-# Begin Group "wfunc_cpp"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wfunc.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wfunc_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\wfunc_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wfunc_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wfunc_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wfuncs.cpp
+SOURCE=..\src\surfit\mask_tcl.cpp
 # End Source File
 # End Group
 # Begin Source File
 
-SOURCE=.\..\surfit\src\func.cpp
+SOURCE=.\..\src\surfit\func.cpp
 
 !IF  "$(CFG)" == "surfit - Win32 Release"
 
@@ -327,286 +244,46 @@ SOURCE=.\..\surfit\src\func.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\func_internal.cpp
+SOURCE=.\..\src\surfit\func_internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\func_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\func_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\func_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\funcs.cpp
+SOURCE=.\..\src\surfit\func_tcl.cpp
 # End Source File
 # End Group
 # Begin Group "points_cpp"
 
 # PROP Default_Filter ""
-# Begin Group "task_cpp"
-
-# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\task.cpp
+SOURCE=..\src\surfit\pnts_internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\task_internal.cpp
+SOURCE=..\src\surfit\pnts_tcl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\task_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\task_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\task_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\tasks.cpp
-# End Source File
-# End Group
-# Begin Group "wtask_cpp"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wtask.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wtask_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\wtask_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wtask_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wtask_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wtasks.cpp
-# End Source File
-# End Group
-# Begin Source File
-
-SOURCE=.\..\surfit\src\points.cpp
+SOURCE=.\..\src\surfit\points.cpp
 # End Source File
 # End Group
 # Begin Group "curv_cpp"
 
 # PROP Default_Filter ""
-# Begin Group "iso_cpp"
-
-# PROP Default_Filter ""
-# Begin Group "wiso_cpp"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wiso.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wiso_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\wiso_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wiso_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wiso_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wisos.cpp
-# End Source File
-# End Group
-# Begin Source File
-
-SOURCE=.\..\surfit\src\iso.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\iso_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\iso_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\iso_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\iso_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\isos.cpp
-# End Source File
-# End Group
-# Begin Group "flt_cpp"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\flt.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\flt_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\flt_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\flt_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\flt_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\flts.cpp
-# End Source File
-# End Group
-# Begin Group "area_cpp"
-
-# PROP Default_Filter ""
-# Begin Group "warea_cpp"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\warea.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\warea_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\warea_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\warea_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\warea_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wareas.cpp
-# End Source File
-# End Group
-# Begin Source File
-
-SOURCE=.\..\surfit\src\area.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\area_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\area_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\area_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\area_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\areas.cpp
-# End Source File
-# End Group
 # Begin Group "cntr_cpp"
 
 # PROP Default_Filter ""
-# Begin Group "wcntr_cpp"
-
-# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\wcntr.cpp
+SOURCE=.\..\src\surfit\cntr.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\wcntr_internal.cpp
+SOURCE=.\..\src\surfit\cntr_internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\wcntr_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wcntr_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wcntr_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wcntrs.cpp
-# End Source File
-# End Group
-# Begin Source File
-
-SOURCE=.\..\surfit\src\cntr.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\cntr_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\cntr_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\cntr_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\cntr_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\cntrs.cpp
+SOURCE=.\..\src\surfit\cntr_tcl.cpp
 # End Source File
 # End Group
 # Begin Group "grid_line_cpp"
@@ -614,150 +291,259 @@ SOURCE=.\..\surfit\src\cntrs.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\grid_line.cpp
+SOURCE=.\..\src\surfit\grid_line.cpp
+
+!IF  "$(CFG)" == "surfit - Win32 Release"
+
+# ADD CPP /O2
+
+!ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\grid_line_internal.cpp
+SOURCE=.\..\src\surfit\grid_line_internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\grid_line_tcl.cpp
+SOURCE=.\..\src\surfit\grid_line_tcl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\grid_line_user.cpp
+SOURCE=.\..\src\surfit\grid_line_user.cpp
 # End Source File
 # End Group
 # Begin Source File
 
-SOURCE=.\..\surfit\src\curv.cpp
+SOURCE=.\..\src\surfit\curv.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\curv_internal.cpp
+SOURCE=.\..\src\surfit\curv_internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\curv_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\curv_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\curv_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\curvs.cpp
+SOURCE=.\..\src\surfit\curv_tcl.cpp
 # End Source File
 # End Group
-# Begin Group "dynamic_cpp"
+# Begin Group "hist_cpp"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\dynamic.cpp
+SOURCE=..\src\surfit\hist.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\dynamic_internal.cpp
+SOURCE=..\src\surfit\hist_internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\dynamic_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\dynamic_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\dynamics.cpp
+SOURCE=..\src\surfit\hist_tcl.cpp
 # End Source File
 # End Group
-# Begin Group "completer_cpp"
+# Begin Group "area_cpp"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\completer.cpp
+SOURCE=..\src\surfit\area.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\completer_tcl.cpp
+SOURCE=..\src\surfit\area_internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\completer_user.cpp
+SOURCE=..\src\surfit\area_tcl.cpp
 # End Source File
 # End Group
-# Begin Group "fill_with_cpp"
+# Begin Source File
+
+SOURCE=.\..\src\surfit\data.cpp
+# End Source File
+# End Group
+# Begin Group "functionals_cpp"
+
+# PROP Default_Filter ""
+# Begin Group "points.cpp"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\fill_with.cpp
+SOURCE=..\src\surfit\f_points.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\fill_with_tcl.cpp
+SOURCE=..\src\surfit\f_points_ineq.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\fill_with_user.cpp
+SOURCE=..\src\surfit\f_points_tcl.cpp
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\..\surfit\src\data.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\user.cpp
-# End Source File
-# End Group
-# Begin Group "gl_cpp"
+# Begin Group "global.cpp"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\surfit\src\colors.cpp
+SOURCE=..\src\surfit\f_completer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\conrec.cxx
+SOURCE=..\src\surfit\f_global_tcl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\draw.cpp
+SOURCE=..\src\surfit\f_hist.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\draw_object.cpp
+SOURCE=..\src\surfit\f_ineq.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\projector.cpp
+SOURCE=..\src\surfit\f_mean.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\trackball.cpp
+SOURCE=..\src\surfit\f_value.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_wmean.cpp
+# End Source File
+# End Group
+# Begin Group "curvs.cpp"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\src\surfit\curvs_tcl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area_func_ineq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area_ineq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area_mean.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area_wmean.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_cntr.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_cntr_ineq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_curv.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_curv_ineq.cpp
+# End Source File
+# End Group
+# Begin Group "funcs.cpp"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\src\surfit\f_func.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_func_ineq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_mask.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_trend.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\funcs_tcl.cpp
 # End Source File
 # End Group
 # Begin Source File
 
-SOURCE=.\..\surfit\src\color_scale.cpp
+SOURCE=..\src\surfit\functional.cpp
+# End Source File
+# End Group
+# Begin Group "ptypes_cxx"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\src\surfit\ptypes\pasync.cxx
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\file_manager.cpp
+SOURCE=..\src\surfit\ptypes\patomic.cxx
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\mrf.cpp
+SOURCE=..\src\surfit\ptypes\pexcept.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\ptypes\pfatal.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\ptypes\pmem.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\ptypes\pmsgq.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\ptypes\psemaphore.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\ptypes\pstring.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\ptypes\pthread.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\ptypes\ptimedsem.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\ptypes\punknown.cxx
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=..\src\surfit\data_manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\..\src\surfit\mrf.cpp
 
 !IF  "$(CFG)" == "surfit - Win32 Release"
 
@@ -770,11 +556,15 @@ SOURCE=.\..\surfit\src\mrf.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\surfit.cpp
+SOURCE=..\src\surfit\sort_alg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\surfit_wrap.cxx
+SOURCE=.\..\src\surfit\surfit.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\..\src\surfit\surfit_wrap.cxx
 
 !IF  "$(CFG)" == "surfit - Win32 Release"
 
@@ -786,6 +576,10 @@ SOURCE=.\..\surfit\src\surfit_wrap.cxx
 !ENDIF 
 
 # End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\threads.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -795,99 +589,67 @@ SOURCE=.\..\surfit\src\surfit_wrap.cxx
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\cg.h
+SOURCE=.\..\src\surfit\solvers.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\cg2.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\jacobi.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\simpiter.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\simpiter2.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\solvers.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\sor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\ssor.h
-# End Source File
-# End Group
-# Begin Group "sort_alg"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\bitvec_alg.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\geom_alg.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\sort_alg.h
+SOURCE=..\src\surfit\surfit_solvers.h
 # End Source File
 # End Group
 # Begin Group "matr_h"
 
 # PROP Default_Filter ""
+# Begin Group "grid_h"
+
+# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\bitvec.h
+SOURCE=.\..\src\surfit\grid.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\boolvec.h
+SOURCE=.\..\src\surfit\grid_internal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\intvec.h
+SOURCE=.\..\src\surfit\grid_tcl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\matfile.h
+SOURCE=.\..\src\surfit\grid_user.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\..\src\surfit\matfile.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\matlab.h
+SOURCE=.\..\src\surfit\matlab.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\oper.h
+SOURCE=..\src\surfit\matr.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\oper_points.h
+SOURCE=..\src\surfit\matr_diag.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\operD1.h
+SOURCE=..\src\surfit\matr_eye.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\operD2.h
+SOURCE=..\src\surfit\matr_onesrow.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\vec.h
+SOURCE=..\src\surfit\matrD1.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\vec_alg.h
+SOURCE=..\src\surfit\matrD2.h
 # End Source File
 # End Group
 # Begin Group "common_h"
@@ -895,67 +657,15 @@ SOURCE=.\..\surfit\src\vec_alg.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\datafile.h
+SOURCE=.\..\src\surfit\free_elements.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\fileio.h
+SOURCE=.\..\src\surfit\license.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\free_elements.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\ie.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\license.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\read_txt.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\real.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\rnd.h
-# End Source File
-# End Group
-# Begin Group "methods_h"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\main_method.h
-# End Source File
-# End Group
-# Begin Group "grid_h"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\grid.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\grid_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\grid_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\grid_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\grid_user.h
+SOURCE=..\src\surfit\surfit_ie.h
 # End Source File
 # End Group
 # Begin Group "variables_h"
@@ -963,15 +673,15 @@ SOURCE=.\..\surfit\src\grid_user.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\variables.h
+SOURCE=.\..\src\surfit\variables.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\variables_internal.h
+SOURCE=.\..\src\surfit\variables_internal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\variables_tcl.h
+SOURCE=.\..\src\surfit\variables_tcl.h
 # End Source File
 # End Group
 # Begin Group "data_h"
@@ -980,376 +690,68 @@ SOURCE=.\..\surfit\src\variables_tcl.h
 # Begin Group "func_h"
 
 # PROP Default_Filter ""
-# Begin Group "trend_h"
+# Begin Group "mask_h"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\trend.h
+SOURCE=..\src\surfit\mask.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\trend_internal.h
+SOURCE=..\src\surfit\mask_internal.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\trend_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\trend_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\trend_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\trends.h
-# End Source File
-# End Group
-# Begin Group "defarea_h"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\defarea.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\defarea_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\defarea_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\defarea_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\defarea_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\defareas.h
-# End Source File
-# End Group
-# Begin Group "wfunc_h"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wfunc.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wfunc_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\wfunc_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wfunc_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wfunc_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wfuncs.h
+SOURCE=..\src\surfit\mask_tcl.h
 # End Source File
 # End Group
 # Begin Source File
 
-SOURCE=.\..\surfit\src\func.h
+SOURCE=.\..\src\surfit\func.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\func_internal.h
+SOURCE=.\..\src\surfit\func_internal.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\func_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\func_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\func_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\funcs.h
+SOURCE=.\..\src\surfit\func_tcl.h
 # End Source File
 # End Group
 # Begin Group "points_h"
 
 # PROP Default_Filter ""
-# Begin Group "task_h"
-
-# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\task.h
+SOURCE=..\src\surfit\pnts_internal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\task_internal.h
+SOURCE=..\src\surfit\pnts_tcl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\task_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\task_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\task_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\tasks.h
-# End Source File
-# End Group
-# Begin Group "wtask_h"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wtask.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wtask_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\wtask_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wtask_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wtask_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wtasks.h
-# End Source File
-# End Group
-# Begin Source File
-
-SOURCE=.\..\surfit\src\points.h
+SOURCE=.\..\src\surfit\points.h
 # End Source File
 # End Group
 # Begin Group "curv_h"
 
 # PROP Default_Filter ""
-# Begin Group "iso_h"
-
-# PROP Default_Filter ""
-# Begin Group "wiso_h"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wiso.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wiso_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\wiso_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wiso_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wiso_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wisos.h
-# End Source File
-# End Group
-# Begin Source File
-
-SOURCE=.\..\surfit\src\iso.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\iso_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\iso_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\iso_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\iso_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\isos.h
-# End Source File
-# End Group
-# Begin Group "flt_h"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\flt.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\flt_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\flt_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\flt_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\flt_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\flts.h
-# End Source File
-# End Group
-# Begin Group "area_h"
-
-# PROP Default_Filter ""
-# Begin Group "warea_h"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\surfit\src\warea.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\warea_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\warea_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\warea_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\warea_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wareas.h
-# End Source File
-# End Group
-# Begin Source File
-
-SOURCE=.\..\surfit\src\area.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\area_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\area_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\area_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\area_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\areas.h
-# End Source File
-# End Group
 # Begin Group "cntr_h"
 
 # PROP Default_Filter ""
-# Begin Group "wcntr_h"
-
-# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\wcntr.h
+SOURCE=.\..\src\surfit\cntr.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\wcntr_internal.h
+SOURCE=.\..\src\surfit\cntr_internal.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\wcntr_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wcntr_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wcntr_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\wcntrs.h
-# End Source File
-# End Group
-# Begin Source File
-
-SOURCE=.\..\surfit\src\cntr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\cntr_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\surfit\src\cntr_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\cntr_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\cntr_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\cntrs.h
+SOURCE=.\..\src\surfit\cntr_tcl.h
 # End Source File
 # End Group
 # Begin Group "grid_line_h"
@@ -1357,154 +759,226 @@ SOURCE=.\..\surfit\src\cntrs.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\grid_line.h
+SOURCE=.\..\src\surfit\grid_line.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\grid_line_internal.h
+SOURCE=.\..\src\surfit\grid_line_internal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\grid_line_tcl.h
+SOURCE=.\..\src\surfit\grid_line_tcl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\grid_line_user.h
+SOURCE=.\..\src\surfit\grid_line_user.h
 # End Source File
 # End Group
 # Begin Source File
 
-SOURCE=.\..\surfit\src\curv.h
+SOURCE=.\..\src\surfit\curv.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\curv_internal.h
+SOURCE=.\..\src\surfit\curv_internal.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\curv_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\curv_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\curv_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\curvs.h
+SOURCE=.\..\src\surfit\curv_tcl.h
 # End Source File
 # End Group
-# Begin Group "dynamic_h"
+# Begin Group "hist_h"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\dynamic.h
+SOURCE=..\src\surfit\hist.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\dynamic_internal.h
+SOURCE=..\src\surfit\hist_internal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\dynamic_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\dynamic_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\dynamics.h
+SOURCE=..\src\surfit\hist_tcl.h
 # End Source File
 # End Group
-# Begin Group "completer_h"
+# Begin Group "area_h"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\completer.h
+SOURCE=..\src\surfit\area.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\completer_tcl.h
+SOURCE=..\src\surfit\area_internal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\completer_user.h
+SOURCE=..\src\surfit\area_tcl.h
 # End Source File
 # End Group
-# Begin Group "fill_with_h"
+# Begin Source File
+
+SOURCE=..\src\surfit\surfit_data.h
+# End Source File
+# End Group
+# Begin Group "functionals_h"
+
+# PROP Default_Filter ""
+# Begin Group "points.h"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\fill_with.h
+SOURCE=..\src\surfit\f_points.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\fill_with_tcl.h
+SOURCE=..\src\surfit\f_points_ineq.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\fill_with_user.h
+SOURCE=..\src\surfit\f_points_tcl.h
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\..\surfit\src\data.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\user.h
-# End Source File
-# End Group
-# Begin Group "gl_h"
+# Begin Group "global.h"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\surfit\src\colors.h
+SOURCE=..\src\surfit\f_completer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\draw.h
+SOURCE=..\src\surfit\f_global_tcl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\draw_object.h
+SOURCE=..\src\surfit\f_hist.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\projector.h
+SOURCE=..\src\surfit\f_ineq.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\trackball.h
+SOURCE=..\src\surfit\f_mean.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_value.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_wmean.h
+# End Source File
+# End Group
+# Begin Group "curvs.h"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\src\surfit\curvs_tcl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area_func_ineq.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area_ineq.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area_mean.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area_wmean.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_cntr.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_cntr_ineq.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_curv.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_curv_ineq.h
+# End Source File
+# End Group
+# Begin Group "funcs.h"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\src\surfit\f_func.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_func_ineq.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_mask.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_trend.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\funcs_tcl.h
 # End Source File
 # End Group
 # Begin Source File
 
-SOURCE=.\..\surfit\src\color_scale.h
+SOURCE=..\src\surfit\functional.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=..\src\surfit\cmofs.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\config.h
+SOURCE=..\src\surfit\config.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\file_manager.h
+SOURCE=..\src\surfit\data_manager.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\mrf.h
+SOURCE=.\..\src\surfit\mrf.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\surfit.h
+SOURCE=..\src\surfit\sort_alg.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\..\src\surfit\surfit.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\surfit_threads.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\threads.h
 # End Source File
 # End Group
 # Begin Group "Interface"
@@ -1512,54 +986,46 @@ SOURCE=.\..\surfit\src\surfit.h
 # PROP Default_Filter "*.i"
 # Begin Source File
 
-SOURCE=.\..\surfit\src\interface\curv.i
+SOURCE=.\..\src\surfit\interface\curv.i
 # End Source File
 # Begin Source File
 
-SOURCE=..\surfit\src\interface\draw.i
+SOURCE=.\..\src\surfit\interface\fileio.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\interface\fileio.i
+SOURCE=.\..\src\surfit\interface\func.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\interface\func.i
+SOURCE=.\..\src\surfit\interface\geom.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\interface\geom.i
+SOURCE=.\..\src\surfit\interface\solve.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\interface\mrf.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\interface\solve.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\surfit\src\interface\surfit.i
+SOURCE=.\..\src\surfit\interface\surfit.i
 
 !IF  "$(CFG)" == "surfit - Win32 Release"
 
-USERDEP__SURFI="../surfit/src/interface/fileio.i"	"../surfit/src/interface/solve.i"	"../surfit/src/interface/task.i"	"../surfit/src/interface/geom.i"	"../surfit/src/interface/func.i"	"../surfit/src/interface/mrf.i"	"../surfit/src/interface/curv.i"	"../surfit/src/real.h"	"../surfit/src/interface/draw.i"	
+USERDEP__SURFI="../src/surfit/interface/fileio.i"	"../src/surfit/interface/solve.i"	"../src/surfit/interface/task.i"	"../src/surfit/interface/geom.i"	"../src/surfit/interface/func.i"	"../src/surfit/interface/curv.i"	
 # Begin Custom Build
-InputPath=.\..\surfit\src\interface\surfit.i
+InputPath=.\..\src\surfit\interface\surfit.i
 
-"../surfit/src/surfit_wrap.cxx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"../src/surfit/surfit_wrap.cxx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	surfit_swig.bat
 
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
 
-USERDEP__SURFI="../surfit/src/interface/fileio.i"	"../surfit/src/interface/solve.i"	"../surfit/src/interface/task.i"	"../surfit/src/interface/geom.i"	"../surfit/src/interface/func.i"	"../surfit/src/interface/mrf.i"	"../surfit/src/interface/curv.i"	"../surfit/src/interface/draw.i"	
+USERDEP__SURFI="../src/surfit/interface/fileio.i"	"../src/surfit/interface/solve.i"	"../src/surfit/interface/task.i"	"../src/surfit/interface/geom.i"	"../src/surfit/interface/func.i"	"../src/surfit/interface/curv.i"	
 # Begin Custom Build
-InputPath=.\..\surfit\src\interface\surfit.i
+InputPath=.\..\src\surfit\interface\surfit.i
 
-"../surfit/src/surfit_wrap.cxx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"../src/surfit/surfit_wrap.cxx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	surfit_swig.bat
 
 # End Custom Build
@@ -1569,7 +1035,7 @@ InputPath=.\..\surfit\src\interface\surfit.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\interface\task.i
+SOURCE=.\..\src\surfit\interface\task.i
 # End Source File
 # End Group
 # Begin Group "Unix files"
@@ -1577,35 +1043,35 @@ SOURCE=.\..\surfit\src\interface\task.i
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\AUTHORS
+SOURCE=.\..\src\surfit\AUTHORS
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\ChangeLog
+SOURCE=.\..\src\surfit\ChangeLog
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\configure.in
+SOURCE=.\..\src\surfit\configure.in
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\COPYING
+SOURCE=.\..\src\surfit\COPYING
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\INSTALL
+SOURCE=.\..\src\surfit\INSTALL
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\Makefile.am
+SOURCE=.\..\src\surfit\Makefile.am
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\NEWS
+SOURCE=.\..\src\surfit\NEWS
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\surfit\src\README
+SOURCE=.\..\src\surfit\README
 # End Source File
 # End Group
 # Begin Group "Deprecated code"
@@ -1613,7 +1079,7 @@ SOURCE=.\..\surfit\src\README
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\surfit\src\deprecated
+SOURCE=.\..\src\surfit\deprecated
 # End Source File
 # End Group
 # Begin Group "examples"

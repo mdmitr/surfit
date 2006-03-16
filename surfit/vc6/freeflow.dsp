@@ -43,8 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FREEFLOW_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MT /W3 /GR /GX /O2 /I "../surfit/src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /FR /FD /c
-# SUBTRACT CPP /YX
+# ADD CPP /nologo /MT /W3 /GR /GX /O2 /Ob2 /I "../src/sstuff" /I "../src/surfit" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /FR /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x419 /d "NDEBUG"
@@ -54,8 +53,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 tcl83.lib opengl32.lib fltk.lib fltkgl.lib gdi32.lib comctl32.lib wsock32.lib ole32.lib shell32.lib user32.lib /nologo /dll /machine:I386 /out:"../bin/libfreeflow.dll"
-# SUBTRACT LINK32 /map /debug
+# ADD LINK32 tcl83.lib /nologo /dll /machine:I386 /out:"../bin/libfreeflow.dll" /implib:"../bin/libfreeflow.lib"
+# SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "freeflow - Win32 Debug"
 
@@ -71,8 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FREEFLOW_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../surfit/src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FREEFLOW_EXPORTS" /YX /FD /GZ /c
-# SUBTRACT CPP /Fr
+# ADD CPP /nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/surfit" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr /YX /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x419 /d "_DEBUG"
@@ -82,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 tcl83d.lib opengl32.lib fltkd.lib fltkgld.lib gdi32.lib comctl32.lib wsock32.lib ole32.lib shell32.lib user32.lib /nologo /dll /pdb:none /debug /machine:I386 /out:"../bin/libfreeflow.dll" /libpath:"D:\fltk\lib"
+# ADD LINK32 tcl83d.lib /nologo /dll /pdb:none /debug /machine:I386 /out:"../bin/libfreeflow.dll" /implib:"../bin/libfreeflow.lib" /libpath:"D:\fltk\lib"
 
 !ENDIF 
 
@@ -96,186 +94,86 @@ LINK32=link.exe
 # Begin Group "data_cpp"
 
 # PROP Default_Filter ""
-# Begin Group "ptask_cpp"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\ptask.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\ptask_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\freeflow\src\ptask_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\ptask_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\ptask_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\ptasks.cpp
-# End Source File
-# End Group
-# Begin Group "curv_cpp"
-
-# PROP Default_Filter ""
-# Begin Group "parea_cpp"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\parea.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\parea_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\freeflow\src\parea_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\parea_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\parea_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\pareas.cpp
-# End Source File
-# End Group
-# Begin Group "piso_cpp"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\piso.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\piso_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\freeflow\src\piso_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\piso_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\piso_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\pisos.cpp
-# End Source File
-# End Group
-# Begin Group "pcntr_cpp"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\pcntr.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\pcntr_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\freeflow\src\pcntr_show.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\pcntr_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\pcntr_user.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\pcntrs.cpp
-# End Source File
-# End Group
-# Begin Source File
-
-SOURCE=..\freeflow\src\flow_curv_show.cpp
-# End Source File
-# End Group
-# Begin Group "lcms_cpp"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\lcm_simple.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\lcm_simple_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\lcm_simple_tcl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\lcm_simple_user.cpp
-# End Source File
-# End Group
 # Begin Group "func_cpp"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\flow_func_internal.cpp
+SOURCE=.\..\src\freeflow\flow_func_internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\flow_func_tcl.cpp
+SOURCE=.\..\src\freeflow\flow_func_tcl.cpp
 # End Source File
 # End Group
 # End Group
-# Begin Group "gl_cpp"
+# Begin Group "functionals_cpp"
+
+# PROP Default_Filter ""
+# Begin Group "points.cpp"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\freeflow\src\flow_colors.cpp
+SOURCE=..\src\freeflow\prod_points.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=..\src\freeflow\prod_points_tcl.cpp
+# End Source File
+# End Group
+# Begin Group "curvs.cpp"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\src\freeflow\pcurvs_tcl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\freeflow\prod_area.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\freeflow\prod_cntr.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\freeflow\prod_iso.cpp
+# End Source File
+# End Group
+# Begin Group "global.cpp"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\src\freeflow\f_lcm_simple.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\freeflow\f_lcm_simple_tcl.cpp
+# End Source File
+# End Group
 # End Group
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\flow.cpp
+SOURCE=.\..\src\freeflow\flow.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\flow_file_manager.cpp
+SOURCE=..\src\freeflow\flow_data_manager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\flow_variables.cpp
+SOURCE=.\..\src\freeflow\flow_variables.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\freeflow.cpp
+SOURCE=.\..\src\freeflow\freeflow.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\freeflow_wrap.cxx
+SOURCE=.\..\src\freeflow\freeflow_wrap.cxx
 
 !IF  "$(CFG)" == "freeflow - Win32 Release"
 
@@ -293,186 +191,86 @@ SOURCE=.\..\freeflow\src\freeflow_wrap.cxx
 # Begin Group "data_h"
 
 # PROP Default_Filter ""
-# Begin Group "ptask_h"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\ptask.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\ptask_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\freeflow\src\ptask_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\ptask_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\ptask_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\ptasks.h
-# End Source File
-# End Group
-# Begin Group "curv_h"
-
-# PROP Default_Filter ""
-# Begin Group "parea_h"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\parea.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\parea_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\freeflow\src\parea_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\parea_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\parea_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\pareas.h
-# End Source File
-# End Group
-# Begin Group "piso_h"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\piso.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\piso_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\freeflow\src\piso_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\piso_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\piso_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\pisos.h
-# End Source File
-# End Group
-# Begin Group "pcntr_h"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\pcntr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\pcntr_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\freeflow\src\pcntr_show.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\pcntr_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\pcntr_user.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\pcntrs.h
-# End Source File
-# End Group
-# Begin Source File
-
-SOURCE=..\freeflow\src\flow_curv_show.h
-# End Source File
-# End Group
-# Begin Group "lcms_h"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\lcm_simple.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\lcm_simple_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\lcm_simple_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\freeflow\src\lcm_simple_user.h
-# End Source File
-# End Group
 # Begin Group "func_h"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\flow_func_internal.h
+SOURCE=.\..\src\freeflow\flow_func_internal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\flow_func_tcl.h
+SOURCE=.\..\src\freeflow\flow_func_tcl.h
 # End Source File
 # End Group
 # End Group
-# Begin Group "gl_h"
+# Begin Group "functionals_h"
+
+# PROP Default_Filter ""
+# Begin Group "points.h"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\freeflow\src\flow_colors.h
+SOURCE=..\src\freeflow\prod_points.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\src\freeflow\prod_points_tcl.h
+# End Source File
+# End Group
+# Begin Group "curvs.h"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\src\freeflow\pcurvs_tcl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\freeflow\prod_area.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\freeflow\prod_cntr.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\freeflow\prod_iso.h
+# End Source File
+# End Group
+# Begin Group "globals.h"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\src\freeflow\f_lcm_simple.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\freeflow\f_lcm_simple_tcl.h
+# End Source File
+# End Group
 # End Group
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\flow.h
+SOURCE=.\..\src\freeflow\flow.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\flow_file_manager.h
+SOURCE=..\src\freeflow\flow_data_manager.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\flow_ie.h
+SOURCE=.\..\src\freeflow\flow_ie.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\flow_variables.h
+SOURCE=.\..\src\freeflow\flow_variables.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\freeflow\src\freeflow.h
+SOURCE=..\src\freeflow\freeflow.h
 # End Source File
 # End Group
 # Begin Group "Interface"
@@ -480,30 +278,30 @@ SOURCE=..\freeflow\src\freeflow.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\freeflow\src\interface\flow_draw.i
+SOURCE=..\src\freeflow\interface\flow_draw.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\interface\freeflow.i
+SOURCE=.\..\src\freeflow\interface\freeflow.i
 
 !IF  "$(CFG)" == "freeflow - Win32 Release"
 
-USERDEP__FREEF="../freeflow/src/interface/lcm.i"	"../freeflow/src/interface/flow_draw.i"	
+USERDEP__FREEF="../src/freeflow/interface/lcm.i"	"../src/freeflow/interface/flow_draw.i"	
 # Begin Custom Build
-InputPath=.\..\freeflow\src\interface\freeflow.i
+InputPath=.\..\src\freeflow\interface\freeflow.i
 
-"../freeflow/src/freeflow_wrap.cxx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"../src/freeflow/freeflow_wrap.cxx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	freeflow_swig.bat
 
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "freeflow - Win32 Debug"
 
-USERDEP__FREEF="../freeflow/src/interface/lcm.i"	"../freeflow/src/interface/flow_draw.i"	
+USERDEP__FREEF="../src/freeflow/interface/lcm.i"	"../src/freeflow/interface/flow_draw.i"	
 # Begin Custom Build
-InputPath=.\..\freeflow\src\interface\freeflow.i
+InputPath=.\..\src\freeflow\interface\freeflow.i
 
-"../freeflow/src/freeflow_wrap.cxx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"../src/freeflow/freeflow_wrap.cxx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	freeflow_swig.bat
 
 # End Custom Build
@@ -513,7 +311,7 @@ InputPath=.\..\freeflow\src\interface\freeflow.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\freeflow\src\interface\lcm.i
+SOURCE=.\..\src\freeflow\interface\lcm.i
 # End Source File
 # End Group
 # Begin Group "Deprecated code"
