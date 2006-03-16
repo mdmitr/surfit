@@ -1,0 +1,41 @@
+/*! \page install Install instructions
+
+<H2>Use installer (Windows only):</H2>
+It's very simple! :) Just run surfit-1.0.0pre.exe.
+
+<H2>Building surfit from sources:</H2>
+
+First of all you must have installed :
+\li <A HREF="http://tcl.sourceforge.net/">TCL</A> ver >= 8.3 or find ActiveTcl in the Web (for Windows)
+\li <A href="http://www.fltk.org">FLTK</A> library ver >= 1.1.4
+
+<H3>WINDOWS:</H3>
+
+Under Windows surfit can be built with Microsoft VC++ 6.0:
+\li extract archive surfit-1.0.0pre.tar.gz
+\li examine directory surfit-1.0.0pre/vc6  
+
+Before building make shure you have installed TCL and FLKT libraries!
+
+<H3>UNIX:</H3>
+
+\htmlonly
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ gunzip surfit-1.0.0pre.tar.gz
+$ tar xvf surfit-1.0.0pre.tar
+$ cd surfit-1.0.0pre
+$ ./configure
+$ make
+$ make install
+</pre>
+</TD>
+</TR>
+</TABLE>
+\endhtmlonly
+
+Don't forget to check your LD_LIBRARY_PATH variable. It must include surfit binaries path.
+
+*/

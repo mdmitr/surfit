@@ -1,0 +1,11 @@
+#! /bin/sh
+rm `find -name core*`
+rm `find -name *.dat`
+make dist
+cp surfit-1.0.tar.gz $HOME/rpm/SOURCES/
+cat rpmmacros > $HOME/.rpmmacros
+rpmbuild -ba surfit.spec.rh73
+cp $HOME/rpm/SRPMS/surfit-1.0-rh73.src.rpm surfit-1.0-rh73.src.rpm
+cp $HOME/rpm/RPMS/i386/surfit-1.0-rh73.i386.rpm surfit-1.0-rh73.i386.rpm
+
+

@@ -1,0 +1,41 @@
+
+%define name mklbooster
+%define version 1.0
+%define release fc4
+
+Summary: computation speed booster for surfit
+Name: %{name}
+Version: %{version}
+Release: %{release}
+Epoch: 1
+Source: %{_sourcedir}/%{name}-%{version}.tar.gz
+Group: Applications/Math
+License: GPL
+Url: http://surfit.sourceforge.net
+Prefix: %{_prefix}
+BuildRoot: %{_builddir}/%{name}-%{version}-buildroot
+
+%description
+mklbooster uses Interl MKL for speedup computations performed by surfit
+
+%prep
+%setup -q
+
+%build
+./configure --prefix %{_prefix} --disable-debug
+make 
+
+%install
+rm -rf ${RPM_BUILD_ROOT}
+make DESTDIR=${RPM_BUILD_ROOT} install
+
+%clean
+rm -rf ${RPM_BUILD_ROOT}
+
+%files
+%defattr(-,root,root)
+%dir %{_prefix}/lib
+%{_prefix}/lib/libmklbooster*
+%dir %{_prefix}/include/mklbooster
+%{_prefix}/include/mklbooster/*.h
+
