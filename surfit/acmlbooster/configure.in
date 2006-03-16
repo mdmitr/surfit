@@ -1,5 +1,6 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT(src/acmlbooster_wrap.cxx)
+AC_INIT
+AC_CONFIG_SRCDIR([src/acmlbooster_wrap.cxx])
 AM_INIT_AUTOMAKE(acmlbooster,1.0)
 
 # test for c++ features
@@ -19,7 +20,7 @@ AH_TEMPLATE([HAVE_THREADS],[Define if you want to compile with multithreading su
 CXXFLAGS="-O2"
 
 AC_ARG_ENABLE(debug, 
-	AC_HELP_STRING(--enable-debug, compiling with debugging info),
+	AS_HELP_STRING(--enable-debug,compiling with debugging info),
 	[if test x$enableval = xyes; then 
 	CXXFLAGS="-g -ggdb"
 	fi])
@@ -33,7 +34,7 @@ if test "x$uname" = x; then
 fi
 
 AC_ARG_ENABLE(pthread,  
-	AC_HELP_STRING(--enable-pthread, compiling with threads support),
+	AS_HELP_STRING(--enable-pthread,compiling with threads support),
 	[if test x$enableval = xno; then
 	PTHREAD_INSTALLED="" 
 	fi])
@@ -98,7 +99,7 @@ fi
 
 AC_MSG_CHECKING(for Tcl header files)
 if test -z "$TCLINCLUDE"; then
-AC_TRY_CPP([#include <tcl.h>], , TCLINCLUDE="")
+AC_PREPROC_IFELSE([AC_LANG_SOURCE([[#include <tcl.h>]])],[],[TCLINCLUDE=""])
 if test -z "$TCLINCLUDE"; then
 	dirs="$prefix/include /usr/local/include /usr/local/include/tcl8.0 /usr/include /opt/local/include"
 	for i in $dirs ; do
@@ -168,10 +169,10 @@ fi
 
 if test -z "$ACMLLIB"; then
    if test -n "$ACMLPACKAGE"; then
-	ACMLLIB="-L$ACMLPACKAGE/gnu32/lib $ACMLPACKAGE/gnu32/lib/libacml.a "
+	ACMLLIB="-L$ACMLPACKAGE/gnu32/lib -lacml "
    fi
 else
-	ACMLLIB="-L$ACMLIB $ACMLLIB/libacml.a "
+	ACMLLIB="-L$ACMLIB -lacml "
 fi
 
 if [[ "$PTHREAD_INSTALLED" = "YES" ]] ; then 
@@ -276,4 +277,5 @@ AC_CONFIG_HEADER(config.h:config.h.in)
 
 AM_CONDITIONAL(HAVE_PTHREAD_INSTALLED, [test "x$PTHREAD_INSTALLED" != "x"])
 
-AC_OUTPUT([Makefile])
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT

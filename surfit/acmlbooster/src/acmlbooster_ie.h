@@ -23,7 +23,7 @@
 #ifdef _MSC_VER
 #include "config.h"
 #else
-#include "../../config.h"
+#include "../config.h"
 #endif
 
 #if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)

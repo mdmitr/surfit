@@ -2,10 +2,10 @@
 rm `find -name core*`
 rm `find -name *.dat`
 make dist
-cp mklbooster-1.0.tar.gz $HOME/rpm/SOURCES/
+cp acmlbooster-1.0.tar.gz $HOME/rpm/SOURCES/
 cat rpmmacros > $HOME/.rpmmacros
-rpmbuild -ba mklbooster.spec.fc4
-cp $HOME/rpm/SRPMS/mklbooster-1.0-fc4.src.rpm mklbooster-1.0-fc4.src.rpm
-cp $HOME/rpm/RPMS/i386/mklbooster-1.0-fc4.i386.rpm mklbooster-1.0-fc4.i386.rpm
+rpmbuild -ba acmlbooster.spec.fc4
+cp $HOME/rpm/SRPMS/acmlbooster-1.0-fc4.src.rpm acmlbooster-1.0-fc4.src.rpm
+cp $HOME/rpm/RPMS/i386/acmlbooster-1.0-fc4.i386.rpm acmlbooster-1.0-fc4.i386.rpm
 
 

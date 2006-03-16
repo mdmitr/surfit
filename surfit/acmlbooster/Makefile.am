@@ -7,13 +7,8 @@ libtool: $(LIBTOOL_DEPS)
 INCLUDES = $(TCLINCLUDE) $(SSTUFFINCLUDE) $(SURFITINCLUDE) $(ACMLINCLUDE)
 EXTRA_DIST = vc6/acmlbooster*
 EXTRA_DIST += src/interface/*.i
-EXTRA_DIST += examples/*
-EXTRA_DIST += doc/*
 EXTRA_DIST += make_release.bat
 EXTRA_DIST += make_debug.bat
-
-#CXXFLAGS = -ggdb  -mwindows -DWIN32
-#CXXFLAGS = -O2
 
 lib_LTLIBRARIES = libacmlbooster.la 
 
@@ -32,25 +27,6 @@ libacmlbooster_la_LDFLAGS = -version-info 1:0:0 -no-undefined --dllname libacmlb
 dist-hook:
 
 	rm -rf `find $(distdir) -name CVS`
-
-install-data-hook:
-
-	if ! test -d "$(DESTDIR)$(prefix)/share"; then \
-		mkdir $(DESTDIR)$(prefix)/share; \
-	fi; \
-	if ! test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)"; then \
-		mkdir $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION); \
-	fi; \
-	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc"; then \
-		rm -rf $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc; \
-	fi; \
-	cp -r doc/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc ; \
-	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples"; then \
-		rm -rf $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples; \
-	fi; \
-	mkdir $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples
-	cp -r examples/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples; \
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name CVS`
 
 install-exec-hook:
 
