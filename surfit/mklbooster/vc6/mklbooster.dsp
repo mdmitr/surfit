@@ -130,6 +130,14 @@ SOURCE=..\src\interface\mklbooster.i
 
 !IF  "$(CFG)" == "mklbooster - Win32 Release"
 
+# Begin Custom Build
+InputPath=..\src\interface\mklbooster.i
+
+"../src/mklbooster_wrap.cxx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	mklbooster_swig.bat
+
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "mklbooster - Win32 Debug"
 
 # Begin Custom Build

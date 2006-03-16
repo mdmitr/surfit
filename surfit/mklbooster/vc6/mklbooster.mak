@@ -273,6 +273,15 @@ SOURCE=..\src\interface\mklbooster.i
 
 !IF  "$(CFG)" == "mklbooster - Win32 Release"
 
+InputPath=..\src\interface\mklbooster.i
+
+"..\src\mklbooster_wrap.cxx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	<<tempfile.bat 
+	@echo off 
+	mklbooster_swig.bat
+<< 
+	
+
 !ELSEIF  "$(CFG)" == "mklbooster - Win32 Debug"
 
 InputPath=..\src\interface\mklbooster.i
