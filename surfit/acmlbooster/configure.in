@@ -1,0 +1,277 @@
+# Process this file with autoconf to produce a configure script.
+AC_INIT(src/acmlbooster_wrap.cxx)
+AM_INIT_AUTOMAKE(acmlbooster,1.0)
+
+# test for c++ features
+AC_PROG_CXX
+AC_PROG_CXXCPP
+# check for stdc headers
+AC_HEADER_STDC
+
+AC_LIBTOOL_WIN32_DLL
+AM_PROG_LIBTOOL
+AC_SUBST(LIBTOOL_DEPS)
+
+# check for pthread 
+AC_CHECK_LIB(pthread, main, [PTHREAD_INSTALLED="YES"], PTHREAD_INSTALLED="")
+AH_TEMPLATE([HAVE_THREADS],[Define if you want to compile with multithreading support])
+
+CXXFLAGS="-O2"
+
+AC_ARG_ENABLE(debug, 
+	AC_HELP_STRING(--enable-debug, compiling with debugging info),
+	[if test x$enableval = xyes; then 
+	CXXFLAGS="-g -ggdb"
+	fi])
+
+# Get the operating system and version number...
+uname=`uname`
+uversion=`uname -r | sed -e '1,$s/[[^0-9]]//g'`
+if test "x$uname" = x; then
+    # MingW doesn't provide any output when uname is run, even with "-s"...
+    uname="CYGWIN"
+fi
+
+AC_ARG_ENABLE(pthread,  
+	AC_HELP_STRING(--enable-pthread, compiling with threads support),
+	[if test x$enableval = xno; then
+	PTHREAD_INSTALLED="" 
+	fi])
+
+#--------------------------------------------------------------------
+#	Try to locate the Tcl package
+#--------------------------------------------------------------------
+
+TCLINCLUDE=
+TCLLIB=
+TCLPACKAGE=
+
+AC_ARG_WITH(tclconfig,[  --with-tclconfig=path  Set location of tclConfig.sh],
+        with_tclconfig="$withval")
+AC_ARG_WITH(tcl,[  --with-tcl=path         Set location of Tcl package],[
+	TCLPACKAGE="$withval"], [TCLPACKAGE=])
+AC_ARG_WITH(tclincl,[  --with-tclincl=path     Set location of Tcl include directory],[
+	TCLINCLUDE="-I$withval"], [TCLINCLUDE=])
+AC_ARG_WITH(tcllib,[  --with-tcllib=path      Set location of Tcl library directory],[
+	TCLLIB="-L$withval"], [TCLLIB=])
+
+AC_MSG_CHECKING([for Tcl configuration])
+# First check to see if --with-tclconfig was specified.
+if test x"${with_tclconfig}" != x ; then
+   if test -f "${with_tclconfig}/tclConfig.sh" ; then
+      TCLCONFIG=`(cd ${with_tclconfig}; pwd)`
+   else
+      AC_MSG_ERROR([${with_tcl} directory doesn't contain tclConfig.sh])
+   fi
+fi
+# check in a few common install locations
+if test x"${TCLCONFIG}" = x ; then
+    for i in `ls -d ${prefix}/lib 2>/dev/null` \
+             `ls -d /usr/lib 2>/dev/null` \
+	     `ls -d /usr/local/lib 2>/dev/null` ; do
+	if test -f "$i/tclConfig.sh" ; then
+	    TCLCONFIG=`(cd $i; pwd)`
+	    break
+	fi
+    done
+fi
+if test x"${TCLCONFIG}" = x ; then
+    AC_MSG_RESULT(no)
+else
+    AC_MSG_RESULT(found $TCLCONFIG/tclConfig.sh)
+    . $TCLCONFIG/tclConfig.sh
+    TCLINCLUDE=-I$TCL_PREFIX/include
+    TCLLIB=$TCL_LIB_SPEC
+fi
+
+if test -z "$TCLINCLUDE"; then
+   if test -n "$TCLPACKAGE"; then
+	TCLINCLUDE="-I$TCLPACKAGE/include"
+   fi
+fi
+
+if test -z "$TCLLIB"; then
+   if test -n "$TCLPACKAGE"; then
+	TCLLIB="-L$TCLPACKAGE/lib -ltcl"
+   fi
+fi
+
+AC_MSG_CHECKING(for Tcl header files)
+if test -z "$TCLINCLUDE"; then
+AC_TRY_CPP([#include <tcl.h>], , TCLINCLUDE="")
+if test -z "$TCLINCLUDE"; then
+	dirs="$prefix/include /usr/local/include /usr/local/include/tcl8.0 /usr/include /opt/local/include"
+	for i in $dirs ; do
+		if test -r $i/tcl.h; then
+			AC_MSG_RESULT($i)
+			TCLINCLUDE="-I$i"
+			break
+		fi
+	done
+fi
+if test -z "$TCLINCLUDE"; then
+#	TCLINCLUDE="-I/usr/local/include"
+    	AC_MSG_ERROR(not found. acmlbooster requies Tcl!)
+fi
+else
+        AC_MSG_RESULT($TCLINCLUDE)
+fi
+
+AC_MSG_CHECKING(for Tcl library)
+if test -z "$TCLLIB"; then
+dirs="$prefix/lib /usr/local/lib /usr/lib /opt/local/lib"
+for i in $dirs ; do
+	if test -r $i/libtcl.a; then
+	    AC_MSG_RESULT($i)
+	    TCLLIB="-L$i -ltcl"
+	    break
+	fi
+done
+if test -z "$TCLLIB"; then
+	AC_MSG_ERROR(not found. acmlbooster requies Tcl!)
+#	TCLLIB="-L/usr/local/lib"
+fi
+else
+AC_MSG_RESULT($TCLLIB)
+fi
+
+
+#--------------------------------------------------------------------
+#	Try to locate the ACML package
+#--------------------------------------------------------------------
+
+ACMLINCLUDE=
+ACMLLIB=
+ACMLPACKAGE=
+
+AC_ARG_WITH(acml,[  --with-acml=path         Set location of ACML package],[
+	ACMLPACKAGE="$withval"], [ACMLPACKAGE=/opt/acml3.0.0])
+AC_ARG_WITH(acmlincl,[  --with-acmlincl=path     Set location of ACML include directory],[
+	ACMLINCLUDE="-I$withval"], [ACMLINCLUDE=])
+AC_ARG_WITH(acmllib,[  --with-acmllib=path      Set location of ACML library directory],[
+	ACMLLIB="-L$withval"], [ACMLLIB=])
+
+AC_MSG_CHECKING(for ACML library)
+
+if test -z "$ACMLINCLUDE"; then
+   if test -n "$ACMLPACKAGE"; then
+	ACMLINCLUDE="$ACMLPACKAGE/gnu32/include"
+   fi
+fi
+
+if test -r "$ACMLINCLUDE/acml.h"; then
+	AC_MSG_RESULT($ACMLPACKAGE)
+	ACMLINCLUDE="-I$ACMLINCLUDE"
+else
+	AC_MSG_ERROR(ACML library not found!)
+fi
+
+if test -z "$ACMLLIB"; then
+   if test -n "$ACMLPACKAGE"; then
+	ACMLLIB="-L$ACMLPACKAGE/gnu32/lib -lacml "
+   fi
+fi
+
+if [[ "$PTHREAD_INSTALLED" = "YES" ]] ; then 
+	AC_DEFINE(HAVE_THREADS)
+fi
+
+AC_SUBST(TCLINCLUDE)
+AC_SUBST(TCLLIB)
+AC_SUBST(ACMLINCLUDE)
+AC_SUBST(ACMLLIB)
+
+
+
+
+
+AC_MSG_CHECKING([for sstuff header files])
+# check in a few common install locations
+if test -z "$SSTUFFINCLUDE"; then
+    for i in `ls -d ${prefix}/include/sstuff 2>/dev/null` \
+             `ls -d /usr/include/sstuff 2>/dev/null` \
+	     `ls -d /usr/local/include/sstuff 2>/dev/null` ; do
+	if test -d "$i" ; then
+	    SSTUFFINCLUDE=`(cd $i; pwd)`
+	    AC_MSG_RESULT($SSTUFFINCLUDE)
+            SSTUFFINCLUDE="-I$SSTUFFINCLUDE"
+	    break
+	fi
+    done
+fi
+
+if test -z "$SSTUFFINCLUDE"; then
+	AC_MSG_RESULT(not found)
+fi
+
+AC_MSG_CHECKING([for sstuff library])
+if test -z "$STUFFLIB"; then
+   for i in `ls -d ${prefix}/lib 2>/dev/null` \
+            `ls -d /usr/lib 2>/dev/null` \
+            `ls -d /usr/local/lib 2>/dev/null` ; do
+        if test -r "$i/libsstuff.a" ; then
+           SSTUFFLIB=`(cd $i; pwd)`
+           AC_MSG_RESULT($SSTUFFLIB)
+	   SSTUFFLIB="-L$SSTUFFLIB -lsstuff"
+        fi
+   done
+else
+   SSTUFFLIB="$SSTUFFLIB -lsstuff"
+fi
+
+if test -z "$SSTUFFLIB"; then
+        AC_MSG_ERROR(not found. acmlbooster requires surfit!)
+fi
+
+AC_SUBST(SSTUFFINCLUDE)
+AC_SUBST(SSTUFFLIB)
+
+
+AC_MSG_CHECKING([for surfit header files])
+# check in a few common install locations
+if test -z "$SURFITINCLUDE"; then
+    for i in `ls -d ${prefix}/include/surfit 2>/dev/null` \
+             `ls -d /usr/include/surfit 2>/dev/null` \
+	     `ls -d /usr/local/include/surfit 2>/dev/null` ; do
+	if test -d "$i" ; then
+	    SURFITINCLUDE=`(cd $i; pwd)`
+	    AC_MSG_RESULT($SURFITINCLUDE)
+            SURFITINCLUDE="-I$SURFITINCLUDE"
+	    break
+	fi
+    done
+fi
+
+if test -z "$SURFITINCLUDE"; then
+	AC_MSG_ERROR(not found. acmlbooster requires surfit!)
+fi
+
+AC_MSG_CHECKING([for surfit library])
+if test -z "$SURFITLIB"; then
+   for i in `ls -d ${prefix}/lib 2>/dev/null` \
+            `ls -d /usr/lib 2>/dev/null` \
+            `ls -d /usr/local/lib 2>/dev/null` ; do
+        if test -r "$i/libsurfit.a" ; then
+           SURFITLIB=`(cd $i; pwd)`
+           AC_MSG_RESULT($SURFITLIB)
+	   SURFITLIB="-L$SURFITLIB -lsurfit"
+        fi
+   done
+else
+   SURFITLIB="$SURFITLIB -lsurfit"
+fi
+
+if test -z "$SURFITLIB"; then
+        AC_MSG_RESULT(not found)
+fi
+
+AC_SUBST(SURFITINCLUDE)
+AC_SUBST(SURFITLIB)
+
+
+
+AC_CONFIG_HEADER(config.h:config.h.in)
+
+AM_CONDITIONAL(HAVE_PTHREAD_INSTALLED, [test "x$PTHREAD_INSTALLED" != "x"])
+
+AC_OUTPUT([Makefile])
