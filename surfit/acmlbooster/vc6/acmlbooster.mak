@@ -66,7 +66,7 @@ CLEAN :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo /MT /W3 /GX /O2 /Ob2 /I "../../sstuff/src" /I "../../surfit/src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ACMLBOOSTER_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\acmlbooster.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MT /W3 /GX /O2 /Ob2 /I "../../src/sstuff" /I "../../src/surfit" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ACMLBOOSTER_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\acmlbooster.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -115,7 +115,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=tcl83.lib libacml.lib libsstuff.lib libsurfit.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libacmlbooster.pdb" /machine:I386 /out:"../bin/libacmlbooster.dll" /implib:"../bin/libacmlbooster.lib" /libpath:"../../bin" 
+LINK32_FLAGS=tcl83.lib libacml.lib libsstuff.lib libsurfit.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libacmlbooster.pdb" /machine:I386 /nodefaultlib:"msvcrt.lib" /out:"../bin/libacmlbooster.dll" /implib:"../bin/libacmlbooster.lib" /libpath:"../../bin" 
 LINK32_OBJS= \
 	"$(INTDIR)\acml_cg.obj" \
 	"$(INTDIR)\acml_threads.obj" \
@@ -171,7 +171,7 @@ CLEAN :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo /MTd /W3 /Gm /GX /Zi /Od /I "../../sstuff/src" /I "../../surfit/src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ACMLBOOSTER_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\acmlbooster.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MTd /W3 /Gm /GX /Zi /Od /I "../../src/sstuff" /I "../../src/surfit" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ACMLBOOSTER_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\acmlbooster.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -220,7 +220,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=tcl83d.lib libacml.lib libsurfit.lib libsstuff.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\libacmlbooster.pdb" /debug /machine:I386 /out:"../bin/libacmlbooster.dll" /implib:"../bin/libacmlbooster.lib" /pdbtype:sept /libpath:"../../bin" 
+LINK32_FLAGS=tcl83d.lib libacml.lib libsurfit.lib libsstuff.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\libacmlbooster.pdb" /debug /machine:I386 /nodefaultlib:"msvcrt.lib" /out:"../bin/libacmlbooster.dll" /implib:"../bin/libacmlbooster.lib" /pdbtype:sept /libpath:"../../bin" 
 LINK32_OBJS= \
 	"$(INTDIR)\acml_cg.obj" \
 	"$(INTDIR)\acml_threads.obj" \
@@ -272,6 +272,15 @@ SOURCE=..\src\acmlbooster_wrap.cxx
 SOURCE=..\src\interface\acmlbooster.i
 
 !IF  "$(CFG)" == "acmlbooster - Win32 Release"
+
+InputPath=..\src\interface\acmlbooster.i
+
+"..\src\acmlbooster_wrap.cxx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	<<tempfile.bat 
+	@echo off 
+	acmlbooster_swig.bat
+<< 
+	
 
 !ELSEIF  "$(CFG)" == "acmlbooster - Win32 Debug"
 
