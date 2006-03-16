@@ -1,24 +1,15 @@
-
-del Bula.exe
-del funner.exe
-
+mkdir bin
 cd bin
-del Bula.exe
-del funner.exe
-del libsurfit.dll
-del libsurfit.map
-del libsurfit.pdb
-del libsurfit_gl.dll
-del libglobe.dll
-del libfreeflow.dll
-del *.ilk
-del *.SUP
-del *.tcl
-del *.nmp
+del libsstuff.*
+del libsurfit.*
+del libglobe.*
+del libfreeflow.*
 cd ..
 
 del /Q /S *.dat
+del /Q /S *.grd
 del /Q /S *.log
+del /Q /S .#*
 del *.plg
 del *.stt
 
@@ -34,12 +25,11 @@ cd Release
 del /Q /S *.*
 cd ..
 
+mkdir vc6
 cd vc6
 del *.ncb
 del *.plg
 cd ..
-
-del surfit\examples\test\task_residuals.txt
 
 del *.o
 del *.lo
