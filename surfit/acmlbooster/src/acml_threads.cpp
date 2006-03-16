@@ -50,7 +50,7 @@ struct DAXPY_job : public job {
 
 	virtual void do_job()
 	{
-		DAXPY(&N, &alpha, x, incx, y, incy);
+		daxpy(N, alpha, x, *incx, y, *incy);
 	}
 
 	int N;
@@ -107,7 +107,7 @@ struct DDOT_job : public job {
 
 	virtual void do_job()
 	{
-		res = DDOT(&N, x, incx, y, incy);
+		res = ddot(N, x, *incx, y, *incy);
 	}
 
 	int N;
@@ -168,7 +168,7 @@ struct DSCAL_job : public job {
 
 	virtual void do_job()
 	{
-		DSCAL(&N, &alpha, x, incx);
+		dscal(N, alpha, x, *incx);
 	}
 
 	int N;

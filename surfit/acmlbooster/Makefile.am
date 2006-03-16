@@ -26,7 +26,7 @@ libacmlbooster_la_SOURCES += src/acml_threads.cpp
 libacmlbooster_la_HEADERS =  src/acmlbooster.h
 libacmlbooster_la_HEADERS += src/acmlbooster_ie.h       
 
-libacmlbooster_la_LIBADD = $(TCLLIB) $(SSTUFFLIB) $(SURFITLIB) $(ACMLLIB)
+libacmlbooster_la_LIBADD = $(ACMLLIB) $(TCLLIB) $(SSTUFFLIB) $(SURFITLIB) 
 libacmlbooster_la_LDFLAGS = -version-info 1:0:0 -no-undefined --dllname libacmlbooster.dll
 
 dist-hook:

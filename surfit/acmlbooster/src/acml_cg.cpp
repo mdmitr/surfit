@@ -64,7 +64,7 @@ vec * cg_with_acml_threaded(matr * A, const vec * b, int max_it, REAL tol, vec *
 	threaded_DSCAL(&N, &mult, r->begin(), &odin);
 	mult = 1;
 	threaded_DAXPY(&N, &mult, const_cast<double*>(b->begin()), &odin, r->begin(), &odin);
-	int max_pos = IDAMAX(&N, r->begin(), &odin) - 1;
+	int max_pos = idamax(N, r->begin(), odin) - 1;
 	error = fabs((*r)(max_pos));
 	error = error/bnrm2;
 	///////////////		
@@ -114,7 +114,7 @@ vec * cg_with_acml_threaded(matr * A, const vec * b, int max_it, REAL tol, vec *
 				
 		// x = x + alpha * p;                    // update approximation vector
 		threaded_DAXPY(&N, &alpha, p->begin(), &odin, x->begin(), &odin);
-		max_pos = IDAMAX(&N, p->begin(), &odin) - 1;
+		max_pos = idamax(N, p->begin(), odin) - 1;
 		error = fabs((*p)(max_pos));
 		error *= fabs(alpha);
 		/////////////////////
@@ -183,10 +183,10 @@ vec * cg_with_acml(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL
 	REAL error_norm = bnrm2;	
 	REAL error = 0;
 	mult = -1;
-	DSCAL(&N, &mult, r->begin(), &odin);
+	dscal(N, mult, r->begin(), odin);
 	mult = 1;
-	DAXPY(&N, &mult, const_cast<double*>(b->begin()), &odin, r->begin(), &odin);
-	int max_pos = IDAMAX(&N, r->begin(), &odin) - 1;
+	daxpy(N, mult, const_cast<double*>(b->begin()), odin, r->begin(), odin);
+	int max_pos = idamax(N, r->begin(), odin) - 1;
 	error = fabs((*r)(max_pos));
 	error = error/bnrm2;
 	///////////////		
@@ -210,20 +210,20 @@ vec * cg_with_acml(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL
 		
 		rho_1 = rho;
 		//rho = times(r,r); 
-		rho = DDOT(&N, r->begin(), &odin, r->begin(), &odin);
+		rho = ddot(N, r->begin(), odin, r->begin(), odin);
 		
 		if ( iter > 1 ) {                        // direction vector
 			beta = rho / rho_1;
 			// p = beta*p;
-			DSCAL(&N, &beta, p->begin(), &odin);
-			DAXPY(&N, &dodin, r->begin(), &odin, p->begin(), &odin);
+			dscal(N, beta, p->begin(), odin);
+			daxpy(N, dodin, r->begin(), odin, p->begin(), odin);
 			//////////////
 		}
 
 		A->mult(p,q);
 	
 		//REAL times_pq = times(p,q);
-		REAL times_pq = DDOT(&N, p->begin(), &odin, q->begin(), &odin);
+		REAL times_pq = ddot(N, p->begin(), odin, q->begin(), odin);
 		REAL alpha = 0;
 		if (fabs(times_pq) > MIN(1e-4,tol))
 			alpha = rho / times_pq;
@@ -235,8 +235,8 @@ vec * cg_with_acml(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL
 		error = 0;
 				
 		// x = x + alpha * p;                    // update approximation vector
-		DAXPY(&N, &alpha, p->begin(), &odin, x->begin(), &odin);
-		max_pos = IDAMAX(&N, p->begin(), &odin) - 1;
+		daxpy(N, alpha, p->begin(), odin, x->begin(), odin);
+		max_pos = idamax(N, p->begin(), odin) - 1;
 		error = fabs((*p)(max_pos));
 		error *= fabs(alpha);
 		/////////////////////
@@ -251,7 +251,7 @@ vec * cg_with_acml(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL
 		
 		// r = r - alpha * q;                    // compute residual
 		mult = -alpha;
-		DAXPY(&N, &mult, q->begin(), &odin, r->begin(), &odin);
+		daxpy(N, mult, q->begin(), odin, r->begin(), odin);
 		//////////////////////
 	}
 	

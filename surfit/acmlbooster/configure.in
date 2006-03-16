@@ -168,8 +168,10 @@ fi
 
 if test -z "$ACMLLIB"; then
    if test -n "$ACMLPACKAGE"; then
-	ACMLLIB="-L$ACMLPACKAGE/gnu32/lib -lacml "
+	ACMLLIB="-L$ACMLPACKAGE/gnu32/lib $ACMLPACKAGE/gnu32/lib/libacml.a "
    fi
+else
+	ACMLLIB="-L$ACMLIB $ACMLLIB/libacml.a "
 fi
 
 if [[ "$PTHREAD_INSTALLED" = "YES" ]] ; then 
