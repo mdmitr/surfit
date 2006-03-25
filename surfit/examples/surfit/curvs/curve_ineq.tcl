@@ -10,59 +10,53 @@ load libsurfit[info sharedlibextension]
 clear_data 
 
 # set name of surface
-set map_name "map_faults" 
+set map_name "map_curve_ineq" 
 
 # set solver
 set_solver "cg" 
 
 # set tolerance for solver
-set tol 1e-005 
+set tol 5e-005 
 
 ##
 ## load initial data 
 ##
  
-# load points from text file 
-pnts_read "11points.txt" "11points"  
+# load curve from text file 
+curv_read "iso1.xy" "iso1"  
  
 # load curve from text file 
-curv_read "flt_line1.txt" "flt_line1"  
+curv_read "iso2.xy" "iso2"  
  
 # load curve from text file 
-curv_read "flt_line2.txt" "flt_line2"  
+curv_read "iso3.xy" "iso3"  
  
 # load curve from text file 
-curv_read "flt_line3.txt" "flt_line3"  
- 
-# load curve from text file 
-curv_read "flt_line4.txt" "flt_line4"  
+curv_read "iso4.xy" "iso4"  
  
 ##
 ## construct grid 
 ##
-grid_get 1 99 1 -50 50 1 
+grid 10 10 
  
 ##
 ## create gridding rules
 ##
 
-# resulting surface at points = points values 
-points "11points" 
+# resulting surface at curve <= value... 
+curve_leq 10 "iso1"  
+
+# resulting surface at curve >= value... 
+curve_geq 50 "iso3"  
+
+# resulting surface at curve <= value... 
+curve_leq 30 "iso4"  
+
+# resulting surface at curve <= value... 
+curve_leq 40 "iso2"  
 
 # resulting surface should tend to be constant or plane 
-completer 0.5 2  
-
-# fault line 
-fault "flt_line1"  
-
-# fault line 
-fault "flt_line2"  
-
-# fault line 
-fault "flt_line3"  
-
-# fault line 
-fault "flt_line4"  
+completer 1 1.6  
 
 ##
 ## run gridding algorithm
@@ -77,4 +71,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "fault.dat" 
+surf_save "curve_ineq.dat" 

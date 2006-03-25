@@ -1,0 +1,43 @@
+/*! \example contour.tcl
+
+This example shows how to build \ref d_surf "surface" using \ref d_cntr "contours". In this example
+3 different contours were used. Two of them were (cntr_big_circle, cntr_center) approximated by resulting surface. 
+Another one (cntr_big_circle) was used to modify \ref completer gridding rule with weight.
+
+\sa \ref contour, \ref contour_add, \ref completer
+
+\htmlonly
+Here is the image of the resulting surface:
+
+<P ALIGN=CENTER>
+<IMG alt="surface built from areas" src="contour.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. Surface built from contours </P>
+
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/curvs/contour.tcl"</TT> script. 
+
+*/
+
+/*! \example contour_ineq.tcl
+
+This example looks like \ref contour.tcl "contour.tcl" example, but it contains 2 set of contours: "lower "
+set and "upper" set. Upper set of contours is shifted up at 0.2. The resulting surface is between
+these contours sets.
+
+\sa \ref contour_leq, \ref contour_geq, \ref completer
+
+\htmlonly
+Here is the image of the resulting surface:
+
+<P ALIGN=CENTER>
+<IMG alt="surface built from areas" src="contour_ineq.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. Surface built from contour inequalities </P>
+
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/curvs/contour_ineq.tcl"</TT> script. 
+
+*/

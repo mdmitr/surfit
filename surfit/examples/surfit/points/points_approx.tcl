@@ -31,16 +31,16 @@ grid 150 150
 ## create gridding rules
 ##
 
-# surface should tend to be constant or plane 
+# resulting surface should tend to be constant or plane 
 completer 1 2  
 
-# add "approximate points" with weight 
+# add "resulting surface at points = points values" with weight 
 points_add 0.6 "points" 
 
 ##
-## run cmofs algorithm
+## run gridding algorithm
 ##
-cmofs 
+surfit 
 
 ##
 ## save results 
@@ -49,5 +49,5 @@ cmofs
 # unload grid from memory
 grid_unload 
 
-# saves function to ROFF file 
-func_save "points_approx.dat" 
+# save surface to surfit datafile 
+surf_save "points_approx.dat" 

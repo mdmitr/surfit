@@ -10,53 +10,44 @@ load libsurfit[info sharedlibextension]
 clear_data 
 
 # set name of surface
-set map_name "map_curve" 
+set map_name "map_curv_surf_ineq" 
 
 # set solver
 set_solver "cg" 
 
 # set tolerance for solver
-set tol 1e-005 
+set tol 1e-004 
 
 ##
 ## load initial data 
 ##
  
 # load curve from text file 
-curv_read "iso1.xy" "iso1"  
+curv_read "spiral2.xy" "spiral2"  
  
 # load curve from text file 
-curv_read "iso2.xy" "iso2"  
+curv_read "spiral.xy" "spiral"  
  
-# load curve from text file 
-curv_read "iso3.xy" "iso3"  
- 
-# load curve from text file 
-curv_read "iso4.xy" "iso4"  
+# load surface from surfit datafile 
+surf_load "func.func" "test_func"  
  
 ##
 ## construct grid 
 ##
-grid 10 10 
+grid 
  
 ##
 ## create gridding rules
 ##
 
-# resulting surface at curve = value... 
-curve 10 "iso1"  
+# resulting surface at curve <= surface values... 
+curve_surf_leq "test_func" "spiral"  
 
-# resulting surface at curve = value... 
-curve 50 "iso3"  
-
-# resulting surface at curve = value... 
-curve 30 "iso4"  
+# resulting surface at curve >= surface values... 
+curve_surf_geq "test_func" "spiral2"  
 
 # resulting surface should tend to be constant or plane 
-completer 1 1.6  
-
-# resulting add "surface at curve = value..." with weight 
-curve_add 40 0.5 "iso2"  
+completer 
 
 ##
 ## run gridding algorithm
@@ -71,4 +62,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "curve.dat" 
+surf_save "curve_surf_ineq.dat" 

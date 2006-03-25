@@ -10,7 +10,7 @@ load libsurfit[info sharedlibextension]
 clear_data 
 
 # set name of surface
-set map_name "map_faults" 
+set map_name "map_surface_ineq" 
 
 # set solver
 set_solver "cg" 
@@ -22,47 +22,30 @@ set tol 1e-005
 ## load initial data 
 ##
  
+# load surface from surfit datafile 
+surf_load "func.func" "test_func"  
+surf_plus_value 80
+ 
 # load points from text file 
-pnts_read "11points.txt" "11points"  
- 
-# load curve from text file 
-curv_read "flt_line1.txt" "flt_line1"  
- 
-# load curve from text file 
-curv_read "flt_line2.txt" "flt_line2"  
- 
-# load curve from text file 
-curv_read "flt_line3.txt" "flt_line3"  
- 
-# load curve from text file 
-curv_read "flt_line4.txt" "flt_line4"  
+pnts_read "7points.txt" "7points"  
  
 ##
 ## construct grid 
 ##
-grid_get 1 99 1 -50 50 1 
+grid_get -10 10 0.2 -10 10 0.2 
  
 ##
 ## create gridding rules
 ##
 
+# resulting surface >= surface values 
+surface_geq "test_func" 
+
 # resulting surface at points = points values 
-points "11points" 
+points "7points" 
 
 # resulting surface should tend to be constant or plane 
-completer 0.5 2  
-
-# fault line 
-fault "flt_line1"  
-
-# fault line 
-fault "flt_line2"  
-
-# fault line 
-fault "flt_line3"  
-
-# fault line 
-fault "flt_line4"  
+completer 2 1  
 
 ##
 ## run gridding algorithm
@@ -77,4 +60,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "fault.dat" 
+surf_save "surface_ineq.dat" 

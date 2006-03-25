@@ -14,7 +14,7 @@ set tol 1e-5
 ## loading initial data 
 ##
 pnts_read 7points.txt 7points
-func_load func.func test_func
+surf_load func.func test_func
 
 ##
 ## constructing grid
@@ -31,7 +31,7 @@ completer 1 2
 ##
 ## runing cmofs algorithm
 ##
-cmofs
+surfit
 
 ##
 ## saving results
@@ -40,5 +40,5 @@ cmofs
 grid_unload
 file_save wmean.dat
 
-set mean_value [func_wmean test_func map_wmean]
-puts "func weighted mean value is $mean_value"
+set mean_value [surf_wmean test_func map_wmean]
+puts "surface weighted mean value is $mean_value"

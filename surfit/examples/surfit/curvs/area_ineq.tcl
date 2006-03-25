@@ -46,31 +46,31 @@ grid_get -12 12 0.2 -12 12 0.2
 ## create gridding rules
 ##
 
-# surface in area = value... 
+# resulting surface in area = value... 
 area 30 "area3"  
 
-# surface in area <= value... 
+# resulting surface in area <= value... 
 area_leq 20 "area6"
 
-# surface in area = value... 
+# resulting surface in area = value... 
 area 10 "area1"  
 
-# surface in area = value... 
+# resulting surface in area = value... 
 area undef "area5"  
 
-# surface should tend to be constant or plane 
+# resulting surface should tend to be constant or plane 
 completer 1 0  
 
-# add "surface in area = value..." with weight 
+# add "resulting surface in area = value..." with weight 
 area_add 20 0.07 "area2"  
 
-# add "surface in area = value..." with weight 
+# add "resulting surface in area = value..." with weight 
 area_add 40 0.07 "area4"  
 
 ##
-## run cmofs algorithm
+## run gridding algorithm
 ##
-cmofs 
+surfit 
 
 ##
 ## save results 
@@ -79,8 +79,8 @@ cmofs
 # unload grid from memory
 grid_unload 
 
-# saves function to ROFF file 
-func_save "area_ineq.dat" 
+# save surface to surfit datafile 
+surf_save "area_ineq.dat" 
 
-puts [concat "Maximum value in area6 : " [func_area_maxz "area6" "map_area_ineq"]]
+puts [concat "Maximum value in area6 : " [surf_area_maxz "area6" "map_area_ineq"]]
 

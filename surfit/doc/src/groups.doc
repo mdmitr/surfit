@@ -1,6 +1,6 @@
 
 /*!
-\defgroup tcl_rules Rules for gridding
+\defgroup tcl_rules Surfit gridding rules
 
 \defgroup tcl_rules_points gridding rules for points
 \ingroup tcl_rules
@@ -14,15 +14,18 @@
 \defgroup tcl_rules_cntrs gridding rules for contours
 \ingroup tcl_rules
 
+\defgroup tcl_rules_surfs gridding rules for surfaces
+\ingroup tcl_rules
+
 */
 
 /*! 
-\defgroup tcl_pnts scattered data-points
+\defgroup tcl_pnts commands for points
 
-\defgroup tcl_pnts_save_load points saving and loading
+\defgroup tcl_pnts_save_load commands for points saving and loading
 \ingroup tcl_pnts
 
-\defgroup tcl_pnts_math mathematical operations with points
+\defgroup tcl_pnts_math commands for mathematical operations with points
 \ingroup tcl_pnts
 
 \defgroup tcl_pnts_other other commands for points
@@ -30,9 +33,9 @@
 */
 
 /*! 
-\defgroup tcl_area areas
+\defgroup tcl_area commands for areas
 
-\defgroup tcl_area_save_load areas saving and loading
+\defgroup tcl_area_save_load commands for areas saving and loading
 \ingroup tcl_area
 
 \defgroup tcl_area_other other commands for areas
@@ -40,9 +43,9 @@
 */
 
 /*!
-\defgroup tcl_curv curves
+\defgroup tcl_curv commands for curves
 
-\defgroup tcl_curv_save_load curves saving and loading
+\defgroup tcl_curv_save_load commands for curves saving and loading
 \ingroup tcl_curv
 
 \defgroup tcl_curv_other other commands for curves
@@ -50,9 +53,9 @@
 */
 
 /*!
-\defgroup tcl_cntr contours
+\defgroup tcl_cntr commands for contours
 
-\defgroup tcl_cntr_save_load contours saving and loading
+\defgroup tcl_cntr_save_load commands for contours saving and loading
 \ingroup tcl_cntr
 
 \defgroup tcl_cntr_math mathematical commands for contours
@@ -60,6 +63,25 @@
 
 \defgroup tcl_cntr_other other commands for contours
 \ingroup tcl_cntr
+*/
+
+/*! 
+\defgroup tcl_surf commands for surfaces
+
+\defgroup tcl_surf_save_load commands for surfaces saving and loading
+\ingroup tcl_surf
+
+\defgroup tcl_surf_math mathematical commands for surfaces
+\ingroup tcl_surf
+
+\defgroup tcl_surf_math_wavan wavelet commands for surfaces
+\ingroup tcl_surf_math
+
+\defgroup tcl_surf_conv commands for converting surfaces
+\ingroup tcl_surf
+
+\defgroup tcl_surf_other other commands for surfaces
+\ingroup tcl_surf
 */
 
 /*! 

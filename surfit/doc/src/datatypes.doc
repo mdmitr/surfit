@@ -10,34 +10,38 @@ by extrapolating or interpolating Z values in those locations where no data exis
 
 \sa 
 \li \ref tcl_rules_points "gridding rules for points"
-\li \ref tcl_pnts "points commands"
+\li \ref tcl_pnts "commands for points"
+
+<hr>
+
+\section d_surf surface
+
+A digital representation of a continuous variable over a two-dimensional surface by a regular 
+array of z values. Surfaces are typically used to represent terrain relief, soil maps, pressure fields and other.
+
+\sa 
+\li \ref tcl_rules_surfs "gridding rules for surfaces"
+\li \ref tcl_surf "commands for surfaces"
 
 <hr>
 
 \section d_area area
 
-Areas are used to represent polygonal regions. Using surfit you can set different gridding rules for these regions:
-\li \ref area "interpolate" or \ref area_add "approximate" area with some value
-\li \ref area_mean "mean" or \ref area_wmean "weighted" mean value for area
-\li equations for area (\ref area_leq \ref area_geq \ref area_func_leq \ref area_func_geq)
+Areas are used to represent polygonal regions. 
 
 \sa 
 \li \ref tcl_rules_areas "gridding rules for areas"
-\li \ref tcl_area "areas commands"
+\li \ref tcl_area "commands for areas"
 
 <hr>
 
 \section d_curv curve
 
-Surfit allows to set several gridding rules for curves:
-\li \ref fault_add
-\li \ref isoline
-\li \ref isoline_add
-\li equations for curves (\ref isoline_leq \ref isoline_geq)
+Curve in XY plane.
 
 \sa 
 \li \ref tcl_rules_curvs "gridding rules for curves"
-\li \ref tcl_curv "curves commands"
+\li \ref tcl_curv "commands for curves"
 
 <hr>
 
@@ -46,7 +50,7 @@ spatial contour.
 
 \sa 
 \li \ref tcl_rules_cntrs "gridding rules for contours"
-\li \ref tcl_cntr "contours commands"
+\li \ref tcl_cntr "commands for contours"
 
 <hr>
 

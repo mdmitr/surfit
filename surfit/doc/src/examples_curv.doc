@@ -1,0 +1,83 @@
+/*! \example fault.tcl
+This example shows how one goes from randomly spaced data points to an evenly sampled 
+surface with taking fault curves into account. In this sample we have 11 scattered data 
+points to interpolate (file examples/surfit/curvs/11points.txt) and 4 fault curves, 
+which are divide whole surface domain into 3 independent subdomains. The main idea
+of fault curves is that parts of resulting surface between fault curve are independent 
+of each other. \b Important! You should place \ref fault rule only after \ref fault 
+"fault modifiable" rules! 
+
+\sa \ref fault
+
+\htmlonly
+Here is the image of the resulting surface:
+<P ALIGN=CENTER>
+<IMG alt="surface with faults" src="fault.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. Surface with faults </P>
+
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/curvs/fault.tcl"</TT> script. 
+*/
+
+/*! \example curve.tcl
+This example shows how to build surface approximating curves with constant real numbers.
+\htmlonly
+Here is the image of the resulting surface:
+<P ALIGN=CENTER>
+<IMG alt="surface from curves" src="curve.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. Surface approximates curves with constant values </P>
+
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/curvs/curve.tcl"</TT> script. 
+*/
+
+/*! \example curve_ineq.tcl
+This example shows how to build surface with inequalities on curves.
+\htmlonly
+Here is the image of the resulting surface:
+<P ALIGN=CENTER>
+<IMG alt="surface from inequalities on curves" src="curve_ineq.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. Surface built from curve inequalities </P>
+
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/curvs/curve_ineq.tcl"</TT> script. 
+*/
+
+/*! \example curve_surf.tcl
+
+This examples shows how to build surface approximating other surface values on curves.
+
+\htmlonly
+Here is the image of the resulting surface:
+<P ALIGN=CENTER>
+<IMG alt="This surface approximates other surface at two curves" src="curve_surf.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. Surface approximates other surface at curves </P>
+
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/curvs/curve_surf.tcl"</TT> script. 
+*/
+
+/*! \example curve_surf_ineq.tcl
+This example shows how to build \ref d_surf "surface" using inequalities on curves. 
+Curves take their values from other surface (called "test_func")
+
+\htmlonly
+Here is the image of the resulting surface:
+<P ALIGN=CENTER>
+<IMG alt="This surface approximates other surface with two inequalities on curves" src="curve_surf_ineq.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. Surface approximates other surface with inequalities on curves </P>
+
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/curvs/curve_surf_ineq.tcl"</TT> script. 
+*/
+

@@ -10,7 +10,7 @@ load libsurfit[info sharedlibextension]
 clear_data 
 
 # set name of surface
-set map_name "map_area_wmean" 
+set map_name "map_area_surf" 
 
 # set solver
 set_solver "cg" 
@@ -35,9 +35,6 @@ area_read "area3.txt" "area3"
 area_read "area4.txt" "area4"  
  
 # load area from text file 
-area_read "area5.txt" "area5"  
- 
-# load area from text file 
 area_read "area6.txt" "area6"  
  
 # load surface from surfit datafile 
@@ -52,26 +49,23 @@ grid_get -12 12 0.2 -12 12 0.2
 ## create gridding rules
 ##
 
-# resulting surface in area = value... 
-area 10 "area1"  
-
-# resulting surface in area = value... 
-area 30 "area3"  
-
-# resulting surface in area = value... 
-area undef "area5"  
-
-# resulting surface weighted mean value in area = value... 
-area_wmean 30 "area6" "test_func"  
+# resulting surface in area = surface values... 
+area_surf "test_func" "area6"  
 
 # resulting surface should tend to be constant or plane 
-completer 1 1.6  
+completer 
 
-# add "resulting surface in area = value..." with weight 
-area_add 20 0.07 "area2"  
+# add "resulting surface in area = surface values..." with weight 
+area_surf_add "test_func" 0.07 "area1"  
 
-# add "resulting surface in area = value..." with weight 
-area_add 40 0.07 "area4"  
+# add "resulting surface in area = surface values..." with weight 
+area_surf_add "test_func" 0.1 "area2"  
+
+# add "resulting surface in area = surface values..." with weight 
+area_surf_add "test_func" 0.1 "area3"  
+
+# add "resulting surface in area = surface values..." with weight 
+area_surf_add "test_func" 0.05 "area4"  
 
 ##
 ## run gridding algorithm
@@ -86,4 +80,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "area_wmean.dat" 
+surf_save "area_surf.dat" 

@@ -34,19 +34,19 @@ grid
 ## create gridding rules
 ##
 
-# surface should be greater than or equal to points 
+# resulting surface should be greater than or equal to points values
 points_geq "points_geq" 
 
-# surface should be lower than or equal to points 
+# resulting surface should be lower than or equal to points values
 points_leq "points_leq" 
 
-# surface should tend to be constant or plane 
+# resulting surface should tend to be constant or plane 
 completer 0 1  
 
 ##
-## run cmofs algorithm
+## run gridding algorithm
 ##
-cmofs 
+surfit 
 
 ##
 ## save results 
@@ -55,5 +55,5 @@ cmofs
 # unload grid from memory
 grid_unload 
 
-# saves function to ROFF file 
-func_save "points_ineq.dat" 
+# save surface to surfit datafile 
+surf_save "points_ineq.dat" 

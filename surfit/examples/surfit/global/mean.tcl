@@ -30,7 +30,7 @@ completer 1 2
 ##
 ## runing cmofs algorithm
 ##
-cmofs
+surfit
 
 ##
 ## saving results
@@ -39,5 +39,5 @@ cmofs
 grid_unload
 file_save mean.dat
 
-set mean_value [func_mean map_mean]
-puts "func mean value is $mean_value"
+set mean_value [surf_mean map_mean]
+puts "surface mean value is $mean_value"

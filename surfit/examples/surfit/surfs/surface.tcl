@@ -6,36 +6,39 @@
 # 
 load libsurfit[info sharedlibextension]
 
-# remove all previous data and functionals
+# remove all previous data and gridding rules
 clear_data 
 
 # set name of surface
-set map_name "points_exact" 
+set map_name "map_surface" 
 
-# set tolerance for cg solver
-set tol 1.99526e-006 
+# set solver
+set_solver "cg" 
+
+# set tolerance for solver
+set tol 1e-005 
 
 ##
 ## load initial data 
 ##
  
-# load points from text file 
-pnts_read "points.txt" "points"  
+# load surface from surfit datafile 
+surf_load "D:\\develop\\surfit\\examples\\surfit\\surfs\\func.func" "test_func"  
  
 ##
 ## construct grid 
 ##
-grid 150 150 
+grid_get -10 10 0.2 -10 10 0.2 
  
 ##
 ## create gridding rules
 ##
 
-# resulting surface at points = points values
-points "points" 
+# resulting surface = surface values 
+surface "test_func" 
 
 # resulting surface should tend to be constant or plane 
-completer 1 2  
+completer 
 
 ##
 ## run gridding algorithm
@@ -50,4 +53,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "points_exact.dat" 
+surf_save "surface.dat" 

@@ -31,12 +31,12 @@ completer 1 2
 ##
 ## runing cmofs algorithm
 ##
-cmofs
+surfit
 
-set minz [func_minz]
+set minz [surf_minz]
 puts "Surface minimum value: $minz"
 
-set maxz [func_maxz]
+set maxz [surf_maxz]
 puts "Surface maximum value: $maxz"
 
 ##

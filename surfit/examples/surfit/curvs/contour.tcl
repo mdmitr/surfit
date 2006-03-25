@@ -46,28 +46,22 @@ grid_get -1000 1000 20 -1000 1000 20
 ## create gridding rules
 ##
 
-# surface at contour = contour values 
+# resulting surface at contour = contour values 
 contour "cntr_small_circle" 
 
-# surface at contour = contour values 
+# resulting surface at contour = contour values 
 contour "cntr_center" 
 
-# surface at contour <= contour values 
-contour_leq "cntr1" 
-
-# surface at contour >= contour values 
-contour_geq "cntr2" 
-
-# surface should tend to be constant or plane 
+# resulting surface should tend to be constant or plane 
 completer 
 
-# add "surface at contour = contour values" with weight 
+# add "resulting surface at contour = contour values" with weight 
 contour_add 0.5 "cntr_big_circle" 
 
 ##
-## run cmofs algorithm
+## run gridding algorithm
 ##
-cmofs 
+surfit 
 
 ##
 ## save results 
@@ -76,5 +70,5 @@ cmofs
 # unload grid from memory
 grid_unload 
 
-# saves function to ROFF file 
-func_save "contour.dat" 
+# save surface to surfit datafile 
+surf_save "contour.dat" 
