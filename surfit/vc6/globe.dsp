@@ -111,16 +111,16 @@ SOURCE=..\src\globe\dem_internal.cpp
 SOURCE=..\src\globe\dem_tcl.cpp
 # End Source File
 # End Group
-# Begin Group "func_cpp"
+# Begin Group "surf_cpp"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\src\globe\globe_func_internal.cpp
+SOURCE=..\src\globe\globe_surf_internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\globe\globe_func_tcl.cpp
+SOURCE=..\src\globe\globe_surf_tcl.cpp
 # End Source File
 # End Group
 # End Group
@@ -200,16 +200,16 @@ SOURCE=..\src\globe\dem_internal.h
 SOURCE=..\src\globe\dem_tcl.h
 # End Source File
 # End Group
-# Begin Group "func_h"
+# Begin Group "surf_h"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\src\globe\globe_func_internal.h
+SOURCE=..\src\globe\globe_surf_internal.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\globe\globe_func_tcl.h
+SOURCE=..\src\globe\globe_surf_tcl.h
 # End Source File
 # End Group
 # End Group

@@ -27,25 +27,25 @@
 #include "bitvec.h"
 #include "matr_onesrow.h"
 #include "grid_user.h"
-#include "func.h"
-#include "func_internal.h"
+#include "surf.h"
+#include "surf_internal.h"
 #include "grid.h"
 #include "grid_internal.h"
 
 namespace surfit {
 
-f_wmean::f_wmean(REAL imean, const d_func * ifnc, REAL imult) :
+f_wmean::f_wmean(REAL imean, const d_surf * isrf, REAL imult) :
 functional("f_wmean") 
 {
 	mean = imean;
-	fnc = ifnc;
+	srf = isrf;
 	mult = imult;
-	w_fnc = NULL;
+	w_srf = NULL;
 };
 
 f_wmean::~f_wmean() {
-	if (w_fnc)
-		w_fnc->release_private();
+	if (w_srf)
+		w_srf->release_private();
 };
 
 int f_wmean::this_get_data_count() const {
@@ -54,7 +54,7 @@ int f_wmean::this_get_data_count() const {
 
 const data * f_wmean::this_get_data(int pos) const {
 	if (pos == 1)
-		return fnc;
+		return srf;
 	return NULL;
 };
 
@@ -66,8 +66,8 @@ bool f_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	
 	int aux_X_from, aux_X_to;
 	int aux_Y_from, aux_Y_to;
-	get_w_fnc(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
-	if (w_fnc == NULL)
+	get_w_srf(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
+	if (w_srf == NULL)
 		return false;
 
 	REAL denom = 0;
@@ -75,8 +75,8 @@ bool f_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	int NN = method_grid->getCountX();
 	int MM = method_grid->getCountY();
-	int nn = w_fnc->getCountX();
-	int mm = w_fnc->getCountY();
+	int nn = w_srf->getCountX();
+	int mm = w_srf->getCountY();
 	
 	vec * weights = create_vec(matrix_size, 0, false); // don't fill this vector
 	bitvec * mask = create_bitvec(matrix_size);
@@ -98,8 +98,8 @@ bool f_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 			if ((i >= aux_X_from) && (i <= aux_X_to) && (j >= aux_Y_from) && (j <= aux_Y_to)) {
 				int I = i-aux_X_from;
 				int J = j-aux_Y_from;
-				weight = (*(w_fnc->coeff))(I + J*nn);
-				if (weight == w_fnc->undef_value)
+				weight = (*(w_srf->coeff))(I + J*nn);
+				if (weight == w_srf->undef_value)
 					weight = 0;
 			}
 
@@ -175,8 +175,8 @@ void f_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_unde
 
 	int aux_X_from, aux_X_to;
 	int aux_Y_from, aux_Y_to;
-	get_w_fnc(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
-	if (w_fnc == NULL) {
+	get_w_srf(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
+	if (w_srf == NULL) {
 		mark_sums(mask_solved, mask_undefined);
 		return;
 	}
@@ -187,8 +187,8 @@ void f_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_unde
 
 	int NN = method_grid->getCountX();
 	int MM = method_grid->getCountY();
-	int nn = w_fnc->getCountX();
-	int mm = w_fnc->getCountY();
+	int nn = w_srf->getCountX();
+	int mm = w_srf->getCountY();
 
 	for (i = 0; i < matrix_size; i++) {
 		if (mask_solved->get(i) == true)
@@ -203,8 +203,8 @@ void f_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_unde
 			int I = ii-aux_X_from;
 			int J = jj-aux_Y_from;
 			
-			REAL weight = (*(w_fnc->coeff))(I + J*nn);
-			if (weight == w_fnc->undef_value)
+			REAL weight = (*(w_srf->coeff))(I + J*nn);
+			if (weight == w_srf->undef_value)
 				continue;
 			
 			if (weight <= 0)
@@ -225,17 +225,17 @@ bool f_wmean::minimize() {
 	return false;
 };
 
-void f_wmean::get_w_fnc(int & i_from, int & i_to, int & j_from, int & j_to) {
+void f_wmean::get_w_srf(int & i_from, int & i_to, int & j_from, int & j_to) {
 	
-	_grid_intersect1(method_grid, fnc->grd, i_from, i_to, j_from, j_to);
+	_grid_intersect1(method_grid, srf->grd, i_from, i_to, j_from, j_to);
 	d_grid * aux_grid = _create_sub_grid(method_grid, i_from, i_to, j_from, j_to);
 
-	if (w_fnc == NULL)
-		w_fnc = _func_project(fnc, aux_grid);
+	if (w_srf == NULL)
+		w_srf = _surf_project(srf, aux_grid);
 	else {
-		if (w_fnc->grd->operator==(aux_grid) == false) {
-			w_fnc->release();
-			w_fnc = _func_project(fnc, aux_grid);
+		if (w_srf->grd->operator==(aux_grid) == false) {
+			w_srf->release();
+			w_srf = _surf_project(srf, aux_grid);
 		}
 	}
 	
@@ -243,9 +243,9 @@ void f_wmean::get_w_fnc(int & i_from, int & i_to, int & j_from, int & j_to) {
 };
 
 void f_wmean::drop_private_data() {
-	if (w_fnc)
-		w_fnc->release_private();
-	w_fnc = NULL;
+	if (w_srf)
+		w_srf->release_private();
+	w_srf = NULL;
 };
 
 

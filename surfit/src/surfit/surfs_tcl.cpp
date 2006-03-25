@@ -18,11 +18,11 @@
  *----------------------------------------------------------------------------*/
 
 #include "surfit_ie.h"
-#include "funcs_tcl.h"
-#include "func.h"
+#include "surfs_tcl.h"
+#include "surf.h"
 #include "mask.h"
-#include "f_func.h"
-#include "f_func_ineq.h"
+#include "f_surf.h"
+#include "f_surf_ineq.h"
 #include "f_trend.h"
 #include "f_mask.h"
 #include "variables.h"
@@ -30,71 +30,75 @@
 
 namespace surfit {
 
-bool func(const char * pos) {
-	d_func * fnc = get_element<d_func>(pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+bool surface(const char * pos) {
+	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
 	
-	f_func * f = new f_func(fnc);
+	f_surf * f = new f_surf(srf);
 	functionals->push_back(f);
 	return true;
 };
 
-bool func_add(REAL weight, const char * pos) {
+bool surface_add(REAL weight, const char * pos) {
 	
-	if (functionals->size() == 0)
+	if (functionals->size() == 0) {
+		writelog(LOG_ERROR,"No gridding rule to modify!");
 		return false;
+	}
 	functional * f = *(functionals->end()-1);
 
-	d_func * fnc = get_element<d_func>(pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
 
-	f_func * fnc2 = new f_func(fnc);
-	f->add_functional(fnc2, weight);
+	f_surf * srf2 = new f_surf(srf);
+	f->add_functional(srf2, weight);
 	return true;
 };
 
-bool func_leq(const char * pos, REAL mult) {
-	d_func * fnc = get_element<d_func>(pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+bool surface_leq(const char * pos, REAL mult) {
+	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
-	f_func_ineq * f = new f_func_ineq(fnc, true, mult);
+	f_surf_ineq * f = new f_surf_ineq(srf, true, mult);
 	functionals->push_back(f);
 	return true;
 };
 
-bool func_geq(const char * pos, REAL mult) {
-	d_func * fnc = get_element<d_func>(pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+bool surface_geq(const char * pos, REAL mult) {
+	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
-	f_func_ineq * f = new f_func_ineq(fnc, false, mult);
+	f_surf_ineq * f = new f_surf_ineq(srf, false, mult);
 	functionals->push_back(f);
 	return true;
 };
 
 bool trend(REAL D1, REAL D2, const char * pos) {
-	d_func * fnc = get_element<d_func>(pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
 	
-	f_trend * f = new f_trend(D1, D2, fnc);
+	f_trend * f = new f_trend(D1, D2, srf);
 	functionals->push_back(f);
 	return true;
 };
 
 bool trend_add(REAL weight, REAL D1, REAL D2, const char * pos) {
 	
-	if (functionals->size() == 0)
+	if (functionals->size() == 0) {
+		writelog(LOG_ERROR,"No gridding rule to modify!");
 		return false;
+	}
 	functional * f = *(functionals->end()-1);
 
-	d_func * fnc = get_element<d_func>(pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
 
-	f_trend * fnc2 = new f_trend(D1, D2, fnc);
-	f->add_functional(fnc2, weight);
+	f_trend * srf2 = new f_trend(D1, D2, srf);
+	f->add_functional(srf2, weight);
 	return true;
 };
 

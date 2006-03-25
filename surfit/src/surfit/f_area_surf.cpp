@@ -18,10 +18,10 @@
  *----------------------------------------------------------------------------*/
 
 #include "surfit_ie.h"
-#include "f_area.h"
-#include "f_points.h"
+#include "f_area_surf.h"
 #include "area.h"
 #include "grid.h"
+#include "surf.h"
 #include "vec.h"
 #include "matr.h"
 #include "matr_eye.h"
@@ -35,36 +35,38 @@
 
 namespace surfit {
 
-f_area::f_area(REAL ivalue, const d_area * iarea, bool iinside) :
-functional("f_area")
+f_area_surf::f_area_surf(const d_surf * isurf, const d_area * iarea, bool iinside) :
+functional("f_area_surf")
 {
 	area = iarea;
-	value = ivalue;
+	srf = isurf;
 	if (area->getName()) {
-		setNameF("f_area %s", area->getName());
+		setNameF("f_area_surf %s", area->getName());
 	}
 	inside = iinside;
 	area_mask = NULL;
 };
 
-f_area::~f_area() {
+f_area_surf::~f_area_surf() {
 	if (area_mask)
 		area_mask->release();
 };
 
-int f_area::this_get_data_count() const {
-	return 1;
+int f_area_surf::this_get_data_count() const {
+	return 2;
 };
 
-const data * f_area::this_get_data(int pos) const {
+const data * f_area_surf::this_get_data(int pos) const {
 	if (pos == 0)
 		return area;
+	if (pos == 1)
+		return srf;
 	return NULL;
 };
 
-bool f_area::minimize() {
-	if (((functionals_add->size() == 0) && ( !cond() )) || (value == undef_value)) {
-		return minimize_only_area();
+bool f_area_surf::minimize() {
+	if (((functionals_add->size() == 0) && ( !cond() )) ) {
+		return minimize_only_area_surf();
 	} else {
 		
 		matr * A = NULL;
@@ -99,25 +101,20 @@ bool f_area::minimize() {
 	return false;
 };
 
-bool f_area::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_area_surf::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	if (area->getName()) {
-		if (value != undef_value)
-			writelog(LOG_MESSAGE,"area (%s), value = %lf", area->getName(), value);
-		else 
-			writelog(LOG_MESSAGE,"area (%s), value = \"undef\"", area->getName());
+		if (srf->getName())
+			writelog(LOG_MESSAGE,"area_surf (%s+%s)", area->getName(), srf->getName());
+		else
+			writelog(LOG_MESSAGE,"area_surf (%s)", area->getName());
 	} else {
-		if (value != undef_value)
-			writelog(LOG_MESSAGE,"area noname, value = %lf", value);
-		else 
-			writelog(LOG_MESSAGE,"area noname, value = \"undef\"");
+		if (srf->getName())
+			writelog(LOG_MESSAGE,"area_surf (noname+%s)", srf->getName());
+		else
+			writelog(LOG_MESSAGE,"area_surf (noname+noname)");
 	}
 
-	if (value == undef_value) {
-		writelog(LOG_WARNING,"area with \"undef_val\" can't be minimized conditionally or as a summator");
-		return false;
-	}
-	
 	get_area_mask();
 	if (area_mask == NULL)
 		return false;
@@ -125,8 +122,11 @@ bool f_area::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	int matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_vec(matrix_size);
 
-	int i;
+	int i, I, J;
 	int points = 0;
+	REAL x,y,z;
+	int NN = method_grid->getCountX();
+	int MM = method_grid->getCountY();
 
 	bitvec * mask = create_bitvec(matrix_size);
 	mask->init_false();
@@ -146,7 +146,14 @@ bool f_area::make_matrix_and_vector(matr *& matrix, vec *& v) {
 			continue;
 		}
 
-		(*v)(i) = value;
+		one2two(i, I, J, NN, MM);
+		method_grid->getCoordNode(I, J, x, y);
+
+		z = srf->getInterpValue(x,y);
+		if (z == srf->undef_value)
+			continue;
+		
+		(*v)(i) = z;
 		points++;
 		mask->set_true(i);
 	
@@ -162,7 +169,7 @@ bool f_area::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	return solvable;
 };
 
-void f_area::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+void f_area_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 	if ((functionals_add->size() == 0) && ( !cond() ) && (i_am_cond == false) )
 		return;	
 
@@ -176,20 +183,11 @@ void f_area::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undef
 	
 	unsigned int i;
 	
-	if (value == undef_value) {
-		for (i = 0; i < (unsigned int)matrix_size; i++) {
-			if (area_mask->get(i) == false)
-				continue;
-			if (!mask_solved->get(i))
-				mask_undefined->set_true(i);
-		}
-	} else {
-		for (i = 0; i < (unsigned int)matrix_size; i++) {
-			if (area_mask->get(i) == false)
-				continue;
-			if ( (mask_solved->get(i) == false) && (mask_undefined->get(i) == false) ) {
-				mask_solved->set_true(i);
-			}
+	for (i = 0; i < (unsigned int)matrix_size; i++) {
+		if (area_mask->get(i) == false)
+			continue;
+		if ( (mask_solved->get(i) == false) && (mask_undefined->get(i) == false) ) {
+			mask_solved->set_true(i);
 		}
 	}
 
@@ -197,18 +195,18 @@ void f_area::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undef
 	
 };
 
-bool f_area::minimize_only_area() {
+bool f_area_surf::minimize_only_area_surf() {
 	
 	if (area->getName()) {
-		if (value != undef_value)
-			writelog(LOG_MESSAGE,"area (%s), value = %lf", area->getName(), value);
-		else 
-			writelog(LOG_MESSAGE,"area (%s), value = \"undef\"", area->getName());
+		if (srf->getName())
+			writelog(LOG_MESSAGE,"area_surf (%s+%s)", area->getName(), srf->getName());
+		else
+			writelog(LOG_MESSAGE,"area_surf (%s)", area->getName());
 	} else {
-		if (value != undef_value)
-			writelog(LOG_MESSAGE,"area noname, value = %lf", value);
-		else 
-			writelog(LOG_MESSAGE,"area noname, value = \"undef\"");
+		if (srf->getName())
+			writelog(LOG_MESSAGE,"area_surf (noname+%s)", srf->getName());
+		else
+			writelog(LOG_MESSAGE,"area_surf (noname+noname)");
 	}
 
 	get_area_mask();
@@ -216,36 +214,41 @@ bool f_area::minimize_only_area() {
 		return false;
 	
 	unsigned int i;
+	int I, J;
+	int NN, MM;
+	REAL x, y, z;
+	NN = method_grid->getCountX();
+	MM = method_grid->getCountY();
 	
-	if (value == undef_value) {
-		for (i = 0; i < (unsigned int)area_mask->size(); i++) {
-			if (area_mask->get(i) == false)
+	for (i = 0; i < (unsigned int)area_mask->size(); i++) {
+		if (area_mask->get(i) == false)
+			continue;
+		if ( (method_mask_solved->get(i) == false) && (method_mask_undefined->get(i) == false) ) 
+		{
+			one2two(i, I, J, NN, MM);
+
+			method_grid->getCoordNode(I, J, x, y);
+
+			z = srf->getInterpValue(x,y);
+			if (z == srf->undef_value)
 				continue;
-			if (!method_mask_solved->get(i))
-				method_mask_undefined->set_true(i);
-		}
-	} else {
-		for (i = 0; i < (unsigned int)area_mask->size(); i++) {
-			if (area_mask->get(i) == false)
-				continue;
-			if ( (method_mask_solved->get(i) == false) && (method_mask_undefined->get(i) == false) ) {
-				method_mask_solved->set_true(i);
-				(*method_X)(i) = value;
-			}
+
+			method_mask_solved->set_true(i);
+			(*method_X)(i) = z;
 		}
 	}
 	
 	return true;
 };
 
-bool f_area::solvable_without_cond(const bitvec * mask_solved,
+bool f_area_surf::solvable_without_cond(const bitvec * mask_solved,
 				   const bitvec * mask_undefined,
 				   const vec * X)
 {
 	return true;
 };
 
-void f_area::get_area_mask() {
+void f_area_surf::get_area_mask() {
 
 	if (area_mask == NULL) {
 		area_mask = nodes_in_area_mask(area, method_grid, method_mask_undefined);
@@ -263,7 +266,7 @@ void f_area::get_area_mask() {
 
 };
 
-void f_area::drop_private_data() {
+void f_area_surf::drop_private_data() {
 	if (area_mask)
 		area_mask->release();
 	area_mask = NULL;

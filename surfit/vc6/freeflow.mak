@@ -60,10 +60,10 @@ CLEAN :
 	-@erase "$(INTDIR)\flow.sbr"
 	-@erase "$(INTDIR)\flow_data_manager.obj"
 	-@erase "$(INTDIR)\flow_data_manager.sbr"
-	-@erase "$(INTDIR)\flow_func_internal.obj"
-	-@erase "$(INTDIR)\flow_func_internal.sbr"
-	-@erase "$(INTDIR)\flow_func_tcl.obj"
-	-@erase "$(INTDIR)\flow_func_tcl.sbr"
+	-@erase "$(INTDIR)\flow_surf_internal.obj"
+	-@erase "$(INTDIR)\flow_surf_internal.sbr"
+	-@erase "$(INTDIR)\flow_surf_tcl.obj"
+	-@erase "$(INTDIR)\flow_surf_tcl.sbr"
 	-@erase "$(INTDIR)\flow_variables.obj"
 	-@erase "$(INTDIR)\flow_variables.sbr"
 	-@erase "$(INTDIR)\freeflow.obj"
@@ -96,8 +96,8 @@ MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\freeflow.bsc" 
 BSC32_SBRS= \
-	"$(INTDIR)\flow_func_internal.sbr" \
-	"$(INTDIR)\flow_func_tcl.sbr" \
+	"$(INTDIR)\flow_surf_internal.sbr" \
+	"$(INTDIR)\flow_surf_tcl.sbr" \
 	"$(INTDIR)\prod_points.sbr" \
 	"$(INTDIR)\prod_points_tcl.sbr" \
 	"$(INTDIR)\pcurvs_tcl.sbr" \
@@ -120,8 +120,8 @@ BSC32_SBRS= \
 LINK32=link.exe
 LINK32_FLAGS=tcl83.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libfreeflow.pdb" /machine:I386 /out:"../bin/libfreeflow.dll" /implib:"../bin/libfreeflow.lib" 
 LINK32_OBJS= \
-	"$(INTDIR)\flow_func_internal.obj" \
-	"$(INTDIR)\flow_func_tcl.obj" \
+	"$(INTDIR)\flow_surf_internal.obj" \
+	"$(INTDIR)\flow_surf_tcl.obj" \
 	"$(INTDIR)\prod_points.obj" \
 	"$(INTDIR)\prod_points_tcl.obj" \
 	"$(INTDIR)\pcurvs_tcl.obj" \
@@ -174,10 +174,10 @@ CLEAN :
 	-@erase "$(INTDIR)\flow.sbr"
 	-@erase "$(INTDIR)\flow_data_manager.obj"
 	-@erase "$(INTDIR)\flow_data_manager.sbr"
-	-@erase "$(INTDIR)\flow_func_internal.obj"
-	-@erase "$(INTDIR)\flow_func_internal.sbr"
-	-@erase "$(INTDIR)\flow_func_tcl.obj"
-	-@erase "$(INTDIR)\flow_func_tcl.sbr"
+	-@erase "$(INTDIR)\flow_surf_internal.obj"
+	-@erase "$(INTDIR)\flow_surf_internal.sbr"
+	-@erase "$(INTDIR)\flow_surf_tcl.obj"
+	-@erase "$(INTDIR)\flow_surf_tcl.sbr"
 	-@erase "$(INTDIR)\flow_variables.obj"
 	-@erase "$(INTDIR)\flow_variables.sbr"
 	-@erase "$(INTDIR)\freeflow.obj"
@@ -211,8 +211,8 @@ MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\freeflow.bsc" 
 BSC32_SBRS= \
-	"$(INTDIR)\flow_func_internal.sbr" \
-	"$(INTDIR)\flow_func_tcl.sbr" \
+	"$(INTDIR)\flow_surf_internal.sbr" \
+	"$(INTDIR)\flow_surf_tcl.sbr" \
 	"$(INTDIR)\prod_points.sbr" \
 	"$(INTDIR)\prod_points_tcl.sbr" \
 	"$(INTDIR)\pcurvs_tcl.sbr" \
@@ -235,8 +235,8 @@ BSC32_SBRS= \
 LINK32=link.exe
 LINK32_FLAGS=tcl83d.lib /nologo /dll /pdb:none /debug /machine:I386 /out:"../bin/libfreeflow.dll" /implib:"../bin/libfreeflow.lib" /libpath:"D:\fltk\lib" 
 LINK32_OBJS= \
-	"$(INTDIR)\flow_func_internal.obj" \
-	"$(INTDIR)\flow_func_tcl.obj" \
+	"$(INTDIR)\flow_surf_internal.obj" \
+	"$(INTDIR)\flow_surf_tcl.obj" \
 	"$(INTDIR)\prod_points.obj" \
 	"$(INTDIR)\prod_points_tcl.obj" \
 	"$(INTDIR)\pcurvs_tcl.obj" \
@@ -301,15 +301,15 @@ LINK32_OBJS= \
 
 
 !IF "$(CFG)" == "freeflow - Win32 Release" || "$(CFG)" == "freeflow - Win32 Debug"
-SOURCE=.\..\src\freeflow\flow_func_internal.cpp
+SOURCE=..\src\freeflow\flow_surf_internal.cpp
 
-"$(INTDIR)\flow_func_internal.obj"	"$(INTDIR)\flow_func_internal.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\flow_surf_internal.obj"	"$(INTDIR)\flow_surf_internal.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=.\..\src\freeflow\flow_func_tcl.cpp
+SOURCE=..\src\freeflow\flow_surf_tcl.cpp
 
-"$(INTDIR)\flow_func_tcl.obj"	"$(INTDIR)\flow_func_tcl.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\flow_surf_tcl.obj"	"$(INTDIR)\flow_surf_tcl.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

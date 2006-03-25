@@ -155,7 +155,7 @@ public:
 	bool condition() const;
 
 	//! finds begin of tag named "tagname"
-	bool findTag(const char * tagname);
+	bool findTag(const char * tagname, const char * another_tagname = NULL);
 
 	//! finds begin of tag named "eof"
 	bool findTagEof();

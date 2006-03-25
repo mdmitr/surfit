@@ -17,26 +17,21 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#ifndef __surfit_flow_func_internal_included__
-#define __surfit_flow_func_internal_included__
+#ifndef __surfit__globe_surf_tcl__
+#define __surfit__globe_surf_tcl__
 
 namespace surfit {
 
-class d_func;
+//
+// CONVERTING
+//
 
-FLOW_EXPORT
-/*!  \ingroup internal_pfunc
-     \fn REAL _func_debit(d_func * fnc, REAL x, REAL y, REAL perm, REAL visc, REAL mult);
-     \brief calculates debit at point (x,y), using four neighbour cells
+GLOBE_EXPORT
+/*! \ingroup tcl_dem_conv
+    \fn bool surf_to_dem(const char * surf_pos = "0");
+    \brief transforms \ref d_surf to \ref d_dem
 */
-REAL _func_debit(d_func * fnc, REAL x, REAL y, REAL perm, REAL visc, REAL mult);
-
-FLOW_EXPORT
-/*! \ingroup internal_pfunc
-    \fn REAL _func_debit_rect(d_func * fnc, REAL x1, REAL y1, REAL x2, REAL y2, REAL perm, REAL visc, REAL mult);
-    \brief calculates debit in rect
-*/
-REAL _func_debit_rect(d_func * fnc, REAL x1, REAL y1, REAL x2, REAL y2, REAL perm, REAL visc, REAL mult);
+bool surf_to_dem(const char * surf_pos = "0");
 
 }; // namespace surfit;
 

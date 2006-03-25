@@ -18,8 +18,8 @@
  *----------------------------------------------------------------------------*/
 
 #include "surfit_ie.h"
-#include "f_func.h"
-#include "func.h"
+#include "f_surf.h"
+#include "surf.h"
 #include "solvers.h"
 #include "variables_tcl.h"
 #include "matr.h"
@@ -33,34 +33,34 @@
 
 namespace surfit {
 
-f_func::f_func(const d_func * ifnc) :
-functional("f_func")
+f_surf::f_surf(const d_surf * isrf) :
+functional("f_surf")
 {
-	fnc = ifnc;
-	if (fnc->getName()) {
-		setNameF("f_func %s", fnc->getName());
+	srf = isrf;
+	if (srf->getName()) {
+		setNameF("f_surf %s", srf->getName());
 	}
 	mask = NULL;
 };
 
-f_func::~f_func() {
+f_surf::~f_surf() {
 	if (mask)
 		mask->release();
 };
 
-int f_func::this_get_data_count() const {
+int f_surf::this_get_data_count() const {
 	return 1;
 };
 
-const data * f_func::this_get_data(int pos) const {
+const data * f_surf::this_get_data(int pos) const {
 	if (pos == 0)
-		return fnc;
+		return srf;
 	return false;
 };
 
-bool f_func::minimize() {
+bool f_surf::minimize() {
 	if ((functionals_add->size() == 0) && ( !cond() )) {
-		return minimize_only_func();
+		return minimize_only_surf();
 	} else {
 		
 		matr * A = NULL;
@@ -95,12 +95,12 @@ bool f_func::minimize() {
 	return false;
 };
 
-bool f_func::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_surf::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
-	if (fnc->getName())
-		writelog(LOG_MESSAGE,"func : (%s), size=(%d x %d)", fnc->getName(), fnc->getCountX(), fnc->getCountY());
+	if (srf->getName())
+		writelog(LOG_MESSAGE,"surf : (%s), size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
 	else 
-		writelog(LOG_MESSAGE,"func : noname, size=(%d x %d)", fnc->getCountX(), fnc->getCountY());
+		writelog(LOG_MESSAGE,"surf : noname, size=(%d x %d)", srf->getCountX(), srf->getCountY());
 
 	int NN = method_grid->getCountX();
 	int MM = method_grid->getCountY();
@@ -114,7 +114,7 @@ bool f_func::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	int points = 0;
 
 	int from_x, from_y, to_x, to_y;
-	_grid_intersect1(method_grid, fnc->grd,
+	_grid_intersect1(method_grid, srf->grd,
 		        from_x, to_x,
 		        from_y, to_y);
 
@@ -138,10 +138,10 @@ bool f_func::make_matrix_and_vector(matr *& matrix, vec *& v) {
 			REAL x, y;
 			method_grid->getCoordNode(i, j, x, y);
 
-			//value = fnc->getMeanValue(x-stepX2, x+stepX2, y-stepY2, y+stepY2);
-			value = fnc->getInterpValue(x, y);
+			//value = srf->getMeanValue(x-stepX2, x+stepX2, y-stepY2, y+stepY2);
+			value = srf->getInterpValue(x, y);
 
-			if (value == fnc->undef_value)
+			if (value == srf->undef_value)
 				continue;
 
 			(*v)(pos) = value;
@@ -162,7 +162,7 @@ bool f_func::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 };
 	
-void f_func::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+void f_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 	if ((functionals_add->size() == 0) && ( !cond() ) && (i_am_cond == false))
 		return;
 
@@ -175,15 +175,15 @@ void f_func::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undef
 	}
 };
 
-bool f_func::minimize_only_func() {
+bool f_surf::minimize_only_surf() {
 
-	if (fnc->getName())
-		writelog(LOG_MESSAGE,"func : (%s), size=(%d x %d)", fnc->getName(), fnc->getCountX(), fnc->getCountY());
+	if (srf->getName())
+		writelog(LOG_MESSAGE,"surf : (%s), size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
 	else 
-		writelog(LOG_MESSAGE,"func : noname, size=(%d x %d)", fnc->getCountX(), fnc->getCountY());
+		writelog(LOG_MESSAGE,"surf : noname, size=(%d x %d)", srf->getCountX(), srf->getCountY());
 
 	int from_x, from_y, to_x, to_y;
-	_grid_intersect1(method_grid, fnc->grd,
+	_grid_intersect1(method_grid, srf->grd,
 		        from_x, to_x,
 		        from_y, to_y);
 
@@ -207,10 +207,10 @@ bool f_func::minimize_only_func() {
 			REAL x, y;
 			method_grid->getCoordNode(i, j, x, y);
 
-			//value = fnc->getMeanValue(x-stepX2, x+stepX2, y-stepY2, y+stepY2);
-			value = fnc->getInterpValue(x, y);
+			//value = srf->getMeanValue(x-stepX2, x+stepX2, y-stepY2, y+stepY2);
+			value = srf->getInterpValue(x, y);
 
-			if (value == fnc->undef_value)
+			if (value == srf->undef_value)
 				continue;
 
 			(*method_X)(pos) = value;
@@ -222,7 +222,7 @@ bool f_func::minimize_only_func() {
 	return true;
 };
 
-bool f_func::solvable_without_cond(const bitvec * mask_solved,
+bool f_surf::solvable_without_cond(const bitvec * mask_solved,
 		      const bitvec * mask_undefined,
 		      const vec * X)
 {

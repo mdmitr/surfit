@@ -22,7 +22,7 @@
 #include "fileio.h"
 
 #include "f_trend.h"
-#include "func.h"
+#include "surf.h"
 #include "grid_line.h"
 #include "vec.h"
 #include "matr.h"
@@ -33,7 +33,7 @@
 #include "bitvec.h"
 #include "grid.h"
 #include "curv.h"
-#include "func_internal.h"
+#include "surf_internal.h"
 #include "f_completer.h"
 #include "grid_internal.h"
 
@@ -42,21 +42,21 @@
 
 namespace surfit {
 
-f_trend::f_trend(REAL iD1, REAL iD2, const d_func * ifnc) :
+f_trend::f_trend(REAL iD1, REAL iD2, const d_surf * isrf) :
 functional("f_trend")
 {
-	fnc = ifnc;
+	srf = isrf;
 	D1 = iD1;
 	D2 = iD2;
-	if (fnc->getName()) {
-		setNameF("f_trend %s", fnc->getName());
+	if (srf->getName()) {
+		setNameF("f_trend %s", srf->getName());
 	}
-	tr_fnc = NULL;
+	tr_srf = NULL;
 };
 
 f_trend::~f_trend() {
-	if (tr_fnc)
-		tr_fnc->release_private();
+	if (tr_srf)
+		tr_srf->release_private();
 };
 
 int f_trend::this_get_data_count() const {
@@ -65,14 +65,14 @@ int f_trend::this_get_data_count() const {
 
 const data * f_trend::this_get_data(int pos) const {
 	if (pos == 0)
-		return fnc;
+		return srf;
 	return NULL;
 };
 
 bool f_trend::minimize() {
 
-	if (fnc->getName())
-		writelog(LOG_MESSAGE,"trend (%s) : processing...",fnc->getName());
+	if (srf->getName())
+		writelog(LOG_MESSAGE,"trend (%s) : processing...",srf->getName());
 	else 
 		writelog(LOG_MESSAGE,"trend : processing...");
 
@@ -224,8 +224,8 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	int aux_X_from, aux_X_to;
 	int aux_Y_from, aux_Y_to;
-	get_tr_fnc(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
-	if (tr_fnc == NULL)
+	get_tr_srf(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
+	if (tr_srf == NULL)
 		return false;
 	
 	matrD1_rect * oD1 = new matrD1_rect(matrix_size, NN, 
@@ -251,7 +251,7 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 			      method_mask_undefined, 
 			      aux_X_from, aux_X_to,
 			      aux_Y_from, aux_Y_to,
-			      tr_fnc);
+			      tr_srf);
 	
 	matrix = T;
 
@@ -267,7 +267,7 @@ void f_trend::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_unde
 
 	int aux_X_from, aux_X_to;
 	int aux_Y_from, aux_Y_to;
-	_grid_intersect1(method_grid, fnc->grd, aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
+	_grid_intersect1(method_grid, srf->grd, aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
 	
 	int i,j,pos;
 	for (j = aux_Y_from; j <= aux_Y_to; j++) {
@@ -320,7 +320,7 @@ bool f_trend::solvable_without_cond(const bitvec * mask_solved,
 
 	int aux_X_from, aux_X_to;
 	int aux_Y_from, aux_Y_to;
-	_grid_intersect1(method_grid, fnc->grd, aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
+	_grid_intersect1(method_grid, srf->grd, aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
 	
 	int i,j,pos;
 	int cnt = 0;
@@ -350,17 +350,17 @@ sss:
 
 };
 
-void f_trend::get_tr_fnc(int & i_from, int & i_to, int & j_from, int & j_to) {
+void f_trend::get_tr_srf(int & i_from, int & i_to, int & j_from, int & j_to) {
 	
-	_grid_intersect1(method_grid, fnc->grd, i_from, i_to, j_from, j_to);
+	_grid_intersect1(method_grid, srf->grd, i_from, i_to, j_from, j_to);
 	d_grid * aux_grid = _create_sub_grid(method_grid, i_from, i_to, j_from, j_to);
 
-	if (tr_fnc == NULL)
-		tr_fnc = _func_project(fnc, aux_grid);
+	if (tr_srf == NULL)
+		tr_srf = _surf_project(srf, aux_grid);
 	else {
-		if (tr_fnc->grd->operator==(aux_grid) == false) {
-			tr_fnc->release();
-			tr_fnc = _func_project(fnc, aux_grid);
+		if (tr_srf->grd->operator==(aux_grid) == false) {
+			tr_srf->release();
+			tr_srf = _surf_project(srf, aux_grid);
 		}
 	}
 	
@@ -368,9 +368,9 @@ void f_trend::get_tr_fnc(int & i_from, int & i_to, int & j_from, int & j_to) {
 };
 
 void f_trend::drop_private_data() {
-	if (tr_fnc)
-		tr_fnc->release_private();
-	tr_fnc = NULL;
+	if (tr_srf)
+		tr_srf->release_private();
+	tr_srf = NULL;
 };
 
 

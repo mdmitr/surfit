@@ -17,45 +17,31 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#ifndef __surfit_func_ineq_defined__
-#define __surfit_func_ineq_defined__
-
-#include "functional.h"
+#include "flow_ie.h"
+#include "flow_surf_tcl.h"
+#include "flow_surf_internal.h"
+#include "surf.h"
+#include <float.h>
 
 namespace surfit {
 
-class func;
-class bitvec;
-class d_func;
+REAL surf_debit(REAL x, REAL y, REAL perm, REAL visc, REAL mult, const char * pos) {
+	d_surf * fnc = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (!fnc)
+		return FLT_MAX;
+	return _surf_debit(fnc, x, y, perm, visc, mult);
 
-class f_func_ineq : public functional {
-public:
-	f_func_ineq(const d_func * ifnc, bool ileq, REAL imult);
-	~f_func_ineq();
+};
 
-	bool minimize();
+REAL surf_debit_rect(REAL x1, REAL y1, REAL x2, REAL y2, 
+		     REAL perm, REAL visc, REAL mult, 
+		     const char * pos) {
+	d_surf * fnc = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (!fnc)
+		return FLT_MAX;
+	return _surf_debit_rect(fnc, x1, y1, x2, y2, perm, visc, mult);
 
-	bool make_matrix_and_vector(matr *& matrix, vec *& v);
-
-	void mark_solved_and_undefined(bitvec * mask_solved, 
-				       bitvec * mask_undefined,
-				       bool i_am_cond);
-
-	bool solvable_without_cond(const bitvec * mask_solved, 
-				   const bitvec * mask_undefined,
-				   const vec * X);
-	
-protected:
-
-	int this_get_data_count() const;
-	const data * this_get_data(int pos) const;
-	
-	const d_func * fnc;
-	bool leq;
-	REAL mult;
 };
 
 }; // namespace surfit;
-
-#endif 
 

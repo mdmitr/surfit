@@ -186,13 +186,6 @@ bool dem_minus(const char * pos1, const char * pos2);
 
 GLOBE_EXPORT
 /*! \ingroup tcl_dem_math
-    \fn bool bool dem_minus_undef(const char * pos1, const char * pos2);
-    \brief dem1 = dem1 - dem2. dems sizes must be equal.
-*/
-bool dem_minus_undef(const char * pos1, const char * pos2);
-
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_math
     \fn bool dem_mult(const char * pos1, const char * pos2);
     \brief dem1 = dem1 * dem2. dems sizes must be equal
 */
@@ -299,10 +292,10 @@ bool dem_to_points(const char * pos = "0", const char * new_name = NULL);
 
 GLOBE_EXPORT
 /*! \ingroup tcl_dem_conv
-    \fn bool dem_to_func(const char * pos = "0", const char * new_name = NULL);
-    \brief makes \ref d_func from \ref d_dem
+    \fn bool dem_to_surf(const char * pos = "0", const char * new_name = NULL);
+    \brief makes \ref d_surf from \ref d_dem
 */
-bool dem_to_func(const char * pos = "0", const char * new_name = NULL);
+bool dem_to_surf(const char * pos = "0", const char * new_name = NULL);
 
 GLOBE_EXPORT
 /*! \ingroup tcl_dem_conv

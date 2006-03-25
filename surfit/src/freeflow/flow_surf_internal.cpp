@@ -21,9 +21,9 @@
 
 #include "fileio.h"
 
-#include "flow_func_internal.h"
+#include "flow_surf_internal.h"
 #include "variables_tcl.h"
-#include "func.h"
+#include "surf.h"
 #include "grid.h"
 #include "vec.h"
 
@@ -31,10 +31,10 @@
 
 namespace surfit {
 
-REAL _func_debit(d_func * fnc, REAL x, REAL y, REAL perm, REAL visc, REAL mult) {
+REAL _surf_debit(d_surf * fnc, REAL x, REAL y, REAL perm, REAL visc, REAL mult) {
 
 	if (!fnc) {
-		writelog(LOG_ERROR,"_func_debit : no surfit_func loaded");
+		writelog(LOG_ERROR,"_surf_debit : no surfit_surf loaded");
 		return undef_value;
 	}
 
@@ -80,11 +80,11 @@ REAL _func_debit(d_func * fnc, REAL x, REAL y, REAL perm, REAL visc, REAL mult) 
 	
 };
 
-REAL _func_debit_rect(d_func * fnc, REAL x1, REAL y1, REAL x2, REAL y2,
+REAL _surf_debit_rect(d_surf * fnc, REAL x1, REAL y1, REAL x2, REAL y2,
 		      REAL perm, REAL visc, REAL mult) {
 	
 	if (!fnc) {
-		writelog(LOG_ERROR,"_func_debit : no surfit_func loaded");
+		writelog(LOG_ERROR,"_surf_debit : no surfit_surf loaded");
 		return undef_value;
 	}
 

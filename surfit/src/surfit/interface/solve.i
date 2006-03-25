@@ -22,8 +22,8 @@
 
 namespace surfit {
 
-void cmofs();
-void clear_cmofs();
+void surfit();
+void clear_rules();
 
 // solvers
 int get_solvers_count();

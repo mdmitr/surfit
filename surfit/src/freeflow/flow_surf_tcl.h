@@ -17,39 +17,27 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#include "globe_ie.h"
-#include "dem.h"
-#include "func_tcl.h"
-#include "shortvec.h"
-#include "vec.h"
-#include "func.h"
-#include "grid.h"
-
-#include <float.h>
+#ifndef __surfit_flow_surf_tcl_included__
+#define __surfit_flow_surf_tcl_included__
 
 namespace surfit {
 
-d_dem * _func_to_dem(d_func * fnc) {
-	shortvec * coeff = create_shortvec( fnc->coeff->size() );
-	int i;
-	REAL val;
-	for (i = 0; i < fnc->coeff->size(); i++) {
-		val = (*(fnc->coeff))(i);
-		if (val == fnc->undef_value)
-			(*coeff)(i) = SHRT_MAX;
-		else
-			(*coeff)(i) = (short)val;
-	};
+FLOW_EXPORT
+/*! \ingroup tcl_psurf
+    \fn REAL surf_debit(REAL x, REAL y, REAL perm, REAL visc, REAL mult, const char * pos);
+    \brief calculates debit at point (x,y), using four neighbour cells
+*/
+REAL surf_debit(REAL x, REAL y, REAL perm, REAL visc, REAL mult, const char * pos = "0");
 
-	d_grid * fgrd = fnc->grd;
-	d_grid * grd = new d_grid(fgrd);
+FLOW_EXPORT
+/*! \ingroup tcl_psurf
+    \fn REAL surf_debit_rect(REAL x1, REAL y1, REAL x2, REAL y2, const char * pos);
+    \brief calculates debit in rect
+*/
+REAL surf_debit_rect(REAL x1, REAL y1, REAL x2, REAL y2, REAL perm, REAL visc, REAL mult, const char * pos = "0");
 
-	d_dem * res = create_dem(coeff, grd);
-	res->undef_value = SHRT_MAX;
-	res->setName(fnc->getName());
-
-	return res;
-};
 
 }; // namespace surfit;
+
+#endif
 

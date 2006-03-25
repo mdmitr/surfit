@@ -23,11 +23,11 @@
 #include "fileio.h"
 
 #include "mask.h"
-#include "func.h"
+#include "surf.h"
 #include "mask_internal.h"
 #include "mask_tcl.h"
-#include "func_internal.h"
-#include "func_tcl.h"
+#include "surf_internal.h"
+#include "surf_tcl.h"
 #include "grid.h"
 #include "bitvec.h"
 #include "variables_internal.h"
@@ -210,13 +210,13 @@ bool mask_not(const char * pos1, const char * pos2) {
 	return true;
 };
 
-bool mask_by_func(const char * func_pos) {
+bool mask_by_surf(const char * surf_pos) {
 	
-	d_func * fnc = get_element<d_func>(func_pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (!fnc)
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (!srf)
 		return false;
 
-	d_mask * msk = _mask_by_func(fnc);
+	d_mask * msk = _mask_by_surf(srf);
 	if (msk) {
 		surfit_masks->push_back(msk);
 		return true;
@@ -224,17 +224,17 @@ bool mask_by_func(const char * func_pos) {
 	return false;
 };
 
-bool mask_apply_to_func(const char * def_pos, const char * func_pos) {
+bool mask_apply_to_surf(const char * def_pos, const char * surf_pos) {
 
 	d_mask * msk = get_element<d_mask>(def_pos, surfit_masks->begin(), surfit_masks->end());
 	if (!msk)
 		return false;
 
-	d_func * fnc = get_element<d_func>(func_pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (!fnc)
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (!srf)
 		return false;
 
-	return _mask_apply_to_func(msk, fnc);
+	return _mask_apply_to_surf(msk, srf);
 };
 
 bool mask_setName(const char * new_name, const char * pos) {
@@ -260,17 +260,17 @@ bool mask_getValue(REAL x, REAL y, const char * pos) {
 	return msk->getValue(x,y);
 };
 
-bool mask_to_func(const char * pos) {
+bool mask_to_surf(const char * pos) {
 	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
 	std::vector<d_mask *>::iterator pdef = get_iterator<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
 	if (!msk)
 		return false;
 
-	d_func * fnc = create_func_by_mask(msk);
+	d_surf * srf = create_surf_by_mask(msk);
 	if (msk)
 		msk->release();
 	surfit_masks->erase(pdef);
-	surfit_funcs->push_back(fnc);
+	surfit_surfs->push_back(srf);
 	return true;
 };
 
@@ -307,9 +307,9 @@ void masks_info() {
 	if (surfit_masks->size() > 0) {
 		unsigned int mask_cnt;
 		for (mask_cnt = 0; mask_cnt < surfit_masks->size(); mask_cnt++) {
-			d_mask * a_fnc = *(surfit_masks->begin()+mask_cnt);
-			if (a_fnc) {
-				_mask_info(a_fnc);
+			d_mask * a_srf = *(surfit_masks->begin()+mask_cnt);
+			if (a_srf) {
+				_mask_info(a_srf);
 			}
 		}
 	}

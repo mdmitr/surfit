@@ -29,8 +29,8 @@ class bitvec;
 class SURFIT_EXPORT matr_eye : public matr {
 public:
 	//! constructor
-	matr_eye(REAL ival, long iN, bitvec * imask,
-		  const bitvec * imask_solved, const bitvec * imask_undefined);
+	matr_eye(REAL ival, long iN, const bitvec * imask,
+		 const bitvec * imask_solved, const bitvec * imask_undefined);
 
 	//! A destructor
 	virtual ~matr_eye();
@@ -52,7 +52,7 @@ protected:
 
 	long N;
 	REAL val;
-	bitvec * mask;
+	const bitvec * mask;
 	const bitvec * mask_solved;
 	const bitvec * mask_undefined;
 

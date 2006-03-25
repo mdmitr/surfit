@@ -17,26 +17,22 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#ifndef __surfit_f_area_func_ineq_included__
-#define __surfit_f_area_func_ineq_included__
+#ifndef __surfit_approx_surf_included__
+#define __surfit_approx_surf_included__
 
 #include "functional.h"
 
 namespace surfit {
 
-class d_area;
-class d_func;
+class d_surf;
+class matr;
+class vec;
+class bitvec;
 
-/*! \class f_area_func_ineq
-    \brief functional that sets inequality condition for area (with function)
-*/
-class SURFIT_EXPORT f_area_func_ineq : public functional {
+class SURFIT_EXPORT f_surf : public functional {
 public:
-
-	//! constructor
-	f_area_func_ineq(const d_func * ifnc, const d_area * iarea, bool ileq, REAL imult, bool iinside = true);
-	//! destructor
-	~f_area_func_ineq();
+	f_surf(const d_surf * isrf);
+	~f_surf();
 
 	bool minimize();
 
@@ -49,40 +45,19 @@ public:
 	void mark_solved_and_undefined(bitvec * mask_solved, 
 				       bitvec * mask_undefined,
 				       bool i_am_cond);
-
-	void drop_private_data();
 	
 protected:
 
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
-
-private:
-
-	//! calculates mask for area
-	void get_area_mask();
-
-	//! area, that defines region
-	const d_area * area;
-
-	//! function for equation
-	const d_func * fnc;
-
-	//! equation flag
-	bool leq;
-
-	//! parameter for penalty algorithm
-	REAL mult;
-
-	//! area is inside or outside region
-	bool inside;
-
-	//! mask for area
-	bitvec * area_mask;
-
+	
+	bool minimize_only_surf();
+	const d_surf * srf;
+	bitvec * mask;
+	
 };
 
-}; // namespace surfit
+}; // namespace surfit;
 
 #endif
 

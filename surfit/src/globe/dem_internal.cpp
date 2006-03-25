@@ -38,7 +38,7 @@
 #include "variables_internal.h"
 #include "sort_alg.h"
 #include "globe_variables.h"
-#include "func.h"
+#include "surf.h"
 #include "free_elements.h"
 #include "byteswap_alg.h"
 
@@ -92,17 +92,17 @@ void mirror_shortvec(shortvec * sv, int NN) {
 
 int calc_ptr(int i, int j, int N);
 
-bool _dem_unload(d_dem *& fnc) {
-	if (!fnc)
+bool _dem_unload(d_dem *& srf) {
+	if (!srf)
 		return false;
-	if (fnc->getName())
-		writelog(LOG_MESSAGE,"unloading dem \"%s\"", fnc->getName());
+	if (srf->getName())
+		writelog(LOG_MESSAGE,"unloading dem \"%s\"", srf->getName());
 	else 
 		writelog(LOG_MESSAGE,"unloading noname dem");
 	
-	if (fnc)
-		fnc->release();
-	fnc = NULL;
+	if (srf)
+		srf->release();
+	srf = NULL;
 	return true;
 };
 
@@ -120,7 +120,7 @@ d_dem * _dem_load_df(datafile * df, const char * demname) {
 	char error[] = "dem_load : wrong datafile format";
 
 	bool err = false;
-	d_dem * fnc = NULL;
+	d_dem * srf = NULL;
 	shortvec * icoeff = NULL;
 	d_grid * grd = NULL;
 	char * name = NULL;
@@ -212,26 +212,26 @@ cont:
 			return false;
 		}
 		
-		fnc = create_dem(icoeff, grd, name);
-		fnc->undef_value = undef_value;
+		srf = create_dem(icoeff, grd, name);
+		srf->undef_value = undef_value;
 		free(name);
 		
 		if (!demname) {
-			return fnc;
+			return srf;
 		} else {
-			if (fnc->getName()) {
-				if (strcmp(fnc->getName(),demname) == 0) {
-					return fnc;
+			if (srf->getName()) {
+				if (strcmp(srf->getName(),demname) == 0) {
+					return srf;
 				}
 			}
-			if (fnc)
-				fnc->release();
-			fnc = NULL;
+			if (srf)
+				srf->release();
+			srf = NULL;
 		}
 		
 	}
 	
-	return fnc;
+	return srf;
 
 exit:
 
@@ -1075,7 +1075,7 @@ d_dem * _dem_load_globe(const char * filename) {
 
 	}
 
-	REAL stepx = 1./120.;
+	REAL stepx = REAL(1./120.);
 	REAL stepy = stepx;
 
 	d_grid * grd = new d_grid(startx, endx-stepx, stepx,
@@ -1091,7 +1091,7 @@ d_dem * _dem_load_globe(const char * filename) {
 
 };
 
-bool _dem_save(const d_dem * fnc, const char * filename) {
+bool _dem_save(const d_dem * srf, const char * filename) {
 	
 	bool res = true;
 
@@ -1101,7 +1101,7 @@ bool _dem_save(const d_dem * fnc, const char * filename) {
 		return false;
 	}
 
-	res = _dem_save_df(fnc, df);
+	res = _dem_save_df(srf, df);
 
 	bool op = df->writeEof();				res = ( op && res );
 	
@@ -1109,17 +1109,17 @@ bool _dem_save(const d_dem * fnc, const char * filename) {
 	return res;
 };
 
-bool _dem_save_df(const d_dem * fnc, datafile * df) {
+bool _dem_save_df(const d_dem * srf, datafile * df) {
 
-	if (!fnc->getName()) 
+	if (!srf->getName()) 
 		writelog(LOG_MESSAGE,"saving dem with no name to file %s",df->get_filename());
 	else 
-		writelog(LOG_MESSAGE,"saving dem \"%s\" to file %s",fnc->getName(),df->get_filename());
+		writelog(LOG_MESSAGE,"saving dem \"%s\" to file %s",srf->getName(),df->get_filename());
 		
 	bool res = true;
 	bool op;
 	
-	op = fnc->writeTags(df);           res = ( op && res );
+	op = srf->writeTags(df);           res = ( op && res );
 	
 	return res;
 };
@@ -1236,12 +1236,12 @@ exit:
 	return NULL;
 };
 
-bool _dem_save_grd(const d_dem * fnc, const char * filename) {
+bool _dem_save_grd(const d_dem * srf, const char * filename) {
 
 	if (!filename)
 		return false;
 
-	if (!fnc) {
+	if (!srf) {
 		writelog(LOG_ERROR,"dem_save_grd : no dem loaded");
 		return false;
 	}
@@ -1253,21 +1253,21 @@ bool _dem_save_grd(const d_dem * fnc, const char * filename) {
 		return false;
 	}
 
-	if (fnc->getName())
-		writelog(LOG_MESSAGE,"Saving dem %s to file %s (grd-ASCII)", fnc->getName(), filename);
+	if (srf->getName())
+		writelog(LOG_MESSAGE,"Saving dem %s to file %s (grd-ASCII)", srf->getName(), filename);
 	else 
 		writelog(LOG_MESSAGE,"Saving dem (noname) to file %s (grd-ASCII)", filename);
 
 	fprintf(f,"DSAA\n");
-	int nx = fnc->getCountX();
-	int ny = fnc->getCountY();
+	int nx = srf->getCountX();
+	int ny = srf->getCountY();
 
 	fprintf(f,"%d %d\n", nx, ny);
-	fprintf(f,"%lf %lf\n", fnc->grd->startX, fnc->grd->endX);
-	fprintf(f,"%lf %lf\n", fnc->grd->startY, fnc->grd->endY);
+	fprintf(f,"%lf %lf\n", srf->grd->startX, srf->grd->endX);
+	fprintf(f,"%lf %lf\n", srf->grd->startY, srf->grd->endY);
 
 	REAL minZ, maxZ;
-	fnc->getMinMaxZ(minZ, maxZ);
+	srf->getMinMaxZ(minZ, maxZ);
 	fprintf(f,"%lf %lf\n", minZ, maxZ);
 
 	// matrix 
@@ -1281,7 +1281,7 @@ bool _dem_save_grd(const d_dem * fnc, const char * filename) {
 		ncnt = 0;
 		
 		for(ix=0; ix<nx; ix++)	{
-			val = (*(fnc->coeff))( ix + nx*iy );
+			val = (*(srf->coeff))( ix + nx*iy );
 			fprintf(f,"%lf ", val);
 			if (ncnt>9) { 
 				fprintf(f,"\n");
@@ -1297,12 +1297,12 @@ bool _dem_save_grd(const d_dem * fnc, const char * filename) {
 	return true;
 };
 
-bool _dem_save_xyz(const d_dem * fnc, const char * filename) {
+bool _dem_save_xyz(const d_dem * srf, const char * filename) {
 
 	if (!filename)
 		return false;
 
-	if (!fnc) {
+	if (!srf) {
 		writelog(LOG_ERROR,"dem_save_xyz : no dem loaded");
 		return false;
 	}
@@ -1314,13 +1314,13 @@ bool _dem_save_xyz(const d_dem * fnc, const char * filename) {
 		return false;
 	}
 
-	if (fnc->getName())
-		writelog(LOG_MESSAGE,"Saving dem %s to file %s (xyz-ASCII)", fnc->getName(), filename);
+	if (srf->getName())
+		writelog(LOG_MESSAGE,"Saving dem %s to file %s (xyz-ASCII)", srf->getName(), filename);
 	else 
 		writelog(LOG_MESSAGE,"Saving dem (noname) to file %s (xyz-ASCII)", filename);
 
-	int nx = fnc->getCountX();
-	int ny = fnc->getCountY();
+	int nx = srf->getCountX();
+	int ny = srf->getCountY();
 
 	int iy, ix;
 	int cnt = 0;
@@ -1330,8 +1330,8 @@ bool _dem_save_xyz(const d_dem * fnc, const char * filename) {
     
 	for(iy=0; iy<ny; iy++)	{
 		for(ix=0; ix<nx; ix++)	{
-			fnc->getCoordNode(ix, iy, x_coord, y_coord);
-			val = (*(fnc->coeff))( ix + nx*iy );
+			srf->getCoordNode(ix, iy, x_coord, y_coord);
+			val = (*(srf->coeff))( ix + nx*iy );
 			fprintf(f,"%lf %lf %lf \n", x_coord, y_coord, val);
 			
 		}
@@ -1342,30 +1342,30 @@ bool _dem_save_xyz(const d_dem * fnc, const char * filename) {
 	return true;
 };
 
-bool _dem_save_dtm(const d_dem * fnc, const char * filename)
+bool _dem_save_dtm(const d_dem * srf, const char * filename)
 {
 	return false;
 };
 
-d_points * _dem_to_points(const d_dem * fnc) {
+d_points * _dem_to_points(const d_dem * srf) {
 
 	return NULL;	
 	
 };
 
-d_dem * _dem_project(const d_dem * fnc, const d_grid * grd) {
+d_dem * _dem_project(const d_dem * srf, const d_grid * grd) {
 
 	int size_x = grd->getCountX();
 	int size_y = grd->getCountY();
 
 	shortvec * coeff = create_shortvec(size_x*size_y,0,0);  // do not fill this vector
 	
-	int dem_size = fnc->coeff->size();
-	int dem_sizeX = fnc->getCountX();
-	int dem_sizeY = fnc->getCountY();
+	int dem_size = srf->coeff->size();
+	int dem_sizeX = srf->getCountX();
+	int dem_sizeY = srf->getCountY();
 
-	if (fnc->getName())
-		writelog(LOG_MESSAGE,"Projecting dem \"%s\" (%d x %d) => (%d x %d)",fnc->getName(), dem_sizeX, dem_sizeY, size_x, size_y);
+	if (srf->getName())
+		writelog(LOG_MESSAGE,"Projecting dem \"%s\" (%d x %d) => (%d x %d)",srf->getName(), dem_sizeX, dem_sizeY, size_x, size_y);
 	else 
 		writelog(LOG_MESSAGE,"Projecting dem (%d x %d) => (%d x %d)", dem_sizeX, dem_sizeY, size_x, size_y);
 
@@ -1378,15 +1378,15 @@ d_dem * _dem_project(const d_dem * fnc, const d_grid * grd) {
 		REAL z0, z1, z2, z3;
 		REAL x0, y0;
 		REAL delta_x, delta_y;
-		REAL hX = fnc->grd->stepX;
-		REAL hY = fnc->grd->stepY;
+		REAL hX = srf->grd->stepX;
+		REAL hY = srf->grd->stepY;
 		
 		for (j = 0; j < size_y; j++) {
 			for (i = 0; i < size_x; i++) {
 				value = 0;
 				grd->getCoordNode(i, j, x, y);
 				
-				d_grid * g = fnc->grd;
+				d_grid * g = srf->grd;
 				I0 = (int)floor( (x - g->startX)/g->stepX );
 				J0 = (int)floor( (y - g->startY)/g->stepY );
 
@@ -1398,54 +1398,54 @@ d_dem * _dem_project(const d_dem * fnc, const d_grid * grd) {
 				J0 = MIN(MAX( 0, J0 ), dem_sizeY-1);
 				J1 = MIN(MAX( 0, J1 ), dem_sizeY-1);
 
-				fnc->getCoordNode(I0, J0, x0, y0);
+				srf->getCoordNode(I0, J0, x0, y0);
 				
-				z0 = (*(fnc->coeff))(I0 + dem_sizeX*J0);
-				z1 = (*(fnc->coeff))(I1 + dem_sizeX*J0);
-				z2 = (*(fnc->coeff))(I1 + dem_sizeX*J1);
-				z3 = (*(fnc->coeff))(I0 + dem_sizeX*J1);
+				z0 = (*(srf->coeff))(I0 + dem_sizeX*J0);
+				z1 = (*(srf->coeff))(I1 + dem_sizeX*J0);
+				z2 = (*(srf->coeff))(I1 + dem_sizeX*J1);
+				z3 = (*(srf->coeff))(I0 + dem_sizeX*J1);
 				
 				if (
-					(z0 == fnc->undef_value) ||
-					(z1 == fnc->undef_value) ||
-					(z2 == fnc->undef_value) ||
-					(z3 == fnc->undef_value) 
+					(z0 == srf->undef_value) ||
+					(z1 == srf->undef_value) ||
+					(z2 == srf->undef_value) ||
+					(z3 == srf->undef_value) 
 					) 
 				{
 					
 					REAL sum = REAL(0);
 					int cnt = 0;
 					
-					if (z0 != fnc->undef_value) {
+					if (z0 != srf->undef_value) {
 						sum += z0;
 						cnt++;
 					}
-					if (z1 != fnc->undef_value) {
+					if (z1 != srf->undef_value) {
 						sum += z1;
 						cnt++;
 					}
-					if (z2 != fnc->undef_value) {
+					if (z2 != srf->undef_value) {
 						sum += z2;
 						cnt++;
 					}
-					if (z3 != fnc->undef_value) {
+					if (z3 != srf->undef_value) {
 						sum += z3;
 						cnt++;
 					}
 					
 					if (cnt == 0) {
-						(*coeff)(i + j*size_x) = fnc->undef_value;
+						(*coeff)(i + j*size_x) = srf->undef_value;
 						continue;
 					}
 
 					REAL mean_z = sum/REAL(cnt);
-					if (z0 == fnc->undef_value)
+					if (z0 == srf->undef_value)
 						z0 = mean_z;
-					if (z1 == fnc->undef_value)
+					if (z1 == srf->undef_value)
 						z1 = mean_z;
-					if (z2 == fnc->undef_value)
+					if (z2 == srf->undef_value)
 						z2 = mean_z;
-					if (z3 == fnc->undef_value)
+					if (z3 == srf->undef_value)
 						z3 = mean_z;
 					
 				}
@@ -1468,22 +1468,22 @@ d_dem * _dem_project(const d_dem * fnc, const d_grid * grd) {
 	}
 	
 	d_grid * new_grd = new d_grid(grd);
-	d_dem * res = create_dem(coeff, new_grd, fnc->getName());
-	res->undef_value = fnc->undef_value;
+	d_dem * res = create_dem(coeff, new_grd, srf->getName());
+	res->undef_value = srf->undef_value;
 	return res;
 };
 
-void _dem_info(const d_dem * fnc) {
-	if (!fnc)
+void _dem_info(const d_dem * srf) {
+	if (!srf)
 		return;
-	if (fnc->getName()) 
-		writelog(LOG_MESSAGE,"dem (%s) : size=(%d x %d)", fnc->getName(), fnc->getCountX(), fnc->getCountY());
+	if (srf->getName()) 
+		writelog(LOG_MESSAGE,"dem (%s) : size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
 	else 
-		writelog(LOG_MESSAGE,"dem noname : size=(%d x %d)", fnc->getCountX(), fnc->getCountY());
+		writelog(LOG_MESSAGE,"dem noname : size=(%d x %d)", srf->getCountX(), srf->getCountY());
 };
 
-bool _dem_resid(const d_dem * fnc, const d_points * tsk, const char * filename) {
-	if (!fnc)
+bool _dem_resid(const d_dem * srf, const d_points * tsk, const char * filename) {
+	if (!srf)
 		return false;
 	if (!tsk)
 		return false;
@@ -1508,7 +1508,7 @@ bool _dem_resid(const d_dem * fnc, const d_points * tsk, const char * filename) 
 		x = (*(tsk->X))(cnt);
 		y = (*(tsk->Y))(cnt);
 		z = (*(tsk->Z))(cnt);
-		res = fnc->getValue(x,y) - z;
+		res = srf->getValue(x,y) - z;
 		maxres = (REAL)MAX(fabs(res),maxres);
 		fprintf(f,"%lf \t %lf \t %lf %lf\n",x,y,z,res);
 	}
@@ -1520,13 +1520,13 @@ bool _dem_resid(const d_dem * fnc, const d_points * tsk, const char * filename) 
 
 };
 
-REAL _dem_D1(const d_dem * fnc) {
+REAL _dem_D1(const d_dem * srf) {
 
 	int i,j;
-	int NN = fnc->getCountX();
-	int MM = fnc->getCountY();
+	int NN = srf->getCountX();
+	int MM = srf->getCountY();
 
-	short * ptr = fnc->coeff->begin();
+	short * ptr = srf->coeff->begin();
 
 	REAL v1, v2;
 
@@ -1536,7 +1536,7 @@ REAL _dem_D1(const d_dem * fnc) {
 		for (j = 0; j < MM-1; j++) {
 			v1 = *(ptr + i + j*NN);
 			v2 = *(ptr + (i+1) + j*NN);
-			if ((v1 != fnc->undef_value) && (v2 != fnc->undef_value)) {
+			if ((v1 != srf->undef_value) && (v2 != srf->undef_value)) {
 				dx += (v2-v1)*(v2-v1);
 				dx_cnt++;
 			}
@@ -1551,7 +1551,7 @@ REAL _dem_D1(const d_dem * fnc) {
 		for (j = 0; j < MM-2; j++) {
 			v1 = *(ptr + i + j*NN);
 			v2 = *(ptr + i + (j+1)*NN);
-			if ((v1 != fnc->undef_value) && (v2 != fnc->undef_value)) {
+			if ((v1 != srf->undef_value) && (v2 != srf->undef_value)) {
 				dy += (v2-v1)*(v2-v1);
 				dy_cnt++;
 			}
@@ -1560,8 +1560,8 @@ REAL _dem_D1(const d_dem * fnc) {
 
 	dy /= REAL(dy_cnt);
 
-	REAL h_x_2 = (fnc->grd->stepX)*(fnc->grd->stepX);
-	REAL h_y_2 = (fnc->grd->stepY)*(fnc->grd->stepY);
+	REAL h_x_2 = (srf->grd->stepX)*(srf->grd->stepX);
+	REAL h_y_2 = (srf->grd->stepY)*(srf->grd->stepY);
 
 	REAL res = dx/h_x_2 + dy/h_y_2;
 
@@ -1569,13 +1569,13 @@ REAL _dem_D1(const d_dem * fnc) {
 
 };
 
-REAL _dem_D2(const d_dem * fnc) {
+REAL _dem_D2(const d_dem * srf) {
 
 	int i,j;
-	int NN = fnc->getCountX();
-	int MM = fnc->getCountY();
+	int NN = srf->getCountX();
+	int MM = srf->getCountY();
 
-	short * ptr = fnc->coeff->begin();
+	short * ptr = srf->coeff->begin();
 
 	REAL v1, v2, v3, v4;
 
@@ -1586,9 +1586,9 @@ REAL _dem_D2(const d_dem * fnc) {
 			v1 = *(ptr + i + j*NN);
 			v2 = *(ptr + (i+1) + j*NN);
 			v3 = *(ptr + (i+2) + j*NN);
-			if ((v1 != fnc->undef_value) && 
-				(v2 != fnc->undef_value) && 
-				(v3 != fnc->undef_value)) {
+			if ((v1 != srf->undef_value) && 
+				(v2 != srf->undef_value) && 
+				(v3 != srf->undef_value)) {
 				dx2 += (v3-2*v2+v1)*(v3-2*v2+v1);
 				dx2_cnt++;
 			}
@@ -1603,10 +1603,10 @@ REAL _dem_D2(const d_dem * fnc) {
 			v2 = *(ptr + (i+1) + j*NN);
 			v3 = *(ptr + i + (j+1)*NN);
 			v4 = *(ptr + (i+1) + (j+1)*NN);
-			if ((v1 != fnc->undef_value) && 
-				(v2 != fnc->undef_value) && 
-				(v3 != fnc->undef_value) && 
-				(v4 != fnc->undef_value) ) {
+			if ((v1 != srf->undef_value) && 
+				(v2 != srf->undef_value) && 
+				(v3 != srf->undef_value) && 
+				(v4 != srf->undef_value) ) {
 				dxdy += (v4-v3-v2+v1)*(v4-v3-v2+v1);
 				dxdy_cnt++;
 			}
@@ -1620,17 +1620,17 @@ REAL _dem_D2(const d_dem * fnc) {
 			v1 = *(ptr + i + j*NN);
 			v2 = *(ptr + i + (j+1)*NN);
 			v3 = *(ptr + i + (j+2)*NN);
-			if ((v1 != fnc->undef_value) && 
-				(v2 != fnc->undef_value) && 
-				(v3 != fnc->undef_value)) {
+			if ((v1 != srf->undef_value) && 
+				(v2 != srf->undef_value) && 
+				(v3 != srf->undef_value)) {
 				dy2 += (v3-2*v2+v1)*(v3-2*v2+v1);
 				dy2_cnt++;
 			}
 		}
 	}
 
-	REAL h_x_2 = (fnc->grd->stepX)*(fnc->grd->stepX);
-	REAL h_y_2 = (fnc->grd->stepY)*(fnc->grd->stepY);
+	REAL h_x_2 = (srf->grd->stepX)*(srf->grd->stepX);
+	REAL h_y_2 = (srf->grd->stepY)*(srf->grd->stepY);
 	writelog(LOG_DEBUG,"h_x_2 = %lf    h_y_2 = %lf",h_x_2, h_y_2);
 	writelog(LOG_DEBUG,"dx2_cnt = %d dy2_cnt = %d dxdy_cnt = %d",dx2_cnt, dy2_cnt, dxdy_cnt);
 	writelog(LOG_DEBUG,"dx2  = %lf",dx2);
@@ -1646,16 +1646,16 @@ REAL _dem_D2(const d_dem * fnc) {
 	return res;
 };
 
-void _add_globe_dems(d_dem * fnc) {
-	if (!fnc)
+void _add_globe_dems(d_dem * srf) {
+	if (!srf)
 		return;
-	globe_dems->push_back(fnc);
+	globe_dems->push_back(srf);
 };
 
-d_dem * _dem_gradient(const d_dem * fnc) {
+d_dem * _dem_gradient(const d_dem * srf) {
 	
-	int NN = fnc->getCountX();
-	int MM = fnc->getCountY();
+	int NN = srf->getCountX();
+	int MM = srf->getCountY();
 
 	bool first_x, second_x;
 	bool first_y, second_y;
@@ -1682,9 +1682,9 @@ d_dem * _dem_gradient(const d_dem * fnc) {
 				first_y = false;
 
 			pos = i + j*NN;
-			REAL pos_val = (*(fnc->coeff))(pos);
-			if (pos_val == fnc->undef_value) {
-				(*(coeff))(pos) = fnc->undef_value;
+			REAL pos_val = (*(srf->coeff))(pos);
+			if (pos_val == srf->undef_value) {
+				(*(coeff))(pos) = srf->undef_value;
 				continue;
 			}
 			REAL pos1_val;
@@ -1693,9 +1693,9 @@ d_dem * _dem_gradient(const d_dem * fnc) {
 
 			if (first_x) {
 				pos1 = (i+1) + j*NN;
-				pos1_val = (*(fnc->coeff))(pos1);
-				if (pos1_val == fnc->undef_value) {
-					(*(coeff))(pos) = fnc->undef_value;
+				pos1_val = (*(srf->coeff))(pos1);
+				if (pos1_val == srf->undef_value) {
+					(*(coeff))(pos) = srf->undef_value;
 					continue;
 				}
 				val += pos_val - pos1_val;
@@ -1703,9 +1703,9 @@ d_dem * _dem_gradient(const d_dem * fnc) {
 
 			if (second_x) {
 				pos1 = (i-1) + j*NN;
-				pos1_val = (*(fnc->coeff))(pos1);
-				if (pos1_val == fnc->undef_value) {
-					(*(coeff))(pos) = fnc->undef_value;
+				pos1_val = (*(srf->coeff))(pos1);
+				if (pos1_val == srf->undef_value) {
+					(*(coeff))(pos) = srf->undef_value;
 					continue;
 				}
 				val += pos1_val - pos_val;
@@ -1713,9 +1713,9 @@ d_dem * _dem_gradient(const d_dem * fnc) {
 
 			if (first_y) {
 				pos1 = (i) + (j+1)*NN;
-				pos1_val = (*(fnc->coeff))(pos1);
-				if (pos1_val == fnc->undef_value) {
-					(*(coeff))(pos) = fnc->undef_value;
+				pos1_val = (*(srf->coeff))(pos1);
+				if (pos1_val == srf->undef_value) {
+					(*(coeff))(pos) = srf->undef_value;
 					continue;
 				}
 				val += pos_val - pos1_val;
@@ -1723,9 +1723,9 @@ d_dem * _dem_gradient(const d_dem * fnc) {
 
 			if (second_y) {
 				pos1 = i + (j-1)*NN;
-				pos1_val = (*(fnc->coeff))(pos1);
-				if (pos1_val == fnc->undef_value) {
-					(*(coeff))(pos) = fnc->undef_value;
+				pos1_val = (*(srf->coeff))(pos1);
+				if (pos1_val == srf->undef_value) {
+					(*(coeff))(pos) = srf->undef_value;
 					continue;
 				}
 				val += pos1_val - pos_val;
@@ -1736,19 +1736,19 @@ d_dem * _dem_gradient(const d_dem * fnc) {
 		}
 	}
 
-	d_grid * grd = new d_grid(fnc->grd);
-	d_dem * res = create_dem(coeff, grd, fnc->getName());
+	d_grid * grd = new d_grid(srf->grd);
+	d_dem * res = create_dem(coeff, grd, srf->getName());
 	return res;
 
 };
 
-d_mask * _dem_to_mask(const d_dem * fnc, short true_from, short true_to) {
+d_mask * _dem_to_mask(const d_dem * srf, short true_from, short true_to) {
 	
-	bitvec * bcoeff = create_bitvec( fnc->coeff->size() );
+	bitvec * bcoeff = create_bitvec( srf->coeff->size() );
 	int i;
 	short val;
-	for (i = 0; i < fnc->coeff->size(); i++) {
-		val = (*(fnc->coeff))(i);
+	for (i = 0; i < srf->coeff->size(); i++) {
+		val = (*(srf->coeff))(i);
 		bool bval = ( (val >= true_from) && (val <= true_to) );
 		if (bval)
 			bcoeff->set_true(i);
@@ -1756,7 +1756,7 @@ d_mask * _dem_to_mask(const d_dem * fnc, short true_from, short true_to) {
 			bcoeff->set_false(i);
 	};
 
-	d_grid * fgrd = fnc->grd;
+	d_grid * fgrd = srf->grd;
 	d_grid * grd = new d_grid(fgrd);
 
 	d_mask * msk = create_mask(bcoeff, grd);
@@ -1764,53 +1764,53 @@ d_mask * _dem_to_mask(const d_dem * fnc, short true_from, short true_to) {
 	return msk;
 };
 
-d_func * _dem_to_func(const d_dem * fnc) {
+d_surf * _dem_to_surf(const d_dem * srf) {
 	
-	vec * coeff = create_vec( fnc->coeff->size() );
+	vec * coeff = create_vec( srf->coeff->size() );
 	int i;
 	short val;
-	for (i = 0; i < fnc->coeff->size(); i++) {
-		val = (*(fnc->coeff))(i);
-		if (val == fnc->undef_value)
+	for (i = 0; i < srf->coeff->size(); i++) {
+		val = (*(srf->coeff))(i);
+		if (val == srf->undef_value)
 			(*coeff)(i) = FLT_MAX;
 		else
 			(*coeff)(i) = (REAL)val;
 	};
 
-	d_grid * fgrd = fnc->grd;
+	d_grid * fgrd = srf->grd;
 	d_grid * grd = new d_grid(fgrd);
 
-	d_func * res = create_func(coeff, grd);
+	d_surf * res = create_surf(coeff, grd);
 
 	return res;
 };
 
-bool _dem_decomp(d_dem * fnc) {
-	if (!fnc)
+bool _dem_decomp(d_dem * srf) {
+	if (!srf)
 		return false;
 	
-	return fnc->decompose();
+	return srf->decompose();
 };
 
-bool _dem_auto_decomp(d_dem * fnc, REAL eps) {
-	if (!fnc)
+bool _dem_auto_decomp(d_dem * srf, REAL eps) {
+	if (!srf)
 		return false;
 
-	return fnc->auto_decompose(eps);
+	return srf->auto_decompose(eps);
 };
 
-bool _dem_recons(d_dem * fnc) {
-	if (!fnc)
+bool _dem_recons(d_dem * srf) {
+	if (!srf)
 		return false;
 
-	return fnc->reconstruct();
+	return srf->reconstruct();
 };
 
-bool _dem_full_recons(d_dem * fnc) {
-	if (!fnc)
+bool _dem_full_recons(d_dem * srf) {
+	if (!srf)
 		return false;
 
-	return fnc->full_reconstruct();
+	return srf->full_reconstruct();
 };
 
 

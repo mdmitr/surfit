@@ -20,11 +20,6 @@
 #ifndef __real_included__
 #define __real_included__
 
-namespace surfit {
-
-typedef unsigned char byte;
-
-
 ///*
 #undef REAL
 #define REAL double
@@ -36,10 +31,6 @@ typedef unsigned char byte;
 #define REAL float
 #define REAL_NAME "float"
 */
-
-}; // namespace surfit;
-
-
 
 #endif
 

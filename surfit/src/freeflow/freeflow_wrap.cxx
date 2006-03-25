@@ -1639,7 +1639,7 @@ SWIG_AsCharPtrAndSize(Tcl_Obj *obj, char** cptr, size_t* psize, int *alloc)
   #define SWIG_From_bool   Tcl_NewBooleanObj 
 
 
-#include "flow_func_tcl.h"
+#include "flow_surf_tcl.h"
 
 #include "f_lcm_simple_tcl.h"
 
@@ -2579,7 +2579,7 @@ _wrap_lcm_simple_add(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
 
 
 SWIGINTERN int
-_wrap_func_debit__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_surf_debit__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   REAL arg1 ;
   REAL arg2 ;
   REAL arg3 ;
@@ -2601,14 +2601,14 @@ _wrap_func_debit__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf6 = 0 ;
   int alloc6 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo:func_debit x y perm visc mult pos ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:surf_debit x y perm visc mult pos ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   {
     res1 = SWIG_ConvertPtr(objv[1], &argp1, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "func_debit" "', argument " "1"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_debit" "', argument " "1"" of type '" "REAL""'"); 
     }  
     if (!argp1) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit" "', argument " "1"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit" "', argument " "1"" of type '" "REAL""'");
     } else {
       arg1 = *(reinterpret_cast<REAL * >(argp1));
     }
@@ -2616,10 +2616,10 @@ _wrap_func_debit__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   {
     res2 = SWIG_ConvertPtr(objv[2], &argp2, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "func_debit" "', argument " "2"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "surf_debit" "', argument " "2"" of type '" "REAL""'"); 
     }  
     if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit" "', argument " "2"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit" "', argument " "2"" of type '" "REAL""'");
     } else {
       arg2 = *(reinterpret_cast<REAL * >(argp2));
     }
@@ -2627,10 +2627,10 @@ _wrap_func_debit__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   {
     res3 = SWIG_ConvertPtr(objv[3], &argp3, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "func_debit" "', argument " "3"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "surf_debit" "', argument " "3"" of type '" "REAL""'"); 
     }  
     if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit" "', argument " "3"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit" "', argument " "3"" of type '" "REAL""'");
     } else {
       arg3 = *(reinterpret_cast<REAL * >(argp3));
     }
@@ -2638,10 +2638,10 @@ _wrap_func_debit__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   {
     res4 = SWIG_ConvertPtr(objv[4], &argp4, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "func_debit" "', argument " "4"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "surf_debit" "', argument " "4"" of type '" "REAL""'"); 
     }  
     if (!argp4) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit" "', argument " "4"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit" "', argument " "4"" of type '" "REAL""'");
     } else {
       arg4 = *(reinterpret_cast<REAL * >(argp4));
     }
@@ -2649,23 +2649,23 @@ _wrap_func_debit__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   {
     res5 = SWIG_ConvertPtr(objv[5], &argp5, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res5)) {
-      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "func_debit" "', argument " "5"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "surf_debit" "', argument " "5"" of type '" "REAL""'"); 
     }  
     if (!argp5) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit" "', argument " "5"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit" "', argument " "5"" of type '" "REAL""'");
     } else {
       arg5 = *(reinterpret_cast<REAL * >(argp5));
     }
   }
   res6 = SWIG_AsCharPtrAndSize(objv[6], &buf6, NULL, &alloc6);
   if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "func_debit" "', argument " "6"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "surf_debit" "', argument " "6"" of type '" "char const *""'");
   }
   arg6 = buf6;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = surfit::func_debit(arg1,arg2,arg3,arg4,arg5,(char const *)arg6);
+        result = surfit::surf_debit(arg1,arg2,arg3,arg4,arg5,(char const *)arg6);
         
       }
     }
@@ -2683,7 +2683,7 @@ fail:
 
 
 SWIGINTERN int
-_wrap_func_debit__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_surf_debit__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   REAL arg1 ;
   REAL arg2 ;
   REAL arg3 ;
@@ -2701,14 +2701,14 @@ _wrap_func_debit__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   void *argp5 ;
   int res5 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:func_debit x y perm visc mult ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:surf_debit x y perm visc mult ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   {
     res1 = SWIG_ConvertPtr(objv[1], &argp1, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "func_debit" "', argument " "1"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_debit" "', argument " "1"" of type '" "REAL""'"); 
     }  
     if (!argp1) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit" "', argument " "1"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit" "', argument " "1"" of type '" "REAL""'");
     } else {
       arg1 = *(reinterpret_cast<REAL * >(argp1));
     }
@@ -2716,10 +2716,10 @@ _wrap_func_debit__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   {
     res2 = SWIG_ConvertPtr(objv[2], &argp2, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "func_debit" "', argument " "2"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "surf_debit" "', argument " "2"" of type '" "REAL""'"); 
     }  
     if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit" "', argument " "2"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit" "', argument " "2"" of type '" "REAL""'");
     } else {
       arg2 = *(reinterpret_cast<REAL * >(argp2));
     }
@@ -2727,10 +2727,10 @@ _wrap_func_debit__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   {
     res3 = SWIG_ConvertPtr(objv[3], &argp3, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "func_debit" "', argument " "3"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "surf_debit" "', argument " "3"" of type '" "REAL""'"); 
     }  
     if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit" "', argument " "3"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit" "', argument " "3"" of type '" "REAL""'");
     } else {
       arg3 = *(reinterpret_cast<REAL * >(argp3));
     }
@@ -2738,10 +2738,10 @@ _wrap_func_debit__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   {
     res4 = SWIG_ConvertPtr(objv[4], &argp4, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "func_debit" "', argument " "4"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "surf_debit" "', argument " "4"" of type '" "REAL""'"); 
     }  
     if (!argp4) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit" "', argument " "4"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit" "', argument " "4"" of type '" "REAL""'");
     } else {
       arg4 = *(reinterpret_cast<REAL * >(argp4));
     }
@@ -2749,10 +2749,10 @@ _wrap_func_debit__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   {
     res5 = SWIG_ConvertPtr(objv[5], &argp5, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res5)) {
-      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "func_debit" "', argument " "5"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "surf_debit" "', argument " "5"" of type '" "REAL""'"); 
     }  
     if (!argp5) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit" "', argument " "5"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit" "', argument " "5"" of type '" "REAL""'");
     } else {
       arg5 = *(reinterpret_cast<REAL * >(argp5));
     }
@@ -2760,7 +2760,7 @@ _wrap_func_debit__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = surfit::func_debit(arg1,arg2,arg3,arg4,arg5);
+        result = surfit::surf_debit(arg1,arg2,arg3,arg4,arg5);
         
       }
     }
@@ -2776,7 +2776,7 @@ fail:
 
 
 SWIGINTERN int
-_wrap_func_debit(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_surf_debit(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   Tcl_Obj *CONST *argv = objv+1;
   int argc = objc-1;
   if (argc == 5) {
@@ -2801,7 +2801,7 @@ _wrap_func_debit(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
             int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_REAL, 0);
             _v = SWIG_CheckState(res);
             if (_v) {
-              return _wrap_func_debit__SWIG_1(clientData, interp, objc, argv - 1);
+              return _wrap_surf_debit__SWIG_1(clientData, interp, objc, argv - 1);
             }
           }
         }
@@ -2833,7 +2833,7 @@ _wrap_func_debit(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
               int res = SWIG_AsCharPtrAndSize(argv[5], 0, NULL, 0);
               _v = SWIG_CheckState(res);
               if (_v) {
-                return _wrap_func_debit__SWIG_0(clientData, interp, objc, argv - 1);
+                return _wrap_surf_debit__SWIG_0(clientData, interp, objc, argv - 1);
               }
             }
           }
@@ -2842,13 +2842,13 @@ _wrap_func_debit(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
     }
   }
   
-  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'func_debit'", TCL_STATIC);
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'surf_debit'", TCL_STATIC);
   return TCL_ERROR;
 }
 
 
 SWIGINTERN int
-_wrap_func_debit_rect__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_surf_debit_rect__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   REAL arg1 ;
   REAL arg2 ;
   REAL arg3 ;
@@ -2876,14 +2876,14 @@ _wrap_func_debit_rect__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   char *buf8 = 0 ;
   int alloc8 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooooo:func_debit_rect x1 y1 x2 y2 perm visc mult pos ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooooo:surf_debit_rect x1 y1 x2 y2 perm visc mult pos ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   {
     res1 = SWIG_ConvertPtr(objv[1], &argp1, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "func_debit_rect" "', argument " "1"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_debit_rect" "', argument " "1"" of type '" "REAL""'"); 
     }  
     if (!argp1) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit_rect" "', argument " "1"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit_rect" "', argument " "1"" of type '" "REAL""'");
     } else {
       arg1 = *(reinterpret_cast<REAL * >(argp1));
     }
@@ -2891,10 +2891,10 @@ _wrap_func_debit_rect__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     res2 = SWIG_ConvertPtr(objv[2], &argp2, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "func_debit_rect" "', argument " "2"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "surf_debit_rect" "', argument " "2"" of type '" "REAL""'"); 
     }  
     if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit_rect" "', argument " "2"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit_rect" "', argument " "2"" of type '" "REAL""'");
     } else {
       arg2 = *(reinterpret_cast<REAL * >(argp2));
     }
@@ -2902,10 +2902,10 @@ _wrap_func_debit_rect__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     res3 = SWIG_ConvertPtr(objv[3], &argp3, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "func_debit_rect" "', argument " "3"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "surf_debit_rect" "', argument " "3"" of type '" "REAL""'"); 
     }  
     if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit_rect" "', argument " "3"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit_rect" "', argument " "3"" of type '" "REAL""'");
     } else {
       arg3 = *(reinterpret_cast<REAL * >(argp3));
     }
@@ -2913,10 +2913,10 @@ _wrap_func_debit_rect__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     res4 = SWIG_ConvertPtr(objv[4], &argp4, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "func_debit_rect" "', argument " "4"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "surf_debit_rect" "', argument " "4"" of type '" "REAL""'"); 
     }  
     if (!argp4) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit_rect" "', argument " "4"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit_rect" "', argument " "4"" of type '" "REAL""'");
     } else {
       arg4 = *(reinterpret_cast<REAL * >(argp4));
     }
@@ -2924,10 +2924,10 @@ _wrap_func_debit_rect__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     res5 = SWIG_ConvertPtr(objv[5], &argp5, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res5)) {
-      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "func_debit_rect" "', argument " "5"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "surf_debit_rect" "', argument " "5"" of type '" "REAL""'"); 
     }  
     if (!argp5) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit_rect" "', argument " "5"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit_rect" "', argument " "5"" of type '" "REAL""'");
     } else {
       arg5 = *(reinterpret_cast<REAL * >(argp5));
     }
@@ -2935,10 +2935,10 @@ _wrap_func_debit_rect__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     res6 = SWIG_ConvertPtr(objv[6], &argp6, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res6)) {
-      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "func_debit_rect" "', argument " "6"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "surf_debit_rect" "', argument " "6"" of type '" "REAL""'"); 
     }  
     if (!argp6) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit_rect" "', argument " "6"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit_rect" "', argument " "6"" of type '" "REAL""'");
     } else {
       arg6 = *(reinterpret_cast<REAL * >(argp6));
     }
@@ -2946,23 +2946,23 @@ _wrap_func_debit_rect__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     res7 = SWIG_ConvertPtr(objv[7], &argp7, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res7)) {
-      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "func_debit_rect" "', argument " "7"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "surf_debit_rect" "', argument " "7"" of type '" "REAL""'"); 
     }  
     if (!argp7) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit_rect" "', argument " "7"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit_rect" "', argument " "7"" of type '" "REAL""'");
     } else {
       arg7 = *(reinterpret_cast<REAL * >(argp7));
     }
   }
   res8 = SWIG_AsCharPtrAndSize(objv[8], &buf8, NULL, &alloc8);
   if (!SWIG_IsOK(res8)) {
-    SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "func_debit_rect" "', argument " "8"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "surf_debit_rect" "', argument " "8"" of type '" "char const *""'");
   }
   arg8 = buf8;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = surfit::func_debit_rect(arg1,arg2,arg3,arg4,arg5,arg6,arg7,(char const *)arg8);
+        result = surfit::surf_debit_rect(arg1,arg2,arg3,arg4,arg5,arg6,arg7,(char const *)arg8);
         
       }
     }
@@ -2980,7 +2980,7 @@ fail:
 
 
 SWIGINTERN int
-_wrap_func_debit_rect__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_surf_debit_rect__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   REAL arg1 ;
   REAL arg2 ;
   REAL arg3 ;
@@ -3004,14 +3004,14 @@ _wrap_func_debit_rect__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   void *argp7 ;
   int res7 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:func_debit_rect x1 y1 x2 y2 perm visc mult ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:surf_debit_rect x1 y1 x2 y2 perm visc mult ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   {
     res1 = SWIG_ConvertPtr(objv[1], &argp1, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "func_debit_rect" "', argument " "1"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_debit_rect" "', argument " "1"" of type '" "REAL""'"); 
     }  
     if (!argp1) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit_rect" "', argument " "1"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit_rect" "', argument " "1"" of type '" "REAL""'");
     } else {
       arg1 = *(reinterpret_cast<REAL * >(argp1));
     }
@@ -3019,10 +3019,10 @@ _wrap_func_debit_rect__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     res2 = SWIG_ConvertPtr(objv[2], &argp2, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "func_debit_rect" "', argument " "2"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "surf_debit_rect" "', argument " "2"" of type '" "REAL""'"); 
     }  
     if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit_rect" "', argument " "2"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit_rect" "', argument " "2"" of type '" "REAL""'");
     } else {
       arg2 = *(reinterpret_cast<REAL * >(argp2));
     }
@@ -3030,10 +3030,10 @@ _wrap_func_debit_rect__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     res3 = SWIG_ConvertPtr(objv[3], &argp3, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "func_debit_rect" "', argument " "3"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "surf_debit_rect" "', argument " "3"" of type '" "REAL""'"); 
     }  
     if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit_rect" "', argument " "3"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit_rect" "', argument " "3"" of type '" "REAL""'");
     } else {
       arg3 = *(reinterpret_cast<REAL * >(argp3));
     }
@@ -3041,10 +3041,10 @@ _wrap_func_debit_rect__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     res4 = SWIG_ConvertPtr(objv[4], &argp4, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "func_debit_rect" "', argument " "4"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "surf_debit_rect" "', argument " "4"" of type '" "REAL""'"); 
     }  
     if (!argp4) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit_rect" "', argument " "4"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit_rect" "', argument " "4"" of type '" "REAL""'");
     } else {
       arg4 = *(reinterpret_cast<REAL * >(argp4));
     }
@@ -3052,10 +3052,10 @@ _wrap_func_debit_rect__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     res5 = SWIG_ConvertPtr(objv[5], &argp5, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res5)) {
-      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "func_debit_rect" "', argument " "5"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "surf_debit_rect" "', argument " "5"" of type '" "REAL""'"); 
     }  
     if (!argp5) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit_rect" "', argument " "5"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit_rect" "', argument " "5"" of type '" "REAL""'");
     } else {
       arg5 = *(reinterpret_cast<REAL * >(argp5));
     }
@@ -3063,10 +3063,10 @@ _wrap_func_debit_rect__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     res6 = SWIG_ConvertPtr(objv[6], &argp6, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res6)) {
-      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "func_debit_rect" "', argument " "6"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "surf_debit_rect" "', argument " "6"" of type '" "REAL""'"); 
     }  
     if (!argp6) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit_rect" "', argument " "6"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit_rect" "', argument " "6"" of type '" "REAL""'");
     } else {
       arg6 = *(reinterpret_cast<REAL * >(argp6));
     }
@@ -3074,10 +3074,10 @@ _wrap_func_debit_rect__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     res7 = SWIG_ConvertPtr(objv[7], &argp7, SWIGTYPE_p_REAL,  0 );
     if (!SWIG_IsOK(res7)) {
-      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "func_debit_rect" "', argument " "7"" of type '" "REAL""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "surf_debit_rect" "', argument " "7"" of type '" "REAL""'"); 
     }  
     if (!argp7) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "func_debit_rect" "', argument " "7"" of type '" "REAL""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "surf_debit_rect" "', argument " "7"" of type '" "REAL""'");
     } else {
       arg7 = *(reinterpret_cast<REAL * >(argp7));
     }
@@ -3085,7 +3085,7 @@ _wrap_func_debit_rect__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = surfit::func_debit_rect(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
+        result = surfit::surf_debit_rect(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
         
       }
     }
@@ -3101,7 +3101,7 @@ fail:
 
 
 SWIGINTERN int
-_wrap_func_debit_rect(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_surf_debit_rect(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   Tcl_Obj *CONST *argv = objv+1;
   int argc = objc-1;
   if (argc == 7) {
@@ -3134,7 +3134,7 @@ _wrap_func_debit_rect(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
                 int res = SWIG_ConvertPtr(argv[6], &vptr, SWIGTYPE_p_REAL, 0);
                 _v = SWIG_CheckState(res);
                 if (_v) {
-                  return _wrap_func_debit_rect__SWIG_1(clientData, interp, objc, argv - 1);
+                  return _wrap_surf_debit_rect__SWIG_1(clientData, interp, objc, argv - 1);
                 }
               }
             }
@@ -3176,7 +3176,7 @@ _wrap_func_debit_rect(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
                   int res = SWIG_AsCharPtrAndSize(argv[7], 0, NULL, 0);
                   _v = SWIG_CheckState(res);
                   if (_v) {
-                    return _wrap_func_debit_rect__SWIG_0(clientData, interp, objc, argv - 1);
+                    return _wrap_surf_debit_rect__SWIG_0(clientData, interp, objc, argv - 1);
                   }
                 }
               }
@@ -3187,7 +3187,7 @@ _wrap_func_debit_rect(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
     }
   }
   
-  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'func_debit_rect'", TCL_STATIC);
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'surf_debit_rect'", TCL_STATIC);
   return TCL_ERROR;
 }
 
@@ -3200,8 +3200,8 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "prod_contour", (swig_wrapper_func) _wrap_prod_contour, NULL},
     { SWIG_prefix "lcm_simple", (swig_wrapper_func) _wrap_lcm_simple, NULL},
     { SWIG_prefix "lcm_simple_add", (swig_wrapper_func) _wrap_lcm_simple_add, NULL},
-    { SWIG_prefix "func_debit", (swig_wrapper_func) _wrap_func_debit, NULL},
-    { SWIG_prefix "func_debit_rect", (swig_wrapper_func) _wrap_func_debit_rect, NULL},
+    { SWIG_prefix "surf_debit", (swig_wrapper_func) _wrap_surf_debit, NULL},
+    { SWIG_prefix "surf_debit_rect", (swig_wrapper_func) _wrap_surf_debit_rect, NULL},
     {0, 0, 0}
 };
 

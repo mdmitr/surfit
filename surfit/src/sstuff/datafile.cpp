@@ -260,7 +260,7 @@ bool datafile::findTagEof() {
 	return true;
 };
 
-bool datafile::findTag(const char * tag) {
+bool datafile::findTag(const char * tag, const char * tag2) {
 	char tagname[TAG_WORD_SIZE];
 	char error[] = "find_tag : wrong datafile format";
 	
@@ -270,6 +270,12 @@ bool datafile::findTag(const char * tag) {
 	};
 	
 	while ( strcmp(tagname,tag) != 0 ) {
+
+		if (tag2 != NULL) {
+			if (strcmp(tagname, tag2) == 0)
+				break;
+		}
+
 		if (!skipTag(false)) {
 			writelog(LOG_ERROR, error);
 			return false;

@@ -30,8 +30,8 @@
 #include "grid_internal.h"
 #include "grid_tcl.h"
 #include "pnts_internal.h"
-#include "func.h"
-#include "func_internal.h"
+#include "surf.h"
+#include "surf_internal.h"
 #include "variables_internal.h"
 #include "variables.h"
 #include "data_manager.h"
@@ -168,23 +168,23 @@ bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * name, const cha
 	return (surfit_grid != NULL);
 };
 
-bool grid_get_for_func(int Xnodes, int Ynodes, const char * pos) {
-	d_func * fnc = get_element<d_func>(pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (!fnc)
+bool grid_get_for_surf(int Xnodes, int Ynodes, const char * pos) {
+	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (!srf)
 		return false;
 	grid_unload();
-	surfit_grid = _grid_get_for_func(fnc, Xnodes, Ynodes, fnc->getName());
+	surfit_grid = _grid_get_for_surf(srf, Xnodes, Ynodes, srf->getName());
 	grid_info();
 	return (surfit_grid != NULL);
 };
 
-bool grid_get_for_func_step(REAL stepX, REAL stepY, const char * pos) {
-	d_func * fnc = get_element<d_func>(pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (!fnc)
+bool grid_get_for_surf_step(REAL stepX, REAL stepY, const char * pos) {
+	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (!srf)
 		return false;
 
 	grid_unload();
-	surfit_grid = _grid_get_for_func_step(fnc, stepX, stepY, fnc->getName());
+	surfit_grid = _grid_get_for_surf_step(srf, stepX, stepY, srf->getName());
 	grid_info();
 	return (surfit_grid != NULL);
 };
@@ -196,12 +196,12 @@ bool grid_load(const char * filename, const char * gridname) {
 	return (surfit_grid != NULL);
 };
 
-bool grid_get_from_func(const char * pos) {
-	d_func * fnc = get_element<d_func>(pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (!fnc)
+bool grid_get_from_surf(const char * pos) {
+	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (!srf)
 		return false;
 	
-	d_grid * res = _grid_from_func(fnc);
+	d_grid * res = _grid_from_surf(srf);
 	if (!res)
 		return false;
 	grid_unload();

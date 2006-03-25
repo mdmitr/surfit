@@ -210,7 +210,7 @@ SOURCE=.\..\src\surfit\variables.cpp
 # Begin Group "data_cpp"
 
 # PROP Default_Filter ""
-# Begin Group "func_cpp"
+# Begin Group "surf_cpp"
 
 # PROP Default_Filter ""
 # Begin Group "mask_cpp"
@@ -231,24 +231,15 @@ SOURCE=..\src\surfit\mask_tcl.cpp
 # End Group
 # Begin Source File
 
-SOURCE=.\..\src\surfit\func.cpp
-
-!IF  "$(CFG)" == "surfit - Win32 Release"
-
-# ADD CPP /O2
-
-!ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
-
-!ENDIF 
-
+SOURCE=..\src\surfit\surf.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\src\surfit\func_internal.cpp
+SOURCE=..\src\surfit\surf_internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\src\surfit\func_tcl.cpp
+SOURCE=..\src\surfit\surf_tcl.cpp
 # End Source File
 # End Group
 # Begin Group "points_cpp"
@@ -429,15 +420,19 @@ SOURCE=..\src\surfit\f_area.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\surfit\f_area_func_ineq.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\src\surfit\f_area_ineq.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\src\surfit\f_area_mean.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area_surf.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area_surf_ineq.cpp
 # End Source File
 # Begin Source File
 
@@ -459,21 +454,29 @@ SOURCE=..\src\surfit\f_curv.cpp
 
 SOURCE=..\src\surfit\f_curv_ineq.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_curv_surf.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_curv_surf_ineq.cpp
+# End Source File
 # End Group
-# Begin Group "funcs.cpp"
+# Begin Group "surfs.cpp"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\src\surfit\f_func.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\f_func_ineq.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\src\surfit\f_mask.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_surf.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_surf_ineq.cpp
 # End Source File
 # Begin Source File
 
@@ -481,7 +484,7 @@ SOURCE=..\src\surfit\f_trend.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\surfit\funcs_tcl.cpp
+SOURCE=..\src\surfit\surfs_tcl.cpp
 # End Source File
 # End Group
 # Begin Source File
@@ -687,7 +690,7 @@ SOURCE=.\..\src\surfit\variables_tcl.h
 # Begin Group "data_h"
 
 # PROP Default_Filter ""
-# Begin Group "func_h"
+# Begin Group "surf_h"
 
 # PROP Default_Filter ""
 # Begin Group "mask_h"
@@ -708,15 +711,15 @@ SOURCE=..\src\surfit\mask_tcl.h
 # End Group
 # Begin Source File
 
-SOURCE=.\..\src\surfit\func.h
+SOURCE=..\src\surfit\surf.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\src\surfit\func_internal.h
+SOURCE=..\src\surfit\surf_internal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\src\surfit\func_tcl.h
+SOURCE=..\src\surfit\surf_tcl.h
 # End Source File
 # End Group
 # Begin Group "points_h"
@@ -888,15 +891,19 @@ SOURCE=..\src\surfit\f_area.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\surfit\f_area_func_ineq.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\src\surfit\f_area_ineq.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\src\surfit\f_area_mean.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area_surf.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area_surf_ineq.h
 # End Source File
 # Begin Source File
 
@@ -918,21 +925,29 @@ SOURCE=..\src\surfit\f_curv.h
 
 SOURCE=..\src\surfit\f_curv_ineq.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_curv_surf.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_curv_surf_ineq.h
+# End Source File
 # End Group
-# Begin Group "funcs.h"
+# Begin Group "surfs.h"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\src\surfit\f_func.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\f_func_ineq.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\src\surfit\f_mask.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_surf.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_surf_ineq.h
 # End Source File
 # Begin Source File
 
@@ -940,7 +955,7 @@ SOURCE=..\src\surfit\f_trend.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\surfit\funcs_tcl.h
+SOURCE=..\src\surfit\surfs_tcl.h
 # End Source File
 # End Group
 # Begin Source File

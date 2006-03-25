@@ -17,23 +17,27 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#ifndef __surfit_approx_trend_included__
-#define __surfit_approx_trend_included__
+#ifndef __surfit_f_curv_surf_included__
+#define __surfit_f_curv_surf_included__
 
 #include "functional.h"
 
 namespace surfit {
 
+class d_points;
 class d_surf;
-class matr;
-class vec;
+class f_points;
 class bitvec;
-class d_grid;
 
-class SURFIT_EXPORT f_trend : public functional, public faultable {
+/*! \class f_curv_surf
+    \brief functional for approximating curve with surface values
+*/
+class SURFIT_EXPORT f_curv_surf : public functional {
 public:
-	f_trend(REAL iD1, REAL iD2, const d_surf * isrf);
-	~f_trend();
+	//! constructor
+	f_curv_surf(const d_surf * isrf, const d_curv * icrv);
+	//! destructor
+	~f_curv_surf();
 
 	bool minimize();
 
@@ -46,30 +50,27 @@ public:
 	void mark_solved_and_undefined(bitvec * mask_solved, 
 				       bitvec * mask_undefined,
 				       bool i_am_cond);
-
-	void drop_private_data();
 	
 protected:
 
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
-	
-	bool minimize_step();
+
+	//! function for converting curve to points and creating \ref f_points functional
+	void create_f_approx_points();
+
+	//! curve for approximation
+	const d_curv * crv;
+	//! values for curve approximation
 	const d_surf * srf;
-	REAL D1;
-	REAL D2;
 
-	d_surf * tr_srf;
-	void get_tr_srf(int & i_from, int & i_to, int & j_from, int & j_to);
-
+	//! functional for points approximation
+	f_points * f_pnts;
+	//! points, received from curve and surface
+	d_points * pnts;
 };
 
-SURFIT_EXPORT
-d_grid * adopt_surf_grid(const d_surf * srf, d_grid * grd,
-			 int & from_x, int & to_x,
-			 int & from_y, int & to_y);
-
-}; // namespace surfit;
+}; // namespace surfit
 
 #endif
 

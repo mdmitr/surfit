@@ -325,21 +325,6 @@ void d_dem::minus(const d_dem * fnc) {
 	}
 };
 
-void d_dem::minus_undef(const d_dem * fnc) {
-	int i;
-	short val1, val2;
-	for (i = 0; i < coeff->size(); i++) {
-		val1 = (*fnc->coeff)(i);
-		val2 = (*coeff)(i);
-		if ( (val1 == undef_value) || (val2 == undef_value) ) {
-			(*coeff)(i) = undef_value;
-			continue;
-		}
-		if ((val1 != fnc->undef_value) && (val2 != this->undef_value))
-			(*coeff)(i) -= val1;
-	}
-};
-
 void d_dem::mult(const d_dem * fnc) {
 	int i;
 	short val1, val2;

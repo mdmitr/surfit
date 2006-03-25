@@ -26,19 +26,19 @@ namespace surfit {
 
 extern SURFIT_EXPORT bool method_ok;
 
+/*! \ingroup tcl
+    \fn void surfit();
+    executes gridding procedure
+*/    
 SURFIT_EXPORT 
-/*! \ingroup tcl
-    \fn void cmofs();
-    \brief executes CMOFS procedure (gridding)
-*/    
-void cmofs();
+void surfit();
 
-SURFIT_EXPORT
 /*! \ingroup tcl
-    \fn void clear_cmofs();
-    \brief removes all functionals
+    \fn void clear_rulescmofs();
+    removes all gridding rules
 */    
-void clear_cmofs();
+SURFIT_EXPORT
+void clear_rules();
 
 };
 

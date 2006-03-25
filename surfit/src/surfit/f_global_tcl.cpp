@@ -28,7 +28,7 @@
 #include "variables.h"
 #include "curv.h"
 #include "curv_internal.h"
-#include "func.h"
+#include "surf.h"
 #include "hist.h"
 
 namespace surfit {
@@ -40,11 +40,13 @@ bool completer(REAL D1, REAL D2) {
 };
 
 bool completer_add(REAL weight, REAL D1, REAL D2) {
-	if (functionals->size() == 0)
+	if (functionals->size() == 0) {
+		writelog(LOG_ERROR,"No gridding rule to modify!");
 		return false;
-	functional * fnc = *(functionals->end()-1);
+	}
+	functional * srf = *(functionals->end()-1);
 	f_completer * f_cmpltr = new f_completer(D1, D2);
-	fnc->add_functional(f_cmpltr, weight);
+	srf->add_functional(f_cmpltr, weight);
 	return true;
 };
 
@@ -55,11 +57,13 @@ bool value(REAL value) {
 };
 
 bool value_add(REAL weight, REAL value) {
-	if (functionals->size() == 0)
+	if (functionals->size() == 0) {
+		writelog(LOG_ERROR,"No gridding rule to modify!");
 		return false;
-	functional * fnc = *(functionals->end()-1);
+	}
+	functional * srf = *(functionals->end()-1);
 	f_value * f = new f_value(value);
-	fnc->add_functional(f, weight);
+	srf->add_functional(f, weight);
 	return true;
 };
 
@@ -69,12 +73,12 @@ bool mean(REAL value, REAL mult) {
 	return true;
 };
 
-bool wmean(REAL value, const char * func_pos, REAL mult) {
-	d_func * fnc = get_element<d_func>(func_pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+bool wmean(REAL value, const char * surf_pos, REAL mult) {
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
 
-	f_wmean * f = new f_wmean(value, fnc, mult);
+	f_wmean * f = new f_wmean(value, srf, mult);
 	functionals->push_back(f);
 	return true;
 };

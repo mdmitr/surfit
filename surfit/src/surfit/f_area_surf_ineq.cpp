@@ -21,22 +21,22 @@
 
 #include "fileio.h"
 
-#include "f_area_func_ineq.h"
+#include "f_area_surf_ineq.h"
 #include "bitvec.h"
 #include "vec.h"
 #include "matr_diag.h"
 #include "area.h"
 #include "grid_line.h"
 #include "grid.h"
-#include "func.h"
+#include "surf.h"
 
 #include "grid_user.h"
 #include "grid_line_user.h"
 
 namespace surfit {
 
-f_area_func_ineq::f_area_func_ineq(const d_func * ifnc, const d_area * iarea, bool ileq, REAL imult, bool iinside) :
-functional("f_area_func_ineq")
+f_area_surf_ineq::f_area_surf_ineq(const d_surf * ifnc, const d_area * iarea, bool ileq, REAL imult, bool iinside) :
+functional("f_area_surf_ineq")
 {
 	leq = ileq;
 	mult = imult;
@@ -46,16 +46,16 @@ functional("f_area_func_ineq")
 	area_mask = NULL;
 };
 
-f_area_func_ineq::~f_area_func_ineq() {
+f_area_surf_ineq::~f_area_surf_ineq() {
 	if (area_mask)
 		area_mask->release();
 };
 
-int f_area_func_ineq::this_get_data_count() const {
+int f_area_surf_ineq::this_get_data_count() const {
 	return 2;
 };
 
-const data * f_area_func_ineq::this_get_data(int pos) const {
+const data * f_area_surf_ineq::this_get_data(int pos) const {
 	if (pos == 0)
 		return area;
 	if (pos == 1)
@@ -63,13 +63,13 @@ const data * f_area_func_ineq::this_get_data(int pos) const {
 	return NULL;
 };
 
-bool f_area_func_ineq::minimize() {
+bool f_area_surf_ineq::minimize() {
 
 	return false;
 
 };
 
-bool f_area_func_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_area_surf_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	int points = 0;
 	
@@ -78,14 +78,14 @@ bool f_area_func_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	if (leq) {
 		if (area->getName()) 
-			writelog(LOG_MESSAGE,"inequality for area (%s) leq function", area->getName());
+			writelog(LOG_MESSAGE,"inequality for area (%s) leq surface", area->getName());
 		else
-			writelog(LOG_MESSAGE,"inequality for noname area leq function");
+			writelog(LOG_MESSAGE,"inequality for noname area leq surface");
 	} else {
 		if (area->getName())
-			writelog(LOG_MESSAGE,"inequality for area (%s) geq function", area->getName());
+			writelog(LOG_MESSAGE,"inequality for area (%s) geq surface", area->getName());
 		else
-			writelog(LOG_MESSAGE,"inequality for noname area geq function");
+			writelog(LOG_MESSAGE,"inequality for noname area geq surface");
 	}
 
 	get_area_mask();
@@ -160,7 +160,7 @@ bool f_area_func_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	return solvable;
 };
 
-void f_area_func_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+void f_area_surf_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 
 	get_area_mask();
 	if (area_mask == NULL)
@@ -183,7 +183,7 @@ void f_area_func_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * 
 
 };
 
-bool f_area_func_ineq::solvable_without_cond(const bitvec * mask_solved,
+bool f_area_surf_ineq::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
 					const vec * X)
 {
@@ -210,7 +210,7 @@ bool f_area_func_ineq::solvable_without_cond(const bitvec * mask_solved,
 
 };
 
-void f_area_func_ineq::get_area_mask() {
+void f_area_surf_ineq::get_area_mask() {
 
 	if (area_mask == NULL) {
 		area_mask = nodes_in_area_mask(area, method_grid, method_mask_undefined);
@@ -228,7 +228,7 @@ void f_area_func_ineq::get_area_mask() {
 
 };
 
-void f_area_func_ineq::drop_private_data() {
+void f_area_surf_ineq::drop_private_data() {
 	if (area_mask)
 		area_mask->release();
 	area_mask = NULL;

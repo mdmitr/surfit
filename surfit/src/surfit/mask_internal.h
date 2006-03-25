@@ -22,7 +22,7 @@
 
 namespace surfit {
 
-class d_func;
+class d_surf;
 class d_grid;
 class d_mask;
 class boolvec;
@@ -70,17 +70,17 @@ d_mask * _mask_load_grd(const char * filename, const char * maskname);
 
 SURFIT_EXPORT
 /*! \ingroup internal_mask
-    \fn d_mask * _mask_by_func(const d_func * fnc);
-    \brief makes \ref mask by \ref func using unmskined values
+    \fn d_mask * _mask_by_surf(const d_surf * srf);
+    \brief makes \ref mask by \ref surf using unmskined values
 */
-d_mask * _mask_by_func(const d_func * fnc);
+d_mask * _mask_by_surf(const d_surf * srf);
 
 SURFIT_EXPORT
 /*! \ingroup internal_mask
-    \fn bool _mask_apply_to_func(const d_mask * msk, d_func * fnc);
-    \brief sets fnc coefficients to \ref unmsk_value using mask
+    \fn bool _mask_apply_to_surf(const d_mask * msk, d_surf * srf);
+    \brief sets srf coefficients to \ref unmsk_value using mask
 */
-bool _mask_apply_to_func(const d_mask * msk, d_func * fnc);
+bool _mask_apply_to_surf(const d_mask * msk, d_surf * srf);
 
 SURFIT_EXPORT
 /*! \ingroup internal_mask

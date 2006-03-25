@@ -31,7 +31,7 @@ class d_grid;
 class d_points;
 class d_dem;
 class grid_line;
-class d_func;
+class d_surf;
 class d_mask;
 
 GLOBE_EXPORT
@@ -87,115 +87,115 @@ d_dem * _dem_load_grd(const char * filename, const char * demname);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn void _dem_unload(d_dem *& fnc);
+    \fn void _dem_unload(d_dem *& srf);
     \brief unloads dem from memory
 */
-bool _dem_unload(d_dem *& fnc);
+bool _dem_unload(d_dem *& srf);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn bool _dem_save(const d_dem * fnc, const char * filename);
+    \fn bool _dem_save(const d_dem * srf, const char * filename);
     \brief saves dem to ROFF file (see \ref datafile for details) in active \ref rw_mode
-    \param fnc dem class to save
+    \param srf dem class to save
     \param filename data file
 */
-bool _dem_save(const d_dem * fnc, const char * filename);
+bool _dem_save(const d_dem * srf, const char * filename);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn bool _dem_save_dtm(const d_dem * fnc, const char * filename);
+    \fn bool _dem_save_dtm(const d_dem * srf, const char * filename);
     \brief saves dem to DTM files (hdr + bin)
 */
-bool _dem_save_dtm(const d_dem * fnc, const char * filename);
+bool _dem_save_dtm(const d_dem * srf, const char * filename);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn bool _dem_save_df(const d_dem * fnc, datafile * df);
+    \fn bool _dem_save_df(const d_dem * srf, datafile * df);
     \brief writes dem tags to \ref datafile
 */
-bool _dem_save_df(const d_dem * fnc, datafile * df);
+bool _dem_save_df(const d_dem * srf, datafile * df);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn bool _dem_save_grd(const d_dem * fnc, const char * filename); 
+    \fn bool _dem_save_grd(const d_dem * srf, const char * filename); 
     \brief saves dem to SURFER grd file (ASCII format)
 */
-bool _dem_save_grd(const d_dem * fnc, const char * filename); 
+bool _dem_save_grd(const d_dem * srf, const char * filename); 
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn bool _dem_save_xyz(const d_dem * fnc, const char * filename);
+    \fn bool _dem_save_xyz(const d_dem * srf, const char * filename);
     \brief saves dem to XYZ text format
 */
-bool _dem_save_xyz(const d_dem * fnc, const char * filename);
+bool _dem_save_xyz(const d_dem * srf, const char * filename);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn d_points * _dem_to_points(const d_dem * fnc)
+    \fn d_points * _dem_to_points(const d_dem * srf)
     \brief converts \ref d_dem to \ref d_points
 */
-d_points * _dem_to_points(const d_dem * fnc);
+d_points * _dem_to_points(const d_dem * srf);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn d_func * _dem_to_func(const d_dem * fnc);
-    \brief converts \ref dem to \ref func
+    \fn d_surf * _dem_to_surf(const d_dem * srf);
+    \brief converts \ref dem to \ref surf
 */
-d_func * _dem_to_func(const d_dem * fnc);
+d_surf * _dem_to_surf(const d_dem * srf);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn d_defearea * _dem_to_mask(const d_dem * fnc, short true_from, short true_to);
+    \fn d_defearea * _dem_to_mask(const d_dem * srf, short true_from, short true_to);
     \brief converts \ref dem to \ref mask
 */
-d_mask * _dem_to_mask(const d_dem * fnc, short true_from, short true_to);
+d_mask * _dem_to_mask(const d_dem * srf, short true_from, short true_to);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn void _dem_info(const d_dem * fnc);
+    \fn void _dem_info(const d_dem * srf);
     \brief prints some info about demtion
 */
-void _dem_info(const d_dem * fnc);
+void _dem_info(const d_dem * srf);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn bool bool _dem_resid(const d_dem * fnc, const d_points * tsk, const char * filename);
-    \brief calculates residuals between values set at points in \ref task "tsk" and \ref dem "fnc". 
+    \fn bool bool _dem_resid(const d_dem * srf, const d_points * tsk, const char * filename);
+    \brief calculates residuals between values set at points in \ref task "tsk" and \ref dem "srf". 
     Saves result to text file.
 */
-bool _dem_resid(const d_dem * fnc, const d_points * tsk, const char * filename);
+bool _dem_resid(const d_dem * srf, const d_points * tsk, const char * filename);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn d_dem * _dem_project(const d_dem * fnc, const grid * grd);
-    \brief recalculates \ref dem "fnc" to new \ref grid "grd" using bilinear interpolation algorithm
+    \fn d_dem * _dem_project(const d_dem * srf, const grid * grd);
+    \brief recalculates \ref dem "srf" to new \ref grid "grd" using bilinear interpolation algorithm
 */
-d_dem * _dem_project(const d_dem * fnc, const d_grid * grd);
+d_dem * _dem_project(const d_dem * srf, const d_grid * grd);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn REAL _dem_D1(const d_dem * fnc);
+    \fn REAL _dem_D1(const d_dem * srf);
     \brief calculates value of 
     \f$ \int\limits_\Omega \left[ f_x^2 + f_y^2 \right] dx dy \f$ 
-    for demtion "fnc"
+    for demtion "srf"
 */
-REAL _dem_D1(const d_dem * fnc);
+REAL _dem_D1(const d_dem * srf);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn REAL _dem_D2(const d_dem * fnc);
+    \fn REAL _dem_D2(const d_dem * srf);
     \brief calculates value of 
     \f$ \int\limits_\Omega \left[ f_{xx}^2 + 2f_{xy}^2 + f_{yy}^2 \right] dx dy \f$ 
-    for demtion "fnc"
+    for demtion "srf"
 */
-REAL _dem_D2(const d_dem * fnc);
+REAL _dem_D2(const d_dem * srf);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
-    \fn void _add_surfit_dems(d_dem * fnc);
-    \brief adds fnc to \ref surfit_dems
+    \fn void _add_surfit_dems(d_dem * srf);
+    \brief adds srf to \ref surfit_dems
 */
-void _add_globe_dems(d_dem * fnc);
+void _add_globe_dems(d_dem * srf);
 
 GLOBE_EXPORT
 /*! \ingroup internal_dem
@@ -210,31 +210,31 @@ d_dem * _dem_gradient(const d_dem * dem);
 
 GLOBE_EXPORT
 /*! \ingroup int_dem_wavan
-    \fn bool _dem_decomp(d_dem * fnc);
+    \fn bool _dem_decomp(d_dem * srf);
     \brief makes one wavelet-decomposition 
 */
-bool _dem_decomp(d_dem * fnc);
+bool _dem_decomp(d_dem * srf);
 
 GLOBE_EXPORT
 /*! \ingroup int_dem_wavan
-    \fn bool _dem_auto_decomp(d_dem * fnc, REAL eps);
+    \fn bool _dem_auto_decomp(d_dem * srf, REAL eps);
     \brief calls _dem_decomp() while difference between calc_approx_norm() are lower than eps
 */
-bool _dem_auto_decomp(d_dem * fnc, REAL eps);
+bool _dem_auto_decomp(d_dem * srf, REAL eps);
 
 GLOBE_EXPORT
 /*! \ingroup int_dem_wavan
-    \fn bool _dem_recons(d_dem * fnc);
+    \fn bool _dem_recons(d_dem * srf);
     \brief makes one wavelet-reconstruction
 */
-bool _dem_recons(d_dem * fnc);
+bool _dem_recons(d_dem * srf);
 
 GLOBE_EXPORT
 /*! \ingroup int_dem_wavan
-    \fn bool _dem_full_recons(d_dem * fnc);
+    \fn bool _dem_full_recons(d_dem * srf);
     \brief makes all possible wavelet-reconstruction (recontructs original demtion)
 */
-bool _dem_full_recons(d_dem * fnc);
+bool _dem_full_recons(d_dem * srf);
 
 
 }; // namespace surfit;

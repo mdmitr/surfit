@@ -33,7 +33,7 @@ class d_area;
 class SURFIT_EXPORT f_area : public functional {
 public:
 	//! constructor
-	f_area(REAL ivalue, d_area * iarea, bool iinside = true);
+	f_area(REAL ivalue, const d_area * iarea, bool iinside = true);
 	//! destructor
 	~f_area();
 

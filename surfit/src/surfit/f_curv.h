@@ -26,12 +26,16 @@ namespace surfit {
 
 class d_points;
 class f_points;
-class curv;
 class bitvec;
 
+/*! \class f_curv
+    \brief functional for approximating curve with constant value
+*/
 class SURFIT_EXPORT f_curv : public functional {
 public:
-	f_curv(REAL ivalue, d_curv * icrv);
+	//! constructor
+	f_curv(REAL ivalue, const d_curv * icrv);
+	//! destructor
 	~f_curv();
 
 	bool minimize();
@@ -51,12 +55,17 @@ protected:
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
 
+	//! function for converting curve to points (with constant value) and creating \ref f_points functional
 	void create_f_approx_points();
 
+	//! curve for approximation
 	const d_curv * crv;
+	//! real number for curve approximation
 	REAL value;
 
+	//! functional for points approximation
 	f_points * f_pnts;
+	//! points, received from curve and "value"
 	d_points * pnts;
 };
 

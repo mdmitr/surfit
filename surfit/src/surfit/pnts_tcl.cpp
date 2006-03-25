@@ -30,8 +30,8 @@
 #include "points.h"
 #include "pnts_internal.h"
 #include "pnts_tcl.h"
-#include "func.h"
-#include "func_internal.h"
+#include "surf.h"
+#include "surf_internal.h"
 #include "mask.h"
 #include "mask_internal.h"
 #include "variables_internal.h"
@@ -127,13 +127,13 @@ bool pnts_write(const char * filename, const char * delimiter, const char * pos)
 	return _pnts_write(pnts, filename, buf);
 };
 
-bool pnts_filter_by_func(REAL eps, const char * pnts_pos, const char * func_pos) {
+bool pnts_filter_by_surf(REAL eps, const char * pnts_pos, const char * surf_pos) {
 
 	d_points * pnts = get_element<d_points>(pnts_pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;
 
-	d_func * fnc = get_element<d_func>(func_pos, surfit_funcs->begin(), surfit_funcs->end());
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (pnts == NULL)
 		return false;
 
@@ -152,7 +152,7 @@ bool pnts_filter_by_func(REAL eps, const char * pnts_pos, const char * func_pos)
 	REAL z_value;
 
 	for (;old_X_ptr != pnts->X->end(); old_X_ptr++, old_Y_ptr++, old_Z_ptr++) {
-		z_value = fnc->getValue(*old_X_ptr, *old_Y_ptr);
+		z_value = srf->getValue(*old_X_ptr, *old_Y_ptr);
 		if ( fabs(z_value - *old_Z_ptr) < eps ) {
 			*new_X_ptr = *old_X_ptr;
 			*new_Y_ptr = *old_Y_ptr;
@@ -401,14 +401,14 @@ bool pnts_set_real(REAL val, const char * pos) {
 	return true;
 };
 
-bool pnts_plus_func(const char * pos, const char * func_pos) {
+bool pnts_plus_surf(const char * pos, const char * surf_pos) {
 
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;
 
-	d_func * fnc = get_element<d_func>(func_pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
 
 	if (pnts->size() == 0)
@@ -423,8 +423,8 @@ bool pnts_plus_func(const char * pos, const char * func_pos) {
 		x = *(x_ptr + i);
 		y = *(y_ptr + i);
 		z = *(z_ptr + i);
-		Z = fnc->getValue(x,y);
-		if (Z != fnc->undef_value) {
+		Z = srf->getValue(x,y);
+		if (Z != srf->undef_value) {
 			*(z_ptr + i) = z + Z;
 		}
 	}
@@ -432,14 +432,14 @@ bool pnts_plus_func(const char * pos, const char * func_pos) {
 	return true;
 };
 
-bool pnts_minus_func(const char * pos, const char * func_pos) {
+bool pnts_minus_surf(const char * pos, const char * surf_pos) {
 
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;
 
-	d_func * fnc = get_element<d_func>(func_pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
 
 	if (pnts->size() == 0)
@@ -454,8 +454,8 @@ bool pnts_minus_func(const char * pos, const char * func_pos) {
 		x = *(x_ptr + i);
 		y = *(y_ptr + i);
 		z = *(z_ptr + i);
-		Z = fnc->getValue(x,y);
-		if (Z != fnc->undef_value) {
+		Z = srf->getValue(x,y);
+		if (Z != srf->undef_value) {
 			*(z_ptr + i) = z - Z;
 		}
 	}
@@ -463,14 +463,14 @@ bool pnts_minus_func(const char * pos, const char * func_pos) {
 	return true;
 };
 
-bool pnts_mult_func(const char * pos, const char * func_pos) {
+bool pnts_mult_surf(const char * pos, const char * surf_pos) {
 	
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;
 
-	d_func * fnc = get_element<d_func>(func_pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
 
 	if (pnts->size() == 0)
@@ -485,8 +485,8 @@ bool pnts_mult_func(const char * pos, const char * func_pos) {
 		x = *(x_ptr + i);
 		y = *(y_ptr + i);
 		z = *(z_ptr + i);
-		Z = fnc->getValue(x,y);
-		if (Z != fnc->undef_value) {
+		Z = srf->getValue(x,y);
+		if (Z != srf->undef_value) {
 			*(z_ptr + i) = z * Z;
 		}
 	}
@@ -494,14 +494,14 @@ bool pnts_mult_func(const char * pos, const char * func_pos) {
 	return true;
 };
 
-bool pnts_div_func(const char * pos, const char * func_pos) {
+bool pnts_div_surf(const char * pos, const char * surf_pos) {
 
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;
 
-	d_func * fnc = get_element<d_func>(func_pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
 
 	if (pnts->size() == 0)
@@ -516,8 +516,8 @@ bool pnts_div_func(const char * pos, const char * func_pos) {
 		x = *(x_ptr + i);
 		y = *(y_ptr + i);
 		z = *(z_ptr + i);
-		Z = fnc->getValue(x,y);
-		if (Z != fnc->undef_value) {
+		Z = srf->getValue(x,y);
+		if (Z != srf->undef_value) {
 			*(z_ptr + i) = z / Z;
 			if (Z == 0)
 				*(z_ptr + i) = 0;
@@ -528,14 +528,14 @@ bool pnts_div_func(const char * pos, const char * func_pos) {
 	return true;
 };
 
-bool pnts_set_func(const char * pos, const char * func_pos) {
+bool pnts_set_surf(const char * pos, const char * surf_pos) {
 
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;
 
-	d_func * fnc = get_element<d_func>(func_pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
 
 	if (pnts->size() == 0)
@@ -550,8 +550,8 @@ bool pnts_set_func(const char * pos, const char * func_pos) {
 		x = *(x_ptr + i);
 		y = *(y_ptr + i);
 		z = *(z_ptr + i);
-		Z = fnc->getValue(x,y);
-		if (Z != fnc->undef_value) {
+		Z = srf->getValue(x,y);
+		if (Z != srf->undef_value) {
 			*(z_ptr + i) = Z;
 		}
 	}
@@ -559,14 +559,14 @@ bool pnts_set_func(const char * pos, const char * func_pos) {
 	return true;
 };
 
-bool pnts_update_by_func(const char * pnts_pos, const char * func_pos) {
+bool pnts_update_by_surf(const char * pnts_pos, const char * surf_pos) {
 
 	d_points * pnts = get_element<d_points>(pnts_pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;
 
-	d_func * fnc = get_element<d_func>(func_pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
 
 	if (pnts->size() == 0)
@@ -580,7 +580,7 @@ bool pnts_update_by_func(const char * pnts_pos, const char * func_pos) {
 	for (i = 0; i < pnts->size(); i++) {
 		x = *(x_ptr + i);
 		y = *(y_ptr + i);
-		z = fnc->getValue(x,y);
+		z = srf->getValue(x,y);
 		*(z_ptr + i) = z;
 	}
 	return true;

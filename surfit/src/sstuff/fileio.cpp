@@ -261,7 +261,7 @@ int calc_columns(const char * Str, int readed) {
 
 	char * token = strtok( str, seps );
 	while (token != NULL) {
-		REAL val = atof(token);
+		REAL val = (REAL)atof(token);
 		if (val != 0)
 			columns++;
 		else {

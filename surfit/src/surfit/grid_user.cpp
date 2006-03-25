@@ -24,8 +24,8 @@
 #include "grid.h"
 #include "bitvec.h"
 #include "vec.h"
-#include "func.h"
-#include "func_tcl.h"
+#include "surf.h"
+#include "surf_tcl.h"
 #include "variables_tcl.h"
 #include "grid_tcl.h"
 #include "variables.h"
@@ -422,16 +422,16 @@ void grid_release() {
 
 	delete method_prev_grid;
 
-	d_func * res_func = create_func(method_X, new d_grid(method_grid), map_name);
+	d_surf * res_surf = create_surf(method_X, new d_grid(method_grid), map_name);
 	delete method_grid;
 	method_grid = NULL;
 	method_X = NULL;
 
-	res_func->undef_value = surfit::undef_value;
-	res_func->setName(map_name);
+	res_surf->undef_value = surfit::undef_value;
+	res_surf->setName(map_name);
 	
-	surfit_funcs->push_back(res_func);	
-	//func_project();
+	surfit_surfs->push_back(res_surf);	
+	//surf_project();
 
 };
 

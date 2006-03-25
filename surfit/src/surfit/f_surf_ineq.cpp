@@ -18,11 +18,11 @@
  *----------------------------------------------------------------------------*/
 
 #include "surfit_ie.h"
-#include "f_func_ineq.h"
+#include "f_surf_ineq.h"
 #include "vec.h"
 #include "bitvec.h"
 #include "matr_diag.h"
-#include "func.h"
+#include "surf.h"
 #include "grid.h"
 #include "grid_internal.h"
 
@@ -33,44 +33,44 @@
 
 namespace surfit {
 
-f_func_ineq::f_func_ineq(const d_func * ifnc, bool ileq, REAL imult) :
-functional("f_func_ineq")
+f_surf_ineq::f_surf_ineq(const d_surf * isrf, bool ileq, REAL imult) :
+functional("f_surf_ineq")
 {
 	leq = ileq;
-	fnc = ifnc;
-	if (fnc->getName()) {
-		setNameF("f_func_ineq %s", fnc->getName());
+	srf = isrf;
+	if (srf->getName()) {
+		setNameF("f_surf_ineq %s", srf->getName());
 	}
 	mult = imult;
 };
 
-f_func_ineq::~f_func_ineq() {};
+f_surf_ineq::~f_surf_ineq() {};
 
-int f_func_ineq::this_get_data_count() const {
+int f_surf_ineq::this_get_data_count() const {
 	return 1;
 };
 
-const data * f_func_ineq::this_get_data(int pos) const {
+const data * f_surf_ineq::this_get_data(int pos) const {
 	if (pos == 0)
-		return fnc;
+		return srf;
 	return false;
 };
 
-bool f_func_ineq::minimize() {
+bool f_surf_ineq::minimize() {
 
 	return false;
 
 };
 
-bool f_func_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_surf_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	int matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_vec(matrix_size);
 
-	if (fnc->getName()) {
-		writelog(LOG_MESSAGE,"func inequality: (%s), %d x %d", fnc->getName(), fnc->getCountX(), fnc->getCountY());
+	if (srf->getName()) {
+		writelog(LOG_MESSAGE,"surf inequality: (%s), %d x %d", srf->getName(), srf->getCountX(), srf->getCountY());
 	} else {
-		writelog(LOG_MESSAGE,"func inequality : noname dataset, %d x %d", fnc->getCountX(), fnc->getCountY());
+		writelog(LOG_MESSAGE,"surf inequality : noname dataset, %d x %d", srf->getCountX(), srf->getCountY());
 	}
 
 	bitvec * mask = create_bitvec(matrix_size);
@@ -79,14 +79,14 @@ bool f_func_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	vec * diag = create_vec(matrix_size);
 
 	int from_x, from_y, to_x, to_y;
-	_grid_intersect1(method_grid, fnc->grd,
+	_grid_intersect1(method_grid, srf->grd,
 		        from_x, to_x,
 		        from_y, to_y);
 	
 	int points = 0;
 
-	int fnc_sizeX = fnc->getCountX()-1;
-	int fnc_sizeY = fnc->getCountY()-1;
+	int srf_sizeX = srf->getCountX()-1;
+	int srf_sizeY = srf->getCountY()-1;
 	
 	REAL value;
 	REAL stepX2 = method_grid->stepX/REAL(2);
@@ -109,10 +109,10 @@ bool f_func_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 			REAL x, y;
 			method_grid->getCoordNode(i, j, x, y);
 
-			//value = fnc->getMeanValue(x-stepX2, x+stepX2, y-stepY2, y+stepY2);
-			value = fnc->getInterpValue(x, y);
+			//value = srf->getMeanValue(x-stepX2, x+stepX2, y-stepY2, y+stepY2);
+			value = srf->getInterpValue(x, y);
 
-			if (value == fnc->undef_value)
+			if (value == srf->undef_value)
 				continue;
 
 			REAL x_value = (*method_X)(pos);
@@ -156,10 +156,10 @@ bool f_func_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	return solvable;
 };
 
-void f_func_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+void f_surf_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 
 	int from_x, from_y, to_x, to_y;
-	_grid_intersect1(method_grid, fnc->grd,
+	_grid_intersect1(method_grid, srf->grd,
 		        from_x, to_x,
 		        from_y, to_y);
 	
@@ -181,10 +181,10 @@ void f_func_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 			REAL x, y;
 			method_grid->getCoordNode(i, j, x, y);
 
-			//value = fnc->getMeanValue(x-stepX2, x+stepX2, y-stepY2, y+stepY2);
-			value = fnc->getInterpValue(x, y);
+			//value = srf->getMeanValue(x-stepX2, x+stepX2, y-stepY2, y+stepY2);
+			value = srf->getInterpValue(x, y);
 
-			if (value == fnc->undef_value)
+			if (value == srf->undef_value)
 				continue;
 
 			mask_solved->set_true(pos);
@@ -196,13 +196,13 @@ void f_func_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 	
 };
 
-bool f_func_ineq::solvable_without_cond(const bitvec * mask_solved,
+bool f_surf_ineq::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
 					const vec * X) 
 {
 
 	int from_x, from_y, to_x, to_y;
-	_grid_intersect1(method_grid, fnc->grd,
+	_grid_intersect1(method_grid, srf->grd,
 		        from_x, to_x,
 		        from_y, to_y);
 	

@@ -1610,7 +1610,7 @@ SWIGEXPORT int SWIG_init(Tcl_Interp *);
 #include "globe.h"
 #include "globe_variables.h"
 #include "dem_tcl.h"
-#include "globe_func_tcl.h"
+#include "globe_surf_tcl.h"
 #include "variables_tcl.h"
 
 #include "dems_tcl.h"
@@ -3907,51 +3907,6 @@ fail:
 
 
 SWIGINTERN int
-_wrap_dem_minus_undef(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  char *arg1 = (char *) 0 ;
-  char *arg2 = (char *) 0 ;
-  bool result;
-  int res1 ;
-  char *buf1 = 0 ;
-  int alloc1 = 0 ;
-  int res2 ;
-  char *buf2 = 0 ;
-  int alloc2 = 0 ;
-  
-  if (SWIG_GetArgs(interp, objc, objv,"oo:dem_minus_undef pos1 pos2 ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
-  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "dem_minus_undef" "', argument " "1"" of type '" "char const *""'");
-  }
-  arg1 = buf1;
-  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "dem_minus_undef" "', argument " "2"" of type '" "char const *""'");
-  }
-  arg2 = buf2;
-  {
-    try {
-      if (surfit::stop_execution == 0) {
-        result = (bool)surfit::dem_minus_undef((char const *)arg1,(char const *)arg2);
-        
-      }
-    }
-    catch(...) {
-      return TCL_ERROR;
-    }
-  }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  return TCL_OK;
-fail:
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  return TCL_ERROR;
-}
-
-
-SWIGINTERN int
 _wrap_dem_mult(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -5236,7 +5191,7 @@ _wrap_dem_to_points(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
 
 
 SWIGINTERN int
-_wrap_dem_to_func__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_dem_to_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
   bool result;
@@ -5247,21 +5202,21 @@ _wrap_dem_to_func__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:dem_to_func pos new_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:dem_to_surf pos new_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "dem_to_func" "', argument " "1"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "dem_to_surf" "', argument " "1"" of type '" "char const *""'");
   }
   arg1 = buf1;
   res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "dem_to_func" "', argument " "2"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "dem_to_surf" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = buf2;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::dem_to_func((char const *)arg1,(char const *)arg2);
+        result = (bool)surfit::dem_to_surf((char const *)arg1,(char const *)arg2);
         
       }
     }
@@ -5281,23 +5236,23 @@ fail:
 
 
 SWIGINTERN int
-_wrap_dem_to_func__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_dem_to_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:dem_to_func pos ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:dem_to_surf pos ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "dem_to_func" "', argument " "1"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "dem_to_surf" "', argument " "1"" of type '" "char const *""'");
   }
   arg1 = buf1;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::dem_to_func((char const *)arg1);
+        result = (bool)surfit::dem_to_surf((char const *)arg1);
         
       }
     }
@@ -5315,14 +5270,14 @@ fail:
 
 
 SWIGINTERN int
-_wrap_dem_to_func__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_dem_to_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,":dem_to_func ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":dem_to_surf ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::dem_to_func();
+        result = (bool)surfit::dem_to_surf();
         
       }
     }
@@ -5338,18 +5293,18 @@ fail:
 
 
 SWIGINTERN int
-_wrap_dem_to_func(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_dem_to_surf(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   Tcl_Obj *CONST *argv = objv+1;
   int argc = objc-1;
   if (argc == 0) {
-    return _wrap_dem_to_func__SWIG_2(clientData, interp, objc, argv - 1);
+    return _wrap_dem_to_surf__SWIG_2(clientData, interp, objc, argv - 1);
   }
   if (argc == 1) {
     int _v;
     int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_dem_to_func__SWIG_1(clientData, interp, objc, argv - 1);
+      return _wrap_dem_to_surf__SWIG_1(clientData, interp, objc, argv - 1);
     }
   }
   if (argc == 2) {
@@ -5360,12 +5315,12 @@ _wrap_dem_to_func(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_dem_to_func__SWIG_0(clientData, interp, objc, argv - 1);
+        return _wrap_dem_to_surf__SWIG_0(clientData, interp, objc, argv - 1);
       }
     }
   }
   
-  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'dem_to_func'", TCL_STATIC);
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'dem_to_surf'", TCL_STATIC);
   return TCL_ERROR;
 }
 
@@ -5506,23 +5461,23 @@ _wrap_dem_to_mask(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
 
 
 SWIGINTERN int
-_wrap_func_to_dem__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_surf_to_dem__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:func_to_dem func_pos ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_to_dem surf_pos ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "func_to_dem" "', argument " "1"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_to_dem" "', argument " "1"" of type '" "char const *""'");
   }
   arg1 = buf1;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::func_to_dem((char const *)arg1);
+        result = (bool)surfit::surf_to_dem((char const *)arg1);
         
       }
     }
@@ -5540,14 +5495,14 @@ fail:
 
 
 SWIGINTERN int
-_wrap_func_to_dem__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_surf_to_dem__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,":func_to_dem ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":surf_to_dem ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::func_to_dem();
+        result = (bool)surfit::surf_to_dem();
         
       }
     }
@@ -5563,22 +5518,22 @@ fail:
 
 
 SWIGINTERN int
-_wrap_func_to_dem(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_surf_to_dem(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   Tcl_Obj *CONST *argv = objv+1;
   int argc = objc-1;
   if (argc == 0) {
-    return _wrap_func_to_dem__SWIG_1(clientData, interp, objc, argv - 1);
+    return _wrap_surf_to_dem__SWIG_1(clientData, interp, objc, argv - 1);
   }
   if (argc == 1) {
     int _v;
     int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_func_to_dem__SWIG_0(clientData, interp, objc, argv - 1);
+      return _wrap_surf_to_dem__SWIG_0(clientData, interp, objc, argv - 1);
     }
   }
   
-  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'func_to_dem'", TCL_STATIC);
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'surf_to_dem'", TCL_STATIC);
   return TCL_ERROR;
 }
 
@@ -6372,7 +6327,6 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "dem_maxz", (swig_wrapper_func) _wrap_dem_maxz, NULL},
     { SWIG_prefix "dem_plus", (swig_wrapper_func) _wrap_dem_plus, NULL},
     { SWIG_prefix "dem_minus", (swig_wrapper_func) _wrap_dem_minus, NULL},
-    { SWIG_prefix "dem_minus_undef", (swig_wrapper_func) _wrap_dem_minus_undef, NULL},
     { SWIG_prefix "dem_mult", (swig_wrapper_func) _wrap_dem_mult, NULL},
     { SWIG_prefix "dem_div", (swig_wrapper_func) _wrap_dem_div, NULL},
     { SWIG_prefix "dem_set", (swig_wrapper_func) _wrap_dem_set, NULL},
@@ -6387,9 +6341,9 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "dem_recons", (swig_wrapper_func) _wrap_dem_recons, NULL},
     { SWIG_prefix "dem_full_recons", (swig_wrapper_func) _wrap_dem_full_recons, NULL},
     { SWIG_prefix "dem_to_points", (swig_wrapper_func) _wrap_dem_to_points, NULL},
-    { SWIG_prefix "dem_to_func", (swig_wrapper_func) _wrap_dem_to_func, NULL},
+    { SWIG_prefix "dem_to_surf", (swig_wrapper_func) _wrap_dem_to_surf, NULL},
     { SWIG_prefix "dem_to_mask", (swig_wrapper_func) _wrap_dem_to_mask, NULL},
-    { SWIG_prefix "func_to_dem", (swig_wrapper_func) _wrap_func_to_dem, NULL},
+    { SWIG_prefix "surf_to_dem", (swig_wrapper_func) _wrap_surf_to_dem, NULL},
     { SWIG_prefix "dem_getCountX", (swig_wrapper_func) _wrap_dem_getCountX, NULL},
     { SWIG_prefix "dem_getCountY", (swig_wrapper_func) _wrap_dem_getCountY, NULL},
     { SWIG_prefix "dem_getStepX", (swig_wrapper_func) _wrap_dem_getStepX, NULL},

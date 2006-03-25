@@ -66,10 +66,10 @@ CLEAN :
 	-@erase "$(INTDIR)\globe.sbr"
 	-@erase "$(INTDIR)\globe_data_manager.obj"
 	-@erase "$(INTDIR)\globe_data_manager.sbr"
-	-@erase "$(INTDIR)\globe_func_internal.obj"
-	-@erase "$(INTDIR)\globe_func_internal.sbr"
-	-@erase "$(INTDIR)\globe_func_tcl.obj"
-	-@erase "$(INTDIR)\globe_func_tcl.sbr"
+	-@erase "$(INTDIR)\globe_surf_internal.obj"
+	-@erase "$(INTDIR)\globe_surf_internal.sbr"
+	-@erase "$(INTDIR)\globe_surf_tcl.obj"
+	-@erase "$(INTDIR)\globe_surf_tcl.sbr"
 	-@erase "$(INTDIR)\globe_variables.obj"
 	-@erase "$(INTDIR)\globe_variables.sbr"
 	-@erase "$(INTDIR)\globe_wrap.obj"
@@ -97,8 +97,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\dem.sbr" \
 	"$(INTDIR)\dem_internal.sbr" \
 	"$(INTDIR)\dem_tcl.sbr" \
-	"$(INTDIR)\globe_func_internal.sbr" \
-	"$(INTDIR)\globe_func_tcl.sbr" \
+	"$(INTDIR)\globe_surf_internal.sbr" \
+	"$(INTDIR)\globe_surf_tcl.sbr" \
 	"$(INTDIR)\dems_tcl.sbr" \
 	"$(INTDIR)\f_dem.sbr" \
 	"$(INTDIR)\ioapi.sbr" \
@@ -120,8 +120,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\dem.obj" \
 	"$(INTDIR)\dem_internal.obj" \
 	"$(INTDIR)\dem_tcl.obj" \
-	"$(INTDIR)\globe_func_internal.obj" \
-	"$(INTDIR)\globe_func_tcl.obj" \
+	"$(INTDIR)\globe_surf_internal.obj" \
+	"$(INTDIR)\globe_surf_tcl.obj" \
 	"$(INTDIR)\dems_tcl.obj" \
 	"$(INTDIR)\f_dem.obj" \
 	"$(INTDIR)\ioapi.obj" \
@@ -176,10 +176,10 @@ CLEAN :
 	-@erase "$(INTDIR)\globe.sbr"
 	-@erase "$(INTDIR)\globe_data_manager.obj"
 	-@erase "$(INTDIR)\globe_data_manager.sbr"
-	-@erase "$(INTDIR)\globe_func_internal.obj"
-	-@erase "$(INTDIR)\globe_func_internal.sbr"
-	-@erase "$(INTDIR)\globe_func_tcl.obj"
-	-@erase "$(INTDIR)\globe_func_tcl.sbr"
+	-@erase "$(INTDIR)\globe_surf_internal.obj"
+	-@erase "$(INTDIR)\globe_surf_internal.sbr"
+	-@erase "$(INTDIR)\globe_surf_tcl.obj"
+	-@erase "$(INTDIR)\globe_surf_tcl.sbr"
 	-@erase "$(INTDIR)\globe_variables.obj"
 	-@erase "$(INTDIR)\globe_variables.sbr"
 	-@erase "$(INTDIR)\globe_wrap.obj"
@@ -210,8 +210,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\dem.sbr" \
 	"$(INTDIR)\dem_internal.sbr" \
 	"$(INTDIR)\dem_tcl.sbr" \
-	"$(INTDIR)\globe_func_internal.sbr" \
-	"$(INTDIR)\globe_func_tcl.sbr" \
+	"$(INTDIR)\globe_surf_internal.sbr" \
+	"$(INTDIR)\globe_surf_tcl.sbr" \
 	"$(INTDIR)\dems_tcl.sbr" \
 	"$(INTDIR)\f_dem.sbr" \
 	"$(INTDIR)\ioapi.sbr" \
@@ -233,8 +233,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\dem.obj" \
 	"$(INTDIR)\dem_internal.obj" \
 	"$(INTDIR)\dem_tcl.obj" \
-	"$(INTDIR)\globe_func_internal.obj" \
-	"$(INTDIR)\globe_func_tcl.obj" \
+	"$(INTDIR)\globe_surf_internal.obj" \
+	"$(INTDIR)\globe_surf_tcl.obj" \
 	"$(INTDIR)\dems_tcl.obj" \
 	"$(INTDIR)\f_dem.obj" \
 	"$(INTDIR)\ioapi.obj" \
@@ -313,15 +313,15 @@ SOURCE=..\src\globe\dem_tcl.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\src\globe\globe_func_internal.cpp
+SOURCE=..\src\globe\globe_surf_internal.cpp
 
-"$(INTDIR)\globe_func_internal.obj"	"$(INTDIR)\globe_func_internal.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\globe_surf_internal.obj"	"$(INTDIR)\globe_surf_internal.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\src\globe\globe_func_tcl.cpp
+SOURCE=..\src\globe\globe_surf_tcl.cpp
 
-"$(INTDIR)\globe_func_tcl.obj"	"$(INTDIR)\globe_func_tcl.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\globe_surf_tcl.obj"	"$(INTDIR)\globe_surf_tcl.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

@@ -64,7 +64,7 @@ Function .onInit
   ReadRegStr $STARTMENU_FOLDER HKCU "Software\surfit" "StartMenuFolder"
   ReadRegStr $SURFIT_VERSION HKCU "Software\surfit" "Version"
 
-  ${VersionCompare} "1.0" $SURFIT_VERSION" $R0
+  ${VersionCompare} "2.0" $SURFIT_VERSION" $R0
 
   InitPluginsDir
 

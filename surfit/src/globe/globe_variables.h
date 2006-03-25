@@ -25,7 +25,7 @@ struct Tcl_Interp;
 
 namespace surfit {
 
-#define GLOBE_VERSION "1.0"
+#define GLOBE_VERSION "2.0"
 
 GLOBE_EXPORT
 void globe_init_variables(Tcl_Interp * interp);

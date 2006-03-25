@@ -66,8 +66,8 @@ int penalty_max_iter = 150;
 REAL penalty_weight = 1;
 REAL penalty_weight_mult = 2;
 
-REAL sor_omega = 0.6;
-REAL ssor_omega = 0.6;
+REAL sor_omega = REAL(0.6);
+REAL ssor_omega = REAL(0.6);
 
 REAL undef_value = FLT_MAX;
 

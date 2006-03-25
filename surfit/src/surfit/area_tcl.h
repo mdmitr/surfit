@@ -29,9 +29,13 @@ namespace surfit {
     \fn bool area_read(const char * filename, const char * areaname=NULL	, 
 	       int col1=1, int col2=2,
 	       const char * delimiters=" ", int skip_lines = 0, int grow_by=250);
-    reads \ref d_area "area" from formatted text file and sets its name to "areaname"
+    
     \par Tcl syntax:
     area_read "filename" "area_name" first_column_position second_column_position "delimiters" skip_lines
+
+    \par Description:
+    reads \ref d_area "area" from formatted text file and sets its name to "areaname"
+    
     \param filename name of formatted text file
     \param areaname name for \ref d_area "area" dataset
     \param col1 column with X coordinates
@@ -50,9 +54,13 @@ bool area_read(const char * filename, const char * areaname=NULL	,
 
 /*! \ingroup tcl_area_save_load
     \fn bool area_read_bln(const char * filename, const char * areaname = NULL);
-    reads \ref d_area "area" from Surfer BLN files and sets its name to "areaname"
+    
     \par Tcl syntax:
     area_read_read "filename" "area_name" 
+
+    \par Description:
+    reads \ref d_area "area" from Surfer BLN files and sets its name to "areaname"
+
     \par Example
     area_read_bln "C:\\area.bln" area_from_bln
 */
@@ -61,12 +69,17 @@ bool area_read_bln(const char * filename, const char * areaname = NULL);
 
 /*! \ingroup tcl_area_save_load
     \fn bool area_write(const char * filename, const char * area_name_or_position, const char * delimiter);
-    writes \ref d_area "area" to formatted text file
+    
     \par Tcl syntax:
     area_write "filename" "area_name_or_position" "delimiter"
+
+    \par Description:
+    writes \ref d_area "area" to formatted text file
+
     \param filename text file filename
-    \param area_name_or_position area name or position number
+    \param area_name_or_position area name, or area position number
     \param delimiter delimiter between columns. May be " ", "\t", "," or other symbols
+    
     \par Example
     area_write "C:\\area.txt" my_area
 */
@@ -75,12 +88,17 @@ bool area_write(const char * filename, const char * area_name_or_position = "0",
 
 /*! \ingroup tcl_area_save_load
     \fn bool area_write_bln(const char * filename, const char * area_name_or_position = "0", int orient = 1);
-    writes \ref d_area "area" to Surfer BLN file
+    
     \par Tcl syntax:
     area_write_bln "filename" "area_name_or_position" orient
+
+    \par Description:
+    writes \ref d_area "area" to Surfer BLN file
+
     \param filename name for BLN file
-    \param area_name_or_position area name or position number
+    \param area_name_or_position area name, or area position number
     \param orient This value is equal to 1 if the region is inside area and equal to 0 if the region is outside area 
+    
     \par Example
     area_write_bln "C:\\area.bln" my_area 1
 */
@@ -89,11 +107,16 @@ bool area_write_bln(const char * filename, const char * area_name_or_position = 
 
 /*! \ingroup tcl_area_save_load
     \fn bool area_save(const char * filename, const char * area_name_or_position = "0");
-    saves \ref d_area "area" to surfit datafile
+    
     \par Tcl syntax:
     area_save "filename" "area_name_or_position"
+
+    \par Description:
+    saves \ref d_area "area" to surfit datafile
+
     \param filename Surfer BLN file
-    \param area_name_or_position \ref d_area "area" name or position number
+    \param area_name_or_position \ref d_area "area" name, or area position number
+    
     \par Example
     area_save "C:\\area.dat" my_area
 */
@@ -102,11 +125,17 @@ bool area_save(const char * filename, const char * area_name_or_position = "0");
 
 /*! \ingroup tcl_area_save_load
     \fn bool area_load(const char * filename, const char * area_name = NULL);
-    loads \ref d_area "area" from surfit datafile. if no areaname specified, then loads the first area in the file.
+    
     \par Tcl syntax:
     area_load "filename" "area_name"
+
+    \par Description:
+    loads \ref d_area "area" from surfit datafile. if no areaname specified, 
+    then loads the first area in the file.
+
     \param filename surfit datafile filename
     \param area_name \ref d_area "area" name for load
+    
     \par Example
     area_load "C:\\area.dat" my_area
 */
@@ -118,51 +147,61 @@ bool area_load(const char * filename, const char * area_name = NULL);
 
 /*! \ingroup tcl_area_other
     \fn const char * area_getName(const char * area_name_or_position = "0");
-    returns name of \ref area 
-
+    
     \par Tcl syntax:
     area_getName "area_name_or_position"
+
+    \par Description:
+    returns name of \ref area 
 */
 SURFIT_EXPORT
 const char * area_getName(const char * area_name_or_position = "0");
 
 /*! \ingroup tcl_area_other
     \fn bool area_setName(const char * new_name, const char * area_name_or_position = "0");
-    sets name of \ref area 
-
+    
     \par Tcl syntax:
     area_setName new_name "area_name_or_position"
+
+    \par Description:
+    sets name of \ref area 
 */
 SURFIT_EXPORT
 bool area_setName(const char * new_name, const char * area_name_or_position = "0");
 
-/*! \ingroup tcl_area
+/*! \ingroup tcl_area_other
     \fn bool area_delall();
-    removes all areas from memory
-
+    
     \par Tcl syntax:
     area_delall
+
+    \par Description:
+    removes all areas from memory
 */
 SURFIT_EXPORT
 bool area_delall();
 
-/*! \ingroup tcl_area
+/*! \ingroup tcl_area_other
     \fn bool area_del(const char * area_name_or_position = "0");
-    removes \ref area from at 'area_name_or_position' position
-    
+        
     \par Tcl syntax:
     area_del "area_name_or_position"
+
+    \par Description:
+    removes \ref area from at 'area_name_or_position' position
 
 */
 SURFIT_EXPORT
 bool area_del(const char * area_name_or_position = "0");
 
-/*! \ingroup tcl_area
+/*! \ingroup tcl_area_other
     \fn int area_size();
-    returns number of areas in memory 
-
+    
     \par Tcl syntax:
     area_size
+
+    \par Description:
+    returns number of areas in memory 
 */
 SURFIT_EXPORT
 int area_size();
@@ -170,12 +209,14 @@ int area_size();
 SURFIT_EXPORT
 bool area_invert(const char * area_name_or_position = "0");
 
-/*! \ingroup tcl_area
+/*! \ingroup tcl_area_other
     \fn void areas_info();
-    prints information about all areas  
-
+    
     \par Tcl syntax:
     areas_info
+
+    \par Description:
+    prints information about all areas  
 */
 SURFIT_EXPORT
 void areas_info();

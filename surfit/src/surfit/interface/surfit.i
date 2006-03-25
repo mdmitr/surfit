@@ -47,6 +47,7 @@ surfit::surfit_init_variables(interp);
 %}
 
 namespace surfit {
+
 %exception {
         try {
 		if (surfit::stop_execution == 0) {
@@ -115,7 +116,7 @@ bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2);
 bool value(REAL value = 0);
 bool value_add(REAL weight = 1, REAL value = 0);
 bool mean(REAL value, REAL mult = 0.001);
-bool wmean(REAL value, const char * func_pos = "0", REAL mult = 0.001);
+bool wmean(REAL value, const char * surf_pos = "0", REAL mult = 0.001);
 bool leq(REAL value, REAL mult = 1);
 bool geq(REAL value, REAL mult = 1);
 bool hist(const char * pos = "0", REAL mult = 1e-2);
@@ -125,8 +126,8 @@ bool hist_read(const char * filename, const char * histname=NULL, int col1=1, in
 bool hist_write(const char * filename, const char * delimiter = "\t", const char * pos = "0");
 bool hist_save(const char * filename, const char * pos = "0");
 bool hist_load(const char * filename, const char * histname = NULL);
-bool hist_from_func(const char * histname, const char * func_pos = "0", int intervs = 10);
-bool hist_update_func(const char * hist_pos = "0", const char * func_pos = "0");
+bool hist_from_surf(const char * histname, const char * surf_pos = "0", int intervs = 10);
+bool hist_update_surf(const char * hist_pos = "0", const char * surf_pos = "0");
 const char * hist_getName(const char * pos = "0");
 bool hist_setName(const char * new_name, const char * pos = "0");
 bool hist_delall();

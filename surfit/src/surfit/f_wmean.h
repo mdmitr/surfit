@@ -24,14 +24,14 @@
 
 namespace surfit {
 
-class d_func;
+class d_surf;
 class bitvec;
 
 class f_wmean : public functional {
 public:
 
 	//! constructor
-	f_wmean(REAL imean, const d_func * ifnc, REAL imult);
+	f_wmean(REAL imean, const d_surf * isrf, REAL imult);
 	//! destructor
 	~f_wmean();
 
@@ -57,11 +57,11 @@ protected:
 private:
 
 	REAL mean;
-	const d_func * fnc;
+	const d_surf * srf;
 	REAL mult;
 	
-	d_func * w_fnc;
-	void get_w_fnc(int & i_from, int & i_to, int & j_from, int & j_to);
+	d_surf * w_srf;
+	void get_w_srf(int & i_from, int & i_to, int & j_from, int & j_to);
 };
 
 }; // namespace surfit;

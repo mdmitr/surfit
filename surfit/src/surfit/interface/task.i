@@ -26,7 +26,7 @@ namespace surfit {
 class points;
 
 //
-// functionals
+// surftionals
 //
 bool points(const char * points_name_or_position = "0");
 bool points_add(REAL weight = 1, const char * points_name_or_position = "0");
@@ -50,8 +50,8 @@ bool pnts_rotate(REAL centerX, REAL centerY, REAL angle, const char * points_nam
 bool pnts_filter_by_mask(const char * points_name_or_position = "0", const char * mask_name_or_position = "0");
 bool pnts_filter_in_area(const char * points_name_or_position = "0", const char * curv_pos = "0");
 bool pnts_filter_out_area(const char * points_name_or_position = "0", const char * curv_pos = "0");
-bool pnts_filter_by_func(REAL eps, const char * points_name_or_position = "0", const char * func_name_or_position = "0");
-bool pnts_update_by_func(const char * points_name_or_position = "0", const char * func_name_or_position = "0");
+bool pnts_filter_by_surf(REAL eps, const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+bool pnts_update_by_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
 REAL pnts_minx(const char * points_name_or_position = "0");
 REAL pnts_maxx(const char * points_name_or_position = "0");
 REAL pnts_miny(const char * points_name_or_position = "0");
@@ -71,11 +71,11 @@ bool pnts_minus_real(REAL val, const char * points_name_or_position = "0");
 bool pnts_mult_real(REAL val, const char * points_name_or_position = "0");
 bool pnts_div_real(REAL val, const char * points_name_or_position = "0");
 bool pnts_set_real(REAL val, const char * points_name_or_position = "0");
-bool pnts_plus_func(const char * points_name_or_position = "0", const char * func_name_or_position = "0");
-bool pnts_minus_func(const char * points_name_or_position = "0", const char * func_name_or_position = "0");
-bool pnts_mult_func(const char * points_name_or_position = "0", const char * func_name_or_position = "0");
-bool pnts_div_func(const char * points_name_or_position = "0", const char * func_name_or_position = "0");
-bool pnts_set_func(const char * points_name_or_position = "0", const char * func_name_or_position = "0");
+bool pnts_plus_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+bool pnts_minus_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+bool pnts_mult_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+bool pnts_div_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+bool pnts_set_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
 
 // other
 int pnts_getCount(const char * points_name_or_position = "0");

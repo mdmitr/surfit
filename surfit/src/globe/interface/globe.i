@@ -23,7 +23,7 @@
 #include "globe.h"
 #include "globe_variables.h"
 #include "dem_tcl.h"
-#include "globe_func_tcl.h"
+#include "globe_surf_tcl.h"
 #include "variables_tcl.h"
 
 #include "dems_tcl.h"
@@ -90,7 +90,6 @@ REAL dem_minz(const char * pos = "0");
 REAL dem_maxz(const char * pos = "0");
 bool dem_plus(const char * pos1, const char * pos2);
 bool dem_minus(const char * pos1, const char * pos2);
-bool dem_minus_undef(const char * pos1, const char * pos2);
 bool dem_mult(const char * pos1, const char * pos2);
 bool dem_div(const char * pos1, const char * pos2);
 bool dem_set(const char * pos1, const char * pos2);
@@ -107,9 +106,9 @@ bool dem_recons(const char * pos = "0");
 bool dem_full_recons(const char * pos = "0");
 // CONVERTING
 bool dem_to_points(const char * pos = "0", const char * new_name = NULL);
-bool dem_to_func(const char * pos = "0", const char * new_name = NULL);
+bool dem_to_surf(const char * pos = "0", const char * new_name = NULL);
 bool dem_to_mask(short true_from, short true_to, const char * pos = "0");
-bool func_to_dem(const char * func_pos = "0");
+bool surf_to_dem(const char * surf_pos = "0");
 // OTHER
 int dem_getCountX(const char * pos = "0");
 int dem_getCountY(const char * pos = "0");

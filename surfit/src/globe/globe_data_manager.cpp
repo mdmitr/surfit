@@ -120,18 +120,17 @@ bool globe_manager::auto_load(const char * filename, const char * first1024, int
 	char * name = get_name(filename);
 	char * uname = strdup(name);
 	str_toupper(uname);
+
+	bool res = false;
+
 	if (ext != NULL) {
 		if (strcmp( uext, ".HDR" ) == 0) {
-			bool res = dem_load_dtm(filename, strdup(name));
-			sstuff_free_char(ext);
-			sstuff_free_char(name);
-			return res;
+			res = dem_load_dtm(filename, strdup(name));
+			goto exit;
 		}
 		if (strcmp( uext, ".HGT" ) == 0) {
-			bool res = dem_load_hgt(filename, strdup(name));
-			sstuff_free_char(ext);
-			sstuff_free_char(name);
-			return res;
+			res = dem_load_hgt(filename, strdup(name));
+			goto exit;
 		}
 		if (strcmp( uext, ".ZIP" ) == 0) {
 			sstuff_free_char(ext);
@@ -139,24 +138,21 @@ bool globe_manager::auto_load(const char * filename, const char * first1024, int
 			if (strcmp(ext, ".hgt.zip") == 0) {
 				char * name2 = get_name(name);
 				bool res = dem_load_hgt_zip(filename, strdup(name2));
-				sstuff_free_char(name);
 				sstuff_free_char(name2);
-				sstuff_free_char(ext);
-				return res;
+				goto exit;
 			}
 		}
 	}
 	if (name != NULL) {
 		if (strlen(name) == 4) {
 			if (strcmp( uname+1, "10G") == 0) {
-				bool res = dem_load_globe(filename);
-				sstuff_free_char(ext);
-				sstuff_free_char(name);
-				return res;
+				res = dem_load_globe(filename);
+				goto exit;
 			}
 		}
 	}
 
+exit:
 	free(uext);
 	free(uname);
 	sstuff_free_char(ext);

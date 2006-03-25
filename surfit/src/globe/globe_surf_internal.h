@@ -17,28 +17,23 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
+#ifndef __surfit__globe_surf_internal__
+#define __surfit__globe_surf_internal__
+
 namespace surfit {
 
-SURFIT_EXPORT
-bool func(const char * pos = "0");
+//
+// CONVERTING
+//
 
-SURFIT_EXPORT
-bool func_add(REAL weight, const char * pos = "0");
+GLOBE_EXPORT
+/*! \ingroup tcl_dem_internal
+    \fn d_dem * _surf_to_dem(d_surf * srf);
+    \brief transforms \ref surf to \ref dem
+*/
+d_dem * _surf_to_dem(d_surf * srf);
 
-SURFIT_EXPORT
-bool func_leq(const char * pos = "0", REAL mult = 0.001);
-
-SURFIT_EXPORT
-bool func_geq(const char * pos = "0", REAL mult = 0.001);
-
-SURFIT_EXPORT
-bool trend(REAL D1 = 1, REAL D2 = 2, const char * pos = "0");
-	
-SURFIT_EXPORT
-bool trend_add(REAL weight, REAL D1 = 1, REAL D2 = 2, const char * pos = "0");
-
-SURFIT_EXPORT
-bool mask(const char * Value, const char * pos = "0");
-	
 }; // namespace surfit;
+
+#endif
 

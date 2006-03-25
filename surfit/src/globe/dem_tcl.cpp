@@ -29,13 +29,13 @@
 #include "pnts_internal.h"
 #include "pnts_tcl.h"
 #include "mask_tcl.h"
-#include "func_tcl.h"
+#include "surf_tcl.h"
 #include "grid.h"
 #include "grid_internal.h"
 #include "grid_line.h"
 #include "variables_internal.h"
 #include "free_elements.h"
-#include "func.h"
+#include "surf.h"
 
 #include "grid_user.h"
 
@@ -236,26 +236,6 @@ bool dem_minus(const char * pos1, const char * pos2) {
 	return true;
 };
 
-bool dem_minus_undef(const char * pos1, const char * pos2) {
-	
-	d_dem * dem1 = get_element<d_dem>(pos1, globe_dems->begin(), globe_dems->end());
-	if (!dem1)
-		return false;
-	d_dem * dem2 = get_element<d_dem>(pos2, globe_dems->begin(), globe_dems->end());
-	if (!dem2)
-		return false;
-
-	if (!dem1->compare_grid(dem2))	{
-		writelog(LOG_ERROR,"dem_plus : different grids");
-		return false;
-	}
-
-	dem1->minus_undef(dem2);
-
-	return true;
-};
-
-
 bool dem_mult(const char * pos1, const char * pos2) {
 	
 	d_dem * dem1 = get_element<d_dem>(pos1, globe_dems->begin(), globe_dems->end());
@@ -430,22 +410,22 @@ bool dem_to_points(const char * pos, const char * new_name) {
 	
 };
 
-bool dem_to_func(const char * pos, const char * new_name)
+bool dem_to_surf(const char * pos, const char * new_name)
 {
 	d_dem * d = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
 	if (!d) 
 		return false;
 
-	d_func * fnc = _dem_to_func(d);
-	if (!fnc)
+	d_surf * srf = _dem_to_surf(d);
+	if (!srf)
 		return false;
 
 	if (new_name)
-		fnc->setName(new_name);
+		srf->setName(new_name);
 	else
-		fnc->setName(d->getName());
+		srf->setName(d->getName());
 
-	surfit_func_add(fnc);
+	surfit_surf_add(srf);
 	return true;
 };
 
@@ -509,9 +489,9 @@ void dems_info() {
 	if (globe_dems->size() > 0) {
 		unsigned int dem_cnt;
 		for (dem_cnt = 0; dem_cnt < globe_dems->size(); dem_cnt++) {
-			d_dem * a_fnc = *(globe_dems->begin()+dem_cnt);
-			if (a_fnc) {
-				_dem_info(a_fnc);
+			d_dem * a_srf = *(globe_dems->begin()+dem_cnt);
+			if (a_srf) {
+				_dem_info(a_srf);
 			}
 		}
 	}
@@ -523,38 +503,38 @@ void dems_info() {
 //
 //
 bool dem_decomp(const char * pos) {
-	d_dem * fnc = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
-	if (!fnc)
+	d_dem * srf = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
+	if (!srf)
 		return false;
-	return _dem_decomp(fnc);
+	return _dem_decomp(srf);
 };
 
 bool dem_auto_decomp(REAL eps, const char * pos) {
-	d_dem * fnc = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
-	if (!fnc)
+	d_dem * srf = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
+	if (!srf)
 		return false;
-	return _dem_auto_decomp(fnc,eps);
+	return _dem_auto_decomp(srf,eps);
 };
 
 bool dem_recons(const char * pos) {
-	d_dem * fnc = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
-	if (!fnc)
+	d_dem * srf = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
+	if (!srf)
 		return false;
-	return _dem_recons(fnc);
+	return _dem_recons(srf);
 };
 
 bool dem_full_recons(const char * pos) {
-	d_dem * fnc = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
-	if (!fnc)
+	d_dem * srf = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
+	if (!srf)
 		return false;
-	return _dem_full_recons(fnc);
+	return _dem_full_recons(srf);
 };
 
 int dem_get_details_level(const char * pos) {
-	d_dem * fnc = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
-	if (!fnc)
+	d_dem * srf = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
+	if (!srf)
 		return -1;
-	return fnc->coeffs_store->size();
+	return srf->coeffs_store->size();
 };
 
 }; // namespace surfit;

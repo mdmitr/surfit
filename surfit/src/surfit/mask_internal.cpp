@@ -27,7 +27,7 @@
 #include "mask_internal.h"
 #include "grid.h"
 #include "grid_internal.h"
-#include "func.h"
+#include "surf.h"
 #include "bitvec.h"
 #include "vec.h"
 #include "variables_tcl.h"
@@ -317,7 +317,7 @@ d_mask * _mask_load_grd(const char * filename, const char * maskname)
 	return res;
 
 exit:
-	writelog(LOG_ERROR, "func_load_grd : Wrong file format %s", filename);
+	writelog(LOG_ERROR, "surf_load_grd : Wrong file format %s", filename);
 	
 	if (res)
 		res->release();
@@ -328,47 +328,47 @@ exit:
 	return NULL;
 }
 
-d_mask * _mask_by_func(const d_func * fnc) {
-	if (!fnc)
+d_mask * _mask_by_surf(const d_surf * srf) {
+	if (!srf)
 		return NULL;
-	bitvec * bcoeff = create_bitvec( fnc->coeff->size() );
+	bitvec * bcoeff = create_bitvec( srf->coeff->size() );
 	int i;
 	REAL val;
-	for (i = 0; i < fnc->coeff->size(); i++) {
-		val = (*(fnc->coeff))(i);
-		if (val != fnc->undef_value)
+	for (i = 0; i < srf->coeff->size(); i++) {
+		val = (*(srf->coeff))(i);
+		if (val != srf->undef_value)
 			bcoeff->set_true(i);
 		else 
 			bcoeff->set_false(i);
 	};
 
-	d_grid * fgrd = fnc->grd;
+	d_grid * fgrd = srf->grd;
 	d_grid * grd = new d_grid(fgrd);
 
-	d_mask * res = create_mask(bcoeff, grd, fnc->getName());
+	d_mask * res = create_mask(bcoeff, grd, srf->getName());
 	return res;
 
 };
 
-bool _mask_apply_to_func(const d_mask * msk, d_func * fnc) {
-	if (!fnc)
+bool _mask_apply_to_surf(const d_mask * msk, d_surf * srf) {
+	if (!srf)
 		return false;
 	if (!msk)
 		return false;
 	
 	int i,j;
-	int NN = fnc->getCountX();
-	int MM = fnc->getCountY();
+	int NN = srf->getCountX();
+	int MM = srf->getCountY();
 	REAL x,y;
 	bool val;
-	REAL func_val;
+	REAL surf_val;
 	for (j = 0; j < MM; j++) {
 		for (i = 0; i < NN; i++) {
-			fnc->getCoordNode(i,j,x,y);
-			func_val = (*(fnc->coeff))(i + j*NN);
+			srf->getCoordNode(i,j,x,y);
+			surf_val = (*(srf->coeff))(i + j*NN);
 			val = msk->getValue(x,y);
 			if (val == false) {
-				(*(fnc->coeff))(i + j*NN) = fnc->undef_value;
+				(*(srf->coeff))(i + j*NN) = srf->undef_value;
 			}
 		}
 	}

@@ -177,6 +177,9 @@ public:
 	//! this = val
 	void set(REAL val);
 
+	//! removes all points with z == val
+	void remove_with_value(REAL val);
+
 };
 
 /*! \ingroup internal

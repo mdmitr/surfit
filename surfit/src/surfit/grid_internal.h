@@ -24,7 +24,7 @@ namespace surfit {
 
 class datafile;
 class d_points;
-class d_func;
+class d_surf;
 class d_grid;
 
 SURFIT_EXPORT
@@ -102,17 +102,17 @@ d_grid * _grid_get_for_pnts_and_geom(const d_grid * grd, const d_points * pnts);
 
 SURFIT_EXPORT
 /*! \ingroup internal_grid
-    \fn grid * _grid_get_for_func(d_func * fnc, int Xnodes, int Ynodes, const char * name = NULL);
-    \brief constructs grid which covers func and consists of Xnodes*Ynodes nodes
+    \fn grid * _grid_get_for_surf(d_surf * srf, int Xnodes, int Ynodes, const char * name = NULL);
+    \brief constructs grid which covers surf and consists of Xnodes*Ynodes nodes
 */
-d_grid * _grid_get_for_func(d_func * fnc, int Xnodes, int Ynodes, const char * name = NULL);
+d_grid * _grid_get_for_surf(d_surf * srf, int Xnodes, int Ynodes, const char * name = NULL);
 
 SURFIT_EXPORT
 /*! \ingroup internal_grid
-    \fn grid * _grid_get_for_func_step(d_func * fnc, REAL stepX, REAL stepY, const char * name = NULL);
-    \brief constructs grid with steps stepX and stepY which covers func 
+    \fn grid * _grid_get_for_surf_step(d_surf * srf, REAL stepX, REAL stepY, const char * name = NULL);
+    \brief constructs grid with steps stepX and stepY which covers surf 
 */
-d_grid * _grid_get_for_func_step(d_func * fnc, REAL stepX, REAL stepY, const char * name = NULL);
+d_grid * _grid_get_for_surf_step(d_surf * srf, REAL stepX, REAL stepY, const char * name = NULL);
 
 SURFIT_EXPORT
 /*! \ingroup internal_grid
@@ -132,10 +132,10 @@ d_grid * _grid_get(REAL startX, REAL endX, REAL stepX,
 
 SURFIT_EXPORT
 /*! \ingroup internal_grid
-    \fn grid * _grid_from_func(d_func * fnc);
-    \brief returns copy of function fnc grid
+    \fn grid * _grid_from_surf(d_surf * srf);
+    \brief returns copy of surface srf grid
 */
-d_grid * _grid_from_func(d_func * fnc);
+d_grid * _grid_from_surf(d_surf * srf);
 
 SURFIT_EXPORT
 /*! \ingroup internal_grid

@@ -18,53 +18,69 @@
  *----------------------------------------------------------------------------*/
 
 #include "surfit_ie.h"
-#include "f_cntr.h"
+#include "f_curv_surf.h"
 #include "f_points.h"
+#include "curv.h"
 #include "points.h"
+#include "surf.h"
 #include "grid.h"
-#include "cntr.h"
+#include "vec.h"
 
 #include "grid_user.h"
 
 namespace surfit {
 
-f_cntr::f_cntr(const d_cntr * icontour) :
-functional("f_cntr")
+f_curv_surf::f_curv_surf(const d_surf * isurf, const d_curv * icrv) :
+functional("f_curv_surf")
 {
-	contour = icontour;
-	if (contour->getName()) {
-		setNameF("f_cntr %s", contour->getName());
+	crv = icrv;
+	srf = isurf;
+	if (crv->getName()) {
+		setNameF("f_curv_surf %s", crv->getName());
 	}
 	f_pnts = NULL;
 	pnts = NULL;
 };
 
-f_cntr::~f_cntr() {
+f_curv_surf::~f_curv_surf() {
 	delete f_pnts;
 	if (pnts)
 		pnts->release_private();
 };
 
-int f_cntr::this_get_data_count() const {
-	return 1;
+int f_curv_surf::this_get_data_count() const {
+	return 2;
 };
 
-const data * f_cntr::this_get_data(int pos) const {
+const data * f_curv_surf::this_get_data(int pos) const {
 	if (pos == 0)
-		return contour;
+		return crv;
+	if (pos == 1)
+		return srf;
 	return NULL;
 };
 
-void f_cntr::create_f_approx_points() {
+void f_curv_surf::create_f_approx_points() {
 
 	if (pnts == NULL) {
 		d_grid * grd = create_last_grd();
-		pnts = discretize_cntr(contour, grd, contour->getName());
+		pnts = discretize_curv(crv, grd, 0, crv->getName());
+		if (pnts) {
+			int i;
+			REAL x, y, z;
+			for (i = 0; i < pnts->size(); i++) {
+				x = (*(pnts->X))(i);
+				y = (*(pnts->Y))(i);
+				z = srf->getInterpValue(x,y);
+				(*(pnts->Z))(i) = z;
+			}
+			pnts->remove_with_value(srf->undef_value);
+		}
 		delete grd;
 	}
 
 	if (f_pnts == NULL)
-		f_pnts = new f_points(pnts, "contour");
+		f_pnts = new f_points(pnts, "curve+surface");
 
 	if ( cond() ) { 
 		if (f_pnts->cond())
@@ -78,24 +94,24 @@ void f_cntr::create_f_approx_points() {
 	}
 };
 
-bool f_cntr::minimize() {
+bool f_curv_surf::minimize() {
 	create_f_approx_points();
 	return f_pnts->minimize();
 };
 
-bool f_cntr::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_curv_surf::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	create_f_approx_points();
 	return f_pnts->make_matrix_and_vector(matrix, v);
 };
 
-void f_cntr::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+void f_curv_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 	create_f_approx_points();
 	f_pnts->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
 };
 
-bool f_cntr::solvable_without_cond(const bitvec * mask_solved,
-				   const bitvec * mask_undefined,
-				   const vec * X)
+bool f_curv_surf::solvable_without_cond(const bitvec * mask_solved,
+				  const bitvec * mask_undefined,
+				  const vec * X)
 {
 	return true;
 };

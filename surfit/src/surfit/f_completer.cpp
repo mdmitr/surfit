@@ -32,7 +32,7 @@
 #include "matrD2.h"
 #include "curv.h"
 #include "grid_line.h"
-#include "func.h"
+#include "surf.h"
 
 #include "grid_user.h"
 #include "grid_line_user.h"
@@ -322,7 +322,7 @@ int calcVecV(int size,
 	     const bitvec * mask_undefined,
 	     int x_from, int x_to,
 	     int y_from, int y_to,
-	     d_func * trend) 
+	     d_surf * trend) 
 {
 	int points = 0;
 

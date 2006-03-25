@@ -24,11 +24,15 @@ namespace surfit {
 
 /*! \ingroup tcl_rules_points
     \fn bool points(const char * points_name_or_position = "0");
-    This rule approximates points in least squares meaning.
-    If each cell contains no more than one point, result surface interpolates points.
-
+    
     \par Tcl syntax:
     points "points_name_or_position"
+
+    \par Description:
+    Using this rule the resulting surface approximates points in least squares meaning.
+    If each cell contains no more than one point, resulting surface interpolates points.
+
+    \param points_name_or_position name of \ref d_points "points" dataset, or points position number.
 
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -43,10 +47,15 @@ bool points(const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_rules_points
     \fn bool points_add(REAL weight = 1, const char * points_name_or_position = "0");
-    This rule modifies previous (modifable) rule by adding \ref points rule with some weight.
-
+    
     \par Tcl syntax:
     points_add weight "points_name_or_position"
+
+    \par Description:
+    This rule modifies previous (modifiable) rule by adding the \ref points rule with some weight.
+
+    \param weight informational weight for this rule
+    \param points_name_or_position name of \ref d_points "points" dataset, or points position number.
 
     \par Math:
     This command modifies previous functional \f$ \Phi_0 \f$ by adding \f$ \Phi_1 \f$:
@@ -65,13 +74,17 @@ bool points_add(REAL weight = 1, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_rules_points
     \fn bool points_leq(const char * points_name_or_position = "0", REAL mult = REAL(0.001));
-    This rule adds surface condition - "the surface should be lower than equal to points".
-
-    In case of algorithm bad convergence or unexpected (wrong) result, you should carefully review
-    your conditions and if they are correct, try to change "mult" parameter
-
+    
     \par Tcl syntax:
     points "points_name_or_position" mult
+
+    \par Description:
+    This rule adds the surface condition - "the surface should be lower than equal to points".
+    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
+    your conditions and if they are correct, try to change "mult" parameter
+
+    \param points_name_or_position name of \ref d_points "points" dataset, or points position number.
+    \param mult multiplier parameter for \ref penalty algorithm
 
     \par Math:
     This command adds the condition:
@@ -86,13 +99,17 @@ bool points_leq(const char * points_name_or_position = "0", REAL mult = REAL(0.0
 
 /*! \ingroup tcl_rules_points
     \fn bool points_geq(const char * points_name_or_position = "0", REAL mult = REAL(0.001));
-    This rule adds surface condition - "the surface should be greater than equal to points".
-
-    In case of algorithm bad convergence or unexpected (wrong) result, you should carefully review
-    your conditions and if they are correct, try to change "mult" parameter
-
+    
     \par Tcl syntax:
     points_geq "points_name_or_position" mult
+
+    \par Description:
+    This rule adds the surface condition - "the surface should be greater than equal to points".
+    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
+    your conditions and if they are correct, try to change "mult" parameter
+
+    \param points_name_or_position name of \ref d_points "points" dataset, or points position number.
+    \param mult multiplier parameter for \ref penalty algorithm
 
     \par Math:
     This command adds the condition:

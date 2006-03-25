@@ -17,23 +17,26 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#ifndef __surfit_approx_trend_included__
-#define __surfit_approx_trend_included__
+#ifndef __surfit_f_area_surf_included__
+#define __surfit_f_area_surf_included__
 
 #include "functional.h"
 
 namespace surfit {
 
-class d_surf;
-class matr;
-class vec;
 class bitvec;
-class d_grid;
+class d_area;
+class d_surf;
 
-class SURFIT_EXPORT f_trend : public functional, public faultable {
+/*! \class f_area_surf
+    \brief functional for approximating area with surface values
+*/
+class SURFIT_EXPORT f_area_surf : public functional {
 public:
-	f_trend(REAL iD1, REAL iD2, const d_surf * isrf);
-	~f_trend();
+	//! constructor
+	f_area_surf(const d_surf * isurf, const d_area * iarea, bool iinside = true);
+	//! destructor
+	~f_area_surf();
 
 	bool minimize();
 
@@ -53,23 +56,30 @@ protected:
 
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
-	
-	bool minimize_step();
-	const d_surf * srf;
-	REAL D1;
-	REAL D2;
 
-	d_surf * tr_srf;
-	void get_tr_srf(int & i_from, int & i_to, int & j_from, int & j_to);
+private:
+
+	//! very fast minimization function
+	bool minimize_only_area_surf();
+
+	//! calculates mask for area
+	void get_area_mask();
+
+	//! area, that defines region
+	const d_area * area;
+
+	//! this value need for approximation
+	const d_surf * srf;
+
+	//! area is inside or outside region
+	bool inside;
+
+	//! mask for area
+	bitvec * area_mask;
 
 };
 
-SURFIT_EXPORT
-d_grid * adopt_surf_grid(const d_surf * srf, d_grid * grd,
-			 int & from_x, int & to_x,
-			 int & from_y, int & to_y);
-
-}; // namespace surfit;
+}; // namespace surfit
 
 #endif
 

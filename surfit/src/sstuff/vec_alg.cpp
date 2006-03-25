@@ -81,7 +81,7 @@ REAL norm2(const REAL * x_begin, const REAL * x_end, REAL undef) {
 			continue;
 		res += val*val;
 	};
-	return sqrt(res);
+	return (REAL)sqrt(res);
 };
 
 }; // namespace surfit

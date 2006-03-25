@@ -34,7 +34,7 @@ SURFIT_EXPORT
 d_mask * create_mask(bitvec *icoeff, d_grid *igrd, const char * funcname = 0);
 
 /*! \class mask
-    \brief sets domain of the function (see \ref surfit_mask). See \ref tcl_mask "Tcl commands" for \ref mask.
+    \brief sets domain of the surface (see \ref surfit_mask). See \ref tcl_mask "Tcl commands" for \ref mask.
 */
 class SURFIT_EXPORT d_mask : public data {
 protected:

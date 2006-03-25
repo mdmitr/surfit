@@ -30,31 +30,31 @@
 #include "grid_line.h"
 #include "grid.h"
 #include "grid_internal.h"
-#include "func.h"
-#include "func_internal.h"
+#include "surf.h"
+#include "surf_internal.h"
 
 #include "grid_line_user.h"
 
 namespace surfit {
 
-f_area_wmean::f_area_wmean(REAL imean, const d_func * ifnc, const d_area * iarea, REAL imult, bool iinside) :
+f_area_wmean::f_area_wmean(REAL imean, const d_surf * isrf, const d_area * iarea, REAL imult, bool iinside) :
 functional("f_area_wmean") 
 {
 	mean = imean;
 	area = iarea;
-	fnc = ifnc;
+	srf = isrf;
 	mult = imult;
 	inside = iinside;
 	if (area->getName()) {
 		setNameF("f_area_wmean %s", area->getName());
 	}
-	w_fnc = NULL;
+	w_srf = NULL;
 	area_mask = NULL;
 };
 
 f_area_wmean::~f_area_wmean() {
-	if (w_fnc)
-		w_fnc->release_private();
+	if (w_srf)
+		w_srf->release_private();
 	if (area_mask)
 		area_mask->release();
 };
@@ -65,7 +65,7 @@ int f_area_wmean::this_get_data_count() const {
 
 const data * f_area_wmean::this_get_data(int pos) const {
 	if (pos == 0)
-		return fnc;
+		return srf;
 	if (pos == 1)
 		return area;
 	return NULL;
@@ -86,8 +86,8 @@ bool f_area_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	
 	int aux_X_from, aux_X_to;
 	int aux_Y_from, aux_Y_to;
-	get_w_fnc(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
-	if (w_fnc == NULL)
+	get_w_srf(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
+	if (w_srf == NULL)
 		return false;
 
 	REAL denom = 0;
@@ -95,8 +95,8 @@ bool f_area_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	int NN = method_grid->getCountX();
 	int MM = method_grid->getCountY();
-	int nn = w_fnc->getCountX();
-	int mm = w_fnc->getCountY();
+	int nn = w_srf->getCountX();
+	int mm = w_srf->getCountY();
 	
 	vec * weights = create_vec(matrix_size); 
 	bitvec * mask = create_bitvec(matrix_size);
@@ -119,8 +119,8 @@ bool f_area_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		if ((ii >= aux_X_from) && (ii <= aux_X_to) && (jj >= aux_Y_from) && (jj <= aux_Y_to)) {
 			int I = ii-aux_X_from;
 			int J = jj-aux_Y_from;
-			weight = (*(w_fnc->coeff))(I + J*nn);
-			if (weight == w_fnc->undef_value)
+			weight = (*(w_srf->coeff))(I + J*nn);
+			if (weight == w_srf->undef_value)
 				weight = 0;
 		}
 
@@ -212,8 +212,8 @@ void f_area_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask
 	int aux_X_from, aux_X_to;
 	int aux_Y_from, aux_Y_to;
 	
-	get_w_fnc(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
-	if (w_fnc == NULL)
+	get_w_srf(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
+	if (w_srf == NULL)
 		return;
 	
 	unsigned int i;
@@ -221,8 +221,8 @@ void f_area_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask
 
 	int NN = method_grid->getCountX();
 	int MM = method_grid->getCountY();
-	int nn = w_fnc->getCountX();
-	int mm = w_fnc->getCountY();
+	int nn = w_srf->getCountX();
+	int mm = w_srf->getCountY();
 	
 	for (i = 0; i < (unsigned int)area_mask->size(); i++) {
 		
@@ -241,8 +241,8 @@ void f_area_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask
 			int I = ii-aux_X_from;
 			int J = jj-aux_Y_from;
 			
-			REAL weight = (*(w_fnc->coeff))(I + J*nn);
-			if (weight == w_fnc->undef_value)
+			REAL weight = (*(w_srf->coeff))(I + J*nn);
+			if (weight == w_srf->undef_value)
 				continue;
 			
 			if (weight <= 0)
@@ -265,17 +265,17 @@ bool f_area_wmean::minimize() {
 	return false;
 };
 
-void f_area_wmean::get_w_fnc(int & i_from, int & i_to, int & j_from, int & j_to) {
+void f_area_wmean::get_w_srf(int & i_from, int & i_to, int & j_from, int & j_to) {
 	
-	_grid_intersect1(method_grid, fnc->grd, i_from, i_to, j_from, j_to);
+	_grid_intersect1(method_grid, srf->grd, i_from, i_to, j_from, j_to);
 	d_grid * aux_grid = _create_sub_grid(method_grid, i_from, i_to, j_from, j_to);
 
-	if (w_fnc == NULL)
-		w_fnc = _func_project(fnc, aux_grid);
+	if (w_srf == NULL)
+		w_srf = _surf_project(srf, aux_grid);
 	else {
-		if (w_fnc->grd->operator==(aux_grid) == false) {
-			w_fnc->release();
-			w_fnc = _func_project(fnc, aux_grid);
+		if (w_srf->grd->operator==(aux_grid) == false) {
+			w_srf->release();
+			w_srf = _surf_project(srf, aux_grid);
 		}
 	}
 	
@@ -304,9 +304,9 @@ void f_area_wmean::drop_private_data() {
 	if (area_mask)
 		area_mask->release();
 	area_mask = NULL;
-	if (w_fnc)
-		w_fnc->release_private();
-	w_fnc = NULL;
+	if (w_srf)
+		w_srf->release_private();
+	w_srf = NULL;
 };
 
 }; // namespace surfit;

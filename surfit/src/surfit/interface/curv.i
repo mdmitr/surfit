@@ -27,19 +27,28 @@
 
 namespace surfit {
 
-bool fault_add(const char * curv_name_or_position = "0");
+bool fault(const char * curv_name_or_position = "0");
+
 bool curve(REAL value, const char * curv_name_or_position = "0");
 bool curve_add(REAL value, REAL weight, const char * curv_name_or_position = "0");
 bool curve_leq(REAL value, const char * curv_name_or_position = "0", REAL mult = 0.001);
 bool curve_geq(REAL value, const char * curv_name_or_position = "0", REAL mult = 0.001);
+bool curve_surf(const char * surf_name_or_position = "0", const char * curv_name_or_position = "0");
+bool curve_surf_add(const char * surf_name_or_position = "0", REAL weight = 1, const char * curv_name_or_position = "0");
+bool curve_surf_leq(const char * surf_name_or_position = "0", const char * curv_name_or_position = "0", REAL mult = 0.001);
+bool curve_surf_geq(const char * surf_name_or_position = "0", const char * curv_name_or_position = "0", REAL mult = 0.001);
+
 bool area(const char * value = "undef", const char * area_name_or_position = "0", int inside = 1);
 bool area_add(REAL value, REAL weight, const char * area_name_or_position = "0", int inside = 1);
 bool area_leq(REAL value, const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
 bool area_geq(REAL value, const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
-bool area_func_leq(const char * func_name_or_position = "0", const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
-bool area_func_geq(const char * func_name_or_position = "0", const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
+bool area_surf(const char * surf_name_or_position = "0", const char * area_name_or_position = "0", int inside = 1);
+bool area_surf_add(const char * surf_name_or_position = "0", REAL weight = 1, const char * area_name_or_position = "0", int inside = 1);
+bool area_surf_leq(const char * surf_name_or_position = "0", const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
+bool area_surf_geq(const char * surf_name_or_position = "0", const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
 bool area_mean(REAL mean, const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
-bool area_wmean(REAL mean, const char * area_name_or_position = "0", const char * func_name_or_position = "0", REAL mult = 0.001, int inside = 1);
+bool area_wmean(REAL mean, const char * area_name_or_position = "0", const char * surf_name_or_position = "0", REAL mult = 0.001, int inside = 1);
+
 bool contour(const char * cntr_name_or_position = "0");
 bool contour_add(REAL weight, const char * cntr_name_or_position = "0");
 bool contour_leq(const char * cntr_name_or_position = "0", REAL mult = 0.001);

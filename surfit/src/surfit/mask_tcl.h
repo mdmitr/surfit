@@ -106,10 +106,10 @@ bool mask_xor(const char * pos1 = "0", const char * pos2 = "0");
 
 SURFIT_EXPORT
 /*! \ingroup tcl_mask_conv
-    \fn bool mask_to_func(const char * pos = "0");
-    \brief makes \ref surfit_func from \ref surfit_mask
+    \fn bool mask_to_surf(const char * pos = "0");
+    \brief makes \ref surfit_surf from \ref surfit_mask
 */
-bool mask_to_func(const char * pos = "0");
+bool mask_to_surf(const char * pos = "0");
 
 //
 // OTHER
@@ -117,17 +117,17 @@ bool mask_to_func(const char * pos = "0");
 
 SURFIT_EXPORT
 /*! \ingroup tcl_mask_other
-    \fn bool mask_by_func(const char * func_pos = "0");
-    \brief makes \ref mask with the same undefined values as \ref func have
+    \fn bool mask_by_surf(const char * surf_pos = "0");
+    \brief makes \ref mask with the same undefined values as \ref surf have
 */
-bool mask_by_func(const char * func_pos = "0");
+bool mask_by_surf(const char * surf_pos = "0");
 
 SURFIT_EXPORT
 /*! \ingroup tcl_mask_other
-    \fn bool mask_apply_to_func(const char * def_pos = "0", const char * func_pos = "0");
-    \brief sets undefined values to \ref func using \ref mask
+    \fn bool mask_apply_to_surf(const char * def_pos = "0", const char * surf_pos = "0");
+    \brief sets undefined values to \ref surf using \ref mask
 */
-bool mask_apply_to_func(const char * def_pos = "0", const char * func_pos = "0");
+bool mask_apply_to_surf(const char * def_pos = "0", const char * surf_pos = "0");
 
 SURFIT_EXPORT
 /*! \ingroup tcl_mask_other

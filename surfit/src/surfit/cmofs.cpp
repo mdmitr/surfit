@@ -34,13 +34,21 @@
 
 namespace surfit {
 
-void cmofs() {
+void surfit() {
 
 	writelog(LOG_MESSAGE,"");
 	writelog(LOG_MESSAGE,"");
 		
 	time_t ltime_begin;
 	time( &ltime_begin );
+
+	if (map_name == NULL)
+		map_name = strdup("noname");
+
+	if (strlen(map_name) == 0) {
+		free(map_name);
+		map_name = strdup("noname");
+	}
 
 	grid_init();
 	grid_prepare();
@@ -123,7 +131,7 @@ void cmofs() {
 
 };
 
-void clear_cmofs() {
+void clear_rules() {
 	if (functionals) {
 		release_elements(functionals->begin(), functionals->end());
 		functionals->resize(0);

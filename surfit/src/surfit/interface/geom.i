@@ -38,9 +38,9 @@ bool grid_get(REAL startX, REAL endX, REAL stepX, REAL startY, REAL endY, REAL s
 bool grid_get2(REAL startX, REAL endX, REAL stepX, REAL startY, REAL endY, REAL stepY, const char *name=NULL);
 bool grid_get_for_pnts(int Xnodes, int Ynodes, const char *name=NULL, const char * pos = "0");
 bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char *name=NULL, const char * pos = "0");
-bool grid_get_from_func(const char * pos = "0");
-bool grid_get_for_func(int Xnodes, int Ynodes, const char *name=NULL);
-bool grid_get_for_func_step(REAL stepX, REAL stepY, const char *name=NULL);
+bool grid_get_from_surf(const char * pos = "0");
+bool grid_get_for_surf(int Xnodes, int Ynodes, const char *name=NULL);
+bool grid_get_for_surf_step(REAL stepX, REAL stepY, const char *name=NULL);
 //other
 bool grid_check();
 void grid_info();

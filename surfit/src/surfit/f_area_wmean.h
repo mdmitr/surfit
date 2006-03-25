@@ -25,7 +25,7 @@
 namespace surfit {
 
 class d_area;
-class d_func;
+class d_surf;
 
 /*! \class f_area_wmean
     \brief functional that sets equality condition (weighted mean value) for area
@@ -34,7 +34,7 @@ class f_area_wmean : public functional {
 public:
 
 	//! constructor
-	f_area_wmean(REAL imean, const d_func * ifnc, const d_area * iarea, REAL imult, bool iinside);
+	f_area_wmean(REAL imean, const d_surf * isrf, const d_area * iarea, REAL imult, bool iinside);
 	//! destructor
 	~f_area_wmean();
 
@@ -68,8 +68,8 @@ private:
 	//! area, that defines region
 	const d_area * area;
 
-	//! weight function
-	const d_func * fnc;
+	//! weight surface
+	const d_surf * srf;
 
 	//! parameter for penalty algorithm
 	REAL mult;
@@ -77,11 +77,11 @@ private:
 	//! area is inside or outside region
 	bool inside;
 
-	//! weight function reprojected on grid
-	d_func * w_fnc;
+	//! weight surface reprojected on grid
+	d_surf * w_srf;
 
-	//! reprojects weight function
-	void get_w_fnc(int & i_from, int & i_to, int & j_from, int & j_to);
+	//! reprojects weight surface
+	void get_w_srf(int & i_from, int & i_to, int & j_from, int & j_to);
 
 	//! mask for area
 	bitvec * area_mask;

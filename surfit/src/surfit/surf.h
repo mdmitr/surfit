@@ -17,8 +17,8 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#ifndef __surfit__func__
-#define __surfit__func__
+#ifndef __surfit__surf__
+#define __surfit__surf__
 
 #include <vector>
 
@@ -30,68 +30,68 @@ class vec;
 class datafile;
 class d_grid;
 class d_mask;
-class d_func;
+class d_surf;
 class bitvec;
 
 SURFIT_EXPORT
-d_func * create_func(vec *icoeff, d_grid *igrd, const char * funcname = 0);
+d_surf * create_surf(vec *icoeff, d_grid *igrd, const char * surfname = 0);
 SURFIT_EXPORT
-d_func * create_func_by_mask(d_mask * msk);
+d_surf * create_surf_by_mask(d_mask * msk);
 
-/*! \class func
-    \brief class for a function, based on the equidistant \ref grid with values set at the centers of the cells (see \ref surfit_func). See \ref tcl_func "Tcl commands" for \ref func.
+/*! \class surf
+    \brief class for a surface, based on the equidistant \ref grid with values set at the centers of the cells (see \ref surfit_surf). See \ref tcl_surf "Tcl commands" for \ref surf.
 */
-class SURFIT_EXPORT d_func : public data {
+class SURFIT_EXPORT d_surf : public data {
 protected:
 	/*! constructor
 	    \param igrd uniform 2d-grid
 	    \param icoeff coefficients a_i
-	    \param funcname name
+	    \param surfname name
 	*/
-	d_func(vec *icoeff, d_grid *igrd,
-	       const char * funcname = 0);
+	d_surf(vec *icoeff, d_grid *igrd,
+	       const char * surfname = 0);
 
 	//! constructor
-	d_func(d_mask * msk);
+	d_surf(d_mask * msk);
 
 	//! destructor
-	virtual ~d_func();
+	virtual ~d_surf();
 	
 public:
 
 	friend SURFIT_EXPORT
-	d_func * create_func(vec *icoeff, d_grid *igrd, const char * funcname);
+	d_surf * create_surf(vec *icoeff, d_grid *igrd, const char * surfname);
 	friend SURFIT_EXPORT
-	d_func * create_func_by_mask(d_mask * msk);
+	d_surf * create_surf_by_mask(d_mask * msk);
 
-	//! calculates function value at point (x,y)
+	//! calculates surface value at point (x,y)
 	virtual REAL getValue(REAL x, REAL y) const; 
 
-	//! calculates function value at point (x,y) using bilinear interpolation
+	//! calculates surface value at point (x,y) using bilinear interpolation
 	virtual REAL getInterpValue(REAL x, REAL y) const;
 
-	//! calculates function mean value for rect
+	//! calculates surface mean value for rect
 	virtual REAL getMeanValue(REAL x_from, REAL x_to, REAL y_from, REAL y_to) const;
 
-	//! returns function value at node (i,j)
+	//! returns surface value at node (i,j)
 	virtual REAL getValueIJ(int i, int j) const;
 
-	//! returns minimum X-coordinate for the function
+	//! returns minimum X-coordinate for the surface
 	virtual REAL getMinX() const;
 
-	//! returns maximum X-coordinate for the function
+	//! returns maximum X-coordinate for the surface
 	virtual REAL getMaxX() const;
 
-	//! returns minimum Y-coordinate for the function
+	//! returns minimum Y-coordinate for the surface
 	virtual REAL getMinY() const;
 
-	//! returns maximum Y-coordinate for the function
+	//! returns maximum Y-coordinate for the surface
 	virtual REAL getMaxY() const;
 
 	//! returns mean Z value for all nodes
 	virtual REAL mean() const;
 
-	virtual REAL wmean(const d_func * wfnc) const;
+	virtual REAL wmean(const d_surf * wsrf) const;
 
 	//! returns standard deviation value from mean 'mean' value
 	virtual REAL std(REAL mean) const;
@@ -135,36 +135,31 @@ public:
 	//! returns amount of cells with defined values
 	virtual int defined() const;
 
-	//! writes tag for saving func to datafile 
+	//! writes tag for saving surf to datafile 
 	virtual bool writeTags(datafile * df) const;
 
-	//! compares two funcitons by their grids
-	virtual bool compare_grid(const d_func * fnc) const;
+	//! compares two surfitons by their grids
+	virtual bool compare_grid(const d_surf * srf) const;
 
-	//! this = this + fnc
-	virtual void plus(const d_func * fnc);
-	virtual void plus_mask(const d_func * fnc, const bitvec * mask);
+	//! this = this + srf
+	virtual void plus(const d_surf * srf);
+	virtual void plus_mask(const d_surf * srf, const bitvec * mask);
 	
-	//! this = this - fnc, undef means no operation
-	virtual void minus(const d_func * fnc);
-	virtual void minus_mask(const d_func * fnc, const bitvec * mask);
+	//! this = this - srf, undef means no operation
+	virtual void minus(const d_surf * srf);
+	virtual void minus_mask(const d_surf * srf, const bitvec * mask);
 
-	//! this = this - fnc, undef means undef
-	virtual void minus_undef(const d_func * fnc);
-	virtual void minus_undef_mask(const d_func * fnc, const bitvec * mask);
+	//! this = this * srf
+	virtual void mult(const d_surf * srf);
+	virtual void mult_mask(const d_surf * srf, const bitvec * mask);
 	
-	//! this = this * fnc
-	virtual void mult(const d_func * fnc);
-	virtual void mult_mask(const d_func * fnc, const bitvec * mask);
+	//! this = this / srf
+	virtual void div(const d_surf * srf);
+	virtual void div_mask(const d_surf * srf, const bitvec * mask);
 	
-	//! this = this / fnc
-	virtual void div(const d_func * fnc);
-	virtual void div_undef(const d_func * fnc);
-	virtual void div_mask(const d_func * fnc, const bitvec * mask);
-	
-	//! this = fnc
-	virtual void set(const d_func * fnc);
-	virtual void set_mask(const d_func * fnc, const bitvec * mask);
+	//! this = srf
+	virtual void set(const d_surf * srf);
+	virtual void set_mask(const d_surf * srf, const bitvec * mask);
 
 	//! this = this + val
 	virtual void plus(REAL val);
@@ -213,16 +208,16 @@ public:
 	//! returns details size
 	virtual int  details_size() const;
 
-	//! calculates function norm
+	//! calculates surface norm
 	virtual REAL calc_approx_norm(int norm_type) const;
 
-	//! grid for basis function placements
+	//! grid for basis surface placements
 	d_grid * grd;
 
-	//! coefficients for each basis function
+	//! coefficients for each basis surface
 	vec * coeff;
 	
-	//! sets function draw type - ( true - with triangles, false - with plates )
+	//! sets surface draw type - ( true - with triangles, false - with plates )
 	bool show_smooth;
 
 	//! all values in coeff equal to undef_value interprets as undefined
@@ -246,10 +241,10 @@ public:
 };
 
 /*! \ingroup surfit_variables_collections
-    \var std::vector<d_func *> * surfit_funcs
-    collection of \ref func objects
+    \var std::vector<d_surf *> * surfit_surfs
+    collection of \ref surf objects
 */
-extern SURFIT_EXPORT std::vector<d_func *> * surfit_funcs;
+extern SURFIT_EXPORT std::vector<d_surf *> * surfit_surfs;
 
 
 }; // namespace surfit;

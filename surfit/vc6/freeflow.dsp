@@ -94,16 +94,16 @@ LINK32=link.exe
 # Begin Group "data_cpp"
 
 # PROP Default_Filter ""
-# Begin Group "func_cpp"
+# Begin Group "surf_cpp"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\src\freeflow\flow_func_internal.cpp
+SOURCE=..\src\freeflow\flow_surf_internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\src\freeflow\flow_func_tcl.cpp
+SOURCE=..\src\freeflow\flow_surf_tcl.cpp
 # End Source File
 # End Group
 # End Group
@@ -191,16 +191,16 @@ SOURCE=.\..\src\freeflow\freeflow_wrap.cxx
 # Begin Group "data_h"
 
 # PROP Default_Filter ""
-# Begin Group "func_h"
+# Begin Group "surf_h"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\..\src\freeflow\flow_func_internal.h
+SOURCE=..\src\freeflow\flow_surf_internal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\src\freeflow\flow_func_tcl.h
+SOURCE=..\src\freeflow\flow_surf_tcl.h
 # End Source File
 # End Group
 # End Group

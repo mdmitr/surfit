@@ -39,7 +39,7 @@ REAL norm2(const V * x, REAL undef = FLT_MAX) {
 			continue;
 		res += val*val;
 	};
-	return sqrt(res);
+	return (REAL)sqrt(res);
 };
 
 SSTUFF_EXPORT

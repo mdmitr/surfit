@@ -33,7 +33,7 @@
 #include "grid_internal.h"
 #include "points.h"
 #include "pnts_internal.h"
-#include "func.h"
+#include "surf.h"
 
 #include "grid_user.h"
 #include <algorithm>
@@ -138,12 +138,12 @@ d_grid * _grid_get_for_pnts_step(d_points * pnts, REAL stepX, REAL stepY, const 
 	return res;
 };
 
-d_grid * _grid_get_for_func(d_func * fnc, int Xnodes, int Ynodes, const char * name) {
+d_grid * _grid_get_for_surf(d_surf * srf, int Xnodes, int Ynodes, const char * name) {
 	
-	REAL minx = fnc->getMinX();
-	REAL maxx = fnc->getMaxX();
-	REAL miny = fnc->getMinY();
-	REAL maxy = fnc->getMaxY();
+	REAL minx = srf->getMinX();
+	REAL maxx = srf->getMaxX();
+	REAL miny = srf->getMinY();
+	REAL maxy = srf->getMaxY();
 
 	REAL len_x = maxx-minx;
 	if (len_x == REAL(0))
@@ -160,12 +160,12 @@ d_grid * _grid_get_for_func(d_func * fnc, int Xnodes, int Ynodes, const char * n
 	return res;
 };
 
-d_grid * _grid_get_for_func_step(d_func * fnc, REAL stepX, REAL stepY, const char * name) {
+d_grid * _grid_get_for_surf_step(d_surf * srf, REAL stepX, REAL stepY, const char * name) {
 
-	REAL minx = fnc->getMinX();
-	REAL maxx = fnc->getMaxX();
-	REAL miny = fnc->getMinY();
-	REAL maxy = fnc->getMaxY();
+	REAL minx = srf->getMinX();
+	REAL maxx = srf->getMaxX();
+	REAL miny = srf->getMinY();
+	REAL maxy = srf->getMaxY();
 
 	REAL len_x = maxx-minx;
 	if (len_x == REAL(0))
@@ -421,10 +421,10 @@ d_grid * _grid_load(const char * filename, const char * gridname) {
 
 };
 
-d_grid * _grid_from_func(d_func * fnc) {
-	if (!fnc)
+d_grid * _grid_from_surf(d_surf * srf) {
+	if (!srf)
 		return NULL;
-	d_grid * res = new d_grid(fnc->grd);
+	d_grid * res = new d_grid(srf->grd);
 	return res;
 };
 

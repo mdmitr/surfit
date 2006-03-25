@@ -26,7 +26,7 @@ namespace surfit {
 
 class d_curv;
 class grid_line;
-class d_func;
+class d_surf;
 class bitvec;
 class matr;
 class vec;
@@ -76,7 +76,7 @@ int calcVecV(int size,
 	     const bitvec * mask_undefined,
 	     int use_x_from = -1, int use_x_to = -1,
 	     int use_y_from = -1, int use_y_to = -1,
-	     d_func * trend = NULL);
+	     d_surf * trend = NULL);
 
 SURFIT_EXPORT
 bool completer_solvable(int points, REAL D1, REAL D2);

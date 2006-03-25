@@ -26,12 +26,14 @@
 #include <string.h>
 #include "grid.h"
 #include "datafile.h"
+#include "fileio.h"
 
 namespace surfit {
 
 d_grid::d_grid(REAL istartX, REAL iendX, REAL istepX,
 	       REAL istartY, REAL iendY, REAL istepY,
 	       const char * iname) {
+
 	startX = istartX;
 	endX = iendX;
 	stepX = istepX;
@@ -40,6 +42,9 @@ d_grid::d_grid(REAL istartX, REAL iendX, REAL istepX,
 	stepY = istepY;
 	gridname = NULL;
 	setName(iname);
+
+	if ((startX > endX) || (startY > endY))
+		writelog(LOG_ERROR,"Wrong grid");
 };
 
 d_grid::d_grid(const d_grid * igrid) {
@@ -161,7 +166,7 @@ void d_grid::getLine(int line_number, float &x0, float &y0, float &x1, float &y1
 
 bool d_grid::operator==(const d_grid * test) const 
 {
-	REAL eps = 1e-6;
+	REAL eps = REAL(1e-6);
 	if (test == this)
 		return true;
 

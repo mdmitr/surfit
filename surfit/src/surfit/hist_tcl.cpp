@@ -30,7 +30,7 @@
 #include "hist_internal.h"
 #include "variables_internal.h"
 #include "free_elements.h"
-#include "func.h"
+#include "surf.h"
 
 #include <math.h>
 #include <float.h>
@@ -135,13 +135,13 @@ void hists_info() {
 	}
 };
 
-bool hist_from_func(const char * histname, const char * func_pos, int intervs) {
-	d_func * fnc = get_element<d_func>(func_pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+bool hist_from_surf(const char * histname, const char * surf_pos, int intervs) {
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
 
 	REAL minz, maxz;
-	fnc->getMinMaxZ(minz, maxz);
+	srf->getMinMaxZ(minz, maxz);
 	maxz += (maxz-minz)*1e-3;
 	REAL step = stepFunc(minz, maxz, intervs);
 	minz = floor(minz/step)*step;
@@ -161,19 +161,19 @@ bool hist_from_func(const char * histname, const char * func_pos, int intervs) {
 	for (i = 0; i < intervs; i++) 
 		(*Z)(i) = 0;
 
-	int fnc_size = 0;
+	int srf_size = 0;
 
-	for (i = 0; i < fnc->coeff->size(); i++) {
-		REAL z = (*(fnc->coeff))(i);
-		if (z == fnc->undef_value)
+	for (i = 0; i < srf->coeff->size(); i++) {
+		REAL z = (*(srf->coeff))(i);
+		if (z == srf->undef_value)
 			continue;
-		fnc_size += 1;
+		srf_size += 1;
 		int pos = (int)floor((z-minz)/step + 0.5);
 		(*Z)(pos) += 1;
 	}
 
 	for (i = 0; i < intervs; i++) 
-		(*Z)(i) /= (REAL)(fnc_size);
+		(*Z)(i) /= (REAL)(srf_size);
 
 	d_hist * hst = create_hist(X1, X2, Z, histname);
 	surfit_hists->push_back(hst);
@@ -181,18 +181,18 @@ bool hist_from_func(const char * histname, const char * func_pos, int intervs) {
 	return true;
 };
 
-bool hist_update_func(const char * hist_pos, const char * func_pos) {
+bool hist_update_surf(const char * hist_pos, const char * surf_pos) {
 
 	d_hist * hst = get_element<d_hist>(hist_pos, surfit_hists->begin(), surfit_hists->end());
 	if (hst == NULL)
 		return false;
 
-	d_func * fnc = get_element<d_func>(func_pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (fnc == NULL)
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
 		return false;
 
 	int hist_size = hst->size();
-	int fnc_size = 0;
+	int srf_size = 0;
 	int i, j;
 	
 	for (i = 0; i < hist_size - 1; i++) 
@@ -200,11 +200,11 @@ bool hist_update_func(const char * hist_pos, const char * func_pos) {
 
 	REAL from, to, z;
 	
-	for (j = 0; j < fnc->coeff->size(); j++) {
-		z = (*(fnc->coeff))(j);
-		if (z == fnc->undef_value)
+	for (j = 0; j < srf->coeff->size(); j++) {
+		z = (*(srf->coeff))(j);
+		if (z == srf->undef_value)
 			continue;
-		fnc_size ++;
+		srf_size ++;
 		for (i = 0; i < hist_size - 1; i++) {
 			from = (*(hst->X1))(i);
 			to   = (*(hst->X2))(i);
@@ -214,7 +214,7 @@ bool hist_update_func(const char * hist_pos, const char * func_pos) {
 	}
 
 	for (i = 0; i < hist_size; i++) 
-		(*(hst->Z))(i) /= (REAL)(fnc_size);
+		(*(hst->Z))(i) /= (REAL)(srf_size);
 	
 	return true;
 

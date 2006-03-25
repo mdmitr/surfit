@@ -17,23 +17,27 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#ifndef __surfit_approx_trend_included__
-#define __surfit_approx_trend_included__
+#ifndef __surfit_f_curv_surf_ineq_included__
+#define __surfit_f_curv_surf_ineq_included__
 
 #include "functional.h"
 
 namespace surfit {
 
+class d_curv;
 class d_surf;
-class matr;
-class vec;
-class bitvec;
-class d_grid;
+class d_points;
+class f_points_ineq;
 
-class SURFIT_EXPORT f_trend : public functional, public faultable {
+/*! \class f_curv_surf_ineq
+    \brief functional that sets inequality condition for curv with surface values
+*/
+class SURFIT_EXPORT f_curv_surf_ineq : public functional {
 public:
-	f_trend(REAL iD1, REAL iD2, const d_surf * isrf);
-	~f_trend();
+	//! constructor
+	f_curv_surf_ineq(const d_surf * isurf, const d_curv * icurv, bool ileq, REAL imult);
+	//! destructor
+	~f_curv_surf_ineq();
 
 	bool minimize();
 
@@ -53,23 +57,32 @@ protected:
 
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
-	
-	bool minimize_step();
-	const d_surf * srf;
-	REAL D1;
-	REAL D2;
 
-	d_surf * tr_srf;
-	void get_tr_srf(int & i_from, int & i_to, int & j_from, int & j_to);
+private:
+
+	//! function for creating \ref f_points_ineq functional 
+	void create_f_points_ineq();
+
+	//! curve for inequalities
+	const d_curv * crv;
+
+	//! equation flag
+	bool leq;
+
+	//! values for inequalities
+	const d_surf * srf;
+
+	//! parameter for penalty algorithm
+	REAL mult;
+
+	//! functional for points inequalities
+	f_points_ineq * f_pnts_ineq;
+	//! points, received from curve
+	d_points * pnts;
 
 };
 
-SURFIT_EXPORT
-d_grid * adopt_surf_grid(const d_surf * srf, d_grid * grd,
-			 int & from_x, int & to_x,
-			 int & from_y, int & to_y);
-
-}; // namespace surfit;
+}; // namespace surfit
 
 #endif
 

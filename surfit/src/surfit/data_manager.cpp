@@ -34,9 +34,9 @@
 #include "grid.h"
 #include "grid_tcl.h"
 #include "grid_user.h"
-#include "func.h"
-#include "func_internal.h"
-#include "func_tcl.h"
+#include "surf.h"
+#include "surf_internal.h"
+#include "surf_tcl.h"
 #include "mask.h"
 #include "mask_internal.h"
 #include "mask_tcl.h"
@@ -325,13 +325,13 @@ int surfit_manager::load_tag(datafile * df, char * tagname) const {
 		return 1;
 	}
 	
-	if (strcmp(tagname, "func") == 0) {
+	if ((strcmp(tagname, "surf") == 0) || (strcmp(tagname, "func") == 0)) {
 		
-		d_func * res = _func_load_df(df, NULL);
+		d_surf * res = _surf_load_df(df, NULL);
 		
 		if (res) {
-			surfit_funcs->push_back(res);
-			_func_info(res);
+			surfit_surfs->push_back(res);
+			_surf_info(res);
 		}
 		
 		if ( !df->readTagName(tagname) )
@@ -424,15 +424,15 @@ bool surfit_manager::save(datafile *df) const {
 			return false;
 	}
 
-	for (cnt = 0; cnt < surfit_funcs->size(); cnt++) {
-		d_func * fnc = *(surfit_funcs->begin()+cnt);
-		if (!_func_save_df(fnc, df))
+	for (cnt = 0; cnt < surfit_surfs->size(); cnt++) {
+		d_surf * srf = *(surfit_surfs->begin()+cnt);
+		if (!_surf_save_df(srf, df))
 			return false;
 	}
 
 	for (cnt = 0; cnt < surfit_masks->size(); cnt++) {
-		d_mask * fnc = *(surfit_masks->begin()+cnt);
-		if (!_mask_save_df(fnc, df))
+		d_mask * srf = *(surfit_masks->begin()+cnt);
+		if (!_mask_save_df(srf, df))
 			return false;
 	}
 
@@ -468,7 +468,7 @@ void surfit_manager::clear_data() const {
 
 	grid_unload();
 	
-	func_delall();
+	surf_delall();
 	mask_delall();
 
 	pnts_delall();
@@ -487,7 +487,7 @@ void surfit_manager::clear_data() const {
 
 };
 
-#define SURFIT_TYPES "surfit func mask pnts curv area cntr grid\n"
+#define SURFIT_TYPES "surfit surf mask pnts curv area cntr grid\n"
 
 char * surfit_manager::types_info() const {
 	return SURFIT_TYPES;
@@ -496,7 +496,7 @@ char * surfit_manager::types_info() const {
 void surfit_manager::mem_info() const {
 
 	
-	funcs_info();
+	surfs_info();
 	masks_info();
 	pnts_info();
 	curvs_info();
@@ -509,7 +509,7 @@ void surfit_manager::mem_info() const {
 int surfit_manager::data_count() const {
 	int res = 0;
 
-	res += surfit_funcs->size();
+	res += surfit_surfs->size();
 	res += surfit_masks->size(); 
 	res += surfit_pnts->size(); 
 	res += surfit_cntrs->size(); 
@@ -521,39 +521,58 @@ int surfit_manager::data_count() const {
 
 bool surfit_manager::auto_load(const char * filename, const char * first1024, int readed) const {
 
+	char * ext = get_ext(filename);
+	char * uext = strdup(ext);
+	str_toupper(uext);
+	char * name = get_name(filename);
+	char * uname = strdup(name);
+	str_toupper(uname);
+
+	bool res = false;
+	int columns = calc_columns(first1024, readed);
+
 	if (first1024 == NULL)
 		return false;
+
+	if (ext != NULL) {
+		if (strcmp( uext, ".BLN" ) == 0) {
+			res = area_read_bln(filename, name);
+		}
+	}
 	
 	if ( strncmp(first1024,"DSAA",4) == 0 ) {
-		bool res = false;
 		try {
-			res = func_load_grd(filename);
+			res = surf_load_grd(filename);
 		} catch (...) {
-			return false;
+			goto exit;
 		}
-		return res;
+		goto exit;
 	}
 
-	int columns = calc_columns(first1024, readed);
 	if (columns == 2) {
-		bool res = false;
 		try {
 			res = curv_read(filename);
 		} catch (...) {
-			return false;
+			goto exit;
 		}
-		return res;
+		goto exit;
 	}
 	
 	if (columns == 3) {
-		bool res = false;
 		try {
 			res = pnts_read(filename);
 		} catch (...) {
-			return false;
+			goto exit;
 		}
-		return res;
+		goto exit;
 	}
+
+exit:
+
+	free(uext);
+	free(uname);
+	sstuff_free_char(ext);
+	sstuff_free_char(name);
 
 	return false;
 };
@@ -563,9 +582,9 @@ const data * surfit_manager::data_get(int i) const {
 	int res = 0;
 	int sum = 0;
 
-	res = surfit_funcs->size();
+	res = surfit_surfs->size();
 	if (res + sum > i)
-		return (*surfit_funcs)[i-sum];
+		return (*surfit_surfs)[i-sum];
 	sum += res;
 
 	res = surfit_masks->size();
@@ -644,7 +663,7 @@ bool manager::bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const {
 
 void clear_data() {
 
-	clear_cmofs();
+	clear_rules();
 
 	if (surfit_data_manager)
 		surfit_data_manager->clear_data();

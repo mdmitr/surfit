@@ -58,25 +58,25 @@ public:
 	d_dem * create_dem(shortvec *icoeff, d_grid *igrd, 
 			   const char * demname, short dem_undef_value);
 
-	//! calculates function value at point (x,y)
+	//! calculates surface value at point (x,y)
 	virtual short getValue(REAL x, REAL y) const;
 	
-	//! calculates function value at point (x,y) using bilinear interpolation
+	//! calculates surface value at point (x,y) using bilinear interpolation
 	virtual REAL getInterpValue(REAL x, REAL y) const;
 
-	//! calculates function mean value for rect
+	//! calculates surface mean value for rect
 	virtual REAL getMeanValue(REAL x_from, REAL x_to, REAL y_from, REAL y_to) const;
 
-	//! returns minimum X-coordinate for the function
+	//! returns minimum X-coordinate for the surface
 	virtual REAL getMinX() const;
 
-	//! returns maximum X-coordinate for the function
+	//! returns maximum X-coordinate for the surface
 	virtual REAL getMaxX() const;
 
-	//! returns minimum Y-coordinate for the function
+	//! returns minimum Y-coordinate for the surface
 	virtual REAL getMinY() const;
 
-	//! returns maximum Y-coordinate for the function
+	//! returns maximum Y-coordinate for the surface
 	virtual REAL getMaxY() const;
 
 	//! calculates minimum and maximum Z values 
@@ -115,7 +115,7 @@ public:
 	//! returns amount of cells with defined values
 	virtual int defined() const;
 
-	//! writes tag for saving func to datafile 
+	//! writes tag for saving dem to datafile 
 	virtual bool writeTags(datafile * df) const;
 
 	//! this = this + fnc
@@ -124,9 +124,6 @@ public:
 	//! this = this - fnc, undef means no operation
 	virtual void minus(const d_dem * fnc);
 
-	//! this = this - fnc, undef means undef
-	virtual void minus_undef(const d_dem * fnc);
-	
 	//! this = this * fnc
 	virtual void mult(const d_dem * fnc);
 	
@@ -175,10 +172,10 @@ public:
 	//! calculates norm
 	virtual REAL calc_approx_norm(int norm_type) const;
 
-	//! grid for basis function placements
+	//! grid for basis surface placements
 	d_grid * grd;
 
-	//! coefficients for each basis function
+	//! coefficients for each basis surface
 	shortvec * coeff;
 
 	std::vector<shortvec *> * coeffs_store;

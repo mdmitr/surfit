@@ -52,8 +52,8 @@ bool rotate(REAL center_x, REAL center_y, REAL angle,
 	    REAL * x_begin, REAL * x_end,
 	    REAL * y_begin, REAL * y_end) 
 {
-	REAL cos_alpha = cos(angle/REAL(180)*3.1415926);
-	REAL sin_alpha = sin(angle/REAL(180)*3.1415926);
+	REAL cos_alpha = (REAL)cos(angle/REAL(180)*3.1415926);
+	REAL sin_alpha = (REAL)sin(angle/REAL(180)*3.1415926);
 
 	int size = (x_end-x_begin);
 	if (size != (y_end-y_begin))

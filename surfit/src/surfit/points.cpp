@@ -280,6 +280,28 @@ bool d_points::getMinMaxZ(REAL & minz, REAL & maxz) const {
 	return false;
 };
 
+void d_points::remove_with_value(REAL val) {
+	int i,j;
+	REAL z;
+	int N = size();
+	for (i = 0, j = 0; i < N; i++) {
+		z = (*Z)(i);
+		if (z != val) {
+			(*Z)(j) = z;
+			(*X)(j) = (*X)(i);
+			(*Y)(j) = (*Y)(i);
+			j++;
+			continue;
+		}
+		
+	}
+
+	X->resize(j);
+	Y->resize(j);
+	Z->resize(j);
+
+};
+
 sub_points::sub_points(int icell_number, 
 		       std::vector<unsigned int> * ipoint_numbers)
 {

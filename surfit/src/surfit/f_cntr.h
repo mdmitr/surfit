@@ -29,9 +29,14 @@ class f_points;
 class d_cntr;
 class bitvec;
 
+/*! \class f_cntr
+    \brief functional for approximating contour
+*/
 class SURFIT_EXPORT f_cntr : public functional {
 public:
-	f_cntr(d_cntr * icontour);
+	//! constructor
+	f_cntr(const d_cntr * icontour);
+	//! destructor
 	~f_cntr();
 
 	bool minimize();
@@ -51,10 +56,15 @@ protected:
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
 
+	//! function for converting contour to points and making \ref f_points functional
 	void create_f_approx_points();
 
+	//! contour for approximation
 	const d_cntr * contour;
+
+	//! functional for approximation of points (received from contour)
 	f_points * f_pnts;
+	//! contour for apprixmation converted to points
 	d_points * pnts;
 };
 

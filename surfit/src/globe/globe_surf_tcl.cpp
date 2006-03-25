@@ -17,23 +17,31 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#ifndef __surfit__globe_func_internal__
-#define __surfit__globe_func_internal__
+#include "globe_ie.h"
+#include "dem.h"
+#include "surf_internal.h"
+#include "dem_internal.h"
+#include "dem_tcl.h"
+#include "surf.h"
+#include "surf_tcl.h"
+#include "globe_surf_internal.h"
+
+#include <float.h>
 
 namespace surfit {
 
-//
-// CONVERTING
-//
+bool surf_to_dem(const char * pos) {
+	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (!srf)
+		return false;
+	
+	d_dem * d = _surf_to_dem(srf);
+	if (!d)
+		return false;
 
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_internal
-    \fn d_dem * _func_to_dem(d_func * fnc);
-    \brief transforms \ref func to \ref dem
-*/
-d_dem * _func_to_dem(d_func * fnc);
+	globe_dems->push_back(d);
+	return true;
+};
 
 }; // namespace surfit;
-
-#endif
 

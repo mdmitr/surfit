@@ -19,28 +19,36 @@
 
 #include "globe_ie.h"
 #include "dem.h"
-#include "func_internal.h"
-#include "dem_internal.h"
-#include "dem_tcl.h"
-#include "func.h"
-#include "func_tcl.h"
-#include "globe_func_internal.h"
+#include "surf_tcl.h"
+#include "shortvec.h"
+#include "vec.h"
+#include "surf.h"
+#include "grid.h"
 
 #include <float.h>
 
 namespace surfit {
 
-bool func_to_dem(const char * pos) {
-	d_func * fnc = get_element<d_func>(pos, surfit_funcs->begin(), surfit_funcs->end());
-	if (!fnc)
-		return false;
-	
-	d_dem * d = _func_to_dem(fnc);
-	if (!d)
-		return false;
+d_dem * _surf_to_dem(d_surf * srf) {
+	shortvec * coeff = create_shortvec( srf->coeff->size() );
+	int i;
+	REAL val;
+	for (i = 0; i < srf->coeff->size(); i++) {
+		val = (*(srf->coeff))(i);
+		if (val == srf->undef_value)
+			(*coeff)(i) = SHRT_MAX;
+		else
+			(*coeff)(i) = (short)val;
+	};
 
-	globe_dems->push_back(d);
-	return true;
+	d_grid * fgrd = srf->grd;
+	d_grid * grd = new d_grid(fgrd);
+
+	d_dem * res = create_dem(coeff, grd);
+	res->undef_value = SHRT_MAX;
+	res->setName(srf->getName());
+
+	return res;
 };
 
 }; // namespace surfit;

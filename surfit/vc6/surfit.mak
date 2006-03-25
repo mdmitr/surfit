@@ -82,12 +82,14 @@ CLEAN :
 	-@erase "$(INTDIR)\data_manager.sbr"
 	-@erase "$(INTDIR)\f_area.obj"
 	-@erase "$(INTDIR)\f_area.sbr"
-	-@erase "$(INTDIR)\f_area_func_ineq.obj"
-	-@erase "$(INTDIR)\f_area_func_ineq.sbr"
 	-@erase "$(INTDIR)\f_area_ineq.obj"
 	-@erase "$(INTDIR)\f_area_ineq.sbr"
 	-@erase "$(INTDIR)\f_area_mean.obj"
 	-@erase "$(INTDIR)\f_area_mean.sbr"
+	-@erase "$(INTDIR)\f_area_surf.obj"
+	-@erase "$(INTDIR)\f_area_surf.sbr"
+	-@erase "$(INTDIR)\f_area_surf_ineq.obj"
+	-@erase "$(INTDIR)\f_area_surf_ineq.sbr"
 	-@erase "$(INTDIR)\f_area_wmean.obj"
 	-@erase "$(INTDIR)\f_area_wmean.sbr"
 	-@erase "$(INTDIR)\f_cntr.obj"
@@ -100,10 +102,10 @@ CLEAN :
 	-@erase "$(INTDIR)\f_curv.sbr"
 	-@erase "$(INTDIR)\f_curv_ineq.obj"
 	-@erase "$(INTDIR)\f_curv_ineq.sbr"
-	-@erase "$(INTDIR)\f_func.obj"
-	-@erase "$(INTDIR)\f_func.sbr"
-	-@erase "$(INTDIR)\f_func_ineq.obj"
-	-@erase "$(INTDIR)\f_func_ineq.sbr"
+	-@erase "$(INTDIR)\f_curv_surf.obj"
+	-@erase "$(INTDIR)\f_curv_surf.sbr"
+	-@erase "$(INTDIR)\f_curv_surf_ineq.obj"
+	-@erase "$(INTDIR)\f_curv_surf_ineq.sbr"
 	-@erase "$(INTDIR)\f_global_tcl.obj"
 	-@erase "$(INTDIR)\f_global_tcl.sbr"
 	-@erase "$(INTDIR)\f_hist.obj"
@@ -120,6 +122,10 @@ CLEAN :
 	-@erase "$(INTDIR)\f_points_ineq.sbr"
 	-@erase "$(INTDIR)\f_points_tcl.obj"
 	-@erase "$(INTDIR)\f_points_tcl.sbr"
+	-@erase "$(INTDIR)\f_surf.obj"
+	-@erase "$(INTDIR)\f_surf.sbr"
+	-@erase "$(INTDIR)\f_surf_ineq.obj"
+	-@erase "$(INTDIR)\f_surf_ineq.sbr"
 	-@erase "$(INTDIR)\f_trend.obj"
 	-@erase "$(INTDIR)\f_trend.sbr"
 	-@erase "$(INTDIR)\f_value.obj"
@@ -128,14 +134,6 @@ CLEAN :
 	-@erase "$(INTDIR)\f_wmean.sbr"
 	-@erase "$(INTDIR)\free_elements.obj"
 	-@erase "$(INTDIR)\free_elements.sbr"
-	-@erase "$(INTDIR)\func.obj"
-	-@erase "$(INTDIR)\func.sbr"
-	-@erase "$(INTDIR)\func_internal.obj"
-	-@erase "$(INTDIR)\func_internal.sbr"
-	-@erase "$(INTDIR)\func_tcl.obj"
-	-@erase "$(INTDIR)\func_tcl.sbr"
-	-@erase "$(INTDIR)\funcs_tcl.obj"
-	-@erase "$(INTDIR)\funcs_tcl.sbr"
 	-@erase "$(INTDIR)\functional.obj"
 	-@erase "$(INTDIR)\functional.sbr"
 	-@erase "$(INTDIR)\grid.obj"
@@ -228,10 +226,18 @@ CLEAN :
 	-@erase "$(INTDIR)\sort_alg.sbr"
 	-@erase "$(INTDIR)\SSOR.obj"
 	-@erase "$(INTDIR)\SSOR.sbr"
+	-@erase "$(INTDIR)\surf.obj"
+	-@erase "$(INTDIR)\surf.sbr"
+	-@erase "$(INTDIR)\surf_internal.obj"
+	-@erase "$(INTDIR)\surf_internal.sbr"
+	-@erase "$(INTDIR)\surf_tcl.obj"
+	-@erase "$(INTDIR)\surf_tcl.sbr"
 	-@erase "$(INTDIR)\surfit.obj"
 	-@erase "$(INTDIR)\surfit.sbr"
 	-@erase "$(INTDIR)\surfit_wrap.obj"
 	-@erase "$(INTDIR)\surfit_wrap.sbr"
+	-@erase "$(INTDIR)\surfs_tcl.obj"
+	-@erase "$(INTDIR)\surfs_tcl.sbr"
 	-@erase "$(INTDIR)\threads.obj"
 	-@erase "$(INTDIR)\threads.sbr"
 	-@erase "$(INTDIR)\variables.obj"
@@ -276,9 +282,9 @@ BSC32_SBRS= \
 	"$(INTDIR)\mask.sbr" \
 	"$(INTDIR)\mask_internal.sbr" \
 	"$(INTDIR)\mask_tcl.sbr" \
-	"$(INTDIR)\func.sbr" \
-	"$(INTDIR)\func_internal.sbr" \
-	"$(INTDIR)\func_tcl.sbr" \
+	"$(INTDIR)\surf.sbr" \
+	"$(INTDIR)\surf_internal.sbr" \
+	"$(INTDIR)\surf_tcl.sbr" \
 	"$(INTDIR)\pnts_internal.sbr" \
 	"$(INTDIR)\pnts_tcl.sbr" \
 	"$(INTDIR)\points.sbr" \
@@ -311,19 +317,22 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_wmean.sbr" \
 	"$(INTDIR)\curvs_tcl.sbr" \
 	"$(INTDIR)\f_area.sbr" \
-	"$(INTDIR)\f_area_func_ineq.sbr" \
 	"$(INTDIR)\f_area_ineq.sbr" \
 	"$(INTDIR)\f_area_mean.sbr" \
+	"$(INTDIR)\f_area_surf.sbr" \
+	"$(INTDIR)\f_area_surf_ineq.sbr" \
 	"$(INTDIR)\f_area_wmean.sbr" \
 	"$(INTDIR)\f_cntr.sbr" \
 	"$(INTDIR)\f_cntr_ineq.sbr" \
 	"$(INTDIR)\f_curv.sbr" \
 	"$(INTDIR)\f_curv_ineq.sbr" \
-	"$(INTDIR)\f_func.sbr" \
-	"$(INTDIR)\f_func_ineq.sbr" \
+	"$(INTDIR)\f_curv_surf.sbr" \
+	"$(INTDIR)\f_curv_surf_ineq.sbr" \
 	"$(INTDIR)\f_mask.sbr" \
+	"$(INTDIR)\f_surf.sbr" \
+	"$(INTDIR)\f_surf_ineq.sbr" \
 	"$(INTDIR)\f_trend.sbr" \
-	"$(INTDIR)\funcs_tcl.sbr" \
+	"$(INTDIR)\surfs_tcl.sbr" \
 	"$(INTDIR)\functional.sbr" \
 	"$(INTDIR)\pasync.sbr" \
 	"$(INTDIR)\patomic.sbr" \
@@ -377,9 +386,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\mask.obj" \
 	"$(INTDIR)\mask_internal.obj" \
 	"$(INTDIR)\mask_tcl.obj" \
-	"$(INTDIR)\func.obj" \
-	"$(INTDIR)\func_internal.obj" \
-	"$(INTDIR)\func_tcl.obj" \
+	"$(INTDIR)\surf.obj" \
+	"$(INTDIR)\surf_internal.obj" \
+	"$(INTDIR)\surf_tcl.obj" \
 	"$(INTDIR)\pnts_internal.obj" \
 	"$(INTDIR)\pnts_tcl.obj" \
 	"$(INTDIR)\points.obj" \
@@ -412,19 +421,22 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_wmean.obj" \
 	"$(INTDIR)\curvs_tcl.obj" \
 	"$(INTDIR)\f_area.obj" \
-	"$(INTDIR)\f_area_func_ineq.obj" \
 	"$(INTDIR)\f_area_ineq.obj" \
 	"$(INTDIR)\f_area_mean.obj" \
+	"$(INTDIR)\f_area_surf.obj" \
+	"$(INTDIR)\f_area_surf_ineq.obj" \
 	"$(INTDIR)\f_area_wmean.obj" \
 	"$(INTDIR)\f_cntr.obj" \
 	"$(INTDIR)\f_cntr_ineq.obj" \
 	"$(INTDIR)\f_curv.obj" \
 	"$(INTDIR)\f_curv_ineq.obj" \
-	"$(INTDIR)\f_func.obj" \
-	"$(INTDIR)\f_func_ineq.obj" \
+	"$(INTDIR)\f_curv_surf.obj" \
+	"$(INTDIR)\f_curv_surf_ineq.obj" \
 	"$(INTDIR)\f_mask.obj" \
+	"$(INTDIR)\f_surf.obj" \
+	"$(INTDIR)\f_surf_ineq.obj" \
 	"$(INTDIR)\f_trend.obj" \
-	"$(INTDIR)\funcs_tcl.obj" \
+	"$(INTDIR)\surfs_tcl.obj" \
 	"$(INTDIR)\functional.obj" \
 	"$(INTDIR)\pasync.obj" \
 	"$(INTDIR)\patomic.obj" \
@@ -503,12 +515,14 @@ CLEAN :
 	-@erase "$(INTDIR)\data_manager.sbr"
 	-@erase "$(INTDIR)\f_area.obj"
 	-@erase "$(INTDIR)\f_area.sbr"
-	-@erase "$(INTDIR)\f_area_func_ineq.obj"
-	-@erase "$(INTDIR)\f_area_func_ineq.sbr"
 	-@erase "$(INTDIR)\f_area_ineq.obj"
 	-@erase "$(INTDIR)\f_area_ineq.sbr"
 	-@erase "$(INTDIR)\f_area_mean.obj"
 	-@erase "$(INTDIR)\f_area_mean.sbr"
+	-@erase "$(INTDIR)\f_area_surf.obj"
+	-@erase "$(INTDIR)\f_area_surf.sbr"
+	-@erase "$(INTDIR)\f_area_surf_ineq.obj"
+	-@erase "$(INTDIR)\f_area_surf_ineq.sbr"
 	-@erase "$(INTDIR)\f_area_wmean.obj"
 	-@erase "$(INTDIR)\f_area_wmean.sbr"
 	-@erase "$(INTDIR)\f_cntr.obj"
@@ -521,10 +535,10 @@ CLEAN :
 	-@erase "$(INTDIR)\f_curv.sbr"
 	-@erase "$(INTDIR)\f_curv_ineq.obj"
 	-@erase "$(INTDIR)\f_curv_ineq.sbr"
-	-@erase "$(INTDIR)\f_func.obj"
-	-@erase "$(INTDIR)\f_func.sbr"
-	-@erase "$(INTDIR)\f_func_ineq.obj"
-	-@erase "$(INTDIR)\f_func_ineq.sbr"
+	-@erase "$(INTDIR)\f_curv_surf.obj"
+	-@erase "$(INTDIR)\f_curv_surf.sbr"
+	-@erase "$(INTDIR)\f_curv_surf_ineq.obj"
+	-@erase "$(INTDIR)\f_curv_surf_ineq.sbr"
 	-@erase "$(INTDIR)\f_global_tcl.obj"
 	-@erase "$(INTDIR)\f_global_tcl.sbr"
 	-@erase "$(INTDIR)\f_hist.obj"
@@ -541,6 +555,10 @@ CLEAN :
 	-@erase "$(INTDIR)\f_points_ineq.sbr"
 	-@erase "$(INTDIR)\f_points_tcl.obj"
 	-@erase "$(INTDIR)\f_points_tcl.sbr"
+	-@erase "$(INTDIR)\f_surf.obj"
+	-@erase "$(INTDIR)\f_surf.sbr"
+	-@erase "$(INTDIR)\f_surf_ineq.obj"
+	-@erase "$(INTDIR)\f_surf_ineq.sbr"
 	-@erase "$(INTDIR)\f_trend.obj"
 	-@erase "$(INTDIR)\f_trend.sbr"
 	-@erase "$(INTDIR)\f_value.obj"
@@ -549,14 +567,6 @@ CLEAN :
 	-@erase "$(INTDIR)\f_wmean.sbr"
 	-@erase "$(INTDIR)\free_elements.obj"
 	-@erase "$(INTDIR)\free_elements.sbr"
-	-@erase "$(INTDIR)\func.obj"
-	-@erase "$(INTDIR)\func.sbr"
-	-@erase "$(INTDIR)\func_internal.obj"
-	-@erase "$(INTDIR)\func_internal.sbr"
-	-@erase "$(INTDIR)\func_tcl.obj"
-	-@erase "$(INTDIR)\func_tcl.sbr"
-	-@erase "$(INTDIR)\funcs_tcl.obj"
-	-@erase "$(INTDIR)\funcs_tcl.sbr"
 	-@erase "$(INTDIR)\functional.obj"
 	-@erase "$(INTDIR)\functional.sbr"
 	-@erase "$(INTDIR)\grid.obj"
@@ -649,10 +659,18 @@ CLEAN :
 	-@erase "$(INTDIR)\sort_alg.sbr"
 	-@erase "$(INTDIR)\SSOR.obj"
 	-@erase "$(INTDIR)\SSOR.sbr"
+	-@erase "$(INTDIR)\surf.obj"
+	-@erase "$(INTDIR)\surf.sbr"
+	-@erase "$(INTDIR)\surf_internal.obj"
+	-@erase "$(INTDIR)\surf_internal.sbr"
+	-@erase "$(INTDIR)\surf_tcl.obj"
+	-@erase "$(INTDIR)\surf_tcl.sbr"
 	-@erase "$(INTDIR)\surfit.obj"
 	-@erase "$(INTDIR)\surfit.sbr"
 	-@erase "$(INTDIR)\surfit_wrap.obj"
 	-@erase "$(INTDIR)\surfit_wrap.sbr"
+	-@erase "$(INTDIR)\surfs_tcl.obj"
+	-@erase "$(INTDIR)\surfs_tcl.sbr"
 	-@erase "$(INTDIR)\threads.obj"
 	-@erase "$(INTDIR)\threads.sbr"
 	-@erase "$(INTDIR)\variables.obj"
@@ -699,9 +717,9 @@ BSC32_SBRS= \
 	"$(INTDIR)\mask.sbr" \
 	"$(INTDIR)\mask_internal.sbr" \
 	"$(INTDIR)\mask_tcl.sbr" \
-	"$(INTDIR)\func.sbr" \
-	"$(INTDIR)\func_internal.sbr" \
-	"$(INTDIR)\func_tcl.sbr" \
+	"$(INTDIR)\surf.sbr" \
+	"$(INTDIR)\surf_internal.sbr" \
+	"$(INTDIR)\surf_tcl.sbr" \
 	"$(INTDIR)\pnts_internal.sbr" \
 	"$(INTDIR)\pnts_tcl.sbr" \
 	"$(INTDIR)\points.sbr" \
@@ -734,19 +752,22 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_wmean.sbr" \
 	"$(INTDIR)\curvs_tcl.sbr" \
 	"$(INTDIR)\f_area.sbr" \
-	"$(INTDIR)\f_area_func_ineq.sbr" \
 	"$(INTDIR)\f_area_ineq.sbr" \
 	"$(INTDIR)\f_area_mean.sbr" \
+	"$(INTDIR)\f_area_surf.sbr" \
+	"$(INTDIR)\f_area_surf_ineq.sbr" \
 	"$(INTDIR)\f_area_wmean.sbr" \
 	"$(INTDIR)\f_cntr.sbr" \
 	"$(INTDIR)\f_cntr_ineq.sbr" \
 	"$(INTDIR)\f_curv.sbr" \
 	"$(INTDIR)\f_curv_ineq.sbr" \
-	"$(INTDIR)\f_func.sbr" \
-	"$(INTDIR)\f_func_ineq.sbr" \
+	"$(INTDIR)\f_curv_surf.sbr" \
+	"$(INTDIR)\f_curv_surf_ineq.sbr" \
 	"$(INTDIR)\f_mask.sbr" \
+	"$(INTDIR)\f_surf.sbr" \
+	"$(INTDIR)\f_surf_ineq.sbr" \
 	"$(INTDIR)\f_trend.sbr" \
-	"$(INTDIR)\funcs_tcl.sbr" \
+	"$(INTDIR)\surfs_tcl.sbr" \
 	"$(INTDIR)\functional.sbr" \
 	"$(INTDIR)\pasync.sbr" \
 	"$(INTDIR)\patomic.sbr" \
@@ -800,9 +821,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\mask.obj" \
 	"$(INTDIR)\mask_internal.obj" \
 	"$(INTDIR)\mask_tcl.obj" \
-	"$(INTDIR)\func.obj" \
-	"$(INTDIR)\func_internal.obj" \
-	"$(INTDIR)\func_tcl.obj" \
+	"$(INTDIR)\surf.obj" \
+	"$(INTDIR)\surf_internal.obj" \
+	"$(INTDIR)\surf_tcl.obj" \
 	"$(INTDIR)\pnts_internal.obj" \
 	"$(INTDIR)\pnts_tcl.obj" \
 	"$(INTDIR)\points.obj" \
@@ -835,19 +856,22 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_wmean.obj" \
 	"$(INTDIR)\curvs_tcl.obj" \
 	"$(INTDIR)\f_area.obj" \
-	"$(INTDIR)\f_area_func_ineq.obj" \
 	"$(INTDIR)\f_area_ineq.obj" \
 	"$(INTDIR)\f_area_mean.obj" \
+	"$(INTDIR)\f_area_surf.obj" \
+	"$(INTDIR)\f_area_surf_ineq.obj" \
 	"$(INTDIR)\f_area_wmean.obj" \
 	"$(INTDIR)\f_cntr.obj" \
 	"$(INTDIR)\f_cntr_ineq.obj" \
 	"$(INTDIR)\f_curv.obj" \
 	"$(INTDIR)\f_curv_ineq.obj" \
-	"$(INTDIR)\f_func.obj" \
-	"$(INTDIR)\f_func_ineq.obj" \
+	"$(INTDIR)\f_curv_surf.obj" \
+	"$(INTDIR)\f_curv_surf_ineq.obj" \
 	"$(INTDIR)\f_mask.obj" \
+	"$(INTDIR)\f_surf.obj" \
+	"$(INTDIR)\f_surf_ineq.obj" \
 	"$(INTDIR)\f_trend.obj" \
-	"$(INTDIR)\funcs_tcl.obj" \
+	"$(INTDIR)\surfs_tcl.obj" \
 	"$(INTDIR)\functional.obj" \
 	"$(INTDIR)\pasync.obj" \
 	"$(INTDIR)\patomic.obj" \
@@ -1072,39 +1096,21 @@ SOURCE=..\src\surfit\mask_tcl.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=.\..\src\surfit\func.cpp
+SOURCE=..\src\surfit\surf.cpp
 
-!IF  "$(CFG)" == "surfit - Win32 Release"
-
-CPP_SWITCHES=/nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../src/sstuff" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
-
-"$(INTDIR)\func.obj"	"$(INTDIR)\func.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) @<<
-  $(CPP_SWITCHES) $(SOURCE)
-<<
-
-
-!ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
-
-CPP_SWITCHES=/nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
-
-"$(INTDIR)\func.obj"	"$(INTDIR)\func.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) @<<
-  $(CPP_SWITCHES) $(SOURCE)
-<<
-
-
-!ENDIF 
-
-SOURCE=.\..\src\surfit\func_internal.cpp
-
-"$(INTDIR)\func_internal.obj"	"$(INTDIR)\func_internal.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\surf.obj"	"$(INTDIR)\surf.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=.\..\src\surfit\func_tcl.cpp
+SOURCE=..\src\surfit\surf_internal.cpp
 
-"$(INTDIR)\func_tcl.obj"	"$(INTDIR)\func_tcl.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\surf_internal.obj"	"$(INTDIR)\surf_internal.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\surf_tcl.cpp
+
+"$(INTDIR)\surf_tcl.obj"	"$(INTDIR)\surf_tcl.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1318,12 +1324,6 @@ SOURCE=..\src\surfit\f_area.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\src\surfit\f_area_func_ineq.cpp
-
-"$(INTDIR)\f_area_func_ineq.obj"	"$(INTDIR)\f_area_func_ineq.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
 SOURCE=..\src\surfit\f_area_ineq.cpp
 
 "$(INTDIR)\f_area_ineq.obj"	"$(INTDIR)\f_area_ineq.sbr" : $(SOURCE) "$(INTDIR)"
@@ -1333,6 +1333,18 @@ SOURCE=..\src\surfit\f_area_ineq.cpp
 SOURCE=..\src\surfit\f_area_mean.cpp
 
 "$(INTDIR)\f_area_mean.obj"	"$(INTDIR)\f_area_mean.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\f_area_surf.cpp
+
+"$(INTDIR)\f_area_surf.obj"	"$(INTDIR)\f_area_surf.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\f_area_surf_ineq.cpp
+
+"$(INTDIR)\f_area_surf_ineq.obj"	"$(INTDIR)\f_area_surf_ineq.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1366,15 +1378,15 @@ SOURCE=..\src\surfit\f_curv_ineq.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\src\surfit\f_func.cpp
+SOURCE=..\src\surfit\f_curv_surf.cpp
 
-"$(INTDIR)\f_func.obj"	"$(INTDIR)\f_func.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\f_curv_surf.obj"	"$(INTDIR)\f_curv_surf.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\src\surfit\f_func_ineq.cpp
+SOURCE=..\src\surfit\f_curv_surf_ineq.cpp
 
-"$(INTDIR)\f_func_ineq.obj"	"$(INTDIR)\f_func_ineq.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\f_curv_surf_ineq.obj"	"$(INTDIR)\f_curv_surf_ineq.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1384,15 +1396,27 @@ SOURCE=..\src\surfit\f_mask.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\src\surfit\f_surf.cpp
+
+"$(INTDIR)\f_surf.obj"	"$(INTDIR)\f_surf.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\f_surf_ineq.cpp
+
+"$(INTDIR)\f_surf_ineq.obj"	"$(INTDIR)\f_surf_ineq.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\src\surfit\f_trend.cpp
 
 "$(INTDIR)\f_trend.obj"	"$(INTDIR)\f_trend.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\src\surfit\funcs_tcl.cpp
+SOURCE=..\src\surfit\surfs_tcl.cpp
 
-"$(INTDIR)\funcs_tcl.obj"	"$(INTDIR)\funcs_tcl.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\surfs_tcl.obj"	"$(INTDIR)\surfs_tcl.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

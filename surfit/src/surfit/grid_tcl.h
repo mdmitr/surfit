@@ -112,23 +112,23 @@ bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * name = NULL, const c
 bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * name = NULL, const char * pos = "0");
 
 /*! \ingroup tcl_grid_create
-    \fn bool grid_get_from_func(const char * pos = "0");
-    \brief constructs \ref surfit_grid equal to \ref surfit_func grid
+    \fn bool grid_get_from_surf(const char * pos = "0");
+    \brief constructs \ref surfit_grid equal to \ref surfit_surf grid
 */
-bool grid_get_from_func(const char * pos = "0");
+bool grid_get_from_surf(const char * pos = "0");
 
 /*! \ingroup tcl_grid_create
-    \fn bool grid_get_for_func(int Xnodes, int Ynodes, const char * pos = "0");
+    \fn bool grid_get_for_surf(int Xnodes, int Ynodes, const char * pos = "0");
     \brief constructs \ref surfit_grid which covers \ref d_points and nodes are 
-    coincident with grid of \ref surfit_func
+    coincident with grid of \ref surfit_surf
 */
-bool grid_get_for_func(int Xnodes, int Ynodes, const char * pos = "0");
+bool grid_get_for_surf(int Xnodes, int Ynodes, const char * pos = "0");
 
 /*! \ingroup tcl_grid_create
-    \fn bool grid_get_for_func_step(REAL stepX, REAL stepY, const char * pos = "0");
-    \brief constructs \ref surfit_grid with steps stepX and stepY and covers \ref surfit_func 
+    \fn bool grid_get_for_surf_step(REAL stepX, REAL stepY, const char * pos = "0");
+    \brief constructs \ref surfit_grid with steps stepX and stepY and covers \ref surfit_surf 
 */
-bool grid_get_for_func_step(REAL stepX, REAL stepY, const char * pos = "0");
+bool grid_get_for_surf_step(REAL stepX, REAL stepY, const char * pos = "0");
 
 /////////////////
 // other
