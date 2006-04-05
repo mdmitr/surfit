@@ -11,10 +11,10 @@ curv_read press.xyz press
 pnts_read press_c.xyz press_c
 
 points
-isoline 250 press
+curve 250 press
 lcm_simple 16.4 1 1e-6 
 
-cmofs
+surfit
 
 grid_unload
 file_save map_task.dat

@@ -35,7 +35,7 @@
 namespace surfit {
 
 f_value::f_value(REAL ivalue) :
-functional("f_value") {
+functional("f_value", F_USUAL) {
 	value = ivalue;
 	mask = NULL;
 };

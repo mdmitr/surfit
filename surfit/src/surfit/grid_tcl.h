@@ -29,22 +29,40 @@ class datafile;
 
 /*! \ingroup tcl_grid_save_load
     \fn bool grid_save(const char * filename);
-    \brief saves \ref surfit_grid to file named filename in active \ref rw_mode. 
-    This function uses ROFF format (see \ref datafile for details)
+    
+    \par Tcl syntax:
+    grid_save "filename"
+
+    \par Description:
+    saves \ref d_grid "grid" to surfit datafile. 
+
+    \param filename surfit datafile
 */
 bool grid_save(const char * filename);
 
 /*! \ingroup tcl_grid_save_load
     \fn bool grid_load(const char * filename, const char * gridname = NULL);
-    \brief loads \ref surfit_grid named 'geomname' from ROFF file (see \ref datafile for details)
-    \param filename filename
-    \param gridname name
+
+    \par Tcl syntax:
+    grid_load "filename" "gridname"
+
+    \par Description:
+    loads \ref d_grid "grid" with name "gridname" from surfit datafile. If no
+    gridname specified, then loads first \ref d_grid "grid" from file.
+    
+    \param filename surfit datafile
+    \param gridname name of \ref d_grid "grid"
 */
 bool grid_load(const char * filename, const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_save_load
     \fn void grid_unload();
-    \brief unloads \ref surfit_grid from memory
+
+    \par Tcl syntax:
+    grid_unload
+
+    \par Description:
+    unloads \ref d_grid "grid" from memory
 */
 void grid_unload();
 
@@ -52,144 +70,233 @@ void grid_unload();
 // create
 
 /*! \ingroup tcl_grid_create
-    \fn bool grid(REAL stepX = 0, REAL stepY = 0, REAL percent = 2);
-    \brief constructs \ref surfit_grid with cells size stepX and stepY, which covers all \ref data.
+    \fn bool grid(REAL stepX = 0, REAL stepY = 0, REAL percent = 2, const char * gridname = NULL);
+
+    \par Tcl syntax:
+    grid stepX stepY percent
+
+    \par Description:
+    constructs \ref d_grid "grid" with cells size stepX and stepY. Resulting grid will
+    cover all loaded datasets with overcome border.
+
+    \param stepX cell length in X direction
+    \param stepY cell length in Y direction
+    \param percent border length in percent
+    \param gridname name of \ref d_grid "grid"
 */
-bool grid(REAL stepX = 0, REAL stepY = 0, REAL percent = 2);
+bool grid(REAL stepX = 0, REAL stepY = 0, REAL percent = 2, const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_create
-    \fn bool grid2(REAL stepX = 0, REAL stepY = 0, REAL percent = 2);
-    \brief constructs \ref surfit_grid with cells size stepX and stepY, which covers all \ref data.
-    Amount of nodes in each direction is a number equal to \f$ 2^n \f$, where n is a number.
+    \fn bool grid2(REAL stepX = 0, REAL stepY = 0, REAL percent = 2, const char * gridname = NULL);
+
+    \par Tcl syntax:
+    grid2 stepX stepY percent
+
+    \par Description:
+    constructs \ref d_grid "grid" with cells size stepX and stepY. Resultin grid will
+    cover all loaded datasets with overcome border.   
+    Number of nodes in each direction is a number equal to \f$ 2^n \f$, where n is 
+    an integer number.
+
+    \param stepX cell length in X direction
+    \param stepY cell length in Y direction
+    \param percent border length in percent
+    \param gridname name of \ref d_grid "grid"
 */
-bool grid2(REAL stepX=0, REAL stepY=0, REAL percent = 2);
+bool grid2(REAL stepX=0, REAL stepY=0, REAL percent = 2, const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_create
     \fn bool grid_get(REAL startX, REAL endX, REAL stepX,
                       REAL startY, REAL endY, REAL stepY,
-                      const char * name = NULL);
-    \brief constructs \ref surfit_grid
+                      const char * gridname = NULL);
+
+    \par Tcl syntax:
+    grid_get startX endX stepX startY endY stepY "gridname"
+
+    \par Description:
+    constructs \ref d_grid "grid"
+
     \param startX X-coordinate of the first node of the grid
     \param endX   X-coordinate of the last node of the grid
     \param stepX  distance between two neighbour X-nodes
     \param startY Y-coordinate of the first node of the grid
     \param endY   Y-coordinate of the last node of the grid
     \param stepY  distance between two neighbour Y-nodes 
-    \param name   name for grid (optional)
+    \param gridname   name for grid (optional)
 */
 bool grid_get(REAL startX, REAL endX, REAL stepX,
               REAL startY, REAL endY, REAL stepY,
-              const char * name = NULL);
+              const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_create
     \fn bool grid_get2(REAL startX, REAL endX, REAL stepX,
-                      REAL startY, REAL endY, REAL stepY,
-                      const char * name = NULL);
-    \brief constructs \ref surfit_grid 
-    Amount of nodes in each direction is a number equal to \f$ 2^n \f$, where n is a number.
+                       REAL startY, REAL endY, REAL stepY,
+                       const char * gridname = NULL);
+  
+    \par Tcl syntax:
+    grid_get startX endX stepX startY endY stepY "name"
+
+    \par Description:
+    constructs \ref d_grid "grid".
+    Number of nodes in each direction is a number equal to \f$ 2^n \f$, where n is 
+    an integer number.
+
     \param startX X-coordinate of the first node of the grid
     \param endX   X-coordinate of the last node of the grid
     \param stepX  distance between two neighbour X-nodes
     \param startY Y-coordinate of the first node of the grid
     \param endY   Y-coordinate of the last node of the grid
     \param stepY  distance between two neighbour Y-nodes 
-    \param name   name for grid (optional)
+    \param gridname   name for grid (optional)
 */
 bool grid_get2(REAL startX, REAL endX, REAL stepX,
                REAL startY, REAL endY, REAL stepY,
-               const char * name = NULL);
+               const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_create
-    \fn bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * name = NULL, const char * pos = "0");
-    \brief constructs \ref surfit_grid which covers \ref points, and consists of Xnodes*Ynodes nodes. 
+    \fn bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * points_name_or_position = "0", const char * gridname = NULL);
+
+    \par Tcl syntax:
+    grid_get_for_pnts Xnodex Ynodes "points_name_or_position" "gridname"
+
+    \par Description:
+    constructs \ref d_grid "grid" which covers \ref d_points "points", and consists of Xnodes*Ynodes nodes. 
 */
-bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * name = NULL, const char * pos = "0");
+bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * points_name_or_position = "0", const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_create
-    \fn bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * name = NULL, const char * pos = "0");
-    \brief constructs \ref surfit_grid which covers \ref points, with steps stepX and stepY. 
+    \fn bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * points_name_or_position = "0", const char * gridname = NULL);
+    
+    \par Tcl syntax:
+    grid_get_for_pnts_step steX stepY "points_name_or_position" "gridname" 
+
+    \par Description:
+    constructs \ref d_grid "grid" with cell size stepX and stepY. Resulting grid will
+    cover \ref d_points "points" dataset. 
 */
-bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * name = NULL, const char * pos = "0");
+bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * points_name_or_position = "0", const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_create
-    \fn bool grid_get_from_surf(const char * pos = "0");
-    \brief constructs \ref surfit_grid equal to \ref surfit_surf grid
-*/
-bool grid_get_from_surf(const char * pos = "0");
+    \fn bool grid_get_from_surf(const char * surface_name_or_position = "0", const char * gridname = NULL);
 
-/*! \ingroup tcl_grid_create
-    \fn bool grid_get_for_surf(int Xnodes, int Ynodes, const char * pos = "0");
-    \brief constructs \ref surfit_grid which covers \ref d_points and nodes are 
-    coincident with grid of \ref surfit_surf
-*/
-bool grid_get_for_surf(int Xnodes, int Ynodes, const char * pos = "0");
+    \par Tcl syntax:
+    grid_get_from_surf
 
-/*! \ingroup tcl_grid_create
-    \fn bool grid_get_for_surf_step(REAL stepX, REAL stepY, const char * pos = "0");
-    \brief constructs \ref surfit_grid with steps stepX and stepY and covers \ref surfit_surf 
+    \par Description:
+    constructs \ref d_grid "grid" equal to \ref d_surf "surface" grid
 */
-bool grid_get_for_surf_step(REAL stepX, REAL stepY, const char * pos = "0");
+bool grid_get_from_surf(const char * surface_name_or_position = "0", const char * gridname = NULL);
 
 /////////////////
 // other
 
 /*! \ingroup tcl_grid_other
     \fn bool grid_check();
-    \brief checks for \ref surfit_grid existance 
+
+    \par Tcl syntax:
+    grid_check
+
+    \par Description:
+    checks for \ref d_grid "grid" existance 
 */
 bool grid_check();
 
 /*! \ingroup tcl_grid_other
     \fn void grid_info();
-    \brief prints \ref surfit_grid parametes
+
+    \par Tcl syntax:
+    grid_info
+
+    \par Description:
+    prints \ref d_grid "grid" parametes
 */
 void grid_info();
 
 /*! \ingroup tcl_grid_other
     \fn int grid_getCountX();
-    \brief returns the amount of X-nodes for \ref surfit_grid
+    
+    \par Tcl syntax:
+    grid_getCountX
+
+    \par Description:
+    returns the number of X-nodes for \ref d_grid "grid"
 */
 int grid_getCountX();
 
 /*! \ingroup tcl_grid_other
     \fn void grid_setCountX(int countX);
-    \brief sets the amount of X-nodes for \ref surfit_grid
+
+    \par Tcl syntax:
+    grid_setCountX countX
+
+    \par Description:
+    sets the number of X-nodes for \ref d_grid "grid"
 */
 bool grid_setCountX(int countX);
 
 /*! \ingroup tcl_grid_other
     \fn int grid_getCountY();
-    \brief returns the amount of Y-nodes for \ref surfit_grid
+
+    \par Tcl syntax:
+    grid_getCountY
+
+    \par Description:
+    returns the amount of Y-nodes for \ref d_grid "grid"
 */
 int grid_getCountY();
 
 /*! \ingroup tcl_grid_other
     \fn void grid_setCountY(int countY);
-    \brief sets the amount of Y-nodes for \ref surfit_grid
+
+    \par Tcl syntax:
+    grid_setCountY countY
+    
+    \par Description:
+    sets the amount of Y-nodes for \ref d_grid "grid"
 */
 bool grid_setCountY(int countY);
 
 /*! \ingroup tcl_grid_other
     \fn REAL grid_getCoordNodeX(int i);
-    \brief returns X-coordinate of i-th node for \ref surfit_grid
+
+    \par Tcl syntax:
+    grid_getCoordNodeX i
+    
+    \par Description:
+    returns X-coordinate of i-th node for \ref d_grid "grid"
 */
 REAL grid_getCoordNodeX(int i);
 
 /*! \ingroup tcl_grid_other
     \fn REAL grid_getCoordNodeY(int j);
-    \brief returns Y-coordinate of j-th node for \ref surfit_grid
+
+    \par Tcl syntax:
+    grid_getCoordNodeY j
+
+    \par Description:
+    returns Y-coordinate of j-th node for \ref d_grid "grid"
 */
 REAL grid_getCoordNodeY(int j);
 
 /*! \ingroup tcl_grid_other
     \fn REAL grid_getStepX();
-    \brief returns X-step of \ref surfit_grid
+
+    \par Tcl syntax:
+    grid_getStepX
+
+    \par Description:
+    returns X-step of \ref d_grid "grid"
 */
 REAL grid_getStepX();
 
 /*! \ingroup tcl_grid_other
     \fn REAL grid_getStepY();
-    \brief returns Y-step of \ref surfit_grid
+
+    \par Tcl syntax:
+    grid_getStepY
+
+    \par Description:
+    returns Y-step of \ref d_grid "grid"
 */
 REAL grid_getStepY();
  

@@ -38,7 +38,7 @@
 namespace surfit {
 
 f_points::f_points(const d_points * ipnts, const char * iprint_name) :
-functional("f_points")
+functional("f_points", F_USUAL)
 {
 	pnts = ipnts;
 	if (pnts->getName()) {

@@ -133,6 +133,9 @@ void bind_points_to_grid(d_grid *& old_grid,
 SURFIT_EXPORT
 bool ptr_sub_points_less(sub_points * it1, sub_points * it2);
 
+SURFIT_EXPORT
+void _surfit_pnts_add(d_points * pnts);
+
 }; // namespace surfit;
 
 #endif

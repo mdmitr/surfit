@@ -38,7 +38,7 @@ grid_get -10 10 0.2 -10 10 0.2
 completer 
 
 # add "resulting surface = surface values" with weight 
-surface_add 0.1 "test_func" 
+surface_add 0.01 "test_func" 
 
 ##
 ## run gridding algorithm

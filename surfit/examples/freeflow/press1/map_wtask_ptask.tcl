@@ -10,12 +10,12 @@ curv_read press.xyz press
 pnts_read debit_c.txt debit_c
 pnts_read press_c.xyz press_c
 
-isoline 250 press
+curve 250 press
 lcm_simple 16.4 1 1e-6 
 points_add 1 press_c
 prod_points debit_c
 
-cmofs
+surfit
 
 grid_unload
 file_save map_wtask_ptask.dat

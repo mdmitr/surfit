@@ -421,10 +421,14 @@ d_grid * _grid_load(const char * filename, const char * gridname) {
 
 };
 
-d_grid * _grid_from_surf(d_surf * srf) {
+d_grid * _grid_from_surf(d_surf * srf, const char * name) {
 	if (!srf)
 		return NULL;
-	d_grid * res = new d_grid(srf->grd);
+	d_grid * res = NULL;
+	if (name)
+		res = new d_grid(srf->grd, name);
+	else
+		res = new d_grid(srf->grd, srf->grd->getName());
 	return res;
 };
 

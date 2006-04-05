@@ -1,6 +1,11 @@
 
+/*! 
+\defgroup surfit_commands surfit commands and variables
+*/
+
 /*!
-\defgroup tcl_rules Surfit gridding rules
+\defgroup tcl_rules surfit gridding rules
+\ingroup surfit_commands
 
 \defgroup tcl_rules_points gridding rules for points
 \ingroup tcl_rules
@@ -17,10 +22,17 @@
 \defgroup tcl_rules_surfs gridding rules for surfaces
 \ingroup tcl_rules
 
+\defgroup tcl_rules_masks gridding rules for masks
+\ingroup tcl_rules
+
+\defgroup tcl_rules_other other gridding rules
+\ingroup tcl_rules
+
 */
 
 /*! 
 \defgroup tcl_pnts commands for points
+\ingroup surfit_commands
 
 \defgroup tcl_pnts_save_load commands for points saving and loading
 \ingroup tcl_pnts
@@ -34,6 +46,7 @@
 
 /*! 
 \defgroup tcl_area commands for areas
+\ingroup surfit_commands
 
 \defgroup tcl_area_save_load commands for areas saving and loading
 \ingroup tcl_area
@@ -44,6 +57,7 @@
 
 /*!
 \defgroup tcl_curv commands for curves
+\ingroup surfit_commands
 
 \defgroup tcl_curv_save_load commands for curves saving and loading
 \ingroup tcl_curv
@@ -54,6 +68,7 @@
 
 /*!
 \defgroup tcl_cntr commands for contours
+\ingroup surfit_commands
 
 \defgroup tcl_cntr_save_load commands for contours saving and loading
 \ingroup tcl_cntr
@@ -67,6 +82,7 @@
 
 /*! 
 \defgroup tcl_surf commands for surfaces
+\ingroup surfit_commands
 
 \defgroup tcl_surf_save_load commands for surfaces saving and loading
 \ingroup tcl_surf
@@ -84,7 +100,44 @@
 \ingroup tcl_surf
 */
 
+/*!
+\defgroup tcl_mask commands for masks
+\ingroup surfit_commands
+
+\defgroup tcl_mask_save_load commands for masks saving and loading
+\ingroup tcl_mask
+
+\defgroup tcl_mask_math mathematical commands for masks
+\ingroup tcl_mask
+
+\defgroup tcl_mask_conv commands for converting masks
+\ingroup tcl_mask
+
+\defgroup tcl_mask_other other commands for masks
+\ingroup tcl_mask
+*/
+
+/*!
+\defgroup tcl_grid commands for grid
+\ingroup surfit_commands
+
+\defgroup tcl_grid_save_load commands for grids saving and loading
+\ingroup tcl_grid
+
+\defgroup tcl_grid_create commands for creating grids
+\ingroup tcl_grid
+
+\defgroup tcl_grid_other other commands for grids
+\ingroup tcl_grid
+*/
+
+/*! 
+\defgroup tcl_other other commands
+\ingroup surfit_commands
+*/
+
 /*! 
 \defgroup surfit_variables surfit variables
+\ingroup surfit_commands
 */
 

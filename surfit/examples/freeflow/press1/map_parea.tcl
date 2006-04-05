@@ -9,7 +9,7 @@ grid_get  -1000 1000 5 -1000 1000 5
 curv_read press.xyz press
 area_read parea.txt parea_center 
 
-isoline 250 press
+curve 250 press
 lcm_simple 16.4 1 1e-6 
 prod_area -0.00159 parea_center
 

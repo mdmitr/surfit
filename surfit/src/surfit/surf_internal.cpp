@@ -1289,6 +1289,10 @@ int _surf_cells_in_area(const d_surf * srf, const d_area * area) {
 	
 };
 
+void _surfit_surf_add(d_surf * srf) {
+	surfit_surfs->push_back(srf);
+};
+
 
 }; // namespace surfit;
 

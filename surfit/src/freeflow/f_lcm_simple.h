@@ -28,7 +28,7 @@ class curv;
 class grid_line;
 class bitvec;
 
-class f_lcm_simple : public functional, public faultable {
+class f_lcm_simple : public faultable {
 public:
 
 	//! constructor

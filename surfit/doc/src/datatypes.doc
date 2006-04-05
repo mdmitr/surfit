@@ -14,17 +14,6 @@ by extrapolating or interpolating Z values in those locations where no data exis
 
 <hr>
 
-\section d_surf surface
-
-A digital representation of a continuous variable over a two-dimensional surface by a regular 
-array of z values. Surfaces are typically used to represent terrain relief, soil maps, pressure fields and other.
-
-\sa 
-\li \ref tcl_rules_surfs "gridding rules for surfaces"
-\li \ref tcl_surf "commands for surfaces"
-
-<hr>
-
 \section d_area area
 
 Areas are used to represent polygonal regions. 
@@ -37,7 +26,7 @@ Areas are used to represent polygonal regions.
 
 \section d_curv curve
 
-Curve in XY plane.
+2D piecewise linear curve.
 
 \sa 
 \li \ref tcl_rules_curvs "gridding rules for curves"
@@ -46,11 +35,46 @@ Curve in XY plane.
 <hr>
 
 \section d_cntr contour
-spatial contour.
+3D piecewise linear curve.
 
 \sa 
 \li \ref tcl_rules_cntrs "gridding rules for contours"
 \li \ref tcl_cntr "commands for contours"
+
+<hr>
+
+\section d_surf surface
+
+A digital representation of a continuous variable over a two-dimensional surface by a regular 
+array of z values. Surfaces are typically used to represent terrain relief, soil maps, pressure fields and other.
+
+\sa 
+\li \ref tcl_rules_surfs "gridding rules for surfaces"
+\li \ref tcl_surf "commands for surfaces"
+
+<hr>
+
+\section d_mask mask
+
+This data is looks like \ref d_surf "surface", but cells values take only "true" or "false"
+values. Masks are used to filter out some parts of surface, i.e. to create the definition area
+for surface.
+
+\sa 
+\li \ref tcl_rules_masks "gridding rules for masks"
+\li \ref tcl_mask "commands for masks"
+                                      
+<hr>
+
+\section d_grid grid
+
+grid is structure that determines places for the cells. <TT><B>surfit</B></TT> uses
+rectangular equidistant grid:
+
+\image html grid.jpg
+
+\sa
+\li \ref tcl_grid "commands for grids"
 
 <hr>
 

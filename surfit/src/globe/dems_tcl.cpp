@@ -31,15 +31,15 @@ bool dem(const char * pos) {
 		return false;
 	
 	f_dem * f = new f_dem(fnc);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
 bool dem_add(REAL weight, const char * pos) {
-	
-	if (functionals->size() == 0)
+		
+	functional * f = get_modifiable_functional();
+	if (f == NULL)
 		return false;
-	functional * f = *(functionals->end()-1);
 
 	d_dem * fnc = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
 	if (fnc == NULL)

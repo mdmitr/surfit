@@ -36,7 +36,7 @@
 namespace surfit {
 
 f_area_surf::f_area_surf(const d_surf * isurf, const d_area * iarea, bool iinside) :
-functional("f_area_surf")
+functional("f_area_surf", F_USUAL)
 {
 	area = iarea;
 	srf = isurf;

@@ -50,7 +50,7 @@ boolvec::boolvec(const boolvec &in) {
 			}
 		};
 		if ((data == NULL) && (newsize != 0)) {
-			throw "not enough memory";
+			throw "out of memory";
 		}	
 	}
 };
@@ -75,7 +75,7 @@ boolvec::boolvec(int newsize, bool default_value, int fill_default, int igrow_by
 		}
 	};
 	if ((data == NULL) && (newsize != 0)) {
-		throw "not enough memory";
+		throw "out of memory";
 	}
 };
 
@@ -120,7 +120,7 @@ void boolvec::resize(int newsize, bool default_value, int fill_default) {
 		}
 	}
 	if ((data == NULL) && (newsize != 0)) 
-		throw "not enough memory";
+		throw "out of memory";
 };
 
 void boolvec::push_back(const bool& x) {
@@ -154,7 +154,7 @@ void boolvec::reserve(int reserve_size) {
 			}
 		}
 		if ((data == NULL) && (reserve_size != 0)) 
-			throw "not enough memory";
+			throw "out of memory";
 
 	}
 };

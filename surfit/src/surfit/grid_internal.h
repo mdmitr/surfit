@@ -132,10 +132,10 @@ d_grid * _grid_get(REAL startX, REAL endX, REAL stepX,
 
 SURFIT_EXPORT
 /*! \ingroup internal_grid
-    \fn grid * _grid_from_surf(d_surf * srf);
+    \fn grid * _grid_from_surf(d_surf * srf, const char * name);
     \brief returns copy of surface srf grid
 */
-d_grid * _grid_from_surf(d_surf * srf);
+d_grid * _grid_from_surf(d_surf * srf, const char * name);
 
 SURFIT_EXPORT
 /*! \ingroup internal_grid

@@ -45,18 +45,8 @@ struct globe_garbage : public binman {
 
 globe_garbage::~globe_garbage() {
 
-	if (surfit_data_manager) {
-		unsigned int i;
-		for (i = 0; i < surfit_data_manager->managers->size(); i++) {
-			manager * man = *(surfit_data_manager->managers->begin()+i);
-			if ( (manager*)my_globe_manager == man ) {
-				delete my_globe_manager;
-				my_globe_manager = NULL;
-				*(surfit_data_manager->managers->begin()+i) = NULL;
-			}
-		}
-	}
-	
+	if (release_manager(my_globe_manager))
+		my_globe_manager = NULL;
 };
 
 globe_garbage globe_garb;
@@ -67,11 +57,8 @@ void globe_init_variables(Tcl_Interp * iinterp) {
 		return;
 	}
 	
-	data_manager * m = surfit_data_manager;
-	if (surfit_data_manager) {
-		my_globe_manager = new globe_manager;
-		surfit_data_manager->managers->push_back(my_globe_manager);
-	}
+	my_globe_manager = new globe_manager;
+	add_manager(my_globe_manager);
 
 	Tcl_printf("globe version %s, Copyright (c) 2002-2006 M.V.Dmitrievsky \n", GLOBE_VERSION);
 	Tcl_printf("globe comes with ABSOLUTELY NO WARRANTY; for details type `show_w'.\n");

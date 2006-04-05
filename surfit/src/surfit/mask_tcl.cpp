@@ -319,9 +319,5 @@ int mask_size() {
 	return surfit_masks->size();
 };
 
-void surfit_mask_add(d_mask * msk) {
-	surfit_masks->push_back(msk);
-};
-
 }; // namespace surfit;
 

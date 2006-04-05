@@ -24,7 +24,13 @@ set tol 1e-005
  
 # load surface from surfit datafile 
 surf_load "func.func" "test_func"  
-surf_plus_value 80
+surf_plus_value 80 "test_func"
+surf_setName "test_func_geq" "test_func"
+
+# load surface from surfit datafile 
+surf_load "func.func" "test_func"  
+surf_plus_value 90 "test_func"
+surf_setName "test_func_leq" "test_func"
  
 # load points from text file 
 pnts_read "7points.txt" "7points"  
@@ -39,7 +45,7 @@ grid_get -10 10 0.2 -10 10 0.2
 ##
 
 # resulting surface >= surface values 
-surface_geq "test_func" 
+surface_geq "test_func_geq" 
 
 # resulting surface at points = points values 
 points "7points" 

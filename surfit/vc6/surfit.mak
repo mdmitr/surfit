@@ -25,10 +25,6 @@ NULL=
 NULL=nul
 !ENDIF 
 
-CPP=cl.exe
-MTL=midl.exe
-RSC=rc.exe
-
 !IF  "$(CFG)" == "surfit - Win32 Release"
 
 OUTDIR=.\../Release
@@ -106,8 +102,6 @@ CLEAN :
 	-@erase "$(INTDIR)\f_curv_surf.sbr"
 	-@erase "$(INTDIR)\f_curv_surf_ineq.obj"
 	-@erase "$(INTDIR)\f_curv_surf_ineq.sbr"
-	-@erase "$(INTDIR)\f_global_tcl.obj"
-	-@erase "$(INTDIR)\f_global_tcl.sbr"
 	-@erase "$(INTDIR)\f_hist.obj"
 	-@erase "$(INTDIR)\f_hist.sbr"
 	-@erase "$(INTDIR)\f_ineq.obj"
@@ -190,6 +184,8 @@ CLEAN :
 	-@erase "$(INTDIR)\matrD2_rect.sbr"
 	-@erase "$(INTDIR)\mrf.obj"
 	-@erase "$(INTDIR)\mrf.sbr"
+	-@erase "$(INTDIR)\others_tcl.obj"
+	-@erase "$(INTDIR)\others_tcl.sbr"
 	-@erase "$(INTDIR)\pasync.obj"
 	-@erase "$(INTDIR)\pasync.sbr"
 	-@erase "$(INTDIR)\patomic.obj"
@@ -251,8 +247,42 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
+CPP=cl.exe
 CPP_PROJ=/nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../src/sstuff" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+MTL=midl.exe
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
+RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\surfit.bsc" 
 BSC32_SBRS= \
@@ -309,12 +339,12 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_points_ineq.sbr" \
 	"$(INTDIR)\f_points_tcl.sbr" \
 	"$(INTDIR)\f_completer.sbr" \
-	"$(INTDIR)\f_global_tcl.sbr" \
 	"$(INTDIR)\f_hist.sbr" \
 	"$(INTDIR)\f_ineq.sbr" \
 	"$(INTDIR)\f_mean.sbr" \
 	"$(INTDIR)\f_value.sbr" \
 	"$(INTDIR)\f_wmean.sbr" \
+	"$(INTDIR)\others_tcl.sbr" \
 	"$(INTDIR)\curvs_tcl.sbr" \
 	"$(INTDIR)\f_area.sbr" \
 	"$(INTDIR)\f_area_ineq.sbr" \
@@ -413,12 +443,12 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_points_ineq.obj" \
 	"$(INTDIR)\f_points_tcl.obj" \
 	"$(INTDIR)\f_completer.obj" \
-	"$(INTDIR)\f_global_tcl.obj" \
 	"$(INTDIR)\f_hist.obj" \
 	"$(INTDIR)\f_ineq.obj" \
 	"$(INTDIR)\f_mean.obj" \
 	"$(INTDIR)\f_value.obj" \
 	"$(INTDIR)\f_wmean.obj" \
+	"$(INTDIR)\others_tcl.obj" \
 	"$(INTDIR)\curvs_tcl.obj" \
 	"$(INTDIR)\f_area.obj" \
 	"$(INTDIR)\f_area_ineq.obj" \
@@ -539,8 +569,6 @@ CLEAN :
 	-@erase "$(INTDIR)\f_curv_surf.sbr"
 	-@erase "$(INTDIR)\f_curv_surf_ineq.obj"
 	-@erase "$(INTDIR)\f_curv_surf_ineq.sbr"
-	-@erase "$(INTDIR)\f_global_tcl.obj"
-	-@erase "$(INTDIR)\f_global_tcl.sbr"
 	-@erase "$(INTDIR)\f_hist.obj"
 	-@erase "$(INTDIR)\f_hist.sbr"
 	-@erase "$(INTDIR)\f_ineq.obj"
@@ -623,6 +651,8 @@ CLEAN :
 	-@erase "$(INTDIR)\matrD2_rect.sbr"
 	-@erase "$(INTDIR)\mrf.obj"
 	-@erase "$(INTDIR)\mrf.sbr"
+	-@erase "$(INTDIR)\others_tcl.obj"
+	-@erase "$(INTDIR)\others_tcl.sbr"
 	-@erase "$(INTDIR)\pasync.obj"
 	-@erase "$(INTDIR)\pasync.sbr"
 	-@erase "$(INTDIR)\patomic.obj"
@@ -686,8 +716,42 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
+CPP=cl.exe
 CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+MTL=midl.exe
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
+RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\surfit.bsc" 
 BSC32_SBRS= \
@@ -744,12 +808,12 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_points_ineq.sbr" \
 	"$(INTDIR)\f_points_tcl.sbr" \
 	"$(INTDIR)\f_completer.sbr" \
-	"$(INTDIR)\f_global_tcl.sbr" \
 	"$(INTDIR)\f_hist.sbr" \
 	"$(INTDIR)\f_ineq.sbr" \
 	"$(INTDIR)\f_mean.sbr" \
 	"$(INTDIR)\f_value.sbr" \
 	"$(INTDIR)\f_wmean.sbr" \
+	"$(INTDIR)\others_tcl.sbr" \
 	"$(INTDIR)\curvs_tcl.sbr" \
 	"$(INTDIR)\f_area.sbr" \
 	"$(INTDIR)\f_area_ineq.sbr" \
@@ -848,12 +912,12 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_points_ineq.obj" \
 	"$(INTDIR)\f_points_tcl.obj" \
 	"$(INTDIR)\f_completer.obj" \
-	"$(INTDIR)\f_global_tcl.obj" \
 	"$(INTDIR)\f_hist.obj" \
 	"$(INTDIR)\f_ineq.obj" \
 	"$(INTDIR)\f_mean.obj" \
 	"$(INTDIR)\f_value.obj" \
 	"$(INTDIR)\f_wmean.obj" \
+	"$(INTDIR)\others_tcl.obj" \
 	"$(INTDIR)\curvs_tcl.obj" \
 	"$(INTDIR)\f_area.obj" \
 	"$(INTDIR)\f_area_ineq.obj" \
@@ -898,36 +962,6 @@ LINK32_OBJS= \
 <<
 
 !ENDIF 
-
-.c{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.c{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
 
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
@@ -1276,12 +1310,6 @@ SOURCE=..\src\surfit\f_completer.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\src\surfit\f_global_tcl.cpp
-
-"$(INTDIR)\f_global_tcl.obj"	"$(INTDIR)\f_global_tcl.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
 SOURCE=..\src\surfit\f_hist.cpp
 
 "$(INTDIR)\f_hist.obj"	"$(INTDIR)\f_hist.sbr" : $(SOURCE) "$(INTDIR)"
@@ -1309,6 +1337,12 @@ SOURCE=..\src\surfit\f_value.cpp
 SOURCE=..\src\surfit\f_wmean.cpp
 
 "$(INTDIR)\f_wmean.obj"	"$(INTDIR)\f_wmean.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\others_tcl.cpp
+
+"$(INTDIR)\others_tcl.obj"	"$(INTDIR)\others_tcl.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

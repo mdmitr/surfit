@@ -28,9 +28,16 @@ class surf;
 class bitvec;
 class d_surf;
 
+/*! \class f_surf_ineq
+    \brief Functional that sets inequality with surface
+*/
 class f_surf_ineq : public functional {
 public:
+
+	//! constructor
 	f_surf_ineq(const d_surf * isrf, bool ileq, REAL imult);
+
+	//! destructor
 	~f_surf_ineq();
 
 	bool minimize();
@@ -49,9 +56,14 @@ protected:
 
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
-	
+
+	//! data for inequalities
 	const d_surf * srf;
+
+	//! inequality flag
 	bool leq;
+
+	//! parameter for penalty algorithm
 	REAL mult;
 };
 

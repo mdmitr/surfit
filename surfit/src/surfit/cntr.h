@@ -31,20 +31,12 @@ SURFIT_EXPORT
 d_cntr * create_cntr(vec * iX, vec * iY, vec * iZ,
 	             const char * cntr_name = NULL);
 
-/*! \class cntr
-    \brief 3D contour for interpolation (see \ref surfit_cntr). See \ref tcl_cntr "Tcl commands" for \ref cntr.
+/*! \class d_cntr
+    \brief 3D contour 
 */
 class SURFIT_EXPORT d_cntr : public d_curv {
 protected:
-	/*! constructor
-	    \param iX_begin pointer to the first element of X-coordinates vector
-	    \param iX_end   pointer to the last+1 element of X-coordinates vector
-	    \param iY_begin pointer to the first element of Y-coordinates vector
-	    \param iY_end   pointer to the last+1 element of Y-coordinates vector
-	    \param iZ_begin pointer to the first element of line values vector
-	    \param iZ_end   pointer to the last+1 element of line values vector
-	    \param cntr_name name of contour
-	*/
+	//! constructor
 	d_cntr(vec * iX, vec * iY, vec * iZ,
 	       const char * cntr_name = NULL);
 
@@ -53,6 +45,7 @@ protected:
 
 public:
 
+	//! constructor
 	friend SURFIT_EXPORT
 	d_cntr * create_cntr(vec * iX, vec * iY, vec * iZ,
 	                     const char * cntr_name);
@@ -82,31 +75,6 @@ public:
 class d_points;
 class d_grid;
 
-/*! \ingroup surfit_data_variables
-    \var surfit_cntr
-    \brief 3D contour for interpolation
-
-3D contour for interpolation. Contour is a line in 3D which set with 
-points \f$(x_i,y_i,z_i)\f$. Between points countour is a straight line segment.
-
-By loading \ref cntr object to surfit memory we write the follow functionals to the sequence:
-
-\f[
-P_{i,j} = \left( u_{i,j} - z_{i,j} \right)^2 = \min,
-\f]
-
-where \f$(i,j)\f$ are the cells indexes, crossed with contour,
-\f$z_{i,j}\f$ - mean value of contour for the (i,j) cell, \f$u_{i,j}\f$ - value of (i,j) cell.
-
-\par Example: 
-\li \ref map_cntr.tcl "Interpolation of contours"
-
-\sa
-\li \ref surfit_cntrs
-\li \ref cntr
-\li \ref tcl_cntr "Tcl commands"
-
-*/
 extern SURFIT_EXPORT std::vector<d_cntr *> * surfit_cntrs;
 
 SURFIT_EXPORT

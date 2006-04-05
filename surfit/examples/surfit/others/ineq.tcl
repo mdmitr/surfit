@@ -10,7 +10,7 @@ load libsurfit[info sharedlibextension]
 clear_data 
 
 # set name of surface
-set map_name "map_surface_add" 
+set map_name "map_ineq" 
 
 # set solver
 set_solver "cg" 
@@ -22,23 +22,29 @@ set tol 1e-005
 ## load initial data 
 ##
  
-# load surface from surfit datafile 
-surf_load "func.func" "test_func"  
+# load points from text file 
+pnts_read "7points.txt" "7points"  
  
 ##
 ## construct grid 
 ##
-grid_get -10 10 0.2 -10 10 0.2 
+grid 
  
 ##
 ## create gridding rules
 ##
 
+# resulting surface <= value... 
+leq 120  
+
+# resulting surface >= value... 
+geq 80  
+
+# resulting surface at points = points values 
+points "7points" 
+
 # resulting surface should tend to be constant or plane 
 completer 
-
-# add "resulting surface = surface values" with weight 
-surface_add 0.03 "test_func" 
 
 ##
 ## run gridding algorithm
@@ -53,4 +59,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "surface_add.dat" 
+surf_save "ineq.dat" 

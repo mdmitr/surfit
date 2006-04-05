@@ -34,7 +34,7 @@
 namespace surfit {
 
 f_prod_area::f_prod_area(REAL ivalue, const d_area * iarea) :
-functional("f_prod_area") 
+functional("f_prod_area", F_USUAL) 
 {
 	area = iarea;
 	value = ivalue;

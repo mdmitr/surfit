@@ -442,5 +442,10 @@ void bind_points_to_grid(d_grid *& old_grid,
 
 };
 
+void _surfit_pnts_add(d_points * pnts) {
+	surfit_pnts->push_back(pnts);
+};
+
+
 }; // namespace surfit;
 

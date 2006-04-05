@@ -143,28 +143,12 @@ void bitvec::write4(int pos,
 
 void bitvec::get4(int pos, bool * b) 
 {
-	/*
-	int real_pos = pos*4;
-	b1 = get(real_pos);
-	real_pos++;
-	b2 = get(real_pos);
-	real_pos++;
-	b3 = get(real_pos);
-	real_pos++;
-	b4 = get(real_pos);
-	*/
 	unsigned int real_pos = pos*4;
 	unsigned int d = real_pos & 31;
 	unsigned int q = real_pos>>5;
 	unsigned int t = ((unsigned int)data[q]) >> d;
 	if (d > 32-5)
 		t |= data[q+1] << (32-d);
-/*	__asm
-	{
-		mov eax,t
-		bt eax,0
-		cmov b1,1
-	}*/
 	(char&)b[0] = 1 & (t >> 0);
 	(char&)b[1] = 1 & (t >> 1);
 	(char&)b[2] = 1 & (t >> 2);
@@ -248,12 +232,6 @@ void bitvec::get10(int pos, bool * b)
 	unsigned int t = ((unsigned int)data[q]) >> d;
 	if (d > 32-10)
 		t |= data[q+1] << (32-d);
-/*	__asm
-	{
-		mov eax,t
-		bt eax,0
-		cmov b1,1
-	}*/
 	(char&)b[0] = 1 & (t >> 0);
 	(char&)b[1] = 1 & (t >> 1);
 	(char&)b[2] = 1 & (t >> 2);
@@ -264,56 +242,16 @@ void bitvec::get10(int pos, bool * b)
 	(char&)b[7] = 1 & (t >> 7);
 	(char&)b[8] = 1 & (t >> 8);
 	(char&)b[9] = 1 & (t >> 9);
-	/*
-	int real_pos = pos*10;
-	b1 = get(real_pos);
-	real_pos++;
-	b2 = get(real_pos);
-	real_pos++;
-	b3 = get(real_pos);
-	real_pos++;
-	b4 = get(real_pos);
-	real_pos++;
-	b5 = get(real_pos);
-	real_pos++;
-	b6 = get(real_pos);
-	real_pos++;
-	b7 = get(real_pos);
-	real_pos++;
-	b8 = get(real_pos);
-	real_pos++;
-	b9 = get(real_pos);
-	real_pos++;
-	b10 = get(real_pos);
-	*/
 };
 
 void bitvec::AND(const bitvec * b) {
 	int i;
-	/*
-	for (i = 0; i < size(); i++) {
-		bool bb = (get(i) && b->get(i));
-		if (bb)
-			set_true(i);
-		else
-			set_false(i);
-	}
-	*/
 	for (i = 0; i < byte_size; i++) 
 		*(data + i) &= *(b->begin()+i);
 };
 
 void bitvec::OR(const bitvec * b) {
 	int i;
-	/*
-	for (i = 0; i < size(); i++) {
-		bool bb = (get(i) || b->get(i));
-		if (bb)
-			set_true(i);
-		else
-			set_false(i);
-	}
-	*/
 	for (i = 0; i < byte_size; i++) 
 		*(data + i) |= *(b->begin()+i);
 };

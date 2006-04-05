@@ -46,10 +46,9 @@ namespace surfit {
     curv_read "C:\\curv.txt" my_curv
     curv_read "C:\\curv2.txt" my_curv2 2 3 "\t"
 */
-SURFIT_EXPORT
 bool curv_read(const char * filename, const char * curvname=NULL	, 
     	       int col1=1, int col2=2, 
-	       const char * delimiter=" ", int skip_lines = 0, int grow_by=250);
+	       const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
 
 /*! \ingroup tcl_curv_save_load
     \fn bool curv_read_bln(const char * filename);
@@ -60,7 +59,6 @@ bool curv_read(const char * filename, const char * curvname=NULL	,
     \par Description:
     loads \ref d_curv "curve" from BLN file
 */
-SURFIT_EXPORT
 bool curv_read_bln(const char * filename);
 
 /*! \ingroup tcl_curv_save_load
@@ -72,7 +70,6 @@ bool curv_read_bln(const char * filename);
     \par Description:
     saves \ref d_curv "curve" to formatted text file.
 */
-SURFIT_EXPORT
 bool curv_write(const char * filename, const char * curv_name_or_position = "0", const char * delimiter = "\t");
 
 /*! \ingroup tcl_curv_save_load
@@ -91,7 +88,6 @@ bool curv_write(const char * filename, const char * curv_name_or_position = "0",
     \par Example
     curv_write_bln "C:\\curv.bln" my_curv 1
 */
-SURFIT_EXPORT
 bool curv_write_bln(const char * filename, const char * curv_name_or_position = "0", int orient = 1);
 
 /*! \ingroup tcl_curv_save_load
@@ -103,7 +99,6 @@ bool curv_write_bln(const char * filename, const char * curv_name_or_position = 
     \par Description:
     saves \ref d_curv "curve" to surfit datafile
 */
-SURFIT_EXPORT
 bool curv_save(const char * filename, const char * curv_name_or_position = "0");
 
 /*! \ingroup tcl_curv_save_load
@@ -115,7 +110,6 @@ bool curv_save(const char * filename, const char * curv_name_or_position = "0");
     \par Description:
     loads \ref d_curv "curve" from surfit datafile
 */
-SURFIT_EXPORT
 bool curv_load(const char * filename, const char * curvname = NULL);
 
 //////////////
@@ -130,7 +124,6 @@ bool curv_load(const char * filename, const char * curvname = NULL);
     \par Description:
     returns name of \ref d_curv "curve"
 */
-SURFIT_EXPORT
 const char * curv_getName(const char * curv_name_or_position = "0");
 
 /*! \ingroup tcl_curv_other
@@ -142,7 +135,6 @@ const char * curv_getName(const char * curv_name_or_position = "0");
     \par Description:
     sets name of \ref d_curv "curve"
 */
-SURFIT_EXPORT
 bool curv_setName(const char * new_name, const char * curv_name_or_position = "0");
 
 /*! \ingroup tcl_curv_other
@@ -154,7 +146,6 @@ bool curv_setName(const char * new_name, const char * curv_name_or_position = "0
     \par Description:
     removes all curves from memory
 */
-SURFIT_EXPORT
 bool curv_delall();
 
 /*! \ingroup tcl_curv_other
@@ -169,7 +160,6 @@ bool curv_delall();
     \par Example:
     curv_del "my_curve"
 */
-SURFIT_EXPORT
 bool curv_del(const char * curv_name_or_position = "0");
 
 /*! \ingroup tcl_curv_other
@@ -181,7 +171,6 @@ bool curv_del(const char * curv_name_or_position = "0");
     \par Description:
     returns number of curvs in memory
 */
-SURFIT_EXPORT
 int curv_size();
 
 /*! \ingroup tcl_curv_other
@@ -193,7 +182,6 @@ int curv_size();
     \par Description:
     prints information about all \ref d_curv "curves" in memory
 */
-SURFIT_EXPORT
 void curvs_info();
 
 }; // namespace surfit;

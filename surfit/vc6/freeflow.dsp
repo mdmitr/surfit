@@ -278,10 +278,6 @@ SOURCE=..\src\freeflow\freeflow.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\src\freeflow\interface\flow_draw.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\..\src\freeflow\interface\freeflow.i
 
 !IF  "$(CFG)" == "freeflow - Win32 Release"

@@ -24,9 +24,6 @@
 
 namespace surfit {
 
-SURFIT_EXPORT
-void init_threads(int cnt);
-
 #ifdef HAVE_THREADS
 struct job {
 	virtual void do_job() = 0;

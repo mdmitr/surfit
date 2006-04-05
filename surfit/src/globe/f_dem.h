@@ -30,7 +30,7 @@ class bitvec;
 class GLOBE_EXPORT f_dem : public functional {
 public:
 
-	f_dem(d_dem * ifnc);
+	f_dem(d_dem * idem);
 	~f_dem();
 	bool minimize();
 	bool make_matrix_and_vector(matr *& matrix, vec *& v);
@@ -49,7 +49,7 @@ private:
 
 	bool minimize_only_dem();
 
-	const d_dem * fnc;
+	const d_dem * dem;
 	bitvec * mask;
 	
 };

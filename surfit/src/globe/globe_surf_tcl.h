@@ -26,12 +26,16 @@ namespace surfit {
 // CONVERTING
 //
 
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_conv
-    \fn bool surf_to_dem(const char * surf_pos = "0");
-    \brief transforms \ref d_surf to \ref d_dem
+/*! \ingroup tcl_globe_surf_conv
+    \fn bool surf_to_dem(const char * surface_name_or_position = "0");
+
+    \par Tcl syntax:
+    surf_to_dem "surface_name_or_position"
+
+    \par Description:
+    transforms \ref d_surf "surface" to \ref d_dem "DEM".
 */
-bool surf_to_dem(const char * surf_pos = "0");
+bool surf_to_dem(const char * surface_name_or_position = "0");
 
 }; // namespace surfit;
 

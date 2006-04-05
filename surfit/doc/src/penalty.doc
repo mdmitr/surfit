@@ -1,0 +1,12 @@
+/*! \page penalty penalty algorithm
+
+One of the ways of replacing a constrained optimization problem with an unconstrained one is
+by adding a penalty function to the objective function that depends - in some logical way -
+on the value of the constraints.
+
+The idea is to minimize a sequence of unconstrained minimization problems where the
+infeasibility of the constraints is minimized together with the objective function.
+
+see http://mdolab.utias.utoronto.ca/aer1415.html for details.
+
+*/

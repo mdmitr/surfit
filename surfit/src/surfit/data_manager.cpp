@@ -298,6 +298,22 @@ const data * data_manager::data_get(const char * type, const char * name) const 
 	return NULL;
 };
 
+int data_manager::get_managers_count() const {
+	return managers->size();
+};
+	
+const manager * data_manager::get_manager(int pos) const {
+	return (*managers)[pos];
+};
+	
+void data_manager::add_manager(manager * m) {
+	managers->push_back(m);
+};
+	
+void data_manager::set_manager(manager * m, int pos) {
+	(*managers)[pos]=m;
+};
+
 //////////////////////////////
 //
 // surfit_manager
@@ -745,6 +761,30 @@ bool file_save(const char * filename) {
 	delete df;
 	return res;
 
+};
+
+bool add_manager(manager * man) {
+	unsigned int i;
+	for (i = 0; i < surfit_data_manager->get_managers_count(); i++) {
+		const manager * m = surfit_data_manager->get_manager(i);
+		if ( strcmp(m->getName(),man->getName()) == 0)
+			return false;
+	}
+	surfit_data_manager->add_manager(man);
+	return true;
+};
+
+bool release_manager(manager * man) {
+	unsigned int i;
+	for (i = 0; i < surfit_data_manager->get_managers_count(); i++) {
+		const manager * m = surfit_data_manager->get_manager(i);
+		if ( m == man ) {
+			man->release();
+			surfit_data_manager->set_manager(NULL, i);
+			return true;
+		}
+	}
+	return false;
 };
 
 }; // namespace surfit;

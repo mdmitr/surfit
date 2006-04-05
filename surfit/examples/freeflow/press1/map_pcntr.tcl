@@ -9,11 +9,11 @@ grid_get  -1000 1000 5 -1000 1000 5
 curv_read press.xyz press
 cntr_read pcntr.txt pcntr_center
 
-isoline 250 press
+curve 250 press
 lcm_simple 16.4 1 1e-6 
 prod_contour pcntr_center
-
-cmofs
+ 
+surfit
 
 grid_unload
 file_save map_pcntr.dat

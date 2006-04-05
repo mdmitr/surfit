@@ -29,7 +29,7 @@
 namespace surfit {
 
 f_curv_ineq::f_curv_ineq(REAL ivalue, const d_curv * icrv, bool ileq, REAL imult) :
-functional("f_curv_ineq")
+functional("f_curv_ineq", F_CONDI)
 {
 	crv = icrv;
 	value = ivalue;

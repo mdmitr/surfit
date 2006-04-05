@@ -298,10 +298,6 @@ InputPath=.\..\src\globe\interface\globe.i
 !ENDIF 
 
 # End Source File
-# Begin Source File
-
-SOURCE=..\src\globe\interface\globe_draw.i
-# End Source File
 # End Group
 # End Target
 # End Project

@@ -1,14 +1,90 @@
 /*! \example surface.tcl
+
+This example shows how to make resulting surface approximating other surface.
+
+Here is the image of the resulting \ref d_surf "surface":
+
+\htmlonly
+<P ALIGN=CENTER>
+<IMG alt="surface" src="surface.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. surface obtained from other surface </P>
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/surfs/surface.tcl"</TT> script. 
 */
 
 /*! \example surface_add.tcl
+
+This example shows how to make resulting surface apprixmating smoothed surface.
+
+Here is the image of the resulting \ref d_surf "surface":
+
+\htmlonly
+<P ALIGN=CENTER>
+<IMG alt="surface_add" src="surface_add.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. surface obtained from other surface smoothing </P>
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/surfs/surface_add.tcl"</TT> script. 
 */
 
 /*! \example surface_ineq.tcl
+
+This example shows how to build resulting surface using inequalities on surfaces.
+
+Here is the image of the resulting \ref d_surf "surface":
+
+\htmlonly
+<P ALIGN=CENTER>
+<IMG alt="surface_ineq1" src="surface_ineq1.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. surface obtained from surface inequalities </P>
+
+<P ALIGN=CENTER>
+<IMG alt="surface_ineq2" src="surface_ineq2.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 2. surface obtained from surface inequalities </P>
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/surfs/surface_ineq.tcl"</TT> script. 
 */
 
 /*! \example trend.tcl
+
+This example shows how to use surface as trend and how to modify trend with fault lines.
+
+Here is the image of the resulting \ref d_surf "surface":
+
+\htmlonly
+<P ALIGN=CENTER>
+<IMG alt="trend1" src="trend1.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. surface obtained from points with trend and 2 fault lines </P>
+
+<P ALIGN=CENTER>
+<IMG alt="trend2" src="trend2.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 2. surface obtained from points with trend and 2 fault lines </P>
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/surfs/surface_ineq.tcl"</TT> script. 
+
 */
 
 /*! \example mask.tcl
+
+This example shows how to set \ref d_mask "mask" on resulting surface.
+
+Here is the image of the resulting \ref d_surf "surface":
+
+\htmlonly
+<P ALIGN=CENTER>
+<IMG alt="surface and mask" src="mask.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. surface with mask </P>
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/surfs/mask.tcl"</TT> script. 
 */

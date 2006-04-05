@@ -19,11 +19,50 @@
 
 namespace surfit {
 
-GLOBE_EXPORT
-bool dem(const char * pos = "-1");
+/*! \ingroup tcl_rules_dems
+    \fn bool dem(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
-bool dem_add(REAL weight, const char * pos = "-1");
+    \par Tcl syntax:
+    dem "dem_name_or_position"
+
+    \par Description:
+    Using this rule the resulting surface approximates \ref d_dem "DEM" in least squares meaning.
+
+    \param dem_name_or_position name of \ref d_dem "DEM" dataset, or DEM position number
+
+    \par Math:
+    This command adds the following functional to the functional sequence:
+    \f[
+    \Phi(u_{1,1},\ldots,u_{N,M}) = \sum_{i,j} \left( u_{i,j} - z(x_i, y_j) \right)^2,
+    \f]
+    where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - DEM value for the (i,j) cell.
+*/
+bool dem(const char * dem_name_or_position = "0");
+
+/*! \ingroup tcl_rules_dems
+    \fn bool dem_add(REAL weight, const char * dem_name_or_position = "0");
+
+    \par Tcl syntax:
+    dem_add weight "dem_name_or_position"
+
+    \par Description:
+    This rule modifies previous (modifiable) rule by adding the \ref dem rule with some weight.
+
+    \param weight informational weight for this rule
+    \param dem_name_or_position name of \ref d_dem "DEM" dataset, or DEM position number
+
+    \par Math:
+    This command modifies previous functional \f$ \Phi_0 \f$ by adding \f$ \Phi_1 \f$:
+    \f[
+    \Phi(u_{1,1},\ldots,u_{N,M}) = \Phi_0(u_{1,1},\ldots,u_{N,M}) + w\Phi_1(u_{1,1},\ldots,u_{N,M}),
+    \f]
+    where \f$ w \f$ - informational weight,
+    \f[
+    \Phi_1(u_{1,1},\ldots,u_{N,M}) = \sum_{i,j} \left( u_{i,j} - z(x_i, y_j) \right)^2,
+    \f]
+    where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - DEM value for the (i,j) cell.
+*/
+bool dem_add(REAL weight, const char * dem_name_or_position = "0");
 
 }; // namespace surfit;
 

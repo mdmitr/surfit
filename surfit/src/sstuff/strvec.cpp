@@ -54,7 +54,7 @@ strvec::strvec(int newsize, int igrow_by) {
 		}
 	};
 	if ((data == NULL) && (newsize != 0)) {
-		throw "not enough memory";
+		throw "out of memory";
 	}
 };
 
@@ -101,7 +101,7 @@ void strvec::resize(int newsize) {
 		}
 	}
 	if ((data == NULL) && (newsize != 0)) 
-		throw "not enough memory";
+		throw "out of memory";
 };
 
 void strvec::push_back(const char * x) {
@@ -138,7 +138,7 @@ void strvec::reserve(int reserve_size) {
 			}
 		}
 		if ((data == NULL) && (reserve_size != 0)) 
-			throw "not enough memory";
+			throw "out of memory";
 
 	}
 };

@@ -45,11 +45,10 @@ namespace surfit {
     \f[
     \Phi(u_{1,1},\ldots,u_{N,M}) = \sum_i \sum_j \left( u_{i,j} - z \right)^2,
     \f] 
-    where (i,j) - indexes of the cells cross with curve, 
+    where (i,j) - indices of the cells cross with curve, 
     z - value for curve approximation.  
     
 */
-SURFIT_EXPORT
 bool curve(REAL value, const char * curv_name_or_position = "0");
 
 /*! \ingroup tcl_rules_curvs
@@ -77,10 +76,9 @@ bool curve(REAL value, const char * curv_name_or_position = "0");
     \f[
     \Phi_1(u_{1,1},\ldots,u_{N,M}) = \sum_i \sum_j \left( u_{i,j} - z \right)^2,
     \f]
-    where (i,j) - indexes of the cells cross with curve, 
+    where (i,j) - indices of the cells cross with curve, 
     z - value for curve approximation.  
 */
-SURFIT_EXPORT
 bool curve_add(REAL value, REAL weight = 1, const char * curv_name_or_position = "0");
 
 /*! \ingroup tcl_rules_curvs
@@ -103,9 +101,8 @@ bool curve_add(REAL value, REAL weight = 1, const char * curv_name_or_position =
     \f[
     u_{i,j} \leq z,
     \f]
-    where (i,j) - indexes of the cells cross with curve, z - constant value
+    where (i,j) - indices of the cells cross with curve, z - constant value
 */
-SURFIT_EXPORT
 bool curve_leq(REAL value, const char * curv_name_or_position = "0", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_curvs
@@ -128,9 +125,8 @@ bool curve_leq(REAL value, const char * curv_name_or_position = "0", REAL mult =
     \f[
     u_{i,j} \geq z,
     \f]
-    where (i,j) - indexes of the cells cross with curve, z - constant value
+    where (i,j) - indices of the cells cross with curve, z - constant value
 */
-SURFIT_EXPORT
 bool curve_geq(REAL value, const char * curv_name_or_position = "0", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_curvs
@@ -151,10 +147,9 @@ bool curve_geq(REAL value, const char * curv_name_or_position = "0", REAL mult =
     \f[
     \Phi(u_{1,1},\ldots,u_{N,M}) = \sum_i \sum_j \left( u_{i,j} - f(x_i,y_j) \right)^2,
     \f] 
-    where (i,j) - indexes of the cells cross with curve, 
+    where (i,j) - indices of the cells cross with curve, 
     f(x_i,y_j) - value for curve approximation, calculated as surface value at center of the (i,j) cell.
 */
-SURFIT_EXPORT
 bool curve_surf(const char * surf_name_or_position = "0", const char * curv_name_or_position = "0");
 
 /*! \ingroup tcl_rules_curvs
@@ -182,10 +177,9 @@ bool curve_surf(const char * surf_name_or_position = "0", const char * curv_name
     \f[
     \Phi_1(u_{1,1},\ldots,u_{N,M}) = \sum_i \sum_j \left( u_{i,j} - f(x_i,y_j) \right)^2,
     \f]
-    where (i,j) - indexes of the cells cross with curve, 
+    where (i,j) - indices of the cells cross with curve, 
     f(x_i,y_j) - value for curve approximation, calculated as surface value at center of the (i,j) cell.
 */
-SURFIT_EXPORT
 bool curve_surf_add(const char * surf_name_or_position = "0", REAL weight = 1, const char * curv_name_or_position = "0");
 
 /*! \ingroup tcl_rules_curvs
@@ -210,10 +204,9 @@ bool curve_surf_add(const char * surf_name_or_position = "0", REAL weight = 1, c
     \f[
     u_{i,j} \leq f(x_i,y_i),
     \f]
-    where (i,j) - indexes of the cells cross with curve, 
+    where (i,j) - indices of the cells cross with curve, 
     f(x_i,y_j) - value for curve approximation, calculated as surface value at center of the (i,j) cell.
 */
-SURFIT_EXPORT
 bool curve_surf_leq(const char * surf_name_or_position = "0", const char * curv_name_or_position = "0", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_curvs
@@ -238,10 +231,9 @@ bool curve_surf_leq(const char * surf_name_or_position = "0", const char * curv_
     \f[
     u_{i,j} \geq f(x_i,y_i),
     \f]
-    where (i,j) - indexes of the cells cross with curve, 
+    where (i,j) - indices of the cells cross with curve, 
     f(x_i,y_j) - value for curve approximation, calculated as surface value at center of the (i,j) cell.
 */
-SURFIT_EXPORT
 bool curve_surf_geq(const char * surf_name_or_position = "0", const char * curv_name_or_position = "0", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_curvs
@@ -262,7 +254,6 @@ bool curve_surf_geq(const char * surf_name_or_position = "0", const char * curv_
     \li \ref completer, \ref trend
 
 */
-SURFIT_EXPORT
 bool fault(const char * curv_name_or_position = "0");
 
 ////////////
@@ -290,10 +281,9 @@ bool fault(const char * curv_name_or_position = "0");
     \f[
     \Phi(u_{1,1},\ldots,u_{N,M}) = \sum_{p=1}^P \left( u_{i,j} - z \right)^2,
     \f]
-    where (i,j) - indexes of the cells in area, z - constant value
+    where (i,j) - indices of the cells in area, z - constant value
 
 */
-SURFIT_EXPORT
 bool area(const char * value="undef", const char * area_name_or_position = "0", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -321,10 +311,9 @@ bool area(const char * value="undef", const char * area_name_or_position = "0", 
     \f[
     \Phi_1(u_{1,1},\ldots,u_{N,M}) = \sum_{p=1}^P \left( u_{i,j} - z \right)^2,
     \f]
-    where (i,j) - indexes of the cells in area, z - constant value
+    where (i,j) - indices of the cells in area, z - constant value
 
 */
-SURFIT_EXPORT
 bool area_add(REAL value, REAL weight, const char * area_name_or_position = "0", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -349,10 +338,9 @@ bool area_add(REAL value, REAL weight, const char * area_name_or_position = "0",
     \f[
     u_{i,j} \leq z,
     \f]
-    where (i,j) - indexes of the cells in area, z - constant value
+    where (i,j) - indices of the cells in area, z - constant value
 
 */
-SURFIT_EXPORT
 bool area_leq(REAL value, const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -377,10 +365,9 @@ bool area_leq(REAL value, const char * area_name_or_position = "0", REAL mult = 
     \f[
     u_{i,j} \geq z,
     \f]
-    where (i,j) - indexes of the cells in area, z - constant value
+    where (i,j) - indices of the cells in area, z - constant value
 
 */
-SURFIT_EXPORT
 bool area_geq(REAL value, const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -403,10 +390,9 @@ bool area_geq(REAL value, const char * area_name_or_position = "0", REAL mult = 
     \f[
     \Phi(u_{1,1},\ldots,u_{N,M}) = \sum_{p=1}^P \left( u_{i,j} - z(x_i, y_j) \right)^2,
     \f]
-    where (i,j) - indexes of the cells in area, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
+    where (i,j) - indices of the cells in area, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 
 */
-SURFIT_EXPORT
 bool area_surf(const char * surf_name_or_position = "0", const char * area_name_or_position = "0", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -435,10 +421,9 @@ bool area_surf(const char * surf_name_or_position = "0", const char * area_name_
     \f[
     \Phi_1(u_{1,1},\ldots,u_{N,M}) = \sum_{p=1}^P \left( u_{i,j} - z(x_i, y_j) \right)^2,
     \f]
-    where (i,j) - indexes of the cells in area, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
+    where (i,j) - indices of the cells in area, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 
 */
-SURFIT_EXPORT
 bool area_surf_add(const char * surf_name_or_position = "0", REAL weight = 1, const char * area_name_or_position = "0", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -457,10 +442,9 @@ bool area_surf_add(const char * surf_name_or_position = "0", REAL weight = 1, co
     \f[
     u_{i,j} \leq f(x_{u_i},y_{u_j})
     \f]
-    where (i,j) - indexes of the cells in area, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
+    where (i,j) - indices of the cells in area, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
 
 */
-SURFIT_EXPORT
 bool area_surf_leq(const char * surf_name_or_position = "0", const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -479,10 +463,9 @@ bool area_surf_leq(const char * surf_name_or_position = "0", const char * area_n
     \f[
     u_{i,j} \geq f(x_{u_i},y_{u_j})
     \f]
-    where (i,j) - indexes of the cells in area, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
+    where (i,j) - indices of the cells in area, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
 
 */
-SURFIT_EXPORT
 bool area_surf_geq(const char * surf_name_or_position = "0", const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -502,9 +485,8 @@ bool area_surf_geq(const char * surf_name_or_position = "0", const char * area_n
     \f[
     \frac {\sum\limits_{i,j} u_{i,j}} {Q} = m
     \f]
-    where (i,j) - indexes of the cells in area, Q - number of cells in area, m - desired mean value
+    where (i,j) - indices of the cells in area, Q - number of cells in area, m - desired mean value
 */
-SURFIT_EXPORT
 bool area_mean(REAL mean, const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -524,10 +506,9 @@ bool area_mean(REAL mean, const char * area_name_or_position = "0", REAL mult = 
     \f[
     \frac {\sum\limits_{i,j} z(x_i,y_j) u_{i,j}} {z(x_i,y_j)} = m
     \f]
-    where (i,j) - indexes of the cells in area, \f$z(x_i,y_j)\f$ - weighted surface value for the (i,j) cell,
+    where (i,j) - indices of the cells in area, \f$z(x_i,y_j)\f$ - weighted surface value for the (i,j) cell,
     m - desired weighted mean value
 */
-SURFIT_EXPORT
 bool area_wmean(REAL mean, const char * area_name_or_position = "0", const char * surf_name_or_position = "0", REAL mult = 0.001, int inside = 1);
 
 //////////////
@@ -552,10 +533,9 @@ bool area_wmean(REAL mean, const char * area_name_or_position = "0", const char 
     \f[
     \Phi(u_{1,1},\ldots,u_{N,M}) = \sum_i \sum_j \left( u_{i,j} - z_{i,j} \right)^2,
     \f] 
-    where (i,j) - indexes of the cells cross with contour, 
+    where (i,j) - indices of the cells cross with contour, 
     \f$ z_{i,j} \f$ - contour mean value for the (i,j) cell.
 */
-SURFIT_EXPORT
 bool contour(const char * cntr_name_or_position = "0");
 
 /*! \ingroup tcl_rules_cntrs
@@ -581,10 +561,9 @@ bool contour(const char * cntr_name_or_position = "0");
     \f[
     \Phi_1(u_{1,1},\ldots,u_{N,M}) = \sum_i \sum_j \left( u_{i,j} - z_{i,j} \right)^2,
     \f]
-    where (i,j) - indexes of the cells cross with contour, 
+    where (i,j) - indices of the cells cross with contour, 
     \f$ z_{i,j} \f$ - contour mean value for the (i,j) cell.
 */
-SURFIT_EXPORT
 bool contour_add(REAL weight, const char * cntr_name_or_position = "0");
 
 /*! \ingroup tcl_rules_cntrs
@@ -607,9 +586,8 @@ bool contour_add(REAL weight, const char * cntr_name_or_position = "0");
     \f[
     u_{i,j} \leq z_{i,j}
     \f]
-    where (i,j) - indexes of the cells cross with contour, \f$z_{i,j}\f$ - contour mean value for the (i,j) cell
+    where (i,j) - indices of the cells cross with contour, \f$z_{i,j}\f$ - contour mean value for the (i,j) cell
 */
-SURFIT_EXPORT
 bool contour_leq(const char * cntr_name_or_position = "0", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_cntrs
@@ -632,9 +610,8 @@ bool contour_leq(const char * cntr_name_or_position = "0", REAL mult = 0.001);
     \f[
     u_{i,j} \geq z_{i,j}
     \f]
-    where (i,j) - indexes of the cells cross with contour, \f$z_{i,j}\f$ - contour mean value for the (i,j) cell
+    where (i,j) - indices of the cells cross with contour, \f$z_{i,j}\f$ - contour mean value for the (i,j) cell
 */
-SURFIT_EXPORT
 bool contour_geq(const char * cntr_name_or_position = "0", REAL mult = 0.001);
 
 }; // namespace surfit;

@@ -35,7 +35,7 @@
 namespace surfit {
 
 f_area_mean::f_area_mean(REAL imean, const d_area * iarea, REAL imult, bool iinside) :
-functional("f_area_mean") 
+functional("f_area_mean", F_CONDI) 
 {
 	mean = imean;
 	area = iarea;

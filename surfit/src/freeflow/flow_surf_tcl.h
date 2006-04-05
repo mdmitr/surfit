@@ -22,19 +22,27 @@
 
 namespace surfit {
 
-FLOW_EXPORT
-/*! \ingroup tcl_psurf
-    \fn REAL surf_debit(REAL x, REAL y, REAL perm, REAL visc, REAL mult, const char * pos);
-    \brief calculates debit at point (x,y), using four neighbour cells
-*/
-REAL surf_debit(REAL x, REAL y, REAL perm, REAL visc, REAL mult, const char * pos = "0");
+/*! \ingroup tcl_freeflow_surf
+    \fn REAL surf_debit(REAL x, REAL y, REAL perm, REAL visc, REAL mult, const char * surface_name_or_position = "0");
 
-FLOW_EXPORT
-/*! \ingroup tcl_psurf
-    \fn REAL surf_debit_rect(REAL x1, REAL y1, REAL x2, REAL y2, const char * pos);
-    \brief calculates debit in rect
+    \par Tcl syntax:
+    surf_debit x y perm visc mult "surface_name_or_position"
+
+    \par Description:
+    calculates debit at point (x,y), using four neighbour cells
 */
-REAL surf_debit_rect(REAL x1, REAL y1, REAL x2, REAL y2, REAL perm, REAL visc, REAL mult, const char * pos = "0");
+REAL surf_debit(REAL x, REAL y, REAL perm, REAL visc, REAL mult, const char * surface_name_or_position = "0");
+
+/*! \ingroup tcl_freeflow_surf
+    \fn REAL surf_debit_rect(REAL x1, REAL y1, REAL x2, REAL y2, REAL perm, REAL visc, REAL mult, const char * surface_name_or_position = "0");
+
+    \par Tcl syntax:
+    surf_debit_rect x1 y1 x2 y2 perm visc mult "surface_name_or_position"
+
+    \par Description:
+    calculates debit in rect
+*/
+REAL surf_debit_rect(REAL x1, REAL y1, REAL x2, REAL y2, REAL perm, REAL visc, REAL mult, const char * surface_name_or_position = "0");
 
 
 }; // namespace surfit;

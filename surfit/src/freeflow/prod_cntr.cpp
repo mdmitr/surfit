@@ -35,7 +35,7 @@
 namespace surfit {
 
 f_prod_cntr::f_prod_cntr(d_cntr * icontour) :
-functional("f_prod_cntr")
+functional("f_prod_cntr", F_USUAL)
 {
 	contour = icontour;
 	if (contour->getName()) {

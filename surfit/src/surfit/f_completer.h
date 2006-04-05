@@ -31,7 +31,11 @@ class bitvec;
 class matr;
 class vec;
 
-class f_completer : public functional, public faultable {
+/*! \class f_completer
+    \brief Functional that tells how resulting surface should be in areas 
+    of low information density.
+*/
+class f_completer : public faultable {
 public:
 
 	//! constructor

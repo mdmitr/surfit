@@ -27,6 +27,13 @@ namespace surfit {
 	class data_manager;
 	extern SURFIT_EXPORT data_manager * surfit_data_manager;
 
+	class manager;
+	SURFIT_EXPORT
+	bool add_manager(manager * man);
+
+	SURFIT_EXPORT
+	bool release_manager(manager * man);
+
 	class user;
 	
 	//
@@ -34,10 +41,13 @@ namespace surfit {
 	//
 
 	class functional;
-	extern SURFIT_EXPORT std::vector<functional*> * functionals;
+	extern std::vector<functional*> * functionals;
 
 	SURFIT_EXPORT 
 	void functionals_push_back(functional * f);
+
+	SURFIT_EXPORT 
+	functional * get_modifiable_functional();
 
 	extern char * solver_name;
 

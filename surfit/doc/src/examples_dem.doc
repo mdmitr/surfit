@@ -1,0 +1,32 @@
+/*! \example dem.tcl
+
+This example shows how to make resulting surface approximating \ref d_dem "DEM".
+
+Here is the image of the resulting \ref d_surf "surface":
+
+\htmlonly
+<P ALIGN=CENTER>
+<IMG alt="surface" src="dem.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. surface obtained from DEM</P>
+\endhtmlonly
+
+This result was obtained with <TT>"examples/globe/dem.tcl"</TT> script. 
+*/
+
+/*! \example dem_add.tcl
+
+This example shows how to make resulting surface approximating smoothed \ref d_dem "DEM".
+
+Here is the image of the resulting \ref d_surf "surface":
+
+\htmlonly
+<P ALIGN=CENTER>
+<IMG alt="surface" src="dem_add.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. surface obtained from smoothed DEM</P>
+\endhtmlonly
+
+This result was obtained with <TT>"examples/globe/dem_add.tcl"</TT> script. 
+*/
+

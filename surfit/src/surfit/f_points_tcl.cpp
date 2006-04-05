@@ -39,11 +39,9 @@ bool points(const char * pos) {
 
 bool points_add(REAL weight, const char * pos) {
 	
-	if (functionals->size() == 0) {
-		writelog(LOG_ERROR,"No gridding rule to modify!");
+	functional * fnc = get_modifiable_functional();
+	if (fnc == NULL)
 		return false;
-	}
-	functional * fnc = *(functionals->end()-1);
 
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)

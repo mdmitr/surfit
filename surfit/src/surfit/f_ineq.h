@@ -50,7 +50,6 @@ protected:
 
 protected:
 	
-
 	REAL value;
 	bool leq;
 	REAL mult;

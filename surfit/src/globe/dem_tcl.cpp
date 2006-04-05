@@ -27,9 +27,9 @@
 #include "dem_tcl.h"
 #include "points.h"
 #include "pnts_internal.h"
-#include "pnts_tcl.h"
-#include "mask_tcl.h"
-#include "surf_tcl.h"
+#include "surf_internal.h"
+#include "mask_internal.h"
+#include "mask.h"
 #include "grid.h"
 #include "grid_internal.h"
 #include "grid_line.h"
@@ -355,7 +355,7 @@ REAL dem_D2(const char * pos) {
 	return _dem_D2(d);
 };
 
-bool dem_project(const char * pos) {
+bool dem_project(const char * newname, const char * pos) {
 
 	d_dem * d = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
 	if (!d) 
@@ -366,6 +366,8 @@ bool dem_project(const char * pos) {
 
 	if (!(d->grd->operator == (surfit_grid))) {
 		d_dem * res_dem2 = _dem_project(d, surfit_grid);
+		if (newname)
+			res_dem2->setName(newname);
 		if (res_dem2) {
 			globe_dems->push_back(res_dem2);
 			return true;
@@ -375,20 +377,22 @@ bool dem_project(const char * pos) {
 	return true;
 };
 
-bool dem_gradient(const char * pos) {
+bool dem_gradient(const char * newname, const char * pos) {
 	d_dem * d = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
 	if (!d) 
 		return false;
 
 	d_dem * res = _dem_gradient(d);
 	if (res) {
+		if (newname)
+			res->setName(newname);
 		globe_dems->push_back(res);
 		return true;
 	}
 	return false;
 };
 
-bool dem_to_points(const char * pos, const char * new_name) {
+bool dem_to_pnts(const char * pos) {
 	d_dem * d = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
 	if (!d) 
 		return false;
@@ -399,18 +403,14 @@ bool dem_to_points(const char * pos, const char * new_name) {
 	if (!pnts)
 		return false;
 
-	if (new_name)
-		pnts->setName(new_name);
-	else
-		pnts->setName(d->getName());
+	pnts->setName(d->getName());
 
-	surfit_pnts_add(pnts);
+	_surfit_pnts_add(pnts);
 	
 	return true;
-	
 };
 
-bool dem_to_surf(const char * pos, const char * new_name)
+bool dem_to_surf(const char * pos)
 {
 	d_dem * d = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
 	if (!d) 
@@ -420,12 +420,9 @@ bool dem_to_surf(const char * pos, const char * new_name)
 	if (!srf)
 		return false;
 
-	if (new_name)
-		srf->setName(new_name);
-	else
-		srf->setName(d->getName());
+	srf->setName(d->getName());
 
-	surfit_surf_add(srf);
+	_surfit_surf_add(srf);
 	return true;
 };
 
@@ -439,7 +436,9 @@ bool dem_to_mask(short true_from, short true_to, const char * pos)
 	if (!msk)
 		return false;
 
-	surfit_mask_add(msk);
+	msk->setName(d->getName());
+
+	_surfit_mask_add(msk);
 	return true;
 };
 

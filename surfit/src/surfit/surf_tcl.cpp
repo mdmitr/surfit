@@ -824,10 +824,6 @@ void surfs_info() {
 	}
 };
 
-void surfit_surf_add(d_surf * srf) {
-	surfit_surfs->push_back(srf);
-};
-
 REAL surf_area_mean(const char * area_pos, const char * surf_pos) {
 	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (!srf)

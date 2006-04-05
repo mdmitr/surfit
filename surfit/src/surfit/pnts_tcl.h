@@ -47,7 +47,6 @@ class d_points;
     \par Example:
     pnts_load "C:\\my_points.dat" "my_points"
 */
-SURFIT_EXPORT
 bool pnts_load(const char * filename, const char * pntsname = NULL);
 
 /*! \ingroup tcl_pnts_save_load
@@ -74,7 +73,6 @@ bool pnts_load(const char * filename, const char * pntsname = NULL);
     \li pnts_read "C:\\points.txt" "points" 1 2 3 0 " 	" 0 
     \li pnts_read "C:\\points_geq.txt" "points_geq" 1 2 3 3 " 	" 0 
 */
-SURFIT_EXPORT
 bool pnts_read(const char * filename, const char * pntsname = NULL, 
 	       int col1 = 1, int col2 = 2, int col3 = 3, int col4 = 0, 
 	       const char * delimiter = " \t", int skip_lines = 0, int grow_by = 250);
@@ -91,7 +89,6 @@ bool pnts_read(const char * filename, const char * pntsname = NULL,
     \par Example
     pnts_save "C:\\points.dat" "my_points"
 */
-SURFIT_EXPORT
 bool pnts_save(const char * filename, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_save_load
@@ -103,7 +100,6 @@ bool pnts_save(const char * filename, const char * points_name_or_position = "0"
     \par Description:
     saves \ref d_points "points" to formatted text file
 */
-SURFIT_EXPORT
 bool pnts_write(const char * filename, const char * delimiter = "\t", const char * points_name_or_position = "0");
 
 //////////////
@@ -118,7 +114,6 @@ bool pnts_write(const char * filename, const char * delimiter = "\t", const char
     \par Description:
     makes geometrical transform on \ref d_points "points" (shifting and scaling). 
 */
-SURFIT_EXPORT
 bool pnts_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -130,7 +125,6 @@ bool pnts_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, const ch
     \par Description:
     makes inverse to \ref pnts_transform operation
 */
-SURFIT_EXPORT
 bool pnts_inverse_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -142,7 +136,6 @@ bool pnts_inverse_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, 
     \par Description:
     rotates \ref d_points "points" around point with coords (centerX, centerY)
 */
-SURFIT_EXPORT
 bool pnts_rotate(REAL centerX, REAL centerY, REAL angle, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -154,7 +147,6 @@ bool pnts_rotate(REAL centerX, REAL centerY, REAL angle, const char * points_nam
     \par Description:
     removes all points from \ref d_points "points" dataset for which \ref d_mask is undefined
 */
-SURFIT_EXPORT
 bool pnts_filter_by_mask(const char * points_name_or_position = "0", const char * mask_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -166,7 +158,6 @@ bool pnts_filter_by_mask(const char * points_name_or_position = "0", const char 
     \par Description:
     removes all points from \ref d_points "points" dataset which are inside of \ref d_area
 */
-SURFIT_EXPORT
 bool pnts_filter_in_area(const char * points_name_or_position = "0", const char * area_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -178,7 +169,6 @@ bool pnts_filter_in_area(const char * points_name_or_position = "0", const char 
     \par Description:
     removes all points from \ref d_points "points" dataset which are outside of \ref d_area
 */
-SURFIT_EXPORT
 bool pnts_filter_out_area(const char * points_name_or_position = "0", const char * area_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -191,7 +181,6 @@ bool pnts_filter_out_area(const char * points_name_or_position = "0", const char
     removes points from \ref d_points "points" dataset, if \f$ |z - f(x,y)| > \varepsilon \f$, 
     where (x,y,z) - \ref d_points "data points", f(x,y) - \ref d_surf value at point (x,y)
 */
-SURFIT_EXPORT
 bool pnts_filter_by_surf(REAL eps, const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -204,7 +193,6 @@ bool pnts_filter_by_surf(REAL eps, const char * points_name_or_position = "0", c
     sets points values to z = f(x,y), where (x,y,z) - \ref d_points "data points", 
     f(x,y) - \ref d_surf value at point (x,y)
 */
-SURFIT_EXPORT
 bool pnts_update_by_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -216,7 +204,6 @@ bool pnts_update_by_surf(const char * points_name_or_position = "0", const char 
     \par Description:
     returns minimum X value of all data-points
 */
-SURFIT_EXPORT
 REAL pnts_minx(const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -228,7 +215,6 @@ REAL pnts_minx(const char * points_name_or_position = "0");
     \par Description:
     returns maximum X value of all data-points
 */
-SURFIT_EXPORT
 REAL pnts_maxx(const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -240,7 +226,6 @@ REAL pnts_maxx(const char * points_name_or_position = "0");
     \par Description:
     returns minimum Y value of all data-points
 */
-SURFIT_EXPORT
 REAL pnts_miny(const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -252,7 +237,6 @@ REAL pnts_miny(const char * points_name_or_position = "0");
     \par Description:
     returns maximum Y value of all data-points
 */
-SURFIT_EXPORT
 REAL pnts_maxy(const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -264,7 +248,6 @@ REAL pnts_maxy(const char * points_name_or_position = "0");
     \par Description:
     returns minimum Z value of all data-points
 */
-SURFIT_EXPORT
 REAL pnts_minz(const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -276,7 +259,6 @@ REAL pnts_minz(const char * points_name_or_position = "0");
     \par Description:
     returns maximum Z value of all data-points
 */
-SURFIT_EXPORT
 REAL pnts_maxz(const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -288,7 +270,6 @@ REAL pnts_maxz(const char * points_name_or_position = "0");
     \par Description:
     adds noise distributed as N(0,std) to \ref d_points "points"
 */
-SURFIT_EXPORT
 bool pnts_add_noise(REAL std, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -300,7 +281,6 @@ bool pnts_add_noise(REAL std, const char * points_name_or_position = "0");
     \par Description:
     calculates mean value of all data-points in \ref d_points "points"
 */
-SURFIT_EXPORT
 REAL pnts_mean(const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -312,7 +292,6 @@ REAL pnts_mean(const char * points_name_or_position = "0");
     \par Description:
     calculates standart deviation value from mean value (for \ref d_points "points")
 */
-SURFIT_EXPORT
 REAL pnts_std(REAL mean, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -324,7 +303,6 @@ REAL pnts_std(REAL mean, const char * points_name_or_position = "0");
     \par Description:
     calculates A = A+B, where A - points at pos1, B - points at pos2
 */
-SURFIT_EXPORT
 bool pnts_plus(const char * points_name_or_position1, const char * points_name_or_position2);
 
 /*! \ingroup tcl_pnts_math
@@ -336,7 +314,6 @@ bool pnts_plus(const char * points_name_or_position1, const char * points_name_o
     \par Description:
     calculates A = A-B, where A - points at pos1, B - points at pos2
 */
-SURFIT_EXPORT
 bool pnts_minus(const char * points_name_or_position1, const char * points_name_or_position2);
 
 /*! \ingroup tcl_pnts_math
@@ -348,7 +325,6 @@ bool pnts_minus(const char * points_name_or_position1, const char * points_name_
     \par Description:
     calculates A = A*B, where A - points at pos1, B - points at pos2
 */
-SURFIT_EXPORT
 bool pnts_mult(const char * points_name_or_position1, const char * points_name_or_position2);
 
 /*! \ingroup tcl_pnts_math
@@ -360,7 +336,6 @@ bool pnts_mult(const char * points_name_or_position1, const char * points_name_o
     \par Description:
     calculates A = A/B, where A - points at pos1, B - points at pos2
 */
-SURFIT_EXPORT
 bool pnts_div(const char * points_name_or_position1, const char * points_name_or_position2);
 
 /*! \ingroup tcl_pnts_math
@@ -372,7 +347,6 @@ bool pnts_div(const char * points_name_or_position1, const char * points_name_or
     \par Description:
     calculates A = B, where A - points at pos1, B - points at pos2
 */
-SURFIT_EXPORT
 bool pnts_set(const char * points_name_or_position1, const char * points_name_or_position2);
 
 /*! \ingroup tcl_pnts_math
@@ -384,7 +358,6 @@ bool pnts_set(const char * points_name_or_position1, const char * points_name_or
     \par Description:
     calculates A = A+B, where A - this class, B - some numeric
 */
-SURFIT_EXPORT
 bool pnts_plus_real(REAL val, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -396,7 +369,6 @@ bool pnts_plus_real(REAL val, const char * points_name_or_position = "0");
     \par Description:
     calculates A = A-B, where A - this class, B - some numeric
 */
-SURFIT_EXPORT
 bool pnts_minus_real(REAL val, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -408,7 +380,6 @@ bool pnts_minus_real(REAL val, const char * points_name_or_position = "0");
     \par Description:
     calculates A = A*B, where A - this class, B - some numeric
 */
-SURFIT_EXPORT
 bool pnts_mult_real(REAL val, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -420,7 +391,6 @@ bool pnts_mult_real(REAL val, const char * points_name_or_position = "0");
     \par Description:
     calculates A = A/B, where A - this class, B - some numeric
 */
-SURFIT_EXPORT
 bool pnts_div_real(REAL val, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -432,7 +402,6 @@ bool pnts_div_real(REAL val, const char * points_name_or_position = "0");
     \par Description:
     calculates A = B, where A - this class, B - some numeric
 */
-SURFIT_EXPORT
 bool pnts_set_real(REAL val, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -444,7 +413,6 @@ bool pnts_set_real(REAL val, const char * points_name_or_position = "0");
     \par Description:
     calculates A = A+B, where A - points at points_name_or_position, B - surface values at points
 */
-SURFIT_EXPORT
 bool pnts_plus_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -456,7 +424,6 @@ bool pnts_plus_surf(const char * points_name_or_position = "0", const char * sur
     \par Description:
     calculates A = A-B, where A - points at points_name_or_position, B - surface values at points
 */
-SURFIT_EXPORT
 bool pnts_minus_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -468,7 +435,6 @@ bool pnts_minus_surf(const char * points_name_or_position = "0", const char * su
     \par Description:
     calculates A = A*B, where A - points at points_name_or_position, B - surface values at points
 */
-SURFIT_EXPORT
 bool pnts_mult_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -480,7 +446,6 @@ bool pnts_mult_surf(const char * points_name_or_position = "0", const char * sur
     \par Description:
     calculates A = A/B, where A - points at points_name_or_position, B - surface values at points
 */
-SURFIT_EXPORT
 bool pnts_div_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
@@ -492,7 +457,6 @@ bool pnts_div_surf(const char * points_name_or_position = "0", const char * surf
     \par Description:
     calculates A = B, where A - points at points_name_or_position, B - surface values at points
 */
-SURFIT_EXPORT
 bool pnts_set_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
 
 //////////////
@@ -507,7 +471,6 @@ bool pnts_set_surf(const char * points_name_or_position = "0", const char * surf
     \par Description:
     returns \ref d_points "points" size (number of points)
 */
-SURFIT_EXPORT
 int pnts_getCount(const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_other
@@ -519,7 +482,6 @@ int pnts_getCount(const char * points_name_or_position = "0");
     \par Description:
     returns name of \ref d_points "points" dataset
 */
-SURFIT_EXPORT
 const char * pnts_getName(const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_other
@@ -531,7 +493,6 @@ const char * pnts_getName(const char * points_name_or_position = "0");
     \par Description:
     sets name of \ref d_points "points" to new_name
 */
-SURFIT_EXPORT
 bool pnts_setName(const char * new_name, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_other
@@ -543,7 +504,6 @@ bool pnts_setName(const char * new_name, const char * points_name_or_position = 
     \par Description:
     adds scattered data-points from points at pos2 to points at pos1
 */
-SURFIT_EXPORT
 bool pnts_concat(const char * points_name_or_position1, const char * points_name_or_position2);
 
 /*! \ingroup tcl_pnts_other
@@ -555,7 +515,6 @@ bool pnts_concat(const char * points_name_or_position1, const char * points_name
     \par Description:
     returns number of \ref d_points "points" datasets
 */
-SURFIT_EXPORT
 int pnts_size();
 
 /*! \ingroup tcl_pnts_other
@@ -567,7 +526,6 @@ int pnts_size();
     \par Description:
     prints info about all \ref d_points "points" datasets
 */
-SURFIT_EXPORT
 void pnts_info();
 
 /*! \ingroup tcl_pnts_other
@@ -586,7 +544,6 @@ void pnts_info();
     \li pnts_del 0
 
 */
-SURFIT_EXPORT
 bool pnts_del(const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_other
@@ -598,12 +555,7 @@ bool pnts_del(const char * points_name_or_position = "0");
     \par Description:
     removes all points objects from memory
 */
-SURFIT_EXPORT
 bool pnts_delall();
-
-
-SURFIT_EXPORT
-void surfit_pnts_add(d_points * pnts);
 
 }; // namespace surfit;
 

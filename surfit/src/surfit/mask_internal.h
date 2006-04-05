@@ -89,6 +89,13 @@ SURFIT_EXPORT
 */
 void _mask_info(const d_mask * msk);
 
+SURFIT_EXPORT
+/*! \ingroup tcl_masks
+    \fn void surfit_mask_add(d_mask * msk)
+    \brief adds d_mask into \ref surfit_masks
+*/
+void _surfit_mask_add(d_mask * msk);
+
 }; // namespace surfit
 
 #endif

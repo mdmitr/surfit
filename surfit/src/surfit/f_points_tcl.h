@@ -42,7 +42,6 @@ namespace surfit {
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
-SURFIT_EXPORT
 bool points(const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_rules_points
@@ -69,7 +68,6 @@ bool points(const char * points_name_or_position = "0");
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
-SURFIT_EXPORT
 bool points_add(REAL weight = 1, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_rules_points
@@ -94,7 +92,6 @@ bool points_add(REAL weight = 1, const char * points_name_or_position = "0");
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
-SURFIT_EXPORT
 bool points_leq(const char * points_name_or_position = "0", REAL mult = REAL(0.001));
 
 /*! \ingroup tcl_rules_points
@@ -119,7 +116,6 @@ bool points_leq(const char * points_name_or_position = "0", REAL mult = REAL(0.0
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
-SURFIT_EXPORT
 bool points_geq(const char * points_name_or_position = "0", REAL mult = REAL(0.001));
 
 }; // namespace surfit;

@@ -43,7 +43,7 @@
 namespace surfit {
 
 f_trend::f_trend(REAL iD1, REAL iD2, const d_surf * isrf) :
-functional("f_trend")
+faultable("f_trend", F_USUAL|F_FAULT)
 {
 	srf = isrf;
 	D1 = iD1;

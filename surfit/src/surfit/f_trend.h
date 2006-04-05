@@ -30,9 +30,15 @@ class vec;
 class bitvec;
 class d_grid;
 
-class SURFIT_EXPORT f_trend : public functional, public faultable {
+/*! \class f_trend
+    \brief Functional that looks like \ref f_completer, but uses surface 
+    to calculate differences between cells values.
+*/
+class SURFIT_EXPORT f_trend : public faultable {
 public:
+	//! constructor
 	f_trend(REAL iD1, REAL iD2, const d_surf * isrf);
+	//! desctructor
 	~f_trend();
 
 	bool minimize();
@@ -54,12 +60,22 @@ protected:
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
 	
+	//! minimization procedure
 	bool minimize_step();
+
+	//! surface that will be used as trend
 	const d_surf * srf;
+
+	//! multiplier for matrD1
 	REAL D1;
+
+	//! multiplier for matrD2
 	REAL D2;
 
+	//! reprojected surface (trend)
 	d_surf * tr_srf;
+
+	//! calculates surface for limits
 	void get_tr_srf(int & i_from, int & i_to, int & j_from, int & j_to);
 
 };

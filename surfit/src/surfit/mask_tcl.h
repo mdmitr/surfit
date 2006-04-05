@@ -31,152 +31,223 @@ class d_mask;
 // SAVE_LOAD
 //
 
-SURFIT_EXPORT
 /*! \ingroup tcl_mask_save_load
-    \fn bool mask_load(const char * filename, const char * defname = 0);
-    \brief loads mask from file. If no defname specified, then first mask will be loaded.
-    \param filename filename
-    \param defname name for mask (optional)
-*/
-bool mask_load(const char * filename, const char * defname = 0);
+    \fn bool mask_load(const char * filename, const char * maskname = 0);
+    
+    \par Tcl syntax:
+    mask_load "filename" "maskname"
 
-SURFIT_EXPORT
-/*! \ingroup tcl_mask_save_load
-    \fn bool mask_save(const char * filename, const char * pos = "0");
-    \brief saves \ref mask to file
+    \par Description:
+    loads \ref d_mask "mask" from surfit datafile. If no maskname specified, then first mask will be loaded.
+    \param filename surfit datafile
+    \param maskname name for mask (optional)
 */
-bool mask_save(const char * filename, const char * pos = "0");
+bool mask_load(const char * filename, const char * maskname = 0);
 
-SURFIT_EXPORT
 /*! \ingroup tcl_mask_save_load
-    \fn bool mask_save_grd(const char * filename, const char * pos = "0");
-    \brief saves \ref mask to surfer grd file (ASCII format)
-*/
-bool mask_save_grd(const char * filename, const char * pos = "0");
+    \fn bool mask_save(const char * filename, const char * mask_name_or_position = "0");
 
-SURFIT_EXPORT
-/*! \ingroup tcl_mask_save_load
-    \fn bool mask_save_xyz(const char * filename, const char * pos = "0");
-    \brief saves \ref mask to xyz-file (ASCII format)
+    \par Tcl syntax:
+    mask_save "filename" "mask_name_or_position"
+
+    \par Description:
+    saves \ref d_mask "mask" to surfit datafile
 */
-bool mask_save_xyz(const char * filename, const char * pos = "0");
+bool mask_save(const char * filename, const char * mask_name_or_position = "0");
+
+/*! \ingroup tcl_mask_save_load
+    \fn bool mask_save_grd(const char * filename, const char * mask_name_or_position = "0");
+
+    \par Tcl syntax:
+    mask_save_grd "filename" "mask_name_or_position"
+
+    \par Description:
+    saves \ref d_mask "mask" to Surfer grd file (ASCII format)
+*/
+bool mask_save_grd(const char * filename, const char * mask_name_or_position = "0");
+
+/*! \ingroup tcl_mask_save_load
+    \fn bool mask_save_xyz(const char * filename, const char * mask_name_or_position = "0");
+
+    \par Tcl syntax:
+    mask_save_xyz "filename" "mask_name_or_position"
+    
+    \par Description:
+    saves \ref d_mask "mask" to xyz-file (ASCII format)
+*/
+bool mask_save_xyz(const char * filename, const char * mask_name_or_position = "0");
 
 //
 // math
 //
 
-SURFIT_EXPORT
 /*! \ingroup tcl_mask_math
-    \fn bool mask_getValue(REAL x, REAL y, const char * pos = "0");
-    \brief calculates \ref mask value at point (x,y)
-*/
-bool mask_getValue(REAL x, REAL y, const char * pos = "0");
+    \fn bool mask_getValue(REAL x, REAL y, const char * mask_name_or_position = "0");
 
-SURFIT_EXPORT
-/*! \ingroup tcl_mask_math
-    \fn bool mask_and(const char * pos1 = "0", const char * pos2 = "0");
-    \brief makes AND operation 
-*/
-bool mask_and(const char * pos1 = "0", const char * pos2 = "0");
+    \par Tcl syntax:
+    mask_getValue x y "mask_name_or_position"
 
-SURFIT_EXPORT
-/*! \ingroup tcl_mask_math
-    \fn bool mask_not(const char * pos1 = "0", const char * pos2 = "0");
-    \brief makes NOT operation 
+    \par Description:
+    calculates \ref d_mask "mask" value at point (x,y)
 */
-bool mask_not(const char * pos1 = "0", const char * pos2 = "0");
+bool mask_getValue(REAL x, REAL y, const char * mask_name_or_position = "0");
 
-SURFIT_EXPORT
 /*! \ingroup tcl_mask_math
-    \fn bool mask_or(const char * pos1 = "0", const char * pos2 = "0");
-    \brief makes OR operation 
-*/
-bool mask_or(const char * pos1 = "0", const char * pos2 = "0");
+    \fn bool mask_and(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
 
-SURFIT_EXPORT
-/*! \ingroup tcl_mask_math
-    \fn bool mask_xor(const char * pos1 = "0", const char * pos2 = "0");
-    \brief makes XOR operation 
+    \par Tcl syntax:
+    mask_and "mask1_name_or_position" "mask2_name_or_position"
+
+    \par Description:
+    makes AND operation:
+    mask1 = mask1 AND mask2
 */
-bool mask_xor(const char * pos1 = "0", const char * pos2 = "0");
+bool mask_and(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+
+/*! \ingroup tcl_mask_math
+    \fn bool mask_not(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+
+    \par Tcl syntax:
+    mask_not "mask1_name_or_position" "mask2_name_or_position"
+    
+      
+    \par Description:
+    makes NOT operation:
+    mask1 = NOT mask2
+*/
+bool mask_not(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+
+/*! \ingroup tcl_mask_math
+    \fn bool mask_or(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+
+    \par Tcl syntax:
+    mask_or "mask1_name_or_position" "mask2_name_or_position"
+    
+    \par Description: 
+    makes OR operation:
+    mask1 = mask1 OR mask2
+*/
+bool mask_or(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+
+/*! \ingroup tcl_mask_math
+    \fn bool mask_xor(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+    
+    \par Tcl syntax:
+    mask_xor "mask1_name_or_position" "mask2_name_or_position"
+      
+    \par Description:
+    makes XOR operation:
+    mask1 = mask1 XOR mask2
+*/
+bool mask_xor(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
 
 //
 // CONVERTING
 //
 
-SURFIT_EXPORT
 /*! \ingroup tcl_mask_conv
-    \fn bool mask_to_surf(const char * pos = "0");
-    \brief makes \ref surfit_surf from \ref surfit_mask
+    \fn bool mask_to_surf(const char * mask_name_or_position = "0");
+
+    \par Tcl syntax:
+    mask_to_surf "mask_name_or_position"
+
+    \par Description:
+    makes \ref d_surf "surface" from \ref d_mask "mask"
 */
-bool mask_to_surf(const char * pos = "0");
+bool mask_to_surf(const char * mask_name_or_position = "0");
 
 //
 // OTHER
 //
 
-SURFIT_EXPORT
 /*! \ingroup tcl_mask_other
-    \fn bool mask_by_surf(const char * surf_pos = "0");
-    \brief makes \ref mask with the same undefined values as \ref surf have
-*/
-bool mask_by_surf(const char * surf_pos = "0");
+    \fn bool mask_by_surf(const char * surface_name_or_position = "0");
 
-SURFIT_EXPORT
+    \par Tcl syntax:
+    mask_by_surf "surface_name_or_position"
+
+    \par Description:
+    makes \ref d_mask "mask" from \ref d_surf "surface". Resulting mask will have
+    false values for all cells, where surface have undefined values.
+*/
+bool mask_by_surf(const char * surface_name_or_position = "0");
+
 /*! \ingroup tcl_mask_other
-    \fn bool mask_apply_to_surf(const char * def_pos = "0", const char * surf_pos = "0");
-    \brief sets undefined values to \ref surf using \ref mask
-*/
-bool mask_apply_to_surf(const char * def_pos = "0", const char * surf_pos = "0");
+    \fn bool mask_apply_to_surf(const char * mask_name_or_position = "0", const char * surface_name_or_position = "0");
 
-SURFIT_EXPORT
+    \par Tcl syntax:
+    mask_apply_to_surf "mask_name_or_position" "surface_name_or_position"
+
+    \par Description:
+    sets undefined values for all  \ref d_surf "surface" cells where \ref d_mask "mask" have false values.
+*/
+bool mask_apply_to_surf(const char * mask_name_or_position = "0", const char * surface_name_or_position = "0");
+
 /*! \ingroup tcl_mask_other
-    \fn const char * mask_getName(const char * pos = "0");
-    \brief returns name of \ref mask 
-*/
-const char * mask_getName(const char * pos = "0");
+    \fn const char * mask_getName(const char * mask_name_or_position = "0");
 
-SURFIT_EXPORT
+    \par Tcl syntax:
+    mask_getName "mask_name_or_position"
+
+    \par Description:
+    returns name of the \ref d_mask "mask"
+*/
+const char * mask_getName(const char * mask_name_or_position = "0");
+
 /*! \ingroup tcl_mask_other
-    \fn bool mask_setName(const char * new_name, const char * pos = "0");
-    \brief sets name of \ref mask 
-*/
-bool mask_setName(const char * new_name, const char * pos = "0");
+    \fn bool mask_setName(const char * new_name, const char * mask_name_or_position = "0");
+    
+    \par Tcl syntax:
+    mask_setName "new_name" "mask_name_or_position"
 
-SURFIT_EXPORT
-/*! \ingroup tcl_masks
+    \par Description:
+    sets name for the \ref d_mask "mask"
+*/
+bool mask_setName(const char * new_name, const char * mask_name_or_position = "0");
+
+/*! \ingroup tcl_mask_other
     \fn bool mask_delall();
-    \brief removes all \ref mask's from \ref surfit_masks
+
+    \par Tcl syntax:
+    mask_delall
+
+    \par Description:
+    removes all \ref d_mask "masks" from memory
 */
 bool mask_delall();
 
-SURFIT_EXPORT
-/*! \ingroup tcl_masks
-    \fn bool mask_del(const char * pos = "0");
-    \brief removes \ref mask from \ref surfit_masks 
-*/
-bool mask_del(const char * pos = "0");
+/*! \ingroup tcl_mask_other
+    \fn bool mask_del(const char * mask_name_or_position = "0");
 
-SURFIT_EXPORT
-/*! \ingroup tcl_masks
+    \par Tcl syntax:
+    mask_del "mask_name_or_position"
+
+    \par Description:
+    removes \ref d_mask mask from memory
+*/
+bool mask_del(const char * mask_name_or_position = "0");
+
+/*! \ingroup tcl_mask_other
     \fn int mask_size();
-    \brief returns amount of masks in \ref surfit_masks
+
+    \par Tcl syntax:
+    mask_size
+
+    \par Description:
+    returns number of \ref d_mask masks in memory
 */
 int mask_size();
 
-SURFIT_EXPORT
-/*! \ingroup tcl_masks
+/*! \ingroup tcl_mask_other
     \fn void masks_info();
-    \brief prints information about masks in \ref surfit_masks
+
+    \par Tcl syntax:
+    masks_info
+
+    \par Description:
+    prints information about \ref d_mask masks in memory
 */
 void masks_info();
-
-SURFIT_EXPORT
-/*! \ingroup tcl_masks
-    \fn void surfit_mask_add(d_mask * msk)
-    \brief adds d_mask into \ref surfit_masks
-*/
-void surfit_mask_add(d_mask * msk);
 
 }; // namespace surfit
 

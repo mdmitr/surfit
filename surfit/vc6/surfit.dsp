@@ -375,16 +375,12 @@ SOURCE=..\src\surfit\f_points_ineq.cpp
 SOURCE=..\src\surfit\f_points_tcl.cpp
 # End Source File
 # End Group
-# Begin Group "global.cpp"
+# Begin Group "others.cpp"
 
 # PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=..\src\surfit\f_completer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\f_global_tcl.cpp
 # End Source File
 # Begin Source File
 
@@ -405,6 +401,10 @@ SOURCE=..\src\surfit\f_value.cpp
 # Begin Source File
 
 SOURCE=..\src\surfit\f_wmean.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\others_tcl.cpp
 # End Source File
 # End Group
 # Begin Group "curvs.cpp"
@@ -602,26 +602,6 @@ SOURCE=..\src\surfit\surfit_solvers.h
 # Begin Group "matr_h"
 
 # PROP Default_Filter ""
-# Begin Group "grid_h"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\src\surfit\grid.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\src\surfit\grid_internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\src\surfit\grid_tcl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\src\surfit\grid_user.h
-# End Source File
-# End Group
 # Begin Source File
 
 SOURCE=.\..\src\surfit\matfile.h
@@ -824,6 +804,10 @@ SOURCE=..\src\surfit\area_tcl.h
 # End Group
 # Begin Source File
 
+SOURCE=..\src\surfit\other_tcl.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\surfit\surfit_data.h
 # End Source File
 # End Group
@@ -846,16 +830,12 @@ SOURCE=..\src\surfit\f_points_ineq.h
 SOURCE=..\src\surfit\f_points_tcl.h
 # End Source File
 # End Group
-# Begin Group "global.h"
+# Begin Group "other.h"
 
 # PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=..\src\surfit\f_completer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\f_global_tcl.h
 # End Source File
 # Begin Source File
 
@@ -876,6 +856,10 @@ SOURCE=..\src\surfit\f_value.h
 # Begin Source File
 
 SOURCE=..\src\surfit\f_wmean.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\others_tcl.h
 # End Source File
 # End Group
 # Begin Group "curvs.h"
@@ -961,6 +945,26 @@ SOURCE=..\src\surfit\surfs_tcl.h
 # Begin Source File
 
 SOURCE=..\src\surfit\functional.h
+# End Source File
+# End Group
+# Begin Group "grid_h"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\..\src\surfit\grid.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\..\src\surfit\grid_internal.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\..\src\surfit\grid_tcl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\..\src\surfit\grid_user.h
 # End Source File
 # End Group
 # Begin Source File

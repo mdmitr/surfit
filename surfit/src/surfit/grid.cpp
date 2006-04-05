@@ -47,7 +47,7 @@ d_grid::d_grid(REAL istartX, REAL iendX, REAL istepX,
 		writelog(LOG_ERROR,"Wrong grid");
 };
 
-d_grid::d_grid(const d_grid * igrid) {
+d_grid::d_grid(const d_grid * igrid, const char * iname) {
 	startX = igrid->startX;
 	endX   = igrid->endX;
 	stepX  = igrid->stepX;
@@ -55,7 +55,10 @@ d_grid::d_grid(const d_grid * igrid) {
 	endY   = igrid->endY;
 	stepY  = igrid->stepY;
 	gridname = NULL;
-	setName(igrid->getName());
+	if (iname)
+		setName(iname);
+	else
+		setName(igrid->getName());
 };
 
 d_grid::~d_grid() {

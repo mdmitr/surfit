@@ -1,0 +1,8 @@
+/*! \page solvers List of solvers for systems of linear equations used by surfit
+
+\li cg
+\li jcg
+\li rf
+\li ssor
+
+*/

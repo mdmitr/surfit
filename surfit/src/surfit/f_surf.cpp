@@ -34,7 +34,7 @@
 namespace surfit {
 
 f_surf::f_surf(const d_surf * isrf) :
-functional("f_surf")
+functional("f_surf", F_USUAL)
 {
 	srf = isrf;
 	if (srf->getName()) {

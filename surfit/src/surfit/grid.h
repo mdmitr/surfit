@@ -27,15 +27,7 @@ class datafile;
 #include <math.h>
 
 /*! \class d_grid
-    \brief class for equidistant 2d-grid
-
-This class describes equidistant rectangular grid (rectangular region comprised of evenly 
-spaced rows and columns), presented with cells (intersection of a rows and columns). Each 
-cell have center point, which
-is grid node. To set the grid it is necessary to specify "start" and "end" points, distance between 
-two neighbour nodes in OX and OY directions (stepX and stepY respectively). 
-Gridding procedure generates a Z value at each grid node by interpolating or approximating the \ref data values. 
-
+    \brief class for equidistant rectangular 2d-grid
 */
 class SURFIT_EXPORT d_grid {
 public:
@@ -54,7 +46,7 @@ public:
 	       const char * iname = NULL);
 
 	//! copy constructor
-	d_grid(const d_grid * igrid);
+	d_grid(const d_grid * igrid, const char * iname = NULL);
 
 	//! destructor
         virtual ~d_grid();

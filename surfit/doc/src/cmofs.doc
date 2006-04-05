@@ -1,23 +1,25 @@
-/*! \page cmofs Description of the consequtive minimization of functional sequence (CMOFS) gridding algorithm
-
+/*! \page surfit Description of the surfit gridding algorithm
 
 <P align="justify">
-The CMOFS method described below, allows to strictly determine 
-the influence of each data, used for gridding. This can be done by set the 
-priority levels for each data. For example, we can think, what data in scattered 
-data points are most precise and must be taken first. Information about surface 
-behavior between data points is less reliable and we should use it at last 
-step. Each time, we use CMOFS algorithm we must build "priority classification" 
-for data. This classification determines the influence of each data in gridding 
-procedure.	
+<TT><B>surfit</B></TT> uses originally developed gridding method called CMOFS 
+(consecutive minization of functionals sequence). The CMOFS method described below, 
+allows to strictly determine the influence for each data, used for gridding. 
+To process data with CMOFS algorithm it is necessary to create so-called "gridding rule". 
+Gridding rule is a functional that describes how to use data in gridding.
+The order of gridding rules defines the priority levels for each data. 
+For example, we can think, what data given in scattered 
+points are most precise and must be taken first. Information about the resulting surface 
+behavior between scattered points is less reliable and we should use it at the last 
+step. 
 </P>
 
-We try to build function as cells of equidistant grid with values:
+To build resulting surface with CMOFS algorithm <TT><B>surfit</B></TT> determines values 
+in the cells of \ref d_grid "equidistant grid":
 
 \f[ u(x,y) = \sum_{i=1}^N \sum_{j=1}^M u_{i,j} \phi_{i,j}(x,y), \f]
 
-where \f$u_{i,j}\f$ are the values in the cells needs to determine, \f$\phi_{i,j}\f$ - 
-set of basis functions:
+where \f$u_{i,j}\f$ are cell values, \f$\phi_{i,j}\f$ - 
+set of step basis functions:
 
 \f[
  \phi_i \left( x \right) = \left\{
@@ -32,325 +34,33 @@ set of basis functions:
 \f]
 
 Here is the breif scheme of CMOFS algorithm:
-\li Classify all data to extent of truth: from less truth until indirect apriori information
-\li Write functionals for each data type. This functional describes the way of taking the data 
-into account. Functional order must corresponds to data classification, created before.
-\li Minimizing first functional \f$Phi_1\f$. There are several possible results:
-	<UL>
-	<LI> All unknown values \f$ u_{i,j} \f$ was found, the solution complete.
-	<LI> The only part of unknown values \f$ u_{i,j} \f$ was found one-valued, 
-	other coefficient are undetermined.
-	<LI> No one of coefficients was one-valued determined.
-	</UL>
-\li The second functional can be minimized in two ways:
-	<UL>
-	<LI> By finding conditional extremum:
+\li Classify all data to extent of truth: from less truth until indirect apriori information.
+\li Write functionals sequence 
 \f[
-    \Psi_2(u_{1,1},\ldots,u_{N,M}) = \Phi_2(u_{1,1},\ldots,u_{N,M})\ + 
-    \sum_{i=1}^{N} \sum_{j=1}^{M}
-    \lambda_{i,j} \frac{ \partial \Phi_1 (u_{1,1},\ldots,u_{N,M}) }{\partial u_{i,j}}
-    \rightarrow \min.
-\f]
-	<LI> If functional \f$ \Phi_1(u_{1,1},\ldots,u_{N,M}) \f$ doesn't depends on 
-	undefined coefficients, then \f$ \Psi_2(u_{1,1},\ldots,u_{N,M}) \f$ functional
-	extremum can be found from solving system of linear equations
-\f[
-\frac{\partial \Phi_2 (u_{1,1},\ldots,u_{N,M}) } {\partial u_{i,j}} = 0.
-\f]
-	Note: derivatives of already determined \f$ u_{i,i} \f$ must not be calculated.
-	</UL>
+\Phi_1(u_1,\ldots,u_N),\Phi_2(u_1,\ldots,u_N),\ldots,\Phi_K(u_1,\ldots,u_N).
+\f] 
+These functionals describe the way of taking the data 
+into account. Functionals order must corresponds to data confidence level, determined by user.
+Resulting surface is founded from functionals minimization.
 
-Using described CMOFS algorithm surfit implements the following functionals:
-
-<TABLE BORDER="1" COLOR="#E0E0E0" WIDTH="100%" ID="Table4">
-
-<TR>
-<TD ALIGN="CENTER"><STRONG> Name </STRONG> </TD>
-<TD ALIGN="CENTER"><STRONG> Description </STRONG> </TD>
-<TD ALIGN="CENTER"><STRONG> Functional </STRONG> </TD>
-<TD ALIGN="CENTER"><STRONG> Example </STRONG> </TD>
-</TR>
-
-<TR><TD><B>\ref surfit::func  "func"</B></TD>
-<TD>ordered data points</TD>
-<TD>
-\f[ f = \sum_I \sum_J f_{I,J}, \f]
-\f[
-\Phi(u_{1,1},\ldots,u_{N,M}) = \sum_I \sum_J \left( u_{i,j} - f_{I,J} \right)^2
-\f]
-where cell (i,j) is the same as \ref surfit::func "func"'s cell (I,J).
-</TD>
-<TD>
-<a href="../surfit_src/html/map__func_8tcl-example.html">map_func.tcl</a>
-</TD>
-</TR>
-
-<TR><TD><B>\ref surfit::defarea "defarea"</B>  </TD>
-<TD>domain of the function</TD>
-<TD>
-\f[ d = \sum_I \sum_J d_{I,J} \f]
-\f[
-\Phi(\lambda_{1,1},\ldots,\lambda_{N,M}) = 
-\sum_I \sum_J \lambda_{I,J} \left( u_{i,j} - d_{I,J} \right), \,\, if \,\, d_{I,J} = undefined
-\f]
-\f[
-0, \quad otherwise
-\f]
-where cell (i,j) is the same as \ref surfit::defarea "defarea"'s cell (I,J).
-</TD>
-<TD>
-<a href="../surfit_src/html/map__defarea_8tcl-example.html">map_defarea.tcl</a>
-</TD>
-</TR>
-
-<TR><TD><B>\ref surfit::task  "task"</B>  </TD>
-<TD>scattered data points</TD>
-<TD>
-\f$
-(x_p, y_p, z_p), \, p=1,\ldots,P,
-\f$ - set of scattered data points, 
-\f[
-\Phi(u_{1,1},\ldots,u_{N,M}) = \sum_{p=1}^P \left( u_{i,j} - z_p \right)^2,
-\f]
-where point with coordinates \f$ (x_p, y_p) \f$ belong to the cell (i,j)
-</TD>
-<TD>
-<a href="../surfit_src/html/map__task_8tcl-example.html">map_task.tcl</a>
-</TD>
-</TR>
-
-<TR><TD><B>\ref surfit::area  "area"</B>  </TD>
-<TD>area with constant value described with closed 2D piecewise linear curve</TD>
-<TD>
-\f[
-\Phi(u_{1,1},\ldots,u_{N,M}) = \sum_i \sum_j \left( u_{i,j} - z \right)^2,
-\f]
-where (i,j) - indexes of the cells in area, z - area constant value.
-</TD>
-<TD>
-<a href="../surfit_src/html/map__area_8tcl-example.html">map_area.tcl</a>
-</TD>
-</TR>
-
-<TR><TD><B>\ref surfit::iso   "iso"</B>   </TD>
-<TD>piecewise linear isoline</TD>
-<TD>
-\f[
-\Phi(u_{1,1},\ldots,u_{N,M}) = \sum_i \sum_j \left( u_{i,j} - z \right)^2,
-\f]
-where (i,j) - indexes of the cells crossed with isoline, z - isoline value.
-</TD>
-<TD>
-<a href="../surfit_src/html/map__iso_8tcl-example.html">map_iso.tcl</a>
-</TD>
-</TR>
-
-<TR><TD><B>\ref surfit::cntr  "cntr"</B>  </TD>
-<TD>3D piecewise linear curve</TD>
-<TD>
-\f[
-\Phi(u_{1,1},\ldots,u_{N,M}) = \sum_i \sum_j \left( u_{i,j} - z_{i,j} \right)^2,
-\f]
-where (i,j) - indexes of the cells crossed with contour, 
-\f$ z_{i,j} \f$ - mean value of contour for the (i,j) cell.
-</TD>
-<TD>
-<a href="../surfit_src/html/map__cntr_8tcl-example.html">map_cntr.tcl</a>
-</TD>
-</TR>
-
-<TR><TD><B>\ref surfit::fill_with "fill_with"</B>  </TD>
-<TD>sets value for all undefined cells</TD>
-<TD>
-\f[
-\Phi(u_{1,1},\ldots,u_{N,M}) = \sum_i \sum_j \left( u_{i,j} - z \right)^2,
-\f]
-where (i,j) - indexes of the undefined cells, 
-\f$ z_{i,j} \f$ - value for filling.
-</TD>
-</TR>
-
-<TR><TD><B>\ref surfit::completer "completer"</B>  </TD>
-<TD>describes surface behaviour in areas without any data. The first summand tells that surface must
-tend to constant surface, the second - surface must tend to plane.</TD>
-<TD>
+Then minimizing i-th functional, two situations are possible:
+\par Unconstrained extremum is being searched.
+The system of linear equations is being analyzed:
 \f[ 
- \Phi(u_{1,1},\ldots,u_{N,M}) = D1 \int_{\Omega} \left[ u_x^2 + u_y^2 \right] \,dx\,dy +
+\frac {\partial \Phi_i(u_1,\ldots,u_N)} {\partial u_j} = 0, 
 \f]
-\f[
-+ D2 \int_{\Omega} \left[ u_{xx}^2 + 2u_{xy}^2 + u_{yy}^2 \right] dxdy
-\f]
-where integration changes with summation, differentiation with finite-difference analogues.
-</TD>
-<TD>
-\ref examples "all examples here"
-</TD>
-</TR>
+where \f$ j=1,\ldots,N\f$ except of numbers of cells with already solved (founded) values. 
+There are two variants under consideration:
+\li The SLE have only one solution.
+Unknown values \f$ u_j \f$ are being determined from solution of this system of 
+linear equations.
+\li The SLE have many solutions, or have no solution at all.
+The SLE isn't being solved. Instead of this, the conditional extremum problem
+is being solved then i+1'th functional is being minimized.
 
-<TR><TD><B>\ref surfit::trend "trend"</B>  </TD>
-<TD>trend surface (a kind of completer)</TD>
-<TD>
-\f[ 
- \Phi(u_{1,1},\ldots,u_{N,M}) = D1 \int_{\Omega} \left[ (u_x-t_x)^2 + (u_y-t_y)^2 \right] \,dx\,dy +
-\f]
-\f[
-+ D2 \int_{\Omega} \left[ (u_{xx}-t_{xx})^2 + 2 (u_{xy}-t_{xy})^2 + (u_{yy}-t_{yy})^2 \right] dxdy
-\f]
-where integration changes with summation, differentiation with finite-difference analogues.
-</TD>
-<TD>
-<a href="../surfit_src/html/map__trend_8tcl-example.html">map_trend.tcl</a>
-</TD>
-</TR>
-
-<TR><TD><B>\ref surfit::wfunc "wfunc"</B>  </TD>
-<TD>ordered data points</TD>
-<TD>
-\f[ f = \sum_I \sum_J f_{I,J}, \f]
-
-modifies \ref surfit::completer "completer" or \ref surfit::trend "trend" functional with
-adding summand with "informational weight" \f$ w \f$
-
-\f[
-S(u_{1,1},\ldots,u_{N,M}) = w \sum_I \sum_J \left( u_{i,j} - f_{I,J} \right)^2
-\f]
-where cell (i,j) is the same as \ref surfit::wfunc "wfunc"'s cell (I,J).
-</TD>
-<TD>
-<a href="../surfit_src/html/map__wfunc_8tcl-example.html">map_wfunc.tcl</a>
-</TD>
-</TR>
-
-<TR><TD><B>\ref surfit::wtask "wtask"</B>  </TD>
-<TD>scattered data points</TD>
-<TD>
-\f$
-(x_p, y_p, z_p, w_p), \, p=1,\ldots,P,
-\f$ - set of scattered data points, \f$ w_p \f$ - informational weight for p-th point. 
-
-modifies \ref surfit::completer "completer" or \ref surfit::trend "trend" functional with
-adding summand 
-
-\f[
-S(u_{1,1},\ldots,u_{N,M}) = \sum_{p=1}^P w_p\left( u_{i,j} - z_p \right)^2,
-\f]
-where point with coordinates \f$ (x_p, y_p) \f$ belong to the cell (i,j)
-</TD>
-<TD>
-<a href="../surfit_src/html/map__wtask_8tcl-example.html">map_wtask.tcl</a>
-</TD>
-</TR>
-
-<TR><TD><B>\ref surfit::warea "warea"</B> </TD>
-<TD>area with constant value described with closed 2D piecewise linear curve</TD>
-<TD>
-modifies \ref surfit::completer "completer" or \ref surfit::trend "trend" functional with
-adding summand with informational weight \f$ w \f$:
-\f[
-S(u_{1,1},\ldots,u_{N,M}) = w \sum_i \sum_j \left( u_{i,j} - z \right)^2,
-\f]
-where (i,j) - indexes of the cells in area, z - area constant value.
-</TD>
-<TD>
-<a href="../surfit_src/html/map__warea_8tcl-example.html">map_warea.tcl</a>
-</TD>
-</TR>
-
-<TR><TD><B>\ref surfit::wiso  "wiso"</B>  </TD>
-<TD>piecewise linear isoline</TD>
-<TD>
-modifies \ref surfit::completer "completer" or \ref surfit::trend "trend" functional with
-adding summand with informational weight \f$ w \f$:
-\f[
-S(u_{1,1},\ldots,u_{N,M}) = w \sum_i \sum_j \left( u_{i,j} - z \right)^2,
-\f]
-where (i,j) - indexes of the cells crossed with isoline, z - isoline value.
-</TD>
-<TD>
-<a href="../surfit_src/html/map__wiso_8tcl-example.html">map_wiso.tcl</a>
-</TD>
-</TR>
-
-<TR><TD><B>\ref surfit::wcntr "wcntr"</B> </TD>
-<TD>3D piecewise linear curve</TD>
-<TD>
-modifies \ref surfit::completer "completer" or \ref surfit::trend "trend" functional with
-adding summand:
-\f[
-\Phi(u_{1,1},\ldots,u_{N,M}) = \sum_i \sum_j w_{i,j} \left( u_{i,j} - z_{i,j} \right)^2,
-\f]
-where (i,j) - indexes of the cells crossed with contour, 
-\f$ z_{i,j} \f$ - mean value of contour for the (i,j) cell, \f$ w_{i,j} \f$ - mean informational weight of contour for the (i,j) cell.
-</TD>
-<TD>
-<a href="../surfit_src/html/map__wcntr_8tcl-example.html">map_wcntr.tcl</a>
-</TD>
-</TR>
-
-<TR><TD><B>\ref surfit::flt   "flt"</B>   </TD>
-<TD>tectonical fault line </TD>
-<TD>
-To take fault line in terms of grid, fault line transforms to \ref surfit::grid_line "grid based line" using modified 
-Brezengham algorithm. After that fault line presented as a set of cell borders. 
-
-Modifies \ref surfit::completer "completer" or \ref surfit::trend "trend" functional:
-the summands, for which two neighbour cells have the "faulted" borders will be removed from the functional.
-
-</TD>
-<TD>
-<a href="../surfit_src/html/map__flt_8tcl-example.html">map_flt.tcl</a>
-</TD>
-</TR>
-  
-</TABLE>
-
-surfit constructs the functional sequence using \ref surfit::priority "priority" variable and 
-internal order of presented functionals:
-\li \ref surfit::defarea   "defarea"
-\li \ref surfit::flt       "flt"
-\li \ref surfit::task      "task"
-\li \ref surfit::wtask     "wtask"
-\li \ref surfit::iso       "iso"
-\li \ref surfit::wiso      "wiso"
-\li \ref surfit::cntr      "cntr"
-\li \ref surfit::wcntr     "wcntr"
-\li \ref surfit::area      "area"
-\li \ref surfit::warea     "warea"
-\li \ref surfit::func      "func"
-\li \ref surfit::wfunc     "wfunc"
-\li \ref surfit::trend     "trend"
-\li \ref surfit::fill_with "fill_with"
-\li \ref surfit::dynamic   "dynamic"
-\li \ref surfit::completer "completer"
-
-Consider one factitious example:
-
-<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
-<TR>
-<TD>
-<pre>
-$ load libsurfit[info sharedlibextension]
-$ \ref iso_load iso.dat
-$ set \ref surfit::priority "priority" 1
-$ \ref task_load task.dat
-$ \ref wtask_load wtask.dat
-$ set \ref surfit::priority "priority" 2
-$ \ref trend_load trend.dat
-$ \ref completer_set 2 1
-</pre>
-</TD>
-</TR>
-</TABLE>
-
-According to this script, surfit loads data to the memory and constructs the functional sequence:
-<OL>
-<LI> \ref surfit_iso "iso"
-<LI> \ref surfit_task "task"
-<LI> \ref surfit_trend "trend"
-<LI> \ref surfit_completer "completer" + \ref surfit_wtask "wtask"
-</OL>
-
-This sequence means that the first data to take into account is isoline, next task, then trend. At the last is completer 
-with wtask (wtask will modify completer functional).
+\par Constrained extremum is being searched.
+This situation appears if previous functional minimization was impossible, or
+if additional conditions or inequalities are set. For searching of constrained extremum
+the \ref penalty "penalty algorithm" is being used.
 
 */

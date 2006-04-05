@@ -23,7 +23,7 @@ set tol 1e-005
 ##
  
 # load surface from surfit datafile 
-surf_load "D:\\develop\\surfit\\examples\\surfit\\surfs\\func.func" "test_func"  
+surf_load "func.func" "test_func"  
  
 ##
 ## construct grid 

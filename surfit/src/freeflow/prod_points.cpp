@@ -37,7 +37,7 @@
 namespace surfit {
 
 f_prod_points::f_prod_points(const d_points * itsk) :
-functional("f_prod_points") 
+functional("f_prod_points", F_USUAL) 
 {
 	f_task = itsk;
 	if (f_task->getName()) {

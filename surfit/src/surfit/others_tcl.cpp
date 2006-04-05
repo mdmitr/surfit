@@ -18,7 +18,7 @@
  *----------------------------------------------------------------------------*/
 
 #include "surfit_ie.h"
-#include "f_global_tcl.h"
+#include "others_tcl.h"
 #include "f_completer.h"
 #include "f_value.h"
 #include "f_mean.h"
@@ -40,11 +40,10 @@ bool completer(REAL D1, REAL D2) {
 };
 
 bool completer_add(REAL weight, REAL D1, REAL D2) {
-	if (functionals->size() == 0) {
-		writelog(LOG_ERROR,"No gridding rule to modify!");
+	functional * srf = get_modifiable_functional();
+	if (srf == NULL)
 		return false;
-	}
-	functional * srf = *(functionals->end()-1);
+	
 	f_completer * f_cmpltr = new f_completer(D1, D2);
 	srf->add_functional(f_cmpltr, weight);
 	return true;
@@ -57,11 +56,9 @@ bool value(REAL value) {
 };
 
 bool value_add(REAL weight, REAL value) {
-	if (functionals->size() == 0) {
-		writelog(LOG_ERROR,"No gridding rule to modify!");
+	functional * srf = get_modifiable_functional();
+	if (srf == NULL)
 		return false;
-	}
-	functional * srf = *(functionals->end()-1);
 	f_value * f = new f_value(value);
 	srf->add_functional(f, weight);
 	return true;

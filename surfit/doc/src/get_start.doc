@@ -1,16 +1,15 @@
 /*! \page get_start Getting started
 
 <H2>Content</H2>
-\li <A href="#starting">Starting surfit</A>
+\li <A href="#starting">Starting <TT><B>surfit</B></TT></A>
 \li <A href="#loading">Loading data</A>
 \li <A href="#grid">Creating grid</A>
 \li <A href="#gridding">Gridding</A>
 \li <A href="#saving">Saving results</A>
 \li <A href="#visual">Visualizing results</A>
-\li <A href="#roff">Working with ROFF files</A>
 
 <H2><A NAME="starting">Starting surfit</A></H2>
-surfit based on Tcl scripting language, so first of all you must
+<TT><B>surfit</B></TT> based on Tcl scripting language, so first of all you must
 start tclsh. It means that you must have Tcl installed on your 
 computer. 
 
@@ -56,7 +55,7 @@ If libsurfit was succesfully loaded into memory, you would see the license text:
 <TR>
 <TD>
 <TT><PRE>
-surfit version 1.0.0pre, Copyright (C) 2002-2004 M.V.Dmitrievsky & V.N.Kutrunov
+surfit version 2.0, Copyright (c) 2002-2006 M.V.Dmitrievsky & V.N.Kutrunov
 surfit comes with ABSOLUTELY NO WARRANTY; for details type `show_w'.
 This is free software, and you are welcome to redistribute it
 under certain conditions; type `show_c' for details.
@@ -119,9 +118,9 @@ text editor. Find the line in your autoexec.bat that looks
 similar to the following:
 <BR><TT>PATH C:\\DOS;C:\\WINDOWS;C:\\NETWORK;C:\\NAV<BR></TT>
 \li At the end of this line add the following:
-<BR><TT>;"c:\program files\surfit\bin"<BR></TT>
+<BR><TT>;"c:\program files\surfit-2.0\bin"<BR></TT>
 This assumes that you have installed surfit
-(libsurfit.dll) in the c:\\program files\\surfit\\bin
+(libsurfit.dll) in the c:\\program files\\surfit-2.0\\bin
 directory. If you have installed it in another directory,
 verify that you have entered an appropriate path. The
 leading semicolon is only necessary if there is not
@@ -147,7 +146,7 @@ are unable to locate the PATH variable, enter the following in the Variable box:
 <TT>path</TT><BR>
 Enter something similar to the following in the Value box:
 <BR>
-<TT>"c:\program files\surfit\bin"</TT><BR>
+<TT>"c:\program files\surfit-2.0\bin"</TT><BR>
 
 <H2><A NAME="loading">Loading data to surfit</A></H2>
 
@@ -157,9 +156,9 @@ To examine data, already loaded use \ref mem_info command.
 
 <H4>loading points</H4>
 
-The \ref task_read command reads formatted text files containing interpolation scattered data points 
+The \ref pnts_read command reads formatted text files containing interpolation scattered data points 
 coordinates. The text file should organized as a rectangular table of numbers, separated by blanks, with one row 
-per line, and an equal number of elements in each row.  For example, outside of surfit, create a 
+per line, and an equal number of elements in each row.  For example, outside of <TT><B>surfit</B></TT>, create a 
 text file containing these four lines: 
 
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
@@ -181,15 +180,16 @@ Store the file under the name points.txt Then the command
 <TR>
 <TD>
 <TT><PRE>
-$ \ref task_read points.txt my_points 4 1 2 3
-13/01/05 15:02:52 : reading task "my_points" from file points.txt
+$ \ref pnts_read points.txt my_points 4 1 2 3
+13/01/05 15:02:52 : reading points "my_points" from file points.txt
 </PRE></TT>
 </TD>
 </TR>
 </TABLE>
 
-reads the file and creates a variable, \ref surfit_task, containing 4 points with X,Y and Z coordinates
-placed in first, second and third columns. If points.txt consists of only 3 columns: 
+reads the file and creates the \ref d_points "points" dataset. This dataset contains 4 points 
+with X,Y and Z coordinates placed in first, second and third columns. If points.txt consists 
+of only 3 columns: 
 
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
@@ -210,84 +210,65 @@ then the command arguments can be truncated:
 <TR>
 <TD>
 <TT><PRE>
-$ \ref task_read points.txt my_points
-13/01/05 15:02:52 : reading task "my_points" from file points.txt
+$ \ref pnts_read points.txt my_points
+13/01/05 15:02:52 : reading points "my_points" from file points.txt
 </PRE></TT>
 </TD>
 </TR>
 </TABLE>
 
-You can get some info about variables \ref surfit_task and \ref surfit_tasks by following commands:
+You can get some info about \ref d_points "points" datasets with following commands:
 
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
 <TD>
 <TT><PRE>
-# Task existance checking:
-$ \ref task_check
+# Get number of \ref d_points "points" dataset:
+$ \ref pnts_size
 1
-# If \ref surfit_task does not exists, surfit returns 0.
+# If there is no \ref d_points "points" datasets in memory, surfit returns 0.
 #
-# Print \ref surfit_task name
-$ \ref task_name
-13/01/05 15:02:52 : surfit_task name is "my_points"
+# Print \ref d_points "points" name (for first dataset)
+$ \ref pnts_getName 0
+13/01/05 15:02:52 : my_points
 #
-# Amount of points in task
-$ \ref task_size
+# Print \ref d_points "points" name (for second dataset) 
+$ \ref pnts_getName 1
+13/01/05 15:02:52 : Error! class surfit::d_points (1) : bad element requested
+#
+# Get number of points in points dataset
+$ \ref pnts_getCount
 4
 $ Minimum and maximum values:
-$ \ref task_minx
+$ \ref pnts_minx
 4.0
-$ \ref task_maxx
+$ \ref pnts_maxx
 16.0
-$ \ref task_miny
+$ \ref pnts_miny
 3.0
-$ \ref task_maxy
+$ \ref pnts_maxy
 15.0
-$ \ref task_minz
+$ \ref pnts_minz
 2.0
-$ \ref task_maxz
+$ \ref pnts_maxz
 14.0
 </PRE></TT>
 </TD>
 </TR>
 </TABLE>
 
-\ref tcl_task "Here" you can browse all commands for \ref surfit::task "task".
-
-The \ref wtask_read command reads formatted text files containing approximation scattered data points 
-coordinates and informational weights. The command 
-
-<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
-<TR>
-<TD>
-<TT><PRE>
-$ \ref wtask_read points.txt my_points
-</PRE></TT>
-</TD>
-</TR>
-</TABLE>
-
-reads the file and creates a variable, \ref surfit_wtask, containing 4 points with X,Y and Z coordinates
-placed in first, second and third columns. The fourth column is for the informational weights.
-\ref tcl_wtask "Here" you can browse all commands for \ref surfit::wtask "wtask".
-
+\ref tcl_pnts "Here" you can browse all commands for \ref d_points "points".
 
 <H4>loading curves</H4>
 
 surfit supports several types of curves:
 <TABLE BORDER="1" COLOR="#E0E0E0" WIDTH="50%" ID="Table4">
-<TR><TD><B>\ref surfit::curv  "curv"</B>  </TD><TD>2D piecewise linear curve<TD></TR>
-<TR><TD><B>\ref surfit::area  "area"</B>  </TD><TD>area with constant value for <B><I>interpolation</I></B> described with 2D piecewise linear curve<TD></TR>
-<TR><TD><B>\ref surfit::warea "warea"</B> </TD><TD>area with constant value for <B><I>approximation</I></B> described with 2D piecewise linear curve<TD></TR>
-<TR><TD><B>\ref surfit::flt   "flt"</B>   </TD><TD>tectonical fault line (describes the line of dissacording of surface parts)<TD></TR>
-<TR><TD><B>\ref surfit::iso   "iso"</B>   </TD><TD>isoline for <B><I>interpolation</I></B><TD></TR>
-<TR><TD><B>\ref surfit::wiso  "wiso"</B>  </TD><TD>isoline for <B><I>approximation</I></B><TD></TR>
-<TR><TD><B>\ref surfit::cntr  "cntr"</B>  </TD><TD>3D piecewise linear curve for <B><I>interpolation</I></B><TD></TR>
-<TR><TD><B>\ref surfit::wcntr "wcntr"</B> </TD><TD>3D piecewise linear curve for <B><I>approximation</I></B><TD></TR>
+<TR><TD><B>\ref d_curv "curve"</B>  </TD><TD>2D piecewise linear curve<TD></TR>
+<TR><TD><B>\ref d_area "area"</B>  </TD><TD>polygonal region<TD></TR>
+<TR><TD><B>\ref d_cntr "contour"</B>  </TD><TD>3D piecewise linear curve<TD></TR>
 </TABLE>
 
-The curves reading commands reads formatted text files containing coordinates of curve nodes. 
+The curves reading commands read formatted text files containing coordinates of curve nodes. 
 The text file should organized as a rectangular table of numbers, separated by blanks, with one row per line, 
 and an equal number of elements in each row. For example, outside of surfit, create a text file curve.txt containing 
 these lines:
@@ -320,7 +301,7 @@ these lines:
 </TR>
 </TABLE>
 
-To read curve from file curve.txt into \ref surfit_cntr variable use command:
+To read curve from file curve.txt use command:
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
 <TD>
@@ -333,38 +314,16 @@ $ \ref curv_read curve.txt my_curve
 </TR>
 </TABLE>
 
-To read isoline for interpolation with 50 value from file curve.txt into \ref surfit_iso variable use command:
-<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
-<TR>
-<TD>
-<TT><PRE>
-$ \ref iso_read curve.txt my_isoline 50
-14/01/05 11:16:10 : reading iso "my_isoline" from file curve.txt
-1
-</PRE></TT>
-</TD>
-</TR>
-</TABLE>
+<H4>loading surfaces </H4>
 
-\ref tcl_curves "Here" you can browse all commands for working with curves.
-
-<H4>loading functions</H4>
-surfit supports several types of functions (surfaces):
-<TABLE BORDER="1" COLOR="#E0E0E0" WIDTH="50%" ID="Table4">
-<TR><TD><B>\ref surfit::func    "func"</B>    </TD><TD>function for <B><I>interpolation</I></B><TD></TR>
-<TR><TD><B>\ref surfit::wfunc   "wfunc"</B>   </TD><TD>function for <B><I>approximation</I></B><TD></TR>
-<TR><TD><B>\ref surfit::trend   "trend"</B>   </TD><TD>trend function to describe general function behaviour<TD></TR>
-<TR><TD><B>\ref surfit::defarea "defarea"</B> </TD><TD>domain of the function<TD></TR>
-</TABLE>
-
-Functions (surfaces) can be loaded from Surfer GRD-ASCII and surfit extension of ROFF files. 
-To load surface from Surfer GRD-ASCII file into \ref surfit_func variable use command:
+\ref d_surf "surfaces" can be loaded from Surfer GRD-ASCII and <TT><B>surfit</B></TT> datafile format. 
+To load surface from Surfer GRD-ASCII file use the command:
 
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
 <TD>
 <TT><PRE>
-$ \ref func_load_grd surface.grd my_surface
+$ \ref surf_load_grd surface.grd my_surface
 14/01/05 16:32:50 : loading surface from Surfer GRD-ASCII format file surface.grd
 1
 </PRE></TT>
@@ -372,39 +331,24 @@ $ \ref func_load_grd surface.grd my_surface
 </TR>
 </TABLE>
 
-To load surface from surfit extension of ROFF file into \ref surfit_func variable use command:
+To load surface from <TT><B>surfit</B></TT> datafile use the command:
 
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
 <TD>
 <TT><PRE>
-$ \ref func_load surface.dat my_surface
-14/01/05 16:33:20 : loading func "my_surface" from file surface.dat
+$ \ref surf_load surface.dat my_surface
+14/01/05 16:33:20 : loading surf "my_surface" from file surface.dat
 1
 </PRE></TT>
 </TD>
 </TR>
 </TABLE>
 
-You can load other types of surfaces from Surfer GRD-ASCII:
-
-<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
-<TR>
-<TD>
-<TT><PRE>
-$ \ref wfunc_load_grd surface.grd my_surface 10
-14/01/05 16:34:13 : loading surface from Surfer GRD-ASCII format file surface.grd
-1
-$ \ref trend_load_grd surface.grd 1 2
-14/01/05 16:36:41 : loading surface from Surfer GRD-ASCII format file surface.grd
-1
-</PRE></TT>
-</TD>
-</TR>
-</TABLE>
+\ref tcl_surf "Here" you can browse all commands for \ref d_surf "surfaces".
 
 <H2><A NAME="grid">Creating grid</A></H2>
-surfit uses equdistants \ref surfit::grid "grid" for gridding procedures. This grid can be described with
+surfit uses equdistant \ref d_grid "grid" for gridding procedures. This grid can be described with
 only 6 parameters:
 \li 	X-coordinate of the first node of the grid 	
 \li 	X-coordinate of the last node of the grid 	
@@ -413,7 +357,7 @@ only 6 parameters:
 \li	Y-coordinate of the last node of the grid 	
 \li 	cell size in Y-direction
 
-Using surfit you can create \ref surfit::grid "grid" with \ref grid_get command. For example, command
+You can create \ref d_grid "grid" object with \ref grid_get command. For example, command
 
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
@@ -426,21 +370,20 @@ $ \ref grid_get 0 100 10 0 200 20 my_grid
 </TR>
 </TABLE>
 
-In most cases you can use \ref grid_auto with only 2 parameters to specify cell sizes:
+In most cases you can use \ref grid command with only 2 parameters to specify cell sizes:
 
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
 <TD>
 <TT><PRE>
-$ \ref grid_auto 10 20
+$ \ref grid 10 20
 </PRE></TT>
 </TD>
 </TR>
 </TABLE>
 
-surfit automatically produces \ref surfit_grid with cells of specified size.
-This grid will cover all of \ref surfit::data "data", loaded into memory.
-
+surfit automatically produces \ref d_grid "grid" with cells of specified size.
+This grid will cover all data objects, loaded into memory.
   
 <H2><A NAME="gridding">Gridding</A></H2>
 
@@ -450,59 +393,60 @@ pattern over the extent of the map, so there are many "holes" where data are mis
 Gridding fills in these holes by extrapolating or interpolating Z values at those locations 
 where no data exists.
 
-For each data type, loading into surfit memory you can specify priority level using \ref surfit::priority "priority" variable.
+For each data, loaded into surfit memory you can specify 
+\ref tcl_rules "gridding rule", which describes how to use your data in \ref surfit "surfit 
+gridding algorithm".
 
-Gridding procedure consists of 3 steps:
+Gridding procedure consists of 4 steps:
 \li <a href="#loading">load data</a> into memory
 \li <a href="#grid">create grid</a>
-\li execute \ref solve procedure
+\li create ordered set of \ref tcl_rules "gridding rules"
+\li execute \ref surfit gridding algorithm
 
 Here is some examples:
 
 	<UL>
 	<LI>
-	<a href="../surfit_src/html/map__task_8tcl-example.html">Interpolation of scattered data points</a>
+	<a href="points__exact_8tcl-example.html">Interpolation of scattered data points</a>
 	<LI>
-	<a href="../surfit_src/html/map__flt_8tcl-example.html">Interpolation of scattered data points with faults</a>
+	<a href="trend_8tcl-example.html">Interpolation of scattered data points with trend and fault</a>
 	<LI>
-	<a href="../surfit_src/html/map__trend_8tcl-example.html">Interpolation of scattered data points with trend and fault</a>
+	<a href="points__approx_8tcl-example.html">Approximation of scattered data points</a>
 	<LI>
-	<a href="../surfit_src/html/map__wtask_8tcl-example.html">Approximation of scattered data points</a>
+	<a href="curve_8tcl-example.html">Interpolation/approximation of curves with constant values</a>
 	<LI>
-	<a href="../surfit_src/html/map__iso_8tcl-example.html">Interpolation of isolines</a>
+	<a href="contour_8tcl-example.html">Interpolation/approximation of contours</a>
 	<LI>
-	<a href="../surfit_src/html/map__wiso_8tcl-example.html">Approximation of isolines</a>
+	<a href="area_8tcl-example.html">Interpolation/approximation of areas</a>
 	<LI>
-	<a href="../surfit_src/html/map__cntr_8tcl-example.html">Interpolation of contours</a>
+	<a href="surface_8tcl-example.html">Interpolation of surface</a>
 	<LI>
-	<a href="../surfit_src/html/map__wcntr_8tcl-example.html">Approximation of contours</a>
-	<LI>
-	<a href="../surfit_src/html/map__area_8tcl-example.html">Interpolation of areas</a>
-	<LI>
-	<a href="../surfit_src/html/map__warea_8tcl-example.html">Approximation of areas</a>
-	<LI>
-	<a href="../surfit_src/html/map__func_8tcl-example.html">Interpolation of ordered data poinst</a>
-	<LI>
-	<a href="../surfit_src/html/map__wfunc_8tcl-example.html">Approximation of ordered data points</a>
+	<a href="surface__add_8tcl-example.html">Approximation of surface</a>
         </LI>
 	</UL>
 
 <H2><A NAME="saving">Saving results</A></H2>
 
-After <A href="#gridding">gridding</A> procedure results saves to \ref surfit_func variable. You can export
-it to Surfer GRD-ASCII format with command \ref func_save_grd or to and surfit extension of ROFF files with command
-\ref func_save. Also to save your results  into surfit extension of ROFF files with all other data in 
-memory use command \ref file_save.
+After <A href="#gridding">gridding</A> procedure result saves as new \ref d_surf "surface" named with \ref map_name
+variable value. You can export
+it to Surfer GRD-ASCII format with command \ref surf_save_grd or to <TT><B>surfit</B></TT> datafile with command
+\ref surf_save. Also you can save your results into <TT><B>surfit</B></TT> datafile with all other data in 
+memory by command \ref file_save.
 
 <H2><A NAME="visual">Visualising results</A></H2>
 
-The simplest way to visualise your results is to use <a href="../../funner/html/index.html">funner</a> tool:
-just press "Open File..." button and select file to visualise. <a href="../../funner/html/index.html">funner</a> 
-accepts both Surfer GRD-ASCII and ROFF files.
+The simplest way to visualise your results is to use <B><TT>funner</TT></B> program. This program can be
+founded here: <A HREF="http://www.gridding.info">www.gridding.info</A>.
+<B><TT>funner</TT></B> accepts both Surfer GRD-ASCII and surfit datafiles.
 
-<IMG alt="funner main window" src="../../gallery/funner.gif" border="0">
-
-Press "V I E W" button to visualise surfit memory and other buttons to select data to view.
+\htmlonly
+<P ALIGN=CENTER>
+<A HREF="funner.jpg">
+<IMG alt="funner window" src="funner_small.jpg" border="0">
+</A>
+</P>
+<P ALIGN=CENTER> Funner window screenshot </P>
+\endhtmlonly
 
 Also you can select file from command line:
 
@@ -510,24 +454,10 @@ Also you can select file from command line:
 <TR>
 <TD>
 <TT><PRE>
-$ funner map_wfunc.dat
+$ funner my_map.dat
 </PRE></TT>
 </TD>
 </TR>
 </TABLE>
-
-Another usable tool for advanced users is <a href="../../bula/html/index.html">Bula</A>.
-
-<H2><A NAME="roff">Working with ROFF files</A></H2>
-
-surfit extends ROFF file format for saving and loading various kind of \ref surfit::data "data" objects. 
-One ROFF file can contain several objects. Then you saving some data to ROFF file surfit can add this data to
-the end of file or rewrite file. This behaviour rules with variable \ref surfit::datafile_mode "datafile_mode".
-For each data-object exists command like <PRE>"ObjectType_save"</PRE> which saves object to ROFF file.
-
-Special command \ref file_save saves all data from surfit memory to ROFF file. Command \ref file_load loads all data
-from ROFF file to surfit memory. To examine data, already loaded use \ref mem_info command.
-
-<A href="../../index.html">home</a>
                        
 */

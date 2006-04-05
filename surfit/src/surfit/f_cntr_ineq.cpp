@@ -37,7 +37,7 @@
 namespace surfit {
 
 f_cntr_ineq::f_cntr_ineq(const d_cntr * icntr, bool ileq, REAL imult) :
-functional("f_cntr_ineq")
+functional("f_cntr_ineq", F_CONDI)
 {
 	leq = ileq;
 	mult = imult;

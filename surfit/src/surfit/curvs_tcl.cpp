@@ -48,7 +48,13 @@ bool fault(const char * pos) {
 		return false;
 	}
 	functional * srf = *(functionals->end()-1);
-	faultable * f = dynamic_cast<faultable *>(srf);
+
+	if ((srf->getType() & F_FAULT) == 0) {
+		writelog(LOG_ERROR,"\"%s\" rule is not modifiable with \"fault\" rule!", srf->getName());
+		return false;
+	}
+
+	faultable * f = static_cast<faultable *>(srf);
 	if (f == NULL) {
 		writelog(LOG_ERROR,"No gridding rule modifiable with \"fault\" rule present!");
 		return false;
@@ -74,11 +80,9 @@ bool curve(REAL value, const char * pos) {
 
 bool curve_add(REAL value, REAL weight, const char * pos) {
 	
-	if (functionals->size() == 0) {
-		writelog(LOG_ERROR,"No gridding rule to modify!");
+	functional * srf = get_modifiable_functional();
+	if (srf == NULL)
 		return false;
-	}
-	functional * srf = *(functionals->end()-1);
 	
 	d_curv * crv = get_element<d_curv>(pos, surfit_curvs->begin(), surfit_curvs->end());
 	if (crv == NULL)
@@ -126,11 +130,9 @@ bool curve_surf(const char * surf_pos, const char * curv_pos) {
 
 bool curve_surf_add(const char * surf_pos, REAL weight, const char * curv_pos) {
 	
-	if (functionals->size() == 0) {
-		writelog(LOG_ERROR,"No gridding rule to modify!");
+	functional * srf = get_modifiable_functional();
+	if (srf == NULL)
 		return false;
-	}
-	functional * srf = *(functionals->end()-1);
 
 	d_curv * curve = get_element<d_curv>(curv_pos, surfit_curvs->begin(), surfit_curvs->end());
 	if (curve == NULL)
@@ -193,11 +195,9 @@ bool area(const char * Value, const char * pos, int inside) {
 
 bool area_add(REAL value, REAL weight, const char * pos, int inside) {
 	
-	if (functionals->size() == 0) {
-		writelog(LOG_ERROR,"No gridding rule to modify!");
+	functional * srf = get_modifiable_functional();
+	if (srf == NULL)
 		return false;
-	}
-	functional * srf = *(functionals->end()-1);
 	
 	d_area * area = get_element<d_area>(pos, surfit_areas->begin(), surfit_areas->end());
 	if (area == NULL)
@@ -245,11 +245,9 @@ bool area_surf(const char * surf_pos, const char * area_pos, int inside) {
 
 bool area_surf_add(const char * surf_pos, REAL weight, const char * area_pos, int inside) {
 
-	if (functionals->size() == 0) {
-		writelog(LOG_ERROR,"No gridding rule to modify!");
+	functional * srf = get_modifiable_functional();
+	if (srf == NULL)
 		return false;
-	}
-	functional * srf = *(functionals->end()-1);
 
 	d_surf * surf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (surf == NULL)
@@ -329,12 +327,10 @@ bool contour(const char * pos) {
 };
 
 bool contour_add(REAL weight, const char * pos) {
-	
-	if (functionals->size() == 0) {
-		writelog(LOG_ERROR,"No gridding rule to modify!");
+
+	functional * srf = get_modifiable_functional();
+	if (srf == NULL)
 		return false;
-	}
-	functional * srf = *(functionals->end()-1);
 	
 	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
 	if (contour == NULL)

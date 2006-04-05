@@ -30,9 +30,9 @@ bool lcm_simple(REAL permeability, REAL viscosity, REAL multiplier) {
 };
 
 bool lcm_simple_add(REAL weight, REAL permeability, REAL viscosity, REAL multiplier) {
-	if (functionals->size() == 0)
+	functional * fnc = get_modifiable_functional();
+	if (fnc == NULL)
 		return false;
-	functional * fnc = *(functionals->end()-1);
 	f_lcm_simple * f = new f_lcm_simple(permeability, viscosity, multiplier);
 	fnc->add_functional(f, weight);
 	return true;

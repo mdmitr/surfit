@@ -34,24 +34,17 @@ d_curv * create_curv(vec * iX, vec * iY,
 SURFIT_EXPORT
 d_curv * create_curv(const d_curv * src);
 
-/*! \class curv
-    \brief class for curves. See \ref tcl_curv "Tcl commands" for \ref curv.
+/*! \class d_curv
+    \brief class for curves. 
 
   This class describes curve in 2D with two vectors of coordinates (X and Y coordinates).
   These vectors are presented with iX_begin, iX_end, iY_begin and iY_end pointers.
   Curve is a segmented curve, not a smooth line. 
 
-  \sa \ref surfit_curv
 */
 class SURFIT_EXPORT d_curv : public data {
 protected:
-	/*! constructor
-	    \param iX_begin pointer to the first element of X-coordinates vector
-	    \param iX_end   pointer to the last+1 element of X-coordinates vector
-	    \param iY_begin pointer to the first element of Y-coordinates vector
-	    \param iY_end   pointer to the last+1 element of Y-coordinates vector
-	    \param curv_name name of a curve
-	*/
+	//! constructor
 	d_curv(vec * iX, vec * iY,
 	       const char * curv_name = NULL);
 
@@ -60,10 +53,12 @@ protected:
 
 public:
 
+	//! constructor
 	friend SURFIT_EXPORT
 	d_curv * create_curv(vec * iX, vec * iY,
 		             const char * curv_name);
 
+	//! constructor
 	friend SURFIT_EXPORT
 	d_curv * create_curv(const d_curv * src);
 
@@ -95,6 +90,7 @@ public:
 
 	virtual bool getMinMaxZ(REAL & minz, REAL & maxz) const;
 
+	//! returns true if curve is closed and point with coords (x,y) is inside region
 	bool in_region(REAL x, REAL y) const;
 
 	//! pointer to the first element of X-coordinates vector

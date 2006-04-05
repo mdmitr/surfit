@@ -42,11 +42,9 @@ bool surface(const char * pos) {
 
 bool surface_add(REAL weight, const char * pos) {
 	
-	if (functionals->size() == 0) {
-		writelog(LOG_ERROR,"No gridding rule to modify!");
+	functional * f = get_modifiable_functional();
+	if (f == NULL)
 		return false;
-	}
-	functional * f = *(functionals->end()-1);
 
 	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (srf == NULL)
@@ -87,11 +85,9 @@ bool trend(REAL D1, REAL D2, const char * pos) {
 
 bool trend_add(REAL weight, REAL D1, REAL D2, const char * pos) {
 	
-	if (functionals->size() == 0) {
-		writelog(LOG_ERROR,"No gridding rule to modify!");
+	functional * f = get_modifiable_functional();
+	if (f == NULL)
 		return false;
-	}
-	functional * f = *(functionals->end()-1);
 
 	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (srf == NULL)

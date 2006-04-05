@@ -36,7 +36,7 @@
 namespace surfit {
 
 f_points_ineq::f_points_ineq(const d_points * ipnts, bool ileq, REAL imult, const char * iprint_name) :
-functional("f_points_ineq")
+functional("f_points_ineq", F_CONDI)
 {
 	leq = ileq;
 	pnts = ipnts;

@@ -4,13 +4,14 @@
 # 
 # load plugins
 # 
+load libglobe[info sharedlibextension]
 load libsurfit[info sharedlibextension]
 
 # remove all previous data and gridding rules
 clear_data 
 
 # set name of surface
-set map_name "map_surface_ineq" 
+set map_name "map_dem_add" 
 
 # set solver
 set_solver "cg" 
@@ -22,29 +23,23 @@ set tol 1e-005
 ## load initial data 
 ##
  
-# load surface from surfit datafile 
-surf_load "func.func" "test_func"  
- 
-# load points from text file 
-pnts_read "7points.txt" "7points"  
+# loads DEM from zipped HGT files (Shuttle Radar Topographic Mission files) 
+dem_load_hgt_zip "N00E006.hgt.zip" N00E006.hgt  
  
 ##
 ## construct grid 
 ##
-grid_get -10 10 0.2 -10 10 0.2 
+grid 0.0005 0.0005 
  
 ##
 ## create gridding rules
 ##
 
-# resulting surface >= surface values 
-surface_geq "test_func" 
-
-# resulting surface at points = points values 
-points "7points" 
-
 # resulting surface should tend to be constant or plane 
-completer 2 1  
+completer 
+
+# add "resulting surface = DEM values" with weight 
+dem_add 1 N00E006.hgt 
 
 ##
 ## run gridding algorithm
@@ -59,4 +54,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "surface_ineq.dat" 
+surf_save "dem_add.dat" 

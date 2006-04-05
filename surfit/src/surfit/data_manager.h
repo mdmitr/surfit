@@ -27,50 +27,14 @@ namespace surfit {
 class datafile;
 class data;
 
-///////////////
-// file
-
-SURFIT_EXPORT
-/*! \ingroup tcl_file
-    \fn char * file_info(const char * filename);
-    \brief prints info about file contents
-*/
-char * file_info(const char * filename);
-
-SURFIT_EXPORT
-/*! \ingroup tcl_file
-    \fn void file_load(const char * filename);
-    \brief loads all data from ROFF file (see \ref datafile for details)
-*/
-void file_load(const char * filename);
-
-SURFIT_EXPORT
-/*! \ingroup tcl_file
-    \fn bool file_save(const char * filename);
-    \brief saves all data from ROFF file (see \ref datafile for details)
-*/
-bool file_save(const char * filename);
-
-SURFIT_EXPORT
-/*! \ingroup tcl
-    \fn void clear_data();
-    \brief removes all data from memory
-*/
-void clear_data();
-
-SURFIT_EXPORT
-/*! \ingroup tcl
-    \fn void mem_info();
-    \brief prints information about data memory
-*/
-void mem_info();
-
 char * types_info();
 
 /*! \class manager
     \brief serves \ref file_load, \ref file_save, \ref clear_data and \ref mem_info commands
 */
 class SURFIT_EXPORT manager {
+protected:
+	~manager() {};
 public:
 	virtual bool auto_load(const char * filename, const char * first1024, int readed) const = 0;
 	//! loads tag with tag_name from ROFF file (if it is possible)	
@@ -93,6 +57,8 @@ public:
 	virtual void getMinMaxZ(REAL & minZ, REAL & maxZ) const;
 	//! if object have bounds, then fill them!
 	virtual bool bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const;
+	//! returns manager name
+	virtual const char * getName() const = 0;
 };
 
 /*! \class surfit_manager
@@ -109,6 +75,7 @@ public:
 	const data * data_get(int i) const;
 	char * types_info() const;
 	bool auto_load(const char * filename, const char * first1024, int readed) const;
+	const char * getName() const { return "surfit"; };
 };
 
 /*! \class data_manager
@@ -145,6 +112,12 @@ public:
 	//! returns data with specified type and name
 	const data * data_get(const char * type, const char * name) const;
 
+	int get_managers_count() const;
+	const manager * get_manager(int pos) const;
+	void add_manager(manager * m);
+	void set_manager(manager * m, int pos);
+
+private:
 	//! vector of managers 
 	std::vector<manager *> *  managers;
 };

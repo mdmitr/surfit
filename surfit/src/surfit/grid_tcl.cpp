@@ -143,7 +143,7 @@ bool grid_get2(REAL startX, REAL endX, REAL stepX,
 	return (surfit_grid != NULL);
 };
 
-bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * name, const char * pos) {
+bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * pos, const char * name) {
 
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (!pnts)
@@ -156,7 +156,7 @@ bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * name, const char * p
 	return (surfit_grid != NULL);
 };
 
-bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * name, const char * pos) {
+bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * pos, const char * name) {
 
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (!pnts)
@@ -168,27 +168,6 @@ bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * name, const cha
 	return (surfit_grid != NULL);
 };
 
-bool grid_get_for_surf(int Xnodes, int Ynodes, const char * pos) {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	grid_unload();
-	surfit_grid = _grid_get_for_surf(srf, Xnodes, Ynodes, srf->getName());
-	grid_info();
-	return (surfit_grid != NULL);
-};
-
-bool grid_get_for_surf_step(REAL stepX, REAL stepY, const char * pos) {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-
-	grid_unload();
-	surfit_grid = _grid_get_for_surf_step(srf, stepX, stepY, srf->getName());
-	grid_info();
-	return (surfit_grid != NULL);
-};
-
 bool grid_load(const char * filename, const char * gridname) {
 	grid_unload();
 	surfit_grid = _grid_load(filename, gridname);
@@ -196,12 +175,12 @@ bool grid_load(const char * filename, const char * gridname) {
 	return (surfit_grid != NULL);
 };
 
-bool grid_get_from_surf(const char * pos) {
+bool grid_get_from_surf(const char * pos, const char * gridname) {
 	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (!srf)
 		return false;
 	
-	d_grid * res = _grid_from_surf(srf);
+	d_grid * res = _grid_from_surf(srf, gridname);
 	if (!res)
 		return false;
 	grid_unload();
@@ -219,7 +198,7 @@ void grid_info() {
 		surfit_grid->getCountX(), surfit_grid->getCountY());
 };
 
-bool grid(REAL stepX, REAL stepY, REAL percent) {
+bool grid(REAL stepX, REAL stepY, REAL percent, const char * name) {
 	int cnt = surfit_data_manager->data_count();		
 	if (cnt == 0)
 		return false;
@@ -270,10 +249,10 @@ bool grid(REAL stepX, REAL stepY, REAL percent) {
 		new_stepY = new_stepX;
 	}
 			
-	return grid_get(gminx, gmaxx, new_stepX, gminy, gmaxy, new_stepY);
+	return grid_get(gminx, gmaxx, new_stepX, gminy, gmaxy, new_stepY, name);
 };
 
-bool grid2(REAL stepX, REAL stepY, REAL percent) {
+bool grid2(REAL stepX, REAL stepY, REAL percent, const char * name) {
 	int cnt = surfit_data_manager->data_count();		
 	if (cnt == 0)
 		return false;
@@ -324,7 +303,7 @@ bool grid2(REAL stepX, REAL stepY, REAL percent) {
 		new_stepY = new_stepX;
 	}
 
-	return grid_get2(gminx, gmaxx, new_stepX, gminy, gmaxy, new_stepY);
+	return grid_get2(gminx, gmaxx, new_stepX, gminy, gmaxy, new_stepY, name);
 };
 
 

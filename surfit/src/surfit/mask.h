@@ -33,8 +33,8 @@ class d_mask;
 SURFIT_EXPORT
 d_mask * create_mask(bitvec *icoeff, d_grid *igrd, const char * funcname = 0);
 
-/*! \class mask
-    \brief sets domain of the surface (see \ref surfit_mask). See \ref tcl_mask "Tcl commands" for \ref mask.
+/*! \class d_mask
+    \brief sets domain for the surface 
 */
 class SURFIT_EXPORT d_mask : public data {
 protected:
@@ -50,31 +50,64 @@ protected:
 
 public:
 
+	//! constructor
 	friend SURFIT_EXPORT
 	d_mask * create_mask(bitvec *icoeff, d_grid *igrd, const char * funcname);
 
 	bool bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const;
 	bool getMinMaxZ(REAL & minz, REAL & maxz) const;
 	
+	//! calculates mask value at point (x,y)
 	bool getValue(REAL x, REAL y) const; 
+
+	//! returns mask value at node (i,j)
 	bool getValueIJ(int i, int j) const;
+	//! sets mask value for node (i,j)
 	void setValueIJ(int i, int j, bool value);
+
+	//! returns minimum X-coordinate for the mask
 	REAL getMinX() const;
+
+	//! returns maximum X-coordinate for the mask
 	REAL getMaxX() const;
+
+	//! returns minimum Y-coordinate for the mask
 	REAL getMinY() const;
+
+	//! returns maximum Y-coordinate for the smask
 	REAL getMaxY() const;
-	
+
+	//! returns amount of cells for X direction
 	int getCountX() const;
+
+	//! returns amount of cells for Y direction
 	int getCountY() const;
+
+	//! returns distance between of centers of cells in X direction
 	REAL getStepX() const;
+
+	//! returns distance between of centers of cells in Y direction
 	REAL getStepY() const;
+
+	//! calculates coordinates of the center of the (i,j) cell
 	void getCoordNode(int i, int j, REAL & x, REAL & y) const;
+
+	//! returns X-coordinate of the center of the (i,j) cell
 	REAL getCoordNodeX(int i) const;
+
+	//! returns Y-coordinate of the center of the (i,j) cell
 	REAL getCoordNodeY(int j) const;
+
+	//! returns i-cell number for X-coordinate
 	int get_i(REAL x) const;
+
+	//! returns j-cell number for Y-coordinate
 	int get_j(REAL y) const;
+
+	//! for saving in surfit datafile
 	bool writeTags(datafile *df) const;
 
+	//! compares grid with other mask grid
 	bool compare_grid(const d_mask * mask) const;
 	
 	//! and operation with another mask

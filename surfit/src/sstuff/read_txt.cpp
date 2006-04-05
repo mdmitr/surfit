@@ -90,7 +90,7 @@ bool two_columns_read(const char * filename,
 	int current_column = 0;
 	int size = 0;
 
-	// calculate amount of columns!
+	// calculate number of columns!
 	fpos_t pos;
 	if (fgetpos(file, &pos) != 0)
 		goto two_columns_read_failed;
@@ -101,11 +101,7 @@ bool two_columns_read(const char * filename,
 	if (fsetpos(file, &pos) != 0)
 		goto two_columns_read_failed;
 
-	token = strtok(string_buf, seps);
-	while (token != NULL) {
-		columns++;
-		token = strtok( NULL, seps );
-	}
+	columns = calc_columns(string_buf, MY_READ_BUF_SIZE);
 
 	if (col1 > columns)
 		goto two_columns_read_failed;
@@ -252,7 +248,7 @@ bool three_columns_read(const char * filename,
 	int current_column = 0;
 	int size = 0;
 
-	// calculate amount of columns!
+	// calculate number of columns!
 	fpos_t pos;
 	if (fgetpos(file, &pos) != 0)
 		goto three_columns_read_failed;
@@ -263,13 +259,8 @@ bool three_columns_read(const char * filename,
 	if (fsetpos(file, &pos) != 0)
 		goto three_columns_read_failed;
 
-	token = strtok(string_buf, seps);
-	while (token != NULL) {
-		if (strlen(token) > 0)
-			columns++;
-		token = strtok( NULL, seps );
-	}
-
+	columns = calc_columns(string_buf, MY_READ_BUF_SIZE);
+	
 	if (col1 > columns)
 		goto three_columns_read_failed;
 	if (col2 > columns)
@@ -405,7 +396,7 @@ bool three_columns_read_with_names(const char * filename,
 	int current_column = 0;
 	int size = 0;
 
-	// calculate amount of columns!
+	// calculate number of columns!
 	fpos_t pos;
 	if (fgetpos(file, &pos) != 0)
 		goto three_columns_read_failed;
@@ -416,12 +407,7 @@ bool three_columns_read_with_names(const char * filename,
 	if (fsetpos(file, &pos) != 0)
 		goto three_columns_read_failed;
 
-	token = strtok(string_buf, seps);
-	while (token != NULL) {
-		if (strlen(token) > 0)
-			columns++;
-		token = strtok( NULL, seps );
-	}
+	columns = calc_columns(string_buf, MY_READ_BUF_SIZE);
 
 	if (col1 > columns)
 		goto three_columns_read_failed;

@@ -35,7 +35,7 @@
 namespace surfit {
 
 f_wmean::f_wmean(REAL imean, const d_surf * isrf, REAL imult) :
-functional("f_wmean") 
+functional("f_wmean", F_CONDI) 
 {
 	mean = imean;
 	srf = isrf;

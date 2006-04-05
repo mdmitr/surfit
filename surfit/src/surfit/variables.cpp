@@ -27,6 +27,7 @@
 #include "variables_internal.h"
 #include "license.h"
 #include "surfit_threads.h"
+#include "other_tcl.h"
 
 #include "rnd.h"
 #include "data_manager.h"
@@ -125,7 +126,7 @@ void surfit_init_all() {
 	ssor_omega = REAL(1.6);
 
 	surfit_data_manager = new data_manager;
-	surfit_data_manager->managers->push_back(new surfit_manager);
+	add_manager(new surfit_manager);
 
 	Tcl_CreateThreadExitHandler(data_cleanup, NULL);
 
@@ -165,6 +166,21 @@ float get_tol() {
 
 void functionals_push_back(functional * f) {
 	functionals->push_back(f);
+};
+
+functional * get_modifiable_functional() {
+	if (functionals->size() == 0) {
+		writelog(LOG_ERROR,"No gridding rule to modify!");
+		return false;
+	}
+	functional * srf = *(functionals->end()-1);
+
+	if ((srf->getType() & F_USUAL) != 0)
+		return srf;
+
+	writelog(LOG_ERROR,"\"%s\" is not modifiable rule!", srf->getName());
+	return NULL;
+	
 };
 
 }; // namespace surfit;

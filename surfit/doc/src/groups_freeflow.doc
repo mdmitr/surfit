@@ -1,0 +1,13 @@
+/*! 
+\defgroup freeflow_commands freeflow commands and variables
+*/
+
+/*!
+\defgroup tcl_freeflow_rules freeflow gridding rules
+\ingroup freeflow_commands
+*/
+
+/*! 
+\defgroup tcl_freeflow_surf commands for surfaces
+\ingroup freeflow_commands
+*/

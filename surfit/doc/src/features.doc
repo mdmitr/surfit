@@ -1,25 +1,16 @@
-/*! \page features surfit features
+/*! \page features surfit main features
 
 \li Requires little memory for gridding procedure with large grids and large data sets.
-\li Implements very fast gridding algorithm called <a href="cmofs.html">CMOFS</A>.
+\li Implements very fast gridding algorithm called \ref surfit "CMOFS".
 \li Extends Tcl scripting language with new commands, which enables to describe gridding procedure.
 
-<UL>
-<LI> <a href="cmofs.html">CMOFS</A> gridding algorithm features:
-	<UL TYPE=SQUARE> 
-	<LI> Interpolation data: scattered data points, ordered data points, 3d contours, isolines, areas.
-	<LI> Approximation data: scattered data points, ordered data points, 3d contours, isolines, areas.
-	<LI> Other data: trend functions, fault lines, information about function behavior in "holes" where data are missing.
-	</UL>
-</UL>
+\par surfit gridding algorithm features:
+\li Deals with \ref datatypes "various types of data"
+\li Allows to determine priority and set specific \ref tcl_rules "gridding rule" for each data.
+\li Allows to interpolate, approximate data, use inequalities and set specific conditions.
 
-<UL>
-<LI> Import/Export:
+\par Import/Export:
 \li Import/Export of Surfer GRD-ASCII files.
 \li Import/Export of points and curves from columned text files.
-</UL>
-
-\li Huge grid can be displayed with help of wavelet analysis. 
-\li Quality of resulting surface is comparable with a surface created by Kriging or Minimum curvature method.
 
 */

@@ -36,7 +36,7 @@
 namespace surfit {
 
 f_area_surf_ineq::f_area_surf_ineq(const d_surf * ifnc, const d_area * iarea, bool ileq, REAL imult, bool iinside) :
-functional("f_area_surf_ineq")
+functional("f_area_surf_ineq", F_CONDI)
 {
 	leq = ileq;
 	mult = imult;

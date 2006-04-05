@@ -32,6 +32,10 @@ class data;
 class bitvec;
 class intvec;
 
+#define F_USUAL	0x00000001
+#define F_FAULT	0x00000010
+#define F_CONDI 0x00000100  // this is a condition
+
 /*! \class functional
     \brief abstract concept of functional
 */
@@ -39,7 +43,7 @@ class SURFIT_EXPORT functional {
 public:
 	
 	//! constructor
-	functional(const char * newname);
+	functional(const char * newname, int itype);
 	
 protected:
 	//! destructor
@@ -75,6 +79,9 @@ public:
 
 	//! returns functional name 
 	const char * getName() const;
+
+	//! returns functional type
+	int getType() const;
 
 	//! frees some private data
 	virtual void drop_private_data();
@@ -155,15 +162,20 @@ protected:
 	//! array of conditions for functional minimization
 	std::vector<functional *> * functionals_cond;
 
+protected:
+
+	//! functional type
+	int type;
+
 };
 
 /*! \class faultable
     \brief fault line functional
 */
-class SURFIT_EXPORT faultable {
+class SURFIT_EXPORT faultable : public functional {
 public:
 	//! constructor
-	faultable();
+	faultable(const char * newname, int itype);
 	//! destructor
 	virtual ~faultable();
 	//! adds fault line to \ref faults array

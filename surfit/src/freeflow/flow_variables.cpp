@@ -45,25 +45,10 @@ struct flow_garbage : public binman {
 	~flow_garbage();
 };
 
-void remove_functional(int pos, functional * f) {
-	functionals->erase( functionals->begin() + pos );
-	f->release();
-};
-
 flow_garbage::~flow_garbage() {
 
-	if (surfit_data_manager) {
-		unsigned int i;
-		for (i = 0; i < surfit_data_manager->managers->size(); i++) {
-			manager * man = *(surfit_data_manager->managers->begin()+i);
-			if ( (manager*)flow_manager == man ) {
-				delete flow_manager;
-				flow_manager = NULL;
-				*(surfit_data_manager->managers->begin()+i) = NULL;
-			}
-		}
-	}
-
+	if (release_manager(flow_manager))
+		flow_manager = NULL;
 };
 
 flow_garbage flow_garb;
@@ -74,11 +59,8 @@ void freeflow_init_variables(Tcl_Interp * iinterp) {
 		return;
 	}
 	
-	data_manager * m = surfit_data_manager;
-	if (surfit_data_manager) {
-		flow_manager = new freeflow_manager;
-		surfit_data_manager->managers->push_back(flow_manager);
-	}
+	flow_manager = new freeflow_manager;
+	add_manager(flow_manager);
 
 	Tcl_printf("freeflow version %s, Copyright (c) 2002-2006 M.V.Dmitrievsky & V.N.Kutrunov\n", FREEFLOW_VERSION);
 	Tcl_printf("freeflow comes with ABSOLUTELY NO WARRANTY; for details type `show_w'.\n");

@@ -35,9 +35,8 @@ namespace surfit {
     \f[
     \Phi(u_{1,1},\ldots,u_{N,M}) = \sum_{i,j} \left( u_{i,j} - z(x_i, y_j) \right)^2,
     \f]
-    where (i,j) - indexes of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
+    where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 */
-SURFIT_EXPORT
 bool surface(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_rules_surfs
@@ -61,9 +60,8 @@ bool surface(const char * surface_name_or_position = "0");
     \f[
     \Phi_1(u_{1,1},\ldots,u_{N,M}) = \sum_{i,j} \left( u_{i,j} - z(x_i, y_j) \right)^2,
     \f]
-    where (i,j) - indexes of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
+    where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 */
-SURFIT_EXPORT
 bool surface_add(REAL weight, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_rules_surfs
@@ -85,9 +83,8 @@ bool surface_add(REAL weight, const char * surface_name_or_position = "0");
     \f[
     u_{i,j} \leq z(x_i, y_j) \quad i=1,\ldots,N, \quad j=1,\ldots,M
     \f]
-    where (i,j) - indexes of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
+    where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 */
-SURFIT_EXPORT
 bool surface_leq(const char * surface_name_or_position = "0", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_surfs
@@ -109,9 +106,8 @@ bool surface_leq(const char * surface_name_or_position = "0", REAL mult = 0.001)
     \f[
     u_{i,j} \geq z(x_i, y_j) \quad i=1,\ldots,N, \quad j=1,\ldots,M
     \f]
-    where (i,j) - indexes of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
+    where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 */
-SURFIT_EXPORT
 bool surface_geq(const char * surface_name_or_position = "0", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_surfs
@@ -198,7 +194,6 @@ bool surface_geq(const char * surface_name_or_position = "0", REAL mult = 0.001)
 \f]
 
 */
-SURFIT_EXPORT
 bool trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_rules_surfs
@@ -215,10 +210,9 @@ bool trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name_or_position = "0"
     \param D2 informational weight for rule that sounds "resulting surface should have the same curvature as trend surface"
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number. This is a trend surface.
 */	
-SURFIT_EXPORT
 bool trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_name_or_position = "0");
 
-/*! \ingroup tcl_rules_surfs
+/*! \ingroup tcl_rules_masks
     \fn bool mask(const char * val, const char * mask_name_or_position = "0");
 
     \par Tcl syntax:
@@ -235,10 +229,9 @@ bool trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_name_
     \f[
     \Phi(u_{1,1},\ldots,u_{N,M}) = \sum_{i,j} \left( u_{i,j} - z \right)^2,
     \f]
-    where (i,j) - indexes of the cells where mask is true, z - constant real number.
+    where (i,j) - indices of the cells where mask is true, z - constant real number.
 
 */
-SURFIT_EXPORT
 bool mask(const char * val, const char * mask_name_or_position = "0");
 	
 }; // namespace surfit;

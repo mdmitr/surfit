@@ -32,356 +32,559 @@ class dem;
 // SAVE_LOAD
 //
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dem_save_load
     \fn bool dem_load(const char * filename, const char * demname = 0);
-    \brief loads \ref globe_dem named 'demname' from ROFF file (see \ref datafile for details)
-    \param filename filename
-    \param demname name for dem (optional)
+
+    \par Tcl syntax:
+    dem_load "filename" "demname"
+
+    \par Description:
+    loads \ref d_dem "DEM" named 'demname' from surfit datafile. If no demname specified,
+    then loads the first one.
+    
+    \param filename surfit datafile
+    \param demname name of DEM (optional)
 */
 bool dem_load(const char * filename, const char * demname = 0);
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dem_save_load
-    \fn bool dem_load_grd(const char * filename, const char * demname = 0)
-    \brief loads \ref globe_dem from SURFER grd file (ASCII format)
+    \fn bool dem_load_grd(const char * filename, const char * demname = 0);
+
+    \par Tcl syntax:
+    dem_load_grd "filename" "demname"
+
+    \par Description:
+    loads \ref d_dem "DEM" from SURFER grd file (ASCII format)
+
+    \param filename Surfer GRD-ASCII file
+    \param demname name of DEM (optional)
 */
 bool dem_load_grd(const char * filename, const char * demname = 0);
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dem_save_load
     \fn bool dem_load_dtm(const char * hdr_filename, const char * name, const char * bin_filename = 0);
-    \brief loads \ref globe_dem from DTM files (hdr + bin)
+
+    \par Tcl syntax:
+    dem_load_dmt "hdr_filename" "demname" "bin_filename"
+
+    \par Description:
+    loads \ref d_dem "DEM" from DTM files (hdr + bin)
 */
 bool dem_load_dtm(const char * hdr_filename, const char * name, const char * bin_filename = 0);
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dem_save_load
-    \fn bool dem_load_hgt(const char * hgt_filename, const char * dem_name);
-    \brief loads \ref globe_dem from HGT files (Shuttle Radar Topographic Mission files)
-*/
-bool dem_load_hgt(const char * hgt_filename, const char * dem_name = 0);
+    \fn bool dem_load_hgt(const char * hgt_filename, const char * demname);
+    
+    \par Tcl syntax:
+    dem_load_hgt "hgt_filename" "demname"
 
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_save_load
-    \fn bool dem_load_hgt_zip(const char * hgt_filename, const char * dem_name);
-    \brief loads \ref globe_dem from zipped HGT files (Shuttle Radar Topographic Mission files)
+    \par Description:
+    loads \ref d_dem "DEM" from HGT files (Shuttle Radar Topographic Mission files)
 */
-bool dem_load_hgt_zip(const char * hgt_filename, const char * dem_name = 0);
+bool dem_load_hgt(const char * hgt_filename, const char * demname = 0);
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dem_save_load
-    \fn bool dem_load_globe(const char * filename);
-    \brief loads \ref globe_dem from GTOPO30 files (The Global Land One-km Base Elevation (GLOBE) Project)
+    \fn bool dem_load_hgt_zip(const char * hgt_filename, const char * demname);
+
+    \par Tcl syntax:
+    dem_load_hgt_zip(const char * hgt_filename, const char * demname);
+
+    \par Description:
+    loads \ref d_dem "DEM" from zipped HGT files (Shuttle Radar Topographic Mission files)
+*/
+bool dem_load_hgt_zip(const char * hgt_filename, const char * demname = 0);
+
+/*! \ingroup tcl_dem_save_load
+    \fn bool dem_load_globe(const char * filename, const char * demname = 0);
+     
+    \par Tcl syntax:
+    dem_load_globe "filename"
+
+    \par Description:
+    loads \ref d_dem "DEM" from GTOPO30 files (The Global Land One-km Base Elevation (GLOBE) Project)
 */
 bool dem_load_globe(const char * filename, const char * demname = 0);
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dem_save_load
-    \fn bool dem_save(const char * filename, const char * pos = "0");
-    \brief saves \ref globe_dem to ROFF file (see \ref datafile) named filename in active \ref rw_mode
-*/
-bool dem_save(const char * filename, const char * pos = "0");
+    \fn bool dem_save(const char * filename, const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_save_load
-    \fn bool dem_save_grd(const char * filename, const char * pos = "0");
-    \brief saves \ref globe_dem to SURFER grd file (ASCII format)
-*/
-bool dem_save_grd(const char * filename, const char * pos = "0");
+    \par Tcl syntax:
+    dem_save "filename" "dem_name_or_position"
 
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_save_load
-    \fn bool dem_save_xyz(const char * filename, const char * pos = "0");
-    \brief saves \ref globe_dem to XYZ text format
+    \par Description:
+    saves \ref d_dem "DEM" to surfit datafile
 */
-bool dem_save_xyz(const char * filename, const char * pos = "0");
+bool dem_save(const char * filename, const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dem_save_load
-    \fn bool dem_save_dtm(const char * filename, const char * pos = "0");
-    \brief saves \ref globe_dem to DTM files (hdr + bin)
+    \fn bool dem_save_grd(const char * filename, const char * dem_name_or_position = "0");
+
+    \par Tcl syntax:
+    dem_save_grd "filename" "dem_name_or_position"
+
+    \par Description:
+    saves \ref d_dem "DEM" to SURFER grd file (ASCII format)
 */
-bool dem_save_dtm(const char * filename, const char * pos = "0");
+bool dem_save_grd(const char * filename, const char * dem_name_or_position = "0");
+
+/*! \ingroup tcl_dem_save_load
+    \fn bool dem_save_xyz(const char * filename, const char * dem_name_or_position = "0");
+
+    \par Tcl syntax:
+    dem_save_xyz "filename" "dem_name_or_position"
+
+    \par Description:
+    saves \ref d_dem "DEM" to XYZ text format
+*/
+bool dem_save_xyz(const char * filename, const char * dem_name_or_position = "0");
+
+/*! \ingroup tcl_dem_save_load
+    \fn bool dem_save_dtm(const char * filename, const char * dem_name_or_position = "0");
+
+    \par Tcl syntax:
+    dem_save_dtm "filename" "dem_name_or_position"
+
+    \par Description:
+    saves \ref d_dem "DEM" to DTM files (hdr + bin)
+*/
+bool dem_save_dtm(const char * filename, const char * dem_name_or_position = "0");
 
 //
 // MATH OPERATIONS
 //
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dem_math
-    \fn REAL dem_getValue(REAL x, REAL y, const char * pos = "0");
-    \brief calculates \ref globe_dem value at point (x,y)
-*/
-REAL dem_getValue(REAL x, REAL y, const char * pos = "0");
+    \fn REAL dem_getValue(REAL x, REAL y, const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_getValue x y "dem_name_or_position"
+
+    \par Description:
+    calculates \ref d_dem "DEM" value at (x,y) point
+*/
+REAL dem_getValue(REAL x, REAL y, const char * dem_name_or_position = "0");
+
 /*! \ingroup tcl_dem_math
-    \fn bool dem_resid(const char * filename, const char * dem_pos = "0", const char * pnts_pos = "0")
-    \brief calculates residuals between \ref d_points and \ref d_dem
+    \fn bool dem_resid(const char * filename, const char * dem_name_or_position = "0", const char * points_name_or_position = "0")
+
+    \par Tcl syntax:
+    dem_resid "filename" "dem_name_or_position" "points_name_or_position"
+
+    \par Description:
+    calculates residuals between \ref d_points "points" and \ref d_dem "DEM"
     Saves result to text file.
 */
-bool dem_resid(const char * filename, const char * dem_pos = "0", const char * pnts_pos = "0");
+bool dem_resid(const char * filename, const char * dem_name_or_position = "0", const char * points_name_or_position = "0");
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dem_math
-    \fn REAL dem_D1(const char * pos = "0");
-    \brief calculates value of 
+    \fn REAL dem_D1(const char * dem_name_or_position = "0");
+
+    \par Tcl syntax:
+    dem_D1 "dem_name_or_position"
+
+    \par Description:
+    calculates value of 
     \f$ \int\limits_\Omega \left[ f_x^2 + f_y^2 \right] dx dy \f$ 
-    for \ref globe_dem
+    for \ref d_dem "DEM"
 */
-REAL dem_D1(const char * pos = "0");
+REAL dem_D1(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dem_math
-    \fn REAL dem_D2(const char * pos = "0");
-    \brief calculates value of 
+    \fn REAL dem_D2(const char * dem_name_or_position = "0");
+
+    \par Tcl syntax:
+    dem_D2 "dem_name_or_position"
+
+    \par Description:
+    calculates value of 
     \f$ \int\limits_\Omega \left[ f_{xx}^2 + 2f_{xy}^2 + f_{yy}^2 \right] dx dy \f$ 
-    for \ref globe_dem
+    for \ref d_dem "DEM"
 */
-REAL dem_D2(const char * pos = "0");
+REAL dem_D2(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dem_math
-    \fn bool dem_gradient(const char * pos = "0");
-    \brief calculates "map of gradients lengths" from \ref globe_dem and saves result to \ref globe_dem (!)
-*/
-bool dem_gradient(const char * pos = "0");
+    \fn bool dem_gradient(const char * newname, const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_gradient "newname" "dem_name_or_position"
+
+    \par Description:
+    calculates "DEM of gradients lengths" from \ref d_dem "DEM"
+*/
+bool dem_gradient(const char * newname, const char * dem_name_or_position = "0");
+
 /*! \ingroup tcl_dem_math
-    \fn bool dem_project(const char * pos = "0");
-    \brief recalculates dem on \ref surfit_grid using bilinear interpolation algorithm
-*/
-bool dem_project(const char * pos = "0");
+    \fn bool dem_project(const char * newname, const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_project "newname" "dem_name_or_position"
+
+    \par Description:
+    recalculates d_dem "DEM" on \ref d_grid using bilinear interpolation algorithm
+*/
+bool dem_project(const char * newname, const char * dem_name_or_position = "0");
+
 /*! \ingroup tcl_dem_math
-    \fn REAL dem_minz(const char * pos = "0");
-    \brief returns minimum Z-value of \ref d_dem
-*/
-REAL dem_minz(const char * pos = "0");
+    \fn REAL dem_minz(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_minz "dem_name_or_position"
+
+    \par Description:
+    calculates minimum Z-value for \ref d_dem "DEM"
+*/
+REAL dem_minz(const char * dem_name_or_position = "0");
+
 /*! \ingroup tcl_dem_math
-    \fn REAL dem_maxz(const char * pos = "0");
-    \brief calculates maximum Z-value of \ref d_dem
-*/
-REAL dem_maxz(const char * pos = "0");
+    \fn REAL dem_maxz(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_maxz "dem_name_or_position"
+
+    \par Description:
+    calculates maximum Z-value for \ref d_dem "DEM"
+*/
+REAL dem_maxz(const char * dem_name_or_position = "0");
+
 /*! \ingroup tcl_dem_math
-    \fn bool dem_plus(const char * pos1, const char * pos2);
-    \brief dem1 = dem1 + dem2. dems sizes must be equal
-*/
-bool dem_plus(const char * pos1, const char * pos2);
+    \fn bool dem_plus(const char * dem1_name_or_position, const char * dem2_name_or_position);
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_plus "dem1_name_or_position" "dem2_name_or_position"
+
+    \par Description:
+    Performs operation with DEMs cells values:
+    dem1 = dem1 + dem2
+*/
+bool dem_plus(const char * dem1_name_or_position, const char * dem2_name_or_position);
+
 /*! \ingroup tcl_dem_math
-    \fn bool dem_minus(const char * pos1, const char * pos2);
-    \brief dem1 = dem1 - dem2. undef_value means no operation. 
-    dems sizes must be equal
-*/
-bool dem_minus(const char * pos1, const char * pos2);
+    \fn bool dem_minus(const char * dem1_name_or_position, const char * dem2_name_or_position);
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_minus "dem1_name_or_position" "dem2_name_or_position"
+
+    \par Description:
+    Performs operation with DEMs cells values:
+    dem1 = dem1 - dem2
+*/
+bool dem_minus(const char * dem1_name_or_position, const char * dem2_name_or_position);
+
 /*! \ingroup tcl_dem_math
-    \fn bool dem_mult(const char * pos1, const char * pos2);
-    \brief dem1 = dem1 * dem2. dems sizes must be equal
-*/
-bool dem_mult(const char * pos1, const char * pos2);
+    \fn bool dem_mult(const char * dem1_name_or_position, const char * dem2_name_or_position);
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_mult "dem1_name_or_position" "dem2_name_or_position"
+
+    \par Description:
+    Performs operation with DEMs cells values:
+    dem1 = dem1 * dem2
+*/
+bool dem_mult(const char * dem1_name_or_position, const char * dem2_name_or_position);
+
 /*! \ingroup tcl_dem_math
-    \fn bool dem_div(const char * pos1, const char * pos2);
-    \brief dem1 = dem1 / dem2. dems sizes must be equal
-*/
-bool dem_div(const char * pos1, const char * pos2);
+    \fn bool dem_div(const char * dem1_name_or_position, const char * dem2_name_or_position);
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_div "dem1_name_or_position" "dem2_name_or_position"
+
+    \par Description:
+    Performs operation with DEMs cells values:
+    dem1 = dem1 / dem2
+*/
+bool dem_div(const char * dem1_name_or_position, const char * dem2_name_or_position);
+
 /*! \ingroup tcl_dem_math
-    \fn bool dem_set(const char * pos1, const char * pos2);
-    \brief dem1 = dem2. dems sizes must be equal
-*/
-bool dem_set(const char * pos1, const char * pos2);
+    \fn bool dem_set(const char * dem1_name_or_position, const char * dem2_name_or_position);
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_set "dem1_name_or_position" "dem2_name_or_position"
+
+    \par Description:
+    Performs operation with DEMs cells values:
+    dem1 = dem2
+*/
+bool dem_set(const char * dem1_name_or_position, const char * dem2_name_or_position);
+
 /*! \ingroup tcl_dem_math
-    \fn bool dem_plus_real(REAL val, const char * pos = "0");
-    \brief dem = dem + val
-*/
-bool dem_plus_real(REAL val, const char * pos = "0");
+    \fn bool dem_plus_real(REAL val, const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
-/* \ingroup tcl_dem_math
-   \fn bool dem_minus_real(REAL val, const char * pos = "0");
-   \brief dem = dem - val
-*/
-bool dem_minus_real(REAL val, const char * pos = "0");
+    \par Tcl syntax:
+    dem_plus_real val "dem_name_or_position"
 
-GLOBE_EXPORT
+    \par Description:
+    Performs operation with DEMs cells values:
+    dem = dem + val
+*/
+bool dem_plus_real(REAL val, const char * dem_name_or_position = "0");
+
 /*! \ingroup tcl_dem_math
-    \fn bool dem_mult_real(REAL val, const char * pos = "0");
-    \brief dem = dem * val
-*/
-bool dem_mult_real(REAL val, const char * pos = "0");
+    \fn bool dem_minus_real(REAL val, const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_math
-    \fn bool dem_div_real(REAL val, const char * pos = "0");
-    \brief dem = dem / val
-*/
-bool dem_div_real(REAL val, const char * pos = "0");
+    \par Tcl syntax:
+    dem_minus_real val "dem_name_or_position"
 
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_math
-    \fn bool dem_set_real(REAL val, const char * pos = "0");
-    \brief dem = val
+    \par Description:
+    Performs operation with DEMs cells values:
+    dem = dem - val
 */
-bool dem_set_real(REAL val, const char * pos = "0");
+bool dem_minus_real(REAL val, const char * dem_name_or_position = "0");
+
+/*! \ingroup tcl_dem_math
+    \fn bool dem_mult_real(REAL val, const char * dem_name_or_position = "0");
+
+    \par Tcl syntax:
+    dem_mult_real val "dem_name_or_position"
+
+    \par Description:
+    Performs operation with DEMs cells values:
+    dem = dem * val
+*/
+bool dem_mult_real(REAL val, const char * dem_name_or_position = "0");
+
+/*! \ingroup tcl_dem_math
+    \fn bool dem_div_real(REAL val, const char * dem_name_or_position = "0");
+
+    \par Tcl syntax:
+    dem_div_real val "dem_name_or_position"
+
+    \par Description:
+    Performs operation with DEMs cells values:
+    dem = dem / val
+*/
+bool dem_div_real(REAL val, const char * dem_name_or_position = "0");
+
+/*! \ingroup tcl_dem_math
+    \fn bool dem_set_real(REAL val, const char * dem_name_or_position = "0");
+
+    \par Tcl syntax:
+    dem_set_real val "dem_name_or_position"
+
+    \par Description:
+    Performs operation with DEMs cells values:
+    dem = val
+*/
+bool dem_set_real(REAL val, const char * dem_name_or_position = "0");
 
 //
 // WAVELETS SECTION
 //
 
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_wavan
-    \fn int dem_get_details_level(const char * pos = "0");
-    \brief returns the depth of wavelet decomposition for dem
-*/
-int dem_get_details_level(const char * pos = "0");
+/*! \ingroup tcl_dem_math_wavan
+    \fn int dem_get_details_level(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_wavan
-    \fn bool dem_decomp(const char * pos = "0");
-    \brief makes one wavelet-decomposition for dem
-*/
-bool dem_decomp(const char * pos = "0");
+    \par Tcl syntax:
+    dem_get_details_level "dem_name_or_position"
 
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_wavan
-    \fn bool dem_auto_decomp(REAL eps, const char * pos = "0");
-    \brief calls dem_decomp() until difference between calc_approx_norm() will be lower than eps
+    \par Description:
+    returns the depth of wavelet decomposition for dem
 */
-bool dem_auto_decomp(REAL eps, const char * pos = "0");
+int dem_get_details_level(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_wavan
-    \fn bool dem_recons(const char * pos = "0");
-    \brief makes one wavelet-reconstruction for dem
-*/
-bool dem_recons(const char * pos = "0");
+/*! \ingroup tcl_dem_math_wavan
+    \fn bool dem_decomp(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_wavan
-    \fn bool dem_full_recons(const char * pos = "0");
-    \brief makes all possible wavelet-reconstruction (recontructs original dem)
+    \par Tcl syntax:
+    dem_decomp "dem_name_or_position"
+
+    \par Description:
+    makes one wavelet-decomposition for dem
 */
-bool dem_full_recons(const char * pos = "0");
+bool dem_decomp(const char * dem_name_or_position = "0");
+
+/*! \ingroup tcl_dem_math_wavan
+    \fn bool dem_auto_decomp(REAL eps, const char * dem_name_or_position = "0");
+
+    \par Tcl syntax:
+    dem_auto_decomp eps "dem_name_or_position"
+
+    \par Description:
+    calls \ref dem_decomp until difference between original DEM norm and decomposed DEM norm
+    will be lower than eps
+*/
+bool dem_auto_decomp(REAL eps, const char * dem_name_or_position = "0");
+
+/*! \ingroup tcl_dem_math_wavan
+    \fn bool dem_recons(const char * dem_name_or_position = "0");
+
+    \par Tcl syntax:
+    dem_recons "dem_name_or_position"
+
+    \par Description:
+    makes one wavelet-reconstruction for dem
+*/
+bool dem_recons(const char * dem_name_or_position = "0");
+
+/*! \ingroup tcl_dem_math_wavan
+    \fn bool dem_full_recons(const char * dem_name_or_position = "0");
+
+    \par Tcl syntax:
+    dem_full_recons "dem_name_or_position"
+
+    \par Description:
+    makes all possible wavelet-reconstruction (recontructs original dem)
+*/
+bool dem_full_recons(const char * dem_name_or_position = "0");
 
 //
 // CONVERTING
 //
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dem_conv
-    \fn bool dem_to_points(const char * pos = "0", const char * new_name = NULL);
-    \brief transforms \ref d_dem to \ref d_points
-*/
-bool dem_to_points(const char * pos = "0", const char * new_name = NULL);
+    \fn bool dem_to_pnts(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_conv
-    \fn bool dem_to_surf(const char * pos = "0", const char * new_name = NULL);
-    \brief makes \ref d_surf from \ref d_dem
-*/
-bool dem_to_surf(const char * pos = "0", const char * new_name = NULL);
+    \par Tcl syntax:
+    dem_to_pnts "dem_name_or_position" "new_name"
 
-GLOBE_EXPORT
-/*! \ingroup tcl_dem_conv
-    \fn bool dem_to_mask(short true_from, short true_to, const char * pos = "0");
-    \brief makes \ref d_mask by \ref d_dem. Value will be true, if it lies in interval [true_from, true_to]
+    \par Description:
+    transforms \ref d_dem "DEM" to \ref d_points "points"
 */
-bool dem_to_mask(short true_from, short true_to, const char * pos = "0");
+bool dem_to_pnts(const char * dem_name_or_position = "0");
+
+/*! \ingroup tcl_dem_conv
+    \fn bool dem_to_surf(const char * dem_name_or_position = "0");
+
+    \par Tcl syntax:
+    dem_to_surf "dem_name_or_position"
+
+    \par Description:
+    makes \ref d_surf "surface" from \ref d_dem "DEM"
+*/
+bool dem_to_surf(const char * dem_name_or_position = "0");
+
+/*! \ingroup tcl_dem_conv
+    \fn bool dem_to_mask(short true_from, short true_to, const char * dem_name_or_position = "0");
+
+    \par Tcl syntax:
+    dem_to_mask true_from true_to "dem_name_or_position"
+
+    \par Description:
+    makes \ref d_mask "mask" by \ref d_dem "DEM". Value will be true, if it lies in interval [true_from, true_to]
+*/
+bool dem_to_mask(short true_from, short true_to, const char * dem_name_or_position = "0");
 
 //
 // OTHER
 //
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dem_other
-    \fn int dem_getCountX(const char * pos = "0");
-    \brief returns the amount of X-nodes for \ref d_dem
-*/
-int dem_getCountX(const char * pos = "0");
+    \fn int dem_getCountX(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_getCountX "dem_name_or_position"
+
+    \par Description:
+    returns the number of X-nodes for \ref d_dem "DEM"
+*/
+int dem_getCountX(const char * dem_name_or_position = "0");
+
 /*! \ingroup tcl_dem_other
-    \fn int dem_getCountY(const char * pos = "0");
-    \brief returns the amount of Y-nodes for \ref d_dem
-*/
-int dem_getCountY(const char * pos = "0");
+    \fn int dem_getCountY(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_getCountY "dem_name_or_position"
+
+    \par Description:
+    returns the number of Y-nodes for \ref d_dem "DEM"
+*/
+int dem_getCountY(const char * dem_name_or_position = "0");
+
 /*! \ingroup tcl_dem_other
-    \fn REAL dem_getStepX(const char * pos = "0");
-    \brief returns step between X-nodes for \ref d_dem
-*/
-REAL dem_getStepX(const char * pos = "0");
+    \fn REAL dem_getStepX(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_getStepX "dem_name_or_position"
+
+    \par Description:
+    returns step between X-nodes for \ref d_dem "DEM"
+*/
+REAL dem_getStepX(const char * dem_name_or_position = "0");
+
 /*! \ingroup tcl_dem_other
-    \fn REAL dem_getStepY(const char * pos = "0");
-    \brief returns step between Y-nodes for \ref d_dem
-*/
-REAL dem_getStepY(const char * pos = "0");
+    \fn REAL dem_getStepY(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_getStepY "dem_name_or_position"
+
+    \par Description:
+    returns step between Y-nodes for \ref d_dem "DEM"
+*/
+REAL dem_getStepY(const char * dem_name_or_position = "0");
+
 /*! \ingroup tcl_dem_other
-    \fn bool dem_undef(REAL new_undef_value, const char * pos = "0");
-    \brief sets undefined value for \ref d_dem
-*/
-bool dem_undef(REAL new_undef_value, const char * pos = "0");
+    \fn bool dem_undef(REAL new_undef_value, const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_undef new_undef_value "dem_name_or_position"
+
+    \par Description:
+    sets new undefined value for \ref d_dem "DEM"
+*/
+bool dem_undef(REAL new_undef_value, const char * dem_name_or_position = "0");
+
 /*! \ingroup tcl_dem_other
-    \fn const char * dem_getName(const char * pos = "0");
-    \brief returns name of \ref d_dem 
-*/
-const char * dem_getName(const char * pos = "0");
+    \fn const char * dem_getName(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_getName "dem_name_or_position"
+
+    \par Description:
+    returns name of \ref d_dem 
+*/
+const char * dem_getName(const char * dem_name_or_position = "0");
+
 /*! \ingroup tcl_dem_other
-    \fn bool dem_setName(const char * new_name, const char * pos = "0");
-    \brief sets name of \ref d_dem 
-*/
-bool dem_setName(const char * new_name, const char * pos = "0");
+    \fn bool dem_setName(const char * new_name, const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_setName "new_name" "dem_name_or_position"
+
+    \par Description:
+    sets name of \ref d_dem "DEM"
+*/
+bool dem_setName(const char * new_name, const char * dem_name_or_position = "0");
+
 /*! \ingroup tcl_dems
     \fn bool dem_delall();
-    \brief removes all \ref dem's from \ref globe_dems
+
+    \par Tcl syntax:
+    dem_delall
+
+    \par Description:
+    removes all \ref d_dem "DEMs" from memory
 */
 bool dem_delall();
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dems
-    \fn bool dem_del(const char * pos = "0");
-    \brief removes \ref d_dem from \ref globe_dems 
-*/
-bool dem_del(const char * pos = "0");
+    \fn bool dem_del(const char * dem_name_or_position = "0");
 
-GLOBE_EXPORT
+    \par Tcl syntax:
+    dem_del "dem_name_or_position"
+
+    \par Description:
+    removes \ref d_dem "DEM" from memory
+*/
+bool dem_del(const char * dem_name_or_position = "0");
+
 /*! \ingroup tcl_dems
     \fn int dem_size();
-    \brief returns amount of demtions in \ref globe_dems
+
+    \par Tcl syntax:
+    dem_size
+
+    \par Description:
+    \returns number of \ref d_dem "DEMs" in memory
 */
 int dem_size();
 
-GLOBE_EXPORT
 /*! \ingroup tcl_dems
     \fn void dems_info();
-    \brief prints information about dems in \ref globe_dems
+
+    \par Tcl syntax:
+    dems_info
+
+    \par Description:
+    prints information about \ref d_dem "DEMs" in memory
 */
 void dems_info();
 

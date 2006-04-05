@@ -204,6 +204,9 @@ REAL _surf_sum_area(const d_surf * srf, const d_area * crv);
 SURFIT_EXPORT
 int _surf_cells_in_area(const d_surf * srf, const d_area * crv);
 
+SURFIT_EXPORT
+void _surfit_surf_add(d_surf * srf);
+
 }; // namespace surfit;
 
 #endif

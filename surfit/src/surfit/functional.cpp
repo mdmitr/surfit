@@ -37,12 +37,13 @@
 
 namespace surfit {
 
-functional::functional(const char * newname) {
+functional::functional(const char * newname, int itype) {
 	name = NULL;
 	setName(newname);
 	functionals_add = new std::vector<functional *>;
 	weights = create_vec();
 	functionals_cond = new std::vector<functional *>;
+	type = itype;
 };
 
 functional::~functional() {
@@ -80,6 +81,10 @@ void functional::setNameF(const char *tmplt, ...) {
 
 const char * functional::getName() const {
 	return name;
+};
+
+int functional::getType() const {
+	return type;
 };
 
 void functional::add_functional(functional * isum, REAL iweights) {
@@ -314,7 +319,7 @@ void functional::drop_private_data() {};
 //
 // faultable
 //
-faultable::faultable() {
+faultable::faultable(const char * newname, int itype) : functional(newname, itype) {
 	faults = new std::vector<const d_curv *>;
 	gfaults = NULL;
 };

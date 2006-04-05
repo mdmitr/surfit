@@ -1,0 +1,21 @@
+/*! \example ineq.tcl
+
+This example shows how to make resulting surface approximating other surface.
+
+Here is the image of the resulting \ref d_surf "surface":
+
+\htmlonly
+<P ALIGN=CENTER>
+<IMG alt="surface" src="surface.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. surface obtained from other surface </P>
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/surfs/surface.tcl"</TT> script. 
+*/
+
+/*! \example mean.tcl
+*/
+
+/*! \example wmean.tcl
+*/

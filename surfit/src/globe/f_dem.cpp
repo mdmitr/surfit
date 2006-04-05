@@ -34,13 +34,12 @@
 
 namespace surfit {
 
-f_dem::f_dem(d_dem * ifnc) :
-functional("f_dem") 
+f_dem::f_dem(d_dem * idem) :
+functional("f_dem", F_USUAL) 
 {
-	fnc = ifnc;
-	if (fnc->getName()) {
-		setNameF("f_approx_func %s", fnc->getName());
-	}
+	dem = idem;
+	if (dem->getName()) 
+		setNameF("f_dem %s", dem->getName());
 	mask = NULL;
 };
 
@@ -55,7 +54,7 @@ int f_dem::this_get_data_count() const {
 
 const data * f_dem::this_get_data(int pos) const {
 	if (pos == 0)
-		return fnc;
+		return dem;
 	return NULL;
 };
 
@@ -93,10 +92,10 @@ bool f_dem::minimize() {
 
 bool f_dem::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
-	if (fnc->getName())
-		writelog(LOG_MESSAGE,"dem : (%s), size=(%d x %d)", fnc->getName(), fnc->getCountX(), fnc->getCountY());
+	if (dem->getName())
+		writelog(LOG_MESSAGE,"dem : (%s), size=(%d x %d)", dem->getName(), dem->getCountX(), dem->getCountY());
 	else 
-		writelog(LOG_MESSAGE,"dem : noname, size=(%d x %d)", fnc->getCountX(), fnc->getCountY());
+		writelog(LOG_MESSAGE,"dem : noname, size=(%d x %d)", dem->getCountX(), dem->getCountY());
 
 	int NN = method_grid->getCountX();
 	int MM = method_grid->getCountY();
@@ -110,7 +109,7 @@ bool f_dem::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	int points = 0;
 
 	int from_x, from_y, to_x, to_y;
-	_grid_intersect1(method_grid, fnc->grd,
+	_grid_intersect1(method_grid, dem->grd,
 		        from_x, to_x,
 		        from_y, to_y);
 
@@ -135,9 +134,9 @@ bool f_dem::make_matrix_and_vector(matr *& matrix, vec *& v) {
 			method_grid->getCoordNode(i, j, x, y);
 
 			//value = fnc->getMeanValue(x-stepX2, x+stepX2, y-stepY2, y+stepY2);
-			value = fnc->getInterpValue(x, y);
+			value = dem->getInterpValue(x, y);
 
-			if (value == fnc->undef_value)
+			if (value == dem->undef_value)
 				continue;
 
 			(*v)(pos) = value;
@@ -173,16 +172,16 @@ void f_dem::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefi
 
 bool f_dem::minimize_only_dem() {
 
-	if (fnc->getName())
-		writelog(LOG_MESSAGE,"dem : (%s), size=(%d x %d)", fnc->getName(), fnc->getCountX(), fnc->getCountY());
+	if (dem->getName())
+		writelog(LOG_MESSAGE,"dem : (%s), size=(%d x %d)", dem->getName(), dem->getCountX(), dem->getCountY());
 	else 
-		writelog(LOG_MESSAGE,"dem : noname, size=(%d x %d)", fnc->getCountX(), fnc->getCountY());
+		writelog(LOG_MESSAGE,"dem : noname, size=(%d x %d)", dem->getCountX(), dem->getCountY());
 
 	int NN = method_grid->getCountX();
 	int MM = method_grid->getCountY();
 
 	int from_x, from_y, to_x, to_y;
-	_grid_intersect1(method_grid, fnc->grd,
+	_grid_intersect1(method_grid, dem->grd,
 		        from_x, to_x,
 		        from_y, to_y);
 
@@ -207,9 +206,9 @@ bool f_dem::minimize_only_dem() {
 			method_grid->getCoordNode(i, j, x, y);
 
 			//value = fnc->getMeanValue(x-stepX2, x+stepX2, y-stepY2, y+stepY2);
-			value = fnc->getInterpValue(x, y);
+			value = dem->getInterpValue(x, y);
 
-			if (value == fnc->undef_value)
+			if (value == dem->undef_value)
 				continue;
 
 			(*method_X)(pos) = value;

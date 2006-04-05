@@ -29,9 +29,14 @@ class matr;
 class vec;
 class bitvec;
 
+/*! \class f_mask
+    \brief functional that approximates constant real number in some area, defined by \ref d_mask
+*/
 class SURFIT_EXPORT f_mask : public functional {
 public:
+	//! constructor
 	f_mask(const d_mask * idef, REAL ivalue);
+	//! desctructor
 	~f_mask();
 
 	bool minimize();
@@ -52,10 +57,16 @@ protected:
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
 
+	//! fast minimization procedure
 	bool minimize_only_mask();
 
+	//! mask for applying functional
 	const d_mask * msk;
+
+	//! mask
 	bitvec * mask;
+
+	//! value to approximate with
 	REAL value;
 	
 };

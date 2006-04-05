@@ -28,9 +28,9 @@ namespace surfit {
 
 bool prod_points(const char * pos) {
 
-	if (functionals->size() == 0)
+	functional * fnc = get_modifiable_functional();
+	if (fnc == NULL)
 		return false;
-	functional * fnc = *(functionals->end()-1);
 	f_lcm_simple * f = dynamic_cast<f_lcm_simple *>(fnc);
 	if (f == NULL)
 		return false;

@@ -1,4 +1,4 @@
-/*! \example area.tcl
+/*! \example area.tcl 
 
 This example shows how to build \ref d_surf "surface" by approximating \ref d_area 
 "areas" with constant real numbers. In this example 5 different areas were used. 

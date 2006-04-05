@@ -40,7 +40,7 @@
 namespace surfit {
 
 f_completer::f_completer(REAL iD1, REAL iD2) :
-functional("f_completer")
+faultable("f_completer", F_USUAL|F_FAULT)
 {
 	D1 = iD1;
 	D2 = iD2;

@@ -31,7 +31,7 @@
 namespace surfit {
 
 f_prod_iso::f_prod_iso(REAL ivalue, d_curv * icrv) :
-functional("f_prod_iso")
+functional("f_prod_iso", F_USUAL)
 {
 	crv = icrv;
 	value = ivalue;

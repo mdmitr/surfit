@@ -28,8 +28,9 @@ namespace surfit {
     \brief serves \ref file_load, \ref file_save, \ref clear_data and \ref mem_info commands for libfreeglobe
 */
 class globe_manager : public manager {
+protected:
+	~globe_manager() {};
 public:
-
 	bool auto_load(const char * filename, const char * first1024, int readed) const;
 	int load_tag(datafile *df, char * tag_name) const;
 	bool save(datafile *df) const;
@@ -39,7 +40,7 @@ public:
 	void release();
 	int data_count() const;
 	const data * data_get(int i) const;
-
+	const char * getName() const {return "globe";};
 };
 
 }; // namespace surfit;

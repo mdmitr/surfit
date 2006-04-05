@@ -38,8 +38,9 @@ d_surf * create_surf(vec *icoeff, d_grid *igrd, const char * surfname = 0);
 SURFIT_EXPORT
 d_surf * create_surf_by_mask(d_mask * msk);
 
-/*! \class surf
-    \brief class for a surface, based on the equidistant \ref grid with values set at the centers of the cells (see \ref surfit_surf). See \ref tcl_surf "Tcl commands" for \ref surf.
+/*! \class d_surf
+    \brief class for a surface, based on the equidistant \ref d_grid with values 
+    set at the centers of the cells.
 */
 class SURFIT_EXPORT d_surf : public data {
 protected:
@@ -59,8 +60,11 @@ protected:
 	
 public:
 
+	//! constructor
 	friend SURFIT_EXPORT
 	d_surf * create_surf(vec *icoeff, d_grid *igrd, const char * surfname);
+
+	//! constructor
 	friend SURFIT_EXPORT
 	d_surf * create_surf_by_mask(d_mask * msk);
 
@@ -91,6 +95,7 @@ public:
 	//! returns mean Z value for all nodes
 	virtual REAL mean() const;
 
+	//! returns weighted mean value for all nodes
 	virtual REAL wmean(const d_surf * wsrf) const;
 
 	//! returns standard deviation value from mean 'mean' value
@@ -143,42 +148,52 @@ public:
 
 	//! this = this + srf
 	virtual void plus(const d_surf * srf);
+	//! this = this + srf where mask == true
 	virtual void plus_mask(const d_surf * srf, const bitvec * mask);
 	
 	//! this = this - srf, undef means no operation
 	virtual void minus(const d_surf * srf);
+	//! this = this - srf where mask == true
 	virtual void minus_mask(const d_surf * srf, const bitvec * mask);
 
 	//! this = this * srf
 	virtual void mult(const d_surf * srf);
+	//! this = this * srf where mask == true
 	virtual void mult_mask(const d_surf * srf, const bitvec * mask);
 	
 	//! this = this / srf
 	virtual void div(const d_surf * srf);
+	//! this = this / srf where mask == true
 	virtual void div_mask(const d_surf * srf, const bitvec * mask);
 	
 	//! this = srf
 	virtual void set(const d_surf * srf);
+	//! this = this = srf where mask == true
 	virtual void set_mask(const d_surf * srf, const bitvec * mask);
 
 	//! this = this + val
 	virtual void plus(REAL val);
+	//! this = this + val where mask == true
 	virtual void plus_mask(REAL val, const bitvec * mask);
 
 	//! this = this - val
 	virtual void minus(REAL val);
+	//! this = this - val where mask == true
 	virtual void minus_mask(REAL val, const bitvec * mask);
 
 	//! this = this * val
 	virtual void mult(REAL val);
+	//! this = this * val where mask == true
 	virtual void mult_mask(REAL val, const bitvec * mask);
 
 	//! this = this / val
 	virtual void div(REAL val);
+	//! this = this / val where mask == true
 	virtual void div_mask(REAL val, const bitvec * mask);
 
 	//! this = val
 	virtual void set(REAL val);
+	//! this = val where mask == true
 	virtual void set_mask(REAL val, const bitvec * mask);
 
 	//! sets new undef_value

@@ -1344,12 +1344,57 @@ bool _dem_save_xyz(const d_dem * srf, const char * filename) {
 
 bool _dem_save_dtm(const d_dem * srf, const char * filename)
 {
+	writelog(LOG_ERROR,"dem_save_dtm: Not implemented!");
 	return false;
 };
 
 d_points * _dem_to_points(const d_dem * srf) {
 
-	return NULL;	
+	if (!srf->coeff) {
+		writelog(LOG_ERROR,"convert_dem_to_pnts : wrong surf - no coeffs");
+		return NULL;
+	}
+
+	vec * X = create_vec(srf->coeff->size());
+	vec * Y = create_vec(srf->coeff->size());
+	vec * Z = create_vec(srf->coeff->size());
+	
+	REAL * X_ptr = X->begin();
+	REAL * Y_ptr = Y->begin();
+	REAL * Z_ptr = Z->begin();
+
+	int i,j;
+	REAL x,y,z;
+	for (j = 0; j < srf->getCountY(); j++) {
+		for (i = 0; i < srf->getCountX(); i++) {
+			srf->getCoordNode(i,j,x,y);
+			z = srf->getValue(x, y);
+			
+			if (z != srf->undef_value) {
+				*X_ptr = x;
+				*Y_ptr = y;
+				*Z_ptr = z;
+				X_ptr++;
+				Y_ptr++;
+				Z_ptr++;
+			}
+		}
+	}
+
+	int size = X_ptr-X->begin();
+
+	if (size == 0) {
+		X->release();
+		Y->release();
+		Z->release();
+		return NULL;
+	}
+	X->resize(size);
+	Y->resize(size);
+	Z->resize(size);
+
+	return create_points(X, Y, Z,
+			     srf->getName());
 	
 };
 
@@ -1738,6 +1783,7 @@ d_dem * _dem_gradient(const d_dem * srf) {
 
 	d_grid * grd = new d_grid(srf->grd);
 	d_dem * res = create_dem(coeff, grd, srf->getName());
+	res->undef_value = srf->undef_value;
 	return res;
 
 };

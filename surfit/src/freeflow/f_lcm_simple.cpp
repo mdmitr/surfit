@@ -39,7 +39,7 @@
 namespace surfit {
 
 f_lcm_simple::f_lcm_simple(REAL ipermeability, REAL iviscosity, REAL imultiplier) :
-functional("f_lcm_simple") 
+faultable("f_lcm_simple", F_USUAL|F_FAULT) 
 {
 	permeability = ipermeability;
 	viscosity = iviscosity;

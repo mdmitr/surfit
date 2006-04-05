@@ -45,14 +45,9 @@ vec::vec(const vec &in) {
 			real_datasize = datasize;
 			// init
 			memcpy(data, in.data, sizeof(REAL)*newsize);
-			/*
-			for (int i = 0; i < size(); i++) {
-				operator()(i) = in(i);
-			}
-			*/
 		};
 		if ((data == NULL) && (newsize != 0)) {
-			throw "not enough memory";
+			throw "out of memory";
 		}	
 		grow_by = in.grow_by;
 	}
@@ -78,7 +73,7 @@ vec::vec(int newsize, REAL default_value, int fill_default, int igrow_by) {
 		}
 	};
 	if ((data == NULL) && (newsize != 0)) {
-		throw "not enough memory";
+		throw "out of memory";
 	}
 };
 
@@ -124,7 +119,7 @@ void vec::resize(int newsize, REAL default_value, int fill_default) {
 		}
 	}
 	if ((data == NULL) && (newsize != 0)) 
-		throw "not enough memory";
+		throw "out of memory";
 };
 
 void vec::push_back(const REAL& x) {
@@ -158,7 +153,7 @@ void vec::reserve(int reserve_size) {
 			}
 		}
 		if ((data == NULL) && (reserve_size != 0)) 
-			throw "not enough memory";
+			throw "out of memory";
 
 	}
 };

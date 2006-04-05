@@ -29,9 +29,15 @@ class matr;
 class vec;
 class bitvec;
 
+/*! \class f_surf
+    \brief Functional for approximation surface with other surface values
+*/
 class SURFIT_EXPORT f_surf : public functional {
 public:
+	//! constructor
 	f_surf(const d_surf * isrf);
+
+	//! destructor
 	~f_surf();
 
 	bool minimize();
@@ -50,9 +56,14 @@ protected:
 
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
-	
+
+	//! fast minimization procedure
 	bool minimize_only_surf();
+
+	//! data for functional
 	const d_surf * srf;
+
+	//! mask for functional
 	bitvec * mask;
 	
 };

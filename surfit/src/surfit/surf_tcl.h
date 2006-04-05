@@ -44,7 +44,6 @@ class d_surf;
     \param filename surfit datafile
     \param surfname name for surface (optional)
 */
-SURFIT_EXPORT
 bool surf_load(const char * filename, const char * surfname = 0);
 
 /*! \ingroup tcl_surf_save_load
@@ -59,7 +58,6 @@ bool surf_load(const char * filename, const char * surfname = 0);
     \param filename Surfer grd file (ASCII format)
     \param surfname name for surface (optional)
 */
-SURFIT_EXPORT
 bool surf_load_grd(const char * filename, const char * surfname = 0);
 
 /*! \ingroup tcl_surf_save_load
@@ -74,7 +72,6 @@ bool surf_load_grd(const char * filename, const char * surfname = 0);
     \param filename surfit datafile
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
 */
-SURFIT_EXPORT
 bool surf_save(const char * filename, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_save_load
@@ -89,7 +86,6 @@ bool surf_save(const char * filename, const char * surface_name_or_position = "0
     \param filename SURFER grd file (ASCII format)
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
 */
-SURFIT_EXPORT
 bool surf_save_grd(const char * filename, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_save_load
@@ -104,7 +100,6 @@ bool surf_save_grd(const char * filename, const char * surface_name_or_position 
     \param filename XYZ text file
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
 */
-SURFIT_EXPORT
 bool surf_save_xyz(const char * filename, const char * surface_name_or_position = "0");
 
 //
@@ -124,7 +119,6 @@ bool surf_save_xyz(const char * filename, const char * surface_name_or_position 
     \param y point y-coordinate 
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
 */
-SURFIT_EXPORT
 REAL surf_getValue(REAL x, REAL y, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -140,7 +134,6 @@ REAL surf_getValue(REAL x, REAL y, const char * surface_name_or_position = "0");
     \param J node number in Y direction
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
 */
-SURFIT_EXPORT
 REAL surf_getValueIJ(int I, int J, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -157,7 +150,6 @@ REAL surf_getValueIJ(int I, int J, const char * surface_name_or_position = "0");
     \param points_name_or_position name of \ref d_points "points" dataset, or points position number
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 bool surf_resid(const char * filename, const char * surface_name_or_position = "0", const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -172,7 +164,6 @@ bool surf_resid(const char * filename, const char * surface_name_or_position = "
 
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 REAL surf_D1(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -188,7 +179,6 @@ REAL surf_D1(const char * surface_name_or_position = "0");
 
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 REAL surf_D2(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -203,7 +193,6 @@ REAL surf_D2(const char * surface_name_or_position = "0");
     \param newname name for resulting surface
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 bool surf_gradient(const char * newname, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -213,12 +202,11 @@ bool surf_gradient(const char * newname, const char * surface_name_or_position =
     surf_project "newname" "surface_name_or_position"
 
     \par Description:
-    recalculates surface on \ref surfit_grid using bilinear interpolation algorithm
+    recalculates surface on current \ref d_grid "grid" using bilinear interpolation algorithm
 
     \param newname name for resulting surface
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 bool surf_project(const char * newname, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -233,7 +221,6 @@ bool surf_project(const char * newname, const char * surface_name_or_position = 
     \param std standart deviation
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 bool surf_add_noise(REAL std, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -247,7 +234,6 @@ bool surf_add_noise(REAL std, const char * surface_name_or_position = "0");
 
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 REAL surf_minz(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -262,7 +248,6 @@ REAL surf_minz(const char * surface_name_or_position = "0");
     \param area_name_or_position name of \ref d_area "area" dataset, or area position number
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 REAL surf_area_minz(const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -276,7 +261,6 @@ REAL surf_area_minz(const char * area_name_or_position = "0", const char * surfa
 
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 REAL surf_maxz(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -291,7 +275,6 @@ REAL surf_maxz(const char * surface_name_or_position = "0");
     \param area_name_or_position name of \ref d_area "area" dataset, or area position number
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 REAL surf_area_maxz(const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -305,7 +288,6 @@ REAL surf_area_maxz(const char * area_name_or_position = "0", const char * surfa
 
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 REAL surf_mean(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -320,7 +302,6 @@ REAL surf_mean(const char * surface_name_or_position = "0");
     \param area_name_or_position name of \ref d_area "area" dataset, or area position number
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 REAL surf_area_mean(const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -335,7 +316,6 @@ REAL surf_area_mean(const char * area_name_or_position = "0", const char * surfa
     \param wsurface_name_or_position name of weighting \ref d_surf "surface" dataset, or surface position number
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 REAL surf_wmean(const char * wsurface_name_or_position = "0", const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -351,7 +331,6 @@ REAL surf_wmean(const char * wsurface_name_or_position = "0", const char * surfa
     \param wsurface_name_or_position name of weighting \ref d_surf "surface" dataset, or surface position number
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 REAL surf_area_wmean(const char * area_name_or_position = "0", const char * wsurface_name_or_position = "0", const char * surface_name_or_position = "0");
 
 
@@ -366,7 +345,6 @@ REAL surf_area_wmean(const char * area_name_or_position = "0", const char * wsur
 
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 REAL surf_sum(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -381,7 +359,6 @@ REAL surf_sum(const char * surface_name_or_position = "0");
     \param area_name_or_position name of \ref d_area "area" dataset, or area position number
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 REAL surf_sum_area(const char * area_name_or_position = "0",  const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -396,7 +373,6 @@ REAL surf_sum_area(const char * area_name_or_position = "0",  const char * surfa
     \param area_name_or_position name of \ref d_area "area" dataset, or area position number
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 int surf_cells_in_area(const char * area_name_or_position = "0",  const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -411,7 +387,6 @@ int surf_cells_in_area(const char * area_name_or_position = "0",  const char * s
     \param mean surface mean value
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 REAL surf_std(REAL mean, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -424,7 +399,6 @@ REAL surf_std(REAL mean, const char * surface_name_or_position = "0");
     Performs operation with surfaces cells values:
     surface1 = surface1 + surface2
 */
-SURFIT_EXPORT
 bool surf_plus(const char * surface1_name_or_position, const char * surface2_name_or_position);
 
 /*! \ingroup tcl_surf_math
@@ -437,7 +411,6 @@ bool surf_plus(const char * surface1_name_or_position, const char * surface2_nam
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface1 + surface2
 */
-SURFIT_EXPORT
 bool surf_plus_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
 
 /*! \ingroup tcl_surf_math
@@ -450,7 +423,6 @@ bool surf_plus_area(const char * surface1_name_or_position, const char * area_na
     Performs operation with surfaces cells values:
     surface1 = surface1 - surface2
 */
-SURFIT_EXPORT
 bool surf_minus(const char * surface1_name_or_position, const char * surface2_name_or_position);
 
 /*! \ingroup tcl_surf_math
@@ -463,7 +435,6 @@ bool surf_minus(const char * surface1_name_or_position, const char * surface2_na
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface1 - surface2
 */
-SURFIT_EXPORT
 bool surf_minus_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
 
 /*! \ingroup tcl_surf_math
@@ -476,7 +447,6 @@ bool surf_minus_area(const char * surface1_name_or_position, const char * area_n
     Performs operation with surfaces cells values:
     surface1 = surface1 * surface2
 */
-SURFIT_EXPORT
 bool surf_mult(const char * surface1_name_or_position, const char * surface2_name_or_position);
 
 /*! \ingroup tcl_surf_math
@@ -489,7 +459,6 @@ bool surf_mult(const char * surface1_name_or_position, const char * surface2_nam
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface1 * surface2
 */
-SURFIT_EXPORT
 bool surf_mult_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
 
 /*! \ingroup tcl_surf_math
@@ -502,7 +471,6 @@ bool surf_mult_area(const char * surface1_name_or_position, const char * area_na
     Performs operation with surfaces cells values:
     surface1 = surface1 / surface2
 */
-SURFIT_EXPORT
 bool surf_div(const char * surface1_name_or_position, const char * surface2_name_or_position);
 
 /*! \ingroup tcl_surf_math
@@ -515,7 +483,6 @@ bool surf_div(const char * surface1_name_or_position, const char * surface2_name
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface1 / surface2
 */
-SURFIT_EXPORT
 bool surf_div_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
 
 /*! \ingroup tcl_surf_math
@@ -528,7 +495,6 @@ bool surf_div_area(const char * surface1_name_or_position, const char * area_nam
     Performs operation with surfaces cells values:
     surface1 = surface2
 */
-SURFIT_EXPORT
 bool surf_set(const char * surface1_name_or_position, const char * surface2_name_or_position);
 
 /*! \ingroup tcl_surf_math
@@ -541,7 +507,6 @@ bool surf_set(const char * surface1_name_or_position, const char * surface2_name
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface2
 */
-SURFIT_EXPORT
 bool surf_set_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
 
 /*! \ingroup tcl_surf_math
@@ -557,7 +522,6 @@ bool surf_set_area(const char * surface1_name_or_position, const char * area_nam
     \param val real number
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 bool surf_plus_value(REAL val, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -574,7 +538,6 @@ bool surf_plus_value(REAL val, const char * surface_name_or_position = "0");
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
     \param area_name_or_position name of \ref d_area "area" dataset, or area position number
 */
-SURFIT_EXPORT
 bool surf_plus_value_area(REAL val, const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -590,7 +553,6 @@ bool surf_plus_value_area(REAL val, const char * surface_name_or_position = "0",
     \param val real number
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 bool surf_minus_value(REAL val, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -607,7 +569,6 @@ bool surf_minus_value(REAL val, const char * surface_name_or_position = "0");
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
     \param area_name_or_position name of \ref d_area "area" dataset, or area position number
 */
-SURFIT_EXPORT
 bool surf_minus_value_area(REAL val, const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -623,7 +584,6 @@ bool surf_minus_value_area(REAL val, const char * area_name_or_position = "0", c
     \param val real number
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 bool surf_mult_value(REAL val, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -640,7 +600,6 @@ bool surf_mult_value(REAL val, const char * surface_name_or_position = "0");
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
     \param area_name_or_position name of \ref d_area "area" dataset, or area position number
 */
-SURFIT_EXPORT
 bool surf_mult_value_area(REAL val, const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -656,7 +615,6 @@ bool surf_mult_value_area(REAL val, const char * area_name_or_position = "0", co
     \param val real number
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 bool surf_div_value(REAL val, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -673,7 +631,6 @@ bool surf_div_value(REAL val, const char * surface_name_or_position = "0");
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
     \param area_name_or_position name of \ref d_area "area" dataset, or area position number
 */
-SURFIT_EXPORT
 bool surf_div_value_area(REAL val, const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -689,7 +646,6 @@ bool surf_div_value_area(REAL val, const char * area_name_or_position = "0", con
     \param val real number
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 bool surf_set_value(REAL val, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
@@ -706,7 +662,6 @@ bool surf_set_value(REAL val, const char * surface_name_or_position = "0");
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
     \param area_name_or_position name of \ref d_area "area" dataset, or area position number
 */
-SURFIT_EXPORT
 bool surf_set_value_area(const char * val, const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
 
 //
@@ -724,7 +679,6 @@ bool surf_set_value_area(const char * val, const char * area_name_or_position = 
 
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 int surf_get_details_level(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math_wavan
@@ -738,7 +692,6 @@ int surf_get_details_level(const char * surface_name_or_position = "0");
 
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 bool surf_decomp(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math_wavan
@@ -754,7 +707,6 @@ bool surf_decomp(const char * surface_name_or_position = "0");
     \param eps real number
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 bool surf_auto_decomp(REAL eps, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math_wavan
@@ -768,7 +720,6 @@ bool surf_auto_decomp(REAL eps, const char * surface_name_or_position = "0");
 
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 bool surf_recons(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math_wavan
@@ -782,7 +733,6 @@ bool surf_recons(const char * surface_name_or_position = "0");
 
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 bool surf_full_recons(const char * surface_name_or_position = "0");
 
 //
@@ -800,7 +750,6 @@ bool surf_full_recons(const char * surface_name_or_position = "0");
 
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-SURFIT_EXPORT
 bool surf_to_pnts(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_conv
@@ -813,7 +762,6 @@ bool surf_to_pnts(const char * surface_name_or_position = "0");
     makes \ref d_mask "mask" by surface. Cells values will be converted to "true" values if their
     values are in interval [true_from, true_to], else to "false" values.
 */
-SURFIT_EXPORT
 bool surf_to_mask(REAL true_from, REAL true_to, const char * surface_name_or_position = "0");
 
 //
@@ -829,7 +777,6 @@ bool surf_to_mask(REAL true_from, REAL true_to, const char * surface_name_or_pos
     \par Description:
     returns the amount of X-nodes for surface
 */
-SURFIT_EXPORT
 int surf_getCountX(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_other
@@ -841,7 +788,6 @@ int surf_getCountX(const char * surface_name_or_position = "0");
     \par Description:
     returns the amount of Y-nodes for surface
 */
-SURFIT_EXPORT
 int surf_getCountY(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_other
@@ -853,7 +799,6 @@ int surf_getCountY(const char * surface_name_or_position = "0");
     \par Description:
     returns step between X-nodes for surface
 */
-SURFIT_EXPORT
 REAL surf_getStepX(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_other
@@ -865,7 +810,6 @@ REAL surf_getStepX(const char * surface_name_or_position = "0");
     \par Description:
     returns step between Y-nodes for surface
 */
-SURFIT_EXPORT
 REAL surf_getStepY(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_other
@@ -877,7 +821,6 @@ REAL surf_getStepY(const char * surface_name_or_position = "0");
     \par Description:
     sets undefined value for surface
 */
-SURFIT_EXPORT
 bool surf_undef(REAL new_undef_value, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_other
@@ -889,7 +832,6 @@ bool surf_undef(REAL new_undef_value, const char * surface_name_or_position = "0
     \par Description:
     prints some info about surface
 */
-SURFIT_EXPORT
 void surf_info(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_other
@@ -901,7 +843,6 @@ void surf_info(const char * surface_name_or_position = "0");
     \par Description:
     returns name of surface 
 */
-SURFIT_EXPORT
 const char * surf_getName(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_other
@@ -913,7 +854,6 @@ const char * surf_getName(const char * surface_name_or_position = "0");
     \par Description:
     sets name for surface
 */
-SURFIT_EXPORT
 bool surf_setName(const char * new_name, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_other
@@ -924,7 +864,6 @@ bool surf_setName(const char * new_name, const char * surface_name_or_position =
     \par Description:
     returns amount of surfaces in surfaces
 */
-SURFIT_EXPORT
 int surf_size();
 
 /*! \ingroup tcl_surf_other
@@ -935,19 +874,7 @@ int surf_size();
     \par Description:
     prints information about surfaces in surfaces
 */
-SURFIT_EXPORT
 void surfs_info();
-
-/*! \ingroup tcl_surf_other
-    \fn void surfit_surf_add(d_surf * srf);
-
-    \par Tcl syntax:
-    
-    \par Description:
-    adds \ref d_surf into surfaces
-*/
-SURFIT_EXPORT
-void surfit_surf_add(d_surf * srf);
 
 /*! \ingroup tcl_surf_other
     \fn bool surf_del(const char * surface_name_or_position = "0");
@@ -958,7 +885,6 @@ void surfit_surf_add(d_surf * srf);
     \par Description:
     removes \ref d_surf "surface" from memory
 */
-SURFIT_EXPORT
 bool surf_del(const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_other
@@ -970,9 +896,7 @@ bool surf_del(const char * surface_name_or_position = "0");
     \par Description:
     removes all \ref d_surf "surfaces" from memory
 */
-SURFIT_EXPORT
 bool surf_delall();
-
 
 }; // namespace surfit;
 

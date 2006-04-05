@@ -47,7 +47,6 @@ namespace surfit {
     area_read "C:\\area.txt" my_area
     area_read "C:\\area2.txt" my_area2 2 3 "\t"
 */
-SURFIT_EXPORT
 bool area_read(const char * filename, const char * areaname=NULL	, 
 	       int col1=1, int col2=2,
 	       const char * delimiter=" ", int skip_lines = 0, int grow_by=250);
@@ -64,7 +63,6 @@ bool area_read(const char * filename, const char * areaname=NULL	,
     \par Example
     area_read_bln "C:\\area.bln" area_from_bln
 */
-SURFIT_EXPORT
 bool area_read_bln(const char * filename, const char * areaname = NULL);
 
 /*! \ingroup tcl_area_save_load
@@ -83,7 +81,6 @@ bool area_read_bln(const char * filename, const char * areaname = NULL);
     \par Example
     area_write "C:\\area.txt" my_area
 */
-SURFIT_EXPORT
 bool area_write(const char * filename, const char * area_name_or_position = "0", const char * delimiter = "\t");
 
 /*! \ingroup tcl_area_save_load
@@ -102,7 +99,6 @@ bool area_write(const char * filename, const char * area_name_or_position = "0",
     \par Example
     area_write_bln "C:\\area.bln" my_area 1
 */
-SURFIT_EXPORT
 bool area_write_bln(const char * filename, const char * area_name_or_position = "0", int flag = 1);
 
 /*! \ingroup tcl_area_save_load
@@ -120,7 +116,6 @@ bool area_write_bln(const char * filename, const char * area_name_or_position = 
     \par Example
     area_save "C:\\area.dat" my_area
 */
-SURFIT_EXPORT
 bool area_save(const char * filename, const char * area_name_or_position = "0");
 
 /*! \ingroup tcl_area_save_load
@@ -139,7 +134,6 @@ bool area_save(const char * filename, const char * area_name_or_position = "0");
     \par Example
     area_load "C:\\area.dat" my_area
 */
-SURFIT_EXPORT
 bool area_load(const char * filename, const char * area_name = NULL);
 
 //////////////
@@ -154,7 +148,6 @@ bool area_load(const char * filename, const char * area_name = NULL);
     \par Description:
     returns name of \ref area 
 */
-SURFIT_EXPORT
 const char * area_getName(const char * area_name_or_position = "0");
 
 /*! \ingroup tcl_area_other
@@ -166,7 +159,6 @@ const char * area_getName(const char * area_name_or_position = "0");
     \par Description:
     sets name of \ref area 
 */
-SURFIT_EXPORT
 bool area_setName(const char * new_name, const char * area_name_or_position = "0");
 
 /*! \ingroup tcl_area_other
@@ -178,7 +170,6 @@ bool area_setName(const char * new_name, const char * area_name_or_position = "0
     \par Description:
     removes all areas from memory
 */
-SURFIT_EXPORT
 bool area_delall();
 
 /*! \ingroup tcl_area_other
@@ -191,7 +182,6 @@ bool area_delall();
     removes \ref area from at 'area_name_or_position' position
 
 */
-SURFIT_EXPORT
 bool area_del(const char * area_name_or_position = "0");
 
 /*! \ingroup tcl_area_other
@@ -203,10 +193,8 @@ bool area_del(const char * area_name_or_position = "0");
     \par Description:
     returns number of areas in memory 
 */
-SURFIT_EXPORT
 int area_size();
 
-SURFIT_EXPORT
 bool area_invert(const char * area_name_or_position = "0");
 
 /*! \ingroup tcl_area_other
@@ -218,7 +206,6 @@ bool area_invert(const char * area_name_or_position = "0");
     \par Description:
     prints information about all areas  
 */
-SURFIT_EXPORT
 void areas_info();
 
 }; // namespace surfit;

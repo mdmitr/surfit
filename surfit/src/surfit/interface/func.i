@@ -112,27 +112,27 @@ void surfs_info();
 //
 
 //save and load
-bool mask_load(const char * filename, const char * defname = 0);
-bool mask_save(const char * filename, const char * pos = "0");
-bool mask_save_grd(const char * filename, const char * pos = "0");
-bool mask_save_xyz(const char * filename, const char * pos = "0");
+bool mask_load(const char * filename, const char * maskname = 0);
+bool mask_save(const char * filename, const char * mask_name_or_position = "0");
+bool mask_save_grd(const char * filename, const char * mask_name_or_position = "0");
+bool mask_save_xyz(const char * filename, const char * mask_name_or_position = "0");
 //
 // math
 //
-bool mask_getValue(REAL x, REAL y, const char * pos = "0");
+bool mask_getValue(REAL x, REAL y, const char * mask_name_or_position = "0");
 bool mask_and(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
 bool mask_not(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
 bool  mask_or(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
 bool mask_xor(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
 // CONVERTING
-bool mask_to_surf(const char * pos = "0");
+bool mask_to_surf(const char * mask_name_or_position = "0");
 // OTHER
 bool mask_by_surf(const char * surface_name_or_position = "0");
-bool mask_apply_to_surf(const char * def_pos = "0", const char * surface_name_or_position = "0");
-const char * mask_getName(const char * pos = "0");
-bool mask_setName(const char * new_name, const char * pos = "0");
+bool mask_apply_to_surf(const char * mask_name_or_position = "0", const char * surface_name_or_position = "0");
+const char * mask_getName(const char * mask_name_or_position = "0");
+bool mask_setName(const char * new_name, const char * mask_name_or_position = "0");
 bool mask_delall();
-bool mask_del(const char * pos = "0");
+bool mask_del(const char * mask_name_or_position = "0");
 int mask_size();
 void masks_info();
 

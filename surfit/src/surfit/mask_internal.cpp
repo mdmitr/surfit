@@ -385,5 +385,10 @@ void _mask_info(const d_mask * msk) {
 		writelog(LOG_MESSAGE,"mask noname : size=(%d x %d)", msk->getCountX(), msk->getCountY());
 };
 
+void _surfit_mask_add(d_mask * msk) {
+	surfit_masks->push_back(msk);
+};
+
+
 }; // namespace surfit;
 

@@ -19,6 +19,7 @@
 
 #include "globe_ie.h"
 #include "globe_data_manager.h"
+#include "variables.h"
 
 #include "sstuff.h"
 
@@ -137,7 +138,7 @@ bool globe_manager::auto_load(const char * filename, const char * first1024, int
 			ext = get_full_ext(filename);				
 			if (strcmp(ext, ".hgt.zip") == 0) {
 				char * name2 = get_name(name);
-				bool res = dem_load_hgt_zip(filename, strdup(name2));
+				res = dem_load_hgt_zip(filename, strdup(name2));
 				sstuff_free_char(name2);
 				goto exit;
 			}
@@ -157,7 +158,7 @@ exit:
 	free(uname);
 	sstuff_free_char(ext);
 	sstuff_free_char(name);
-	return false;
+	return res;
 };
 
 }; // namespace surfit;

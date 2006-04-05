@@ -32,10 +32,11 @@
 #include "variables_tcl.h"
 #include "data_manager.h"
 #include "license.h"
-#include "f_global_tcl.h"
+#include "others_tcl.h"
 #include "hist_tcl.h"
 #include "surfit_threads.h"
 #include "solvers.h"
+#include "other_tcl.h"
 
 TCL_DECLARE_MUTEX(surfitMutex)
 
@@ -54,8 +55,12 @@ namespace surfit {
                 $action
 		}
         }
-        catch(...) {
-                return TCL_ERROR;
+	catch ( const char * str ) {
+		surfit::writelog(LOG_ERROR,"%s",str);
+		return TCL_ERROR;
+	}
+	catch(...) {
+		return TCL_ERROR;
         }
 };
 
@@ -98,8 +103,6 @@ extern int penalty_max_iter;
 extern REAL penalty_weight;
 extern REAL penalty_weight_mult;
 
-extern int datafile_mode;
-
 void init_threads(int amount);
 void clear_data();
 void mem_info();
@@ -113,10 +116,10 @@ char * file_info(const char * filename);
 
 bool completer(REAL D1 = 1, REAL D2 = 2);
 bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2);
-bool value(REAL value = 0);
-bool value_add(REAL weight = 1, REAL value = 0);
+bool value(REAL val = 0);
+bool value_add(REAL weight = 1, REAL val = 0);
 bool mean(REAL value, REAL mult = 0.001);
-bool wmean(REAL value, const char * surf_pos = "0", REAL mult = 0.001);
+bool wmean(REAL value, const char * surface_name_or_position = "0", REAL mult = 0.001);
 bool leq(REAL value, REAL mult = 1);
 bool geq(REAL value, REAL mult = 1);
 bool hist(const char * pos = "0", REAL mult = 1e-2);

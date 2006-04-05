@@ -50,7 +50,7 @@ shortvec::shortvec(const shortvec &in) {
 			}
 		};
 		if ((data == NULL) && (newsize != 0)) {
-			throw "not enough memory";
+			throw "out of memory";
 		}	
 	}
 };
@@ -75,7 +75,7 @@ shortvec::shortvec(int newsize, short default_value, int fill_default, int igrow
 		}
 	};
 	if ((data == NULL) && (newsize != 0)) {
-		throw "not enough memory";
+		throw "out of memory";
 	}
 };
 
@@ -120,7 +120,7 @@ void shortvec::resize(int newsize, short default_value, int fill_default) {
 		}
 	}
 	if ((data == NULL) && (newsize != 0)) 
-		throw "not enough memory";
+		throw "out of memory";
 };
 
 void shortvec::push_back(const short& x) {
@@ -154,7 +154,7 @@ void shortvec::reserve(int reserve_size) {
 			}
 		}
 		if ((data == NULL) && (reserve_size != 0)) 
-			throw "not enough memory";
+			throw "out of memory";
 
 	}
 };

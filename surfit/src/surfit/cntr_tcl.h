@@ -48,7 +48,6 @@ class cntr;
     \par Example:
     cntr_read "C:\\my_cntr.txt" "my_cntr"
 */
-SURFIT_EXPORT
 bool cntr_read(const char * filename, const char * cntrname, 
     	       int col1=1, int col2=2, int col3=3,
 	       const char * delimiters=" \t", int skip_lines = 0, int grow_by=250);
@@ -65,7 +64,6 @@ bool cntr_read(const char * filename, const char * cntrname,
     \par Example:
     cntr_write "C:\\my_cntr.txt" "my_cntr"
 */
-SURFIT_EXPORT
 bool cntr_write(const char * filename, const char * cntr_name_or_position = "0", const char * delimiter = "\t");
 
 /*! \ingroup tcl_cntr_save_load
@@ -80,7 +78,6 @@ bool cntr_write(const char * filename, const char * cntr_name_or_position = "0",
     \par Example:
     cntr_save "C:\\my_cntr.dat" "my_cntr"
 */
-SURFIT_EXPORT
 bool cntr_save(const char * filename, const char * cntr_name_or_position = "0");
 
 /*! \ingroup tcl_cntr_save_load
@@ -95,7 +92,6 @@ bool cntr_save(const char * filename, const char * cntr_name_or_position = "0");
     \par Example:
     cntr_load "C:\\my_cntr.dat" "my_cntr"
 */
-SURFIT_EXPORT
 bool cntr_load(const char * filename, const char * cntrname = NULL);
 
 ///////////////
@@ -110,7 +106,6 @@ bool cntr_load(const char * filename, const char * cntrname = NULL);
     \par Description:
     adds real value to \ref d_cntr "contour" values
 */
-SURFIT_EXPORT
 bool cntr_plus_real(REAL value, const char * cntr_name_or_position = "0");
 
 /*! \ingroup tcl_cntr_math
@@ -122,7 +117,6 @@ bool cntr_plus_real(REAL value, const char * cntr_name_or_position = "0");
     \par Description:
     deducts real value from \ref d_cntr "contour" values
 */
-SURFIT_EXPORT
 bool cntr_minus_real(REAL value, const char * cntr_name_or_position = "0");
 
 /*! \ingroup tcl_cntr_math
@@ -134,7 +128,6 @@ bool cntr_minus_real(REAL value, const char * cntr_name_or_position = "0");
     \par Description:
     multiplies \ref d_cntr "contour" values with real value
 */
-SURFIT_EXPORT
 bool cntr_mult_real(REAL value, const char * cntr_name_or_position = "0");
 
 /*! \ingroup tcl_cntr_math
@@ -146,7 +139,6 @@ bool cntr_mult_real(REAL value, const char * cntr_name_or_position = "0");
     \par Description:
     divides \ref d_cntr "contour" values with real value
 */
-SURFIT_EXPORT
 bool cntr_div_real(REAL value, const char * cntr_name_or_position = "0");
 
 ///////////////
@@ -161,7 +153,6 @@ bool cntr_div_real(REAL value, const char * cntr_name_or_position = "0");
     \par Description:
     makes \ref d_curv "curve" from \ref d_cntr "contour"
 */
-SURFIT_EXPORT
 bool cntr_to_curv(const char * cntr_name_or_position = "0");
 
 ///////////////
@@ -176,7 +167,6 @@ bool cntr_to_curv(const char * cntr_name_or_position = "0");
     \par Description:
     returns name of \ref d_cntr "contour"
 */
-SURFIT_EXPORT
 const char * cntr_getName(const char * cntr_name_or_position = "0");
 
 /*! \ingroup tcl_cntr_other
@@ -188,7 +178,6 @@ const char * cntr_getName(const char * cntr_name_or_position = "0");
     \par Description:
     sets name of \ref d_cntr "contour"
 */
-SURFIT_EXPORT
 bool cntr_setName(const char * new_name, const char * cntr_name_or_position = "0");
 
 /*! \ingroup tcl_cntr_other
@@ -200,7 +189,6 @@ bool cntr_setName(const char * new_name, const char * cntr_name_or_position = "0
     \par Description:
     removes all \ref d_cntr "contours" from memory
 */
-SURFIT_EXPORT
 bool cntr_delall();
 
 /*! \ingroup tcl_cntr_other
@@ -212,7 +200,6 @@ bool cntr_delall();
     \par Description:
     removes \ref d_cntr "contour" from memory
 */
-SURFIT_EXPORT
 bool cntr_del(const char * cntr_name_or_position);
 
 /*! \ingroup tcl_cntr_other
@@ -224,7 +211,6 @@ bool cntr_del(const char * cntr_name_or_position);
     \par Description:
     returns number of \ref d_cntr "contours" in memory
 */
-SURFIT_EXPORT
 int cntr_size();
 
 /*! \ingroup tcl_cntr_other
@@ -236,7 +222,6 @@ int cntr_size();
     \par Description:
     prints information about all \ref d_cntr "contours" in memory
 */
-SURFIT_EXPORT
 void cntrs_info();
 
 }; // namespace surfit;

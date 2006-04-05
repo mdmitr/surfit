@@ -748,9 +748,5 @@ void pnts_info() {
 	}
 };
 
-void surfit_pnts_add(d_points * pnts) {
-	surfit_pnts->push_back(pnts);
-};
-
 }; // namespace surfit;
 

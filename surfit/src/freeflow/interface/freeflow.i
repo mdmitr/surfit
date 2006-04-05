@@ -59,7 +59,7 @@ namespace surfit {
    Tcl_SetObjResult(interp,Tcl_NewStringObj($1,-1));
 };
 
-//%include "../../surfit/src/real.h"
+%include "../../src/sstuff/real.h"
 
 bool prod_points(const char * pos = "-1");
 bool prod_area(REAL value, const char * pos = "-1");
@@ -70,5 +70,4 @@ bool prod_contour(const char * pos = "-1");
 }; // namespace surfit;
 
 %include "interface/lcm.i"
-%include "interface/flow_draw.i"
 

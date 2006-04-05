@@ -31,7 +31,7 @@
 namespace surfit {
 
 f_curv_surf::f_curv_surf(const d_surf * isurf, const d_curv * icrv) :
-functional("f_curv_surf")
+functional("f_curv_surf", F_USUAL)
 {
 	crv = icrv;
 	srf = isurf;

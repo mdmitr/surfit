@@ -64,7 +64,7 @@ intvec::intvec(const intvec &in) {
 			}
 		};
 		if ((data == NULL) && (newsize != 0)) {
-			throw "not enough memory";
+			throw "out of memory";
 		}	
 		grow_by = in.grow_by;
 	}
@@ -90,7 +90,7 @@ intvec::intvec(int newsize, int default_value, int fill_default, int igrow_by) {
 		}
 	};
 	if ((data == NULL) && (newsize != 0)) {
-		throw "not enough memory";
+		throw "out of memory";
 	}
 };
 
@@ -136,7 +136,7 @@ void intvec::resize(int newsize, int default_value, int fill_default) {
 		}
 	}
 	if ((data == NULL) && (newsize != 0)) 
-		throw "not enough memory";
+		throw "out of memory";
 };
 
 void intvec::push_back(const int& x) {
@@ -170,7 +170,7 @@ void intvec::reserve(int reserve_size) {
 			}
 		}
 		if ((data == NULL) && (reserve_size != 0)) 
-			throw "not enough memory";
+			throw "out of memory";
 
 	}
 };

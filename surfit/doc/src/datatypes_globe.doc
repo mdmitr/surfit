@@ -1,0 +1,12 @@
+/*! \page datatypes_globe datatypes supported by globe
+
+\section d_dem Digital Elevation Model (DEM)
+
+http://en.wikipedia.org/wiki/Digital_elevation_model
+
+\sa 
+\li \ref tcl_rules_dems "gridding rules for DEMs"
+\li \ref tcl_dem "commands for DEMs"
+
+<hr>
+*/

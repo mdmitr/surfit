@@ -34,7 +34,7 @@
 namespace surfit {
 
 f_mask::f_mask(const d_mask * idef, REAL ivalue) :
-functional("f_mask")
+functional("f_mask", F_USUAL)
 {
 	msk = idef;
 	value = ivalue;

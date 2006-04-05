@@ -314,28 +314,38 @@ char * get_name(const char * filename) {
 };
 
 char * get_full_ext(const char * filename) {
-	char * posFirstDot = strchr(filename, '.');
 
-	// check whether this dot occurs at the very beginning of a path component
-	if (posFirstDot != NULL) {
-		if ( strchr( posFirstDot, '/' ) )
+	const char * search_from = filename;
+	char * posFirstDot = NULL;
+	int len = strlen(filename);
+	
+	while (!posFirstDot) {
+		posFirstDot = strchr(search_from, '.');
+		if ((posFirstDot-filename) == len)
+			return NULL;
+		
+		// check whether this dot occurs at the very beginning of a path component
+		if (posFirstDot != NULL) {
+			if ( strchr( posFirstDot, '/' ) ) {
+				search_from = posFirstDot+1;
+				posFirstDot = NULL;
+			}
+		}
+		if (posFirstDot != NULL) {
+			if ( strchr( posFirstDot, '\\' ) ) {
+				search_from = posFirstDot+1;
+				posFirstDot = NULL;
+			}
+		}
+		if (posFirstDot == filename) {
 			posFirstDot = NULL;
+		}
 	}
-	if (posFirstDot != NULL) {
-		if ( strchr( posFirstDot, '\\' ) )
-			posFirstDot = NULL;
-	}
-	if (posFirstDot == filename) {
-			posFirstDot = NULL;
-	}
-
-	if (posFirstDot == NULL)
-		return NULL;
 
 	const char * pos_from = posFirstDot;
 	const char * pos_to = filename + strlen(filename);
 	
-	int len = pos_to-pos_from;
+	len = pos_to-pos_from;
 
 	char * res = (char *)malloc( (len+1) * sizeof(char));
 	strncpy(res, pos_from, len);
