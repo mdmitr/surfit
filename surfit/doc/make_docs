@@ -3,11 +3,13 @@
 rm html -rf
 mkdir html
 
-cp gallery/*.* html/*.*
-cp gallery/data/*.* html/*.*
-cp gallery/maps/*.* html/*.*
+cp -l gallery/*.* html/
+cp -l gallery/data/*.* html/
+cp -l gallery/maps/*.* html/
 
 doxygen surfit.cfg
 
-cp src/index.html html/index.html
+rm html/index.html
+cp -l src/index.html html/
+
 
