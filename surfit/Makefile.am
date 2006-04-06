@@ -12,13 +12,13 @@ EXTRA_DIST += src/surfit/interface/*.i
 EXTRA_DIST += examples/*
 EXTRA_DIST += src/freeflow/interface/*.i
 EXTRA_DIST += src/globe/interface/*.i
-EXTRA_DIST += doc/*
+EXTRA_DIST += doc/gallery/*
+EXTRA_DIST += doc/src/*
+EXTRA_DIST += doc/surfit.cfg
+EXTRA_DIST += doc/make_doc*
 EXTRA_DIST += make_release.bat
 EXTRA_DIST += make_debug.bat
 EXTRA_DIST += clean.bat
-
-#CXXFLAGS = -ggdb  -mwindows -DWIN32
-#CXXFLAGS = -O2
 
 lib_LTLIBRARIES = libsstuff.la 
 lib_LTLIBRARIES += libsurfit.la 
@@ -69,7 +69,7 @@ libsstuff_la_HEADERS += src/sstuff/vec.h
 libsstuff_la_HEADERS += src/sstuff/vec_alg.h      
 
 libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB)
-libsstuff_la_LDFLAGS = -version-info 1:0:0 -no-undefined --dllname libsstuff.dll
+libsstuff_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libsstuff.dll
 
 
 libsurfit_ladir = $(prefix)/include/surfit
@@ -267,7 +267,7 @@ libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la
 if HAVE_PTHREAD_INSTALLED
 libsurfit_la_LIBADD += -lpthread 
 endif
-libsurfit_la_LDFLAGS = -version-info 1:0:0 -no-undefined --dllname libsurfit.dll
+libsurfit_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libsurfit.dll
 
 
 libfreeflow_ladir = $(prefix)/include/freeflow
@@ -304,7 +304,7 @@ libfreeflow_la_HEADERS += src/freeflow/prod_points.h
 libfreeflow_la_SOURCES += src/freeflow/prod_points_tcl.h       
 
 libfreeflow_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la libsurfit.la
-libfreeflow_la_LDFLAGS = -version-info 1:0:0 -no-undefined --dllname libfreeflow.dll
+libfreeflow_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libfreeflow.dll
 
 libglobe_ladir = $(prefix)/include/globe
 libglobe_la_SOURCES  = src/globe/dem.cpp                
@@ -345,7 +345,7 @@ libglobe_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la libsurfit.la
 if HAVE_ZLIB_INSTALLED
 libglobe_la_LIBADD += -lz
 endif 
-libglobe_la_LDFLAGS = -version-info 1:0:0 -no-undefined --dllname libglobe.dll
+libglobe_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libglobe.dll
 
 dist-hook:
 
@@ -353,6 +353,9 @@ dist-hook:
 
 install-data-hook:
 
+	cd doc; \
+	sh make_docs; \
+	cd ..; \
 	if ! test -d "$(DESTDIR)$(prefix)/share"; then \
 		mkdir $(DESTDIR)$(prefix)/share; \
 	fi; \
@@ -362,39 +365,39 @@ install-data-hook:
 	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc"; then \
 		rm -rf $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc; \
 	fi; \
-	cp -r doc/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc ; \
+	cp -r doc/html $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc ; \
 	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples"; then \
 		rm -rf $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples; \
 	fi; \
 	mkdir $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples
-	cp -r surfit/examples/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/surfit; \
-	cp -r freeflow/examples/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/freeflow; \
-	cp -r globe/examples/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/globe; \
+	cp -r examples/surfit/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/surfit; \
+	cp -r examples/freeflow $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/freeflow; \
+	cp -r examples/globe $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/globe; \
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name CVS`
 
 install-exec-hook:
 
-	if test -f $(DESTDIR)$(bindir)/cygsstuff-1.dll; then \
+	if test -f $(DESTDIR)$(bindir)/cygsstuff-2.dll; then \
 		rm -f $(DESTDIR)$(bindir)/libsstuff.dll; \
-		ln $(DESTDIR)$(bindir)/cygsstuff-1.dll $(DESTDIR)$(bindir)/libsstuff.dll; \
+		ln $(DESTDIR)$(bindir)/cygsstuff-2.dll $(DESTDIR)$(bindir)/libsstuff.dll; \
 	fi
 
-	if test -f $(DESTDIR)$(bindir)/cygsurfit-1.dll; then \
+	if test -f $(DESTDIR)$(bindir)/cygsurfit-2.dll; then \
 		rm -f $(DESTDIR)$(bindir)/libsurfit.dll; \
-		ln $(DESTDIR)$(bindir)/cygsurfit-1.dll $(DESTDIR)$(bindir)/libsurfit.dll; \
+		ln $(DESTDIR)$(bindir)/cygsurfit-2.dll $(DESTDIR)$(bindir)/libsurfit.dll; \
 	fi
 
 if MAKE_FREEFLOW
-	if test -f $(DESTDIR)$(bindir)/cygfreeflow-1.dll; then \
+	if test -f $(DESTDIR)$(bindir)/cygfreeflow-2.dll; then \
 		rm -f $(DESTDIR)$(bindir)/libfreeflow.dll; \
-		ln $(DESTDIR)$(bindir)/cygfreeflow-1.dll $(DESTDIR)$(bindir)/libfreeflow.dll; \
+		ln $(DESTDIR)$(bindir)/cygfreeflow-2.dll $(DESTDIR)$(bindir)/libfreeflow.dll; \
 	fi
 endif
 
 if MAKE_GLOBE
-	if test -f $(DESTDIR)$(bindir)/cygglobe-1.dll; then \
+	if test -f $(DESTDIR)$(bindir)/cygglobe-2.dll; then \
 		rm -f $(DESTDIR)$(bindir)/libglobe.dll; \
-		ln $(DESTDIR)$(bindir)/cygglobe-1.dll $(DESTDIR)$(bindir)/libglobe.dll; \
+		ln $(DESTDIR)$(bindir)/cygglobe-2.dll $(DESTDIR)$(bindir)/libglobe.dll; \
 	fi
 endif
 
