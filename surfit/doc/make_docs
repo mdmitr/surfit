@@ -1,0 +1,13 @@
+#! /bin/sh
+
+rm html -rf
+mkdir html
+
+cp gallery/*.* html/*.*
+cp gallery/data/*.* html/*.*
+cp gallery/maps/*.* html/*.*
+
+doxygen surfit.cfg
+
+cp src/index.html html/index.html
+
