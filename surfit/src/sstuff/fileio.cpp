@@ -251,10 +251,9 @@ int calc_columns(const char * Str, int readed) {
 	char * str = strdup(Str);
 
 	char * pos = strchr(str, '\n');
-	if (pos == NULL)
-		return 0;
-
-	*pos = '\0';
+	if (pos != NULL) {
+		*pos = '\0';
+	}
 
 	char seps[] = " \t";
 	int columns = 0;
