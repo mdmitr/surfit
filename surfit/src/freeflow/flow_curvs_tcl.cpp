@@ -18,19 +18,19 @@
  *----------------------------------------------------------------------------*/
 
 #include "flow_ie.h"
-#include "pcurvs_tcl.h"
+#include "flow_curvs_tcl.h"
 #include "variables.h"
 #include "f_lcm_simple.h"
 #include "curv.h"
 #include "area.h"
 #include "cntr.h"
-#include "prod_area.h"
-#include "prod_iso.h"
-#include "prod_cntr.h"
+#include "flow_area.h"
+#include "flow_curv.h"
+#include "flow_cntr.h"
 
 namespace surfit {
 
-bool prod_area(REAL value, const char * pos) {
+bool flow_area(REAL value, const char * pos) {
 
 	functional * fnc = get_modifiable_functional();
 	if (fnc == NULL)
@@ -43,13 +43,13 @@ bool prod_area(REAL value, const char * pos) {
 	if (area == NULL)
 		return false;
 
-	f_prod_area * ff = new f_prod_area(value, area);
-	f->add_production(ff);
+	f_flow_area * ff = new f_flow_area(value, area);
+	f->add_flow(ff);
 	return true;
 
 };
 
-bool prod_isoline(REAL value, const char * pos) {
+bool flow_curve(REAL value, const char * pos) {
 
 	functional * fnc = get_modifiable_functional();
 	if (fnc == NULL)
@@ -62,13 +62,13 @@ bool prod_isoline(REAL value, const char * pos) {
 	if (crv == NULL)
 		return false;
 
-	f_prod_iso * ff = new f_prod_iso(value, crv);
-	f->add_production(ff);
+	f_flow_curv * ff = new f_flow_curv(value, crv);
+	f->add_flow(ff);
 	return true;
 
 };
 
-bool prod_contour(const char * pos) {
+bool flow_contour(const char * pos) {
 
 	functional * fnc = get_modifiable_functional();
 	if (fnc == NULL)
@@ -81,8 +81,8 @@ bool prod_contour(const char * pos) {
 	if (contour == NULL)
 		return false;
 
-	f_prod_cntr * ff = new f_prod_cntr(contour);
-	f->add_production(ff);
+	f_flow_cntr * ff = new f_flow_cntr(contour);
+	f->add_flow(ff);
 	return true;
 
 };

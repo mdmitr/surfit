@@ -17,33 +17,15 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#include "flow_ie.h"
-#include "prod_points_tcl.h"
-#include "points.h"
-#include "prod_points.h"
-#include "variables.h"
-#include "f_lcm_simple.h"
+#ifndef __freeflow_flow_points_tcl_included__
+#define __freeflow_flow_points_tcl_included__
 
 namespace surfit {
 
-bool prod_points(const char * pos) {
-
-	functional * fnc = get_modifiable_functional();
-	if (fnc == NULL)
-		return false;
-	f_lcm_simple * f = dynamic_cast<f_lcm_simple *>(fnc);
-	if (f == NULL)
-		return false;
-	
-	d_points * tsk = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (tsk == NULL)
-		return false;
-
-	f_prod_points * ff = new f_prod_points(tsk);
-	f->add_production(ff);
-	return true;
-
-};
+FLOW_EXPORT
+bool flow_points(const char * points_name_or_position = "0");
 
 }; // namespace surfit;
+
+#endif
 

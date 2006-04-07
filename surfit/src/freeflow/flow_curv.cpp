@@ -18,8 +18,8 @@
  *----------------------------------------------------------------------------*/
 
 #include "flow_ie.h"
-#include "prod_iso.h"
-#include "prod_points.h"
+#include "flow_curv.h"
+#include "flow_points.h"
 #include "curv.h"
 #include "grid.h"
 #include "points.h"
@@ -30,35 +30,35 @@
 
 namespace surfit {
 
-f_prod_iso::f_prod_iso(REAL ivalue, d_curv * icrv) :
-functional("f_prod_iso", F_USUAL)
+f_flow_curv::f_flow_curv(REAL ivalue, d_curv * icrv) :
+functional("f_flow_curv", F_USUAL)
 {
 	crv = icrv;
 	value = ivalue;
 	if (crv->getName()) {
-		setNameF("f_prod_iso %s", crv->getName());
+		setNameF("f_flow_curv %s", crv->getName());
 	}
 	d_pnts = NULL;
 	f_points = NULL;
 };
 
-f_prod_iso::~f_prod_iso() {
+f_flow_curv::~f_flow_curv() {
 	if (d_pnts)
 		d_pnts->release_private();
 	delete f_points;
 };
 
-int f_prod_iso::this_get_data_count() const {
+int f_flow_curv::this_get_data_count() const {
 	return 1;
 };
 
-const data * f_prod_iso::this_get_data(int pos) const {
+const data * f_flow_curv::this_get_data(int pos) const {
 	if (pos == 0)
 		return crv;
 	return NULL;
 };
 
-void f_prod_iso::create_f_prod_points() {
+void f_flow_curv::create_f_flow_points() {
 
 	if (d_pnts == NULL) {
 		d_grid * grd = create_last_grd();
@@ -67,7 +67,7 @@ void f_prod_iso::create_f_prod_points() {
 	}
 
 	if (f_points == NULL)
-		f_points = new f_prod_points(d_pnts);
+		f_points = new f_flow_points(d_pnts);
 
 	if ( cond() ) { 
 		if (f_points->cond())
@@ -81,22 +81,22 @@ void f_prod_iso::create_f_prod_points() {
 	}
 };
 
-bool f_prod_iso::minimize() {
-	create_f_prod_points();
+bool f_flow_curv::minimize() {
+	create_f_flow_points();
 	return f_points->minimize();
 };
 
-bool f_prod_iso::make_matrix_and_vector(matr *& matrix, vec *& v) {
-	create_f_prod_points();
+bool f_flow_curv::make_matrix_and_vector(matr *& matrix, vec *& v) {
+	create_f_flow_points();
 	return f_points->make_matrix_and_vector(matrix, v);
 };
 
-void f_prod_iso::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
-	create_f_prod_points();
+void f_flow_curv::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+	create_f_flow_points();
 	f_points->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
 };
 
-bool f_prod_iso::solvable_without_cond(const bitvec * mask_solved,
+bool f_flow_curv::solvable_without_cond(const bitvec * mask_solved,
 				       const bitvec * mask_undefined,
 				       const vec * X)
 {

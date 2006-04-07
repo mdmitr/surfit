@@ -48,14 +48,14 @@ public:
 				       bitvec * mask_undefined,
 				       bool i_am_cond);
 	
-	void add_production(functional * fnc);
+	void add_flow(functional * fnc);
 
 protected:
 
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
 
-	std::vector<functional *> * production;
+	std::vector<functional *> * flows;
 
 private:
 

@@ -1,0 +1,231 @@
+/*! \page freeflow freeflow library description
+
+<B><TT>freeflow</TT></B> is a library for a mathematical modeling of pressure fields.
+
+\par Introduction
+Energy state of a productive oil formation is an important indicator used for 
+the correct and effective planning of its further development. <B><TT>freeflow</TT></B>
+implements the way of pressure fields reconstruction based on the 
+constructing and consecutive minimization of functional sequence. In other
+words <B><TT>freeflow</TT></B> extends \ref surfit "gridding algorithm" with new
+\ref tcl_rules "gridding rules". It allows to reconstruct pressure fields 
+from different data of different extent of thruth.
+
+\par Two main ways of pressure fields reconstruction
+
+There are two widely-used ways of solving pressure reconstruction problem:
+\li Interpolation of the so-called "formation pressures", pressures measured 
+in wells after two or three days of shut-down.
+
+\li Creation of the mathematical model describing fluid filtration using 
+the language of partial differential equations.
+
+Due to the simplicity of usage, the first way is much more widely used PU 
+(performance unit): there is no necessity in model tuning and algorithms 
+are simply to use. Obtained pressure field is often physically inadequate, 
+nevertheless it is used to analyze energy state of oil formation, to detect 
+boundaries of reduced and raised pressure zones and calculate weighted 
+average pressures within areas.
+
+The second way is usually used in research institutes and model creation 
+is well-expensive. Usually it takes about one year. The significant 
+constraint involuntarily set up to mathematical models described by the 
+terms of partial differential equations is connected with the correctness 
+of a boundary problem. For example, to describe a well in mathematical model 
+we set only fluid rate/injectivity or bottom hole pressure. The simultaneous 
+setting of rates and pressures may lead to incorrect (overdetermined) boundary 
+problem. However, the simultaneous setting of inconsistent data is frequent 
+for solving of underground fluid filtration problems - there is a lot of 
+inconsistent data with different levels of errors. 
+Existent mathematical models require precise data with no errors (rates, 
+pressures, permeability), but it is impossible in the real life. 
+That's why the ability of mathematical model to take into account inconsistent 
+data and data with errors is of high-interest for <B><TT>freeflow</TT></B>
+<A HREF="mailto:surfit@bluebottle.com">authors</A>.
+
+<B><TT>freeflow</TT></B> implements the method, which has the features of the 
+both considered ways and has the ability to take into account often inconsistent 
+values of rates and bottom hole pressures in wells.
+
+\par Classical statement of the problem in the differential form.
+
+We are considering the task of calculating an pressure field for a homogeneous 
+productive oil formation with a relatively small thickness \f$ h \f$. In this case 
+the function \f$ u(x,y) \f$ of the formation pressure can be considered two-dimensional.
+\f$ u(x,y) \f$ is obtained by solving the boundary problem:
+\f[
+\frac {k}{\mu} \Delta u =
+\sum\limits_{i=1}^{N} Q_i \delta(P-P_i) + \sum\limits_{j=1}^M \int\limits_l S_j(l)\delta(P-l)dl,
+\f]
+where \f$ k \f$ is permeability (\f$ m^2 \f$), \f$ \mu \f$ - liquid viscosity 
+(\f$ Pa \cdot sec \f$). The vertical wells are described as point sources with 
+volume flow rates of \f$ Q_i \quad ( m^3 / sec\f$). The position of horizontal 
+(directional) wells and formation fractures are described by a curve with 
+the curved source density of \f$ S_i \quad (m^2 / sec)\f$.
+
+The boundary conditions are:
+\li \f$ u|_\Gamma = u_0\f$ - value of pressure on the boundary (oil bearing outer contour);
+\li \f$ u(P_k) = u_k, \quad k=1,\ldots,K \f$ - downhole pressures;
+\li \f$ \nabla u \cdot n_l = 0|_l, \quad f = 1,\ldots,F \f$ - condition of non-filtration 
+on the curves (boundaries of non-productive formations, tectonic zones).
+
+For a differential equation of elliptical type the simultaneous setting of rates and 
+pressures for the same points and/or curves of the area is incorrect but it is 
+frequent when the formation energy state is studied. In order to use the overdetermined 
+conditions and avoid the incorrectness the boundary problem is re-formulated as 
+a variational problem.
+
+\par Variational statement of the problem.
+
+The pressure field is determined as cells of equidistant grid with values:
+\f[
+u(x,y) = \sum\limits_{i=1}^N \sum\limits_{j=1}^M u_{i,j} \phi_{i,j}(x,y),
+\f]
+where \f$ \phi_{i,j}(x,y) = \phi_i(x) \phi_j(y) \f$,
+\f[
+ \phi_i \left( x \right) = \left\{
+  1,x \in \left[ih + a - \frac{h}
+{2},(i + 1)h + a - \frac{h}
+{2}\right) 
+\qquad 
+0, x \notin \left[ih + a - \frac{h}
+{2},(i + 1)h + a - \frac{h}
+{2}\right) \hfill 
+\right.
+\f]
+
+For each cell we use the flowing hypothesis:
+\li cell pressure is a constant value
+\li liquid viscosity and liquid density are constant for cell
+\li liquid filtration processes because of different pressure in neighbour cells. 
+Filtration processes in perpendicular direction to borders. For each border constant
+permeability coefficient is set.
+
+Following linear Darcy law, evalute filtration speeds throuth the cell borders:
+\image html darcy_law.gif "Darcy law for a cell"
+
+\f[
+\overline{\nu}_{i,j}^1 = - \frac{ k^1_{i,j} } { \mu_{i,j} } \frac{(u_{i+1,j}-u_{i,j})} {h_x} \overline{x},
+\f]
+\f[
+\overline{\nu}_{i,j}^2 = - \frac{ k^2_{i,j} } { \mu_{i,j} } \frac{(u_{i,j+1}-u_{i,j})} {h_y} \overline{y},
+\f]
+\f[
+\overline{\nu}_{i,j}^3 = - \frac{ k^1_{i-1,j} } { \mu_{i,j} } \frac{(u_{i,j}-u_{i-1,j})} {h_x} \overline{x},
+\f]
+\f[
+\overline{\nu}_{i,j}^4 = - \frac{ k^2_{i,j-1} } { \mu_{i,j} } \frac{(u_{i,j}-u_{i,j-1})} {h_y} \overline{y},
+\f]
+where \f$ k_{i,j}^p \f$ cell permeability in \f$ \overline{\nu}_{i,j}^p \f$ direction, 
+\f$ \mu_{i,j} \f$ liquid viscosity for (i,j) cell, \f$ \overline{x} \f$ unit vector in X direction,
+\f$ \overline{y} \f$ unit vector in Y direction.
+
+Consider two functionals:
+\li Pressure in the cell:	
+\f[
+P_{i,j} = \sum\limits_{p=1}^P \alpha_p \left( u_{i,j} - u_p \right)^2 = \min,
+\f]
+where \f$ \alpha_p \geq 0 \f$ is an informational weight, determines the level of 
+truth for the well pressure.
+This functional describes the way of taking into account pressures of the wells, 
+which belong to the (i,j) cell. Differentiation of this functional by \f$ u_{i,j} \f$
+leads to the equation: 
+\f[
+u_{i,j} = \frac 
+{ \sum\limits_{p=1}^P \alpha_p u_p }
+{ \sum\limits_{p=1}^P \alpha_p }.
+\f]
+
+\li Cell rate: 
+we use well-known variational principle describing filtration in porous 
+medium: among all possible isothermal laminar flows of homogeneous incompressible liquid 
+in cell with heterogeneous borders with filtration speed set, the real filtration flow 
+is that the pressure forces work spent for filtration resistance is minimal.
+For work of pressure forces in the cell we can write:
+\f[
+A_{i,j} = \frac{1}{2} \overline{F}_{i,j} \cdot \overline{\nu}_{i,j} - Q_{i,j} u_{i,j} = \min,
+\f]
+\f[
+\overline{F}_{i,j} = \left( u_{i+1,j} - u_{i,j} \right)h_y h_z \overline{x} +
+\left( u_{i,j+1} - u_{i,j} \right) h_x h_z \overline{y} +
+\left( u_{i,j} - u_{i-1,j} \right)h_y h_z \overline{x} +
+\left( u_{i,j} - u_{i,j-1} \right) h_x h_z \overline{y}
+\f]
+\f[
+\overline{\nu}_{i,j} = \overline{\nu}_{i,j}^1 + \overline{\nu}_{i,j}^2 + \overline{\nu}_{i,j}^3 \overline{\nu}_{i,j}^4
+\f]
+Differentiation of this expression by \f$ u_{i,j} \f$ leads to law of conservation of mass 
+written for the cell (i,j). <B><TT>freeflow</TT></B> implements the law of conservation of mass
+in the simplest statement : \ref lcm_simple. To represent impermeable lines it is necessary to set zero 
+filtration speed via suitable cell borders. It is effective to use \ref fault gridding rule for that. 
+
+For each cell we consider three possible situations:
+
+\li We know exact pressure for the cell. 
+\f[
+\begin{cases}
+P_{i,j}=\min, \\
+A_{i,j}=\min.
+\end{cases}
+\f]
+The functional describing pressure is the first to be minimized, the functional describing rate is the second.
+
+\li We know exact cell rate and permeable cell borders.
+\f[
+\begin{cases}
+A_{i,j}=\min, \\
+P_{i,j}=\min.
+\end{cases}
+\f]
+he functional describing rate is the first to be  minimized, the functional describing pressure is the second.
+
+\li We know cell debit with permeable cell borders and pressure for the cell. 
+When we minimize combination of functionals:
+
+\f[
+\beta A_{i,j} + P_{i,j} = \min,
+\f] 
+where \f$ \beta \f$ determines degree of reliability for each of the functionals.
+
+In case if we use only 1 and 2 types of functionals to obtain the solution, 
+the solution will be the same as for corresponding boundary problem because 
+we use only consistent data. In case of redundant and inconsistent data we 
+use the third functional.
+
+\par Example 1:
+
+\image html freeflow_ex1.gif 
+
+On the pictures you can see the results of the proposed algorithm. 
+On the contour showed by a dashed line pressure of 250 atmospheres was set. 
+On the first picture at the center the well with pressure of 200 
+atmospheres was set. For the second picture in the center rate in 97 m3 per 
+a second was assumed. The third picture is the result of calculation when 
+both pressure and debit were assumed in the center. As you can see this 
+result is approximately in the middle of results, showed in the first and 
+second pictures. It means that we can take into account both of data - 
+pressures and debits that is impossible to get by solving of a boundary 
+problem. This result was obtained from scripts:
+\li <A HREF="points_8tcl-example.html">points.tcl</A>
+\li <A HREF="flow__points_8tcl-example.html">flow_points.tcl</A>
+\li <A HREF="flow__points2_8tcl-example.html">flow_points2.tcl</A>
+
+\par Example 2:
+
+\image html freeflow_ex2.gif 
+
+The second example is about determination of formation fracture for 
+Arigol oilfield direction. Two situations were considered: horizontal 
+and vertical formation fracture direction. For this fracture we know 
+the rate and pressure and  take them into account writing the 
+combination of two functionals. The result is that the best direction is 
+vertical, because in this case each of the two functionals takes lower 
+values, than for horizontal direction. This criterion is explained by 
+the idea, that the correct fracture direction makes pressure and rate 
+more consistent.
+
+This result was obtained from scripts:
+\li <A HREF="map__hor__frac_8tcl-example.html">map_hor_frac.tcl</A>
+\li <A HREF="map__ver__frac_8tcl-example.html">map_ver_frac.tcl</A>
+                         
+*/

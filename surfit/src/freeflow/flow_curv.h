@@ -17,24 +17,27 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#ifndef __freeflow_prod_parea_included__
-#define __freeflow_prod_parea_included__
+#ifndef __freeflow_flow_curv_included__
+#define __freeflow_flow_curv_included__
 
 #include "functional.h"
 
 namespace surfit {
 
-class d_area;
+class d_points;
+class f_flow_points;
+class d_curv;
+class d_grid;
 
-class FLOW_EXPORT f_prod_area : public functional {
+class FLOW_EXPORT f_flow_curv : public functional {
 public:
-	f_prod_area(REAL ivalue, const d_area * iarea);
-	~f_prod_area();
-	
+	f_flow_curv(REAL ivalue, d_curv * icrv);
+	~f_flow_curv();
+
 	bool minimize();
-	
+
 	bool make_matrix_and_vector(matr *& matrix, vec *& v);
-	
+
 	bool solvable_without_cond(const bitvec * mask_solved, 
 				   const bitvec * mask_undefined,
 				   const vec * X);
@@ -42,16 +45,23 @@ public:
 	void mark_solved_and_undefined(bitvec * mask_solved, 
 				       bitvec * mask_undefined,
 				       bool i_am_cond);
-	
+		
 protected:
 
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
 
-	const d_area * area;
+	void create_f_flow_points();
+
+	const d_curv * crv;
 	REAL value;
 
+	f_flow_points * f_points;
+	d_points * d_pnts;
 };
+
+FLOW_EXPORT
+d_points * discretize_pcurv(const d_curv * crv, d_grid * grd, REAL value, const char * task_name);
 
 }; // namespace surfit;
 

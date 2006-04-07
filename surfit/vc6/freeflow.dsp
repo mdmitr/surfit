@@ -115,11 +115,11 @@ SOURCE=..\src\freeflow\flow_surf_tcl.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\src\freeflow\prod_points.cpp
+SOURCE=..\src\freeflow\flow_points.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\freeflow\prod_points_tcl.cpp
+SOURCE=..\src\freeflow\flow_points_tcl.cpp
 # End Source File
 # End Group
 # Begin Group "curvs.cpp"
@@ -127,19 +127,19 @@ SOURCE=..\src\freeflow\prod_points_tcl.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\src\freeflow\pcurvs_tcl.cpp
+SOURCE=..\src\freeflow\flow_area.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\freeflow\prod_area.cpp
+SOURCE=..\src\freeflow\flow_cntr.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\freeflow\prod_cntr.cpp
+SOURCE=..\src\freeflow\flow_curv.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\freeflow\prod_iso.cpp
+SOURCE=..\src\freeflow\flow_curvs_tcl.cpp
 # End Source File
 # End Group
 # Begin Group "global.cpp"
@@ -157,19 +157,11 @@ SOURCE=..\src\freeflow\f_lcm_simple_tcl.cpp
 # End Group
 # Begin Source File
 
-SOURCE=.\..\src\freeflow\flow.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\src\freeflow\flow_data_manager.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\..\src\freeflow\flow_variables.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\..\src\freeflow\freeflow.cpp
 # End Source File
 # Begin Source File
 
@@ -212,11 +204,11 @@ SOURCE=..\src\freeflow\flow_surf_tcl.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\src\freeflow\prod_points.h
+SOURCE=..\src\freeflow\flow_points.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\freeflow\prod_points_tcl.h
+SOURCE=..\src\freeflow\flow_points_tcl.h
 # End Source File
 # End Group
 # Begin Group "curvs.h"
@@ -224,19 +216,19 @@ SOURCE=..\src\freeflow\prod_points_tcl.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\src\freeflow\pcurvs_tcl.h
+SOURCE=..\src\freeflow\flow_area.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\freeflow\prod_area.h
+SOURCE=..\src\freeflow\flow_cntr.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\freeflow\prod_cntr.h
+SOURCE=..\src\freeflow\flow_curv.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\freeflow\prod_iso.h
+SOURCE=..\src\freeflow\flow_curvs_tcl.h
 # End Source File
 # End Group
 # Begin Group "globals.h"
@@ -254,10 +246,6 @@ SOURCE=..\src\freeflow\f_lcm_simple_tcl.h
 # End Group
 # Begin Source File
 
-SOURCE=.\..\src\freeflow\flow.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\src\freeflow\flow_data_manager.h
 # End Source File
 # Begin Source File
@@ -267,10 +255,6 @@ SOURCE=.\..\src\freeflow\flow_ie.h
 # Begin Source File
 
 SOURCE=.\..\src\freeflow\flow_variables.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\freeflow\freeflow.h
 # End Source File
 # End Group
 # Begin Group "Interface"

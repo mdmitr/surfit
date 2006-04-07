@@ -17,52 +17,48 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#ifndef __freeflow_approx_pcntr_included__
-#define __freeflow_approx_pcntr_included__
+#ifndef __freeflow_flow_points_included__
+#define __freeflow_flow_points_included__
 
 #include "functional.h"
 
 namespace surfit {
 
 class d_points;
-class f_prod_points;
-class d_cntr;
+class sub_points;
+typedef std::vector<sub_points *> sub_tasks;
+class bitvec;
 class d_grid;
 
-class FLOW_EXPORT f_prod_cntr : public functional {
+class FLOW_EXPORT f_flow_points : public functional {
 public:
-	f_prod_cntr(d_cntr * icontour);
-	~f_prod_cntr();
+	f_flow_points(const d_points * itsk);
+	~f_flow_points();
 
 	bool minimize();
-
+	
 	bool make_matrix_and_vector(matr *& matrix, vec *& v);
-
-	bool solvable_without_cond(const bitvec * mask_solved, 
-				   const bitvec * mask_undefined,
-				   const vec * X);
-
+	
 	void mark_solved_and_undefined(bitvec * mask_solved, 
 				       bitvec * mask_undefined,
 				       bool i_am_cond);
-
+	
+	bool solvable_without_cond(const bitvec * mask_solved, 
+				   const bitvec * mask_undefined,
+				   const vec * X);
+	
 protected:
 
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
 
-	void create_f_prod_points();
+	const d_points * f_task;
+	sub_tasks * f_sub_tasks;
+	d_grid * binded_grid;
 
-	const d_cntr * contour;
-	f_prod_points * f_points;
-	d_points * d_pnts;
 };
 
-FLOW_EXPORT
-d_points * discretize_pcntr(const d_cntr * pcrv, d_grid * grd, const char * task_name);
-
-
-}; // namespace surfit;
+}; // namespace surfit
 
 #endif
 

@@ -21,7 +21,7 @@
 
 #include "fileio.h"
 
-#include "prod_points.h"
+#include "flow_points.h"
 #include "points.h"
 #include "bitvec.h"
 #include "vec.h"
@@ -36,38 +36,38 @@
 
 namespace surfit {
 
-f_prod_points::f_prod_points(const d_points * itsk) :
-functional("f_prod_points", F_USUAL) 
+f_flow_points::f_flow_points(const d_points * itsk) :
+functional("f_flow_points", F_USUAL) 
 {
 	f_task = itsk;
 	if (f_task->getName()) {
-		setNameF("f_prod_points %s", f_task->getName());
+		setNameF("f_flow_points %s", f_task->getName());
 	}
 	f_sub_tasks = NULL;
 	binded_grid = NULL;
 }
 
-f_prod_points::~f_prod_points() {
+f_flow_points::~f_flow_points() {
 	if (f_sub_tasks)
 		free_scattered_points( f_sub_tasks );
 	delete binded_grid;
 };
 
-int f_prod_points::this_get_data_count() const {
+int f_flow_points::this_get_data_count() const {
 	return 1;
 };
 
-const data * f_prod_points::this_get_data(int pos) const {
+const data * f_flow_points::this_get_data(int pos) const {
 	if (pos == 0)
 		return f_task;
 	return NULL;
 };
 
-bool f_prod_points::minimize() {
+bool f_flow_points::minimize() {
 	return false;
 };
 
-bool f_prod_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_flow_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	if (f_sub_tasks == NULL) {
 		prepare_scattered_points(f_task, f_sub_tasks);
@@ -81,9 +81,9 @@ bool f_prod_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	int task_size = f_task->size();
 		
 	if (f_task->getName()) {
-		writelog(LOG_MESSAGE,"production points : (%s), %d points", f_task->getName(), f_task->size());
+		writelog(LOG_MESSAGE,"flow points : (%s), %d points", f_task->getName(), f_task->size());
 	} else {
-		writelog(LOG_MESSAGE,"production points : noname dataset, %d points", f_task->size());
+		writelog(LOG_MESSAGE,"flow points : noname dataset, %d points", f_task->size());
 	}
 	
 	// avoiding two-times bind_points_to_grid calling for the same grid
@@ -123,14 +123,14 @@ bool f_prod_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	return solvable;
 };
 
-void f_prod_points::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+void f_flow_points::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 	if ((functionals_add->size() == 0) && ( !cond() ) && (i_am_cond == false) )
 		return;	
 
 	mark_sums(mask_solved, mask_undefined);
 };
 
-bool f_prod_points::solvable_without_cond(const bitvec * mask_solved,
+bool f_flow_points::solvable_without_cond(const bitvec * mask_solved,
 					  const bitvec * mask_undefined,
 					  const vec * X)
 {

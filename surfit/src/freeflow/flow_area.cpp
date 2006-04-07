@@ -21,7 +21,7 @@
 
 #include "fileio.h"
 
-#include "prod_area.h"
+#include "flow_area.h"
 #include "area.h"
 #include "vec.h"
 #include "grid_line.h"
@@ -33,8 +33,8 @@
 
 namespace surfit {
 
-f_prod_area::f_prod_area(REAL ivalue, const d_area * iarea) :
-functional("f_prod_area", F_USUAL) 
+f_flow_area::f_flow_area(REAL ivalue, const d_area * iarea) :
+functional("f_flow_area", F_USUAL) 
 {
 	area = iarea;
 	value = ivalue;
@@ -43,29 +43,29 @@ functional("f_prod_area", F_USUAL)
 	}
 };
 
-f_prod_area::~f_prod_area() {
+f_flow_area::~f_flow_area() {
 };
 
-int f_prod_area::this_get_data_count() const {
+int f_flow_area::this_get_data_count() const {
 	return 1;
 };
 
-const data * f_prod_area::this_get_data(int pos) const {
+const data * f_flow_area::this_get_data(int pos) const {
 	if (pos == 0)
 		return area;
 	return NULL;
 };
 
-bool f_prod_area::minimize() {
+bool f_flow_area::minimize() {
 	return false;
 };
 
-bool f_prod_area::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_flow_area::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	if (area->getName())
-		writelog(LOG_MESSAGE,"production area (%s), value = %g", area->getName(), value);
+		writelog(LOG_MESSAGE,"flow area (%s), value = %g", area->getName(), value);
 	else 
-		writelog(LOG_MESSAGE,"production area noname, value = %g", value);
+		writelog(LOG_MESSAGE,"flow area noname, value = %g", value);
 	
 	int matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_vec(matrix_size);
@@ -104,14 +104,14 @@ bool f_prod_area::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	return solvable;
 };
 
-void f_prod_area::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+void f_flow_area::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 	if ((functionals_add->size() == 0) && ( !cond() ) && (i_am_cond == false) )
 		return;	
 
 	mark_sums(mask_solved, mask_undefined);
 };
 
-bool f_prod_area::solvable_without_cond(const bitvec * mask_solved,
+bool f_flow_area::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
 					const vec * X)
 {

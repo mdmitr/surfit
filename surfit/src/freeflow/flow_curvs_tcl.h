@@ -17,13 +17,37 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#ifndef __surfit_flow_included__
-#define __surfit_flow_included__
+#ifndef __freeflow_pcurvs_tcl_included__
+#define __freeflow_pcurvs_tcl_included__
 
 namespace surfit {
 
+/*! \ingroup tcl_freeflow_rules
+    \fn bool flow_area(REAL value, const char * area_name_or_position = "0");
+
+    \par Tcl syntax: 
+    flow_area value "area_name_or_position"
+*/
 FLOW_EXPORT
-void flow();
+bool flow_area(REAL value, const char * area_name_or_position = "0");
+
+/*! \ingroup tcl_freeflow_rules
+    \fn bool flow_curve(REAL value, const char * curve_name_or_position = "0");
+
+    \par Tcl syntax: 
+    flow_curve value "curve_name_or_position"
+*/
+FLOW_EXPORT
+bool flow_curve(REAL value, const char * curve_name_or_position = "0");
+
+/*! \ingroup tcl_freeflow_rules
+    \fn bool flow_contour(const char * contour_name_or_position = "0");
+
+    \par Tcl syntax: 
+    flow_contour "contour_name_or_position"
+*/
+FLOW_EXPORT
+bool flow_contour(const char * contour_name_or_position = "0");
 
 }; // namespace surfit;
 

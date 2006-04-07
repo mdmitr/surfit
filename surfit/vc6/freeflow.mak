@@ -52,32 +52,28 @@ CLEAN :
 	-@erase "$(INTDIR)\f_lcm_simple.sbr"
 	-@erase "$(INTDIR)\f_lcm_simple_tcl.obj"
 	-@erase "$(INTDIR)\f_lcm_simple_tcl.sbr"
-	-@erase "$(INTDIR)\flow.obj"
-	-@erase "$(INTDIR)\flow.sbr"
+	-@erase "$(INTDIR)\flow_area.obj"
+	-@erase "$(INTDIR)\flow_area.sbr"
+	-@erase "$(INTDIR)\flow_cntr.obj"
+	-@erase "$(INTDIR)\flow_cntr.sbr"
+	-@erase "$(INTDIR)\flow_curv.obj"
+	-@erase "$(INTDIR)\flow_curv.sbr"
+	-@erase "$(INTDIR)\flow_curvs_tcl.obj"
+	-@erase "$(INTDIR)\flow_curvs_tcl.sbr"
 	-@erase "$(INTDIR)\flow_data_manager.obj"
 	-@erase "$(INTDIR)\flow_data_manager.sbr"
+	-@erase "$(INTDIR)\flow_points.obj"
+	-@erase "$(INTDIR)\flow_points.sbr"
+	-@erase "$(INTDIR)\flow_points_tcl.obj"
+	-@erase "$(INTDIR)\flow_points_tcl.sbr"
 	-@erase "$(INTDIR)\flow_surf_internal.obj"
 	-@erase "$(INTDIR)\flow_surf_internal.sbr"
 	-@erase "$(INTDIR)\flow_surf_tcl.obj"
 	-@erase "$(INTDIR)\flow_surf_tcl.sbr"
 	-@erase "$(INTDIR)\flow_variables.obj"
 	-@erase "$(INTDIR)\flow_variables.sbr"
-	-@erase "$(INTDIR)\freeflow.obj"
-	-@erase "$(INTDIR)\freeflow.sbr"
 	-@erase "$(INTDIR)\freeflow_wrap.obj"
 	-@erase "$(INTDIR)\freeflow_wrap.sbr"
-	-@erase "$(INTDIR)\pcurvs_tcl.obj"
-	-@erase "$(INTDIR)\pcurvs_tcl.sbr"
-	-@erase "$(INTDIR)\prod_area.obj"
-	-@erase "$(INTDIR)\prod_area.sbr"
-	-@erase "$(INTDIR)\prod_cntr.obj"
-	-@erase "$(INTDIR)\prod_cntr.sbr"
-	-@erase "$(INTDIR)\prod_iso.obj"
-	-@erase "$(INTDIR)\prod_iso.sbr"
-	-@erase "$(INTDIR)\prod_points.obj"
-	-@erase "$(INTDIR)\prod_points.sbr"
-	-@erase "$(INTDIR)\prod_points_tcl.obj"
-	-@erase "$(INTDIR)\prod_points_tcl.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(OUTDIR)\freeflow.bsc"
 	-@erase "..\bin\libfreeflow.dll"
@@ -128,19 +124,17 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\freeflow.bsc"
 BSC32_SBRS= \
 	"$(INTDIR)\flow_surf_internal.sbr" \
 	"$(INTDIR)\flow_surf_tcl.sbr" \
-	"$(INTDIR)\prod_points.sbr" \
-	"$(INTDIR)\prod_points_tcl.sbr" \
-	"$(INTDIR)\pcurvs_tcl.sbr" \
-	"$(INTDIR)\prod_area.sbr" \
-	"$(INTDIR)\prod_cntr.sbr" \
-	"$(INTDIR)\prod_iso.sbr" \
 	"$(INTDIR)\f_lcm_simple.sbr" \
 	"$(INTDIR)\f_lcm_simple_tcl.sbr" \
-	"$(INTDIR)\flow.sbr" \
 	"$(INTDIR)\flow_data_manager.sbr" \
 	"$(INTDIR)\flow_variables.sbr" \
-	"$(INTDIR)\freeflow.sbr" \
-	"$(INTDIR)\freeflow_wrap.sbr"
+	"$(INTDIR)\freeflow_wrap.sbr" \
+	"$(INTDIR)\flow_points.sbr" \
+	"$(INTDIR)\flow_points_tcl.sbr" \
+	"$(INTDIR)\flow_curvs_tcl.sbr" \
+	"$(INTDIR)\flow_area.sbr" \
+	"$(INTDIR)\flow_cntr.sbr" \
+	"$(INTDIR)\flow_curv.sbr"
 
 "$(OUTDIR)\freeflow.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -152,19 +146,17 @@ LINK32_FLAGS=tcl83.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libfreeflow.
 LINK32_OBJS= \
 	"$(INTDIR)\flow_surf_internal.obj" \
 	"$(INTDIR)\flow_surf_tcl.obj" \
-	"$(INTDIR)\prod_points.obj" \
-	"$(INTDIR)\prod_points_tcl.obj" \
-	"$(INTDIR)\pcurvs_tcl.obj" \
-	"$(INTDIR)\prod_area.obj" \
-	"$(INTDIR)\prod_cntr.obj" \
-	"$(INTDIR)\prod_iso.obj" \
 	"$(INTDIR)\f_lcm_simple.obj" \
 	"$(INTDIR)\f_lcm_simple_tcl.obj" \
-	"$(INTDIR)\flow.obj" \
 	"$(INTDIR)\flow_data_manager.obj" \
 	"$(INTDIR)\flow_variables.obj" \
-	"$(INTDIR)\freeflow.obj" \
 	"$(INTDIR)\freeflow_wrap.obj" \
+	"$(INTDIR)\flow_points.obj" \
+	"$(INTDIR)\flow_points_tcl.obj" \
+	"$(INTDIR)\flow_curvs_tcl.obj" \
+	"$(INTDIR)\flow_area.obj" \
+	"$(INTDIR)\flow_cntr.obj" \
+	"$(INTDIR)\flow_curv.obj" \
 	"..\bin\libsurfit.lib" \
 	"..\bin\libsstuff.lib"
 
@@ -200,32 +192,28 @@ CLEAN :
 	-@erase "$(INTDIR)\f_lcm_simple.sbr"
 	-@erase "$(INTDIR)\f_lcm_simple_tcl.obj"
 	-@erase "$(INTDIR)\f_lcm_simple_tcl.sbr"
-	-@erase "$(INTDIR)\flow.obj"
-	-@erase "$(INTDIR)\flow.sbr"
+	-@erase "$(INTDIR)\flow_area.obj"
+	-@erase "$(INTDIR)\flow_area.sbr"
+	-@erase "$(INTDIR)\flow_cntr.obj"
+	-@erase "$(INTDIR)\flow_cntr.sbr"
+	-@erase "$(INTDIR)\flow_curv.obj"
+	-@erase "$(INTDIR)\flow_curv.sbr"
+	-@erase "$(INTDIR)\flow_curvs_tcl.obj"
+	-@erase "$(INTDIR)\flow_curvs_tcl.sbr"
 	-@erase "$(INTDIR)\flow_data_manager.obj"
 	-@erase "$(INTDIR)\flow_data_manager.sbr"
+	-@erase "$(INTDIR)\flow_points.obj"
+	-@erase "$(INTDIR)\flow_points.sbr"
+	-@erase "$(INTDIR)\flow_points_tcl.obj"
+	-@erase "$(INTDIR)\flow_points_tcl.sbr"
 	-@erase "$(INTDIR)\flow_surf_internal.obj"
 	-@erase "$(INTDIR)\flow_surf_internal.sbr"
 	-@erase "$(INTDIR)\flow_surf_tcl.obj"
 	-@erase "$(INTDIR)\flow_surf_tcl.sbr"
 	-@erase "$(INTDIR)\flow_variables.obj"
 	-@erase "$(INTDIR)\flow_variables.sbr"
-	-@erase "$(INTDIR)\freeflow.obj"
-	-@erase "$(INTDIR)\freeflow.sbr"
 	-@erase "$(INTDIR)\freeflow_wrap.obj"
 	-@erase "$(INTDIR)\freeflow_wrap.sbr"
-	-@erase "$(INTDIR)\pcurvs_tcl.obj"
-	-@erase "$(INTDIR)\pcurvs_tcl.sbr"
-	-@erase "$(INTDIR)\prod_area.obj"
-	-@erase "$(INTDIR)\prod_area.sbr"
-	-@erase "$(INTDIR)\prod_cntr.obj"
-	-@erase "$(INTDIR)\prod_cntr.sbr"
-	-@erase "$(INTDIR)\prod_iso.obj"
-	-@erase "$(INTDIR)\prod_iso.sbr"
-	-@erase "$(INTDIR)\prod_points.obj"
-	-@erase "$(INTDIR)\prod_points.sbr"
-	-@erase "$(INTDIR)\prod_points_tcl.obj"
-	-@erase "$(INTDIR)\prod_points_tcl.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\vc60.pdb"
 	-@erase "$(OUTDIR)\freeflow.bsc"
@@ -277,19 +265,17 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\freeflow.bsc"
 BSC32_SBRS= \
 	"$(INTDIR)\flow_surf_internal.sbr" \
 	"$(INTDIR)\flow_surf_tcl.sbr" \
-	"$(INTDIR)\prod_points.sbr" \
-	"$(INTDIR)\prod_points_tcl.sbr" \
-	"$(INTDIR)\pcurvs_tcl.sbr" \
-	"$(INTDIR)\prod_area.sbr" \
-	"$(INTDIR)\prod_cntr.sbr" \
-	"$(INTDIR)\prod_iso.sbr" \
 	"$(INTDIR)\f_lcm_simple.sbr" \
 	"$(INTDIR)\f_lcm_simple_tcl.sbr" \
-	"$(INTDIR)\flow.sbr" \
 	"$(INTDIR)\flow_data_manager.sbr" \
 	"$(INTDIR)\flow_variables.sbr" \
-	"$(INTDIR)\freeflow.sbr" \
-	"$(INTDIR)\freeflow_wrap.sbr"
+	"$(INTDIR)\freeflow_wrap.sbr" \
+	"$(INTDIR)\flow_points.sbr" \
+	"$(INTDIR)\flow_points_tcl.sbr" \
+	"$(INTDIR)\flow_curvs_tcl.sbr" \
+	"$(INTDIR)\flow_area.sbr" \
+	"$(INTDIR)\flow_cntr.sbr" \
+	"$(INTDIR)\flow_curv.sbr"
 
 "$(OUTDIR)\freeflow.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -301,19 +287,17 @@ LINK32_FLAGS=tcl83d.lib /nologo /dll /pdb:none /debug /machine:I386 /out:"../bin
 LINK32_OBJS= \
 	"$(INTDIR)\flow_surf_internal.obj" \
 	"$(INTDIR)\flow_surf_tcl.obj" \
-	"$(INTDIR)\prod_points.obj" \
-	"$(INTDIR)\prod_points_tcl.obj" \
-	"$(INTDIR)\pcurvs_tcl.obj" \
-	"$(INTDIR)\prod_area.obj" \
-	"$(INTDIR)\prod_cntr.obj" \
-	"$(INTDIR)\prod_iso.obj" \
 	"$(INTDIR)\f_lcm_simple.obj" \
 	"$(INTDIR)\f_lcm_simple_tcl.obj" \
-	"$(INTDIR)\flow.obj" \
 	"$(INTDIR)\flow_data_manager.obj" \
 	"$(INTDIR)\flow_variables.obj" \
-	"$(INTDIR)\freeflow.obj" \
 	"$(INTDIR)\freeflow_wrap.obj" \
+	"$(INTDIR)\flow_points.obj" \
+	"$(INTDIR)\flow_points_tcl.obj" \
+	"$(INTDIR)\flow_curvs_tcl.obj" \
+	"$(INTDIR)\flow_area.obj" \
+	"$(INTDIR)\flow_cntr.obj" \
+	"$(INTDIR)\flow_curv.obj" \
 	"..\bin\libsurfit.lib" \
 	"..\bin\libsstuff.lib"
 
@@ -347,39 +331,39 @@ SOURCE=..\src\freeflow\flow_surf_tcl.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\src\freeflow\prod_points.cpp
+SOURCE=..\src\freeflow\flow_points.cpp
 
-"$(INTDIR)\prod_points.obj"	"$(INTDIR)\prod_points.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\flow_points.obj"	"$(INTDIR)\flow_points.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\src\freeflow\prod_points_tcl.cpp
+SOURCE=..\src\freeflow\flow_points_tcl.cpp
 
-"$(INTDIR)\prod_points_tcl.obj"	"$(INTDIR)\prod_points_tcl.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\flow_points_tcl.obj"	"$(INTDIR)\flow_points_tcl.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\src\freeflow\pcurvs_tcl.cpp
+SOURCE=..\src\freeflow\flow_area.cpp
 
-"$(INTDIR)\pcurvs_tcl.obj"	"$(INTDIR)\pcurvs_tcl.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\flow_area.obj"	"$(INTDIR)\flow_area.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\src\freeflow\prod_area.cpp
+SOURCE=..\src\freeflow\flow_cntr.cpp
 
-"$(INTDIR)\prod_area.obj"	"$(INTDIR)\prod_area.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\flow_cntr.obj"	"$(INTDIR)\flow_cntr.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\src\freeflow\prod_cntr.cpp
+SOURCE=..\src\freeflow\flow_curv.cpp
 
-"$(INTDIR)\prod_cntr.obj"	"$(INTDIR)\prod_cntr.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\flow_curv.obj"	"$(INTDIR)\flow_curv.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\src\freeflow\prod_iso.cpp
+SOURCE=..\src\freeflow\flow_curvs_tcl.cpp
 
-"$(INTDIR)\prod_iso.obj"	"$(INTDIR)\prod_iso.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\flow_curvs_tcl.obj"	"$(INTDIR)\flow_curvs_tcl.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -395,12 +379,6 @@ SOURCE=..\src\freeflow\f_lcm_simple_tcl.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=.\..\src\freeflow\flow.cpp
-
-"$(INTDIR)\flow.obj"	"$(INTDIR)\flow.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
 SOURCE=..\src\freeflow\flow_data_manager.cpp
 
 "$(INTDIR)\flow_data_manager.obj"	"$(INTDIR)\flow_data_manager.sbr" : $(SOURCE) "$(INTDIR)"
@@ -410,12 +388,6 @@ SOURCE=..\src\freeflow\flow_data_manager.cpp
 SOURCE=.\..\src\freeflow\flow_variables.cpp
 
 "$(INTDIR)\flow_variables.obj"	"$(INTDIR)\flow_variables.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=.\..\src\freeflow\freeflow.cpp
-
-"$(INTDIR)\freeflow.obj"	"$(INTDIR)\freeflow.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

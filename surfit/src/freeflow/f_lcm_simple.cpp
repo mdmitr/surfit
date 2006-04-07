@@ -44,12 +44,12 @@ faultable("f_lcm_simple", F_USUAL|F_FAULT)
 	permeability = ipermeability;
 	viscosity = iviscosity;
 	multiplier = imultiplier;
-	production = new std::vector<functional *>;
+	flows = new std::vector<functional *>;
 };
 
 f_lcm_simple::~f_lcm_simple() {
-	release_elements(production->begin(), production->end());
-	delete production;
+	release_elements(flows->begin(), flows->end());
+	delete flows;
 };
 
 int f_lcm_simple::this_get_data_count() const {
@@ -60,8 +60,8 @@ const data * f_lcm_simple::this_get_data(int pos) const {
 	return NULL;
 };
 
-void f_lcm_simple::add_production(functional * fnc) {
-	production->push_back(fnc);
+void f_lcm_simple::add_flow(functional * fnc) {
+	flows->push_back(fnc);
 };
 
 bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, vec *& v) {
@@ -80,8 +80,8 @@ bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	int points = calcVecV(matrix_size, method_X, oD1, v, NN, MM, method_mask_solved, method_mask_undefined);
 
 	unsigned int i;
-	for (i = 0; i < production->size(); i++) {
-		functional * ff = (*production)[i];
+	for (i = 0; i < flows->size(); i++) {
+		functional * ff = (*flows)[i];
 		if (!ff)
 			continue;
 		matr * T = NULL;

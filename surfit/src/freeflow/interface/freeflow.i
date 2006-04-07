@@ -22,14 +22,13 @@
 %{
 #include "real.h"
 #include "flow_ie.h"
-#include "flow.h"
 #include "variables.h"
 #include "variables_tcl.h"
 #include "flow_variables.h"
 #include <float.h>
 
-#include "prod_points_tcl.h"
-#include "pcurvs_tcl.h"
+#include "flow_points_tcl.h"
+#include "flow_curvs_tcl.h"
 %}
 
 %init 
@@ -61,10 +60,10 @@ namespace surfit {
 
 %include "../../src/sstuff/real.h"
 
-bool prod_points(const char * pos = "-1");
-bool prod_area(REAL value, const char * pos = "-1");
-bool prod_isoline(REAL value, const char * pos = "-1");
-bool prod_contour(const char * pos = "-1");
+bool flow_points(const char * points_name_or_position = "0");
+bool flow_area(REAL value, const char * area_name_or_position = "0");
+bool flow_curve(REAL value, const char * curve_name_or_position = "0");
+bool flow_contour(const char * contour_name_or_position = "0");
 
 
 }; // namespace surfit;

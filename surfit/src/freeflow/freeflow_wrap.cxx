@@ -1607,14 +1607,13 @@ SWIGEXPORT int SWIG_init(Tcl_Interp *);
 
 #include "real.h"
 #include "flow_ie.h"
-#include "flow.h"
 #include "variables.h"
 #include "variables_tcl.h"
 #include "flow_variables.h"
 #include <float.h>
 
-#include "prod_points_tcl.h"
-#include "pcurvs_tcl.h"
+#include "flow_points_tcl.h"
+#include "flow_curvs_tcl.h"
 
 
 #include <limits.h>
@@ -1683,30 +1682,27 @@ SWIG_AsVal_double SWIG_TCL_DECL_ARGS_2(Tcl_Obj *obj, double *val)
 
   #define SWIG_From_double   Tcl_NewDoubleObj 
 
-
-
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 SWIGINTERN int
-_wrap_prod_points__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_flow_points__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:prod_points pos ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:flow_points points_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "prod_points" "', argument " "1"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "flow_points" "', argument " "1"" of type '" "char const *""'");
   }
   arg1 = buf1;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::prod_points((char const *)arg1);
+        result = (bool)surfit::flow_points((char const *)arg1);
         
       }
     }
@@ -1724,14 +1720,14 @@ fail:
 
 
 SWIGINTERN int
-_wrap_prod_points__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_flow_points__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,":prod_points ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":flow_points ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::prod_points();
+        result = (bool)surfit::flow_points();
         
       }
     }
@@ -1747,28 +1743,28 @@ fail:
 
 
 SWIGINTERN int
-_wrap_prod_points(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_flow_points(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   Tcl_Obj *CONST *argv = objv+1;
   int argc = objc-1;
   if (argc == 0) {
-    return _wrap_prod_points__SWIG_1(clientData, interp, objc, argv - 1);
+    return _wrap_flow_points__SWIG_1(clientData, interp, objc, argv - 1);
   }
   if (argc == 1) {
     int _v;
     int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_prod_points__SWIG_0(clientData, interp, objc, argv - 1);
+      return _wrap_flow_points__SWIG_0(clientData, interp, objc, argv - 1);
     }
   }
   
-  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'prod_points'", TCL_STATIC);
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'flow_points'", TCL_STATIC);
   return TCL_ERROR;
 }
 
 
 SWIGINTERN int
-_wrap_prod_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_flow_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   double arg1 ;
   char *arg2 = (char *) 0 ;
   bool result;
@@ -1778,21 +1774,21 @@ _wrap_prod_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:prod_area value pos ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:flow_area value area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "prod_area" "', argument " "1"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "flow_area" "', argument " "1"" of type '" "double""'");
   } 
   arg1 = static_cast<double >(val1);
   res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "prod_area" "', argument " "2"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "flow_area" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = buf2;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::prod_area(arg1,(char const *)arg2);
+        result = (bool)surfit::flow_area(arg1,(char const *)arg2);
         
       }
     }
@@ -1810,22 +1806,22 @@ fail:
 
 
 SWIGINTERN int
-_wrap_prod_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_flow_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   double arg1 ;
   bool result;
   double val1 ;
   int ecode1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:prod_area value ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:flow_area value ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "prod_area" "', argument " "1"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "flow_area" "', argument " "1"" of type '" "double""'");
   } 
   arg1 = static_cast<double >(val1);
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::prod_area(arg1);
+        result = (bool)surfit::flow_area(arg1);
         
       }
     }
@@ -1841,7 +1837,7 @@ fail:
 
 
 SWIGINTERN int
-_wrap_prod_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_flow_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   Tcl_Obj *CONST *argv = objv+1;
   int argc = objc-1;
   if (argc == 1) {
@@ -1851,7 +1847,7 @@ _wrap_prod_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       _v = SWIG_CheckState(res);
     }
     if (_v) {
-      return _wrap_prod_area__SWIG_1(clientData, interp, objc, argv - 1);
+      return _wrap_flow_area__SWIG_1(clientData, interp, objc, argv - 1);
     }
   }
   if (argc == 2) {
@@ -1864,18 +1860,18 @@ _wrap_prod_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_prod_area__SWIG_0(clientData, interp, objc, argv - 1);
+        return _wrap_flow_area__SWIG_0(clientData, interp, objc, argv - 1);
       }
     }
   }
   
-  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'prod_area'", TCL_STATIC);
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'flow_area'", TCL_STATIC);
   return TCL_ERROR;
 }
 
 
 SWIGINTERN int
-_wrap_prod_isoline__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_flow_curve__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   double arg1 ;
   char *arg2 = (char *) 0 ;
   bool result;
@@ -1885,21 +1881,21 @@ _wrap_prod_isoline__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:prod_isoline value pos ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:flow_curve value curve_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "prod_isoline" "', argument " "1"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "flow_curve" "', argument " "1"" of type '" "double""'");
   } 
   arg1 = static_cast<double >(val1);
   res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "prod_isoline" "', argument " "2"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "flow_curve" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = buf2;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::prod_isoline(arg1,(char const *)arg2);
+        result = (bool)surfit::flow_curve(arg1,(char const *)arg2);
         
       }
     }
@@ -1917,22 +1913,22 @@ fail:
 
 
 SWIGINTERN int
-_wrap_prod_isoline__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_flow_curve__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   double arg1 ;
   bool result;
   double val1 ;
   int ecode1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:prod_isoline value ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:flow_curve value ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "prod_isoline" "', argument " "1"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "flow_curve" "', argument " "1"" of type '" "double""'");
   } 
   arg1 = static_cast<double >(val1);
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::prod_isoline(arg1);
+        result = (bool)surfit::flow_curve(arg1);
         
       }
     }
@@ -1948,7 +1944,7 @@ fail:
 
 
 SWIGINTERN int
-_wrap_prod_isoline(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_flow_curve(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   Tcl_Obj *CONST *argv = objv+1;
   int argc = objc-1;
   if (argc == 1) {
@@ -1958,7 +1954,7 @@ _wrap_prod_isoline(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       _v = SWIG_CheckState(res);
     }
     if (_v) {
-      return _wrap_prod_isoline__SWIG_1(clientData, interp, objc, argv - 1);
+      return _wrap_flow_curve__SWIG_1(clientData, interp, objc, argv - 1);
     }
   }
   if (argc == 2) {
@@ -1971,34 +1967,34 @@ _wrap_prod_isoline(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_prod_isoline__SWIG_0(clientData, interp, objc, argv - 1);
+        return _wrap_flow_curve__SWIG_0(clientData, interp, objc, argv - 1);
       }
     }
   }
   
-  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'prod_isoline'", TCL_STATIC);
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'flow_curve'", TCL_STATIC);
   return TCL_ERROR;
 }
 
 
 SWIGINTERN int
-_wrap_prod_contour__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_flow_contour__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:prod_contour pos ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:flow_contour contour_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "prod_contour" "', argument " "1"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "flow_contour" "', argument " "1"" of type '" "char const *""'");
   }
   arg1 = buf1;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::prod_contour((char const *)arg1);
+        result = (bool)surfit::flow_contour((char const *)arg1);
         
       }
     }
@@ -2016,14 +2012,14 @@ fail:
 
 
 SWIGINTERN int
-_wrap_prod_contour__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_flow_contour__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,":prod_contour ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":flow_contour ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::prod_contour();
+        result = (bool)surfit::flow_contour();
         
       }
     }
@@ -2039,22 +2035,22 @@ fail:
 
 
 SWIGINTERN int
-_wrap_prod_contour(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_flow_contour(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   Tcl_Obj *CONST *argv = objv+1;
   int argc = objc-1;
   if (argc == 0) {
-    return _wrap_prod_contour__SWIG_1(clientData, interp, objc, argv - 1);
+    return _wrap_flow_contour__SWIG_1(clientData, interp, objc, argv - 1);
   }
   if (argc == 1) {
     int _v;
     int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_prod_contour__SWIG_0(clientData, interp, objc, argv - 1);
+      return _wrap_flow_contour__SWIG_0(clientData, interp, objc, argv - 1);
     }
   }
   
-  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'prod_contour'", TCL_STATIC);
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'flow_contour'", TCL_STATIC);
   return TCL_ERROR;
 }
 
@@ -3014,10 +3010,10 @@ _wrap_surf_debit_rect(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
 
 
 static swig_command_info swig_commands[] = {
-    { SWIG_prefix "prod_points", (swig_wrapper_func) _wrap_prod_points, NULL},
-    { SWIG_prefix "prod_area", (swig_wrapper_func) _wrap_prod_area, NULL},
-    { SWIG_prefix "prod_isoline", (swig_wrapper_func) _wrap_prod_isoline, NULL},
-    { SWIG_prefix "prod_contour", (swig_wrapper_func) _wrap_prod_contour, NULL},
+    { SWIG_prefix "flow_points", (swig_wrapper_func) _wrap_flow_points, NULL},
+    { SWIG_prefix "flow_area", (swig_wrapper_func) _wrap_flow_area, NULL},
+    { SWIG_prefix "flow_curve", (swig_wrapper_func) _wrap_flow_curve, NULL},
+    { SWIG_prefix "flow_contour", (swig_wrapper_func) _wrap_flow_contour, NULL},
     { SWIG_prefix "lcm_simple", (swig_wrapper_func) _wrap_lcm_simple, NULL},
     { SWIG_prefix "lcm_simple_add", (swig_wrapper_func) _wrap_lcm_simple_add, NULL},
     { SWIG_prefix "surf_debit", (swig_wrapper_func) _wrap_surf_debit, NULL},
