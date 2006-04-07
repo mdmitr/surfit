@@ -251,7 +251,9 @@ bool curve_surf_geq(const char * surf_name_or_position = "0", const char * curv_
     \param curv_name_or_position \ref d_curv "curve" name, or curve position number
 
     \par Gridding rules, modifiable with this rule:
-    \li \ref completer, \ref trend
+    \li \ref completer
+    \li \ref trend
+    \li \ref lcm_simple
 
 */
 bool fault(const char * curv_name_or_position = "0");
