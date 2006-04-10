@@ -25,6 +25,10 @@ NULL=
 NULL=nul
 !ENDIF 
 
+CPP=cl.exe
+MTL=midl.exe
+RSC=rc.exe
+
 !IF  "$(CFG)" == "freeflow - Win32 Release"
 
 OUTDIR=.\../Release
@@ -83,58 +87,24 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP=cl.exe
 CPP_PROJ=/nologo /MT /W3 /GR /GX /O2 /Ob2 /I "../src/sstuff" /I "../src/surfit" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
-
-.c{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.c{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-MTL=midl.exe
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
-RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\freeflow.bsc" 
 BSC32_SBRS= \
 	"$(INTDIR)\flow_surf_internal.sbr" \
 	"$(INTDIR)\flow_surf_tcl.sbr" \
+	"$(INTDIR)\flow_points.sbr" \
+	"$(INTDIR)\flow_points_tcl.sbr" \
+	"$(INTDIR)\flow_area.sbr" \
+	"$(INTDIR)\flow_cntr.sbr" \
+	"$(INTDIR)\flow_curv.sbr" \
+	"$(INTDIR)\flow_curvs_tcl.sbr" \
 	"$(INTDIR)\f_lcm_simple.sbr" \
 	"$(INTDIR)\f_lcm_simple_tcl.sbr" \
 	"$(INTDIR)\flow_data_manager.sbr" \
 	"$(INTDIR)\flow_variables.sbr" \
-	"$(INTDIR)\freeflow_wrap.sbr" \
-	"$(INTDIR)\flow_points.sbr" \
-	"$(INTDIR)\flow_points_tcl.sbr" \
-	"$(INTDIR)\flow_curvs_tcl.sbr" \
-	"$(INTDIR)\flow_area.sbr" \
-	"$(INTDIR)\flow_cntr.sbr" \
-	"$(INTDIR)\flow_curv.sbr"
+	"$(INTDIR)\freeflow_wrap.sbr"
 
 "$(OUTDIR)\freeflow.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -146,17 +116,17 @@ LINK32_FLAGS=tcl83.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libfreeflow.
 LINK32_OBJS= \
 	"$(INTDIR)\flow_surf_internal.obj" \
 	"$(INTDIR)\flow_surf_tcl.obj" \
+	"$(INTDIR)\flow_points.obj" \
+	"$(INTDIR)\flow_points_tcl.obj" \
+	"$(INTDIR)\flow_area.obj" \
+	"$(INTDIR)\flow_cntr.obj" \
+	"$(INTDIR)\flow_curv.obj" \
+	"$(INTDIR)\flow_curvs_tcl.obj" \
 	"$(INTDIR)\f_lcm_simple.obj" \
 	"$(INTDIR)\f_lcm_simple_tcl.obj" \
 	"$(INTDIR)\flow_data_manager.obj" \
 	"$(INTDIR)\flow_variables.obj" \
 	"$(INTDIR)\freeflow_wrap.obj" \
-	"$(INTDIR)\flow_points.obj" \
-	"$(INTDIR)\flow_points_tcl.obj" \
-	"$(INTDIR)\flow_curvs_tcl.obj" \
-	"$(INTDIR)\flow_area.obj" \
-	"$(INTDIR)\flow_cntr.obj" \
-	"$(INTDIR)\flow_curv.obj" \
 	"..\bin\libsurfit.lib" \
 	"..\bin\libsstuff.lib"
 
@@ -224,8 +194,55 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP=cl.exe
 CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/surfit" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fp"$(INTDIR)\freeflow.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
+BSC32=bscmake.exe
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\freeflow.bsc" 
+BSC32_SBRS= \
+	"$(INTDIR)\flow_surf_internal.sbr" \
+	"$(INTDIR)\flow_surf_tcl.sbr" \
+	"$(INTDIR)\flow_points.sbr" \
+	"$(INTDIR)\flow_points_tcl.sbr" \
+	"$(INTDIR)\flow_area.sbr" \
+	"$(INTDIR)\flow_cntr.sbr" \
+	"$(INTDIR)\flow_curv.sbr" \
+	"$(INTDIR)\flow_curvs_tcl.sbr" \
+	"$(INTDIR)\f_lcm_simple.sbr" \
+	"$(INTDIR)\f_lcm_simple_tcl.sbr" \
+	"$(INTDIR)\flow_data_manager.sbr" \
+	"$(INTDIR)\flow_variables.sbr" \
+	"$(INTDIR)\freeflow_wrap.sbr"
+
+"$(OUTDIR)\freeflow.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
+    $(BSC32) @<<
+  $(BSC32_FLAGS) $(BSC32_SBRS)
+<<
+
+LINK32=link.exe
+LINK32_FLAGS=tcl83d.lib /nologo /dll /pdb:none /debug /machine:I386 /out:"../bin/libfreeflow.dll" /implib:"../bin/libfreeflow.lib" /libpath:"D:\fltk\lib" 
+LINK32_OBJS= \
+	"$(INTDIR)\flow_surf_internal.obj" \
+	"$(INTDIR)\flow_surf_tcl.obj" \
+	"$(INTDIR)\flow_points.obj" \
+	"$(INTDIR)\flow_points_tcl.obj" \
+	"$(INTDIR)\flow_area.obj" \
+	"$(INTDIR)\flow_cntr.obj" \
+	"$(INTDIR)\flow_curv.obj" \
+	"$(INTDIR)\flow_curvs_tcl.obj" \
+	"$(INTDIR)\f_lcm_simple.obj" \
+	"$(INTDIR)\f_lcm_simple_tcl.obj" \
+	"$(INTDIR)\flow_data_manager.obj" \
+	"$(INTDIR)\flow_variables.obj" \
+	"$(INTDIR)\freeflow_wrap.obj" \
+	"..\bin\libsurfit.lib" \
+	"..\bin\libsstuff.lib"
+
+"..\bin\libfreeflow.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ENDIF 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -256,57 +273,6 @@ CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/surf
    $(CPP) @<<
    $(CPP_PROJ) $< 
 <<
-
-MTL=midl.exe
-MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
-RSC=rc.exe
-BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\freeflow.bsc" 
-BSC32_SBRS= \
-	"$(INTDIR)\flow_surf_internal.sbr" \
-	"$(INTDIR)\flow_surf_tcl.sbr" \
-	"$(INTDIR)\f_lcm_simple.sbr" \
-	"$(INTDIR)\f_lcm_simple_tcl.sbr" \
-	"$(INTDIR)\flow_data_manager.sbr" \
-	"$(INTDIR)\flow_variables.sbr" \
-	"$(INTDIR)\freeflow_wrap.sbr" \
-	"$(INTDIR)\flow_points.sbr" \
-	"$(INTDIR)\flow_points_tcl.sbr" \
-	"$(INTDIR)\flow_curvs_tcl.sbr" \
-	"$(INTDIR)\flow_area.sbr" \
-	"$(INTDIR)\flow_cntr.sbr" \
-	"$(INTDIR)\flow_curv.sbr"
-
-"$(OUTDIR)\freeflow.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
-    $(BSC32) @<<
-  $(BSC32_FLAGS) $(BSC32_SBRS)
-<<
-
-LINK32=link.exe
-LINK32_FLAGS=tcl83d.lib /nologo /dll /pdb:none /debug /machine:I386 /out:"../bin/libfreeflow.dll" /implib:"../bin/libfreeflow.lib" /libpath:"D:\fltk\lib" 
-LINK32_OBJS= \
-	"$(INTDIR)\flow_surf_internal.obj" \
-	"$(INTDIR)\flow_surf_tcl.obj" \
-	"$(INTDIR)\f_lcm_simple.obj" \
-	"$(INTDIR)\f_lcm_simple_tcl.obj" \
-	"$(INTDIR)\flow_data_manager.obj" \
-	"$(INTDIR)\flow_variables.obj" \
-	"$(INTDIR)\freeflow_wrap.obj" \
-	"$(INTDIR)\flow_points.obj" \
-	"$(INTDIR)\flow_points_tcl.obj" \
-	"$(INTDIR)\flow_curvs_tcl.obj" \
-	"$(INTDIR)\flow_area.obj" \
-	"$(INTDIR)\flow_cntr.obj" \
-	"$(INTDIR)\flow_curv.obj" \
-	"..\bin\libsurfit.lib" \
-	"..\bin\libsstuff.lib"
-
-"..\bin\libfreeflow.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
-    $(LINK32) @<<
-  $(LINK32_FLAGS) $(LINK32_OBJS)
-<<
-
-!ENDIF 
 
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"

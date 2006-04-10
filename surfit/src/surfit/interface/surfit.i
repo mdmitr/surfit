@@ -56,7 +56,7 @@ namespace surfit {
 		}
         }
 	catch ( const char * str ) {
-		surfit::writelog(LOG_ERROR,"%s",str);
+		surfit::writelog(LOG_ERROR_TCL,"%s",str);
 		return TCL_ERROR;
 	}
 	catch(...) {

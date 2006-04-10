@@ -24,10 +24,11 @@
 
 namespace surfit {
 
-#define LOG_MESSAGE 0
-#define LOG_ERROR 1
-#define LOG_WARNING 2
-#define LOG_DEBUG 3
+#define LOG_ERROR_TCL 0 
+#define LOG_MESSAGE 1
+#define LOG_ERROR 2
+#define LOG_WARNING 3
+#define LOG_DEBUG 4
 
 SSTUFF_EXPORT
 /*! \ingroup internal

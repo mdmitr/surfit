@@ -102,6 +102,7 @@ void writelog (int errlevel, const char *tmplt, ...) {
 		case LOG_MESSAGE:
 			break;
 		case LOG_ERROR: 
+		case LOG_ERROR_TCL:
 			Tcl_WriteChars(out, error, strlen(error));
 			break;
 		case LOG_WARNING:
@@ -133,6 +134,7 @@ void writelog (int errlevel, const char *tmplt, ...) {
 		case LOG_MESSAGE:
 			break;
 		case LOG_ERROR:
+		case LOG_ERROR_TCL:
 			fprintf(logfile,"%s",error);
 			break;
 		case LOG_WARNING:
@@ -150,7 +152,7 @@ void writelog (int errlevel, const char *tmplt, ...) {
 	if ( (logfile) && (ferror(logfile) == 0) ) fflush(logfile);
 
 	if (errlevel == LOG_ERROR) 
-		throw "LOG_ERROR_for_tcl";
+		throw "Execution stopped";
 };
 
 void Tcl_printf (const char *tmplt, ...) {

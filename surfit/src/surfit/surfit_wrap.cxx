@@ -2241,7 +2241,7 @@ _wrap_init_threads(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2266,7 +2266,7 @@ _wrap_clear_data(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2291,7 +2291,7 @@ _wrap_mem_info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, T
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2318,7 +2318,7 @@ _wrap_types_info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2356,7 +2356,7 @@ _wrap_putlog(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2393,7 +2393,7 @@ _wrap_file_load(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2431,7 +2431,7 @@ _wrap_file_save(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2469,7 +2469,7 @@ _wrap_file_info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2517,7 +2517,7 @@ _wrap_completer__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2552,7 +2552,7 @@ _wrap_completer__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2579,7 +2579,7 @@ _wrap_completer__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2669,7 +2669,7 @@ _wrap_completer_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2712,7 +2712,7 @@ _wrap_completer_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2747,7 +2747,7 @@ _wrap_completer_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2774,7 +2774,7 @@ _wrap_completer_add__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2870,7 +2870,7 @@ _wrap_value__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2897,7 +2897,7 @@ _wrap_value__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2963,7 +2963,7 @@ _wrap_value_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -2998,7 +2998,7 @@ _wrap_value_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3025,7 +3025,7 @@ _wrap_value_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3107,7 +3107,7 @@ _wrap_mean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3142,7 +3142,7 @@ _wrap_mean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3230,7 +3230,7 @@ _wrap_wmean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3276,7 +3276,7 @@ _wrap_wmean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3313,7 +3313,7 @@ _wrap_wmean__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3410,7 +3410,7 @@ _wrap_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3445,7 +3445,7 @@ _wrap_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3524,7 +3524,7 @@ _wrap_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3559,7 +3559,7 @@ _wrap_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3639,7 +3639,7 @@ _wrap_hist__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3677,7 +3677,7 @@ _wrap_hist__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3706,7 +3706,7 @@ _wrap_hist__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3835,7 +3835,7 @@ _wrap_hist_read__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -3927,7 +3927,7 @@ _wrap_hist_read__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -4011,7 +4011,7 @@ _wrap_hist_read__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -4086,7 +4086,7 @@ _wrap_hist_read__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -4151,7 +4151,7 @@ _wrap_hist_read__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -4208,7 +4208,7 @@ _wrap_hist_read__SWIG_5(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -4257,7 +4257,7 @@ _wrap_hist_read__SWIG_6(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -4297,7 +4297,7 @@ _wrap_hist_read__SWIG_7(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -4575,7 +4575,7 @@ _wrap_hist_write__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -4626,7 +4626,7 @@ _wrap_hist_write__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -4666,7 +4666,7 @@ _wrap_hist_write__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -4759,7 +4759,7 @@ _wrap_hist_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -4799,7 +4799,7 @@ _wrap_hist_save__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -4876,7 +4876,7 @@ _wrap_hist_load__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -4916,7 +4916,7 @@ _wrap_hist_load__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5001,7 +5001,7 @@ _wrap_hist_from_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5050,7 +5050,7 @@ _wrap_hist_from_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5090,7 +5090,7 @@ _wrap_hist_from_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5185,7 +5185,7 @@ _wrap_hist_update_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5225,7 +5225,7 @@ _wrap_hist_update_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5254,7 +5254,7 @@ _wrap_hist_update_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5323,7 +5323,7 @@ _wrap_hist_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5354,7 +5354,7 @@ _wrap_hist_getName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5422,7 +5422,7 @@ _wrap_hist_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5462,7 +5462,7 @@ _wrap_hist_setName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5521,7 +5521,7 @@ _wrap_hist_delall(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5557,7 +5557,7 @@ _wrap_hist_del__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5586,7 +5586,7 @@ _wrap_hist_del__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5634,7 +5634,7 @@ _wrap_hist_size(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5659,7 +5659,7 @@ _wrap_hists_info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5684,7 +5684,7 @@ _wrap_show_w(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5709,7 +5709,7 @@ _wrap_show_c(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5752,7 +5752,7 @@ _wrap_log_open__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5788,7 +5788,7 @@ _wrap_log_open__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5813,7 +5813,7 @@ _wrap_log_open__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5875,7 +5875,7 @@ _wrap_log_clear(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5911,7 +5911,7 @@ _wrap_points__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -5940,7 +5940,7 @@ _wrap_points__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6005,7 +6005,7 @@ _wrap_points_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6042,7 +6042,7 @@ _wrap_points_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6069,7 +6069,7 @@ _wrap_points_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6150,7 +6150,7 @@ _wrap_points_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6188,7 +6188,7 @@ _wrap_points_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6217,7 +6217,7 @@ _wrap_points_leq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6296,7 +6296,7 @@ _wrap_points_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6334,7 +6334,7 @@ _wrap_points_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6363,7 +6363,7 @@ _wrap_points_geq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6443,7 +6443,7 @@ _wrap_pnts_load__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6483,7 +6483,7 @@ _wrap_pnts_load__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6616,7 +6616,7 @@ _wrap_pnts_read__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6715,7 +6715,7 @@ _wrap_pnts_read__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6806,7 +6806,7 @@ _wrap_pnts_read__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6888,7 +6888,7 @@ _wrap_pnts_read__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -6960,7 +6960,7 @@ _wrap_pnts_read__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -7024,7 +7024,7 @@ _wrap_pnts_read__SWIG_5(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -7080,7 +7080,7 @@ _wrap_pnts_read__SWIG_6(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -7128,7 +7128,7 @@ _wrap_pnts_read__SWIG_7(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -7167,7 +7167,7 @@ _wrap_pnts_read__SWIG_8(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -7490,7 +7490,7 @@ _wrap_pnts_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -7530,7 +7530,7 @@ _wrap_pnts_save__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -7616,7 +7616,7 @@ _wrap_pnts_write__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -7667,7 +7667,7 @@ _wrap_pnts_write__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -7707,7 +7707,7 @@ _wrap_pnts_write__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -7823,7 +7823,7 @@ _wrap_pnts_transform__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -7884,7 +7884,7 @@ _wrap_pnts_transform__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8022,7 +8022,7 @@ _wrap_pnts_inverse_transform__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8083,7 +8083,7 @@ _wrap_pnts_inverse_transform__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8213,7 +8213,7 @@ _wrap_pnts_rotate__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8266,7 +8266,7 @@ _wrap_pnts_rotate__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8369,7 +8369,7 @@ _wrap_pnts_filter_by_mask__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8409,7 +8409,7 @@ _wrap_pnts_filter_by_mask__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8438,7 +8438,7 @@ _wrap_pnts_filter_by_mask__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8516,7 +8516,7 @@ _wrap_pnts_filter_in_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8556,7 +8556,7 @@ _wrap_pnts_filter_in_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8585,7 +8585,7 @@ _wrap_pnts_filter_in_area__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8663,7 +8663,7 @@ _wrap_pnts_filter_out_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8703,7 +8703,7 @@ _wrap_pnts_filter_out_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8732,7 +8732,7 @@ _wrap_pnts_filter_out_area__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8818,7 +8818,7 @@ _wrap_pnts_filter_by_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8866,7 +8866,7 @@ _wrap_pnts_filter_by_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -8903,7 +8903,7 @@ _wrap_pnts_filter_by_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9000,7 +9000,7 @@ _wrap_pnts_update_by_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9040,7 +9040,7 @@ _wrap_pnts_update_by_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9069,7 +9069,7 @@ _wrap_pnts_update_by_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9138,7 +9138,7 @@ _wrap_pnts_minx__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9167,7 +9167,7 @@ _wrap_pnts_minx__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9224,7 +9224,7 @@ _wrap_pnts_maxx__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9253,7 +9253,7 @@ _wrap_pnts_maxx__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9310,7 +9310,7 @@ _wrap_pnts_miny__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9339,7 +9339,7 @@ _wrap_pnts_miny__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9396,7 +9396,7 @@ _wrap_pnts_maxy__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9425,7 +9425,7 @@ _wrap_pnts_maxy__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9482,7 +9482,7 @@ _wrap_pnts_minz__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9511,7 +9511,7 @@ _wrap_pnts_minz__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9568,7 +9568,7 @@ _wrap_pnts_maxz__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9597,7 +9597,7 @@ _wrap_pnts_maxz__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9662,7 +9662,7 @@ _wrap_pnts_add_noise__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9699,7 +9699,7 @@ _wrap_pnts_add_noise__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9769,7 +9769,7 @@ _wrap_pnts_mean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9798,7 +9798,7 @@ _wrap_pnts_mean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9863,7 +9863,7 @@ _wrap_pnts_std__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9900,7 +9900,7 @@ _wrap_pnts_std__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -9979,7 +9979,7 @@ _wrap_pnts_plus(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10028,7 +10028,7 @@ _wrap_pnts_minus(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10077,7 +10077,7 @@ _wrap_pnts_mult(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10126,7 +10126,7 @@ _wrap_pnts_div(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, T
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10175,7 +10175,7 @@ _wrap_pnts_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, T
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10223,7 +10223,7 @@ _wrap_pnts_plus_real__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10260,7 +10260,7 @@ _wrap_pnts_plus_real__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10338,7 +10338,7 @@ _wrap_pnts_minus_real__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10375,7 +10375,7 @@ _wrap_pnts_minus_real__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10453,7 +10453,7 @@ _wrap_pnts_mult_real__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10490,7 +10490,7 @@ _wrap_pnts_mult_real__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10568,7 +10568,7 @@ _wrap_pnts_div_real__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10605,7 +10605,7 @@ _wrap_pnts_div_real__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10683,7 +10683,7 @@ _wrap_pnts_set_real__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10720,7 +10720,7 @@ _wrap_pnts_set_real__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10799,7 +10799,7 @@ _wrap_pnts_plus_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10839,7 +10839,7 @@ _wrap_pnts_plus_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10868,7 +10868,7 @@ _wrap_pnts_plus_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10946,7 +10946,7 @@ _wrap_pnts_minus_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -10986,7 +10986,7 @@ _wrap_pnts_minus_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11015,7 +11015,7 @@ _wrap_pnts_minus_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11093,7 +11093,7 @@ _wrap_pnts_mult_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11133,7 +11133,7 @@ _wrap_pnts_mult_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11162,7 +11162,7 @@ _wrap_pnts_mult_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11240,7 +11240,7 @@ _wrap_pnts_div_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11280,7 +11280,7 @@ _wrap_pnts_div_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11309,7 +11309,7 @@ _wrap_pnts_div_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11387,7 +11387,7 @@ _wrap_pnts_set_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11427,7 +11427,7 @@ _wrap_pnts_set_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11456,7 +11456,7 @@ _wrap_pnts_set_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11525,7 +11525,7 @@ _wrap_pnts_getCount__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11554,7 +11554,7 @@ _wrap_pnts_getCount__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11611,7 +11611,7 @@ _wrap_pnts_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11642,7 +11642,7 @@ _wrap_pnts_getName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11710,7 +11710,7 @@ _wrap_pnts_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11750,7 +11750,7 @@ _wrap_pnts_setName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11809,7 +11809,7 @@ _wrap_pnts_delall(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11845,7 +11845,7 @@ _wrap_pnts_del__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11874,7 +11874,7 @@ _wrap_pnts_del__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11940,7 +11940,7 @@ _wrap_pnts_concat(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11971,7 +11971,7 @@ _wrap_pnts_size(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -11996,7 +11996,7 @@ _wrap_pnts_info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12032,7 +12032,7 @@ _wrap_grid_save(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12079,7 +12079,7 @@ _wrap_grid_load__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12119,7 +12119,7 @@ _wrap_grid_load__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12176,7 +12176,7 @@ _wrap_grid_unload(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12236,7 +12236,7 @@ _wrap_grid__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12289,7 +12289,7 @@ _wrap_grid__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12332,7 +12332,7 @@ _wrap_grid__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12367,7 +12367,7 @@ _wrap_grid__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12394,7 +12394,7 @@ _wrap_grid__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12541,7 +12541,7 @@ _wrap_grid2__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12594,7 +12594,7 @@ _wrap_grid2__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12637,7 +12637,7 @@ _wrap_grid2__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12672,7 +12672,7 @@ _wrap_grid2__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12699,7 +12699,7 @@ _wrap_grid2__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12870,7 +12870,7 @@ _wrap_grid_get__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -12947,7 +12947,7 @@ _wrap_grid_get__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -13125,7 +13125,7 @@ _wrap_grid_get2__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -13202,7 +13202,7 @@ _wrap_grid_get2__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -13357,7 +13357,7 @@ _wrap_grid_get_for_pnts__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -13413,7 +13413,7 @@ _wrap_grid_get_for_pnts__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -13458,7 +13458,7 @@ _wrap_grid_get_for_pnts__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -13589,7 +13589,7 @@ _wrap_grid_get_for_pnts_step__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -13645,7 +13645,7 @@ _wrap_grid_get_for_pnts_step__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -13690,7 +13690,7 @@ _wrap_grid_get_for_pnts_step__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -13805,7 +13805,7 @@ _wrap_grid_get_from_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -13845,7 +13845,7 @@ _wrap_grid_get_from_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -13874,7 +13874,7 @@ _wrap_grid_get_from_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -13934,7 +13934,7 @@ _wrap_grid_check(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -13959,7 +13959,7 @@ _wrap_grid_info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -13986,7 +13986,7 @@ _wrap_grid_getCountX(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14021,7 +14021,7 @@ _wrap_grid_setCountX(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14048,7 +14048,7 @@ _wrap_grid_getCountY(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14083,7 +14083,7 @@ _wrap_grid_setCountY(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14118,7 +14118,7 @@ _wrap_grid_getCoordNodeX(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14153,7 +14153,7 @@ _wrap_grid_getCoordNodeY(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14180,7 +14180,7 @@ _wrap_grid_getStepX(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14207,7 +14207,7 @@ _wrap_grid_getStepY(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14266,7 +14266,7 @@ _wrap_surfit(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14291,7 +14291,7 @@ _wrap_clear_rules(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14318,7 +14318,7 @@ _wrap_get_solvers_count(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14353,7 +14353,7 @@ _wrap_get_solver_long_name(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14390,7 +14390,7 @@ _wrap_get_solver_short_name(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14419,7 +14419,7 @@ _wrap_get_current_solver_short_name(ClientData clientData SWIGUNUSED, Tcl_Interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14448,7 +14448,7 @@ _wrap_get_current_solver_long_name(ClientData clientData SWIGUNUSED, Tcl_Interp 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14485,7 +14485,7 @@ _wrap_set_solver(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14512,7 +14512,7 @@ _wrap_solvers_info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14548,7 +14548,7 @@ _wrap_surface__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14577,7 +14577,7 @@ _wrap_surface__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14642,7 +14642,7 @@ _wrap_surface_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14679,7 +14679,7 @@ _wrap_surface_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14757,7 +14757,7 @@ _wrap_surface_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14795,7 +14795,7 @@ _wrap_surface_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14824,7 +14824,7 @@ _wrap_surface_leq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14903,7 +14903,7 @@ _wrap_surface_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14941,7 +14941,7 @@ _wrap_surface_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -14970,7 +14970,7 @@ _wrap_surface_geq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15057,7 +15057,7 @@ _wrap_trend__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15102,7 +15102,7 @@ _wrap_trend__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15137,7 +15137,7 @@ _wrap_trend__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15164,7 +15164,7 @@ _wrap_trend__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15283,7 +15283,7 @@ _wrap_trend_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15336,7 +15336,7 @@ _wrap_trend_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15379,7 +15379,7 @@ _wrap_trend_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15414,7 +15414,7 @@ _wrap_trend_add__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15543,7 +15543,7 @@ _wrap_mask__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15583,7 +15583,7 @@ _wrap_mask__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15660,7 +15660,7 @@ _wrap_surf_load__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15700,7 +15700,7 @@ _wrap_surf_load__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15777,7 +15777,7 @@ _wrap_surf_load_grd__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15817,7 +15817,7 @@ _wrap_surf_load_grd__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15894,7 +15894,7 @@ _wrap_surf_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -15934,7 +15934,7 @@ _wrap_surf_save__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16011,7 +16011,7 @@ _wrap_surf_save_grd__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16051,7 +16051,7 @@ _wrap_surf_save_grd__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16128,7 +16128,7 @@ _wrap_surf_save_xyz__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16168,7 +16168,7 @@ _wrap_surf_save_xyz__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16252,7 +16252,7 @@ _wrap_surf_getValue__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16297,7 +16297,7 @@ _wrap_surf_getValue__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16395,7 +16395,7 @@ _wrap_surf_getValueIJ__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16440,7 +16440,7 @@ _wrap_surf_getValueIJ__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16540,7 +16540,7 @@ _wrap_surf_resid__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16591,7 +16591,7 @@ _wrap_surf_resid__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16631,7 +16631,7 @@ _wrap_surf_resid__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16715,7 +16715,7 @@ _wrap_surf_D1__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16744,7 +16744,7 @@ _wrap_surf_D1__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16801,7 +16801,7 @@ _wrap_surf_D2__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16830,7 +16830,7 @@ _wrap_surf_D2__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16896,7 +16896,7 @@ _wrap_surf_gradient__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -16936,7 +16936,7 @@ _wrap_surf_gradient__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17013,7 +17013,7 @@ _wrap_surf_project__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17053,7 +17053,7 @@ _wrap_surf_project__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17129,7 +17129,7 @@ _wrap_surf_add_noise__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17166,7 +17166,7 @@ _wrap_surf_add_noise__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17236,7 +17236,7 @@ _wrap_surf_minz__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17265,7 +17265,7 @@ _wrap_surf_minz__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17331,7 +17331,7 @@ _wrap_surf_area_minz__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17371,7 +17371,7 @@ _wrap_surf_area_minz__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17400,7 +17400,7 @@ _wrap_surf_area_minz__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17469,7 +17469,7 @@ _wrap_surf_maxz__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17498,7 +17498,7 @@ _wrap_surf_maxz__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17564,7 +17564,7 @@ _wrap_surf_area_maxz__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17604,7 +17604,7 @@ _wrap_surf_area_maxz__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17633,7 +17633,7 @@ _wrap_surf_area_maxz__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17702,7 +17702,7 @@ _wrap_surf_mean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17731,7 +17731,7 @@ _wrap_surf_mean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17797,7 +17797,7 @@ _wrap_surf_area_mean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17837,7 +17837,7 @@ _wrap_surf_area_mean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17866,7 +17866,7 @@ _wrap_surf_area_mean__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17944,7 +17944,7 @@ _wrap_surf_wmean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -17984,7 +17984,7 @@ _wrap_surf_wmean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18013,7 +18013,7 @@ _wrap_surf_wmean__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18100,7 +18100,7 @@ _wrap_surf_area_wmean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18151,7 +18151,7 @@ _wrap_surf_area_wmean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18191,7 +18191,7 @@ _wrap_surf_area_wmean__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18220,7 +18220,7 @@ _wrap_surf_area_wmean__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18313,7 +18313,7 @@ _wrap_surf_std__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18350,7 +18350,7 @@ _wrap_surf_std__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18420,7 +18420,7 @@ _wrap_surf_sum__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18449,7 +18449,7 @@ _wrap_surf_sum__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18515,7 +18515,7 @@ _wrap_surf_plus(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18573,7 +18573,7 @@ _wrap_surf_plus_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18624,7 +18624,7 @@ _wrap_surf_minus(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18682,7 +18682,7 @@ _wrap_surf_minus_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18733,7 +18733,7 @@ _wrap_surf_mult(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18791,7 +18791,7 @@ _wrap_surf_mult_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18842,7 +18842,7 @@ _wrap_surf_div(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, T
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18900,7 +18900,7 @@ _wrap_surf_div_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -18951,7 +18951,7 @@ _wrap_surf_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, T
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19009,7 +19009,7 @@ _wrap_surf_set_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19059,7 +19059,7 @@ _wrap_surf_plus_value__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19096,7 +19096,7 @@ _wrap_surf_plus_value__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19183,7 +19183,7 @@ _wrap_surf_plus_value_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19231,7 +19231,7 @@ _wrap_surf_plus_value_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19268,7 +19268,7 @@ _wrap_surf_plus_value_area__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19364,7 +19364,7 @@ _wrap_surf_minus_value__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19401,7 +19401,7 @@ _wrap_surf_minus_value__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19488,7 +19488,7 @@ _wrap_surf_minus_value_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19536,7 +19536,7 @@ _wrap_surf_minus_value_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19573,7 +19573,7 @@ _wrap_surf_minus_value_area__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19669,7 +19669,7 @@ _wrap_surf_mult_value__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19706,7 +19706,7 @@ _wrap_surf_mult_value__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19793,7 +19793,7 @@ _wrap_surf_mult_value_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19841,7 +19841,7 @@ _wrap_surf_mult_value_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19878,7 +19878,7 @@ _wrap_surf_mult_value_area__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -19974,7 +19974,7 @@ _wrap_surf_div_value__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20011,7 +20011,7 @@ _wrap_surf_div_value__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20098,7 +20098,7 @@ _wrap_surf_div_value_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20146,7 +20146,7 @@ _wrap_surf_div_value_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20183,7 +20183,7 @@ _wrap_surf_div_value_area__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20279,7 +20279,7 @@ _wrap_surf_set_value__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20316,7 +20316,7 @@ _wrap_surf_set_value__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20404,7 +20404,7 @@ _wrap_surf_set_value_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20455,7 +20455,7 @@ _wrap_surf_set_value_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20495,7 +20495,7 @@ _wrap_surf_set_value_area__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20588,7 +20588,7 @@ _wrap_surf_sum_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20628,7 +20628,7 @@ _wrap_surf_sum_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20657,7 +20657,7 @@ _wrap_surf_sum_area__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20735,7 +20735,7 @@ _wrap_surf_cells_in_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20775,7 +20775,7 @@ _wrap_surf_cells_in_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20804,7 +20804,7 @@ _wrap_surf_cells_in_area__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20873,7 +20873,7 @@ _wrap_surf_get_details_level__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20902,7 +20902,7 @@ _wrap_surf_get_details_level__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20959,7 +20959,7 @@ _wrap_surf_decomp__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -20988,7 +20988,7 @@ _wrap_surf_decomp__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21053,7 +21053,7 @@ _wrap_surf_auto_decomp__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21090,7 +21090,7 @@ _wrap_surf_auto_decomp__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21160,7 +21160,7 @@ _wrap_surf_recons__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21189,7 +21189,7 @@ _wrap_surf_recons__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21246,7 +21246,7 @@ _wrap_surf_full_recons__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21275,7 +21275,7 @@ _wrap_surf_full_recons__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21332,7 +21332,7 @@ _wrap_surf_to_pnts__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21361,7 +21361,7 @@ _wrap_surf_to_pnts__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21434,7 +21434,7 @@ _wrap_surf_to_mask__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21479,7 +21479,7 @@ _wrap_surf_to_mask__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21561,7 +21561,7 @@ _wrap_surf_getCountX__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21590,7 +21590,7 @@ _wrap_surf_getCountX__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21647,7 +21647,7 @@ _wrap_surf_getCountY__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21676,7 +21676,7 @@ _wrap_surf_getCountY__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21733,7 +21733,7 @@ _wrap_surf_getStepX__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21762,7 +21762,7 @@ _wrap_surf_getStepX__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21819,7 +21819,7 @@ _wrap_surf_getStepY__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21848,7 +21848,7 @@ _wrap_surf_getStepY__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21913,7 +21913,7 @@ _wrap_surf_undef__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -21950,7 +21950,7 @@ _wrap_surf_undef__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22019,7 +22019,7 @@ _wrap_surf_info__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22046,7 +22046,7 @@ _wrap_surf_info__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22103,7 +22103,7 @@ _wrap_surf_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22134,7 +22134,7 @@ _wrap_surf_getName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22202,7 +22202,7 @@ _wrap_surf_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22242,7 +22242,7 @@ _wrap_surf_setName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22301,7 +22301,7 @@ _wrap_surf_delall(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22337,7 +22337,7 @@ _wrap_surf_del__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22366,7 +22366,7 @@ _wrap_surf_del__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22414,7 +22414,7 @@ _wrap_surf_size(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22439,7 +22439,7 @@ _wrap_surfs_info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22484,7 +22484,7 @@ _wrap_mask_load__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22524,7 +22524,7 @@ _wrap_mask_load__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22601,7 +22601,7 @@ _wrap_mask_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22641,7 +22641,7 @@ _wrap_mask_save__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22718,7 +22718,7 @@ _wrap_mask_save_grd__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22758,7 +22758,7 @@ _wrap_mask_save_grd__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22835,7 +22835,7 @@ _wrap_mask_save_xyz__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22875,7 +22875,7 @@ _wrap_mask_save_xyz__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -22959,7 +22959,7 @@ _wrap_mask_getValue__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23004,7 +23004,7 @@ _wrap_mask_getValue__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23095,7 +23095,7 @@ _wrap_mask_and__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23135,7 +23135,7 @@ _wrap_mask_and__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23164,7 +23164,7 @@ _wrap_mask_and__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23242,7 +23242,7 @@ _wrap_mask_not__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23282,7 +23282,7 @@ _wrap_mask_not__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23311,7 +23311,7 @@ _wrap_mask_not__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23389,7 +23389,7 @@ _wrap_mask_or__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23429,7 +23429,7 @@ _wrap_mask_or__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23458,7 +23458,7 @@ _wrap_mask_or__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23536,7 +23536,7 @@ _wrap_mask_xor__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23576,7 +23576,7 @@ _wrap_mask_xor__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23605,7 +23605,7 @@ _wrap_mask_xor__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23674,7 +23674,7 @@ _wrap_mask_to_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23703,7 +23703,7 @@ _wrap_mask_to_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23760,7 +23760,7 @@ _wrap_mask_by_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23789,7 +23789,7 @@ _wrap_mask_by_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23855,7 +23855,7 @@ _wrap_mask_apply_to_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23895,7 +23895,7 @@ _wrap_mask_apply_to_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23924,7 +23924,7 @@ _wrap_mask_apply_to_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -23993,7 +23993,7 @@ _wrap_mask_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24024,7 +24024,7 @@ _wrap_mask_getName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24092,7 +24092,7 @@ _wrap_mask_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24132,7 +24132,7 @@ _wrap_mask_setName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24191,7 +24191,7 @@ _wrap_mask_delall(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24227,7 +24227,7 @@ _wrap_mask_del__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24256,7 +24256,7 @@ _wrap_mask_del__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24304,7 +24304,7 @@ _wrap_mask_size(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24329,7 +24329,7 @@ _wrap_masks_info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24365,7 +24365,7 @@ _wrap_fault__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24394,7 +24394,7 @@ _wrap_fault__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24459,7 +24459,7 @@ _wrap_curve__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24496,7 +24496,7 @@ _wrap_curve__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24582,7 +24582,7 @@ _wrap_curve_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24627,7 +24627,7 @@ _wrap_curve_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24725,7 +24725,7 @@ _wrap_curve_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24771,7 +24771,7 @@ _wrap_curve_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24808,7 +24808,7 @@ _wrap_curve_leq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24914,7 +24914,7 @@ _wrap_curve_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24960,7 +24960,7 @@ _wrap_curve_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -24997,7 +24997,7 @@ _wrap_curve_geq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25096,7 +25096,7 @@ _wrap_curve_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25136,7 +25136,7 @@ _wrap_curve_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25165,7 +25165,7 @@ _wrap_curve_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25251,7 +25251,7 @@ _wrap_curve_surf_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25299,7 +25299,7 @@ _wrap_curve_surf_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25337,7 +25337,7 @@ _wrap_curve_surf_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25366,7 +25366,7 @@ _wrap_curve_surf_add__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25472,7 +25472,7 @@ _wrap_curve_surf_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25521,7 +25521,7 @@ _wrap_curve_surf_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25561,7 +25561,7 @@ _wrap_curve_surf_leq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25590,7 +25590,7 @@ _wrap_curve_surf_leq__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25694,7 +25694,7 @@ _wrap_curve_surf_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25743,7 +25743,7 @@ _wrap_curve_surf_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25783,7 +25783,7 @@ _wrap_curve_surf_geq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25812,7 +25812,7 @@ _wrap_curve_surf_geq__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25916,7 +25916,7 @@ _wrap_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -25965,7 +25965,7 @@ _wrap_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26005,7 +26005,7 @@ _wrap_area__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26034,7 +26034,7 @@ _wrap_area__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26145,7 +26145,7 @@ _wrap_area_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26199,7 +26199,7 @@ _wrap_area_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26244,7 +26244,7 @@ _wrap_area_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26376,7 +26376,7 @@ _wrap_area_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26430,7 +26430,7 @@ _wrap_area_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26476,7 +26476,7 @@ _wrap_area_leq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26513,7 +26513,7 @@ _wrap_area_leq__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26653,7 +26653,7 @@ _wrap_area_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26707,7 +26707,7 @@ _wrap_area_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26753,7 +26753,7 @@ _wrap_area_geq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26790,7 +26790,7 @@ _wrap_area_geq__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26923,7 +26923,7 @@ _wrap_area_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -26972,7 +26972,7 @@ _wrap_area_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27012,7 +27012,7 @@ _wrap_area_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27041,7 +27041,7 @@ _wrap_area_surf__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27153,7 +27153,7 @@ _wrap_area_surf_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27210,7 +27210,7 @@ _wrap_area_surf_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27258,7 +27258,7 @@ _wrap_area_surf_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27296,7 +27296,7 @@ _wrap_area_surf_add__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27325,7 +27325,7 @@ _wrap_area_surf_add__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27463,7 +27463,7 @@ _wrap_area_surf_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27520,7 +27520,7 @@ _wrap_area_surf_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27569,7 +27569,7 @@ _wrap_area_surf_leq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27609,7 +27609,7 @@ _wrap_area_surf_leq__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27638,7 +27638,7 @@ _wrap_area_surf_leq__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27774,7 +27774,7 @@ _wrap_area_surf_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27831,7 +27831,7 @@ _wrap_area_surf_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27880,7 +27880,7 @@ _wrap_area_surf_geq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27920,7 +27920,7 @@ _wrap_area_surf_geq__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -27949,7 +27949,7 @@ _wrap_area_surf_geq__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28084,7 +28084,7 @@ _wrap_area_mean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28138,7 +28138,7 @@ _wrap_area_mean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28184,7 +28184,7 @@ _wrap_area_mean__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28221,7 +28221,7 @@ _wrap_area_mean__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28370,7 +28370,7 @@ _wrap_area_wmean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28435,7 +28435,7 @@ _wrap_area_wmean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28492,7 +28492,7 @@ _wrap_area_wmean__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28540,7 +28540,7 @@ _wrap_area_wmean__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28577,7 +28577,7 @@ _wrap_area_wmean__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28719,7 +28719,7 @@ _wrap_contour__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28748,7 +28748,7 @@ _wrap_contour__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28813,7 +28813,7 @@ _wrap_contour_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28850,7 +28850,7 @@ _wrap_contour_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28928,7 +28928,7 @@ _wrap_contour_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28966,7 +28966,7 @@ _wrap_contour_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -28995,7 +28995,7 @@ _wrap_contour_leq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -29074,7 +29074,7 @@ _wrap_contour_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -29112,7 +29112,7 @@ _wrap_contour_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -29141,7 +29141,7 @@ _wrap_contour_geq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -29262,7 +29262,7 @@ _wrap_curv_read__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -29346,7 +29346,7 @@ _wrap_curv_read__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -29422,7 +29422,7 @@ _wrap_curv_read__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -29489,7 +29489,7 @@ _wrap_curv_read__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -29546,7 +29546,7 @@ _wrap_curv_read__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -29595,7 +29595,7 @@ _wrap_curv_read__SWIG_5(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -29635,7 +29635,7 @@ _wrap_curv_read__SWIG_6(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -29847,7 +29847,7 @@ _wrap_curv_read_bln(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -29903,7 +29903,7 @@ _wrap_curv_write__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -29954,7 +29954,7 @@ _wrap_curv_write__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -29994,7 +29994,7 @@ _wrap_curv_write__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30095,7 +30095,7 @@ _wrap_curv_write_bln__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30144,7 +30144,7 @@ _wrap_curv_write_bln__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30184,7 +30184,7 @@ _wrap_curv_write_bln__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30279,7 +30279,7 @@ _wrap_curv_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30319,7 +30319,7 @@ _wrap_curv_save__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30396,7 +30396,7 @@ _wrap_curv_load__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30436,7 +30436,7 @@ _wrap_curv_load__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30504,7 +30504,7 @@ _wrap_curv_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30535,7 +30535,7 @@ _wrap_curv_getName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30603,7 +30603,7 @@ _wrap_curv_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30643,7 +30643,7 @@ _wrap_curv_setName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30702,7 +30702,7 @@ _wrap_curv_delall(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30738,7 +30738,7 @@ _wrap_curv_del__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30767,7 +30767,7 @@ _wrap_curv_del__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30815,7 +30815,7 @@ _wrap_curv_size(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30840,7 +30840,7 @@ _wrap_curvs_info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -30934,7 +30934,7 @@ _wrap_cntr_read__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -31026,7 +31026,7 @@ _wrap_cntr_read__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -31110,7 +31110,7 @@ _wrap_cntr_read__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -31185,7 +31185,7 @@ _wrap_cntr_read__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -31250,7 +31250,7 @@ _wrap_cntr_read__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -31307,7 +31307,7 @@ _wrap_cntr_read__SWIG_5(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -31356,7 +31356,7 @@ _wrap_cntr_read__SWIG_6(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -31628,7 +31628,7 @@ _wrap_cntr_write__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -31679,7 +31679,7 @@ _wrap_cntr_write__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -31719,7 +31719,7 @@ _wrap_cntr_write__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -31812,7 +31812,7 @@ _wrap_cntr_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -31852,7 +31852,7 @@ _wrap_cntr_save__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -31929,7 +31929,7 @@ _wrap_cntr_load__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -31969,7 +31969,7 @@ _wrap_cntr_load__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32045,7 +32045,7 @@ _wrap_cntr_plus_real__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32082,7 +32082,7 @@ _wrap_cntr_plus_real__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32160,7 +32160,7 @@ _wrap_cntr_minus_real__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32197,7 +32197,7 @@ _wrap_cntr_minus_real__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32275,7 +32275,7 @@ _wrap_cntr_mult_real__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32312,7 +32312,7 @@ _wrap_cntr_mult_real__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32390,7 +32390,7 @@ _wrap_cntr_div_real__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32427,7 +32427,7 @@ _wrap_cntr_div_real__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32497,7 +32497,7 @@ _wrap_cntr_to_curv__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32526,7 +32526,7 @@ _wrap_cntr_to_curv__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32583,7 +32583,7 @@ _wrap_cntr_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32614,7 +32614,7 @@ _wrap_cntr_getName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32682,7 +32682,7 @@ _wrap_cntr_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32722,7 +32722,7 @@ _wrap_cntr_setName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32781,7 +32781,7 @@ _wrap_cntr_delall(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32817,7 +32817,7 @@ _wrap_cntr_del(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, T
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32846,7 +32846,7 @@ _wrap_cntr_size(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32871,7 +32871,7 @@ _wrap_cntrs_info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -32957,7 +32957,7 @@ _wrap_area_read__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -33041,7 +33041,7 @@ _wrap_area_read__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -33117,7 +33117,7 @@ _wrap_area_read__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -33184,7 +33184,7 @@ _wrap_area_read__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -33241,7 +33241,7 @@ _wrap_area_read__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -33290,7 +33290,7 @@ _wrap_area_read__SWIG_5(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -33330,7 +33330,7 @@ _wrap_area_read__SWIG_6(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -33551,7 +33551,7 @@ _wrap_area_read_bln__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -33591,7 +33591,7 @@ _wrap_area_read_bln__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -33677,7 +33677,7 @@ _wrap_area_write__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -33728,7 +33728,7 @@ _wrap_area_write__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -33768,7 +33768,7 @@ _wrap_area_write__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -33869,7 +33869,7 @@ _wrap_area_write_bln__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -33918,7 +33918,7 @@ _wrap_area_write_bln__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -33958,7 +33958,7 @@ _wrap_area_write_bln__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34053,7 +34053,7 @@ _wrap_area_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34093,7 +34093,7 @@ _wrap_area_save__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34170,7 +34170,7 @@ _wrap_area_load__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34210,7 +34210,7 @@ _wrap_area_load__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34278,7 +34278,7 @@ _wrap_area_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34309,7 +34309,7 @@ _wrap_area_getName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34377,7 +34377,7 @@ _wrap_area_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34417,7 +34417,7 @@ _wrap_area_setName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34476,7 +34476,7 @@ _wrap_area_delall(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34512,7 +34512,7 @@ _wrap_area_del__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34541,7 +34541,7 @@ _wrap_area_del__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34589,7 +34589,7 @@ _wrap_area_size(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34625,7 +34625,7 @@ _wrap_area_invert__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34654,7 +34654,7 @@ _wrap_area_invert__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34700,7 +34700,7 @@ _wrap_areas_info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34727,7 +34727,7 @@ _wrap_grid_line_check(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34772,7 +34772,7 @@ _wrap_grid_line_write__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34812,7 +34812,7 @@ _wrap_grid_line_write__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34889,7 +34889,7 @@ _wrap_grid_line_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34929,7 +34929,7 @@ _wrap_grid_line_save__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -34988,7 +34988,7 @@ _wrap_grid_line_unload(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
@@ -35015,7 +35015,7 @@ _wrap_trace_grid_line(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       }
     }
     catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR,"%s",str);
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
       return TCL_ERROR;
     }
     catch(...) {
