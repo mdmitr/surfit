@@ -93,11 +93,11 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libfreeflow_la_DEPENDENCIES = $(am__DEPENDENCIES_1) libsstuff.la \
 	libsurfit.la
-am_libfreeflow_la_OBJECTS = flow.lo flow_data_manager.lo \
-	flow_surf_internal.lo flow_surf_tcl.lo flow_variables.lo \
-	freeflow.lo freeflow_wrap.lo f_lcm_simple.lo \
-	f_lcm_simple_tcl.lo pcurvs_tcl.lo prod_area.lo prod_cntr.lo \
-	prod_iso.lo prod_points.lo prod_points_tcl.lo
+am_libfreeflow_la_OBJECTS = flow_data_manager.lo flow_surf_internal.lo \
+	flow_surf_tcl.lo flow_variables.lo freeflow_wrap.lo \
+	f_lcm_simple.lo f_lcm_simple_tcl.lo flow_curvs_tcl.lo \
+	flow_area.lo flow_cntr.lo flow_curv.lo flow_points.lo \
+	flow_points_tcl.lo
 libfreeflow_la_OBJECTS = $(am_libfreeflow_la_OBJECTS)
 @MAKE_FREEFLOW_TRUE@am_libfreeflow_la_rpath = -rpath $(libdir)
 libglobe_la_DEPENDENCIES = $(am__DEPENDENCIES_1) libsstuff.la \
@@ -480,25 +480,21 @@ libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la \
 	$(am__append_4)
 libsurfit_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libsurfit.dll
 libfreeflow_ladir = $(prefix)/include/freeflow
-libfreeflow_la_SOURCES = src/freeflow/flow.cpp \
-	src/freeflow/flow_data_manager.cpp \
+libfreeflow_la_SOURCES = src/freeflow/flow_data_manager.cpp \
 	src/freeflow/flow_surf_internal.cpp \
 	src/freeflow/flow_surf_tcl.cpp src/freeflow/flow_variables.cpp \
-	src/freeflow/freeflow.cpp src/freeflow/freeflow_wrap.cxx \
-	src/freeflow/f_lcm_simple.cpp \
-	src/freeflow/f_lcm_simple_tcl.cpp src/freeflow/pcurvs_tcl.cpp \
-	src/freeflow/prod_area.cpp src/freeflow/prod_cntr.cpp \
-	src/freeflow/prod_iso.cpp src/freeflow/prod_points.cpp \
-	src/freeflow/prod_points_tcl.cpp src/freeflow/flow_surf_tcl.h \
-	src/freeflow/f_lcm_simple_tcl.h src/freeflow/pcurvs_tcl.h \
-	src/freeflow/prod_points_tcl.h
-libfreeflow_la_HEADERS = src/freeflow/flow.h \
-	src/freeflow/flow_data_manager.h \
+	src/freeflow/freeflow_wrap.cxx src/freeflow/f_lcm_simple.cpp \
+	src/freeflow/f_lcm_simple_tcl.cpp \
+	src/freeflow/flow_curvs_tcl.cpp src/freeflow/flow_area.cpp \
+	src/freeflow/flow_cntr.cpp src/freeflow/flow_curv.cpp \
+	src/freeflow/flow_points.cpp src/freeflow/flow_points_tcl.cpp \
+	src/freeflow/flow_surf_tcl.h src/freeflow/f_lcm_simple_tcl.h \
+	src/freeflow/flow_curvs_tcl.h src/freeflow/flow_points_tcl.h
+libfreeflow_la_HEADERS = src/freeflow/flow_data_manager.h \
 	src/freeflow/flow_surf_internal.h src/freeflow/flow_ie.h \
-	src/freeflow/flow_variables.h src/freeflow/freeflow.h \
-	src/freeflow/f_lcm_simple.h src/freeflow/prod_area.h \
-	src/freeflow/prod_cntr.h src/freeflow/prod_iso.h \
-	src/freeflow/prod_points.h
+	src/freeflow/flow_variables.h src/freeflow/f_lcm_simple.h \
+	src/freeflow/flow_area.h src/freeflow/flow_cntr.h \
+	src/freeflow/flow_curv.h src/freeflow/flow_points.h
 libfreeflow_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la libsurfit.la
 libfreeflow_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libfreeflow.dll
 libglobe_ladir = $(prefix)/include/globe
@@ -669,13 +665,17 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_value.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_wmean.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fileio.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flow.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flow_area.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flow_cntr.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flow_curv.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flow_curvs_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flow_data_manager.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flow_points.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flow_points_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flow_surf_internal.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flow_surf_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flow_variables.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/free_elements.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/freeflow.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/freeflow_wrap.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/functional.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/geom_alg.Plo@am__quote@
@@ -716,7 +716,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/others_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pasync.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/patomic.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pcurvs_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pexcept.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pfatal.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pmem.Plo@am__quote@
@@ -724,11 +723,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pnts_internal.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pnts_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/points.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prod_area.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prod_cntr.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prod_iso.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prod_points.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prod_points_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/psemaphore.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pstring.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pthread.Plo@am__quote@
@@ -811,13 +805,6 @@ unzip.lo: src/globe/minizip/unzip.c
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
 
-flow.lo: src/freeflow/flow.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flow.lo -MD -MP -MF "$(DEPDIR)/flow.Tpo" -c -o flow.lo `test -f 'src/freeflow/flow.cpp' || echo '$(srcdir)/'`src/freeflow/flow.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/flow.Tpo" "$(DEPDIR)/flow.Plo"; else rm -f "$(DEPDIR)/flow.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/freeflow/flow.cpp' object='flow.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flow.lo `test -f 'src/freeflow/flow.cpp' || echo '$(srcdir)/'`src/freeflow/flow.cpp
-
 flow_data_manager.lo: src/freeflow/flow_data_manager.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flow_data_manager.lo -MD -MP -MF "$(DEPDIR)/flow_data_manager.Tpo" -c -o flow_data_manager.lo `test -f 'src/freeflow/flow_data_manager.cpp' || echo '$(srcdir)/'`src/freeflow/flow_data_manager.cpp; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/flow_data_manager.Tpo" "$(DEPDIR)/flow_data_manager.Plo"; else rm -f "$(DEPDIR)/flow_data_manager.Tpo"; exit 1; fi
@@ -846,13 +833,6 @@ flow_variables.lo: src/freeflow/flow_variables.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flow_variables.lo `test -f 'src/freeflow/flow_variables.cpp' || echo '$(srcdir)/'`src/freeflow/flow_variables.cpp
 
-freeflow.lo: src/freeflow/freeflow.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT freeflow.lo -MD -MP -MF "$(DEPDIR)/freeflow.Tpo" -c -o freeflow.lo `test -f 'src/freeflow/freeflow.cpp' || echo '$(srcdir)/'`src/freeflow/freeflow.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/freeflow.Tpo" "$(DEPDIR)/freeflow.Plo"; else rm -f "$(DEPDIR)/freeflow.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/freeflow/freeflow.cpp' object='freeflow.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o freeflow.lo `test -f 'src/freeflow/freeflow.cpp' || echo '$(srcdir)/'`src/freeflow/freeflow.cpp
-
 freeflow_wrap.lo: src/freeflow/freeflow_wrap.cxx
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT freeflow_wrap.lo -MD -MP -MF "$(DEPDIR)/freeflow_wrap.Tpo" -c -o freeflow_wrap.lo `test -f 'src/freeflow/freeflow_wrap.cxx' || echo '$(srcdir)/'`src/freeflow/freeflow_wrap.cxx; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/freeflow_wrap.Tpo" "$(DEPDIR)/freeflow_wrap.Plo"; else rm -f "$(DEPDIR)/freeflow_wrap.Tpo"; exit 1; fi
@@ -874,47 +854,47 @@ f_lcm_simple_tcl.lo: src/freeflow/f_lcm_simple_tcl.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o f_lcm_simple_tcl.lo `test -f 'src/freeflow/f_lcm_simple_tcl.cpp' || echo '$(srcdir)/'`src/freeflow/f_lcm_simple_tcl.cpp
 
-pcurvs_tcl.lo: src/freeflow/pcurvs_tcl.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pcurvs_tcl.lo -MD -MP -MF "$(DEPDIR)/pcurvs_tcl.Tpo" -c -o pcurvs_tcl.lo `test -f 'src/freeflow/pcurvs_tcl.cpp' || echo '$(srcdir)/'`src/freeflow/pcurvs_tcl.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pcurvs_tcl.Tpo" "$(DEPDIR)/pcurvs_tcl.Plo"; else rm -f "$(DEPDIR)/pcurvs_tcl.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/freeflow/pcurvs_tcl.cpp' object='pcurvs_tcl.lo' libtool=yes @AMDEPBACKSLASH@
+flow_curvs_tcl.lo: src/freeflow/flow_curvs_tcl.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flow_curvs_tcl.lo -MD -MP -MF "$(DEPDIR)/flow_curvs_tcl.Tpo" -c -o flow_curvs_tcl.lo `test -f 'src/freeflow/flow_curvs_tcl.cpp' || echo '$(srcdir)/'`src/freeflow/flow_curvs_tcl.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/flow_curvs_tcl.Tpo" "$(DEPDIR)/flow_curvs_tcl.Plo"; else rm -f "$(DEPDIR)/flow_curvs_tcl.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/freeflow/flow_curvs_tcl.cpp' object='flow_curvs_tcl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pcurvs_tcl.lo `test -f 'src/freeflow/pcurvs_tcl.cpp' || echo '$(srcdir)/'`src/freeflow/pcurvs_tcl.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flow_curvs_tcl.lo `test -f 'src/freeflow/flow_curvs_tcl.cpp' || echo '$(srcdir)/'`src/freeflow/flow_curvs_tcl.cpp
 
-prod_area.lo: src/freeflow/prod_area.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT prod_area.lo -MD -MP -MF "$(DEPDIR)/prod_area.Tpo" -c -o prod_area.lo `test -f 'src/freeflow/prod_area.cpp' || echo '$(srcdir)/'`src/freeflow/prod_area.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/prod_area.Tpo" "$(DEPDIR)/prod_area.Plo"; else rm -f "$(DEPDIR)/prod_area.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/freeflow/prod_area.cpp' object='prod_area.lo' libtool=yes @AMDEPBACKSLASH@
+flow_area.lo: src/freeflow/flow_area.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flow_area.lo -MD -MP -MF "$(DEPDIR)/flow_area.Tpo" -c -o flow_area.lo `test -f 'src/freeflow/flow_area.cpp' || echo '$(srcdir)/'`src/freeflow/flow_area.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/flow_area.Tpo" "$(DEPDIR)/flow_area.Plo"; else rm -f "$(DEPDIR)/flow_area.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/freeflow/flow_area.cpp' object='flow_area.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o prod_area.lo `test -f 'src/freeflow/prod_area.cpp' || echo '$(srcdir)/'`src/freeflow/prod_area.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flow_area.lo `test -f 'src/freeflow/flow_area.cpp' || echo '$(srcdir)/'`src/freeflow/flow_area.cpp
 
-prod_cntr.lo: src/freeflow/prod_cntr.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT prod_cntr.lo -MD -MP -MF "$(DEPDIR)/prod_cntr.Tpo" -c -o prod_cntr.lo `test -f 'src/freeflow/prod_cntr.cpp' || echo '$(srcdir)/'`src/freeflow/prod_cntr.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/prod_cntr.Tpo" "$(DEPDIR)/prod_cntr.Plo"; else rm -f "$(DEPDIR)/prod_cntr.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/freeflow/prod_cntr.cpp' object='prod_cntr.lo' libtool=yes @AMDEPBACKSLASH@
+flow_cntr.lo: src/freeflow/flow_cntr.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flow_cntr.lo -MD -MP -MF "$(DEPDIR)/flow_cntr.Tpo" -c -o flow_cntr.lo `test -f 'src/freeflow/flow_cntr.cpp' || echo '$(srcdir)/'`src/freeflow/flow_cntr.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/flow_cntr.Tpo" "$(DEPDIR)/flow_cntr.Plo"; else rm -f "$(DEPDIR)/flow_cntr.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/freeflow/flow_cntr.cpp' object='flow_cntr.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o prod_cntr.lo `test -f 'src/freeflow/prod_cntr.cpp' || echo '$(srcdir)/'`src/freeflow/prod_cntr.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flow_cntr.lo `test -f 'src/freeflow/flow_cntr.cpp' || echo '$(srcdir)/'`src/freeflow/flow_cntr.cpp
 
-prod_iso.lo: src/freeflow/prod_iso.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT prod_iso.lo -MD -MP -MF "$(DEPDIR)/prod_iso.Tpo" -c -o prod_iso.lo `test -f 'src/freeflow/prod_iso.cpp' || echo '$(srcdir)/'`src/freeflow/prod_iso.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/prod_iso.Tpo" "$(DEPDIR)/prod_iso.Plo"; else rm -f "$(DEPDIR)/prod_iso.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/freeflow/prod_iso.cpp' object='prod_iso.lo' libtool=yes @AMDEPBACKSLASH@
+flow_curv.lo: src/freeflow/flow_curv.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flow_curv.lo -MD -MP -MF "$(DEPDIR)/flow_curv.Tpo" -c -o flow_curv.lo `test -f 'src/freeflow/flow_curv.cpp' || echo '$(srcdir)/'`src/freeflow/flow_curv.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/flow_curv.Tpo" "$(DEPDIR)/flow_curv.Plo"; else rm -f "$(DEPDIR)/flow_curv.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/freeflow/flow_curv.cpp' object='flow_curv.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o prod_iso.lo `test -f 'src/freeflow/prod_iso.cpp' || echo '$(srcdir)/'`src/freeflow/prod_iso.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flow_curv.lo `test -f 'src/freeflow/flow_curv.cpp' || echo '$(srcdir)/'`src/freeflow/flow_curv.cpp
 
-prod_points.lo: src/freeflow/prod_points.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT prod_points.lo -MD -MP -MF "$(DEPDIR)/prod_points.Tpo" -c -o prod_points.lo `test -f 'src/freeflow/prod_points.cpp' || echo '$(srcdir)/'`src/freeflow/prod_points.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/prod_points.Tpo" "$(DEPDIR)/prod_points.Plo"; else rm -f "$(DEPDIR)/prod_points.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/freeflow/prod_points.cpp' object='prod_points.lo' libtool=yes @AMDEPBACKSLASH@
+flow_points.lo: src/freeflow/flow_points.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flow_points.lo -MD -MP -MF "$(DEPDIR)/flow_points.Tpo" -c -o flow_points.lo `test -f 'src/freeflow/flow_points.cpp' || echo '$(srcdir)/'`src/freeflow/flow_points.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/flow_points.Tpo" "$(DEPDIR)/flow_points.Plo"; else rm -f "$(DEPDIR)/flow_points.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/freeflow/flow_points.cpp' object='flow_points.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o prod_points.lo `test -f 'src/freeflow/prod_points.cpp' || echo '$(srcdir)/'`src/freeflow/prod_points.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flow_points.lo `test -f 'src/freeflow/flow_points.cpp' || echo '$(srcdir)/'`src/freeflow/flow_points.cpp
 
-prod_points_tcl.lo: src/freeflow/prod_points_tcl.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT prod_points_tcl.lo -MD -MP -MF "$(DEPDIR)/prod_points_tcl.Tpo" -c -o prod_points_tcl.lo `test -f 'src/freeflow/prod_points_tcl.cpp' || echo '$(srcdir)/'`src/freeflow/prod_points_tcl.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/prod_points_tcl.Tpo" "$(DEPDIR)/prod_points_tcl.Plo"; else rm -f "$(DEPDIR)/prod_points_tcl.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/freeflow/prod_points_tcl.cpp' object='prod_points_tcl.lo' libtool=yes @AMDEPBACKSLASH@
+flow_points_tcl.lo: src/freeflow/flow_points_tcl.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flow_points_tcl.lo -MD -MP -MF "$(DEPDIR)/flow_points_tcl.Tpo" -c -o flow_points_tcl.lo `test -f 'src/freeflow/flow_points_tcl.cpp' || echo '$(srcdir)/'`src/freeflow/flow_points_tcl.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/flow_points_tcl.Tpo" "$(DEPDIR)/flow_points_tcl.Plo"; else rm -f "$(DEPDIR)/flow_points_tcl.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/freeflow/flow_points_tcl.cpp' object='flow_points_tcl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o prod_points_tcl.lo `test -f 'src/freeflow/prod_points_tcl.cpp' || echo '$(srcdir)/'`src/freeflow/prod_points_tcl.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flow_points_tcl.lo `test -f 'src/freeflow/flow_points_tcl.cpp' || echo '$(srcdir)/'`src/freeflow/flow_points_tcl.cpp
 
 dem.lo: src/globe/dem.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT dem.lo -MD -MP -MF "$(DEPDIR)/dem.Tpo" -c -o dem.lo `test -f 'src/globe/dem.cpp' || echo '$(srcdir)/'`src/globe/dem.cpp; \
