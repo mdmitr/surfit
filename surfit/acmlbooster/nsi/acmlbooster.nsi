@@ -17,7 +17,7 @@
   OutFile "acmlbooster-1.0-setup.exe"
 
   ;Default installation folder
-  InstallDir "$PROGRAMFILES\acmlbooster-1.0"
+  InstallDir "$PROGRAMFILES\surfit-2.0"
   
   ;Get installation folder from registry if available
   InstallDirRegKey HKCU "Software\surfit" ""
@@ -147,7 +147,6 @@ Section "sources" SecSources
   File /r /x CVS "..\vc6\*.bat"
   File /r /x CVS "..\vc6\*.dsp"
   File /r /x CVS "..\vc6\*.dsw"
-  File /r /x CVS "..\vc6\*.opt"
   File /r /x CVS "..\vc6\*.mak"
 
   SetOutPath "$INSTDIR"
@@ -160,6 +159,16 @@ Section "sources" SecSources
 
 SectionEnd
 
+Section "examples" SecExamples
+
+  SetOutPath "$INSTDIR\examples\acmlbooster"
+  File /r /x CVS "..\examples\acmlbooster\points.txt"
+  File /r /x CVS "..\examples\acmlbooster\acml_test.tcl"
+  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
+  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\examples.lnk" "$INSTDIR\examples\"
+
+SectionEnd
+
 
 
 ;--------------------------------
@@ -168,6 +177,7 @@ SectionEnd
   ;Language strings
   LangString DESC_Sources ${LANG_ENGLISH} "source files (*.cpp, *.h, ...)"
   LangString DESC_Binary ${LANG_ENGLISH} "libacmlbooster.dll"
+  LangString DESC_Binary ${LANG_ENGLISH} "acml_test.tcl"
 
 
   ;Assign language strings to sections
