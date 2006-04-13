@@ -266,7 +266,7 @@ SOURCE=.\..\src\freeflow\interface\freeflow.i
 
 !IF  "$(CFG)" == "freeflow - Win32 Release"
 
-USERDEP__FREEF="../src/freeflow/interface/lcm.i"	"../src/freeflow/interface/flow_draw.i"	
+USERDEP__FREEF="../src/freeflow/interface/lcm.i"	
 # Begin Custom Build
 InputPath=.\..\src\freeflow\interface\freeflow.i
 
@@ -277,7 +277,7 @@ InputPath=.\..\src\freeflow\interface\freeflow.i
 
 !ELSEIF  "$(CFG)" == "freeflow - Win32 Debug"
 
-USERDEP__FREEF="../src/freeflow/interface/lcm.i"	"../src/freeflow/interface/flow_draw.i"	
+USERDEP__FREEF="../src/freeflow/interface/lcm.i"	
 # Begin Custom Build
 InputPath=.\..\src\freeflow\interface\freeflow.i
 

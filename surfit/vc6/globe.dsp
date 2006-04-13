@@ -275,7 +275,6 @@ SOURCE=.\..\src\globe\interface\globe.i
 
 !IF  "$(CFG)" == "globe - Win32 Release"
 
-USERDEP__GLOBE="../src/freeflow/interface/flow_draw.i"	
 # Begin Custom Build
 InputPath=.\..\src\globe\interface\globe.i
 
@@ -286,7 +285,6 @@ InputPath=.\..\src\globe\interface\globe.i
 
 !ELSEIF  "$(CFG)" == "globe - Win32 Debug"
 
-USERDEP__GLOBE="../src/freeflow/interface/flow_draw.i"	
 # Begin Custom Build
 InputPath=.\..\src\globe\interface\globe.i
 
