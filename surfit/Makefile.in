@@ -370,8 +370,9 @@ AUTOMAKE_OPTIONS = foreign
 INCLUDES = $(TCLINCLUDE) -Isrc/sstuff -Isrc/surfit -Isrc/freeflow
 EXTRA_DIST = vc6/surfit* vc6/freeflow* vc6/globe* \
 	src/surfit/interface/*.i examples/* src/freeflow/interface/*.i \
-	src/globe/interface/*.i doc/gallery/* doc/src/* doc/surfit.cfg \
-	doc/make_doc* make_release.bat make_debug.bat clean.bat
+	src/globe/interface/*.i doc/gallery/* doc/src/* doc/html/* \
+	doc/surfit.cfg doc/make_doc* make_release.bat make_debug.bat \
+	clean.bat
 lib_LTLIBRARIES = libsstuff.la libsurfit.la $(am__append_1) \
 	$(am__append_2)
 libsstuff_ladir = $(prefix)/include/sstuff
@@ -1900,7 +1901,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/doc $(distdir)/doc/gallery $(distdir)/doc/src $(distdir)/examples $(distdir)/src/freeflow $(distdir)/src/freeflow/interface $(distdir)/src/globe $(distdir)/src/globe/interface $(distdir)/src/sstuff $(distdir)/src/surfit $(distdir)/src/surfit/interface $(distdir)/vc6
+	$(mkdir_p) $(distdir)/doc $(distdir)/doc/gallery $(distdir)/doc/html $(distdir)/doc/src $(distdir)/examples $(distdir)/src/freeflow $(distdir)/src/freeflow/interface $(distdir)/src/globe $(distdir)/src/globe/interface $(distdir)/src/sstuff $(distdir)/src/surfit $(distdir)/src/surfit/interface $(distdir)/vc6
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -2151,9 +2152,6 @@ dist-hook:
 
 install-data-hook:
 
-	cd doc; \
-	sh make_docs; \
-	cd ..; \
 	if ! test -d "$(DESTDIR)$(prefix)/share"; then \
 		mkdir $(DESTDIR)$(prefix)/share; \
 	fi; \

@@ -2,6 +2,9 @@
 rm `find -name core*`
 rm `find -name *.dat`
 rm `find -name *.log`
+cd doc
+sh make_docs
+cd ..
 make dist
 cp surfit-2.0.tar.gz $HOME/rpm/SOURCES/
 cat rpmmacros > $HOME/.rpmmacros

@@ -350,9 +350,6 @@ dist-hook:
 
 install-data-hook:
 
-	cd doc; \
-	sh make_docs; \
-	cd ..; \
 	if ! test -d "$(DESTDIR)$(prefix)/share"; then \
 		mkdir $(DESTDIR)$(prefix)/share; \
 	fi; \
