@@ -134,7 +134,9 @@ Section "binaries" SecBinary
   
   !insertmacro MUI_STARTMENU_WRITE_END
 
-
+  Push $INSTDIR/bin
+  Call AddToPath
+                
   File "..\bin\libmklbooster.dll"
 
 SectionEnd
@@ -199,6 +201,9 @@ Section "Uninstall"
     
   ;Delete empty start menu parent diretories
   StrCpy $MUI_TEMP "$SMPROGRAMS\$MUI_TEMP"
+
+  Push $INSTDIR/bin
+  Call un.RemoveFromPath
  
 SectionEnd
 
