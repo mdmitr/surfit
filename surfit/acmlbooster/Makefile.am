@@ -28,6 +28,25 @@ dist-hook:
 
 	rm -rf `find $(distdir) -name CVS`
 
+install-data-hook:
+
+	if ! test -d "$(DESTDIR)$(prefix)/share"; then \
+		mkdir $(DESTDIR)$(prefix)/share; \
+	fi; \
+	if ! test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)"; then \
+		mkdir $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION); \
+	fi; \
+	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc"; then \
+		rm -rf $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc; \
+	fi; \
+	cp -r doc/html $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc ; \
+	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples"; then \
+		rm -rf $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples; \
+	fi; \
+	mkdir $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples
+	cp -r examples/acmlbooster/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name CVS`
+
 install-exec-hook:
 
 	if test -f $(DESTDIR)$(bindir)/cygacmlbooster-1.dll; then \
