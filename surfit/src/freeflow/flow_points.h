@@ -35,6 +35,8 @@ public:
 	f_flow_points(const d_points * itsk);
 	~f_flow_points();
 
+	const char * getManagerName() const { return "freeflow"; };
+
 	bool minimize();
 	
 	bool make_matrix_and_vector(matr *& matrix, vec *& v);
@@ -46,6 +48,8 @@ public:
 	bool solvable_without_cond(const bitvec * mask_solved, 
 				   const bitvec * mask_undefined,
 				   const vec * X);
+
+	void cleanup();
 	
 protected:
 

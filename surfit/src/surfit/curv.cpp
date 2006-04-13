@@ -251,6 +251,7 @@ struct curv_garbage : public binman {
 		if (surfit_curvs) {
 			release_elements(surfit_curvs->begin(), surfit_curvs->end());
 			delete surfit_curvs;
+			surfit_curvs = NULL;
 		}
 	}
 

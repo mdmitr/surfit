@@ -40,9 +40,15 @@ functional("f_cntr", F_USUAL)
 };
 
 f_cntr::~f_cntr() {
+	cleanup();
+};
+
+void f_cntr::cleanup() {
 	delete f_pnts;
 	if (pnts)
 		pnts->release_private();
+	f_pnts = NULL;
+	pnts = NULL;
 };
 
 int f_cntr::this_get_data_count() const {

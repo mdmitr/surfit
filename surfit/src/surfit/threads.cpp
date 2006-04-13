@@ -57,6 +57,10 @@ void init_threads(int cnt) {
 #endif //threads
 };
 
+int get_threads() {
+	return cpu;
+};
+
 /*
 void finish_threads() {
 	if (master) {

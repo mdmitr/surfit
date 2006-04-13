@@ -30,6 +30,8 @@ class FLOW_EXPORT f_flow_area : public functional {
 public:
 	f_flow_area(REAL ivalue, const d_area * iarea);
 	~f_flow_area();
+
+	const char * getManagerName() const { return "freeflow"; };
 	
 	bool minimize();
 	

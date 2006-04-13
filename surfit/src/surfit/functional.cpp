@@ -316,6 +316,8 @@ bool functional::solvable(const bitvec * mask_solved,
 
 void functional::drop_private_data() {};
 
+void functional::cleanup() {};
+
 //
 // faultable
 //

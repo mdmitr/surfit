@@ -40,6 +40,8 @@ public:
 	//! destructor
 	~f_points();
 
+	const char * getManagerName() const { return "surfit"; };
+
 	bool minimize();
 	bool make_matrix_and_vector(matr *& matrix, vec *& v);
 	void mark_solved_and_undefined(bitvec * mask_solved, 
@@ -49,6 +51,8 @@ public:
 	bool solvable_without_cond(const bitvec * mask_solved, 
 				   const bitvec * mask_undefined,
 				   const vec * X);
+
+	virtual void cleanup();
 
 protected:
 

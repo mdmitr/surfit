@@ -34,6 +34,17 @@ namespace surfit {
 void init_threads(int cnt);
 
 /*! \ingroup tcl_other
+    \fn int get_threads();
+
+    \par Tcl syntax:
+    get_threads
+
+    \par Description:
+    returns max number of threads to execute
+*/
+int get_threads();
+
+/*! \ingroup tcl_other
     \fn char * file_info(const char * filename);
 
     \par Tcl syntax:

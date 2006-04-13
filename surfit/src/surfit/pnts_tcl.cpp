@@ -674,6 +674,10 @@ bool pnts_rotate(REAL centerX, REAL centerY, REAL angle, const char * pos) {
 };
 
 bool pnts_delall() {
+
+	if (surfit_pnts == NULL)
+		return false;
+
 	if (surfit_pnts->size() == 0) {
 		return false;
 	}

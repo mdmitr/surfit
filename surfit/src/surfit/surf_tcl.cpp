@@ -788,6 +788,9 @@ bool surf_setName(const char * new_name, const char * pos) {
 
 bool surf_delall() {
 
+	if (surfit_surfs == NULL)
+		return false;
+
 	if (surfit_surfs->size() == 0) {
 		return false;
 	}

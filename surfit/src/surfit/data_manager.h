@@ -43,6 +43,8 @@ public:
 	virtual bool save(datafile *df) const = 0;
 	//! unloads data from memory
 	virtual void clear_data() const = 0;
+	//! unloads gridding rules from memory
+	virtual void clear_rules() const;
 	//! prints some info about loaded \ref data into memory
 	virtual void mem_info() const = 0;
 	//! delete this
@@ -68,9 +70,9 @@ class surfit_manager : public manager {
 public:
 	int load_tag(datafile *df, char * tag_name) const;
 	bool save(datafile *df) const;
+	void release();
 	void clear_data() const;
 	void mem_info() const;
-	void release();
 	int data_count() const;
 	const data * data_get(int i) const;
 	char * types_info() const;
@@ -97,6 +99,8 @@ public:
 	bool save(datafile *df) const;
 	//! serves \ref clear_data command
 	void clear_data() const;
+	//! serves \ref clear_rules command
+	void clear_rules() const;
 	//! serves \ref mem_info command
 	void mem_info() const;
 	//! serves \ref types_info command

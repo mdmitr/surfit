@@ -54,12 +54,17 @@ functional("f_points_ineq", F_CONDI)
 };
 
 f_points_ineq::~f_points_ineq() {
-	if (f_sub_pnts)
-		release_elements(f_sub_pnts->begin(), f_sub_pnts->end());
-	delete f_sub_pnts;
+	cleanup();
 	delete binded_grid;
 	if (print_name)
 		free(print_name);
+};
+
+void f_points_ineq::cleanup() {
+	if (f_sub_pnts)
+		release_elements(f_sub_pnts->begin(), f_sub_pnts->end());
+	delete f_sub_pnts;
+	f_sub_pnts = NULL;
 };
 
 int f_points_ineq::this_get_data_count() const {

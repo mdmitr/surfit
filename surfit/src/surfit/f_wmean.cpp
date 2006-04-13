@@ -44,8 +44,13 @@ functional("f_wmean", F_CONDI)
 };
 
 f_wmean::~f_wmean() {
+	cleanup();
+};
+
+void f_wmean::cleanup() {
 	if (w_srf)
 		w_srf->release_private();
+	w_srf = NULL;
 };
 
 int f_wmean::this_get_data_count() const {

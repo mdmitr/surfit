@@ -129,6 +129,7 @@ struct cntr_garbage : public binman {
 		if (surfit_cntrs) {
 			release_elements(surfit_cntrs->begin(), surfit_cntrs->end());
 			delete surfit_cntrs;
+			surfit_cntrs = NULL;
 		}
 	};
 };

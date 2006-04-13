@@ -72,7 +72,6 @@ void surfit() {
 			if (stop_execution == 1) 
 				break;
 			
-					
 			functional * fnc = (*Functionals)[i];
 			std::vector<functional *>::iterator fnc_it = Functionals->begin()+i;
 			bool res = fnc->minimize();
@@ -118,6 +117,13 @@ void surfit() {
 
 	};
 
+	int f_size = functionals->size();
+
+	for (i = 0; i < f_size; i++) {
+		functional * f = (*functionals)[i];
+		f->cleanup();
+	}
+
 	grid_release();
 
 	time_t ltime_end;
@@ -129,13 +135,6 @@ void surfit() {
 		
 	writelog(LOG_MESSAGE,"Elapsed time %d minutes %G seconds",minutes,sec);
 
-};
-
-void clear_rules() {
-	if (functionals) {
-		release_elements(functionals->begin(), functionals->end());
-		functionals->resize(0);
-	}
 };
 
 }; // namespace surfit;

@@ -44,8 +44,13 @@ functional("f_dem", F_USUAL)
 };
 
 f_dem::~f_dem() {
+	cleanup();
+};
+
+void f_dem::cleanup() {
 	if (mask)
 		mask->release();
+	mask = NULL;
 };
 
 int f_dem::this_get_data_count() const {

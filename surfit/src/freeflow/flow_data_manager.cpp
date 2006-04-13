@@ -26,6 +26,8 @@
 namespace surfit {
 
 void freeflow_manager::release() {
+	clear_rules();
+	clear_data();
 	delete this;
 };
 

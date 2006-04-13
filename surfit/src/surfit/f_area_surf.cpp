@@ -48,8 +48,13 @@ functional("f_area_surf", F_USUAL)
 };
 
 f_area_surf::~f_area_surf() {
+	cleanup();
+};
+
+void f_area_surf::cleanup() {
 	if (area_mask)
 		area_mask->release();
+	area_mask = NULL;
 };
 
 int f_area_surf::this_get_data_count() const {

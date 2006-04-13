@@ -32,6 +32,8 @@ public:
 
 	f_dem(d_dem * idem);
 	~f_dem();
+
+	const char * getManagerName() const { return "globe"; };
 	bool minimize();
 	bool make_matrix_and_vector(matr *& matrix, vec *& v);
 	bool solvable_without_cond(const bitvec * mask_solved, 
@@ -39,6 +41,7 @@ public:
 				   const vec * X);
 	
 	void mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond);
+	void cleanup();
 	
 protected:
 

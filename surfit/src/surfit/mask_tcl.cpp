@@ -277,6 +277,9 @@ bool mask_to_surf(const char * pos) {
 bool mask_delall() {
 	unsigned int i;
 
+	if (surfit_masks == NULL)
+		return false;
+
 	if (surfit_masks->size() == 0) {
 		//writelog(SURFIT_WARNING,"masks_delall : empty surfit_masks");
 		return false;

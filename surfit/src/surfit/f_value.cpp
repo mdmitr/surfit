@@ -41,8 +41,13 @@ functional("f_value", F_USUAL) {
 };
 
 f_value::~f_value() {
+	cleanup();
+};
+
+void f_value::cleanup() {
 	if (mask)
 		mask->release();
+	mask = NULL;
 };
 
 int f_value::this_get_data_count() const {

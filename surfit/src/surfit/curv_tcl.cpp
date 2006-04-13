@@ -144,6 +144,10 @@ const char * curv_getName(const char * pos) {
 };
 
 bool curv_delall() {
+
+	if (surfit_curvs == NULL)
+		return false;
+
 	if (surfit_curvs->size() == 0) {
 		//writelog(SURFIT_WARNING,"curvs_delall : empty surfit_curvs");
 		return false;

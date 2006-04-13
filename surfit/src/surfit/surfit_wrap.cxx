@@ -2256,6 +2256,33 @@ fail:
 
 
 SWIGINTERN int
+_wrap_get_threads(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  int result;
+  
+  if (SWIG_GetArgs(interp, objc, objv,":get_threads ") == TCL_ERROR) SWIG_fail;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (int)surfit::get_threads();
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_int(static_cast<int >(result)));
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
 _wrap_clear_data(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   if (SWIG_GetArgs(interp, objc, objv,":clear_data ") == TCL_ERROR) SWIG_fail;
   {
@@ -35032,6 +35059,7 @@ fail:
 
 static swig_command_info swig_commands[] = {
     { SWIG_prefix "init_threads", (swig_wrapper_func) _wrap_init_threads, NULL},
+    { SWIG_prefix "get_threads", (swig_wrapper_func) _wrap_get_threads, NULL},
     { SWIG_prefix "clear_data", (swig_wrapper_func) _wrap_clear_data, NULL},
     { SWIG_prefix "mem_info", (swig_wrapper_func) _wrap_mem_info, NULL},
     { SWIG_prefix "types_info", (swig_wrapper_func) _wrap_types_info, NULL},

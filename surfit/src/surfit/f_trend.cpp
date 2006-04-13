@@ -55,8 +55,13 @@ faultable("f_trend", F_USUAL|F_FAULT)
 };
 
 f_trend::~f_trend() {
+	cleanup();
+};
+
+void f_trend::cleanup() {
 	if (tr_srf)
 		tr_srf->release_private();
+	tr_srf = NULL;
 };
 
 int f_trend::this_get_data_count() const {

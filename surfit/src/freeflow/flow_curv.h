@@ -34,6 +34,8 @@ public:
 	f_flow_curv(REAL ivalue, d_curv * icrv);
 	~f_flow_curv();
 
+	const char * getManagerName() const { return "freeflow"; };
+
 	bool minimize();
 
 	bool make_matrix_and_vector(matr *& matrix, vec *& v);
@@ -45,6 +47,8 @@ public:
 	void mark_solved_and_undefined(bitvec * mask_solved, 
 				       bitvec * mask_undefined,
 				       bool i_am_cond);
+
+	void cleanup();
 		
 protected:
 

@@ -104,6 +104,7 @@ extern REAL penalty_weight;
 extern REAL penalty_weight_mult;
 
 void init_threads(int amount);
+int get_threads();
 void clear_data();
 void mem_info();
 char * types_info();

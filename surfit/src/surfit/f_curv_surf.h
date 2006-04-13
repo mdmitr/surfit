@@ -39,6 +39,8 @@ public:
 	//! destructor
 	~f_curv_surf();
 
+	const char * getManagerName() const { return "surfit"; };
+
 	bool minimize();
 
 	bool make_matrix_and_vector(matr *& matrix, vec *& v);
@@ -50,6 +52,8 @@ public:
 	void mark_solved_and_undefined(bitvec * mask_solved, 
 				       bitvec * mask_undefined,
 				       bool i_am_cond);
+
+	void cleanup();
 	
 protected:
 

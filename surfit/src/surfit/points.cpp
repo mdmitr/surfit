@@ -439,6 +439,7 @@ struct pnts_garbage : public binman {
 		if (surfit_pnts) {
 			release_elements(surfit_pnts->begin(), surfit_pnts->end());
 			delete surfit_pnts;
+			surfit_pnts = NULL;
 		}
 	};
 

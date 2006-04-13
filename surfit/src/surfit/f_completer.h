@@ -43,6 +43,8 @@ public:
 	//! destructor
 	~f_completer();
 
+	const char * getManagerName() const { return "surfit"; };
+
 	bool minimize();
 
 	bool make_matrix_and_vector(matr *& matrix, vec *& v);

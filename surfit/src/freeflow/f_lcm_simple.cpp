@@ -48,8 +48,15 @@ faultable("f_lcm_simple", F_USUAL|F_FAULT)
 };
 
 f_lcm_simple::~f_lcm_simple() {
-	release_elements(flows->begin(), flows->end());
-	delete flows;
+	cleanup();
+};
+
+void f_lcm_simple::cleanup() {
+	if (flows) {
+		release_elements(flows->begin(), flows->end());
+		delete flows;
+	}
+	flows = NULL;
 };
 
 int f_lcm_simple::this_get_data_count() const {

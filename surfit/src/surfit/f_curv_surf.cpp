@@ -43,9 +43,15 @@ functional("f_curv_surf", F_USUAL)
 };
 
 f_curv_surf::~f_curv_surf() {
+	cleanup();
+};
+
+void f_curv_surf::cleanup() {
 	delete f_pnts;
 	if (pnts)
 		pnts->release_private();
+	f_pnts = NULL;
+	pnts = NULL;
 };
 
 int f_curv_surf::this_get_data_count() const {

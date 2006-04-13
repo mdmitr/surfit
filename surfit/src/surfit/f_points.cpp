@@ -55,14 +55,24 @@ functional("f_points", F_USUAL)
 };
 
 f_points::~f_points() {
+	cleanup();
+	
+	if (print_name)
+		free(print_name);
+};
+
+void f_points::cleanup() {
 	if (f_sub_pnts)
 		release_elements(f_sub_pnts->begin(), f_sub_pnts->end());
 	delete f_sub_pnts;
+	f_sub_pnts = NULL;
+
 	if (mask)
 		mask->release();
+	mask = NULL;
+
 	delete binded_grid;
-	if (print_name)
-		free(print_name);
+	binded_grid = NULL;
 };
 
 int f_points::this_get_data_count() const {

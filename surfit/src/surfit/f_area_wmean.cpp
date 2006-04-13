@@ -53,10 +53,16 @@ functional("f_area_wmean", F_CONDI)
 };
 
 f_area_wmean::~f_area_wmean() {
-	if (w_srf)
-		w_srf->release_private();
+	cleanup();	
+};
+
+void f_area_wmean::cleanup() {
 	if (area_mask)
 		area_mask->release();
+	area_mask = NULL;
+	if (w_srf)
+		w_srf->release_private();
+	w_srf = NULL;
 };
 
 int f_area_wmean::this_get_data_count() const {

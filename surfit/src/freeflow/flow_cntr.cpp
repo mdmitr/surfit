@@ -46,9 +46,15 @@ functional("f_flow_cntr", F_USUAL)
 };
 
 f_flow_cntr::~f_flow_cntr() {
+	cleanup();
+};
+
+void f_flow_cntr::cleanup() {
 	if (d_pnts)
 		d_pnts->release_private();
 	delete f_points;
+	d_pnts = NULL;
+	f_points = NULL;
 };
 
 int f_flow_cntr::this_get_data_count() const {

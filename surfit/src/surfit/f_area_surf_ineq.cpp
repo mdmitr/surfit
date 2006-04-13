@@ -47,8 +47,13 @@ functional("f_area_surf_ineq", F_CONDI)
 };
 
 f_area_surf_ineq::~f_area_surf_ineq() {
+	cleanup();
+};
+
+void f_area_surf_ineq::cleanup() {
 	if (area_mask)
 		area_mask->release();
+	area_mask = NULL;
 };
 
 int f_area_surf_ineq::this_get_data_count() const {

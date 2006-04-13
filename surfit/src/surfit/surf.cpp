@@ -952,6 +952,7 @@ struct surf_garbage : public binman {
 		if (surfit_surfs) {
 			release_elements(surfit_surfs->begin(), surfit_surfs->end());
 			delete surfit_surfs;
+			surfit_surfs = NULL;
 		}
 	};
 };

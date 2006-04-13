@@ -624,6 +624,7 @@ struct dem_garbage : public binman {
 		if (globe_dems) {
 			release_elements(globe_dems->begin(), globe_dems->end());
 			delete globe_dems;
+			globe_dems = NULL;
 		}
 	};
 };

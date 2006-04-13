@@ -44,8 +44,13 @@ functional("f_hist", F_CONDI)
 };
 
 f_hist::~f_hist() {
+	cleanup();
+};
+
+void f_hist::cleanup() {
 	if (mask)
 		mask->release();
+	mask = NULL;
 };
 
 int f_hist::this_get_data_count() const {

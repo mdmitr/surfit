@@ -165,6 +165,17 @@ void data_manager::clear_data() const {
 	
 };
 
+void data_manager::clear_rules() const {
+	
+	if (managers) {
+		std::vector<manager *>::iterator it;
+		for (it = managers->begin(); it != managers->end(); it++) 
+			if (*it)
+				(*it)->clear_rules();
+	}
+	
+};
+
 void data_manager::mem_info() const {
 	
 	if (managers) {
@@ -316,13 +327,86 @@ void data_manager::set_manager(manager * m, int pos) {
 
 //////////////////////////////
 //
+// manager
+//
+//////////////////////////////
+
+void manager::clear_rules() const {
+	int i, prev_size = functionals->size();
+	for (i = prev_size-1; i >= 0; i--) {
+		functional * f = (*functionals)[i];
+		if (f == NULL)
+			continue;
+		const char * mname = f->getManagerName() ;
+		if (mname) {
+			if (strcmp(mname, getName()) == 0) {
+				f->release();
+				(*functionals)[i] = NULL;
+			}
+		}
+	};
+	int pos = 0;
+	for (i = 0; i < functionals->size(); i++) {
+		functional * f = (*functionals)[i];
+		if (f == NULL)
+			continue;
+		(*functionals)[pos] = f;
+		pos++;
+	}
+	functionals->resize(pos);
+};
+
+void manager::getMinMaxZ(REAL & minz, REAL & maxz) const {
+	
+	REAL minZ, maxZ;
+
+	int max_data = data_count();
+	int i;
+	for (i = 0; i < max_data; i++) {
+		const data  * dat = data_get(i);
+		dat->getMinMaxZ(minZ, maxZ);
+		minz = MIN(minz, minZ);
+		maxz = MAX(maxz, maxZ);
+	};
+
+};
+
+bool manager::bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const {
+	
+	REAL minX, maxX;
+	REAL minY, maxY;
+
+	bool reS, Res = false;
+
+	int max_data = data_count();
+	int i;
+	for (i = 0; i < max_data; i++) {
+		const data  * dat = data_get(i);
+		reS = dat->bounds(minX, maxX, minY, maxY);
+		if (reS) {
+			Res = true;
+			minx = MIN(minx, minX);
+			maxx = MAX(maxx, maxX);
+			miny = MIN(miny, minY);
+			maxy = MAX(maxy, maxY);
+		}
+
+	};
+
+	return Res;
+};
+
+//////////////////////////////
+//
 // surfit_manager
 //
 //////////////////////////////
 
 void surfit_manager::release() {
+	this->clear_rules();
+	this->clear_data();
 	delete this;
-};
+}
 
 int surfit_manager::load_tag(datafile * df, char * tagname) const {
 	
@@ -492,7 +576,7 @@ void surfit_manager::clear_data() const {
 	curv_delall();
 	area_delall();
 	cntr_delall();
-	
+		
 	grid_line_unload();
 
 	tol = float(1e-5);
@@ -631,45 +715,6 @@ const data * surfit_manager::data_get(int i) const {
 	return NULL;
 };
 
-void manager::getMinMaxZ(REAL & minz, REAL & maxz) const {
-	
-	REAL minZ, maxZ;
-
-	int max_data = data_count();
-	int i;
-	for (i = 0; i < max_data; i++) {
-		const data  * dat = data_get(i);
-		dat->getMinMaxZ(minZ, maxZ);
-		minz = MIN(minz, minZ);
-		maxz = MAX(maxz, maxZ);
-	};
-
-};
-
-bool manager::bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const {
-	
-	REAL minX, maxX;
-	REAL minY, maxY;
-
-	bool reS, Res = false;
-
-	int max_data = data_count();
-	int i;
-	for (i = 0; i < max_data; i++) {
-		const data  * dat = data_get(i);
-		reS = dat->bounds(minX, maxX, minY, maxY);
-		if (reS) {
-			Res = true;
-			minx = MIN(minx, minX);
-			maxx = MAX(maxx, maxX);
-			miny = MIN(miny, minY);
-			maxy = MAX(maxy, maxY);
-		}
-
-	};
-
-	return Res;
-};
 
 ///////////////////////
 //
@@ -683,6 +728,13 @@ void clear_data() {
 
 	if (surfit_data_manager)
 		surfit_data_manager->clear_data();
+
+};
+
+void clear_rules() {
+
+	if (surfit_data_manager)
+		surfit_data_manager->clear_rules();
 
 };
 

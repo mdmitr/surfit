@@ -460,6 +460,9 @@ const char * dem_getName(const char * pos) {
 
 bool dem_delall() {
 
+	if (globe_dems == NULL)
+		return false;
+
 	if (globe_dems->size() == 0) {
 		return false;
 	}

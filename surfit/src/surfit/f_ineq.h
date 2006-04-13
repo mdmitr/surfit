@@ -31,6 +31,8 @@ public:
 	f_ineq(REAL value, bool ileq, REAL imult);
 	~f_ineq();
 
+	const char * getManagerName() const { return "surfit"; };
+
 	bool minimize();
 
 	bool make_matrix_and_vector(matr *& matrix, vec *& v);

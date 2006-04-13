@@ -234,6 +234,7 @@ struct mask_garbage : public binman {
 		if (surfit_masks) {
 			release_elements(surfit_masks->begin(), surfit_masks->end());
 			delete surfit_masks;
+			surfit_masks = NULL;
 		}
 	};
 };

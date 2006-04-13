@@ -148,6 +148,7 @@ struct area_garbage : public binman {
 		if (surfit_areas) {
 			release_elements(surfit_areas->begin(), surfit_areas->end());
 			delete surfit_areas;
+			surfit_areas = NULL;
 		}
 	}
 

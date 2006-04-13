@@ -41,6 +41,8 @@ public:
 	//! destructor
 	~f_points_ineq();
 
+	const char * getManagerName() const { return "surfit"; };
+
 	bool minimize();
 	bool make_matrix_and_vector(matr *& matrix, vec *& v);
 	void mark_solved_and_undefined(bitvec * mask_solved, 
@@ -51,6 +53,8 @@ public:
 				   const bitvec * mask_undefined,
 				   const vec * X);
 	
+	void cleanup();
+
 protected:
 
 	int this_get_data_count() const;

@@ -116,6 +116,10 @@ const char * area_getName(const char * pos) {
 };
 
 bool area_delall() {
+
+	if (surfit_areas == NULL)
+		return false;
+
 	if (surfit_areas->size() == 0) {
 		//writelog(SURFIT_WARNING,"areas_delall : empty surfit_areas");
 		return false;

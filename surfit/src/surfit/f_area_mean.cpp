@@ -50,8 +50,13 @@ functional("f_area_mean", F_CONDI)
 };
 
 f_area_mean::~f_area_mean() {
+	cleanup();
+};
+
+void f_area_mean::cleanup() {
 	if (area_mask)
 		area_mask->release();
+	area_mask = NULL;
 };
 
 int f_area_mean::this_get_data_count() const {

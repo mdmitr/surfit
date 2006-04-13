@@ -147,6 +147,10 @@ const char * cntr_getName(const char * pos) {
 };
 
 bool cntr_delall() {
+
+	if (surfit_cntrs == NULL)
+		return false;
+
 	if (surfit_cntrs->size() == 0) {
 		//writelog(SURFIT_WARNING,"cntrs_delall : empty surfit_cntrs");
 		return false;

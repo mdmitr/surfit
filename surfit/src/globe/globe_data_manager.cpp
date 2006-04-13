@@ -36,6 +36,8 @@
 namespace surfit {
 
 void globe_manager::release() {
+	clear_rules();
+	clear_data();
 	delete this;
 };
 

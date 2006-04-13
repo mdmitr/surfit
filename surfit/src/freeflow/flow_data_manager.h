@@ -33,6 +33,7 @@ public:
 	bool auto_load(const char * filename, const char * first1024, int readed) const;
 	int load_tag(datafile *df, char * tag_name) const;
 	bool save(datafile *df) const;
+	void release();
 	void clear_data() const;
 	void mem_info() const;
 	char * types_info() const;
@@ -40,7 +41,6 @@ public:
 	void mem_show() const;
 	bool check_for_drawing(const char * type) const;
 #endif
-	void release();
 	int data_count() const;
 	const data * data_get(int i) const;
 	const char * getName() const {return "freeflow";};

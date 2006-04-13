@@ -44,8 +44,13 @@ functional("f_surf", F_USUAL)
 };
 
 f_surf::~f_surf() {
+	cleanup();
+};
+
+void f_surf::cleanup() {
 	if (mask)
 		mask->release();
+	mask = NULL;
 };
 
 int f_surf::this_get_data_count() const {

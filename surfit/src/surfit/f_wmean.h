@@ -35,6 +35,8 @@ public:
 	//! destructor
 	~f_wmean();
 
+	const char * getManagerName() const { return "surfit"; };
+
 	bool minimize();
 
 	bool make_matrix_and_vector(matr *& matrix, vec *& v);
@@ -48,6 +50,7 @@ public:
 				       bool i_am_cond);
 
 	void drop_private_data();
+	void cleanup();
 
 protected:
 

@@ -41,9 +41,15 @@ functional("f_curv", F_CONDI)
 };
 
 f_curv::~f_curv() {
+	cleanup();
+};
+
+void f_curv::cleanup() {
 	delete f_pnts;
 	if (pnts)
 		pnts->release_private();
+	f_pnts = NULL;
+	pnts = NULL;
 };
 
 int f_curv::this_get_data_count() const {

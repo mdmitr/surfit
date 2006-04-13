@@ -109,7 +109,6 @@ data_cleanup(ClientData clientData)
 #endif
 };
 
-
 void surfit_init_all() {
 
 	functionals = new std::vector<functional *>;
@@ -139,7 +138,6 @@ void surfit_init_all() {
 	if (cpu < 1)
 		cpu = 1;
 #endif
-
 
 };
 

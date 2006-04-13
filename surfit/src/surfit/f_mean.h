@@ -34,6 +34,8 @@ public:
 	//! destructor
 	~f_mean();
 
+	const char * getManagerName() const { return "surfit"; };
+
 	bool minimize();
 
 	bool make_matrix_and_vector(matr *& matrix, vec *& v);

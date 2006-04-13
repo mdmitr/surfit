@@ -48,9 +48,15 @@ functional("f_flow_points", F_USUAL)
 }
 
 f_flow_points::~f_flow_points() {
+	cleanup();	
+};
+
+void f_flow_points::cleanup() {
 	if (f_sub_tasks)
 		free_scattered_points( f_sub_tasks );
+	f_sub_tasks = NULL;
 	delete binded_grid;
+	binded_grid = NULL;
 };
 
 int f_flow_points::this_get_data_count() const {

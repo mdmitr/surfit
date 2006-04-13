@@ -36,6 +36,8 @@ public:
 	//! destructor
 	~f_lcm_simple();
 
+	const char * getManagerName() const { return "freeflow"; };
+
 	bool minimize();
 
 	bool make_matrix_and_vector(matr *& matrix, vec *& v);
@@ -49,6 +51,7 @@ public:
 				       bool i_am_cond);
 	
 	void add_flow(functional * fnc);
+	void cleanup();
 
 protected:
 

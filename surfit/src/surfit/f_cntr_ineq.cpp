@@ -47,9 +47,15 @@ functional("f_cntr_ineq", F_CONDI)
 };
 
 f_cntr_ineq::~f_cntr_ineq() {
+	cleanup();
+};
+
+void f_cntr_ineq::cleanup() {
 	delete f_pnts_ineq;
 	if (pnts)
 		pnts->release_private();
+	f_pnts_ineq = NULL;
+	pnts = NULL;
 };
 
 int f_cntr_ineq::this_get_data_count() const {
