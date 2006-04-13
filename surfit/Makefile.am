@@ -14,6 +14,7 @@ EXTRA_DIST += src/freeflow/interface/*.i
 EXTRA_DIST += src/globe/interface/*.i
 EXTRA_DIST += doc/gallery/*
 EXTRA_DIST += doc/src/*
+EXTRA_DIST += doc/html/*
 EXTRA_DIST += doc/surfit.cfg
 EXTRA_DIST += doc/make_doc*
 EXTRA_DIST += make_release.bat
