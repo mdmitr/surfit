@@ -1,6 +1,7 @@
 #! /bin/sh
-rm `find -name core*`
-rm `find -name *.dat`
+rm `find -name "core*"`
+rm `find -name "*.dat"`
+rm `find -name "*.log"`
 make dist
 cp mklbooster-1.0.tar.gz $HOME/rpm/SOURCES/
 cat rpmmacros > $HOME/.rpmmacros

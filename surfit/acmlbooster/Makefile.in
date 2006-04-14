@@ -214,7 +214,8 @@ target_alias = @target_alias@
 AUTOMAKE_OPTIONS = foreign
 INCLUDES = $(TCLINCLUDE) $(SSTUFFINCLUDE) $(SURFITINCLUDE) $(ACMLINCLUDE)
 EXTRA_DIST = vc6/acmlbooster* src/interface/*.i make_release.bat \
-	make_debug.bat
+	make_debug.bat examples/acmlbooster/*.tcl \
+	examples/acmlbooster/*.txt
 lib_LTLIBRARIES = libacmlbooster.la 
 libacmlbooster_ladir = $(prefix)/include/acmlbooster
 libacmlbooster_la_SOURCES = src/acmlbooster.cpp \
@@ -466,7 +467,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/src $(distdir)/src/interface $(distdir)/vc6
+	$(mkdir_p) $(distdir)/examples/acmlbooster $(distdir)/src $(distdir)/src/interface $(distdir)/vc6
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -647,6 +648,8 @@ info: info-am
 info-am:
 
 install-data-am: install-libacmlbooster_laHEADERS
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 
 install-exec-am: install-libLTLIBRARIES
 	@$(NORMAL_INSTALL)
@@ -680,6 +683,8 @@ ps-am:
 
 uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES \
 	uninstall-libacmlbooster_laHEADERS
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
 
 .PHONY: CTAGS GTAGS all all-am am--refresh check check-am clean \
 	clean-generic clean-libLTLIBRARIES clean-libtool ctags dist \
@@ -688,15 +693,15 @@ uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES \
 	distclean-generic distclean-hdr distclean-libtool \
 	distclean-tags distcleancheck distdir distuninstallcheck dvi \
 	dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-exec install-exec-am \
-	install-exec-hook install-info install-info-am \
+	install-data install-data-am install-data-hook install-exec \
+	install-exec-am install-exec-hook install-info install-info-am \
 	install-libLTLIBRARIES install-libacmlbooster_laHEADERS \
 	install-man install-strip installcheck installcheck-am \
 	installdirs maintainer-clean maintainer-clean-generic \
 	mostlyclean mostlyclean-compile mostlyclean-generic \
 	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am uninstall-info-am uninstall-libLTLIBRARIES \
-	uninstall-libacmlbooster_laHEADERS
+	uninstall-am uninstall-hook uninstall-info-am \
+	uninstall-libLTLIBRARIES uninstall-libacmlbooster_laHEADERS
 
 
 $(OBJECTS): libtool
@@ -705,13 +710,47 @@ libtool: $(LIBTOOL_DEPS)
 
 dist-hook:
 
-	rm -rf `find $(distdir) -name CVS`
+	rm -rf `find $(distdir) -name CVS`; \
+	rm -rf `find $(distdir) -name "core*"`; \
+	rm -rf `find $(distdir) -name "*.log"`; \
+	rm -rf `find $(distdir) -name "*.dat"`
+
+install-data-hook:
+
+	if ! test -d "$(DESTDIR)$(prefix)/share"; then \
+		mkdir $(DESTDIR)$(prefix)/share; \
+	fi; \
+	if ! test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)"; then \
+		mkdir $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION); \
+	fi; \
+	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc"; then \
+		rm -rf $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc; \
+	fi; \
+	cp -r doc/html $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc ; \
+	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples"; then \
+		rm -rf $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples; \
+	fi; \
+	mkdir $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples
+	cp -r examples/acmlbooster/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name CVS`; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "core*"`; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name ".log"`; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name ".dat"` 
 
 install-exec-hook:
 
 	if test -f $(DESTDIR)$(bindir)/cygacmlbooster-1.dll; then \
 		rm -f $(DESTDIR)$(bindir)/libacmlbooster.dll; \
 		ln $(DESTDIR)$(bindir)/cygacmlbooster-1.dll $(DESTDIR)$(bindir)/libacmlbooster.dll; \
+	fi
+
+uninstall-hook:
+
+	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)"; then \
+		rm $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/ -rf; \
+	fi; \
+	if test -f "$(DESTDIR)$(bindir)/cygacmlbooster-1.dll"; then \
+		rm -f $(DESTDIR)$(bindir)/libacmlbooster.dll; \
 	fi
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

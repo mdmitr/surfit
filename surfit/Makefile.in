@@ -372,7 +372,8 @@ EXTRA_DIST = vc6/surfit* vc6/freeflow* vc6/globe* \
 	src/surfit/interface/*.i examples/* src/freeflow/interface/*.i \
 	src/globe/interface/*.i doc/gallery/* doc/src/* doc/html/* \
 	doc/surfit.cfg doc/make_doc* make_release.bat make_debug.bat \
-	clean.bat
+	clean.bat make_rpm_fc4 make_rpm_rh73 surfit.spec.fc4 \
+	surfit.spec.rh73
 lib_LTLIBRARIES = libsstuff.la libsurfit.la $(am__append_1) \
 	$(am__append_2)
 libsstuff_ladir = $(prefix)/include/sstuff
@@ -2150,7 +2151,10 @@ libtool: $(LIBTOOL_DEPS)
 
 dist-hook:
 
-	rm -rf `find $(distdir) -name CVS`
+	rm -rf `find $(distdir) -name CVS`; \
+	rm -rf `find $(distdir) -name "*.log"`; \
+	rm -rf `find $(distdir) -name "*.dat"`; \
+	rm -rf `find $(distdir) -name "core*"` 
 
 install-data-hook:
 
@@ -2172,15 +2176,27 @@ install-data-hook:
 	cp -r examples/freeflow $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/freeflow; \
 	cp -r examples/globe $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/globe; \
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name CVS`; \
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name *.log`; \
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name *.dat` 
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "core*"`; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.log"`; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.dat"` 
 
 uninstall-hook:
-	rm $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/ -rf; \
-	rm $(DESTDIR)$(bindir)/cygsstuff-2.dll; \
-	rm $(DESTDIR)$(bindir)/cygsurfit-2.dll; \
-	rm $(DESTDIR)$(bindir)/cygfreeflow-2.dll; \
-	rm $(DESTDIR)$(bindir)/cygglobe-2.dll
+
+	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)"; then \
+		rm $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/ -rf; \
+	fi; \
+	if test -f "$(DESTDIR)$(bindir)/cygsstuff-2.dll"; then \
+		rm $(DESTDIR)$(bindir)/cygsstuff-2.dll; \
+	fi; \
+	if test -f "$(DESTDIR)$(bindir)/cygsurfit-2.dll"; then \
+		rm $(DESTDIR)$(bindir)/cygsurfit-2.dll; \
+	fi; \
+	if test -f "$(DESTDIR)$(bindir)/cygfreeflow-2.dll"; then \
+		rm $(DESTDIR)$(bindir)/cygfreeflow-2.dll; \
+	fi; \
+	if test -f "$(DESTDIR)$(bindir)/cygglobe-2.dll"; then \
+		rm $(DESTDIR)$(bindir)/cygglobe-2.dll;
+	fi
 
 install-exec-hook:
 

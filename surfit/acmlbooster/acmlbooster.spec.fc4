@@ -38,4 +38,5 @@ rm -rf ${RPM_BUILD_ROOT}
 %{_prefix}/lib/libacmlbooster*
 %dir %{_prefix}/include/acmlbooster
 %{_prefix}/include/acmlbooster/*.h
-
+%dir %{_prefix}/share/%{name}-%{version}
+%{_prefix}/share/%{name}-%{version}

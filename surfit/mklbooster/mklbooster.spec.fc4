@@ -38,4 +38,5 @@ rm -rf ${RPM_BUILD_ROOT}
 %{_prefix}/lib/libmklbooster*
 %dir %{_prefix}/include/mklbooster
 %{_prefix}/include/mklbooster/*.h
-
+%dir %{_prefix}/share/%{name}-%{version}
+%{_prefix}/share/%{name}-%{version}

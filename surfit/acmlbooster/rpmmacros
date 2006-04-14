@@ -4,4 +4,3 @@
 %_sourcedir	/home/mvd/rpm/SOURCES
 %_srcrpmdir	/home/mvd/rpm/SRPMS
 %_rpmdir	/home/mvd/rpm/RPMS
-%_prefix	/home/mvd/install

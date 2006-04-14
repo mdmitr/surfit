@@ -9,9 +9,11 @@ EXTRA_DIST = vc6/mklbooster*
 EXTRA_DIST += src/interface/*.i
 EXTRA_DIST += make_release.bat
 EXTRA_DIST += make_debug.bat
-
-#CXXFLAGS = -ggdb  -mwindows -DWIN32
-#CXXFLAGS = -O2
+EXTRA_DIST += rpmmacros
+EXTRA_DIST += make_rpm_fc4
+EXTRA_DIST += mklbooster.spec.fc4
+EXTRA_DIST += examples/mklbooster/*.tcl
+EXTRA_DIST += examples/mklbooster/*.txt
 
 lib_LTLIBRARIES = libmklbooster.la 
 
@@ -29,7 +31,11 @@ libmklbooster_la_LDFLAGS = -version-info 1:0:0 -no-undefined --dllname libmklboo
 
 dist-hook:
 
-	rm -rf `find $(distdir) -name CVS`
+	rm -rf `find $(distdir) -name CVS`; \
+	rm -rf `find $(distdir) -name "core*"`; \
+	rm -rf `find $(distdir) -name "*.log"`; \
+	rm -rf `find $(distdir) -name "*.dat"`
+	
 
 install-data-hook:
 
@@ -47,14 +53,26 @@ install-data-hook:
 		rm -rf $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples; \
 	fi; \
 	mkdir $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples
-	cp -r examples/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples; \
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name CVS`
+	cp -r examples/mklbooster/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name CVS`; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "core*"`; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.log"`; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.dat"` 
 
 install-exec-hook:
 
 	if test -f $(DESTDIR)$(bindir)/cygmklbooster-1.dll; then \
 		rm -f $(DESTDIR)$(bindir)/libmklbooster.dll; \
 		ln $(DESTDIR)$(bindir)/cygmklbooster-1.dll $(DESTDIR)$(bindir)/libmklbooster.dll; \
+	fi
+
+uninstall-hook:
+
+	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)"; then \
+		rm $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/ -rf; \
+	fi; \
+	if test -f "$(DESTDIR)$(bindir)/cygmklbooster"; then \
+		rm $(DESTDIR)$(bindir)/cygmklbooster-1.dll; \
 	fi
 
 
