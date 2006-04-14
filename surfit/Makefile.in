@@ -2120,6 +2120,8 @@ ps-am:
 uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES \
 	uninstall-libfreeflow_laHEADERS uninstall-libglobe_laHEADERS \
 	uninstall-libsstuff_laHEADERS uninstall-libsurfit_laHEADERS
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
 
 .PHONY: CTAGS GTAGS all all-am am--refresh check check-am clean \
 	clean-generic clean-libLTLIBRARIES clean-libtool ctags dist \
@@ -2136,7 +2138,7 @@ uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES \
 	installcheck installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-info-am \
+	tags uninstall uninstall-am uninstall-hook uninstall-info-am \
 	uninstall-libLTLIBRARIES uninstall-libfreeflow_laHEADERS \
 	uninstall-libglobe_laHEADERS uninstall-libsstuff_laHEADERS \
 	uninstall-libsurfit_laHEADERS
@@ -2169,7 +2171,16 @@ install-data-hook:
 	cp -r examples/surfit/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/surfit; \
 	cp -r examples/freeflow $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/freeflow; \
 	cp -r examples/globe $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/globe; \
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name CVS`
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name CVS`; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name *.log`; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name *.dat` 
+
+uninstall-hook:
+	rm $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/ -rf; \
+	rm $(DESTDIR)$(bindir)/cygsstuff-2.dll; \
+	rm $(DESTDIR)$(bindir)/cygsurfit-2.dll; \
+	rm $(DESTDIR)$(bindir)/cygfreeflow-2.dll; \
+	rm $(DESTDIR)$(bindir)/cygglobe-2.dll
 
 install-exec-hook:
 

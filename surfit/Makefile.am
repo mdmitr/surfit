@@ -367,7 +367,16 @@ install-data-hook:
 	cp -r examples/surfit/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/surfit; \
 	cp -r examples/freeflow $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/freeflow; \
 	cp -r examples/globe $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/globe; \
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name CVS`
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name CVS`; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name *.log`; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name *.dat` 
+
+uninstall-hook:
+	rm $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/ -rf; \
+	rm $(DESTDIR)$(bindir)/cygsstuff-2.dll; \
+	rm $(DESTDIR)$(bindir)/cygsurfit-2.dll; \
+	rm $(DESTDIR)$(bindir)/cygfreeflow-2.dll; \
+	rm $(DESTDIR)$(bindir)/cygglobe-2.dll
 
 install-exec-hook:
 
