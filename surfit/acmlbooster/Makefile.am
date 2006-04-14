@@ -11,7 +11,9 @@ EXTRA_DIST += make_release.bat
 EXTRA_DIST += make_debug.bat
 EXTRA_DIST += rpmmacros
 EXTRA_DIST += make_rpm_fc4
+EXTRA_DIST += make_rpm_rh73
 EXTRA_DIST += acmlbooster.spec.fc4
+EXTRA_DIST += acmlbooster.spec.rh73
 EXTRA_DIST += examples/acmlbooster/*.tcl
 EXTRA_DIST += examples/acmlbooster/*.txt
 
