@@ -173,7 +173,7 @@ bool pnts_filter_by_surf(REAL eps, const char * pnts_pos, const char * surf_pos)
 
 };
 
-bool pnts_filter_in_area(const char * pnts_pos, const char * area_pos) {
+bool pnts_filter_out_area(const char * pnts_pos, const char * area_pos) {
 
 	d_points * pnts = get_element<d_points>(pnts_pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
@@ -218,7 +218,7 @@ bool pnts_filter_in_area(const char * pnts_pos, const char * area_pos) {
 
 };
 
-bool pnts_filter_out_area(const char * pnts_pos, const char * area_pos) {
+bool pnts_filter_in_area(const char * pnts_pos, const char * area_pos) {
 
 	d_points * pnts = get_element<d_points>(pnts_pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
