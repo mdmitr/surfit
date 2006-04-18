@@ -68,6 +68,8 @@ public:
 
 	REAL norm() const;
 
+	virtual void skip(int i, int j);
+
 protected:
 
 	//! matrix size
@@ -87,15 +89,11 @@ protected:
 	//! hx/hy
 	REAL _hy2;
 	
-	//! numbers of elements in row to skip in mult_line function (solved)
-	const bitvec * mask_solved;
-	//! numbers of elements in row to skip in mult_line function (undefined)
-	const bitvec * mask_undefined;
 	//! grid based fault line
 	grid_line * fault;
 
 	//! makes mask with fault, solved and undefined taken
-	void make_mask();
+	void make_mask(const bitvec * imask_solved, const bitvec * imask_undefined);
 
 	//! bit-mask
 	bitvec * mask;
@@ -109,7 +107,7 @@ protected:
 /*! \class matrD1_rect
     \brief matrix to serve \ref trend functional for trend::D1 > 0
 */
-class matrD1_rect : public matrD1 {
+class SURFIT_EXPORT matrD1_rect : public matr_rect, public matrD1 {
 public:
 	/*! constructor
 	    \param iN number of matrix elements 
@@ -144,9 +142,11 @@ public:
 	virtual long cols() const;
 	virtual long rows() const;
 
+	REAL norm() const;
+
 protected:
 
-	void make_mask();
+	void make_mask(const bitvec * imask_solved, const bitvec * imask_undefined);
 	
 	//! matrix size 1
 	int N_cols; 
@@ -159,15 +159,6 @@ protected:
 
 	//! rows in matrix
 	int matrMM; 
-
-	//! left index of the rect
-	int x_from;
-	//! right index of the rect
-	int x_to;
-	//! bottom index of the rect
-	int y_from;
-	//! top index of the rect
-	int y_to;
 
 };
 

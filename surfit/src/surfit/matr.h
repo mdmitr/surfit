@@ -43,26 +43,12 @@ public:
 	*/
 	virtual REAL element_at(int i, int j, int * next_j = NULL) const = 0;
 
-	/*! \return i,j-th transposed matrix element
-	    \param i i-th index
-	    \param j j-th index
-	    \param next_j pointer, where next no-zero element index will be placed
-	*/
-	virtual REAL element_at_transposed(int i, int j, int * next_j = NULL) const = 0;
-
 	/*! \return i,j-th matrix element after columns and rows removal
 	    \param i i-th index
 	    \param j j-th index
 	    \param next_j pointer, where next no-zero element index will be placed
 	*/
 	virtual REAL at(int i, int j, int * next_j = NULL) const = 0;
-
-	/*! \return i,j-th transposed matrix element after columns and rows removal
-	    \param i i-th index
-	    \param j j-th index
-	    \param next_j pointer, where next no-zero element index will be placed
-	*/
-	virtual REAL at_transposed(int i, int j, int * next_j = NULL) const = 0;
 
 	//! returns number of columns in matrix
 	virtual long cols() const = 0;
@@ -77,22 +63,12 @@ public:
 	*/
 	virtual REAL mult_line(int J, const REAL * b_begin, const REAL * b_end) = 0;
 
-	/*! returns result of multiplication J-th matrix col with vector
-	    \param J J-th matrix col
-	    \param b_begin pointer to begin of vector
-	    \param b_end pointer to end of vector
-	*/
-	virtual REAL mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end) = 0;
-
+	//! special function. Needs to be called after mult()
 	virtual void call_after_mult();
 	
 	//! r = T*b
-	void mult(const vec * b, vec * r);
-	void mult(const REAL * b_begin, REAL * r_begin);
-
-	//! r = T'*b
-	void mult_transposed(const vec * b, vec * r);
-
+	virtual void mult(const vec * b, vec * r);
+	
 	//! calculates norm estimation
 	virtual REAL norm() const = 0;
 };
@@ -118,12 +94,9 @@ public:
 	void set_const();
 
 	virtual REAL element_at(int i, int j, int * next_j = NULL) const;
-	virtual REAL element_at_transposed(int i, int j, int * next_j = NULL) const;
 	virtual REAL at(int i, int j, int * next_j = NULL) const;
-	virtual REAL at_transposed(int i, int j, int * next_j = NULL) const;
-    
+	
 	virtual REAL mult_line(int J, const REAL * b_begin, const REAL * b_end);
-	virtual REAL mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end);
 	virtual void call_after_mult();
 		    
 	virtual REAL norm() const;
@@ -159,12 +132,9 @@ public:
 	virtual ~matr_sums();
 
 	virtual REAL element_at(int i, int j, int * next_j = NULL) const;
-	virtual REAL element_at_transposed(int i, int j, int * next_j = NULL) const;
 	virtual REAL at(int i, int j, int * next_j = NULL) const;
-	virtual REAL at_transposed(int i, int j, int * next_j = NULL) const;
-    
+	
 	virtual REAL mult_line(int J, const REAL * b_begin, const REAL * b_end);
-	virtual REAL mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end);
 	virtual void call_after_mult();
 	    
 	virtual REAL norm() const;
@@ -192,12 +162,9 @@ public:
 	virtual ~matr_mask();
 
 	virtual REAL element_at(int i, int j, int * next_j = NULL) const;
-	virtual REAL element_at_transposed(int i, int j, int * next_j = NULL) const;
 	virtual REAL at(int i, int j, int * next_j = NULL) const;
-	virtual REAL at_transposed(int i, int j, int * next_j = NULL) const;
-    
+	
 	virtual REAL mult_line(int J, const REAL * b_begin, const REAL * b_end);
-	virtual REAL mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end);
 	virtual void call_after_mult();
 	    
 	virtual REAL norm() const;
@@ -209,6 +176,75 @@ public:
 	//! pointer to matrix
 	matr * matrix;
    
+};
+
+////////////////////////////////////////////
+//
+// matrices for subgrid (rect matrices)
+//
+////////////////////////////////////////////
+
+class SURFIT_EXPORT matr_rect : public matr {
+public:
+	matr_rect(int ix_from, int ix_to, int iy_from, int iy_to, int in_grid_cols);
+
+	//! r = T*b
+	void mult(const vec * b, vec * r);
+	
+	//! number of cols in grid
+	int n_grid_cols;
+
+	//! left index of the rect
+	int x_from;
+	//! right index of the rect
+	int x_to;
+	//! bottom index of the rect
+	int y_from;
+	//! top index of the rect
+	int y_to;
+};
+
+class SURFIT_EXPORT matr_rect_sum : public matr_rect {
+public:
+	
+	/*! constructor
+	    \param iw1 weigth of first matrix
+	    \param iT1 first matrix
+	    \param iw2 weigth of second matrix
+	    \param iT2 second matrix
+	*/
+	matr_rect_sum(int ix_from, int ix_to, int iy_from, int iy_to, int in_grid_cols,
+		      REAL iw1, matr_rect *iT1, REAL iw2 = 0, matr_rect *iT2 = NULL);
+		
+	//! destructor 
+	virtual ~matr_rect_sum();
+	
+	//! don't allows to delete input matrators
+	void set_const();
+
+	virtual REAL element_at(int i, int j, int * next_j = NULL) const;
+	virtual REAL at(int i, int j, int * next_j = NULL) const;
+	
+	virtual REAL mult_line(int J, const REAL * b_begin, const REAL * b_end);
+	virtual void call_after_mult();
+		    
+	virtual REAL norm() const;
+	
+	virtual long cols() const;
+	
+	virtual long rows() const;
+
+	//! weight of first matrix
+	REAL w1;
+	//! pointer to first matrix
+	matr_rect * T1;
+	matr_rect * cT1;
+	//! weight of second matrix
+	REAL w2;
+	//! pointer to second matrix
+	matr_rect * T2;
+	matr_rect * cT2;
+    
 };
 
 }; // namespace surfit;

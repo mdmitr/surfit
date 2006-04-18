@@ -183,7 +183,7 @@ bool pnts_filter_out_area(const char * pnts_pos, const char * area_pos) {
 	if (crv == NULL)
 		return false;
 	
-	writelog(LOG_MESSAGE,"removing points inside area");
+	writelog(LOG_MESSAGE,"removing points outside area");
 
 	int old_size = pnts->size();
 
@@ -228,7 +228,7 @@ bool pnts_filter_in_area(const char * pnts_pos, const char * area_pos) {
 	if (crv == NULL)
 		return false;
 
-	writelog(LOG_MESSAGE,"removing points outside area");
+	writelog(LOG_MESSAGE,"removing points inside area");
 
 	int old_size = pnts->size();
 

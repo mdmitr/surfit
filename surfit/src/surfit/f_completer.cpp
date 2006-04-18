@@ -360,13 +360,13 @@ int calcVecV(int size,
 		if (trend) {
 			
 			REAL trend_val = (*(trend->coeff))(local_pos);
-			if (trend_val == undef_value)
-				continue;
-			for (j = 0; j < T->rows();) {
-				int prev_j = j;
-				mult = T->element_at(pos,j,&j);
-				if (trend && (mult != 0)) {
-					(*res)(prev_j) += mult*trend_val;
+			if (trend_val != undef_value) {
+				for (j = 0; j < T->rows();) {
+					int prev_j = j;
+					mult = T->element_at(pos,j,&j);
+					if (trend && (mult != 0)) {
+						(*res)(prev_j) += mult*trend_val;
+					}
 				}
 			}
 

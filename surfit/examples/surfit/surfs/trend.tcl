@@ -68,4 +68,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "trend.dat" 
+surf_save "trend.dat" "map_trend"

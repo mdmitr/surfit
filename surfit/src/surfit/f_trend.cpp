@@ -52,6 +52,9 @@ faultable("f_trend", F_USUAL|F_FAULT)
 		setNameF("f_trend %s", srf->getName());
 	}
 	tr_srf = NULL;
+
+	trend_mask_solved = NULL;
+	trend_mask_undefined = NULL;
 };
 
 f_trend::~f_trend() {
@@ -62,6 +65,12 @@ void f_trend::cleanup() {
 	if (tr_srf)
 		tr_srf->release_private();
 	tr_srf = NULL;
+	if (trend_mask_solved)
+		trend_mask_solved->release();
+	trend_mask_solved = NULL;
+	if (trend_mask_undefined)
+		trend_mask_undefined->release();
+	trend_mask_undefined = NULL;
 };
 
 int f_trend::this_get_data_count() const {
@@ -232,32 +241,138 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	get_tr_srf(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
 	if (tr_srf == NULL)
 		return false;
+
+	int nn = aux_X_to-aux_X_from;
+	
+	trend_mask_solved = create_bitvec(method_mask_solved);
+	trend_mask_undefined = create_bitvec(method_mask_undefined);
+
+	int i,j;
+	for (j = aux_Y_from; j <= aux_Y_to; j++) {
+		for (i = aux_X_from; i <= aux_X_to; i++) {
+			REAL val = tr_srf->getValueIJ(i-aux_X_from,j-aux_Y_from);
+			if (val == tr_srf->undef_value) {
+				int pos = i + j*NN;
+				trend_mask_undefined->set_true(pos);
+				trend_mask_solved->set_false(pos);
+
+				if ((D1 > 0) || (D2 > 0)) {
+					
+					if (j-1 >= aux_Y_from) {
+						pos = i + (j-1)*NN;
+						trend_mask_undefined->set_true(pos);
+						trend_mask_solved->set_false(pos);
+					}
+					
+					if (i+1 <= aux_X_to) {
+						pos = i+1 + j*NN;
+						trend_mask_undefined->set_true(pos);
+						trend_mask_solved->set_false(pos);
+					}
+					
+					if (i-1 >= aux_X_from) {
+						pos = i-1 + j*NN;
+						trend_mask_undefined->set_true(pos);
+						trend_mask_solved->set_false(pos);
+					}
+					
+					if (j+1 <= aux_Y_to) {
+						pos = i + (j+1)*NN;
+						trend_mask_undefined->set_true(pos);
+						trend_mask_solved->set_false(pos);
+					}
+					
+				}
+
+				if (D2 > 0) {
+
+					if ((i-1 >= aux_X_from) && (j-1 >= aux_Y_from)) {
+						pos = i-1 + (j-1)*NN;
+						trend_mask_undefined->set_true(pos);
+						trend_mask_solved->set_false(pos);
+					}
+
+					if ((i+1 <= aux_X_to) && (j-1 >= aux_Y_from)) {
+						pos = i+1 + (j-1)*NN;
+						trend_mask_undefined->set_true(pos);
+						trend_mask_solved->set_false(pos);
+					}
+
+					if ((i-1 >= aux_X_from) && (j+1 <= aux_Y_to)) {
+						pos = i-1 + (j+1)*NN;
+						trend_mask_undefined->set_true(pos);
+						trend_mask_solved->set_false(pos);
+					}
+					
+					if ((i+1 <= aux_X_to) && (j+1 <= aux_Y_to)) {
+						pos = i+1 + (j+1)*NN;
+						trend_mask_undefined->set_true(pos);
+						trend_mask_solved->set_false(pos);
+					}
+
+					if (j-2 >= aux_Y_from) {
+						pos = i + (j-2)*NN;
+						trend_mask_undefined->set_true(pos);
+						trend_mask_solved->set_false(pos);
+					}
+					
+					if (i+2 <= aux_X_to) {
+						pos = i+2 + j*NN;
+						trend_mask_undefined->set_true(pos);
+						trend_mask_solved->set_false(pos);
+					}
+					
+					if (i-2 >= aux_X_from) {
+						pos = i-2 + j*NN;
+						trend_mask_undefined->set_true(pos);
+						trend_mask_solved->set_false(pos);
+					}
+					
+					if (j+2 <= aux_Y_to) {
+						pos = i + (j+2)*NN;
+						trend_mask_undefined->set_true(pos);
+						trend_mask_solved->set_false(pos);
+					}
+										
+
+				}
+
+				
+			}
+		}
+	}
 	
 	matrD1_rect * oD1 = new matrD1_rect(matrix_size, NN, 
 		method_stepX, method_stepY,
 		aux_X_from, aux_X_to,
 		aux_Y_from, aux_Y_to,
-		method_mask_solved, method_mask_undefined, 
+		trend_mask_solved, trend_mask_undefined, 
 		gfaults); 
 	
 	matrD2_rect * oD2 = new matrD2_rect(matrix_size, NN, 
 		method_stepX, method_stepY,
 		aux_X_from, aux_X_to,
 		aux_Y_from, aux_Y_to,
-		method_mask_solved, method_mask_undefined, 
+		trend_mask_solved, trend_mask_undefined, 
 		gfaults); 
-	
-	matr_sum *  T = new matr_sum(D1, oD1, D2, oD2);
+
+	matr_rect_sum *  T = new matr_rect_sum(aux_X_from, aux_X_to,
+					       aux_Y_from, aux_Y_to, NN,
+					       D1, oD1, 
+					       D2, oD2);
 
 	v = create_vec(matrix_size);
 
 	int points = calcVecV(matrix_size, method_X, T, v, NN, MM, 
-			      method_mask_solved, 
-			      method_mask_undefined, 
+			      trend_mask_solved,
+			      trend_mask_undefined, 
 			      aux_X_from, aux_X_to,
 			      aux_Y_from, aux_Y_to,
 			      tr_srf);
-	
+
+	trend_mask_solved->release();
+	trend_mask_solved = NULL;
+
 	matrix = T;
 
 	bool solvable = completer_solvable(points, D1, D2);
@@ -278,10 +393,15 @@ void f_trend::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_unde
 	for (j = aux_Y_from; j <= aux_Y_to; j++) {
 		for (i = aux_X_from; i <= aux_X_to; i++) {
 			pos = i + j*NN;
-			if (!mask_undefined->get(pos))
+			if (!mask_undefined->get(pos) && !trend_mask_undefined->get(pos)) {
+				REAL val = tr_srf->getValueIJ(i-aux_X_from, j-aux_Y_from);
 				mask_solved->set_true(pos);
+			}
 		}
 	}
+
+	trend_mask_undefined->release();
+	trend_mask_undefined = NULL;
 
 };
 

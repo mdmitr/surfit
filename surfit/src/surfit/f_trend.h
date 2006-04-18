@@ -78,6 +78,9 @@ protected:
 	//! reprojected surface (trend)
 	d_surf * tr_srf;
 
+	bitvec * trend_mask_solved;
+	bitvec * trend_mask_undefined;
+
 	//! calculates surface for limits
 	void get_tr_srf(int & i_from, int & i_to, int & j_from, int & j_to);
 

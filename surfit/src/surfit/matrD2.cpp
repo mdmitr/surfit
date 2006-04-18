@@ -53,8 +53,6 @@ matrD2::matrD2(int iN, int iNN,
 	N = iN; 
 	NN = iNN;
 	MM = N/NN; 
-	mask_solved = imask_solved;
-	mask_undefined = imask_undefined;
 	fault = ifault;
 	hx4 = ihx*ihx*ihx*ihx;
 	hy4 = ihy*ihy*ihy*ihy;
@@ -62,7 +60,7 @@ matrD2::matrD2(int iN, int iNN,
 	_hy4 = (ihx*ihx)/(ihy*ihy);
 	_hxy4 = 1;
 
-	make_mask();
+	make_mask(imask_solved, imask_undefined);
 };
 
 matrD2::~matrD2() {
@@ -72,7 +70,7 @@ matrD2::~matrD2() {
 		mask_solved_undefined->release();
 };
 
-void matrD2::make_mask() {
+void matrD2::make_mask(const bitvec * imask_solved, const bitvec * imask_undefined) {
 	mask = create_bitvec(rows()*10);
 	int j;
 	bool first_x, second_x, third_x;
@@ -91,7 +89,7 @@ void matrD2::make_mask() {
 		
 		sums_points_D2(n, m, 
 			NN, MM, NN, MM,
-			mask_undefined,
+			imask_undefined,
 			first_x, second_x, third_x,
 			first_xx, second_xx,
 			first_yy, second_yy,
@@ -110,8 +108,8 @@ void matrD2::make_mask() {
 			first_y, second_y, third_y);
 	}
 
-	mask_solved_undefined = create_bitvec(mask_solved);
-	mask_solved_undefined->OR(mask_undefined);
+	mask_solved_undefined = create_bitvec(imask_solved);
+	mask_solved_undefined->OR(imask_undefined);
 };
 
 REAL matrD2::matrator_serve(int i, int j,
@@ -1046,6 +1044,10 @@ long matrD2::cols() const {
 
 long matrD2::rows() const {
 	return N;
+};
+
+void matrD2::skip(int i, int j) {
+	mask_solved_undefined->set_true(i + j*NN);
 };
 
 }; // namespace surfit;

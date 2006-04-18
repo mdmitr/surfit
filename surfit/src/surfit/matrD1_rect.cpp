@@ -40,31 +40,27 @@ namespace surfit {
 
 matrD1_rect::matrD1_rect(int iN, int iNN, 
 			 REAL ihx, REAL ihy,
-		         int ix_from, int ix_to, int iy_from, int iy_to,
+		         int ix_from, int ix_to, int iy_from, int iy_to, 
 			 const bitvec * imask_solved,
 			 const bitvec * imask_undefined,
-			 grid_line * ifault) 
+			 grid_line * ifault) : matr_rect(ix_from, ix_to, iy_from, iy_to, iNN)
 {
 	N = iN; 
 	NN = iNN;
 	MM = N/NN; 
-	mask_solved = imask_solved;
-	mask_undefined = imask_undefined;
 	fault = ifault;
 	N_cols = N;
 	N_rows = N;
-	x_from = ix_from; x_to = ix_to;
 	matrNN = x_to - x_from + 1;
-	y_from = iy_from; y_to = iy_to;
 	matrMM = y_to - y_from + 1;
 	hx2 = ihx*ihx;
 	hy2 = ihy*ihy;
 	_hx2 = REAL(1)/hx2;
 	_hy2 = REAL(1)/hx2;
-	make_mask();
+	make_mask(imask_solved, imask_undefined);
 };
 
-void matrD1_rect::make_mask() {
+void matrD1_rect::make_mask(const bitvec * imask_solved, const bitvec * imask_undefined) {
 	mask = create_bitvec(matrMM*matrNN*4);
 	int j;
 	bool first_x, second_x, first_y, second_y;
@@ -78,7 +74,7 @@ void matrD1_rect::make_mask() {
 	
 		sums_points_D1(n, m, 
 			NN, MM, matrNN, matrMM,
-			mask_undefined,
+			imask_undefined,
 			first_x, second_x, 
 			first_y, second_y,
 			x_from, y_from);
@@ -90,8 +86,8 @@ void matrD1_rect::make_mask() {
 		mask->write4(j, first_x, second_x, first_y, second_y);
 	}
 
-	mask_solved_undefined = create_bitvec(mask_solved);
-	mask_solved_undefined->OR(mask_undefined);
+	mask_solved_undefined = create_bitvec(imask_solved);
+	mask_solved_undefined->OR(imask_undefined);
 
 };
 
@@ -159,9 +155,9 @@ REAL matrD1_rect::at(int i, int j, int * next_j) const {
 		return res;
 	}
 
-	bool zero = mask_solved->get(i);
+	bool zero = mask_solved_undefined->get(i);
 	if (!zero)
-		zero = mask_solved->get(j);
+		zero = mask_solved_undefined->get(j);
 
 	if ( zero ) {
 		if (next_j) {
@@ -213,18 +209,15 @@ REAL matrD1_rect::mult_transposed_line(int J, const REAL * b_begin, const REAL *
 
 REAL matrD1_rect::mult_line(int J, const REAL * b_begin, const REAL * b_end) {
 		
+	if (mask_solved_undefined->get(J))
+		return REAL(0);
+
 	int n = J % NN;
 	int m = (J - n)/NN;
 
 	if  (!( (n >= x_from) && (n <= x_to) && (m >= y_from) && (m <= y_to) ))
 		return REAL(0);
-
-	if (mask_solved->get(J))
-		return REAL(0);
-
-	if (mask_undefined->get(J))
-		return REAL(0);
-
+	
 	int local_J = n-x_from + (m-y_from)*matrNN;
 	bool b[4];
 	mask->get4(local_J, b);
@@ -344,6 +337,10 @@ long matrD1_rect::cols() const {
 
 long matrD1_rect::rows() const {
 	return N_rows;
+};
+
+REAL matrD1_rect::norm() const {
+	return matrD1::norm();
 };
 
 }; // namespace surfit;

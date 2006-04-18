@@ -48,29 +48,25 @@ matrD2_rect::matrD2_rect(int iN, int iNN,
 		         int ix_from, int ix_to, int iy_from, int iy_to,
 			 const bitvec * imask_solved,
 			 const bitvec * imask_undefined,
-			 grid_line * ifault) 
+			 grid_line * ifault) : matr_rect(ix_from, ix_to, iy_from, iy_to, iNN)
 {
 	N = iN; 
 	NN = iNN;
 	MM = N/NN; 
-	mask_solved = imask_solved;
-	mask_undefined = imask_undefined;
 	fault = ifault;
 	N_cols = N;
 	N_rows = N;
-	x_from = ix_from; x_to = ix_to;
 	matrNN = x_to - x_from + 1;
-	y_from = iy_from; y_to = iy_to;
 	matrMM = y_to - y_from + 1;
 	hx4 = ihx*ihx*ihx*ihx;
 	hy4 = ihy*ihy*ihy*ihy;
 	_hx4 = REAL(1)/hx4;
 	_hy4 = REAL(1)/hy4;
 	_hxy4 = REAL(2)/(ihx*ihx*ihy*ihy);
-	make_mask();
+	make_mask(imask_solved, imask_undefined);
 };
 
-void matrD2_rect::make_mask() {
+void matrD2_rect::make_mask(const bitvec * imask_solved, const bitvec * imask_undefined) {
 	mask = create_bitvec(matrNN*matrMM*10);
 	int j;
 	bool first_x, second_x, third_x;
@@ -89,7 +85,7 @@ void matrD2_rect::make_mask() {
 		
 		sums_points_D2(n, m, 
 			NN, MM, matrNN, matrMM,
-			mask_undefined,
+			imask_undefined,
 			first_x, second_x, third_x,
 			first_xx, second_xx,
 			first_yy, second_yy,
@@ -110,8 +106,8 @@ void matrD2_rect::make_mask() {
 			first_y, second_y, third_y);
 	}
 
-	mask_solved_undefined = create_bitvec(mask_solved);
-	mask_solved_undefined->OR(mask_undefined);
+	mask_solved_undefined = create_bitvec(imask_solved);
+	mask_solved_undefined->OR(imask_undefined);
 };
 
 
@@ -183,9 +179,9 @@ REAL matrD2_rect::at(int i, int j, int * next_j) const {
 		return res;
 	}
 
-	bool zero = mask_solved->get(i);
+	bool zero = mask_solved_undefined->get(i);
 	if (!zero)
-		zero = mask_solved->get(j);
+		zero = mask_solved_undefined->get(j);
 
 	if ( zero ) {
 		if (next_j) {
@@ -267,18 +263,15 @@ REAL matrD2_rect::mult_transposed_line(int J, const REAL * b_begin, const REAL *
 
 REAL matrD2_rect::mult_line(int J, const REAL * b_begin, const REAL * b_end) {
 
+	if (mask_solved_undefined->get(J))
+		return REAL(0);
+
 	int n = J % NN;
 	int m = (J - n)/NN;
 
 	if  (!( (n >= x_from) && (n <= x_to) && (m >= y_from) && (m <= y_to) ))
 		return REAL(0);
-
-	if (mask_solved->get(J))
-		return REAL(0);
-
-	if (mask_undefined->get(J))
-		return REAL(0);
-
+	
 	bool b[10];
 	int local_J = n-x_from + (m-y_from)*matrNN;
 
@@ -689,6 +682,10 @@ long matrD2_rect::cols() const {
 
 long matrD2_rect::rows() const {
 	return N_rows;
+};
+
+REAL matrD2_rect::norm() const {
+	return matrD2::norm();
 };
 
 }; // namespace surfit;

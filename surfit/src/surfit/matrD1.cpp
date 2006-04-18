@@ -48,15 +48,13 @@ matrD1::matrD1(int iN, int iNN,
 	N = iN; 
 	NN = iNN;
 	MM = N/NN; 
-	mask_solved = imask_solved;
-	mask_undefined = imask_undefined;
 	fault = ifault;
 	hx2 = ihx*ihx;
 	hy2 = ihy*ihy;
 	_hx2 = ihy/ihx;
 	_hy2 = ihx/ihy;
 	mask = NULL;
-	make_mask();
+	make_mask(imask_solved, imask_undefined);
 };
 
 matrD1::~matrD1() {
@@ -66,7 +64,7 @@ matrD1::~matrD1() {
 		mask_solved_undefined->release();
 };
 
-void matrD1::make_mask() {
+void matrD1::make_mask(const bitvec * imask_solved, const bitvec * imask_undefined) {
 	mask = create_bitvec(rows()*4);
 	int j;
 	bool first_x, second_x, first_y, second_y;
@@ -80,7 +78,7 @@ void matrD1::make_mask() {
 
 		sums_points_D1(n, m, 
 			NN, MM, NN, MM,
-			mask_undefined,
+			imask_undefined,
 			first_x, second_x, 
 			first_y, second_y);
 		
@@ -90,8 +88,8 @@ void matrD1::make_mask() {
 		mask->write4(j, first_x, second_x, first_y, second_y);
 	}
 
-	mask_solved_undefined = create_bitvec(mask_solved);
-	mask_solved_undefined->OR(mask_undefined);
+	mask_solved_undefined = create_bitvec(imask_solved);
+	mask_solved_undefined->OR(imask_undefined);
 
 };
 
@@ -314,14 +312,12 @@ REAL matrD1::mult_transposed_line(int J, const REAL * b_begin, const REAL * b_en
 
 REAL matrD1::mult_line(int J, const REAL * b_begin, const REAL * b_end) {
 
+	if (mask_solved_undefined->get(J))
+		return REAL(0);
+
 	int n = J % NN;
 	int m = (J - n)/NN;
 
-	if (mask_solved->get(J))
-		return REAL(0);
-
-	if (mask_undefined->get(J))
-		return REAL(0);
 	
 	REAL res = REAL(0);
 	const REAL * p;
@@ -445,6 +441,10 @@ long matrD1::cols() const {
 
 long matrD1::rows() const {
 	return N;
+};
+
+void matrD1::skip(int i, int j) {
+	mask_solved_undefined->set_true(i + j*NN);
 };
 
 }; // namespace surfit;

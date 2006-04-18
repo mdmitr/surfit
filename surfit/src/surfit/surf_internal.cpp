@@ -42,6 +42,8 @@
 #include "grid_line_user.h"
 #include "grid_user.h"
 
+#include "threads.h"
+
 #include <math.h>
 #include <float.h>
 #include <errno.h>
@@ -532,41 +534,46 @@ bool _surf_full_recons(d_surf * srf) {
 	return srf->full_reconstruct();
 };
 
-
-d_surf * _surf_project(const d_surf * srf, d_grid * grd) {
-
-	int size_x = grd->getCountX();
-	int size_y = grd->getCountY();
-
-	vec * coeff = create_vec(size_x*size_y,0,0);  // do not fill this vector
-	
-	int surf_size = srf->coeff->size();
-	int surf_sizeX = srf->getCountX();
-	int surf_sizeY = srf->getCountY();
-
-	if (srf->getName())
-		writelog(LOG_MESSAGE,"Projecting surf \"%s\" (%d x %d) => (%d x %d)",srf->getName(), surf_sizeX, surf_sizeY, size_x, size_y);
-	else 
-		writelog(LOG_MESSAGE,"Projecting surf (%d x %d) => (%d x %d)", surf_sizeX, surf_sizeY, size_x, size_y);
-
+#ifdef HAVE_THREADS
+struct surf_project_job : public job 
+{
+	surf_project_job()
 	{
-
-		REAL x, y;
-		int I0, J0, I1, J1;
-		REAL value;
-		int i,j;
+		J_from = 0;
+		J_to = 0;
+		srf = NULL;
+		grd = NULL;
+	};
+	void set(unsigned int iJ_from, unsigned int iJ_to, 
+		 const d_surf * isrf, const d_grid * igrd,
+		 vec * icoeff)
+	{
+		J_from = iJ_from;
+		J_to = iJ_to;
+		srf = isrf;
+		grd = igrd;
+		coeff = icoeff;
+	};
+	virtual void do_job() 
+	{
+		d_grid * g = srf->grd;
+		REAL value, x, y, x0, y0;
+		int I0, I1, J0, J1;
 		REAL z0, z1, z2, z3;
-		REAL x0, y0;
 		REAL delta_x, delta_y;
+
 		REAL hX = srf->grd->stepX;
 		REAL hY = srf->grd->stepY;
-		
-		for (j = 0; j < size_y; j++) {
+		int size_x = grd->getCountX();
+		int surf_sizeX = srf->getCountX();
+		int surf_sizeY = srf->getCountY();
+
+		int i,j;
+		for (j = J_from; j < J_to; j++) {
 			for (i = 0; i < size_x; i++) {
 				value = 0;
 				grd->getCoordNode(i, j, x, y);
-				
-				d_grid * g = srf->grd;
+								
 				I0 = (int)floor( (x - g->startX)/g->stepX );
 				J0 = (int)floor( (y - g->startY)/g->stepY );
 
@@ -645,6 +652,152 @@ d_surf * _surf_project(const d_surf * srf, d_grid * grd) {
 								
 			}
 		}
+	};
+
+	unsigned int J_from, J_to;
+	const d_surf * srf;
+	const d_grid * grd;
+	vec * coeff;
+};
+
+surf_project_job surf_project_jobs[MAX_CPU];
+#endif
+
+d_surf * _surf_project(const d_surf * srf, d_grid * grd) {
+
+	int size_x = grd->getCountX();
+	int size_y = grd->getCountY();
+
+	vec * coeff = create_vec(size_x*size_y,0,0);  // do not fill this vector
+	
+	int surf_size = srf->coeff->size();
+	int surf_sizeX = srf->getCountX();
+	int surf_sizeY = srf->getCountY();
+
+	if (srf->getName())
+		writelog(LOG_MESSAGE,"Projecting surf \"%s\" (%d x %d) => (%d x %d)",srf->getName(), surf_sizeX, surf_sizeY, size_x, size_y);
+	else 
+		writelog(LOG_MESSAGE,"Projecting surf (%d x %d) => (%d x %d)", surf_sizeX, surf_sizeY, size_x, size_y);
+
+	{
+
+		REAL x, y;
+		int I0, J0, I1, J1;
+		REAL value;
+		int i,j;
+		REAL z0, z1, z2, z3;
+		REAL x0, y0;
+		REAL delta_x, delta_y;
+		REAL hX = srf->grd->stepX;
+		REAL hY = srf->grd->stepY;
+#ifdef HAVE_THREADS
+		if (cpu == 1) {
+#endif
+		d_grid * g = srf->grd;
+		for (j = 0; j < size_y; j++) {
+			for (i = 0; i < size_x; i++) {
+				value = 0;
+				grd->getCoordNode(i, j, x, y);
+								
+				I0 = (int)floor( (x - g->startX)/g->stepX );
+				J0 = (int)floor( (y - g->startY)/g->stepY );
+
+				I1 = I0+1;
+				J1 = J0+1;
+
+				I0 = MIN(MAX( 0, I0 ), surf_sizeX-1);
+				I1 = MIN(MAX( 0, I1 ), surf_sizeX-1);
+				J0 = MIN(MAX( 0, J0 ), surf_sizeY-1);
+				J1 = MIN(MAX( 0, J1 ), surf_sizeY-1);
+
+				srf->getCoordNode(I0, J0, x0, y0);
+				
+				z0 = (*(srf->coeff))(I0 + surf_sizeX*J0);
+				z1 = (*(srf->coeff))(I1 + surf_sizeX*J0);
+				z2 = (*(srf->coeff))(I1 + surf_sizeX*J1);
+				z3 = (*(srf->coeff))(I0 + surf_sizeX*J1);
+				
+				if (
+					(z0 == srf->undef_value) ||
+					(z1 == srf->undef_value) ||
+					(z2 == srf->undef_value) ||
+					(z3 == srf->undef_value) 
+					) 
+				{
+					
+					REAL sum = REAL(0);
+					int cnt = 0;
+					
+					if (z0 != srf->undef_value) {
+						sum += z0;
+						cnt++;
+					}
+					if (z1 != srf->undef_value) {
+						sum += z1;
+						cnt++;
+					}
+					if (z2 != srf->undef_value) {
+						sum += z2;
+						cnt++;
+					}
+					if (z3 != srf->undef_value) {
+						sum += z3;
+						cnt++;
+					}
+					
+					if (cnt == 0) {
+						(*coeff)(i + j*size_x) = srf->undef_value;
+						continue;
+					}
+
+					REAL mean_z = sum/REAL(cnt);
+					if (z0 == srf->undef_value)
+						z0 = mean_z;
+					if (z1 == srf->undef_value)
+						z1 = mean_z;
+					if (z2 == srf->undef_value)
+						z2 = mean_z;
+					if (z3 == srf->undef_value)
+						z3 = mean_z;
+					
+				}
+				
+				delta_x = x - x0;
+				delta_y = y - y0;
+				
+				// первый шаг линейной интерпол€ции
+				REAL z11 = (z2-z1)*delta_y/hY+z1;
+				REAL z22 = (z3-z0)*delta_y/hY+z0;
+				
+				// второй шаг линейной интерпол€ции
+				REAL res = (z11-z22)*delta_x/hX+z22;
+								
+				(*coeff)(i + j*size_x) = res;
+				
+								
+			}
+		}
+#ifdef HAVE_THREADS
+		} else {
+			unsigned int step = size_y / (cpu);
+			unsigned int ost = size_y % (cpu);
+			unsigned int J_from = 0;
+			unsigned int J_to = 0;
+			int work;
+			for (work = 0; work < cpu; work++) {
+				J_to = J_from + step;
+				if (work == 0)
+					J_to += ost;
+				
+				surf_project_job & f = surf_project_jobs[work];
+				f.set(J_from, J_to, srf, grd, coeff);
+				set_job(&f, work);
+				J_from = J_to;
+			}
+
+			do_jobs();
+		}
+#endif
 	}
 	
 	d_grid * new_grd = new d_grid(grd);
