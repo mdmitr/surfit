@@ -7,6 +7,7 @@ libtool: $(LIBTOOL_DEPS)
 INCLUDES = $(TCLINCLUDE) $(SSTUFFINCLUDE) $(SURFITINCLUDE) $(MKLINCLUDE)
 EXTRA_DIST = vc6/mklbooster*
 EXTRA_DIST += src/interface/*.i
+EXTRA_DIST += readme.txt
 EXTRA_DIST += make_release.bat
 EXTRA_DIST += make_debug.bat
 EXTRA_DIST += rpmmacros
