@@ -168,6 +168,8 @@ Section "examples" SecExamples
   File /r /x CVS "..\examples\acmlbooster\acml_test.tcl"
   CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
   CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\examples.lnk" "$INSTDIR\examples\"
+  SetOutPath "$INSTDIR\doc\acmlbooster"
+  File /r /x CVS "..\doc\readme.txt"
 
 SectionEnd
 

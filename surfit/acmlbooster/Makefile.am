@@ -7,7 +7,6 @@ libtool: $(LIBTOOL_DEPS)
 INCLUDES = $(TCLINCLUDE) $(SSTUFFINCLUDE) $(SURFITINCLUDE) $(ACMLINCLUDE)
 EXTRA_DIST = vc6/acmlbooster*
 EXTRA_DIST += src/interface/*.i
-EXTRA_DIST += readme.txt
 EXTRA_DIST += make_release.bat
 EXTRA_DIST += make_debug.bat
 EXTRA_DIST += rpmmacros
@@ -17,6 +16,7 @@ EXTRA_DIST += acmlbooster.spec.fc4
 EXTRA_DIST += acmlbooster.spec.rh73
 EXTRA_DIST += examples/acmlbooster/*.tcl
 EXTRA_DIST += examples/acmlbooster/*.txt
+EXTRA_DIST += doc/readme.txt
 
 lib_LTLIBRARIES = libacmlbooster.la 
 
