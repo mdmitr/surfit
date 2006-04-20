@@ -47,8 +47,6 @@ d_dem::d_dem(shortvec * icoeff, d_grid * igrd, const char * idemname, short idem
 
 	coeffs_store = new std::vector<shortvec*>;
 	grids_store = new std::vector<d_grid*>;
-	enlarges_X = new std::vector<bool>;
-	enlarges_Y = new std::vector<bool>;
 	store_pos = 0;
 
 };
@@ -75,9 +73,6 @@ d_dem::~d_dem() {
 			(*git)->release();
 	}
 	delete grids_store;
-
-	delete enlarges_X;
-	delete enlarges_Y;
 };
 
 short d_dem::getValue(REAL x, REAL y) const {
@@ -459,10 +454,16 @@ bool d_dem::compare_grid(const d_dem * fnc) const {
 //
 
 int d_dem::details_size() const {
-	return 1+store_pos;
+	return store_pos;
 };
 
 bool d_dem::decompose() {
+
+	if (coeffs_store->size() == 0) {
+		coeffs_store->push_back(coeff);
+		grids_store->push_back( new d_grid(*grd) );
+		store_pos++;
+	}
 
 	if (store_pos == coeffs_store->size()) {
 		
@@ -489,8 +490,6 @@ bool d_dem::decompose() {
 			undef_value, 
 			(store_pos % 2 == 1));
 		
-		coeffs_store->push_back(coeff);
-		grids_store->push_back( new d_grid(*grd) );
 		coeff = new_coeff;
 		
 		int new_size_x = 0;
@@ -516,10 +515,10 @@ bool d_dem::decompose() {
 		grd->endY    = grd->startY + (new_size_y-1) * grd->stepY;
 		new_size_y = grd->getCountY();
 		
-		enlarges_X->push_back(enlarge_X);
-		enlarges_Y->push_back(enlarge_Y);
+		coeffs_store->push_back(coeff);
+		grids_store->push_back( new d_grid(*grd) );
 		store_pos++;
-		
+				
 	} else {
 
 		store_pos++;
@@ -580,12 +579,8 @@ bool d_dem::reconstruct() {
 
 	store_pos--;
 
-	std::vector<bool>::iterator b_itX = enlarges_X->begin() + store_pos;
-	std::vector<bool>::iterator b_itY = enlarges_Y->begin() + store_pos;
-	
 	coeff = (*coeffs_store)[store_pos];
 	grd = (*grids_store)[store_pos];
-	
 	
 	return true;
 

@@ -182,12 +182,6 @@ public:
 	std::vector<d_grid *> * grids_store;
 	int store_pos;
 	
-	//! X-direction enlarges
-	std::vector<bool>  * enlarges_X; 
-
-	//! Y-direction enlarges
-	std::vector<bool>  * enlarges_Y; 
-	
 	//! all values in coeff equal to undef_value interprets as undefined
 	short undef_value;
 

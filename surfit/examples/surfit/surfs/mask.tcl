@@ -1,7 +1,7 @@
 #
 load libsurfit[info sharedlibextension]
 
-# removing all previous data and functionals
+# removing all previous data and gridding rules
 clear_data
 
 # setting map name for calculating surfit

@@ -111,7 +111,7 @@ bool pnts_read(const char * filename, const char * pntsname, int col1, int col2,
 	return false;
 };
 
-bool pnts_write(const char * filename, const char * delimiter, const char * pos) {
+bool pnts_write(const char * filename, const char * pos, const char * delimiter) {
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;

@@ -20,11 +20,11 @@
 #ifndef __surfit__grid__
 #define __surfit__grid__
 
+#include <math.h>
+
 namespace surfit {
 
 class datafile;
-
-#include <math.h>
 
 /*! \class d_grid
     \brief class for equidistant rectangular 2d-grid

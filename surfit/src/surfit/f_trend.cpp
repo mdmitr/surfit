@@ -393,9 +393,16 @@ void f_trend::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_unde
 	for (j = aux_Y_from; j <= aux_Y_to; j++) {
 		for (i = aux_X_from; i <= aux_X_to; i++) {
 			pos = i + j*NN;
-			if (!mask_undefined->get(pos) && !trend_mask_undefined->get(pos)) {
-				REAL val = tr_srf->getValueIJ(i-aux_X_from, j-aux_Y_from);
-				mask_solved->set_true(pos);
+			if (trend_mask_undefined) {
+				if (!mask_undefined->get(pos) && !trend_mask_undefined->get(pos)) {
+					REAL val = tr_srf->getValueIJ(i-aux_X_from, j-aux_Y_from);
+					mask_solved->set_true(pos);
+				}
+			} else {
+				if (!mask_undefined->get(pos))  {
+					REAL val = tr_srf->getValueIJ(i-aux_X_from, j-aux_Y_from);
+					mask_solved->set_true(pos);
+				}
 			}
 		}
 	}

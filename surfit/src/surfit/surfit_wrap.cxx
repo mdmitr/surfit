@@ -7619,7 +7619,7 @@ _wrap_pnts_write__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:pnts_write filename delimiter points_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:pnts_write filename points_name_or_position delimiter ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pnts_write" "', argument " "1"" of type '" "char const *""'");
@@ -7675,7 +7675,7 @@ _wrap_pnts_write__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:pnts_write filename delimiter ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:pnts_write filename points_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pnts_write" "', argument " "1"" of type '" "char const *""'");

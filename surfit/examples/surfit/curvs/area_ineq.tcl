@@ -6,7 +6,7 @@
 # 
 load libsurfit[info sharedlibextension]
 
-# remove all previous data and functionals
+# remove all previous data and gridding rules
 clear_data 
 
 # set name of surface

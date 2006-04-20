@@ -92,7 +92,7 @@ bool pnts_read(const char * filename, const char * pntsname = NULL,
 bool pnts_save(const char * filename, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_save_load
-    \fn bool pnts_write(const char * filename, const char * delimiter = "\t", const char * points_name_or_position = "0");
+    \fn bool pnts_write(const char * filename, const char * points_name_or_position = "0", const char * delimiter = "\t");
     
     \par Tcl syntax:
     pnts_write "filename" "delimiter" "points_name_or_position"
@@ -100,7 +100,7 @@ bool pnts_save(const char * filename, const char * points_name_or_position = "0"
     \par Description:
     saves \ref d_points "points" to formatted text file
 */
-bool pnts_write(const char * filename, const char * delimiter = "\t", const char * points_name_or_position = "0");
+bool pnts_write(const char * filename, const char * points_name_or_position = "0", const char * delimiter = "\t");
 
 //////////////
 // math
