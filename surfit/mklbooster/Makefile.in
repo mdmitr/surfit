@@ -216,7 +216,8 @@ INCLUDES = $(TCLINCLUDE) $(SSTUFFINCLUDE) $(SURFITINCLUDE) $(MKLINCLUDE)
 EXTRA_DIST = vc6/mklbooster* src/interface/*.i make_release.bat \
 	make_debug.bat rpmmacros make_rpm_fc4 make_rpm_rh73 \
 	mklbooster.spec.fc4 mklbooster.spec.rh73 \
-	examples/mklbooster/*.tcl examples/mklbooster/*.txt
+	examples/mklbooster/*.tcl examples/mklbooster/*.txt \
+	doc/readme.txt
 lib_LTLIBRARIES = libmklbooster.la 
 libmklbooster_ladir = $(prefix)/include/mklbooster
 libmklbooster_la_SOURCES = src/mklbooster.cpp src/mklbooster_wrap.cxx \
@@ -468,7 +469,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/examples/mklbooster $(distdir)/src $(distdir)/src/interface $(distdir)/vc6
+	$(mkdir_p) $(distdir)/doc $(distdir)/examples/mklbooster $(distdir)/src $(distdir)/src/interface $(distdir)/vc6
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
