@@ -214,8 +214,9 @@ target_alias = @target_alias@
 AUTOMAKE_OPTIONS = foreign
 INCLUDES = $(TCLINCLUDE) $(SSTUFFINCLUDE) $(SURFITINCLUDE) $(ACMLINCLUDE)
 EXTRA_DIST = vc6/acmlbooster* src/interface/*.i make_release.bat \
-	make_debug.bat examples/acmlbooster/*.tcl \
-	examples/acmlbooster/*.txt
+	make_debug.bat rpmmacros make_rpm_fc4 make_rpm_rh73 \
+	acmlbooster.spec.fc4 acmlbooster.spec.rh73 \
+	examples/acmlbooster/*.tcl examples/acmlbooster/*.txt
 lib_LTLIBRARIES = libacmlbooster.la 
 libacmlbooster_ladir = $(prefix)/include/acmlbooster
 libacmlbooster_la_SOURCES = src/acmlbooster.cpp \
