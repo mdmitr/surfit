@@ -35,7 +35,7 @@ bitvec * create_bitvec(const bitvec * src) {
 bitvec::bitvec(int size) {
 	data = NULL;
 	byte_size = (size + bits_per_byte - 1)/bits_per_byte;
-	data = (int*)malloc(byte_size*sizeof(int));
+	data = (__int32*)malloc(byte_size*sizeof(__int32));
 	datasize = size;
 };
 
@@ -44,7 +44,7 @@ bitvec::bitvec(const bitvec * src) {
 	copy(src);
 };
 
-bitvec::bitvec(int * begin, int * end, int size) {
+bitvec::bitvec(__int32 * begin, __int32 * end, int size) {
 	data = begin;
 	byte_size = (size + bits_per_byte - 1)/bits_per_byte;
 	datasize = size;
@@ -64,13 +64,13 @@ void bitvec::copy(const bitvec * src) {
 	data = NULL;
 	datasize = src->datasize;
 	byte_size = src->byte_size;
-	data = (int*)malloc(byte_size*sizeof(int));
-	memcpy(data, src->data, byte_size*sizeof(int));
+	data = (__int32*)malloc(byte_size*sizeof(__int32));
+	memcpy(data, src->data, byte_size*sizeof(__int32));
 };
 
 void bitvec::init_false() {
 	int i;
-	int * ptr = data;
+	__int32 * ptr = data;
 	for (i = 0; i < byte_size; i++) {
 		*ptr = 0;
 		ptr++;

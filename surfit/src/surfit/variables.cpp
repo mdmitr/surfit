@@ -134,7 +134,11 @@ void surfit_init_all() {
 	GetSystemInfo(&info);
 	cpu = info.dwNumberOfProcessors;
 #else
+#ifdef _SC_NPROCESSORS_ONLN
 	cpu = sysconf(_SC_NPROCESSORS_ONLN);
+#else
+	cpu = 1;
+#endif
 	if (cpu < 1)
 		cpu = 1;
 #endif

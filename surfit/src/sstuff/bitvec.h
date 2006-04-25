@@ -51,7 +51,7 @@ protected:
 	bitvec(const bitvec * src);
 
 	//! another constructor
-	bitvec(int * begin, int * end, int size);
+	bitvec(__int32 * begin, __int32 * end, int size);
 
 public:
 
@@ -129,13 +129,13 @@ public:
 	void XOR(const bitvec * b);
 	void NOT();
 
-	const int * begin() const { return data; };
-	int * begin() { return data; };
+	const __int32 * begin() const { return data; };
+	__int32 * begin() { return data; };
 
 protected:
 
 	//! pointer to bit-based array
-	int * data;
+	__int32 * data;
 
 	//! amount of bits in bitvec
 	int datasize;

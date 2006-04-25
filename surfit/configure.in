@@ -20,7 +20,7 @@ AH_TEMPLATE([HAVE_THREADS],[Define if you want to compile with multithreading su
 AC_CHECK_HEADERS(zlib.h)
 AC_CHECK_LIB(z, zlibVersion, [ZLIB_INSTALLED="YES"], ZLIB_INSTALLED="")
 
-CXXFLAGS="-O2"
+CXXFLAGS="-O3"
 
 AC_ARG_ENABLE(debug, 
 	AC_HELP_STRING(--enable-debug, compiling with debugging info),
