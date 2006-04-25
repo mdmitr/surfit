@@ -350,6 +350,7 @@ libglobe_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libglobe.dll
 
 dist-hook:
 
+	chmod ugo+x install-sh
 	rm -rf `find $(distdir) -name CVS`; \
 	rm -rf `find $(distdir) -name "*.log"`; \
 	rm -rf `find $(distdir) -name "*.dat"`; \
