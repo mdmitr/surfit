@@ -26,6 +26,12 @@
 
 namespace surfit {
 
+#if (defined(_WIN32) || defined(__WIN32__) || defined(WIN32)) && !defined(__CYGWIN__)
+#define surfit_int32 __int32
+#else
+#define surfit_int32 int32_t
+#endif
+
 class bitvec;
 
 SSTUFF_EXPORT
@@ -51,7 +57,7 @@ protected:
 	bitvec(const bitvec * src);
 
 	//! another constructor
-	bitvec(__int32 * begin, __int32 * end, int size);
+	bitvec(surfit_int32 * begin, surfit_int32 * end, int size);
 
 public:
 
@@ -129,13 +135,13 @@ public:
 	void XOR(const bitvec * b);
 	void NOT();
 
-	const __int32 * begin() const { return data; };
-	__int32 * begin() { return data; };
+	const surfit_int32 * begin() const { return data; };
+	surfit_int32 * begin() { return data; };
 
 protected:
 
 	//! pointer to bit-based array
-	__int32 * data;
+	surfit_int32 * data;
 
 	//! amount of bits in bitvec
 	int datasize;
