@@ -35,7 +35,7 @@ bitvec * create_bitvec(const bitvec * src) {
 bitvec::bitvec(int size) {
 	data = NULL;
 	byte_size = (size + bits_per_byte - 1)/bits_per_byte;
-	data = (surfit_int32*)malloc(byte_size*sizeof(surfit_int32));
+	data = (surfit_int32*)malloc((byte_size+1)*sizeof(surfit_int32));
 	datasize = size;
 };
 
@@ -64,8 +64,8 @@ void bitvec::copy(const bitvec * src) {
 	data = NULL;
 	datasize = src->datasize;
 	byte_size = src->byte_size;
-	data = (surfit_int32*)malloc(byte_size*sizeof(surfit_int32));
-	memcpy(data, src->data, byte_size*sizeof(surfit_int32));
+	data = (surfit_int32*)malloc((byte_size+1)*sizeof(surfit_int32));
+	memcpy(data, src->data, (byte_size+1)*sizeof(surfit_int32));
 };
 
 void bitvec::init_false() {
@@ -147,15 +147,13 @@ void bitvec::get4(int pos, bool * b)
 	unsigned int d = real_pos & 31;
 	unsigned int q = real_pos>>5;
 	unsigned int t = ((unsigned int)data[q]) >> d;
-	if (d > 32-5)
+	if (d > 32-5) 
 		t |= data[q+1] << (32-d);
 	(char&)b[0] = 1 & (t >> 0);
 	(char&)b[1] = 1 & (t >> 1);
 	(char&)b[2] = 1 & (t >> 2);
 	(char&)b[3] = 1 & (t >> 3);
-	
 };
-
 
 void bitvec::write10(int pos, 
 		     bool b1, bool b2, bool b3, bool b4, bool b5,
