@@ -1,8 +1,25 @@
 /*! \page freeflow freeflow library description
 
-<B><TT>freeflow</TT></B> is a library for a mathematical modeling of pressure fields.
-
 \par Introduction
+
+<B><TT>freeflow</TT></B> is a library for a mathematical modeling of pressure fields.
+To start using this library you should type the command:
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ load libfreeflow[info sharedlibextension]
+</pre>
+</TD>
+</TR>
+</TABLE>
+
+<B><TT>freeflow</TT></B> provides \ref tcl_freeflow_rules "gridding rules",
+\ref freeflow_commands "commands and variables". Using freeflow gridding rules 
+with some of \ref tcl_rules "surfit gridding rules" you can create special
+gridding algorithms for solving 2d hydrodynamics tasks.
+
+\par Description
 Energy state of a productive oil formation is an important indicator used for 
 the correct and effective planning of its further development. <B><TT>freeflow</TT></B>
 implements the way of pressure fields reconstruction based on the 

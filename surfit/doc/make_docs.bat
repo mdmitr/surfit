@@ -13,6 +13,7 @@ cd ..
 copy gallery\*.* html\*.*
 copy gallery\data\*.* html\*.*
 copy gallery\maps\*.* html\*.*
+copy gallery\globe\*.* html\*.*
 
 doxygen.exe surfit.cfg
 

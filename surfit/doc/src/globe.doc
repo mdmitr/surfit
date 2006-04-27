@@ -1,0 +1,29 @@
+/*! \page globe globe library description
+
+\par Introduction
+
+<B><TT>globe</TT></B> is a library for mathematical modelling of 3D Earth topographical
+surfaces from large datasets: DEMs, clouds of point data, elevation contours. 
+
+<B><TT>globe</TT></B> extends <B><TT>surfit</TT></B> with DEM reading support from common formats
+and two gridding rules. See \ref tcl_globe_rules and \ref tcl_dem.
+
+To start using this library you should type the command:
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ load libglobe[info sharedlibextension]
+</pre>
+</TD>
+</TR>
+</TABLE>
+               
+
+\par Grand Canyon example
+
+\image html source1_srtm.jpg "SRTM data (Grand canyon region)"
+\image html source2_dtm.jpg "DTM data (Grand canyon region)"
+\image html canyon.jpg "Resulting DEM"
+                         
+*/

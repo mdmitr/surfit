@@ -7,147 +7,139 @@
 		<META content="mapping, gridding, interpolation, approximation, surface interpolation, Kriging, Minimum curvature"
 			name="keywords">
 	</HEAD>
-	<BODY text="#000000" vLink="#676465" link="#00671c" bgColor="#376392" width="100%" marginwidth="0"
-		marginheight="0">
-		<font color="#ffffff" size="+2">
-			<center><B><TT><FONT size="7">surfit docs</FONT></TT></B>
-			&nbsp; </font>
-		<table id="Table1" cellSpacing="6" cellPadding="6" width="100%" border="0">
-			<tr>
-				
-      <td vAlign="top" bgColor="#ffffff"><font><font> 
-        <p align="justify"> 
-        <H2 align="center"><FONT face="Verdana"> <IMG alt="surfit logo" src="surfit_logo.jpg" border="0"></FONT> 
-        </H2>
-        <P align="center"><FONT face="Verdana" size="2"><STRONG>surfit-2.0</STRONG></FONT></P>
-        <P align="left"><FONT face="Verdana" size="5"><STRONG>Introduction</STRONG></FONT></P>
-        </font></font>
-        <p><font><font><font><font><FONT size="2"><TT><STRONG><FONT size="3">surfit</FONT></STRONG></TT> 
-          <FONT face="Verdana">is a computer program which enables to calculate 
-          regular grid from various data (scattered points, curves, surfaces, 
-          etc), conditions and inequalities by setting called &quot;gridding rules&quot;. 
-          <TT><STRONG><FONT size="3">surfit</FONT></STRONG></TT> implements the 
-          original </FONT></FONT><A href="surfit/html/cmofs.html"> <FONT face="Verdana" size="2">gridding 
-          method</FONT></A><FONT face="Verdana" size="2">. </FONT></font></font></font></font></p>
-        <p><font><font><font><FONT face="Verdana" size="2"><TT><STRONG><FONT size="3">surfit</FONT></STRONG></TT> 
-          is an </FONT><a href="http://www.opensource.org"><FONT face="Verdana" size="2">Open 
-          Source</FONT></a><FONT face="Verdana" size="2"> and </FONT><a href="http://www.gnu.org/philosophy/free-sw.html"> 
-          <FONT face="Verdana" size="2">Free Software</FONT></a><FONT face="Verdana" size="2">, 
-          the source code is available free of charge under the Free Software 
-          </FONT><A href="http://www.gnu.org/copyleft/licenses.html"> <FONT face="Verdana" size="2">GPL 
-          license</FONT></A><FONT face="Verdana" size="2">. </FONT><FONT face="Verdana" size="2">The 
-          code is written in C++ with STL usage. Careful attention is paid to 
-          performance related issues. The initial goal of <TT><STRONG> <FONT size="3">surfit</FONT></STRONG></TT> 
-          is to provide an&nbsp;efficient tool&nbsp;to scientists&nbsp;dealing 
-          with 3D surfaces computational tasks.</FONT></font><FONT face="Verdana"> 
-          </FONT></font></font></p>
-        <font><font><FONT face="Verdana"> 
-        <P align="justify"><FONT face="Verdana" size="2">The program has the following 
-          basic features:</FONT></P>
-        </FONT></font></font>
-        <UL>
-          <LI> 
-            <DIV align="justify"><FONT face="Verdana" size="2">Allows to build 
-              your own gridding algorithm by defining a set of so called &quot;gridding 
-              rules&quot;. </FONT> </DIV>
-          <LI> 
-            <DIV align="justify"><FONT face="Verdana" size="2">Allows to build 
-              &quot;gridding rules&quot; from: </FONT> </DIV>
-            <UL>
-              <LI> <FONT face="Verdana"><FONT size="2"><B>scattered points</B> 
-                (surface should interpolate or approximate points);</FONT></FONT> 
-              <LI><font size="2" face="Verdana"><strong>curves</strong> (surface 
-                should interpolate or approximate curve with constant value or 
-                with values taken from other surface);</font> 
-              <LI><font size="2" face="Verdana"><strong>areas</strong> (<font>surface 
-                should interpolate or approximate area with constant value or 
-                with values taken from other surface</font>);</font> 
-              <LI><font size="2" face="Verdana"><strong>contours</strong> (surface 
-                should interpolate or approximate contour);</font> 
-              <LI><b><font size="2" face="Verdana">surfaces<strong> </strong></font></b><font size="2" face="Verdana">(surface 
-                should interpolate or approximate other surface);</font> 
-              <LI><b><strong><font size="2" face="Verdana">inequalities </font></strong></b><font size="2" face="Verdana">(based 
-                on points, curves, areas, ... );</font> 
-              <LI><b><strong><font size="2" face="Verdana">linear conditions </font></strong></b><font size="2" face="Verdana">(mean 
-                or weighted mean values for whole surface, or in some area)</font> 
-            </UL>
-          <LI> 
-            <DIV align="justify"><FONT face="Verdana" size="2">Can deal with <B>HUGE</B> 
-              data sets. </FONT> </DIV>
-          <LI> 
-            <DIV align="justify"><FONT face="Verdana" size="2">Quality of resulting 
-              surface can be <A href="compare.html">comparable</A> with a surface 
-              created by Kriging or Minimum curvature method. </FONT> </DIV>
-        </UL>
-        <font><font><FONT face="Verdana">
-        <P align="justify"><STRONG><FONT size="5">Manual sections</FONT></STRONG></P>
-        </FONT> 
-        <UL>
-          <LI> 
-            <DIV align="left"><a href="install.html"><FONT face="Verdana"><STRONG>installation</STRONG></FONT></a></DIV>
-          <LI> 
-            <DIV align="left"><a href="get_start.html"><FONT face="Verdana"><STRONG>getting 
-              started</STRONG></FONT></a></DIV>
-          <LI> 
-            <DIV align="left"><a href="features.html"><FONT face="Verdana"><STRONG>surfit 
-              features</STRONG></FONT></a></DIV>
-          <LI> 
-            <DIV align="left"><A href="surfit.html"><FONT face="Verdana"><STRONG>description 
-              of the surfit gridding algorithm</STRONG></FONT></A></DIV>
-          <LI> 
-            <DIV align="left"><a href="modules.html"><FONT face="Verdana"><STRONG>surfit 
-              functions and variables for Tcl</STRONG></FONT></a></DIV>
-          <LI> 
-            <DIV align="left"><a href="examples.html"><FONT face="Verdana"><STRONG>examples</STRONG></FONT></a></DIV>
-          <LI> 
-            <DIV align="left"><a href="pages.html"><FONT face="Verdana"><STRONG>related 
-              pages</STRONG></FONT></a></DIV>
-          </LI>
-          <LI><FONT face="Verdana"><STRONG>modules:</STRONG></FONT>
-		  <UL>
-		      <li><a href="freeflow.html"><FONT face="Verdana"><STRONG>libfreeflow</STRONG></FONT></a></li>
-		      <li><a href="globe.html"><FONT face="Verdana"><STRONG>libglobe</STRONG></FONT></a></li>
-		      <li><a href="acmlbooster.html"><FONT face="Verdana"><STRONG>libacmlbooster</STRONG></FONT></a></li>
-		      <li><a href="mklbooster.html"><FONT face="Verdana"><STRONG>libmklbooster</STRONG></FONT></a></li>
-		  </UL>
-		  </LI>
-        </UL>
-        <P align="left"><FONT face="Verdana"><STRONG><FONT size="5">surfit license</FONT></STRONG> 
-          </FONT> </P>
-        <P align="justify"><FONT face="Verdana" size="2">Copyright c 1997-2006 
-          by M.V. Dmitrievsky &amp; V.N. Kutrunov. Permission to use, copy, modify, 
-          and distribute this software and its documentation under the terms of 
-          the GNU General Public License is hereby granted. No representations 
-          are made about the suitability of this software for any purpose. It 
-          is provided "as is" without express or implied warranty. See the GNU 
-          General Public License for more details. Documents produced by doxygen 
-          are derivative works derived from the input used in their production; 
-          they are not affected by this license.</FONT></P>
-        <P align="left"><FONT face="Verdana" size="5"><STRONG>Future work</STRONG></FONT></P>
-        <P align="left"><FONT face="Verdana" size="5"><STRONG>Links</STRONG></FONT></P>
-        <UL>
-          <LI> 
-            <DIV align="left"> <FONT face="Verdana"><STRONG>surfit homepage: <a href="http://surfit.sf.net">surfit.sf.net</a></STRONG></FONT></DIV>
-          <LI> 
-            <DIV align="left"> <FONT face="Verdana"><STRONG>Visual tools for surfit: 
-              <a href="http://www.gridding.info">www.gridding.info</a></STRONG></FONT></DIV>
-          <LI> 
-            <DIV align="left"> <FONT face="Verdana"><STRONG><a href="http://surfit.sf.net/mklbooster">Computation 
-              speedup library </a> for surfit based on <a href="www.intel.com/software/products/mkl">Intel 
-              Math Kernel Library (MKL)</a></STRONG></FONT></DIV>
-          <LI> 
-            <DIV align="left"> <FONT face="Verdana"><STRONG><a href="http://surfit.sf.net/acmlbooster">Computation 
-              speedup library </a> for surfit based on <a href="http://developer.amd.com/acml.aspx">AMD 
-              Core Math Library (ACML)</a></STRONG></FONT></DIV>
-          </LI>
-        </UL>
-        <P align="center"> <font><font size="-1"><FONT face="Verdana"><FONT size="1">Please 
-          send any comments about this site to</FONT> <tt>surfit at bluebottle 
-          dot com</tt>. </FONT> </P>
-        <P></P>
-        </font></font></FONT></FONT> </td>
-			</tr>
-		</table>
-		</TD></TR></TABLE></CENTER>
+	<BODY text="#000000" vLink="#676465" link="#00671c" bgColor="#376392" width="100%" marginwidth="0" marginheight="0">
+		<FONT face="Verdana">
+		<CENTER><B><TT><FONT color="#ffffff" size="7">surfit docs</FONT></TT></B>
+		<TABLE id="Table1" cellSpacing="6" cellPadding="6" width="100%" border="0">
+			<TR>
+				<TD vAlign="top" bgColor="#ffffff">
+					<FONT size="2">
+					<P align="justify"> 
+						<H2 align="center"><IMG alt="surfit logo" src="surfit_logo.jpg" border="0"></H2>
+						<P align="center">
+							<FONT size="2"><STRONG>surfit-2.0</STRONG></FONT>
+						</P>
+						<P align="left"><FONT size="5">
+							<STRONG>Introduction</STRONG></FONT>
+						</P>
+						<P>
+							<TT><STRONG><FONT size="3">surfit</FONT></STRONG></TT> is a computer program which enables to calculate 
+							regular grid from various data (scattered points, curves, surfaces, etc), conditions and inequalities 
+							by setting called &quot;gridding rules&quot;. 
+							<TT><STRONG><FONT size="3">surfit</FONT></STRONG></TT> implements the original 
+							<A href="surfit/html/cmofs.html"> gridding method</A>. 
+						</P>
+						<P>
+							<TT><STRONG><FONT size="3">surfit</FONT></STRONG></TT> is an <A HREF="http://www.opensource.org">Open 
+							Source</A> and <A HREF="http://www.gnu.org/philosophy/free-sw.html">Free Software</A>, the source code 
+							is available free of charge under the Free Software <A href="http://www.gnu.org/copyleft/licenses.html">
+							GPL license</A>. The code is written in C++ with STL usage. Careful attention is paid to performance 
+							related issues. The initial goal of <TT><STRONG> <FONT size="3">surfit</FONT></STRONG></TT> is to provide 
+							an efficient tool to scientists dealing with 3D surfaces computational tasks.
+						</P>
+						<P align="justify">
+							The program has the following basic features:
+						</P>
+        
+						<UL>
+							<LI>Allows to build your own gridding algorithm by defining a set of so called 
+							&quot;gridding rules&quot;.
+							</LI>
+							<LI>Allows to build &quot;gridding rules&quot; from:
+								<UL>
+									<LI><STRONG>scattered points</STRONG> (surface should interpolate or approximate points);
+									</LI> 
+									<LI><STRONG>curves</STRONG> (surface should interpolate or approximate curve with constant 
+									value or with values taken from other surface);
+									</LI>
+									<LI><STRONG>areas</STRONG> (surface should interpolate or approximate area with constant 
+									value or with values taken from other surface); 
+									</LI>
+									<LI><STRONG>contours</STRONG> (surface should interpolate or approximate contour);
+									</LI> 
+									<LI><STRONG>surfaces</STRONG> (surface should interpolate or approximate other surface);
+									</LI>
+									<LI><STRONG>inequalities</STRONG> (based on points, curves, areas, ... );
+									</LI> 
+									<LI><STRONG>linear conditions</STRONG> (mean or weighted mean values for whole surface, 
+									or in some area).
+									</LI>
+								</UL>
+							</LI>
+							<LI>Can deal with <B>HUGE</B> data sets.
+							</LI>
+							<LI>Quality of resulting surface can be <A HREF="compare.html">comparable</A> with a surface 
+							created by Kriging or Minimum curvature method.
+							</LI>
+						</UL>
+        				<P align="justify">
+							<STRONG><FONT size="5">Manual sections</FONT></STRONG>
+						</P>
+						<UL>
+							<FONT size="3">
+							<STRONG>
+							<LI><A HREF="install.html">installation</A>
+							</LI>
+							<LI><A HREF="get_start.html">getting started</A>
+							</LI>
+							<LI><A HREF="features.html">surfit features</A>
+							</LI>
+							<LI><A HREF="surfit.html">description of the surfit gridding algorithm</A>
+							</LI>
+							<LI><A HREF="modules.html">surfit functions and variables for Tcl</A>
+							</LI>
+							<LI><A HREF="examples.html">examples</A>
+							</LI>
+							<LI><A HREF="pages.html">related pages</A>
+							</LI>
+							<LI>modules:
+							<UL>
+								<LI><A HREF="freeflow.html">libfreeflow</A>
+								</LI>
+								<LI><A HREF="globe.html">libglobe</A>
+								</LI>
+								<LI><A HREF="acmlbooster.html">libacmlbooster</A> (based on 
+								<a href="http://developer.amd.com/acml.aspx">AMD Core Math Library (ACML)</a>)
+								</LI>
+								<LI><A HREF="mklbooster.html">libmklbooster</A> (based on 
+								<a href="www.intel.com/software/products/mkl">Intel Math Kernel Library (MKL)</a>)
+								</LI>
+							</UL>
+							</LI>
+							</STRONG>
+							</FONT>
+						</UL>
+						<P align="left">
+							<STRONG><FONT size="5">surfit license</FONT></STRONG> 
+						</P>
+						<P align="justify">
+							Copyright c 1997-2006 by M.V. Dmitrievsky &amp; V.N. Kutrunov. Permission to use, copy, modify, 
+							and distribute this software and its documentation under the terms of the GNU General Public 
+							License is hereby granted. No representations are made about the suitability of this software 
+							for any purpose. It is provided "as is" without express or implied warranty. See the GNU General 
+							Public License for more details. Documents produced by doxygen are derivative works derived from 
+							the input used in their production; they are not affected by this license.
+						</P>
+						<P align="left">
+							<FONT size="5"><STRONG>Future work</STRONG></FONT>
+						</P>
+						<P align="left">
+							<FONT size="5"><STRONG>Links</STRONG></FONT>
+						</P>
+						<UL>
+						<LI>surfit homepage: <A HREF="http://surfit.sf.net">surfit.sf.net</A>
+						<LI>Visual tool for creating scripts and visualizing results: <a href="http://www.gridding.info">funner-2.0b</a>
+						</LI>
+			        </UL>
+					<P align="center"> 
+						<FONT size="1">Please send any comments about this site to <tt>surfit at bluebottle dot com</tt>. </FONT> 
+					</P>
+					<P>
+					</P>
+					</FONT>
+        		</TD>
+			</TR>
+		</TABLE>
+		</FONT>
 	</BODY>
 </HTML>

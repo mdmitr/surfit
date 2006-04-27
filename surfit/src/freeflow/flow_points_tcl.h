@@ -22,6 +22,12 @@
 
 namespace surfit {
 
+/*! \ingroup tcl_freeflow_rules
+    \fn bool flow_points(const char * points_name_or_position = "0");
+
+    \par Tcl syntax: 
+    flow_point value "points_name_or_position"
+*/
 FLOW_EXPORT
 bool flow_points(const char * points_name_or_position = "0");
 

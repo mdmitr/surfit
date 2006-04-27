@@ -18,7 +18,6 @@ Before building make shure that you have TCL library installed!
 
 <H3>UNIX:</H3>
 
-\htmlonly
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
 <TD>
@@ -33,7 +32,6 @@ $ make install
 </TD>
 </TR>
 </TABLE>
-\endhtmlonly
 
 Don't forget to check your LD_LIBRARY_PATH variable. It must include surfit binaries path.
 
