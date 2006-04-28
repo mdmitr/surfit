@@ -30,3 +30,15 @@ Here is the image of the resulting \ref d_surf "surface":
 This result was obtained with <TT>"examples/globe/dem_add.tcl"</TT> script. 
 */
 
+/*! \example canyon_prepare.tcl
+This script is a part of a grand canyon reconstruction example. See \ref globe for details.
+*/
+
+/*! \example canyon_trend.tcl
+This script is a part of a grand canyon reconstruction example. See \ref globe for details.
+*/
+
+/*! \example canyon_map.tcl
+This script is a part of a grand canyon reconstruction example. See \ref globe for details.
+*/
+

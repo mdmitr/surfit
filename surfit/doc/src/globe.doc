@@ -20,10 +20,49 @@ $ load libglobe[info sharedlibextension]
 </TABLE>
                
 
-\par Grand Canyon example
+\par Grand Canyon example.
 
+Here we consider example of Grand Canyon surface reconstruction. This examples shows
+how to use <B><TT>globe</TT></B> to build your own DEM from other DEM's. Shure, this
+example can be easily extended with other data usage (points and curves for example).
+
+To build our DEM we select the following data:
+
+<B>SRTM</B> data:
+\li N35W112.hgt.zip
+\li N35W113.hgt.zip
+\li N35W114.hgt.zip
+\li N36W112.hgt.zip
+\li N36W113.hgt.zip
+\li N36W114.hgt.zip
+\li N37W112.hgt.zip
+\li N37W113.hgt.zip
+\li N37W114.hgt.zip
+
+Here is an image of small region:
 \image html source1_srtm.jpg "SRTM data (Grand canyon region)"
+
+<B>DTM</B> dataset:
+\li usa.bin
+\li usa.hdr
+
+Here is an image of small region:
 \image html source2_dtm.jpg "DTM data (Grand canyon region)"
+
+As you can see from these images, SRTM data is more detailed than DTM data. We want
+to combine them in the following way. We think, that DTM dataset is more precise, than
+SRTM data, so we want to correct SRTM data with DTM data. In areas, there is no SRTM data,
+we want to put DTM data and interpolate it.
+
+We do it in three steps:
+\li Convert all data from other formats to surfit format, clip data for Grand Canyon region 
+(<A HREF="canyon__prepare_8tcl-example.html">canyon_prepare.tcl</A>);
+\li Combine SRTM data as one surface 
+(<A HREF="canyon__trend_8tcl-example.html">canyon_trend.tcl</A>);
+\li Calculate our dem 
+(<A HREF="canyon__map_8tcl-example.html">canyon_map.tcl</A>).
+
 \image html canyon.jpg "Resulting DEM"
                          
 */
+
