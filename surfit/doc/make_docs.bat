@@ -17,10 +17,11 @@ copy gallery\globe\*.* html\*.*
 
 doxygen.exe surfit.cfg
 
-rem cd html
-rem "C:\Program Files\HTML Help Workshop\hhc.exe" index.hhp
-rem cd ..
-rem copy html\surfit.chm ..\bin\surfit.chm
-
 copy src\index.html html\index.html
+
+cd html
+"C:\Program Files\HTML Help Workshop\hhc.exe" index.hhp
+cd ..
+copy html\surfit.chm ..\bin\surfit.chm
+
 
