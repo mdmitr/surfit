@@ -1,0 +1,223 @@
+/*! \page boosters boosters
+
+<B><TT>mklbooster</TT></B> and <B><TT>acmlbooster</TT></B> are two similar modules.
+The main goal of these modules is to speedup <B><TT>surfit</TT></B> computation speed
+by implementing system of linear equations solver. Both <B><TT>mklbooster</TT></B> 
+and <B><TT>acmlbooster</TT></B> use BLAS functions, but different implementations:
+\li mklbooster uses <a href="www.intel.com/software/products/mkl">MKL</a> - Intel Math Kernel Library
+\li acmlbooster uses <a href="http://developer.amd.com/acml.aspx">ACML</a> - AMD Core Math Library
+
+To start using library you should type the command:
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ load libacmlbooster[info sharedlibextension]
+</pre>
+</TD>
+</TR>
+</TABLE>
+if you want to use <B><TT>acmlbooster</TT></B> or
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ load libmklbooster[info sharedlibextension]
+</pre>
+</TD>
+</TR>
+</TABLE>
+if you want to use <B><TT>mklbooster</TT></B>.
+
+<B><TT>mklbooster</TT></B> provides cg_mkl (Conjugate Gradient method implementation with MKL calls)
+and you can use it by command
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ solver_set "cg_mkl"
+</pre>
+</TD>
+</TR>
+</TABLE>
+
+<B><TT>acmlbooster</TT></B> provides cg_acml (Conjugate Gradient method implementation with ACML calls)
+and you can use it by command
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ solver_set "cg_acml"
+</pre>
+</TD>
+</TR>
+</TABLE>
+
+                   
+Each library contains sample script for testing increasing of computation speeds.
+Here is a tables with some tests results, performed with different computers:
+
+<TABLE border="1">
+	<TR >
+		<TD align="center" >Name</TD>
+		<TD align="center" >Instructions</TD>
+		<TD align="center">native time</TD>
+		<TD align="center">ACML time</TD>
+		<TD align="center">MKL time</TD>
+		<TD align="center">ACML boost</TD>
+		<TD align="center">MKL boost</TD>
+	</TR>
+	<TR>
+		<TD>AMD Athlon 64 X2 4200+</TD>
+		<TD>MMX(+), 3DNow!(+), SSE, SSE2, SSE3, x86-64</TD>
+		<TD align="center">1:34</TD>
+		<TD align="center">1:19</TD>
+		<TD align="center">1:19</TD>
+		<TD align="center">18,99%</TD>
+		<TD align="center">18,99%</TD>
+	</TR>
+	
+	<TR>
+		<TD>Intel Pentium 4</TD>
+		<TD>MMX, SSE, SSE2</TD>
+		<TD align="center">1:56</TD>
+		<TD align="center">1:37</TD>
+		<TD align="center">1:36</TD>
+		<TD align="center">19,59%</TD>
+		<TD align="center">20,83%</TD>
+	</TR>
+	
+	<TR>
+		<TD>Intel Pentium D 805</TD>
+		<TD>MMX(+), SSE, SSE2, SSE3, x86-64</TD>
+		<TD align="center">2:29</TD>
+		<TD align="center">N/A</TD>
+		<TD align="center">2:04</TD>
+		<TD align="center">N/A</TD>
+		<TD align="center">20,16%</TD>
+	</TR>
+	
+	<TR>
+		<TD>AMD Athlon Thunderbird</TD>
+		<TD>MMX(+), 3DNow!(+)</TD>
+		<TD align="center">4:51</TD>
+		<TD align="center">4:11</TD>
+		<TD align="center">4:18</TD>
+		<TD align="center">15,94%</TD>
+		<TD align="center">12,79%</TD>
+	</TR>
+	
+	<TR>
+		<TD>Intel Celeron 325</TD>
+		<TD>MMX, SSE, SSE2, SSE3</TD>
+		<TD align="center">2:42</TD>
+		<TD align="center">2:18</TD>
+		<TD align="center">2:17</TD>
+		<TD align="center">17,39%</TD>
+		<TD align="center">18,25%</TD>
+	</TR>
+	
+	<TR>
+		<TD>Intel Mobile Celeron</TD>
+		<TD>MMX, SSE, SSE2</TD>
+		<TD align="center">4:08</TD>
+		<TD align="center">3:36</TD>
+		<TD align="center">3:34</TD>
+		<TD align="center">14,81%</TD>
+		<TD align="center">15,89%</TD>
+	</TR>
+	
+	<TR>
+		<TD>AMD Athlon 64 3500+</TD>
+		<TD>MMX(+), 3DNow!(+), SSE, SSE2, x86-64</TD>
+		<TD align="center">1:36</TD>
+		<TD align="center">1:22</TD>
+		<TD align="center">1:22</TD>
+		<TD align="center">17,07%</TD>
+		<TD align="center">17,07%</TD>
+	</TR>
+	
+	<TR>
+		<TD>Intel Pentium 4</TD>
+		<TD>MMX, SSE, SSE2</TD>
+		<TD align="center">3:05</TD>
+		<TD align="center">2:37</TD>
+		<TD align="center">2:37</TD>
+		<TD align="center">17,83%</TD>
+		<TD align="center">17,83%</TD>
+	</TR>
+	
+</TABLE>
+<BR>
+<table border="1">
+	<TR>
+		<TD align="center" rowspan="2">Name</TD>
+		<TD align="center" rowspan="2">Instructions</TD>
+		<TD align="center" rowspan="2">native time</TD>
+		<TD align="center" rowspan="2">ACML time</TD>
+		<TD align="center" rowspan="2">MKL time</TD>
+		<TD align="center" rowspan="2">ACML boost</TD>
+		<TD align="center" rowspan="2">MKL boost</TD>
+		<TD align="center" colspan="3">threading boost</TD>
+	</TR>
+	<TR>
+		<TD align="center">native boost</TD>
+		<TD align="center">ACML boost</TD>
+		<TD align="center">MKL boost</TD>
+	</TR>
+	
+	<TR>
+		<TD>AMD Athlon 64 X2 4200+</TD>
+		<TD>MMX(+), 3DNow!(+), SSE, SSE2, SSE3, x86-64</TD>
+		<TD align="center">0:58</TD>
+		<TD align="center">0:44</TD>
+		<TD align="center">0:45</TD>
+		<TD align="center">31,82%</TD>
+		<TD align="center">28,89%</TD>
+		<TD align="center">62,07%</TD>
+		<TD align="center">113,64%</TD>
+		<TD align="center">108,89%</TD>
+	</TR>
+	
+	<TR>
+		<TD>Intel Pentium 4</TD>
+		<TD>MMX, SSE, SSE2</TD>
+		<TD align="center">1:16</TD>
+		<TD align="center">0:58</TD>
+		<TD align="center">0:59</TD>
+		<TD align="center">31,03%</TD>
+		<TD align="center">28,81%</TD>
+		<TD align="center">52,63%</TD>
+		<TD align="center">100,00%</TD>
+		<TD align="center">96,61%</TD>
+	</TR>
+	
+	<TR>
+		<TD>Intel Pentium D 805</TD>
+		<TD>MMX(+), SSE, SSE2, SSE3, x86-64</TD>
+		<TD align="center">1:32</TD>
+		<TD align="center">N/A</TD>
+		<TD align="center">1:07</TD>
+		<TD align="center">N/A</TD>
+		<TD align="center">37,31%</TD>
+		<TD align="center">61,96%</TD>
+		<TD align="center">N/A</TD>
+		<TD align="center">122,39%</TD>
+	</TR>
+	
+</table>
+
+As you can see from tables, acmlbooster's and mklbooster's results looks like very similar.
+But, as I think, in general it is better to use mklbooster with Intel processors and acmlbooster
+with AMD processors. 
+
+Both libraries (<a href="http://developer.amd.com/acml.aspx">ACML</A> and 
+<a href="www.intel.com/software/products/mkl">MKL</a>) are very useful: it is very 
+easy to obtain computation speedup by making some simple changes in source code. You can 
+easily get 15-20% speedup with one processors 
+computers and about 30% with two processors (or computers with multithreading support).
+
+Special thanks to Intel for providing noncommercial license for Windows version of 
+<a href="www.intel.com/software/products/mkl">MKL</A>.
+
+*/
