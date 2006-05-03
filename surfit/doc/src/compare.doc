@@ -1,0 +1,121 @@
+/*! \page compare surfit - comparsion with other methods
+
+<H2 align="center"><FONT face="Verdana">Compares</FONT>
+<FONT face="Courier New" size="6">surfit</FONT>
+by&nbsp;quality with other methods.</H2>
+
+\htmlonly
+				
+<STRONG>
+<P align="justify">
+	<TABLE id="Table2" align="center" border="1">
+		<TR align="center">
+			<TD>¹</TD>
+			<TD>Method<BR>name</TD>
+			<TD>Programm name</TD>
+			<TD>Operating company</TD>
+			<TD>Result (map)</TD>
+		</TR>
+		<TR align="center">
+			<TD>1.</TD>
+			<TD>CMOFS</TD>
+			<TD>surfit</TD>
+			<TD>
+				<P>M.V.Dmitrievsky &amp;</P>
+				<P>V.N. Kutrunov</P>
+			</TD>
+			<TD><A href="compare_cmofs.gif"><IMG alt="cmofs" src="compare_cmofs_tumb.gif" border="1"></A></TD>
+		</TR>
+		<TR align="center">
+			<TD>2.</TD>
+			<TD>MINC</TD>
+			<TD>Surfer 8.0</TD>
+			<TD>
+				<P>Golden Software Inc.,</P>
+				<P>USA</P>
+			</TD>
+			<TD><A href="compare_minc.gif"><IMG alt="minc" src="compare_minc_tumb.gif" border="1"></A></TD>
+		</TR>
+		<TR align="center">
+			<TD>3.</TD>
+			<TD>Kriging</TD>
+			<TD>Surfer 8.0</TD>
+			<TD>
+				<P>Golden Software Inc.,</P>
+				<P>USA</P>
+			</TD>
+			<TD><A href="compare_kriging.gif"><IMG alt="kriging" src="compare_kriging_tumb.gif" border="1"></A></TD>
+		</TR>
+		<TR align="center">
+			<TD>4.</TD>
+			<TD>ABOS</TD>
+			<TD>SurGe</TD>
+			<TD>Miroslav Dressel</TD>
+			<TD><A href="compare_surge.gif"><IMG alt="ABOS" src="compare_surge_tumb.gif" border="1"></A></TD>
+		</TR>
+	</TABLE>
+</P>
+					
+<P>
+</P>
+</STRONG>
+
+<P align="center">
+<A name="speed_table">
+<H2 align="center">Compares <TT><FONT size="6">surfit</FONT></TT>	by speed with other programms.</H2></A>
+
+<TABLE border="1" align="center">
+	<TR>
+		<TD>¹</TD>
+		<TD>Programm name</TD>
+		<TD>Operating company</TD>
+		<TD>Work time</TD>
+		<TD>Result (map)</TD>
+	</TR>
+	<TR>
+		<TD>1.</TD>
+		<TD><A HREF="www.goldensoftware.com">Surfer 7.0</A></TD>
+		<TD>Golden Software Inc. USA</TD>
+		<TD>25 sec.</TD>
+		<TD><A HREF="surfer_map.jpg"><IMG alt="gmt" src="surfer_tumb.jpg" border="1"></A></TD>
+	</TR>
+	<TR>
+		<TD>2.</TD>
+		<TD><A HREF="http://gmt.soest.hawaii.edu/">General Mapping Tools 3.4.3 (GMT)</A></TD>
+		<TD>
+			<P>P. Wessel and W.H.F.</P>
+			<P>Smith, freeware</P>
+		</TD>
+		<TD>12 sec.</TD>
+		<TD><A HREF="gmt_map.jpg"><IMG alt="gmt" src="gmt_tumb.jpg" border="1"></A></TD>
+	</TR>
+	<TR>
+		<TD>3.</TD>
+		<TD>Geoline<BR> (part of Baspro)</TD>
+		<TD>ZAO "INK", Tyumen, Russia</TD>
+		<TD> 5 min. </TD>
+		<TD><A HREF="baspro_map.jpg"><IMG alt="gmt" src="baspro_tumb.jpg" border="1"></A></TD>
+	</TR>
+	<TR>
+		<TD>4.</TD>
+		<TD><A HREF="www.roxar.com">Irap RMS</A></TD>
+		<TD>Roxar, Norway</TD>
+		<TD>&gt; 35 min.	</TD>
+		<TD><A HREF="iraprms_map.jpg"><IMG alt="gmt" src="iraprms_tumb.jpg" border="1"></A></TD>
+	</TR>
+	<TR>
+		<TD>5.</TD>
+		<TD><A HREF="surfit.sourceforge.net"><TT>surfit</TT></A></TD>
+		<TD>
+			<P>M.V. Dmitrievsky and	</P>
+			<P>V.N. Kutrunov, freeware</P>
+		</TD>
+		<TD>7 sec.</TD>
+		<TD><A HREF="surfit_map.jpg"><IMG alt="gmt" src="surfit_tumb.jpg" border="1"></A></TD>
+	</TR>
+</TABLE>
+</P>
+
+\endhtmlonly
+
+*/
