@@ -61,6 +61,17 @@ bool surf_load(const char * filename, const char * surfname = 0);
 bool surf_load_grd(const char * filename, const char * surfname = 0);
 
 /*! \ingroup tcl_surf_save_load
+    \fn bool surf_load_gmt(const char * filename, const char * surfname = 0)
+
+    \par Tcl syntax:
+    surf_load_gmt "filename" "surfname"
+
+    \par Description:
+    loads surface from Generic Mapping Tools grd file (CDF format)
+*/
+bool surf_load_gmt(const char * filename, const char * surfname = 0);
+
+/*! \ingroup tcl_surf_save_load
     \fn bool surf_save(const char * filename, const char * surface_name_or_position = "0");
 
     \par Tcl syntax:
@@ -87,6 +98,17 @@ bool surf_save(const char * filename, const char * surface_name_or_position = "0
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
 */
 bool surf_save_grd(const char * filename, const char * surface_name_or_position = "0");
+
+/*! \ingroup tcl_surf_save_load
+    \fn bool surf_save_gmt(const char * filename, const char * surface_name_or_position = "0");
+
+    \par Tcl syntax:
+    surf_save_gmt "filename" "surface_name_or_position"
+
+    \par Description:
+    saves surface to Generic Mapping Tools grd file (CDF format)
+*/
+bool surf_save_gmt(const char * filename, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_save_load
     \fn bool surf_save_xyz(const char * filename, const char * surface_name_or_position = "0");

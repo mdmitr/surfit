@@ -639,6 +639,15 @@ bool surfit_manager::auto_load(const char * filename, const char * first1024, in
 			res = area_read_bln(filename, name);
 		}
 	}
+
+	if ( strncmp(first1024, "CDF", 3) == 0 ) {
+		try {
+			res = surf_load_gmt(filename);
+		} catch (...) {
+			goto exit;
+		}
+		goto exit;
+	}
 	
 	if ( strncmp(first1024,"DSAA",4) == 0 ) {
 		try {
