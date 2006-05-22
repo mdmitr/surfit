@@ -12,5 +12,6 @@ doxygen surfit.cfg
 
 rm html/index.html
 cp -l src/index.html html/
+cp -l src/examples.html html/
 
 

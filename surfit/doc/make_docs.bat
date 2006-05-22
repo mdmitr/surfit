@@ -18,6 +18,7 @@ copy gallery\globe\*.* html\*.*
 doxygen.exe surfit.cfg
 
 copy src\index.html html\index.html
+copy src\examples.html html\examples.html
 
 cd html
 "C:\Program Files\HTML Help Workshop\hhc.exe" index.hhp
