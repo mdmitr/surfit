@@ -24,6 +24,7 @@ EXTRA_DIST += make_rpm_fc4
 EXTRA_DIST += make_rpm_rh73
 EXTRA_DIST += surfit.spec.fc4
 EXTRA_DIST += surfit.spec.rh73
+EXTRA_DIST += CHANGES
 
 lib_LTLIBRARIES = libsstuff.la 
 lib_LTLIBRARIES += libsurfit.la 

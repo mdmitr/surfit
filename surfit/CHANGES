@@ -1,0 +1,2 @@
+surfit 2.1
+	+ added input/output of GMT maps (CDF format) : surf_load_gmt and surf_save_gmt commands
