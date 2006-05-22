@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT(src/surfit/surfit_wrap.cxx)
-AM_INIT_AUTOMAKE(surfit,2.0)
+AM_INIT_AUTOMAKE(surfit,2.1)
 
 # test for c++ features
 AC_PROG_CXX
@@ -14,7 +14,7 @@ AC_SUBST(LIBTOOL_DEPS)
 
 # check for pthread 
 AC_CHECK_LIB(pthread, main, [PTHREAD_INSTALLED="YES"], PTHREAD_INSTALLED="")
-AH_TEMPLATE([HAVE_THREADS],[Define if you want to compile with multithreading support])
+AH_TEMPLATE([HAVE_THREADS],["Define if you want to compile with multithreading support"])
 
 # check for zlib
 AC_CHECK_HEADERS(zlib.h)
@@ -156,6 +156,10 @@ fi
 
 if [[ "$PTHREAD_INSTALLED" = "YES" ]] ; then 
 	AC_DEFINE(HAVE_THREADS)
+fi
+
+if [[ "$NETCDF_INSTALLED" = "YES" ]] ; then
+	AC_DEFINE(HAVE_NETCDF)
 fi
 
 AC_SUBST(TCLINCLUDE)
