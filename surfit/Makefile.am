@@ -4,7 +4,7 @@ $(OBJECTS): libtool
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
 
-INCLUDES = $(TCLINCLUDE) -Isrc/sstuff -Isrc/surfit -Isrc/freeflow
+INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/surfit -Isrc/freeflow
 EXTRA_DIST = vc6/surfit*
 EXTRA_DIST += vc6/freeflow*
 EXTRA_DIST += vc6/globe*
@@ -268,7 +268,7 @@ libsurfit_la_HEADERS += src/surfit/variables_tcl.h
 
 
 
-libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la 
+libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) libsstuff.la 
 if HAVE_PTHREAD_INSTALLED
 libsurfit_la_LIBADD += -lpthread 
 endif

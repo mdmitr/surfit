@@ -125,8 +125,8 @@ am_libsstuff_la_OBJECTS = bitvec.lo boolvec.lo datafile.lo fileio.lo \
 	geom_alg.lo interp.lo intvec.lo read_txt.lo rnd.lo shortvec.lo \
 	strvec.lo sstuff.lo stepFunc.lo vec.lo vec_alg.lo
 libsstuff_la_OBJECTS = $(am_libsstuff_la_OBJECTS)
-libsurfit_la_DEPENDENCIES = $(am__DEPENDENCIES_1) libsstuff.la \
-	$(am__DEPENDENCIES_1)
+libsurfit_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) libsstuff.la $(am__DEPENDENCIES_1)
 am__libsurfit_la_SOURCES_DIST = src/surfit/area.cpp \
 	src/surfit/area_internal.cpp src/surfit/area_tcl.cpp \
 	src/surfit/cmofs.cpp src/surfit/cntr.cpp \
@@ -304,6 +304,8 @@ MAKE_FREEFLOW_FALSE = @MAKE_FREEFLOW_FALSE@
 MAKE_FREEFLOW_TRUE = @MAKE_FREEFLOW_TRUE@
 MAKE_GLOBE_FALSE = @MAKE_GLOBE_FALSE@
 MAKE_GLOBE_TRUE = @MAKE_GLOBE_TRUE@
+NETCDFINCLUDE = @NETCDFINCLUDE@
+NETCDFLIB = @NETCDFLIB@
 OBJDUMP = @OBJDUMP@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
@@ -367,7 +369,7 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 AUTOMAKE_OPTIONS = foreign
-INCLUDES = $(TCLINCLUDE) -Isrc/sstuff -Isrc/surfit -Isrc/freeflow
+INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/surfit -Isrc/freeflow
 EXTRA_DIST = vc6/surfit* vc6/freeflow* vc6/globe* \
 	src/surfit/interface/*.i examples/* src/freeflow/interface/*.i \
 	src/globe/interface/*.i doc/gallery/* doc/src/* doc/html/* \
@@ -478,8 +480,8 @@ libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/surfit_threads.h src/surfit/surfit_solvers.h \
 	src/surfit/threads.h src/surfit/variables.h \
 	src/surfit/variables_internal.h src/surfit/variables_tcl.h
-libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la \
-	$(am__append_4)
+libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) \
+	libsstuff.la $(am__append_4)
 libsurfit_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libsurfit.dll
 libfreeflow_ladir = $(prefix)/include/freeflow
 libfreeflow_la_SOURCES = src/freeflow/flow_data_manager.cpp \
@@ -2151,6 +2153,7 @@ libtool: $(LIBTOOL_DEPS)
 
 dist-hook:
 
+	chmod ugo+x install-sh
 	rm -rf `find $(distdir) -name CVS`; \
 	rm -rf `find $(distdir) -name "*.log"`; \
 	rm -rf `find $(distdir) -name "*.dat"`; \

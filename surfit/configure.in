@@ -159,6 +159,7 @@ fi
 #--------------------------------------------------------------------
 NETCDFINCLUDE=
 NETCDFLIB=
+NETCDF_INSTALLED=""
 
 AC_ARG_WITH(netcdfincl,[  --with-netcdfincl=path     Set location of netcdf include directory],[
 	NETCDFINCLUDE="-I$withval"], [NETCDFINCLUDE=])
@@ -179,7 +180,7 @@ if test -z "$NETCDFINCLUDE"; then
 	done
 fi
 if test -z "$NETCDFINCLUDE"; then
-    	AC_MSG_RESULT(not found. surfit will be compiled without GMT maps format support!)
+    	AC_MSG_RESULT("not found. surfit will be compiled without GMT maps format support!")
 fi
 else
         AC_MSG_RESULT($NETCDFINCLUDE)
@@ -192,15 +193,15 @@ for i in $dirs ; do
 	if test -r $i/libnetcdf.a; then
 	    AC_MSG_RESULT($i)
 	    NETCDFLIB="-L$i -lnetcdf"
+	    NETCDF_INSTALLED="YES"
 	    break
 	fi
 done
 if test -z "$NETCDFLIB"; then
-	AC_MSG_RESULT(not found. surfit will be compiled without GMT maps format support!)
+	AC_MSG_RESULT("not found. surfit will be compiled without GMT maps format support!")
 fi
 else
 	AC_MSG_RESULT($NETCDFLIB)
-	NETCDF_INSTALLED="YES"
 fi
 
 if [[ "$PTHREAD_INSTALLED" = "YES" ]] ; then 
@@ -213,6 +214,8 @@ fi
 
 AC_SUBST(TCLINCLUDE)
 AC_SUBST(TCLLIB)
+AC_SUBST(NETCDFINCLUDE)
+AC_SUBST(NETCDFLIB)
 
 AC_CONFIG_HEADER(config.h:config.h.in)
 

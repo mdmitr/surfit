@@ -488,7 +488,7 @@ int * GMT_grd_prep_io (struct GRD_HEADER *header, double *w, double *e, double *
 	}
 	else {				// Must deal with a subregion 
 
-		if (*w < header->x_min || *e > header->x_max) geo = TRUE;	// Dealing with periodic grid 
+		if (*w < header->x_min || *e > header->x_max) geo = 1;	// Dealing with periodic grid 
 
 		if (*s < header->y_min || *n > header->y_max) {	// Calling program goofed... 
 			writelog(LOG_ERROR, "GMT ERROR: Trying to read beyond grid domain - abort!!");

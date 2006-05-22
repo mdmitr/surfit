@@ -9,6 +9,9 @@
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 
+/* "Define if you want to compile with GMT maps format support" */
+#undef HAVE_NETCDF
+
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H
 
@@ -27,7 +30,7 @@
 /* Define to 1 if you have the <sys/types.h> header file. */
 #undef HAVE_SYS_TYPES_H
 
-/* Define if you want to compile with multithreading support */
+/* "Define if you want to compile with multithreading support" */
 #undef HAVE_THREADS
 
 /* Define to 1 if you have the <unistd.h> header file. */
