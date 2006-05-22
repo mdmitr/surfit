@@ -4,6 +4,9 @@
 /* Define if you want to compile with multithreading support */
 #define HAVE_THREADS 1
 
+/* Define if you want to compile with GMT maps format support */
+#define HAVE_NETCDF 1
+
 /* Define if you have OpenGL libraries */
 #define HAVE_GL_WORKS 1
 
