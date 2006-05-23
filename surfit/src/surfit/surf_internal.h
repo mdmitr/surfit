@@ -66,6 +66,13 @@ d_surf * _surf_load_gmt(const char * filename, const char * surfname);
 
 SURFIT_EXPORT
 /*! \ingroup internal_surf
+    \fn bool _surf_load_grass(const char * filename, const char * surfname)
+    \brief loads surf from GRASS ASCII file
+*/
+d_surf * _surf_load_grass(const char * filename, const char * surfname); 
+
+SURFIT_EXPORT
+/*! \ingroup internal_surf
     \fn bool _surf_save(const d_surf * srf, const char * filename);
     \brief saves surf to ROFF file (see \ref datafile for details) in active \ref rw_mode
     \param srf surf class to save
@@ -93,6 +100,13 @@ SURFIT_EXPORT
     \brief saves surf to Generic Mapping Tools grd file (CDF format)
 */
 bool _surf_save_gmt(const d_surf * srf, const char * filename); 
+
+SURFIT_EXPORT
+/*! \ingroup internal_surf
+    \fn bool _surf_save_grass(const d_surf * srf, const char * filename); 
+    \brief saves surf to GRASS ASCII file 
+*/
+bool _surf_save_grass(const d_surf * srf, const char * filename); 
 
 SURFIT_EXPORT
 /*! \ingroup internal_surf
