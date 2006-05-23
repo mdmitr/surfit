@@ -346,7 +346,7 @@ void manager::clear_rules() const {
 		}
 	};
 	int pos = 0;
-	for (i = 0; i < functionals->size(); i++) {
+	for (i = 0; i < (int)functionals->size(); i++) {
 		functional * f = (*functionals)[i];
 		if (f == NULL)
 			continue;
@@ -835,7 +835,7 @@ bool file_save(const char * filename) {
 
 bool add_manager(manager * man) {
 	unsigned int i;
-	for (i = 0; i < surfit_data_manager->get_managers_count(); i++) {
+	for (i = 0; i < (unsigned int)surfit_data_manager->get_managers_count(); i++) {
 		const manager * m = surfit_data_manager->get_manager(i);
 		if ( strcmp(m->getName(),man->getName()) == 0)
 			return false;
@@ -846,7 +846,7 @@ bool add_manager(manager * man) {
 
 bool release_manager(manager * man) {
 	unsigned int i;
-	for (i = 0; i < surfit_data_manager->get_managers_count(); i++) {
+	for (i = 0; i < (unsigned int)surfit_data_manager->get_managers_count(); i++) {
 		const manager * m = surfit_data_manager->get_manager(i);
 		if ( m == man ) {
 			man->release();

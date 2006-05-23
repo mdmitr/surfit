@@ -360,7 +360,7 @@ public:
         int i)                                      { return s.getitem(i); }
 #endif
 
-    unknown* operator[] (int i) const               { return PTYPES_NAMESPACE::get(*this, i); }
+    unknown* operator[] (int i) const               { return getitem(i); }
 };
 
 
@@ -445,7 +445,7 @@ public:
     friend inline unknown* get(const strlist& s, int i)  { return s.getobj(i); }
 #endif
 
-    unknown* operator[] (int i) const                    { return PTYPES_NAMESPACE::get(*this, i); }
+    unknown* operator[] (int i) const                    { return getobj(i); }
 };
 
 

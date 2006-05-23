@@ -37,7 +37,7 @@ void init_threads(int cnt) {
 	if (ssize == cpu)
 		return;
 	unsigned int i;
-	if (ssize > cpu-1) {
+	if ((int)ssize > cpu-1) {
 		for (i = 0; i < ssize-cpu-1; i++) {
 			slavethread * slave = *(slaves.end()-1);
 			slave->postquit();
@@ -52,7 +52,7 @@ void init_threads(int cnt) {
 		}
 	}
 	jobs.resize(cpu);
-	for (i = 0; i < cpu; i++)
+	for (i = 0; i < (unsigned int)cpu; i++)
 		jobs[i] = NULL;
 #endif //threads
 };

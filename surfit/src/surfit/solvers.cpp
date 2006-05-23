@@ -301,7 +301,7 @@ void axpy(REAL a, const vec & x, vec & y)
 	unsigned int J_from = 0;
 	unsigned int J_to = 0;
 	unsigned int i;
-	for (i = 0; i < cpu*m; i++) {
+	for (i = 0; i < (unsigned int)(cpu*m); i++) {
 		J_to = J_from + step;
 		if (i == 0)
 			J_to += ost;
@@ -358,7 +358,7 @@ void xpay(REAL a, const vec & x, vec & y)
 	unsigned int J_from = 0;
 	unsigned int J_to = 0;
 	unsigned int i;
-	for (i = 0; i < cpu; i++) {
+	for (i = 0; i < (unsigned int)cpu; i++) {
 		J_to = J_from + step;
 		if (i == 0)
 			J_to += ost;
@@ -411,7 +411,7 @@ REAL threaded_times(const vec * a, const vec * b)
 	unsigned int J_from = 0;
 	unsigned int J_to = 0;
 	unsigned int i;
-	for (i = 0; i < cpu; i++) {
+	for (i = 0; i < (unsigned int)cpu; i++) {
 		J_to = J_from + step;
 		if (i == 0)
 			J_to += ost;
@@ -424,7 +424,7 @@ REAL threaded_times(const vec * a, const vec * b)
 	do_jobs();
 
 	REAL res = 0;
-	for (i = 0; i < cpu; i++) {
+	for (i = 0; i < (unsigned int)cpu; i++) {
 		times_job & f = times_jobs[i];
 		res += f.res;
 	}

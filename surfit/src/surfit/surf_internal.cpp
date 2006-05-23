@@ -894,7 +894,7 @@ bool _surf_save_gmt(const d_surf * srf, const char * filename) {
 			if (val == srf->undef_value)
 				GMT_make_fnan(tmp[i]);
 			else 
-				tmp[i] = (*(srf->coeff))(inc * (ij+k[i]));
+				tmp[i] = (float)(*(srf->coeff))(inc * (ij+k[i]));
 		}
 		check_nc_status (nc_put_vara_float (cdfid, z_id, start, edge, tmp));
 	}
@@ -962,11 +962,11 @@ d_surf * _surf_load_grass(const char * filename, const char * surfname) {
 			continue;
 		}
 		if (strcmp(buf, "rows:") == 0) {
-			ny = atof(buf2);
+			ny = atoi(buf2);
 			continue;
 		}
 		if (strcmp(buf, "cols:") == 0) {
-			nx = atof(buf2);
+			nx = atoi(buf2);
 			continue;
 		}
 		if (strcmp(buf, "null:") == 0) {
@@ -1244,9 +1244,9 @@ struct surf_project_job : public job
 		int surf_sizeX = srf->getCountX();
 		int surf_sizeY = srf->getCountY();
 
-		int i,j;
+		unsigned int i,j;
 		for (j = J_from; j < J_to; j++) {
-			for (i = 0; i < size_x; i++) {
+			for (i = 0; i < (unsigned int)size_x; i++) {
 				value = 0;
 				grd->getCoordNode(i, j, x, y);
 								

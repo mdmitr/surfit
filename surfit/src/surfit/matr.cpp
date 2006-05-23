@@ -137,9 +137,9 @@ struct matr_rect_mult_job : public job
 	virtual void do_job() 
 	{
 		unsigned int J;
-		int i, j;
+		unsigned int i, j;
 		for (j = J_from; j < J_to; j++) {
-			for (i = m->x_from; i <= m->x_to; i++) {
+			for (i = m->x_from; i <= (unsigned int)m->x_to; i++) {
 				J = i + j*m->n_grid_cols;
 				(*r)(J) = m->mult_line(J, b->begin(), b->end());
 			}
