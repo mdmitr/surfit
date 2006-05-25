@@ -666,6 +666,14 @@ bool surfit_manager::auto_load(const char * filename, const char * first1024, in
 		}
 		goto exit;
 	}
+	if ( strncmp(first1024,"ncols ",6) == 0 ) {
+		try {
+			res = surf_load_arcgis(filename);
+		} catch (...) {
+			goto exit;
+		}
+		goto exit;
+	}
 
 	if (columns == 2) {
 		try {

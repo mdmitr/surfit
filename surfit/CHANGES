@@ -1,3 +1,4 @@
 surfit 2.1
 	+ added input/output of GMT maps (CDF format) : surf_load_gmt and surf_save_gmt commands
 	+ added input/output of GRASS maps (ASCII format) : surf_load_grass and surf_save_grass commands
+	+ added input/output of ArcGIS maps (ASCII format) : surf_load_arcgis and surf_save_arcgis commands

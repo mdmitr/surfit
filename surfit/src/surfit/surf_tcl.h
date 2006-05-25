@@ -83,6 +83,17 @@ bool surf_load_gmt(const char * filename, const char * surfname = 0);
 bool surf_load_grass(const char * filename, const char * surfname = 0);
 
 /*! \ingroup tcl_surf_save_load
+    \fn bool surf_load_arcgis(const char * filename, const char * surfname = 0)
+
+    \par Tcl syntax:
+    surf_load_arcgis "filename" "surfname"
+
+    \par Description:
+    loads surface from ArcGIS ASCII file
+*/
+bool surf_load_arcgis(const char * filename, const char * surfname = 0);
+
+/*! \ingroup tcl_surf_save_load
     \fn bool surf_save(const char * filename, const char * surface_name_or_position = "0");
 
     \par Tcl syntax:
@@ -131,6 +142,17 @@ bool surf_save_gmt(const char * filename, const char * surface_name_or_position 
     saves surface to GRASS ASCII file
 */
 bool surf_save_grass(const char * filename, const char * surface_name_or_position = "0");
+
+/*! \ingroup tcl_surf_save_load
+    \fn bool surf_save_arcgis(const char * filename, const char * surface_name_or_position = "0");
+
+    \par Tcl syntax:
+    surf_save_arcgis "filename" "surface_name_or_position"
+
+    \par Description:
+    saves surface to ArcGIS ASCII file
+*/
+bool surf_save_arcgis(const char * filename, const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_save_load
     \fn bool surf_save_xyz(const char * filename, const char * surface_name_or_position = "0");

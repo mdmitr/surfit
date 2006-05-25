@@ -215,6 +215,22 @@ bool surf_load_grass(const char * filename, const char * surfname) {
 	return false;
 };
 
+bool surf_save_arcgis(const char * filename, const char * pos) {
+	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (!srf)
+		return false;
+	return _surf_save_arcgis(srf, filename);
+};
+
+bool surf_load_arcgis(const char * filename, const char * surfname) {
+	d_surf * srf = _surf_load_arcgis(filename, surfname);
+	if (srf) {
+		surfit_surfs->push_back(srf);
+		return true;
+	}
+	return false;
+};
+
 bool surf_save_xyz(const char * filename, const char * pos) {
 	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (!srf)

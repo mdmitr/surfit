@@ -42,10 +42,12 @@ bool surf_load(const char * filename, const char * surfname = 0);
 bool surf_load_grd(const char * filename, const char * surfname = 0);
 bool surf_load_gmt(const char * filename, const char * surfname = 0);
 bool surf_load_grass(const char * filename, const char * surfname = 0);
+bool surf_load_arcgis(const char * filename, const char * surfname = 0);
 bool surf_save(const char * filename, const char * surface_name_or_position = "0");
 bool surf_save_grd(const char * filename, const char * surface_name_or_position = "0");
 bool surf_save_gmt(const char * filename, const char * surface_name_or_position = "0");
 bool surf_save_grass(const char * filename, const char * surface_name_or_position = "0");
+bool surf_save_arcgis(const char * filename, const char * surface_name_or_position = "0");
 bool surf_save_xyz(const char * filename, const char * surface_name_or_position = "0");
 // MATH OPERATIONS
 REAL surf_getValue(REAL x, REAL y, const char * surface_name_or_position = "0");
