@@ -75,7 +75,7 @@ libsstuff_la_HEADERS += src/sstuff/vec.h
 libsstuff_la_HEADERS += src/sstuff/vec_alg.h      
 
 libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB)
-libsstuff_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libsstuff.dll
+libsstuff_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsstuff.dll
 
 
 libsurfit_ladir = $(prefix)/include/surfit
@@ -278,7 +278,7 @@ libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) libsstuff.la
 if HAVE_PTHREAD_INSTALLED
 libsurfit_la_LIBADD += -lpthread 
 endif
-libsurfit_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libsurfit.dll
+libsurfit_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit.dll
 
 
 libfreeflow_ladir = $(prefix)/include/freeflow
@@ -311,7 +311,7 @@ libfreeflow_la_HEADERS += src/freeflow/flow_points.h
 libfreeflow_la_SOURCES += src/freeflow/flow_points_tcl.h       
 
 libfreeflow_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la libsurfit.la
-libfreeflow_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libfreeflow.dll
+libfreeflow_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libfreeflow.dll
 
 libglobe_ladir = $(prefix)/include/globe
 libglobe_la_SOURCES  = src/globe/dem.cpp                
@@ -352,7 +352,7 @@ libglobe_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la libsurfit.la
 if HAVE_ZLIB_INSTALLED
 libglobe_la_LIBADD += -lz
 endif 
-libglobe_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libglobe.dll
+libglobe_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libglobe.dll
 
 dist-hook:
 
