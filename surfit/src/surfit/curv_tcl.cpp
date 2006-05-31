@@ -74,6 +74,28 @@ bool curv_read_bln(const char * filename) {
 	return res;
 };
 
+bool curv_load(const char * filename, const char * curvname) {
+	d_curv * curve = _curv_load(filename, curvname);
+	if (curve) {
+		surfit_curvs->push_back(curve);
+		return false;
+	}
+	return true;
+};
+
+bool curv_load_shp(const char * filename, const char * curvname) {
+	d_curv * curve = _curv_load_shp(filename, curvname);
+	if (curve) {
+		surfit_curvs->push_back(curve);
+		return false;
+	}
+	return true;
+};
+
+bool curvs_load_shp(const char * filename) {
+	return _curvs_load_shp(filename);
+};
+
 bool curv_write(const char * filename, const char * pos, const char * delimiter) 
 {
 	d_curv * curve = get_element<d_curv>(pos, surfit_curvs->begin(), surfit_curvs->end());
@@ -119,13 +141,14 @@ bool curv_save(const char * filename, const char * pos) {
 	return _curv_save(curve, filename);
 };
 
-bool curv_load(const char * filename, const char * curvname) {
-	d_curv * curve = _curv_load(filename, curvname);
-	if (curve) {
-		surfit_curvs->push_back(curve);
+bool curv_save_shp(const char * filename, const char * pos) {
+	d_curv * curve = get_element<d_curv>(pos, surfit_curvs->begin(), surfit_curvs->end());
+	if (curve == NULL)
 		return false;
-	}
-	return true;
+
+	writelog(LOG_MESSAGE,"Saving curv to ERSI shp file %s", filename);
+
+	return _curv_save_shp(curve, filename);
 };
 
 bool curv_setName(const char * new_name, const char * pos) {

@@ -59,6 +59,28 @@ bool area_read_bln(const char * filename, const char * areaname) {
 	return res;
 };
 
+bool area_load(const char * filename, const char * areaname) {
+	d_area * area = _area_load(filename, areaname);
+	if (area) {
+		surfit_areas->push_back(area);
+		return true;
+	}
+	return false;
+};
+
+bool area_load_shp(const char * filename, const char * areaname) {
+	d_area * area = _area_load_shp(filename, areaname);
+	if (area) {
+		surfit_areas->push_back(area);
+		return true;
+	}
+	return false;
+};
+
+bool areas_load_shp(const char * filename) {
+	return _areas_load_shp(filename);
+};
+
 bool area_write(const char * filename, const char * pos, const char * delimiter) 
 {
 	d_area * area = get_element<d_area>(pos, surfit_areas->begin(), surfit_areas->end());
@@ -91,13 +113,14 @@ bool area_save(const char * filename, const char * pos) {
 	return _area_save(area, filename);
 };
 
-bool area_load(const char * filename, const char * areaname) {
-	d_area * area = _area_load(filename, areaname);
-	if (area) {
-		surfit_areas->push_back(area);
-		return true;
-	}
-	return false;
+bool area_save_shp(const char * filename, const char * pos) {
+	d_area * area = get_element<d_area>(pos, surfit_areas->begin(), surfit_areas->end());
+	if (area == NULL)
+		return false;
+
+	writelog(LOG_MESSAGE,"Saving area to ERSI shape file %s", filename);
+
+	return _area_save_shp(area, filename);
 };
 
 bool area_setName(const char * new_name, const char * pos) {

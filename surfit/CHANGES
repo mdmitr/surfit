@@ -2,3 +2,8 @@ surfit 2.1
 	+ added input/output of GMT maps (CDF format) : surf_load_gmt and surf_save_gmt commands
 	+ added input/output of GRASS maps (ASCII format) : surf_load_grass and surf_save_grass commands
 	+ added input/output of ArcGIS maps (ASCII format) : surf_load_arcgis and surf_save_arcgis commands
+	+ added input/output of ERSI shapfiles :
+		pnts_load_shp pnts_save_shp 
+		curv_load_shp curvs_load_shp curv_save_shp
+		area_load_shp areas_load_shp area_save_shp
+		cntr_load_shp cntrs_load_shp cntr_save_shp

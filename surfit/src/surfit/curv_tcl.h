@@ -62,6 +62,39 @@ bool curv_read(const char * filename, const char * curvname=NULL	,
 bool curv_read_bln(const char * filename);
 
 /*! \ingroup tcl_curv_save_load
+    \fn bool curv_load(const char * filename, const char * curvname = NULL);
+    
+    \par Tcl syntax:
+    curv_load "filename" "curvname"
+
+    \par Description:
+    loads \ref d_curv "curve" from surfit datafile
+*/
+bool curv_load(const char * filename, const char * curvname = NULL);
+
+/*! \ingroup tcl_curv_save_load
+    \fn bool curv_load_shp(const char * filename, const char * curvname = NULL);
+    
+    \par Tcl syntax:
+    curv_load_shp "filename" "curvname"
+
+    \par Description:
+    loads \ref d_curv "curve" named "curvname" from ERSI shape file
+*/
+bool curv_load_shp(const char * filename, const char * curvname = NULL);
+
+/*! \ingroup tcl_curv_save_load
+    \fn bool curvs_load_shp(const char * filename);
+    
+    \par Tcl syntax:
+    curvs_load_shp "filename" "curvname"
+
+    \par Description:
+    loads all \ref d_curv "curves" from ERSI shape file
+*/
+bool curvs_load_shp(const char * filename);
+
+/*! \ingroup tcl_curv_save_load
     \fn bool curv_write(const char * filename, const char * curv_name_or_position = "0", const char * delimiter = "\t");
     
     \par Tcl syntax:
@@ -102,15 +135,15 @@ bool curv_write_bln(const char * filename, const char * curv_name_or_position = 
 bool curv_save(const char * filename, const char * curv_name_or_position = "0");
 
 /*! \ingroup tcl_curv_save_load
-    \fn bool curv_load(const char * filename, const char * curvname = NULL);
+    \fn bool curv_save_shp(const char * filename, const char * curv_name_or_position = "0");
     
     \par Tcl syntax:
-    curv_load "filename" "curvname"
+    curv_save_shp "filename" "curv_name_or_position"
 
     \par Description:
-    loads \ref d_curv "curve" from surfit datafile
+    saves \ref d_curv "curve" to ERSI shape file
 */
-bool curv_load(const char * filename, const char * curvname = NULL);
+bool curv_save_shp(const char * filename, const char * curv_name_or_position = "0");
 
 //////////////
 // other

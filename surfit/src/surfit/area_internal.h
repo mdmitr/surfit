@@ -40,6 +40,18 @@ SURFIT_EXPORT
 d_area * _area_read_bln(const char * filename, const char * areaname);
 
 SURFIT_EXPORT
+d_area * _area_load(const char * filename, const char * areaname);
+
+SURFIT_EXPORT
+d_area * _area_load_df(datafile * df, const char * areaname);
+
+SURFIT_EXPORT
+d_area * _area_load_shp(const char * filename, const char * areaname);
+
+SURFIT_EXPORT
+bool _areas_load_shp(const char * filename);
+
+SURFIT_EXPORT
 bool _area_write_bln(const d_area * area, const char * filename);
 
 SURFIT_EXPORT
@@ -49,10 +61,7 @@ SURFIT_EXPORT
 bool _area_save_df(const d_area * area, datafile * df);
 
 SURFIT_EXPORT
-d_area * _area_load(const char * filename, const char * areaname);
-
-SURFIT_EXPORT
-d_area * _area_load_df(datafile * df, const char * areaname);
+bool _area_save_shp(const d_area * area, const char * filename);
 
 SURFIT_EXPORT
 void _area_info(const d_area * area);

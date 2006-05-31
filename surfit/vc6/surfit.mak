@@ -388,7 +388,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=tcl83.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libsurfit.pdb" /machine:I386 /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib" 
+LINK32_FLAGS=tcl83.lib netcdfs.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libsurfit.pdb" /machine:I386 /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\matlab.obj" \
 	"$(INTDIR)\matr.obj" \
@@ -857,7 +857,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=tcl83d.lib /nologo /dll /pdb:none /map:"$(INTDIR)\libsurfit.map" /debug /machine:I386 /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib" 
+LINK32_FLAGS=tcl83d.lib netcdfs.lib /nologo /dll /pdb:none /map:"$(INTDIR)\libsurfit.map" /debug /machine:I386 /nodefaultlib:"LIBCMT" /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\matlab.obj" \
 	"$(INTDIR)\matr.obj" \

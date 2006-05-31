@@ -163,6 +163,11 @@ libsurfit_la_SOURCES += src/surfit/solvers/J.cpp
 libsurfit_la_SOURCES += src/surfit/solvers/JCG.cpp
 libsurfit_la_SOURCES += src/surfit/solvers/RF.cpp
 libsurfit_la_SOURCES += src/surfit/solvers/SSOR.cpp
+
+libsurfit_la_SOURCES += src/surfit/shapelib/shapefil.h
+libsurfit_la_SOURCES += src/surfit/shapelib/dbfopen.c
+libsurfit_la_SOURCES += src/surfit/shapelib/shpopen.c
+
 if HAVE_PTHREAD_INSTALLED
 libsurfit_la_SOURCES += src/surfit/ptypes/pasync.cxx
 libsurfit_la_SOURCES += src/surfit/ptypes/pasync.h

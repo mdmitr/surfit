@@ -66,6 +66,57 @@ bool area_read(const char * filename, const char * areaname=NULL	,
 bool area_read_bln(const char * filename, const char * areaname = NULL);
 
 /*! \ingroup tcl_area_save_load
+    \fn bool area_load(const char * filename, const char * area_name = NULL);
+    
+    \par Tcl syntax:
+    area_load "filename" "area_name"
+
+    \par Description:
+    loads \ref d_area "area" from surfit datafile. if no areaname specified, 
+    then loads the first area in the file.
+
+    \param filename surfit datafile filename
+    \param area_name \ref d_area "area" name for load
+    
+    \par Example
+    area_load "C:\\area.dat" my_area
+*/
+bool area_load(const char * filename, const char * area_name = NULL);
+
+/*! \ingroup tcl_area_save_load
+    \fn bool area_load_shp(const char * filename, const char * area_name = NULL);
+    
+    \par Tcl syntax:
+    area_load_shp "filename" "area_name"
+
+    \par Description:
+    loads \ref d_area "area" named "area_name" from ERSI shape file.
+
+    \param filename ERSI shape file name
+    \param area_name \ref d_area "area" name for load
+    
+    \par Example
+    area_load_shp "C:\\area.shp" my_area
+*/
+bool area_load_shp(const char * filename, const char * area_name = NULL);
+
+/*! \ingroup tcl_area_save_load
+    \fn bool areas_load_shp(const char * filename);
+    
+    \par Tcl syntax:
+    areas_load_shp "filename" 
+
+    \par Description:
+    loads all \ref d_area "areas" from ERSI shape file.
+
+    \param filename ERSI shape file name
+    
+    \par Example
+    areas_load_shp "C:\\area.shp" 
+*/
+bool areas_load_shp(const char * filename);
+
+/*! \ingroup tcl_area_save_load
     \fn bool area_write(const char * filename, const char * area_name_or_position, const char * delimiter);
     
     \par Tcl syntax:
@@ -119,22 +170,21 @@ bool area_write_bln(const char * filename, const char * area_name_or_position = 
 bool area_save(const char * filename, const char * area_name_or_position = "0");
 
 /*! \ingroup tcl_area_save_load
-    \fn bool area_load(const char * filename, const char * area_name = NULL);
+    \fn bool area_save_shp(const char * filename, const char * area_name_or_position = "0");
     
     \par Tcl syntax:
-    area_load "filename" "area_name"
+    area_save_shp "filename" "area_name_or_position"
 
     \par Description:
-    loads \ref d_area "area" from surfit datafile. if no areaname specified, 
-    then loads the first area in the file.
+    saves \ref d_area "area" to ERSI shape file
 
-    \param filename surfit datafile filename
-    \param area_name \ref d_area "area" name for load
+    \param filename ERSI shape file name
+    \param area_name_or_position \ref d_area "area" name, or area position number
     
     \par Example
-    area_load "C:\\area.dat" my_area
+    area_save_shp "C:\\area.shp" my_area
 */
-bool area_load(const char * filename, const char * area_name = NULL);
+bool area_save_shp(const char * filename, const char * area_name_or_position = "0");
 
 //////////////
 // other

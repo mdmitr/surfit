@@ -62,6 +62,8 @@
 #include "functional.h"
 #include "cmofs.h"
 
+#include "shapelib/shapefil.h"
+
 namespace surfit {
 
 char * file_info(const char * filename) {
@@ -501,7 +503,8 @@ int surfit_manager::load_tag(datafile * df, char * tagname) const {
 		
 		d_grid * res = _grid_load_df(df, NULL);
 		if (res) {
-			delete surfit_grid;
+			if (surfit_grid)
+				surfit_grid->release();
 			surfit_grid = res;
 			grid_info();
 		}
@@ -619,6 +622,28 @@ int surfit_manager::data_count() const {
 	return res;
 };
 
+bool load_ESRI_shape(const char * filename, const char * name) {
+	SHPHandle hSHP = SHPOpen(filename, "rb");
+	if( hSHP == NULL )
+		return false;
+	int shpType;
+	SHPGetInfo(hSHP, NULL, &shpType, NULL, NULL);
+	SHPClose( hSHP );
+
+	switch (shpType) {
+	case SHPT_POINT:
+		return pnts_load_shp(filename, name);
+	case SHPT_ARC:
+		return curvs_load_shp(filename);
+	case SHPT_POLYGON:
+		return areas_load_shp(filename);
+	case SHPT_POLYGONZ:
+		return cntrs_load_shp(filename);
+	default:
+		return false;
+	}
+};
+
 bool surfit_manager::auto_load(const char * filename, const char * first1024, int readed) const {
 
 	char * ext = get_ext(filename);
@@ -674,7 +699,14 @@ bool surfit_manager::auto_load(const char * filename, const char * first1024, in
 		}
 		goto exit;
 	}
-
+	if ( strncmp(first1024,"\0x00\0x00\0x27\0x0A",4) == 0 ) {
+		try {
+			res = load_ESRI_shape(filename, name);
+		} catch (...) {
+			goto exit;
+		}
+		goto exit;
+	}
 	if (columns == 2) {
 		try {
 			res = curv_read(filename);

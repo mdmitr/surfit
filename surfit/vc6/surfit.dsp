@@ -540,6 +540,22 @@ SOURCE=..\src\surfit\ptypes\ptimedsem.cxx
 SOURCE=..\src\surfit\ptypes\punknown.cxx
 # End Source File
 # End Group
+# Begin Group "shapelib"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\src\surfit\shapelib\dbfopen.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\shapelib\shapefil.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\shapelib\shpopen.c
+# End Source File
+# End Group
 # Begin Source File
 
 SOURCE=..\src\surfit\data_manager.cpp

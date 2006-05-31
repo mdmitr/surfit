@@ -40,6 +40,35 @@ d_curv * _curv_read_bln(FILE * file, int & orient);
 
 SURFIT_EXPORT
 /*! \ingroup internal_curv
+    \fn d_curv * _curv_load(const char * filename, const char * curvname);
+    \brief loads \ref curv from surfit datafile
+*/
+d_curv * _curv_load(const char * filename, const char * curvname);
+
+SURFIT_EXPORT
+/*! \ingroup internal_curv
+    \fn d_curv * _curv_load_df(datafile * df, const char * curvname);
+    \brief reads \ref curv tags from \ref datafile. 
+*/
+d_curv * _curv_load_df(datafile * df, const char * curvname);
+bool _curv_load_df_tag_readed(datafile * df, d_curv *& crv);
+
+SURFIT_EXPORT
+/*! \ingroup internal_curv
+    \fn d_curv * _curv_load_shp(const char * filename, const char * curvname);
+    \brief loads \ref curv from ERSI shape file
+*/
+d_curv * _curv_load_shp(const char * filename, const char * curvname);
+
+SURFIT_EXPORT
+/*! \ingroup internal_curv
+    \fn bool _curvs_load_shp(const char * filename);
+    \brief loads all curves from ESRI shape file
+*/
+bool _curvs_load_shp(const char * filename);
+
+SURFIT_EXPORT
+/*! \ingroup internal_curv
     \fn bool _curv_write(const d_curv * contour, const char * filename, const char * mask);
     \brief writes \ref curv to formatted text file. 
 */
@@ -51,7 +80,7 @@ bool _curv_write_bln(const d_curv * crv, FILE * file, int orient);
 SURFIT_EXPORT
 /*! \ingroup internal_curv
     \fn bool _curv_save(const d_curv * contour, const char * filename);
-    \brief writes \ref curv to ROFF file (see \ref datafile for details)
+    \brief writes \ref curv to surfit datafile
 */
 bool _curv_save(const d_curv * contour, const char * filename);
 
@@ -64,18 +93,10 @@ bool _curv_save_df(const d_curv * contour, datafile * df);
 
 SURFIT_EXPORT
 /*! \ingroup internal_curv
-    \fn d_curv * _curv_load(const char * filename, const char * curvname);
-    \brief loads \ref curv from ROFF file (see \ref datafile for details)
+    \fn bool _curv_save_shp(const d_curv * contour, const char * filename);
+    \brief writes \ref curv to ERSI shape file
 */
-d_curv * _curv_load(const char * filename, const char * curvname);
-
-SURFIT_EXPORT
-/*! \ingroup internal_curv
-    \fn d_curv * _curv_load_df(datafile * df, const char * curvname);
-    \brief reads \ref curv tags from \ref datafile. 
-*/
-d_curv * _curv_load_df(datafile * df, const char * curvname);
-bool _curv_load_df_tag_readed(datafile * df, d_curv *& crv);
+bool _curv_save_shp(const d_curv * contour, const char * filename);
 
 SURFIT_EXPORT
 /*! \ingroup internal_curv
