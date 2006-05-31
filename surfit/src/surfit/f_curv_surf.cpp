@@ -82,7 +82,8 @@ void f_curv_surf::create_f_approx_points() {
 			}
 			pnts->remove_with_value(srf->undef_value);
 		}
-		delete grd;
+		if (grd)
+			grd->release();
 	}
 
 	if (f_pnts == NULL)

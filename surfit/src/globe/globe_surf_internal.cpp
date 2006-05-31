@@ -42,7 +42,7 @@ d_dem * _surf_to_dem(d_surf * srf) {
 	};
 
 	d_grid * fgrd = srf->grd;
-	d_grid * grd = new d_grid(fgrd);
+	d_grid * grd = create_grid(fgrd);
 
 	d_dem * res = create_dem(coeff, grd);
 	res->undef_value = SHRT_MAX;

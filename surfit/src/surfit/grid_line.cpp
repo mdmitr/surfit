@@ -1459,7 +1459,7 @@ std::vector<int> * nodes_in_curv(grid_line * line, d_grid * grd, bitvec * mask_u
 	int nn = max_i-min_i+1;
 	int mm = max_j-min_j+1;
 
-	d_grid * small_grd = new d_grid(grd);
+	d_grid * small_grd = create_grid(grd);
 
 	REAL old_startX = grd->startX;
 	REAL old_endX = grd->endX;
@@ -1897,7 +1897,9 @@ FILE * ff = fopen("c:\\qqq.m","w+");
 	fclose(ff);
 	*/
 
-	delete small_grd;
+	if (small_grd)
+		small_grd->release();
+
 	return res;
 
 };
@@ -1952,7 +1954,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 	int nn = max_i-min_i+1;
 	int mm = max_j-min_j+1;
 
-	d_grid * small_grd = new d_grid(grd);
+	d_grid * small_grd = create_grid(grd);
 
 	REAL old_startX = grd->startX;
 	REAL old_endX = grd->endX;
@@ -2084,7 +2086,8 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 	grd->startY = old_startY;
 	grd->endY = old_endY;
 
-	delete small_grd;
+	if (small_grd)
+		small_grd->release();
 	return res;
 
 };

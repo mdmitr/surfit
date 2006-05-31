@@ -207,7 +207,8 @@ cont:
 		if (err) {
 			if (icoeff)
 				icoeff->release();
-			delete grd;
+			if (grd)
+				grd->release();
 			free(name);
 			return false;
 		}
@@ -537,8 +538,8 @@ d_dem * _dem_load_dtm(const char * hdr_file, const char * bin_file) {
 	if (swap_bytes) 
 		ByteSwapFunc((unsigned char *)val, read_bytes);
 
-	d_grid * grd = new d_grid(left_map_x, left_map_x + grid_size_x_*(number_of_columns-1), grid_size_x_,
-		                  lower_map_y, lower_map_y + grid_size_y_*(number_of_rows-1), grid_size_y_);
+	d_grid * grd = create_grid(left_map_x, left_map_x + grid_size_x_*(number_of_columns-1), grid_size_x_,
+		                   lower_map_y, lower_map_y + grid_size_y_*(number_of_rows-1), grid_size_y_);
 
 	if (grid_cell_registration) {
 		if (strcmp(grid_cell_registration,"center of cell") == 0) {
@@ -730,8 +731,8 @@ d_dem * _dem_load_hgt_zip(const char * hgt_zip_file) {
 		
 	step = 1./len;
 
-	grd = new d_grid(latitude,  latitude+(len-1)*step,  step,
-		         longtitude,longtitude+(len-1)*step, step);
+	grd = create_grid(latitude,  latitude+(len-1)*step,  step,
+		          longtitude,longtitude+(len-1)*step, step);
 
 	res = create_dem(coeff, grd, name);
 	res->undef_value = -32768;
@@ -870,8 +871,8 @@ d_dem * _dem_load_hgt(const char * hgt_file) {
 		
 	double step = 1./len;
 
-	d_grid * grd = new d_grid(latitude,  latitude+(len-1)*step,  step,
-			          longtitude,longtitude+(len-1)*step, step);
+	d_grid * grd = create_grid(latitude,  latitude+(len-1)*step,  step,
+			           longtitude,longtitude+(len-1)*step, step);
 
 	d_dem * res = create_dem(coeff, grd, name);
 	res->undef_value = -32768;
@@ -1078,8 +1079,8 @@ d_dem * _dem_load_globe(const char * filename) {
 	REAL stepx = REAL(1./120.);
 	REAL stepy = stepx;
 
-	d_grid * grd = new d_grid(startx, endx-stepx, stepx,
-			          starty, endy-stepy, stepy);
+	d_grid * grd = create_grid(startx, endx-stepx, stepx,
+			           starty, endy-stepy, stepy);
 
 	int countx = grd->getCountX();
 	int county = grd->getCountY();
@@ -1206,8 +1207,8 @@ d_dem * _dem_load_grd(const char * filename, const char * demname)
 
 	stepX = (maxx-minx)/(nx-1);
 	stepY = (maxy-miny)/(ny-1);
-	grd = new d_grid(minx, maxx, stepX,
-			 miny, maxy, stepY);
+	grd = create_grid(minx, maxx, stepX,
+			  miny, maxy, stepY);
 	
 	res = create_dem(data, grd);
 	res->undef_value = SHRT_MAX;
@@ -1231,7 +1232,8 @@ exit:
 		res->release();
 	if (data)
 		data->release();
-	delete grd;
+	if (grd)
+		grd->release();
 	fclose(file);
 	return NULL;
 };
@@ -1512,7 +1514,7 @@ d_dem * _dem_project(const d_dem * srf, const d_grid * grd) {
 		}
 	}
 	
-	d_grid * new_grd = new d_grid(grd);
+	d_grid * new_grd = create_grid(grd);
 	d_dem * res = create_dem(coeff, new_grd, srf->getName());
 	res->undef_value = srf->undef_value;
 	return res;
@@ -1781,7 +1783,7 @@ d_dem * _dem_gradient(const d_dem * srf) {
 		}
 	}
 
-	d_grid * grd = new d_grid(srf->grd);
+	d_grid * grd = create_grid(srf->grd);
 	d_dem * res = create_dem(coeff, grd, srf->getName());
 	res->undef_value = srf->undef_value;
 	return res;
@@ -1803,7 +1805,7 @@ d_mask * _dem_to_mask(const d_dem * srf, short true_from, short true_to) {
 	};
 
 	d_grid * fgrd = srf->grd;
-	d_grid * grd = new d_grid(fgrd);
+	d_grid * grd = create_grid(fgrd);
 
 	d_mask * msk = create_mask(bcoeff, grd);
 
@@ -1824,7 +1826,7 @@ d_surf * _dem_to_surf(const d_dem * srf) {
 	};
 
 	d_grid * fgrd = srf->grd;
-	d_grid * grd = new d_grid(fgrd);
+	d_grid * grd = create_grid(fgrd);
 
 	d_surf * res = create_surf(coeff, grd);
 

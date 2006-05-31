@@ -159,7 +159,8 @@ cont:
 		if (err) {
 			if (coeff)
 				coeff->release();
-			delete grd;
+			if (grd)
+				grd->release();
 			free(name);
 			return false;
 		}
@@ -334,8 +335,8 @@ d_surf * _surf_load_grd(const char * filename, const char * surfname)
 
 	stepX = (maxx-minx)/(nx-1);
 	stepY = (maxy-miny)/(ny-1);
-	grd = new d_grid(minx, maxx, stepX,
-			 miny, maxy, stepY);
+	grd = create_grid(minx, maxx, stepX,
+			  miny, maxy, stepY);
 
 	res = create_surf(data, grd);
 
@@ -358,7 +359,8 @@ exit:
 		res->release();
 	if (data)
 		data->release();
-	delete grd;
+	if (grd)
+		grd->release();
 	fclose(file);
 	return NULL;
 };
@@ -696,8 +698,8 @@ d_surf * _surf_load_gmt(const char * filename, const char * surfname)
 
 	check_nc_status (nc_close (cdfid));
 
-	grd = new d_grid(header.x_min, header.x_min + header.x_inc*(header.nx-1), header.x_inc,
-			 header.y_min, header.y_min + header.y_inc*(header.ny-1), header.y_inc);
+	grd = create_grid(header.x_min, header.x_min + header.x_inc*(header.nx-1), header.x_inc,
+			  header.y_min, header.y_min + header.y_inc*(header.ny-1), header.y_inc);
 
 	grd->getCountX();
 	grd->getCountY();
@@ -1015,8 +1017,8 @@ d_surf * _surf_load_grass(const char * filename, const char * surfname) {
 
 	stepX = (maxx-minx)/(nx-1);
 	stepY = (maxy-miny)/(ny-1);
-	grd = new d_grid(minx, maxx, stepX,
-			 miny, maxy, stepY);
+	grd = create_grid(minx, maxx, stepX,
+			  miny, maxy, stepY);
 
 	res = create_surf(data, grd);
 
@@ -1039,7 +1041,8 @@ exit:
 		res->release();
 	if (data)
 		data->release();
-	delete grd;
+	if (grd)
+		grd->release();
 	fclose(file);
 	return NULL;
 };
@@ -1229,8 +1232,8 @@ d_surf * _surf_load_arcgis(const char * filename, const char * surfname) {
 		maxy = miny + step*(ny-1);
 	}
 
-	grd = new d_grid(minx, maxx, step,
-			 miny, maxy, step);
+	grd = create_grid(minx, maxx, step,
+			  miny, maxy, step);
 
 	nx = grd->getCountX();
 	ny = grd->getCountY();
@@ -1256,7 +1259,8 @@ exit:
 		res->release();
 	if (data)
 		data->release();
-	delete grd;
+	if (grd)
+		grd->release();
 	fclose(file);
 	return NULL;
 };
@@ -1293,13 +1297,14 @@ bool _surf_save_arcgis(const d_surf * srf, const char * filename) {
 	d_surf * prj_srf = NULL;
 
 	if (stepX != stepY) {
-		d_grid * grd = new d_grid(srf->getCoordNodeX(0), srf->getCoordNodeX(nx-1), MIN(stepX,stepY),
-					  srf->getCoordNodeY(0), srf->getCoordNodeY(ny-1), MIN(stepX,stepY));
+		d_grid * grd = create_grid(srf->getCoordNodeX(0), srf->getCoordNodeX(nx-1), MIN(stepX,stepY),
+					   srf->getCoordNodeY(0), srf->getCoordNodeY(ny-1), MIN(stepX,stepY));
 
 		prj_srf = _surf_project(srf, grd);
 		nx = prj_srf->getCountX();
 		ny = prj_srf->getCountY();
-		delete grd;
+		if (grd)
+			grd->release();
 		save_srf = prj_srf;
 		stepX = MIN(stepX, stepY);
 	}
@@ -1712,7 +1717,7 @@ d_surf * _surf_project(const d_surf * srf, d_grid * grd) {
 #endif
 	}
 	
-	d_grid * new_grd = new d_grid(grd);
+	d_grid * new_grd = create_grid(grd);
 	d_surf * res = create_surf(coeff, new_grd, srf->getName());
 	res->undef_value = srf->undef_value;
 	return res;
@@ -1877,7 +1882,7 @@ d_surf * _surf_project(d_surf * srf, d_grid * grd, grid_line * fault_grd_line) {
 		}
 	}
 	
-	d_grid * new_grd = new d_grid(grd);
+	d_grid * new_grd = create_grid(grd);
 	d_surf * res = create_surf(coeff, new_grd, srf->getName());
 	res->undef_value = srf->undef_value;
 	return res;
@@ -2153,7 +2158,7 @@ d_surf * _surf_gradient(const d_surf * srf) {
 		}
 	}
 
-	d_grid * grd = new d_grid(srf->grd);
+	d_grid * grd = create_grid(srf->grd);
 	d_surf * res = create_surf(coeff, grd, srf->getName());
 	return res;
 
@@ -2215,7 +2220,7 @@ d_grid * adopt_surf_grid(const d_surf * srf, d_grid * grd,
 	grd->getCoordNode(i0,j0,x0,y0);
 	grd->getCoordNode(in,jn,xn,yn);
 	
-	d_grid * new_geom = new d_grid(x0, xn, grd->stepX, y0, yn, grd->stepY);
+	d_grid * new_geom = create_grid(x0, xn, grd->stepX, y0, yn, grd->stepY);
 	return new_geom;
 
 };
@@ -2271,7 +2276,8 @@ REAL _surf_wmean_area(const d_surf * srf, const d_surf * wsrf, const d_area * ar
 	int NN = srf->getCountX();
 	int MM = srf->getCountY();
 	
-	delete aux_grid;
+	if (aux_grid)
+		aux_grid->release();
 
 	REAL denom = 0;
 	int ii, jj;

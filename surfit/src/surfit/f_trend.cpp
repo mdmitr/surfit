@@ -496,7 +496,8 @@ void f_trend::get_tr_srf(int & i_from, int & i_to, int & j_from, int & j_to) {
 		}
 	}
 	
-	delete aux_grid;
+	if (aux_grid)
+		aux_grid->release();
 };
 
 void f_trend::drop_private_data() {

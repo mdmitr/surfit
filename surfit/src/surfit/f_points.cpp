@@ -71,7 +71,8 @@ void f_points::cleanup() {
 		mask->release();
 	mask = NULL;
 
-	delete binded_grid;
+	if (binded_grid)
+		binded_grid->release();
 	binded_grid = NULL;
 };
 
@@ -146,13 +147,14 @@ bool f_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	if (binded_grid) {
 		if (binded_grid->operator ==(method_grid) == false) {
 			bind_points_to_grid(method_sub_grid, pnts, f_sub_pnts, method_grid);
-			delete binded_grid;
-			binded_grid = new d_grid(method_grid);
+			if (binded_grid)
+				binded_grid->release();
+			binded_grid = create_grid(method_grid);
 		}
 	} else {
 		bind_points_to_grid(method_sub_grid, pnts, f_sub_pnts, method_grid);
-		delete binded_grid;
-		binded_grid = new d_grid(method_grid);
+		if (binded_grid)
+			binded_grid = create_grid(method_grid);
 	}
 
 	if (mask)
@@ -205,13 +207,15 @@ bool f_points::minimize_only_points() {
 		if (binded_grid) {
 			if (binded_grid->operator ==(method_grid) == false) {
 				bind_points_to_grid(method_sub_grid, pnts, f_sub_pnts, method_grid);
-				delete binded_grid;
-				binded_grid = new d_grid(method_grid);
+				if (binded_grid)
+					binded_grid->release();
+				binded_grid = create_grid(method_grid);
 			}
 		} else {
 			bind_points_to_grid(method_sub_grid, pnts, f_sub_pnts, method_grid);
-			delete binded_grid;
-			binded_grid = new d_grid(method_grid);
+			if (binded_grid)
+				binded_grid->release();
+			binded_grid = create_grid(method_grid);
 		}
 				
 		unsigned int i;

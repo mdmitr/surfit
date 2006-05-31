@@ -138,7 +138,8 @@ cont:
 		if (err) {
 			if (icoeff)
 				icoeff->release();
-			delete grd;
+			if (grd)
+				grd->release();
 			free(name);
 			return false;
 		}
@@ -309,8 +310,8 @@ d_mask * _mask_load_grd(const char * filename, const char * maskname)
 
 	stepX = (maxx-minx)/(nx-1);
 	stepY = (maxy-miny)/(ny-1);
-	grd = new d_grid(minx, maxx, stepX,
-                         miny, maxy, stepY);
+	grd = create_grid(minx, maxx, stepX,
+                          miny, maxy, stepY);
 
 	res = create_mask(values, grd, maskname);
 
@@ -323,7 +324,8 @@ exit:
 		res->release();
 	if (values)
 		values->release();
-	delete grd;
+	if (grd)
+		grd->release();
 	fclose(file);
 	return NULL;
 }
@@ -343,7 +345,7 @@ d_mask * _mask_by_surf(const d_surf * srf) {
 	};
 
 	d_grid * fgrd = srf->grd;
-	d_grid * grd = new d_grid(fgrd);
+	d_grid * grd = create_grid(fgrd);
 
 	d_mask * res = create_mask(bcoeff, grd, srf->getName());
 	return res;

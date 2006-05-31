@@ -52,8 +52,10 @@ d_dem::d_dem(shortvec * icoeff, d_grid * igrd, const char * idemname, short idem
 };
 
 d_dem::~d_dem() {
-	if (grids_store->size() == 0)
-		delete grd;
+	if (grids_store->size() == 0) {
+		if (grd)
+			grd->release();
+	}
 
 	if (coeff) {
 		if (coeffs_store->size() == 0)

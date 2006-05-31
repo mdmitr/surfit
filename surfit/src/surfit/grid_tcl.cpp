@@ -48,7 +48,8 @@ extern d_grid * surfit_grid;
 void grid_unload() {
 	if (surfit_grid) {
 		writelog(LOG_MESSAGE,"Removing surfit_grid from memory.");
-		delete surfit_grid;
+		if (surfit_grid)
+			surfit_grid->release();
 		surfit_grid = NULL;
 	}
 };
@@ -136,7 +137,8 @@ bool grid_get2(REAL startX, REAL endX, REAL stepX,
                                 name);
 
 	d_grid * grd = create_last_grd();
-	delete surfit_grid;
+	if (surfit_grid)
+		surfit_grid->release();
 	surfit_grid = grd;
 
 	grid_info();

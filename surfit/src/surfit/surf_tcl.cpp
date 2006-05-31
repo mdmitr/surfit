@@ -693,7 +693,7 @@ bool surf_to_mask(REAL true_from, REAL true_to, const char * pos)
 	};
 
 	d_grid * fgrd = srf->grd;
-	d_grid * grd = new d_grid(fgrd);
+	d_grid * grd = create_grid(fgrd);
 
 	d_mask * msk = create_mask(bcoeff, grd);
 	msk->setName(srf->getName());

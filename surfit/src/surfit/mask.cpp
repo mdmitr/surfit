@@ -45,7 +45,8 @@ d_mask::d_mask(bitvec *icoeff, d_grid *igrd, const char * newname) : data("mask"
 };
 
 d_mask::~d_mask() {
-	delete grd;
+	if (grd)
+		grd->release();
 	if (coeff)
 		coeff->release();
 };

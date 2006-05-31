@@ -84,7 +84,8 @@ void f_curv_surf_ineq::create_f_points_ineq() {
 			}
 			pnts->remove_with_value(srf->undef_value);
 		}
-		delete grd;
+		if (grd)
+			grd->release();
 	}
 
 	if (f_pnts_ineq == NULL)

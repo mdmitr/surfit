@@ -25,12 +25,21 @@
 namespace surfit {
 
 class datafile;
+class d_grid;
+
+SURFIT_EXPORT
+d_grid * create_grid(REAL startX, REAL endX, REAL stepX,
+	       REAL startY, REAL endY, REAL stepY,
+	       const char * iname = NULL);
+
+SURFIT_EXPORT
+d_grid * create_grid(const d_grid * igrid, const char * iname = NULL);
 
 /*! \class d_grid
     \brief class for equidistant rectangular 2d-grid
 */
 class SURFIT_EXPORT d_grid {
-public:
+protected:
 
 	/*! constructor
 	    \param startX X-coordinate of the first node
@@ -50,6 +59,16 @@ public:
 
 	//! destructor
         virtual ~d_grid();
+
+public:
+
+	friend SURFIT_EXPORT
+	d_grid * create_grid(REAL startX, REAL endX, REAL stepX,
+			     REAL startY, REAL endY, REAL stepY,
+			     const char * iname);
+
+	friend SURFIT_EXPORT
+	d_grid * create_grid(const d_grid * igrid, const char * iname);
 
 	//! destructor 
 	virtual void release();

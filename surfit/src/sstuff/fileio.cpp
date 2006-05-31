@@ -161,6 +161,8 @@ void Tcl_printf (const char *tmplt, ...) {
 		return;
 
 	Tcl_Channel out = Tcl_GetStdChannel(TCL_STDOUT);
+	if (out == NULL)
+		return;
 	
 	va_list ap;
 	va_start (ap, tmplt);

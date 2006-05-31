@@ -52,7 +52,8 @@ struct grid_garbage : public binman {
 	};
 	//! removes \ref surfit_grid
 	~grid_garbage() {
-		delete surfit_grid;
+		if (surfit_grid)
+			surfit_grid->release();
 	};
 };
 
@@ -214,13 +215,13 @@ d_grid * create_calc_grd(int basis_cntX, int basis_cntY) {
 	REAL grd_stepX = (grd_endX-grd_startX)/REAL(basis_cntX);
 	REAL grd_stepY = (grd_endY-grd_startY)/REAL(basis_cntY);
 
-	d_grid * grd = new d_grid(grd_startX+grd_stepX/REAL(2), 
-			          grd_endX-grd_stepX/REAL(2), 
-			          grd_stepX, 
-			          grd_startY+grd_stepY/REAL(2), 
-			          grd_endY-grd_stepY/REAL(2), 
-			          grd_stepY, 
-			          NULL);
+	d_grid * grd = create_grid(grd_startX+grd_stepX/REAL(2), 
+			           grd_endX-grd_stepX/REAL(2), 
+			           grd_stepX, 
+			           grd_startY+grd_stepY/REAL(2), 
+			           grd_endY-grd_stepY/REAL(2), 
+			           grd_stepY, 
+			           NULL);
 	return grd;
 
 };
@@ -246,13 +247,13 @@ d_grid * create_last_grd() {
 	REAL grd_stepX = (grd_endX-grd_startX)/REAL(last_basis_cntX);
 	REAL grd_stepY = (grd_endY-grd_startY)/REAL(last_basis_cntY);
 
-	d_grid * last_grd = new d_grid(grd_startX+grd_stepX/REAL(2), 
-		                       grd_endX-grd_stepX/REAL(2), 
-				       grd_stepX, 
-				       grd_startY+grd_stepY/REAL(2), 
-				       grd_endY-grd_stepY/REAL(2), 
-				       grd_stepY, 
-				       NULL);
+	d_grid * last_grd = create_grid(grd_startX+grd_stepX/REAL(2), 
+		                        grd_endX-grd_stepX/REAL(2), 
+				        grd_stepX, 
+				        grd_startY+grd_stepY/REAL(2), 
+				        grd_endY-grd_stepY/REAL(2), 
+				        grd_stepY, 
+				        NULL);
 
 	return last_grd;
 };
@@ -304,8 +305,8 @@ void grid_prepare()
 	endx += surfit_grid->stepX/REAL(2);
 	endy += surfit_grid->stepY/REAL(2);
 	
-	method_sub_grid = new d_grid((startx+endx)/REAL(2), (startx+endx)/REAL(2), (endx-startx),
-				     (starty+endy)/REAL(2), (starty+endy)/REAL(2), (endy-starty));
+	method_sub_grid = create_grid((startx+endx)/REAL(2), (startx+endx)/REAL(2), (endx-startx),
+				      (starty+endy)/REAL(2), (starty+endy)/REAL(2), (endy-starty));
 };
 
 void grid_begin() {
@@ -324,7 +325,8 @@ void grid_begin() {
 	writelog(LOG_MESSAGE,"*************");
 
 	// Создаем геометрию, с которой будем считать
-	delete method_grid;
+	if (method_grid)
+		method_grid->release();
 	method_grid = create_calc_grd(method_basis_cntX, method_basis_cntY);
 	
 	int NN = method_grid->getCountX();
@@ -362,11 +364,13 @@ void grid_begin() {
 
 void grid_finish() {
 
-	delete method_sub_grid;
-	method_sub_grid = new d_grid(method_grid);
+	if (method_sub_grid)
+		method_sub_grid->release();
+	method_sub_grid = create_grid(method_grid);
 
-	delete method_prev_grid;
-	method_prev_grid = new d_grid(method_grid);
+	if (method_prev_grid)
+		method_prev_grid->release();
+	method_prev_grid = create_grid(method_grid);
 	
 	doubleX = false;
 	doubleY = false;
@@ -417,13 +421,16 @@ void grid_release() {
 	if (method_mask_undefined)
 		method_mask_undefined->release();
 	method_mask_undefined = NULL;
-	delete method_sub_grid;
+	if (method_sub_grid)
+		method_sub_grid->release();
 	method_sub_grid = NULL;
 
-	delete method_prev_grid;
-
-	d_surf * res_surf = create_surf(method_X, new d_grid(method_grid), map_name);
-	delete method_grid;
+	if (method_prev_grid)
+		method_prev_grid->release();
+	
+	d_surf * res_surf = create_surf(method_X, create_grid(method_grid), map_name);
+	if (method_grid)
+		method_grid->release();
 	method_grid = NULL;
 	method_X = NULL;
 

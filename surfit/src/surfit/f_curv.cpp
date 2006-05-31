@@ -67,7 +67,8 @@ void f_curv::create_f_approx_points() {
 	if (pnts == NULL) {
 		d_grid * grd = create_last_grd();
 		pnts = discretize_curv(crv, grd, value, crv->getName());
-		delete grd;
+		if (grd)
+			grd->release();
 	}
 
 	if (f_pnts == NULL)

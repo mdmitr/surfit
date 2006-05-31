@@ -72,7 +72,8 @@ void f_flow_cntr::create_f_flow_points() {
 	if (d_pnts == NULL) {
 		d_grid * grd = create_last_grd();
 		d_pnts = discretize_pcntr(contour, grd, contour->getName());
-		delete grd;
+		if (grd)
+			grd->release();
 	}
 
 	if (f_points == NULL)

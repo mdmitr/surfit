@@ -76,9 +76,9 @@ d_grid * _grid_get(REAL startX, REAL endX, REAL stepX,
                    REAL startY, REAL endY, REAL stepY,
                    const char * name) {
 	
-	return new d_grid(startX, endX, stepX,
-			  startY, endY, stepY,
-			  name);
+	return create_grid(startX, endX, stepX,
+			   startY, endY, stepY,
+			   name);
 	
 };
 
@@ -103,9 +103,9 @@ d_grid * _grid_get_for_pnts(d_points * pnts, int Xnodes, int Ynodes, const char 
 	if (len_y == REAL(0))
 		len_y = REAL(1);
 	
-	d_grid * res = new d_grid(minx, maxx, (maxx-minx)/(Xnodes - 1),
-				  miny, maxy, (maxy-miny)/(Ynodes - 1),
-				  name);
+	d_grid * res = create_grid(minx, maxx, (maxx-minx)/(Xnodes - 1),
+				   miny, maxy, (maxy-miny)/(Ynodes - 1),
+				   name);
 	
 	return res;
 };
@@ -131,9 +131,9 @@ d_grid * _grid_get_for_pnts_step(d_points * pnts, REAL stepX, REAL stepY, const 
 	if (len_y == REAL(0))
 		len_y = REAL(1);
 
-	d_grid * res = new d_grid(minx, maxx, stepX,
-                                  miny, maxy, stepY,
-                                  name);
+	d_grid * res = create_grid(minx, maxx, stepX,
+                                   miny, maxy, stepY,
+                                   name);
 
 	return res;
 };
@@ -153,9 +153,9 @@ d_grid * _grid_get_for_surf(d_surf * srf, int Xnodes, int Ynodes, const char * n
 	if (len_y == REAL(0))
 		len_y = REAL(1);
 
-	d_grid * res = new d_grid(minx, maxx, (maxx-minx)/(Xnodes - 1),
-                                  miny, maxy, (maxy-miny)/(Ynodes - 1),
-                                  name);
+	d_grid * res = create_grid(minx, maxx, (maxx-minx)/(Xnodes - 1),
+                                   miny, maxy, (maxy-miny)/(Ynodes - 1),
+                                   name);
 
 	return res;
 };
@@ -175,9 +175,9 @@ d_grid * _grid_get_for_surf_step(d_surf * srf, REAL stepX, REAL stepY, const cha
 	if (len_y == REAL(0))
 		len_y = REAL(1);
 
-	d_grid * res = new d_grid(minx, maxx, stepX,
-                                  miny, maxy, stepY,
-                                  name);
+	d_grid * res = create_grid(minx, maxx, stepX,
+                                   miny, maxy, stepY,
+                                   name);
 
 	return res;
 
@@ -239,7 +239,7 @@ d_grid * _grid_get_for_pnts_and_geom(const d_grid * grd, const d_points * pnts) 
 	g_stepX = grd->stepX;
 	g_stepY = grd->stepY;
 
-	return new d_grid(g_startX, g_endX, g_stepX, g_startY, g_endY, g_stepY);
+	return create_grid(g_startX, g_endX, g_stepX, g_startY, g_endY, g_stepY);
 
 };
 
@@ -331,9 +331,9 @@ cont:
 	endX = startX + len*cos_val;
 	endY = startY + len*sin_val;
 	
-	res = new d_grid(startX, endX, stepX,
-			 startY, endY, stepY,
-			 name);
+	res = create_grid(startX, endX, stepX,
+			  startY, endY, stepY,
+			  name);
 	
 	geom = res;
 	
@@ -358,7 +358,8 @@ d_grid * _grid_load_df(datafile * df, const char * grid_name) {
 			df->skipTagName();
 			
 			if (!_grid_load_df_tag_readed(df, grd)) {
-				delete grd;
+				if (grd)
+					grd->release();
 				return NULL;
 			};
 			
@@ -376,7 +377,8 @@ d_grid * _grid_load_df(datafile * df, const char * grid_name) {
 				if (strlen(grid_name) == 0)
 					return grd;
 				
-				delete grd;
+				if (grd)
+					grd->release();
 				grd = NULL;
 				continue;
 			};
@@ -385,7 +387,8 @@ d_grid * _grid_load_df(datafile * df, const char * grid_name) {
 				return grd;
 			}
 			
-			delete grd;
+			if (grd)
+				grd->release();
 			grd = NULL;
 			
 			
@@ -394,14 +397,17 @@ d_grid * _grid_load_df(datafile * df, const char * grid_name) {
 				writelog(LOG_ERROR, "grid_load : this file have no grid");
 			else
 				writelog(LOG_ERROR, "grid_load : this file have no grid with name %s", grid_name);
-			delete grd;
+			if (grd)
+				grd->release();
 			return NULL;
 		}
 		
 		
 	};
 	
-	delete grd;
+	if (grd)
+		grd->release();
+
 	return NULL;
 };
 
@@ -426,14 +432,15 @@ d_grid * _grid_from_surf(d_surf * srf, const char * name) {
 		return NULL;
 	d_grid * res = NULL;
 	if (name)
-		res = new d_grid(srf->grd, name);
+		res = create_grid(srf->grd, name);
 	else
-		res = new d_grid(srf->grd, srf->grd->getName());
+		res = create_grid(srf->grd, srf->grd->getName());
 	return res;
 };
 
 void _set_surfit_grid(d_grid * grd) {
-	delete surfit_grid;
+	if (surfit_grid)
+		surfit_grid->release();
 	surfit_grid = grd;
 };
 
@@ -476,9 +483,9 @@ d_grid * _create_sub_grid(const d_grid * grd, int x_from, int x_to, int y_from, 
 	REAL Y_from = grd->startY + y_from*grd->stepY;
 	REAL Y_to = grd->startY + y_to*grd->stepY;
 
-	d_grid * res = new d_grid(X_from, X_to, grd->stepX,
-		                  Y_from, Y_to, grd->stepY,
-			          grd->getName());
+	d_grid * res = create_grid(X_from, X_to, grd->stepX,
+		                   Y_from, Y_to, grd->stepY,
+			           grd->getName());
 
 	return res;
 

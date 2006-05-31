@@ -69,7 +69,8 @@ void f_flow_curv::create_f_flow_points() {
 	if (d_pnts == NULL) {
 		d_grid * grd = create_last_grd();
 		d_pnts = discretize_pcurv(crv, grd, value, crv->getName());
-		delete grd;
+		if (grd)
+			grd->release();
 	}
 
 	if (f_points == NULL)

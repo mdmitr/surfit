@@ -30,6 +30,20 @@
 
 namespace surfit {
 
+d_grid * create_grid(REAL startX, REAL endX, REAL stepX,
+		     REAL startY, REAL endY, REAL stepY,
+		     const char * iname)
+{
+	return new d_grid(startX, endX, stepX,
+			  startY, endY, stepY,
+			  iname);
+};
+
+d_grid * create_grid(const d_grid * igrid, const char * iname)
+{
+	return new d_grid(igrid, iname);
+};
+
 d_grid::d_grid(REAL istartX, REAL iendX, REAL istepX,
 	       REAL istartY, REAL iendY, REAL istepY,
 	       const char * iname) {

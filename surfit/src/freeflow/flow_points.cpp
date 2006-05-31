@@ -55,7 +55,8 @@ void f_flow_points::cleanup() {
 	if (f_sub_tasks)
 		free_scattered_points( f_sub_tasks );
 	f_sub_tasks = NULL;
-	delete binded_grid;
+	if (binded_grid)
+		binded_grid->release();
 	binded_grid = NULL;
 };
 
@@ -96,13 +97,15 @@ bool f_flow_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	if (binded_grid) {
 		if (binded_grid->operator ==(method_grid) == false) {
 			bind_points_to_grid(method_sub_grid, f_task, f_sub_tasks, method_grid);
-			delete binded_grid;
-			binded_grid = new d_grid(method_grid);
+			if (binded_grid)
+				binded_grid->release();
+			binded_grid = create_grid(method_grid);
 		}
 	} else {
 		bind_points_to_grid(method_sub_grid, f_task, f_sub_tasks, method_grid);
-		delete binded_grid;
-		binded_grid = new d_grid(method_grid);
+		if (binded_grid)
+			binded_grid->release();
+		binded_grid = create_grid(method_grid);
 	}
 	
 	int points = 0;

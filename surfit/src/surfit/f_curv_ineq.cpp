@@ -69,7 +69,8 @@ void f_curv_ineq::create_f_points_ineq() {
 	if (pnts == NULL) {
 		d_grid * grd = create_last_grd();
 		pnts = discretize_curv(crv, grd, value, crv->getName());
-		delete grd;
+		if (grd)
+			grd->release();
 	}
 
 	if (f_pnts_ineq == NULL)

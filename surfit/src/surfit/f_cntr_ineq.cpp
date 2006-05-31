@@ -104,7 +104,8 @@ void f_cntr_ineq::create_f_points_ineq() {
 	if (pnts == NULL) {
 		d_grid * grd = create_last_grd();
 		pnts = discretize_cntr(cntr, grd, cntr->getName());
-		delete grd;
+		if (grd)
+			grd->release();
 	}
 
 	if (f_pnts_ineq == NULL)

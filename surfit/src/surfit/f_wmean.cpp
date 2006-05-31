@@ -244,7 +244,8 @@ void f_wmean::get_w_srf(int & i_from, int & i_to, int & j_from, int & j_to) {
 		}
 	}
 	
-	delete aux_grid;
+	if (aux_grid)
+		aux_grid->release();
 };
 
 void f_wmean::drop_private_data() {

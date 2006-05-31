@@ -77,7 +77,7 @@ d_surf::d_surf(d_mask * msk) : data("d_surf") {
 		else
 			(*coeff)(i) = 0;
 	}
-	grd = new d_grid(msk->grd);
+	grd = create_grid(msk->grd);
 	setName(msk->getName());
 	show_smooth = true;
 	undef_value = FLT_MAX;
@@ -90,7 +90,8 @@ d_surf::d_surf(d_mask * msk) : data("d_surf") {
 };
 
 d_surf::~d_surf() {
-	delete grd;
+	if (grd)
+		grd->release();
 	if (coeff)
 		coeff->release();
 	
@@ -445,7 +446,9 @@ REAL d_surf::wmean(const d_surf * wsrf) const {
 		}
 	}
 
-	delete aux_grid;
+	if (aux_grid)
+		aux_grid->release();
+	
 	delete w_srf;
 	
 	return sum/denom;
