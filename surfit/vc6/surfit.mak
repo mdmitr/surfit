@@ -76,6 +76,8 @@ CLEAN :
 	-@erase "$(INTDIR)\data.sbr"
 	-@erase "$(INTDIR)\data_manager.obj"
 	-@erase "$(INTDIR)\data_manager.sbr"
+	-@erase "$(INTDIR)\dbfopen.obj"
+	-@erase "$(INTDIR)\dbfopen.sbr"
 	-@erase "$(INTDIR)\f_area.obj"
 	-@erase "$(INTDIR)\f_area.sbr"
 	-@erase "$(INTDIR)\f_area_ineq.obj"
@@ -216,6 +218,8 @@ CLEAN :
 	-@erase "$(INTDIR)\punknown.sbr"
 	-@erase "$(INTDIR)\RF.obj"
 	-@erase "$(INTDIR)\RF.sbr"
+	-@erase "$(INTDIR)\shpopen.obj"
+	-@erase "$(INTDIR)\shpopen.sbr"
 	-@erase "$(INTDIR)\solvers.obj"
 	-@erase "$(INTDIR)\solvers.sbr"
 	-@erase "$(INTDIR)\sort_alg.obj"
@@ -375,6 +379,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\pthread.sbr" \
 	"$(INTDIR)\ptimedsem.sbr" \
 	"$(INTDIR)\punknown.sbr" \
+	"$(INTDIR)\dbfopen.sbr" \
+	"$(INTDIR)\shpopen.sbr" \
 	"$(INTDIR)\data_manager.sbr" \
 	"$(INTDIR)\mrf.sbr" \
 	"$(INTDIR)\sort_alg.sbr" \
@@ -479,6 +485,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\pthread.obj" \
 	"$(INTDIR)\ptimedsem.obj" \
 	"$(INTDIR)\punknown.obj" \
+	"$(INTDIR)\dbfopen.obj" \
+	"$(INTDIR)\shpopen.obj" \
 	"$(INTDIR)\data_manager.obj" \
 	"$(INTDIR)\mrf.obj" \
 	"$(INTDIR)\sort_alg.obj" \
@@ -543,6 +551,8 @@ CLEAN :
 	-@erase "$(INTDIR)\data.sbr"
 	-@erase "$(INTDIR)\data_manager.obj"
 	-@erase "$(INTDIR)\data_manager.sbr"
+	-@erase "$(INTDIR)\dbfopen.obj"
+	-@erase "$(INTDIR)\dbfopen.sbr"
 	-@erase "$(INTDIR)\f_area.obj"
 	-@erase "$(INTDIR)\f_area.sbr"
 	-@erase "$(INTDIR)\f_area_ineq.obj"
@@ -683,6 +693,8 @@ CLEAN :
 	-@erase "$(INTDIR)\punknown.sbr"
 	-@erase "$(INTDIR)\RF.obj"
 	-@erase "$(INTDIR)\RF.sbr"
+	-@erase "$(INTDIR)\shpopen.obj"
+	-@erase "$(INTDIR)\shpopen.sbr"
 	-@erase "$(INTDIR)\solvers.obj"
 	-@erase "$(INTDIR)\solvers.sbr"
 	-@erase "$(INTDIR)\sort_alg.obj"
@@ -844,6 +856,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\pthread.sbr" \
 	"$(INTDIR)\ptimedsem.sbr" \
 	"$(INTDIR)\punknown.sbr" \
+	"$(INTDIR)\dbfopen.sbr" \
+	"$(INTDIR)\shpopen.sbr" \
 	"$(INTDIR)\data_manager.sbr" \
 	"$(INTDIR)\mrf.sbr" \
 	"$(INTDIR)\sort_alg.sbr" \
@@ -948,6 +962,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\pthread.obj" \
 	"$(INTDIR)\ptimedsem.obj" \
 	"$(INTDIR)\punknown.obj" \
+	"$(INTDIR)\dbfopen.obj" \
+	"$(INTDIR)\shpopen.obj" \
 	"$(INTDIR)\data_manager.obj" \
 	"$(INTDIR)\mrf.obj" \
 	"$(INTDIR)\sort_alg.obj" \
@@ -1523,6 +1539,18 @@ SOURCE=..\src\surfit\ptypes\ptimedsem.cxx
 SOURCE=..\src\surfit\ptypes\punknown.cxx
 
 "$(INTDIR)\punknown.obj"	"$(INTDIR)\punknown.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\shapelib\dbfopen.c
+
+"$(INTDIR)\dbfopen.obj"	"$(INTDIR)\dbfopen.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\shapelib\shpopen.c
+
+"$(INTDIR)\shpopen.obj"	"$(INTDIR)\shpopen.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
