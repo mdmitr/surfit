@@ -83,7 +83,7 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "area_mean.dat" 
+surf_save "area_mean.dat" "map_area_mean" 
 
 puts [concat "Surface mean value in area6 : " [surf_area_mean "area6" "map_area_mean"]]
 puts [concat "Surface mean value : " [surf_mean "map_area_mean"]]

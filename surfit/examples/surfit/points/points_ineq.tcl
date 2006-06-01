@@ -10,7 +10,7 @@ load libsurfit[info sharedlibextension]
 clear_data 
 
 # set name of surface
-set map_name "points_ineq" 
+set map_name "map_points_ineq" 
 
 # set tolerance for cg solver
 set tol 1e-004
@@ -56,4 +56,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "points_ineq.dat" 
+surf_save "points_ineq.dat" "map_points_ineq" 

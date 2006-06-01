@@ -59,4 +59,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "ineq.dat" 
+surf_save "ineq.dat" "map_ineq"

@@ -71,4 +71,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "contour.dat" 
+surf_save "contour.dat" "map_cntr" 

@@ -10,7 +10,7 @@ load libsurfit[info sharedlibextension]
 clear_data 
 
 # set name of surface
-set map_name "points_approx" 
+set map_name "map_points_approx" 
 
 # set tolerance for cg solver
 set tol 1e-006 
@@ -50,4 +50,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "points_approx.dat" 
+surf_save "points_approx.dat" "map_points_approx" 

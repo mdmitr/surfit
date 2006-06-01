@@ -59,7 +59,7 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "wmean.dat" 
+surf_save "wmean.dat" "map_wmean"
 
 set mean_value [surf_wmean test_func map_wmean]
 puts "surface weighted mean value is $mean_value"

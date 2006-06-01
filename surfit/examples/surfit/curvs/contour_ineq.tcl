@@ -83,4 +83,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "map_cntr_ineq.dat" 
+surf_save "contour_ineq.dat" "map_cntr_ineq" 

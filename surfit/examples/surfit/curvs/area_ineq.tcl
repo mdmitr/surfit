@@ -80,7 +80,7 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "area_ineq.dat" 
+surf_save "area_ineq.dat" "map_area_ineq" 
 
 puts [concat "Maximum value in area6 : " [surf_area_maxz "area6" "map_area_ineq"]]
 

@@ -56,7 +56,7 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "mean.dat" 
+surf_save "mean.dat" "map_mean"
 
 set mean_value [surf_mean map_mean]
 puts "surface mean value is $mean_value"

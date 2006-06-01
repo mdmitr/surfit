@@ -10,7 +10,7 @@ load libsurfit[info sharedlibextension]
 clear_data 
 
 # set name of surface
-set map_name "points_exact" 
+set map_name "map_points_exact" 
 
 # set tolerance for cg solver
 set tol 1.99526e-006 
@@ -50,4 +50,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "points_exact.dat" 
+surf_save "points_exact.dat" "map_points_exact" 

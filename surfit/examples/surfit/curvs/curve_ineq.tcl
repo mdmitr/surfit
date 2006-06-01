@@ -71,4 +71,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "curve_ineq.dat" 
+surf_save "curve_ineq.dat" "map_curve_ineq" 

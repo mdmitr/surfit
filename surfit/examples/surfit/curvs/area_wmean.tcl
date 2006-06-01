@@ -86,4 +86,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "area_wmean.dat" 
+surf_save "area_wmean.dat" "map_area_wmean" 

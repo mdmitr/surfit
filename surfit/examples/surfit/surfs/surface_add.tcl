@@ -53,4 +53,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "surface_add.dat" 
+surf_save "surface_add.dat" "map_surface_add"
