@@ -167,10 +167,11 @@ first_find_J:
 
 	if (first_y || second_y || first_x || second_x ) {
 		pos2find = J; 
-		
+		std::vector<size_t>::iterator it(&pos2find);
+				
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
@@ -210,10 +211,11 @@ first_find_J_1:
 	if (first_x) {
 		
 		pos2find = J+1; 
-		
+		std::vector<size_t>::iterator it(&pos2find);
+
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
@@ -255,9 +257,10 @@ first_find_J_NN:
 		
 		pos2find = J+NN; 
 		
+		std::vector<size_t>::iterator it(&pos2find);
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
@@ -302,10 +305,11 @@ second_find_J:
 	if (first_x || second_x || first_y || second_y) {
 		
 		pos2find = J; 
-		
+		std::vector<size_t>::iterator it(&pos2find);
+
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
@@ -346,10 +350,10 @@ second_find_J_1:
 	if (first_x) {
 		
 		pos2find = J+1; 
-		
+		std::vector<size_t>::iterator it(&pos2find);
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
@@ -390,10 +394,10 @@ second_find_J_NN:
 	if (first_y) {
 		
 		pos2find = J+NN; 
-		
+		std::vector<size_t>::iterator it(&pos2find);
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
@@ -460,10 +464,10 @@ first_find_J__NN:
 
 	if ( second_y || third_y || first_yy || second_yy ) {		
 		pos2find = J - NN; 
-		
+		std::vector<size_t>::iterator it(&pos2find);
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
@@ -506,10 +510,10 @@ first_find_J__1:
 	if ( second_x || third_x || first_xx || second_xx || second_yy )	{
 		
 		pos2find = J - 1; 
-		
+		std::vector<size_t>::iterator it(&pos2find);
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
@@ -553,10 +557,10 @@ first_find_J_1:
 	if ( first_x || second_x || first_xx || first_yy )	{
 		
 		pos2find = J + 1; 
-		
+		std::vector<size_t>::iterator it(&pos2find);
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
@@ -597,10 +601,10 @@ first_find_J_NN:
 
 	if ( first_y || second_y || first_xx || second_xx ) {		
 		pos2find = J + NN; 
-		
+		std::vector<size_t>::iterator it(&pos2find);
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
@@ -646,10 +650,10 @@ second_find_J__NN:
 	if ( second_y || third_y || first_yy || second_yy ) {
 		
 		pos2find = J - NN; 
-		
+		std::vector<size_t>::iterator it(&pos2find);
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
@@ -692,10 +696,10 @@ second_find_J__1:
 	if ( second_x || third_x || first_xx || second_xx || second_yy ) {
 		
 		pos2find = J - 1; 
-		
+		std::vector<size_t>::iterator it(&pos2find);
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
@@ -738,10 +742,10 @@ second_find_J_1:
 	if ( first_x || second_x || first_xx || first_yy )	{
 		
 		pos2find = J + 1; 
-		
+		std::vector<size_t>::iterator it(&pos2find);
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
@@ -782,10 +786,10 @@ second_find_J_NN:
 
 	if ( first_y || second_y || first_xx || second_xx ) {		
 		pos2find = J + NN; 
-		
+		std::vector<size_t>::iterator it(&pos2find);
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
@@ -830,10 +834,10 @@ second_find_J_NN:
 bool check_for_node(grid_line * fault, size_t nn) {
 	
 	std::vector<size_t>::iterator * ptr;
-
+	std::vector<size_t>::iterator it(&nn);
 	ptr = std::lower_bound(fault->sort_by_first_begin, 
 			       fault->sort_by_first_end, 
-	                       &nn, 
+	                       it, 
 			       ptr_size_t_less);
 
 	if (ptr && (ptr != fault->sort_by_first_end))
@@ -842,7 +846,7 @@ bool check_for_node(grid_line * fault, size_t nn) {
 
 	ptr = std::lower_bound(fault->sort_by_second_begin, 
 			       fault->sort_by_second_end, 
-	                       &nn, 
+	                       it, 
 			       ptr_size_t_less);
 
 	if (ptr && (ptr != fault->sort_by_second_end))
@@ -868,11 +872,14 @@ bool check_for_pair(grid_line * fault, size_t nn1, size_t nn2) {
 		nn1 = temp;
 	}
 
-first_again_nn1:
+	std::vector<size_t>::iterator it1(&nn1);
+	std::vector<size_t>::iterator it2(&nn2);
 
+first_again_nn1:
+	
 	ptr = std::lower_bound(ptr_from, 
 			       fault->sort_by_first_end, 
-	                       &nn1, 
+	                       it1, 
 			       ptr_size_t_less);
 
 	if (ptr && (ptr != fault->sort_by_first_end)) {
@@ -888,10 +895,11 @@ first_again_nn1:
 	ptr_from = ptr; //fault->sort_by_first_begin;
 
 first_again_nn2:
-
+	
+	
 	ptr = std::lower_bound(ptr_from, 
 			       fault->sort_by_first_end, 
-	                       &nn2, 
+	                       it2, 
 			       ptr_size_t_less);
 
 	if (ptr && (ptr != fault->sort_by_first_end)) {
@@ -910,7 +918,7 @@ second_again_nn1:
 
 	ptr = std::lower_bound(ptr_from, 
 			       fault->sort_by_second_end, 
-	                       &nn1, 
+	                       it1, 
 			       ptr_size_t_less);
 
 	if (ptr && (ptr != fault->sort_by_second_end)) {
@@ -929,7 +937,7 @@ second_again_nn2:
 
 	ptr = std::lower_bound(ptr_from, 
 			       fault->sort_by_second_end, 
-	                       &nn2, 
+	                       it2, 
 			       ptr_size_t_less);
 
 	if (ptr && (ptr != fault->sort_by_second_end)) {
