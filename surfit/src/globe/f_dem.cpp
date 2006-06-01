@@ -102,8 +102,8 @@ bool f_dem::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	else 
 		writelog(LOG_MESSAGE,"dem : noname, size=(%d x %d)", dem->getCountX(), dem->getCountY());
 
-	int NN = method_grid->getCountX();
-	int MM = method_grid->getCountY();
+	size_t NN = method_grid->getCountX();
+	size_t MM = method_grid->getCountY();
 
 	v = create_vec(NN*MM);
 	
@@ -113,12 +113,12 @@ bool f_dem::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	mask->init_false();
 	int points = 0;
 
-	int from_x, from_y, to_x, to_y;
+	size_t from_x, from_y, to_x, to_y;
 	_grid_intersect1(method_grid, dem->grd,
 		        from_x, to_x,
 		        from_y, to_y);
 
-	int i, j, pos;
+	size_t i, j, pos;
 	
 	REAL value;
 	REAL stepX2 = method_grid->stepX/REAL(2);
@@ -166,7 +166,7 @@ void f_dem::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefi
 	if ((functionals_add->size() == 0) && ( !cond() ) && (i_am_cond == false))
 		return;
 
-	int i;
+	size_t i;
 	if (mask) {
 		for (i = 0; i < mask->size(); i++) {
 			if (mask->get(i))
@@ -182,15 +182,15 @@ bool f_dem::minimize_only_dem() {
 	else 
 		writelog(LOG_MESSAGE,"dem : noname, size=(%d x %d)", dem->getCountX(), dem->getCountY());
 
-	int NN = method_grid->getCountX();
-	int MM = method_grid->getCountY();
+	size_t NN = method_grid->getCountX();
+	size_t MM = method_grid->getCountY();
 
-	int from_x, from_y, to_x, to_y;
+	size_t from_x, from_y, to_x, to_y;
 	_grid_intersect1(method_grid, dem->grd,
 		        from_x, to_x,
 		        from_y, to_y);
 
-	int i, j, pos;
+	size_t i, j, pos;
 	
 	REAL value;
 	REAL stepX2 = method_grid->stepX/REAL(2);

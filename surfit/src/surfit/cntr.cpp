@@ -202,7 +202,7 @@ d_points * discretize_cntr(const d_cntr * crv, d_grid * grd, const char * pnts_n
 		return NULL;
 
 	// using modified brezengham algorithm
-	int qq;
+	size_t qq;
 	REAL X2, X1, Y2, Y1, Z1, Z2;
 
 	std::vector<pos_z_w> * data = new std::vector<pos_z_w>();
@@ -370,7 +370,7 @@ d_points * discretize_cntr(const d_cntr * crv, d_grid * grd, const char * pnts_n
 	points_y->reserve(data->size());
 	points_z->reserve(data->size());
 
-	int prev_pos = INT_MAX;
+	size_t prev_pos = UINT_MAX;
 	pos_z_w elem;
 	REAL total_weight = 0;
 	REAL sum_val = 0;
@@ -383,7 +383,7 @@ d_points * discretize_cntr(const d_cntr * crv, d_grid * grd, const char * pnts_n
 			total_weight += elem.w;
 		} else {
 			// write
-			if (prev_pos != INT_MAX) {
+			if (prev_pos != UINT_MAX) {
 				int pos_x = prev_pos % NN;
 				int pos_y = (prev_pos - pos_x)/NN;
 				REAL x, y, z;

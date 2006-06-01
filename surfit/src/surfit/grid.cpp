@@ -83,36 +83,36 @@ void d_grid::release() {
 	delete this;
 };
 
-int d_grid::getCountX() const {
+size_t d_grid::getCountX() const {
 	if (stepX == 0) return 0;
-	return (int)floor((endX-startX)/stepX + 0.5) + 1;
+	return (size_t)floor((endX-startX)/stepX + 0.5) + 1;
 };
 
-bool d_grid::setCountX(int countX) {
+bool d_grid::setCountX(size_t countX) {
 	if (endX == startX)
 		return false;
 	stepX = (endX-startX)/REAL(countX-1);
 	return true;
 };
 
-int d_grid::getCountY() const {
+size_t d_grid::getCountY() const {
 	if (stepY == 0) return 0;
-	return (int)floor((endY-startY)/stepY + 0.5) + 1;
+	return (size_t)floor((endY-startY)/stepY + 0.5) + 1;
 };
 
-bool d_grid::setCountY(int countY) {
+bool d_grid::setCountY(size_t countY) {
 	if (endY == startY)
 		return false;
 	stepY = (endY-startY)/REAL(countY-1);
 	return true;
 };
 
-void d_grid::getCoordNode(int i, int j, REAL &x, REAL &y) const {
+void d_grid::getCoordNode(size_t i, size_t j, REAL &x, REAL &y) const {
 	x = startX + (i)*stepX;
 	y = startY + (j)*stepY;
 };
 
-void d_grid::getCoordPoint(REAL x, REAL y, int & i, int & j) const {
+void d_grid::getCoordPoint(REAL x, REAL y, size_t & i, size_t & j) const {
 	i = get_i(x);
 	j = get_j(y);
 };
@@ -149,11 +149,11 @@ void d_grid::setName(const char * newname) {
 	strcpy(gridname, newname);
 };
 
-int d_grid::getLinesCount() const {
+size_t d_grid::getLinesCount() const {
     return getCountX()+getCountY();
 };
 
-void d_grid::getLine(int line_number, float &x0, float &y0, float &x1, float &y1) const {
+void d_grid::getLine(size_t line_number, float &x0, float &y0, float &x1, float &y1) const {
 
     REAL X0, Y0, X1, Y1;
 
@@ -197,29 +197,29 @@ bool d_grid::operator==(const d_grid * test) const
 	       );
 };
 
-void d_grid::x_from_to(int i, REAL & from, REAL & to) const {
+void d_grid::x_from_to(size_t i, REAL & from, REAL & to) const {
 	from = startX + (i - REAL(0.5))*stepX;
 	to   = startX + (i + REAL(0.5))*stepX;
 };
 
-REAL d_grid::x_from(int i) const {
+REAL d_grid::x_from(size_t i) const {
 	return startX + (i - REAL(0.5))*stepX;
 };
 
-REAL d_grid::x_to(int i) const {
+REAL d_grid::x_to(size_t i) const {
 	return startX + (i + REAL(0.5))*stepX;
 };
 
-void d_grid::y_from_to(int i, REAL & from, REAL & to) const {
+void d_grid::y_from_to(size_t i, REAL & from, REAL & to) const {
 	from = startY + (i - REAL(0.5))*stepY;
 	to   = startY + (i + REAL(0.5))*stepY;
 };
 
-REAL d_grid::y_from(int i) const {
+REAL d_grid::y_from(size_t i) const {
 	return startY + (i - REAL(0.5))*stepY;
 };
 
-REAL d_grid::y_to(int i) const {
+REAL d_grid::y_to(size_t i) const {
 	return startY + (i + REAL(0.5))*stepY;
 };
 

@@ -201,7 +201,7 @@ int cntr_size() {
 };
 
 void cntrs_info() {
-	unsigned int cntrs_counter;
+	size_t cntrs_counter;
 	for (cntrs_counter = 0; cntrs_counter < surfit_cntrs->size(); cntrs_counter++) {
 		d_cntr * a_cntr = *(surfit_cntrs->begin()+cntrs_counter);
 		_cntr_info(a_cntr);

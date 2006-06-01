@@ -35,7 +35,7 @@ bool hist_load(const char * filename, const char * histname = NULL);
 //////////////
 // other
 
-bool hist_from_surf(const char * histname, const char * surf_pos = "0", int intervs = 10);
+bool hist_from_surf(const char * histname, const char * surf_pos = "0", size_t intervs = 10);
 
 bool hist_update_surf(const char * hist_pos = "0", const char * surf_pos = "0");
 

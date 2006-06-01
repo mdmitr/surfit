@@ -128,14 +128,14 @@ int hist_size() {
 };
 
 void hists_info() {
-	unsigned int hists_counter;
+	size_t hists_counter;
 	for (hists_counter = 0; hists_counter < surfit_hists->size(); hists_counter++) {
 		d_hist * a_hist = *(surfit_hists->begin()+hists_counter);
 		_hist_info(a_hist);
 	}
 };
 
-bool hist_from_surf(const char * histname, const char * surf_pos, int intervs) {
+bool hist_from_surf(const char * histname, const char * surf_pos, size_t intervs) {
 	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (srf == NULL)
 		return false;
@@ -150,7 +150,7 @@ bool hist_from_surf(const char * histname, const char * surf_pos, int intervs) {
 
 	vec * X1 = create_vec(intervs);
 	vec * X2 = create_vec(intervs);
-	int i;
+	size_t i;
 	for (i = 0; i < intervs; i++) {
 		(*X1)(i) = minz + i*step;
 		(*X2)(i) = minz + (i+1)*step;
@@ -191,9 +191,9 @@ bool hist_update_surf(const char * hist_pos, const char * surf_pos) {
 	if (srf == NULL)
 		return false;
 
-	int hist_size = hst->size();
-	int srf_size = 0;
-	int i, j;
+	size_t hist_size = hst->size();
+	size_t srf_size = 0;
+	size_t i, j;
 	
 	for (i = 0; i < hist_size - 1; i++) 
 		(*(hst->Z))(i) = 0;

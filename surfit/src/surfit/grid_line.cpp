@@ -21,9 +21,7 @@
 
 #include "fileio.h"
 #include "bitvec.h"
-#include "intvec.h"
 #include "boolvec.h"
-
 
 #include "grid_line.h"
 #include "sort_alg.h"
@@ -40,11 +38,11 @@
 
 namespace surfit {
 
-grid_line * create_grid_line(intvec * ifirst, intvec * isecond) {
+grid_line * create_grid_line(std::vector<size_t> * ifirst, std::vector<size_t> * isecond) {
 	return new grid_line(ifirst, isecond);
 };
 
-grid_line::grid_line(intvec * ifirst, intvec * isecond) : data("grid_line") {
+grid_line::grid_line(std::vector<size_t> * ifirst, std::vector<size_t> * isecond) : data("grid_line") {
 
 	first = ifirst;
 	second = isecond;
@@ -59,10 +57,8 @@ grid_line::grid_line(intvec * ifirst, intvec * isecond) : data("grid_line") {
 };
 
 grid_line::~grid_line() {
-	if (first)
-		first->release();
-	if (second)
-		second->release();
+	delete first;
+	delete second;
 	free(sort_by_first_begin);
 	free(sort_by_second_begin);
 };
@@ -71,7 +67,7 @@ bool grid_line::bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const
 	return false;
 };
 
-int grid_line::size() const {
+size_t grid_line::size() const {
 	if (first)
 		return first->size();
 	return 0;
@@ -86,26 +82,26 @@ void grid_line::sort() {
 	free(sort_by_first_begin);
 	free(sort_by_second_begin);
 	
-	sort_by_first_begin = (int**)malloc(size*sizeof(int**));
+	sort_by_first_begin = (std::vector<size_t>::iterator*)malloc(size*sizeof(std::vector<size_t>::iterator *));
 	sort_by_first_end = sort_by_first_begin + size;
 
-	int * ptr;
-	int ** pptr;
+	std::vector<size_t>::iterator ptr;
+	std::vector<size_t>::iterator * pptr;
 	for (ptr = first->begin(), pptr = sort_by_first_begin; ptr != first->end(); ptr++, pptr++)
 		*pptr = ptr;
 	
-	std::sort(sort_by_first_begin, sort_by_first_end, ptr_less);
+	std::sort(sort_by_first_begin, sort_by_first_end, ptr_size_t_less);
 
-	sort_by_second_begin = (int**)malloc(size*sizeof(int**));
+	sort_by_second_begin = (std::vector<size_t>::iterator *)malloc(size*sizeof(std::vector<size_t>::iterator *));
 	sort_by_second_end = sort_by_second_begin + size;
 
 	for (ptr = second->begin(), pptr = sort_by_second_begin; ptr != second->end(); ptr++, pptr++)
 		*pptr = ptr;
 
-	std::sort(sort_by_second_begin, sort_by_second_end, ptr_less);
+	std::sort(sort_by_second_begin, sort_by_second_end, ptr_size_t_less);
 };
 
-void grid_line::add(intvec *& ifirst, intvec *& isecond) 
+void grid_line::add(std::vector<size_t> *& ifirst, std::vector<size_t> *& isecond) 
 {
 	if (ifirst == NULL)
 		return;
@@ -118,13 +114,15 @@ void grid_line::add(intvec *& ifirst, intvec *& isecond)
 	int old_size = size();
 
 	first->resize(old_size+add_size);
-	memcpy(first->begin() + old_size, ifirst->begin(), add_size*sizeof(int));
-	ifirst->release();
+	std::copy(ifirst->begin(), ifirst->begin() + add_size, first->begin() + old_size);
+	//memcpy(first->begin() + old_size, ifirst->begin(), add_size*sizeof(int));
+	delete ifirst;
 	ifirst = NULL;
 	
 	second->resize(old_size+add_size);
-	memcpy(second->begin() + old_size, isecond->begin(), add_size*sizeof(int));
-	isecond->release();
+	std::copy(isecond->begin(), isecond->begin() + add_size, second->begin() + old_size);
+	//memcpy(second->begin() + old_size, isecond->begin(), add_size*sizeof(int));
+	delete isecond;
 	isecond = NULL;
 	
 	sort();
@@ -143,27 +141,27 @@ void grid_line::compress() {
 
 };
 
-void fault_points_D1(int n, int m, 
-		     int NN, int MM, 
+void fault_points_D1(size_t n, size_t m, 
+		     size_t NN, size_t MM, 
 		     grid_line * fault,
 		     bool & first_x, bool & second_x, 
 		     bool & first_y, bool & second_y,
-		     int offset_x, int offset_y) 
+		     size_t offset_x, size_t offset_y) 
 {
 	if (!fault)
 		return;
 
-	int J = (n+offset_x) + (m+offset_y)*NN;
-	int pos;
-	int J2;
-	int diff;
+	size_t J = (n+offset_x) + (m+offset_y)*NN;
+	size_t pos;
+	size_t J2;
+	size_t diff;
 
 	// _first_
 
-	int ** ptr_from = fault->sort_by_first_begin;
-	int ** ptr;
+	std::vector<size_t>::iterator * ptr_from = fault->sort_by_first_begin;
+	std::vector<size_t>::iterator * ptr;
 
-	int pos2find;
+	size_t pos2find;
 	
 first_find_J:
 
@@ -173,14 +171,17 @@ first_find_J:
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
 				       &pos2find, 
-				       ptr_less);
+				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
 			if (**ptr == J) {
 				pos = *ptr - fault->first->begin();
 				J2 = *(fault->second->begin() + pos);
-				diff = abs(pos2find - J2);
-				
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
+								
 				// vertical
 				if (diff == 1) {
 					if (J2 > pos2find)
@@ -213,13 +214,16 @@ first_find_J_1:
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
 				       &pos2find, 
-				       ptr_less);
+				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
 			if (**ptr == J) {
 				pos = *ptr - fault->first->begin();
 				J2 = *(fault->second->begin() + pos);
-				diff = abs(pos2find - J2);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
 				
 				// vertical
 				if (diff == 1) {
@@ -254,13 +258,16 @@ first_find_J_NN:
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
 				       &pos2find, 
-				       ptr_less);
+				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
 			if (**ptr == J) {
 				pos = *ptr - fault->first->begin();
 				J2 = *(fault->second->begin() + pos);
-				diff = abs(pos2find - J2);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
 				
 				// vertical
 				if (diff == 1) {
@@ -299,13 +306,16 @@ second_find_J:
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
 				       &pos2find, 
-				       ptr_less);
+				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
 			if (**ptr == J) {
 				pos = *ptr - fault->second->begin();
 				J2 = *(fault->first->begin() + pos);
-				diff = abs(pos2find - J2);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
 				
 				// vertical
 				if (diff == 1) {
@@ -340,13 +350,16 @@ second_find_J_1:
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
 				       &pos2find, 
-				       ptr_less);
+				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
 			if (**ptr == J) {
 				pos = *ptr - fault->second->begin();
 				J2 = *(fault->first->begin() + pos);
-				diff = abs(pos2find - J2);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
 				
 				// vertical
 				if (diff == 1) {
@@ -381,13 +394,16 @@ second_find_J_NN:
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
 				       &pos2find, 
-				       ptr_less);
+				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
 			if (**ptr == J) {
 				pos = *ptr - fault->second->begin();
 				J2 = *(fault->first->begin() + pos);
-				diff = abs(pos2find - J2);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
 				
 				// vertical
 				if (diff == 1) {
@@ -417,28 +433,28 @@ second_find_J_NN:
 
 };
 
-void fault_points_D2(int n, int m, int NN, int MM, 
+void fault_points_D2(size_t n, size_t m, size_t NN, size_t MM, 
 		     grid_line * fault,
 		     bool & first_x,  bool & second_x,  bool & third_x, 
 		     bool & first_xx, bool & second_xx,
 		     bool & first_yy, bool & second_yy,
 		     bool & first_y,  bool & second_y,  bool & third_y,
-		     int offset_x , int offset_y)
+		     size_t offset_x , size_t offset_y)
 {
 
 	if (!fault)
 		return;
 
-	int J = (n+offset_x) + (m+offset_y)*NN;
+	size_t J = (n+offset_x) + (m+offset_y)*NN;
 
-	int J2;
-	int diff;
-	int pos;
-	int pos2find;
+	size_t J2;
+	size_t diff;
+	size_t pos;
+	size_t pos2find;
 
 
-	int ** ptr_from = fault->sort_by_first_begin;
-	int ** ptr;
+	std::vector<size_t>::iterator * ptr_from = fault->sort_by_first_begin;
+	std::vector<size_t>::iterator * ptr;
 
 first_find_J__NN:
 
@@ -448,14 +464,17 @@ first_find_J__NN:
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
 				       &pos2find, 
-				       ptr_less);
+				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
 			if (**ptr == pos2find) {
 				
 				pos = *ptr - fault->first->begin();
 				J2 = *(fault->second->begin() + pos);
-				diff = abs(pos2find - J2);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
 				
 				if (diff == 1) {  // vertical fault line
 					if (J2 > pos2find) {
@@ -491,14 +510,17 @@ first_find_J__1:
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
 				       &pos2find, 
-				       ptr_less);
+				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
 			if (**ptr == pos2find) {
 				
 				pos = *ptr - fault->first->begin();
 				J2 = *(fault->second->begin() + pos);
-				diff = abs(pos2find - J2);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
 				
 				if (diff == 1) {  // vertical fault line
 					if (J2 > pos2find) {
@@ -535,14 +557,17 @@ first_find_J_1:
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
 				       &pos2find, 
-				       ptr_less);
+				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
 			if (**ptr == pos2find) {
 				
 				pos = *ptr - fault->first->begin();
 				J2 = *(fault->second->begin() + pos);
-				diff = abs(pos2find - J2);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
 				
 				if (diff == 1) {  // vertical fault line
 					if (J2 > pos2find) {
@@ -576,14 +601,17 @@ first_find_J_NN:
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
 				       &pos2find, 
-				       ptr_less);
+				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
 			if (**ptr == pos2find) {
 				
 				pos = *ptr - fault->first->begin();
 				J2 = *(fault->second->begin() + pos);
-				diff = abs(pos2find - J2);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
 				
 				if (diff == 1) {  // vertical fault line
 					if (J2 > pos2find) {
@@ -622,14 +650,17 @@ second_find_J__NN:
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
 				       &pos2find, 
-				       ptr_less);
+				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
 			if (**ptr == pos2find) {
 				
 				pos = *ptr - fault->second->begin();
 				J2 = *(fault->first->begin() + pos);
-				diff = abs(pos2find - J2);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
 				
 				if (diff == 1) {  // vertical fault line
 					if (J2 > pos2find) {
@@ -665,14 +696,17 @@ second_find_J__1:
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
 				       &pos2find, 
-				       ptr_less);
+				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
 			if (**ptr == pos2find) {
 				
 				pos = *ptr - fault->second->begin();
 				J2 = *(fault->first->begin() + pos);
-				diff = abs(pos2find - J2);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
 				
 				if (diff == 1) {  // vertical fault line
 					if (J2 > pos2find) {
@@ -708,14 +742,17 @@ second_find_J_1:
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
 				       &pos2find, 
-				       ptr_less);
+				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
 			if (**ptr == pos2find) {
 				
 				pos = *ptr - fault->second->begin();
 				J2 = *(fault->first->begin() + pos);
-				diff = abs(pos2find - J2);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
 				
 				if (diff == 1) {  // vertical fault line
 					if (J2 > pos2find) {
@@ -749,14 +786,17 @@ second_find_J_NN:
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
 				       &pos2find, 
-				       ptr_less);
+				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
 			if (**ptr == pos2find) {
 				
 				pos = *ptr - fault->second->begin();
 				J2 = *(fault->first->begin() + pos);
-				diff = abs(pos2find - J2);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
 				
 				if (diff == 1) {  // vertical fault line
 					if (J2 > pos2find) {
@@ -787,14 +827,14 @@ second_find_J_NN:
 
 };
 
-bool check_for_node(grid_line * fault, int nn) {
+bool check_for_node(grid_line * fault, size_t nn) {
 	
-	int ** ptr;
+	std::vector<size_t>::iterator * ptr;
 
 	ptr = std::lower_bound(fault->sort_by_first_begin, 
 			       fault->sort_by_first_end, 
 	                       &nn, 
-			       ptr_less);
+			       ptr_size_t_less);
 
 	if (ptr && (ptr != fault->sort_by_first_end))
 		if (**ptr == nn)
@@ -803,7 +843,7 @@ bool check_for_node(grid_line * fault, int nn) {
 	ptr = std::lower_bound(fault->sort_by_second_begin, 
 			       fault->sort_by_second_end, 
 	                       &nn, 
-			       ptr_less);
+			       ptr_size_t_less);
 
 	if (ptr && (ptr != fault->sort_by_second_end))
 		if (**ptr == nn)
@@ -815,14 +855,15 @@ bool check_for_node(grid_line * fault, int nn) {
 
 
 
-bool check_for_pair(grid_line * fault, int nn1, int nn2) {
-	int ** ptr;
+bool check_for_pair(grid_line * fault, size_t nn1, size_t nn2) {
+	
+	std::vector<size_t>::iterator * ptr;
 
-	int ** ptr_from = fault->sort_by_first_begin;
-	int pos;
+	std::vector<size_t>::iterator * ptr_from = fault->sort_by_first_begin;
+	size_t pos;
 
 	if (nn1 < nn2) {
-		int temp = nn2;
+		size_t temp = nn2;
 		nn2 = nn1;
 		nn1 = temp;
 	}
@@ -832,7 +873,7 @@ first_again_nn1:
 	ptr = std::lower_bound(ptr_from, 
 			       fault->sort_by_first_end, 
 	                       &nn1, 
-			       ptr_less);
+			       ptr_size_t_less);
 
 	if (ptr && (ptr != fault->sort_by_first_end)) {
 		if (**ptr == nn1) {
@@ -851,7 +892,7 @@ first_again_nn2:
 	ptr = std::lower_bound(ptr_from, 
 			       fault->sort_by_first_end, 
 	                       &nn2, 
-			       ptr_less);
+			       ptr_size_t_less);
 
 	if (ptr && (ptr != fault->sort_by_first_end)) {
 		if (**ptr == nn2) {
@@ -870,7 +911,7 @@ second_again_nn1:
 	ptr = std::lower_bound(ptr_from, 
 			       fault->sort_by_second_end, 
 	                       &nn1, 
-			       ptr_less);
+			       ptr_size_t_less);
 
 	if (ptr && (ptr != fault->sort_by_second_end)) {
 		if (**ptr == nn1) {
@@ -889,7 +930,7 @@ second_again_nn2:
 	ptr = std::lower_bound(ptr_from, 
 			       fault->sort_by_second_end, 
 	                       &nn2, 
-			       ptr_less);
+			       ptr_size_t_less);
 
 	if (ptr && (ptr != fault->sort_by_second_end)) {
 		if (**ptr == nn2) {
@@ -908,16 +949,16 @@ second_again_nn2:
 void flood_fill(d_grid * grd,
 		grid_line * line, 
 		std::vector<short int> * data,
-		int fill_pos,
+		size_t fill_pos,
 		short int fill_val,
 		const bitvec * mask_undefined) {
 
 	// floodfill algorithm
-	int max_i = grd->getCountX();
-	int NN = max_i;
-	int max_j = grd->getCountY();
-	int MM = max_j;
-	int grid_size = max_i*max_j;
+	size_t max_i = grd->getCountX();
+	size_t NN = max_i;
+	size_t max_j = grd->getCountY();
+	size_t MM = max_j;
+	size_t grid_size = max_i*max_j;
 
 	if (mask_undefined)
 		assert(grid_size == mask_undefined->size());
@@ -925,20 +966,20 @@ void flood_fill(d_grid * grd,
 	if (data->size() != grid_size)
 		return;
 
-	int fill_i, fill_j;
+	size_t fill_i, fill_j;
 	one2two(fill_pos, fill_i, fill_j, NN, MM);
 	 
-	intvec * flood_points = create_intvec(0,0,0,MAX(grid_size/4,1));
-	int push_pos, push_pos2;
+	std::vector<size_t> * flood_points = new std::vector<size_t>();
+	size_t push_pos, push_pos2;
 	flood_points->push_back(fill_pos);
 	
-	int max_points = 1;
-	int i;
+	size_t max_points = 1;
+	size_t i;
 	for (i = 0; i < max_points; i++) {
 		
 		bool flood;
 
-		int pos = (*flood_points)(i);
+		size_t pos = (*flood_points)[i];
 
 		if ( (*data)[pos] != 0 )
 			continue;
@@ -946,8 +987,8 @@ void flood_fill(d_grid * grd,
 		one2two(pos, fill_i, fill_j, NN, MM);
 		
 		// find left edge
-		int left_i = fill_i;
-		int left_j = fill_j;
+		size_t left_i = fill_i;
+		size_t left_j = fill_j;
 				
 		while (true) {
 			
@@ -985,8 +1026,8 @@ void flood_fill(d_grid * grd,
 		left_i++;
 
 		// find right edge
-		int right_i = fill_i;
-		int right_j = fill_j;
+		size_t right_i = fill_i;
+		size_t right_j = fill_j;
 		
 		// find right edge
 		while (true) {
@@ -1024,7 +1065,7 @@ void flood_fill(d_grid * grd,
 		right_i--;
 		
 		// start the loop upwards and downwards
-		int i_pos;
+		size_t i_pos;
 		for (i_pos = left_i; i_pos <= right_i; i_pos++) {
 
 			// upwards
@@ -1079,9 +1120,8 @@ void flood_fill(d_grid * grd,
 				
 	}
 
-	if (flood_points)
-		flood_points->release();
-
+	delete flood_points;
+		
 	return;
 };
 
@@ -1103,7 +1143,7 @@ void flood_fill_boolvec(d_grid * grd,
 	int fill_i = fill_pos % NN;
 	int fill_j = (fill_pos - fill_i)/NN;
 
-	intvec * flood_points = create_intvec(0,0,0,MAX(grid_size/4,1));
+	std::vector<size_t> * flood_points = new std::vector<size_t>();
 	flood_points->push_back(fill_i + NN * fill_j);
 
 	int max_points = 1;
@@ -1112,7 +1152,7 @@ void flood_fill_boolvec(d_grid * grd,
 		
 		bool flood;
 
-		int pos = (*flood_points)(i);
+		int pos = (*flood_points)[i];
 
 		if ( (*data)(pos) != false )
 			continue;
@@ -1191,9 +1231,8 @@ void flood_fill_boolvec(d_grid * grd,
 				
 	}
 
-	if (flood_points)
-		flood_points->release();
-
+	delete flood_points;
+		
 	return;
 };
 
@@ -1232,7 +1271,7 @@ void fill_all_areas(std::vector<short int> *& flood_areas,
 
 	if (!line && !mask_undefined)
 	{
-		unsigned int i;
+		size_t i;
 		for (i = 0; i < flood_areas->size(); i++) {
 			(*flood_areas)[i] = color;
 			flood_areas_cnt = 1;
@@ -1410,7 +1449,7 @@ void fill_all_areas(std::vector<short int> *& flood_areas,
 
 };
 
-std::vector<int> * nodes_in_curv(grid_line * line, d_grid * grd, bitvec * mask_undefined) {
+std::vector<size_t> * nodes_in_curv(grid_line * line, d_grid * grd, bitvec * mask_undefined) {
 
 	if (!line)
 		return NULL;
@@ -1418,15 +1457,15 @@ std::vector<int> * nodes_in_curv(grid_line * line, d_grid * grd, bitvec * mask_u
 	if (line->size() == 0)
 		return NULL;
 
-	std::vector<int> * res = new std::vector<int>;
+	std::vector<size_t> * res = new std::vector<size_t>;
 
-	int min_i = INT_MAX, min_j = INT_MAX, max_i = -INT_MAX, max_j = -INT_MAX;
+	size_t min_i = UINT_MAX, min_j = UINT_MAX, max_i = 0, max_j = 0;
 
-	int i, j; 
-	int pos;
-	int pos_i, pos_j;
-	int NN = grd->getCountX();
-	int MM = grd->getCountY();
+	size_t i, j; 
+	size_t pos;
+	size_t pos_i, pos_j;
+	size_t NN = grd->getCountX();
+	size_t MM = grd->getCountY();
 	for (i = 0; i < line->size(); i++) {
 		pos = *(line->first->begin()+i);
 		pos_i = pos % NN;
@@ -1456,8 +1495,8 @@ std::vector<int> * nodes_in_curv(grid_line * line, d_grid * grd, bitvec * mask_u
 	max_i++;
 	max_j++;
 
-	int nn = max_i-min_i+1;
-	int mm = max_j-min_j+1;
+	size_t nn = max_i-min_i+1;
+	size_t mm = max_j-min_j+1;
 
 	d_grid * small_grd = create_grid(grd);
 
@@ -1646,7 +1685,7 @@ FILE * ff = fopen("c:\\qqq.m","w+");
 	// check for undefined elements in sub_grid!
 	bool exists_undef = false;
 	if (mask_undefined) {
-		int n, m, mask_pos;
+		size_t n, m, mask_pos;
 		for (j = 0; j < mm; j++) {
 			for (i = 0; i < nn; i++) {
 				n = i; m = j;
@@ -1672,7 +1711,7 @@ FILE * ff = fopen("c:\\qqq.m","w+");
 	else {
 		bitvec * local_mask_undefined = create_bitvec(nn*mm);
 		local_mask_undefined->init_false();
-		int n, m, mask_pos, pos;
+		size_t n, m, mask_pos, pos;
 		for (j = min_j+1; j < max_j-1; j++) {
 			for (i = min_i+1; i < max_i-1; i++) {
 				n = i; m = j;
@@ -1915,13 +1954,13 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 	bitvec * res = create_bitvec(grd->getCountX()*grd->getCountY());
 	res->init_false();
 
-	int min_i = INT_MAX, min_j = INT_MAX, max_i = -INT_MAX, max_j = -INT_MAX;
+	size_t min_i = UINT_MAX, min_j = UINT_MAX, max_i = 0, max_j = 0;
 
-	int i, j; 
-	int pos;
-	int pos_i, pos_j;
-	int NN = grd->getCountX();
-	int MM = grd->getCountY();
+	size_t i, j; 
+	size_t pos;
+	size_t pos_i, pos_j;
+	size_t NN = grd->getCountX();
+	size_t MM = grd->getCountY();
 	for (i = 0; i < line->size(); i++) {
 		pos = *(line->first->begin()+i);
 		pos_i = pos % NN;
@@ -1951,8 +1990,8 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 	max_i++;
 	max_j++;
 
-	int nn = max_i-min_i+1;
-	int mm = max_j-min_j+1;
+	size_t nn = max_i-min_i+1;
+	size_t mm = max_j-min_j+1;
 
 	d_grid * small_grd = create_grid(grd);
 
@@ -1992,7 +2031,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 	// check for undefined elements in sub_grid!
 	bool exists_undef = false;
 	if (mask_undefined) {
-		int n, m, mask_pos;
+		size_t n, m, mask_pos;
 		for (j = 0; j < mm; j++) {
 			for (i = 0; i < nn; i++) {
 				n = i; m = j;
@@ -2018,7 +2057,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 	else {
 		bitvec * local_mask_undefined = create_bitvec(nn*mm);
 		local_mask_undefined->init_false();
-		int n, m, mask_pos, pos;
+		size_t n, m, mask_pos, pos;
 	
 		for (j = 0; j < mm; j++) {
 			for (i = 0; i < nn; i++) {
@@ -2096,16 +2135,16 @@ bool grid_line::getMinMaxZ(REAL & minz, REAL & maxz) const {
 	return false;
 };
 
-grid_line * trace_undef_grd_line(const bitvec * mask_undefined, int NN) {
-	int size = mask_undefined->size();
-	int MM = size/NN;
+grid_line * trace_undef_grd_line(const bitvec * mask_undefined, size_t NN) {
+	size_t size = mask_undefined->size();
+	size_t MM = size/NN;
 
-	intvec * first = create_intvec();
-	intvec * second = create_intvec();
+	std::vector<size_t> * first = new std::vector<size_t>();
+	std::vector<size_t> * second = new std::vector<size_t>();
 	grid_line * res = NULL;
 	
-	int pos, pos1, pos2;
-	int i,j;
+	size_t pos, pos1, pos2;
+	size_t i,j;
 	for (i = 0; i < NN-1; i++) {
 		for (j = 0; j < MM-1; j++) {
 			pos = i+j*NN;
@@ -2139,10 +2178,10 @@ grid_line * trace_undef_grd_line(const bitvec * mask_undefined, int NN) {
 		first = NULL;
 		second = NULL;
 	}
-	if (first)
-		first->release();
-	if (second)
-		second->release();
+	
+	delete first;
+	delete second;
+	
 	return res;
 };
 

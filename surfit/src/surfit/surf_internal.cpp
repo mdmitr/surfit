@@ -467,7 +467,7 @@ struct GRD_HEADER {
 };
 
 #define IRINT(x) ((int)(floor((x)+0.5)))
-#define GMT_make_fnan(x) (((unsigned int *) &x)[0] = 0x7fffffff)
+#define GMT_make_fnan(x) (((size_t *) &x)[0] = 0x7fffffff)
 
 int * GMT_grd_prep_io (struct GRD_HEADER *header, double *w, double *e, double *s, double *n, int *width, int *height, int *first_col, int *last_col, int *first_row, int *last_row)
 {
@@ -918,7 +918,7 @@ d_surf * _surf_load_grass(const char * filename, const char * surfname) {
 		return NULL;
 	};
 
-	int nx = INT_MAX, ny = INT_MAX;
+	size_t nx = UINT_MAX, ny = UINT_MAX;
 	REAL miny = FLT_MAX, maxy = FLT_MAX;
 	REAL minx = FLT_MAX, maxx = FLT_MAX;
 	REAL stepX, stepY;
@@ -941,7 +941,7 @@ d_surf * _surf_load_grass(const char * filename, const char * surfname) {
 		goto exit;
 	maxy = atof(buf);
 	
-	int ix, iy;
+	size_t ix, iy;
 
 	while ( true ) 
 	{
@@ -985,9 +985,9 @@ d_surf * _surf_load_grass(const char * filename, const char * surfname) {
 		goto exit;
 	if (maxy == FLT_MAX)
 		goto exit;
-	if (nx == INT_MAX)
+	if (nx == UINT_MAX)
 		goto exit;
-	if (ny == INT_MAX)
+	if (ny == UINT_MAX)
 		goto exit;
 
 
@@ -1109,7 +1109,7 @@ d_surf * _surf_load_arcgis(const char * filename, const char * surfname) {
 		return NULL;
 	};
 
-	int nx = INT_MAX, ny = INT_MAX;
+	size_t nx = UINT_MAX, ny = UINT_MAX;
 	REAL xllcorner = FLT_MAX;
 	REAL yllcorner = FLT_MAX;
 	REAL xllcenter = FLT_MAX;
@@ -1136,7 +1136,7 @@ d_surf * _surf_load_arcgis(const char * filename, const char * surfname) {
 		goto exit;
 	nx = atoi(buf);
 	
-	int ix, iy;
+	size_t ix, iy;
 
 	while ( true ) 
 	{
@@ -1151,7 +1151,7 @@ d_surf * _surf_load_arcgis(const char * filename, const char * surfname) {
 			goto exit;
 
 		if (strcmp(buf, "nrows") == 0) {
-			ny = atof(buf2);
+			ny = atoi(buf2);
 			continue;
 		}
 		if (strcmp(buf, "xllcorner") == 0) {
@@ -1181,9 +1181,9 @@ d_surf * _surf_load_arcgis(const char * filename, const char * surfname) {
 		
 	}
 
-	if (nx == INT_MAX)
+	if (nx == UINT_MAX)
 		goto exit;
-	if (ny == INT_MAX)
+	if (ny == UINT_MAX)
 		goto exit;
 	if ((xllcorner == FLT_MAX) && (xllcenter == FLT_MAX))
 		goto exit;
@@ -1397,7 +1397,7 @@ d_points * _surf_to_pnts(const d_surf * srf) {
 	REAL * X_ptr = X->begin();
 	REAL * Y_ptr = Y->begin();
 
-	int i,j;
+	size_t i,j;
 	for (j = 0; j < srf->getCountY(); j++) {
 		for (i = 0; i < srf->getCountX(); i++) {
 			srf->getCoordNode(i,j,*X_ptr,*Y_ptr);
@@ -1461,7 +1461,7 @@ struct surf_project_job : public job
 		srf = NULL;
 		grd = NULL;
 	};
-	void set(unsigned int iJ_from, unsigned int iJ_to, 
+	void set(size_t iJ_from, size_t iJ_to, 
 		 const d_surf * isrf, const d_grid * igrd,
 		 vec * icoeff)
 	{
@@ -1475,24 +1475,24 @@ struct surf_project_job : public job
 	{
 		d_grid * g = srf->grd;
 		REAL value, x, y, x0, y0;
-		int I0, I1, J0, J1;
+		size_t I0, I1, J0, J1;
 		REAL z0, z1, z2, z3;
 		REAL delta_x, delta_y;
 
 		REAL hX = srf->grd->stepX;
 		REAL hY = srf->grd->stepY;
-		int size_x = grd->getCountX();
-		int surf_sizeX = srf->getCountX();
-		int surf_sizeY = srf->getCountY();
+		size_t size_x = grd->getCountX();
+		size_t surf_sizeX = srf->getCountX();
+		size_t surf_sizeY = srf->getCountY();
 
-		unsigned int i,j;
+		size_t i,j;
 		for (j = J_from; j < J_to; j++) {
-			for (i = 0; i < (unsigned int)size_x; i++) {
+			for (i = 0; i < (size_t)size_x; i++) {
 				value = 0;
 				grd->getCoordNode(i, j, x, y);
 								
-				I0 = (int)floor( (x - g->startX)/g->stepX );
-				J0 = (int)floor( (y - g->startY)/g->stepY );
+				I0 = (size_t)MAX(0,floor( (x - g->startX)/g->stepX ));
+				J0 = (size_t)MAX(0,floor( (y - g->startY)/g->stepY ));
 
 				I1 = I0+1;
 				J1 = J0+1;
@@ -1571,7 +1571,7 @@ struct surf_project_job : public job
 		}
 	};
 
-	unsigned int J_from, J_to;
+	size_t J_from, J_to;
 	const d_surf * srf;
 	const d_grid * grd;
 	vec * coeff;
@@ -1582,14 +1582,14 @@ surf_project_job surf_project_jobs[MAX_CPU];
 
 d_surf * _surf_project(const d_surf * srf, d_grid * grd) {
 
-	int size_x = grd->getCountX();
-	int size_y = grd->getCountY();
+	size_t size_x = grd->getCountX();
+	size_t size_y = grd->getCountY();
 
 	vec * coeff = create_vec(size_x*size_y,0,0);  // do not fill this vector
 	
-	int surf_size = srf->coeff->size();
-	int surf_sizeX = srf->getCountX();
-	int surf_sizeY = srf->getCountY();
+	size_t surf_size = srf->coeff->size();
+	size_t surf_sizeX = srf->getCountX();
+	size_t surf_sizeY = srf->getCountY();
 
 	if (srf->getName())
 		writelog(LOG_MESSAGE,"Projecting surf \"%s\" (%d x %d) => (%d x %d)",srf->getName(), surf_sizeX, surf_sizeY, size_x, size_y);
@@ -1599,9 +1599,9 @@ d_surf * _surf_project(const d_surf * srf, d_grid * grd) {
 	{
 
 		REAL x, y;
-		int I0, J0, I1, J1;
+		size_t I0, J0, I1, J1;
 		REAL value;
-		int i,j;
+		size_t i,j;
 		REAL z0, z1, z2, z3;
 		REAL x0, y0;
 		REAL delta_x, delta_y;
@@ -1616,8 +1616,8 @@ d_surf * _surf_project(const d_surf * srf, d_grid * grd) {
 				value = 0;
 				grd->getCoordNode(i, j, x, y);
 								
-				I0 = (int)floor( (x - g->startX)/g->stepX );
-				J0 = (int)floor( (y - g->startY)/g->stepY );
+				I0 = (size_t)MAX(0,floor( (x - g->startX)/g->stepX ));
+				J0 = (size_t)MAX(0,floor( (y - g->startY)/g->stepY ));
 
 				I1 = I0+1;
 				J1 = J0+1;
@@ -1696,11 +1696,11 @@ d_surf * _surf_project(const d_surf * srf, d_grid * grd) {
 		}
 #ifdef HAVE_THREADS
 		} else {
-			unsigned int step = size_y / (cpu);
-			unsigned int ost = size_y % (cpu);
-			unsigned int J_from = 0;
-			unsigned int J_to = 0;
-			int work;
+			size_t step = size_y / (cpu);
+			size_t ost = size_y % (cpu);
+			size_t J_from = 0;
+			size_t J_to = 0;
+			size_t work;
 			for (work = 0; work < cpu; work++) {
 				J_to = J_from + step;
 				if (work == 0)
@@ -1728,14 +1728,14 @@ d_surf * _surf_project(d_surf * srf, d_grid * grd, grid_line * fault_grd_line) {
 	if (!fault_grd_line)
 		return _surf_project(srf, grd);
 
-	int size_x = grd->getCountX();
-	int size_y = grd->getCountY();
+	size_t size_x = grd->getCountX();
+	size_t size_y = grd->getCountY();
 
 	vec * coeff = create_vec(size_x*size_y,0,0);  // do not fill this vector
 	
-	int surf_size = srf->coeff->size();
-	int surf_sizeX = srf->getCountX();
-	int surf_sizeY = srf->getCountY();
+	size_t surf_size = srf->coeff->size();
+	size_t surf_sizeX = srf->getCountX();
+	size_t surf_sizeY = srf->getCountY();
 
 	if (srf->getName())
 		writelog(LOG_MESSAGE,"Projecting surf \"%s\" (%d x %d) => (%d x %d)",srf->getName(), surf_sizeX, surf_sizeY, size_x, size_y);
@@ -1745,9 +1745,9 @@ d_surf * _surf_project(d_surf * srf, d_grid * grd, grid_line * fault_grd_line) {
 	{
 
 		REAL x, y;
-		int I0, J0, I1, J1;
+		size_t I0, J0, I1, J1;
 		REAL value;
-		int i,j;
+		size_t i,j;
 		REAL z0, z1, z2, z3;
 		REAL x0, y0;
 		REAL delta_x, delta_y;
@@ -1763,8 +1763,8 @@ d_surf * _surf_project(d_surf * srf, d_grid * grd, grid_line * fault_grd_line) {
 				y -= grd->stepY/REAL(2);
 				
 				d_grid * g = srf->grd;
-				I0 = (int)floor( (x - g->startX)/g->stepX );
-				J0 = (int)floor( (y - g->startY)/g->stepY );
+				I0 = (size_t)MAX(0,floor( (x - g->startX)/g->stepX ));
+				J0 = (size_t)MAX(0,floor( (y - g->startY)/g->stepY ));
 
 				I1 = I0+1;
 				J1 = J0+1;
@@ -2165,8 +2165,8 @@ d_surf * _surf_gradient(const d_surf * srf) {
 };
 
 d_grid * adopt_surf_grid(const d_surf * srf, d_grid * grd,
-			 int & from_x, int & to_x,
-			 int & from_y, int & to_y) {
+			 size_t & from_x, size_t & to_x,
+			 size_t & from_y, size_t & to_y) {
 
 	REAL g_x0, g_xn, g_y0, g_yn; // Начало и конец геометрии
 	REAL f_x0, f_xn, f_y0, f_yn; // Начало и конец функции
@@ -2231,7 +2231,7 @@ REAL _surf_mean_area(const d_surf * srf, const d_area * area) {
 	if (mask == NULL)
 		return srf->undef_value;
 	
-	int i, N = 0;
+	size_t i, N = 0;
 	REAL sum = 0;
 	REAL value;
 	for (i = 0; i < mask->size(); i++) {
@@ -2261,26 +2261,26 @@ REAL _surf_wmean_area(const d_surf * srf, const d_surf * wsrf, const d_area * ar
 	
 	bitvec * mask = nodes_in_area_mask(area, srf->grd);
 	
-	int i;
+	size_t i;
 	
 	if (mask == NULL) 
 		return srf->undef_value;
 	
-	int aux_X_from, aux_X_to;
-	int aux_Y_from, aux_Y_to;
+	size_t aux_X_from, aux_X_to;
+	size_t aux_Y_from, aux_Y_to;
 	_grid_intersect1(srf->grd, wsrf->grd, aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
 	d_grid * aux_grid = _create_sub_grid(srf->grd, aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
 	d_surf * w_srf = _surf_project(wsrf, aux_grid);
-	int nn = aux_grid->getCountX();
-	int mm = aux_grid->getCountY();
-	int NN = srf->getCountX();
-	int MM = srf->getCountY();
+	size_t nn = aux_grid->getCountX();
+	size_t mm = aux_grid->getCountY();
+	size_t NN = srf->getCountX();
+	size_t MM = srf->getCountY();
 	
 	if (aux_grid)
 		aux_grid->release();
 
 	REAL denom = 0;
-	int ii, jj;
+	size_t ii, jj;
 	REAL sum = 0;
 	REAL value;
 	for (i = 0; i < mask->size(); i++) {
@@ -2297,8 +2297,8 @@ REAL _surf_wmean_area(const d_surf * srf, const d_surf * wsrf, const d_area * ar
 		one2two(i, ii, jj, NN, MM);
 
 		if ((ii >= aux_X_from) && (ii <= aux_X_to) && (jj >= aux_Y_from) && (jj <= aux_Y_to)) {
-			int I = ii-aux_X_from;
-			int J = jj-aux_Y_from;
+			size_t I = ii-aux_X_from;
+			size_t J = jj-aux_Y_from;
 			weight = (*(w_srf->coeff))(I + J*nn);
 			if (weight == w_srf->undef_value)
 				weight = 0;
@@ -2326,11 +2326,11 @@ REAL _surf_sum_area(const d_surf * srf, const d_area * area) {
 	if (mask == NULL)
 		return 0;
 
-	unsigned int i;
+	size_t i;
 
 	REAL sum = 0;
 	REAL value;
-	for (i = 0; i < (unsigned int)mask->size(); i++) {
+	for (i = 0; i < (size_t)mask->size(); i++) {
 		
 		if (mask->get(i) == false)
 			continue;

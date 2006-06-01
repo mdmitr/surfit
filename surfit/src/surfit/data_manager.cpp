@@ -520,7 +520,7 @@ int surfit_manager::load_tag(datafile * df, char * tagname) const {
 
 bool surfit_manager::save(datafile *df) const {
 
-	unsigned int cnt;
+	size_t cnt;
 
 	if (surfit_grid) {
 		if (!_grid_save_df(surfit_grid, df))
@@ -874,8 +874,8 @@ bool file_save(const char * filename) {
 };
 
 bool add_manager(manager * man) {
-	unsigned int i;
-	for (i = 0; i < (unsigned int)surfit_data_manager->get_managers_count(); i++) {
+	size_t i;
+	for (i = 0; i < (size_t)surfit_data_manager->get_managers_count(); i++) {
 		const manager * m = surfit_data_manager->get_manager(i);
 		if ( strcmp(m->getName(),man->getName()) == 0)
 			return false;
@@ -885,8 +885,8 @@ bool add_manager(manager * man) {
 };
 
 bool release_manager(manager * man) {
-	unsigned int i;
-	for (i = 0; i < (unsigned int)surfit_data_manager->get_managers_count(); i++) {
+	size_t i;
+	for (i = 0; i < (size_t)surfit_data_manager->get_managers_count(); i++) {
 		const manager * m = surfit_data_manager->get_manager(i);
 		if ( m == man ) {
 			man->release();

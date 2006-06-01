@@ -64,7 +64,7 @@ bool f_surf_ineq::minimize() {
 
 bool f_surf_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_vec(matrix_size);
 
 	if (srf->getName()) {
@@ -78,21 +78,21 @@ bool f_surf_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	vec * diag = create_vec(matrix_size);
 
-	int from_x, from_y, to_x, to_y;
+	size_t from_x, from_y, to_x, to_y;
 	_grid_intersect1(method_grid, srf->grd,
 		        from_x, to_x,
 		        from_y, to_y);
 	
-	int points = 0;
+	size_t points = 0;
 
-	int srf_sizeX = srf->getCountX()-1;
-	int srf_sizeY = srf->getCountY()-1;
+	size_t srf_sizeX = srf->getCountX()-1;
+	size_t srf_sizeY = srf->getCountY()-1;
 	
 	REAL value;
 	REAL stepX2 = method_grid->stepX/REAL(2);
 	REAL stepY2 = method_grid->stepY/REAL(2);
 
-	int i,j,pos;
+	size_t i,j,pos;
 	
 	for (j = from_y; j <= to_y; j++) {
 
@@ -158,12 +158,12 @@ bool f_surf_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 void f_surf_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 
-	int from_x, from_y, to_x, to_y;
+	size_t from_x, from_y, to_x, to_y;
 	_grid_intersect1(method_grid, srf->grd,
 		        from_x, to_x,
 		        from_y, to_y);
 	
-	int i,j,pos;
+	size_t i,j,pos;
 	REAL value;
 	
 	for (j = from_y; j <= to_y; j++) {
@@ -201,12 +201,12 @@ bool f_surf_ineq::solvable_without_cond(const bitvec * mask_solved,
 					const vec * X) 
 {
 
-	int from_x, from_y, to_x, to_y;
+	size_t from_x, from_y, to_x, to_y;
 	_grid_intersect1(method_grid, srf->grd,
 		        from_x, to_x,
 		        from_y, to_y);
 	
-	int i,j,pos;
+	size_t i,j,pos;
 	
 	for (j = from_y; j <= to_y; j++) {
 

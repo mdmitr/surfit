@@ -47,7 +47,7 @@ struct matr_mult_job : public job
 		J_from = 0;
 		J_to = 0;
 	};
-	void set(matr * im, const vec * ib, vec * ir, unsigned int iJ_from, unsigned int iJ_to)
+	void set(matr * im, const vec * ib, vec * ir, size_t iJ_from, size_t iJ_to)
 	{
 		m = im;
 		b = ib;
@@ -57,7 +57,7 @@ struct matr_mult_job : public job
 	};
 	virtual void do_job() 
 	{
-		unsigned int J;
+		size_t J;
 		for (J = J_from; J < J_to; J++) {
 			(*r)(J) = m->mult_line(J, b->begin(), b->end());
 		}
@@ -66,7 +66,7 @@ struct matr_mult_job : public job
 	matr * m;
 	const vec * b;
 	vec * r;
-	unsigned int J_from, J_to;
+	size_t J_from, J_to;
 };
 
 matr_mult_job matr_mult_jobs[MAX_CPU];
@@ -76,19 +76,19 @@ void matr::mult(const vec * b, vec * r) {
 #ifdef HAVE_THREADS
 	if (cpu == 1) {
 #endif
-		int J;
+		size_t J;
 		for (J = 0; J < rows(); J++) {
 			(*r)(J) = mult_line(J, b->begin(), b->end());
 		}
 		call_after_mult();
 #ifdef HAVE_THREADS
 	} else {
-		int i;
-		int rws = rows();
-		unsigned int step = rws/(cpu);
-		unsigned int ost = rws % (cpu);
-		unsigned int J_from = 0;
-		unsigned int J_to = 0;
+		size_t i;
+		size_t rws = rows();
+		size_t step = rws/(cpu);
+		size_t ost = rws % (cpu);
+		size_t J_from = 0;
+		size_t J_to = 0;
 		for (i = 0; i < cpu; i++) {
 			J_to = J_from + step;
 			if (i == 0)
@@ -126,7 +126,7 @@ struct matr_rect_mult_job : public job
 		J_from = 0;
 		J_to = 0;
 	};
-	void set(matr_rect * im, const vec * ib, vec * ir, unsigned int iJ_from, unsigned int iJ_to)
+	void set(matr_rect * im, const vec * ib, vec * ir, size_t iJ_from, size_t iJ_to)
 	{
 		m = im;
 		b = ib;
@@ -136,10 +136,10 @@ struct matr_rect_mult_job : public job
 	};
 	virtual void do_job() 
 	{
-		unsigned int J;
-		unsigned int i, j;
+		size_t J;
+		size_t i, j;
 		for (j = J_from; j < J_to; j++) {
-			for (i = m->x_from; i <= (unsigned int)m->x_to; i++) {
+			for (i = m->x_from; i <= (size_t)m->x_to; i++) {
 				J = i + j*m->n_grid_cols;
 				(*r)(J) = m->mult_line(J, b->begin(), b->end());
 			}
@@ -149,14 +149,14 @@ struct matr_rect_mult_job : public job
 	matr_rect * m;
 	const vec * b;
 	vec * r;
-	unsigned int J_from, J_to;
+	size_t J_from, J_to;
 };
 
 matr_rect_mult_job matr_rect_mult_jobs[MAX_CPU];
 #endif
 
 
-matr_rect::matr_rect(int ix_from, int ix_to, int iy_from, int iy_to, int in_grid_cols) {
+matr_rect::matr_rect(size_t ix_from, size_t ix_to, size_t iy_from, size_t iy_to, size_t in_grid_cols) {
 	x_from = ix_from;
 	x_to = ix_to;
 	y_from = iy_from;
@@ -165,8 +165,8 @@ matr_rect::matr_rect(int ix_from, int ix_to, int iy_from, int iy_to, int in_grid
 };
 
 void matr_rect::mult(const vec * b, vec * r) {
-	int J;
-	int i, j;
+	size_t J;
+	size_t i, j;
 	for (i = 0; i < b->size(); i++)
 		(*r)(i) = 0;
 
@@ -183,12 +183,12 @@ void matr_rect::mult(const vec * b, vec * r) {
 
 #ifdef HAVE_THREADS
 	} else {
-		int i;
-		int rws = y_to-y_from+1;
-		unsigned int step = rws/(cpu);
-		unsigned int ost = rws % (cpu);
-		unsigned int J_from = y_from;
-		unsigned int J_to = 0;
+		size_t i;
+		size_t rws = y_to-y_from+1;
+		size_t step = rws/(cpu);
+		size_t ost = rws % (cpu);
+		size_t J_from = y_from;
+		size_t J_to = 0;
 		for (i = 0; i < cpu; i++) {
 			J_to = J_from + step;
 			if (i == 0)
@@ -233,11 +233,11 @@ void matr_sum::set_const() {
 	T2 = NULL;
 };
 
-REAL matr_sum::element_at(int i, int j, int * next_j) const {
+REAL matr_sum::element_at(size_t i, size_t j, size_t * next_j) const {
 
 	REAL res = 0;
-	int next_j1 = INT_MAX;
-	int next_j2 = INT_MAX;
+	size_t next_j1 = UINT_MAX;
+	size_t next_j2 = UINT_MAX;
 	if (T1 && w1)
 		res += w1 * T1->element_at(i,j,&next_j1);
 	if (cT1 && w1)
@@ -254,11 +254,11 @@ REAL matr_sum::element_at(int i, int j, int * next_j) const {
 	
 };
 
-REAL matr_sum::at(int i, int j, int * next_j) const {
+REAL matr_sum::at(size_t i, size_t j, size_t * next_j) const {
 
 	REAL res = 0;
-	int next_j1 = INT_MAX;
-	int next_j2 = INT_MAX;
+	size_t next_j1 = UINT_MAX;
+	size_t next_j2 = UINT_MAX;
 	if (T1 && w1)
 		res += w1 * T1->at(i,j,&next_j1);
 	if (cT1 && w1)
@@ -275,7 +275,7 @@ REAL matr_sum::at(int i, int j, int * next_j) const {
 	
 };
 
-REAL matr_sum::mult_line(int J, const REAL * b_begin, const REAL * b_end) {
+REAL matr_sum::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) {
 	REAL res = 0;
 	if (T1 && w1)
 		res += w1*T1->mult_line(J, b_begin, b_end);
@@ -314,7 +314,7 @@ REAL matr_sum::norm() const {
 	return res;
 };
 
-long matr_sum::cols() const {
+size_t matr_sum::cols() const {
 	if (T1)
 		return T1->cols();
 	if (cT1)
@@ -326,7 +326,7 @@ long matr_sum::cols() const {
 	return 0;
 };
 
-long matr_sum::rows() const {
+size_t matr_sum::rows() const {
 	if (T1)
 		return T1->rows();
 	if (cT1)
@@ -356,13 +356,13 @@ matr_sums::~matr_sums() {
 	delete matrices;
 };
 
-REAL matr_sums::element_at(int i, int j, int * next_j) const {
+REAL matr_sums::element_at(size_t i, size_t j, size_t * next_j) const {
 
 	REAL res = 0;
-	int next_j1 = INT_MAX;
-	int next_j2 = INT_MAX;
-	int q;
-	for (q = 0; q < (int)matrices->size(); q++) {
+	size_t next_j1 = UINT_MAX;
+	size_t next_j2 = UINT_MAX;
+	size_t q;
+	for (q = 0; q < matrices->size(); q++) {
 		matr * T = (*matrices)[q];
 		REAL w = (*weights)(q);
 		res += w * T->element_at(i,j,&next_j2);
@@ -376,13 +376,13 @@ REAL matr_sums::element_at(int i, int j, int * next_j) const {
 	
 };
 
-REAL matr_sums::at(int i, int j, int * next_j) const {
+REAL matr_sums::at(size_t i, size_t j, size_t * next_j) const {
 
 	REAL res = 0;
-	int next_j1 = INT_MAX;
-	int next_j2 = INT_MAX;
-	int q;
-	for (q = 0; q < (int)matrices->size(); q++) {
+	size_t next_j1 = UINT_MAX;
+	size_t next_j2 = UINT_MAX;
+	size_t q;
+	for (q = 0; q < matrices->size(); q++) {
 		matr * T = (*matrices)[q];
 		if (T == NULL) 
 			continue;
@@ -398,11 +398,11 @@ REAL matr_sums::at(int i, int j, int * next_j) const {
 	
 };
 
-REAL matr_sums::mult_line(int J, const REAL * b_begin, const REAL * b_end) {
+REAL matr_sums::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) {
 	
 	REAL res = 0;
-	int q;
-	for (q = 0; q < (int)matrices->size(); q++) {
+	size_t q;
+	for (q = 0; q < matrices->size(); q++) {
 		matr * T = (*matrices)[q];
 		if (!T)
 			continue;
@@ -413,8 +413,8 @@ REAL matr_sums::mult_line(int J, const REAL * b_begin, const REAL * b_end) {
 };
 
 void matr_sums::call_after_mult() {
-	int q;
-	for (q = 0; q < (int)matrices->size(); q++) {
+	size_t q;
+	for (q = 0; q < matrices->size(); q++) {
 		matr * T = (*matrices)[q];
 		if (T)
 			T->call_after_mult();
@@ -423,8 +423,8 @@ void matr_sums::call_after_mult() {
 
 REAL matr_sums::norm() const {
 	REAL res = 0;
-	int q;
-	for (q = 0; q < (int)matrices->size(); q++) {
+	size_t q;
+	for (q = 0; q < matrices->size(); q++) {
 		matr * T = (*matrices)[q];
 		if (T == NULL)
 			continue;
@@ -434,12 +434,12 @@ REAL matr_sums::norm() const {
 	return res;
 };
 
-long matr_sums::cols() const {
+size_t matr_sums::cols() const {
 	matr * T = (*matrices)[0];
 	return T->cols();
 };
 
-long matr_sums::rows() const {
+size_t matr_sums::rows() const {
 	matr * T = (*matrices)[0];
 	return T->rows();
 };
@@ -460,19 +460,19 @@ matr_mask::~matr_mask() {
 	delete matrix;	
 };
 
-REAL matr_mask::element_at(int i, int j, int * next_j) const {
+REAL matr_mask::element_at(size_t i, size_t j, size_t * next_j) const {
 
 	if (mask)
 	if (mask->get(i) == false) {
 		if (next_j)
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 		return REAL(0);
 	}
 
 	if (mask)
 	if (mask->get(j) == false) {
 		if (next_j)
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 		return REAL(0);
 	}
 
@@ -480,19 +480,19 @@ REAL matr_mask::element_at(int i, int j, int * next_j) const {
 	
 };
 
-REAL matr_mask::at(int i, int j, int * next_j) const {
+REAL matr_mask::at(size_t i, size_t j, size_t * next_j) const {
 
 	if (mask)
 	if (mask->get(i) == false) {
 		if (next_j)
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 		return REAL(0);
 	}
 
 	if (mask)
 	if (mask->get(j) == false) {
 		if (next_j)
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 		return REAL(0);
 	}
 
@@ -500,7 +500,7 @@ REAL matr_mask::at(int i, int j, int * next_j) const {
 	
 };
 
-REAL matr_mask::mult_line(int J, const REAL * b_begin, const REAL * b_end) {
+REAL matr_mask::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) {
 
 	if (mask)
 	if (mask->get(J) == false) 
@@ -522,13 +522,13 @@ REAL matr_mask::norm() const {
 
 };
 
-long matr_mask::cols() const {
+size_t matr_mask::cols() const {
 
 	return matrix->cols();
 	
 };
 
-long matr_mask::rows() const {
+size_t matr_mask::rows() const {
 
 	return matrix->rows();
 	
@@ -540,7 +540,7 @@ long matr_mask::rows() const {
 //
 //////////////////
 
-matr_rect_sum::matr_rect_sum(int ix_from, int ix_to, int iy_from, int iy_to, int in_grid_cols,
+matr_rect_sum::matr_rect_sum(size_t ix_from, size_t ix_to, size_t iy_from, size_t iy_to, size_t in_grid_cols,
 			     REAL iw1, matr_rect *iT1, REAL iw2, matr_rect *iT2) 
 			     : matr_rect(ix_from, ix_to, iy_from, iy_to, in_grid_cols) 
 {
@@ -564,11 +564,11 @@ void matr_rect_sum::set_const() {
 	T2 = NULL;
 };
 
-REAL matr_rect_sum::element_at(int i, int j, int * next_j) const {
+REAL matr_rect_sum::element_at(size_t i, size_t j, size_t * next_j) const {
 
 	REAL res = 0;
-	int next_j1 = INT_MAX;
-	int next_j2 = INT_MAX;
+	size_t next_j1 = UINT_MAX;
+	size_t next_j2 = UINT_MAX;
 	if (T1 && w1)
 		res += w1 * T1->element_at(i,j,&next_j1);
 	if (cT1 && w1)
@@ -585,11 +585,11 @@ REAL matr_rect_sum::element_at(int i, int j, int * next_j) const {
 	
 };
 
-REAL matr_rect_sum::at(int i, int j, int * next_j) const {
+REAL matr_rect_sum::at(size_t i, size_t j, size_t * next_j) const {
 
 	REAL res = 0;
-	int next_j1 = INT_MAX;
-	int next_j2 = INT_MAX;
+	size_t next_j1 = UINT_MAX;
+	size_t next_j2 = UINT_MAX;
 	if (T1 && w1)
 		res += w1 * T1->at(i,j,&next_j1);
 	if (cT1 && w1)
@@ -606,7 +606,7 @@ REAL matr_rect_sum::at(int i, int j, int * next_j) const {
 	
 };
 
-REAL matr_rect_sum::mult_line(int J, const REAL * b_begin, const REAL * b_end) {
+REAL matr_rect_sum::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) {
 	REAL res = 0;
 	if (T1 && w1)
 		res += w1*T1->mult_line(J, b_begin, b_end);
@@ -645,7 +645,7 @@ REAL matr_rect_sum::norm() const {
 	return res;
 };
 
-long matr_rect_sum::cols() const {
+size_t matr_rect_sum::cols() const {
 	if (T1)
 		return T1->cols();
 	if (cT1)
@@ -657,7 +657,7 @@ long matr_rect_sum::cols() const {
 	return 0;
 };
 
-long matr_rect_sum::rows() const {
+size_t matr_rect_sum::rows() const {
 	if (T1)
 		return T1->rows();
 	if (cT1)

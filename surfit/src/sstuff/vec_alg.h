@@ -32,7 +32,7 @@ template <class V>
 REAL norm2(const V * x, REAL undef = FLT_MAX) {
 	REAL res = REAL(0);
 	REAL val;
-	int i;
+	size_t i;
 	for (i = 0; i < x->size(); i++) {
 		val = (*x)(i);
 		if (val == undef)
@@ -48,7 +48,7 @@ REAL norm2(const REAL * x_begin, const REAL * x_end, REAL undef = FLT_MAX);
 template <class V>
 REAL times(const V * x, const V * y) {
 	REAL res = REAL(0);
-	int i;
+	size_t i;
 	for (i = 0; i < x->size(); i++) {
 		res += (*x)(i)*(*y)(i);
 	};

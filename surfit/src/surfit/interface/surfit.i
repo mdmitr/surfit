@@ -130,7 +130,7 @@ bool hist_read(const char * filename, const char * histname=NULL, int col1=1, in
 bool hist_write(const char * filename, const char * delimiter = "\t", const char * pos = "0");
 bool hist_save(const char * filename, const char * pos = "0");
 bool hist_load(const char * filename, const char * histname = NULL);
-bool hist_from_surf(const char * histname, const char * surf_pos = "0", int intervs = 10);
+bool hist_from_surf(const char * histname, const char * surf_pos = "0", size_t intervs = 10);
 bool hist_update_surf(const char * hist_pos = "0", const char * surf_pos = "0");
 const char * hist_getName(const char * pos = "0");
 bool hist_setName(const char * new_name, const char * pos = "0");

@@ -192,8 +192,8 @@ d_grid * _grid_get_for_pnts_and_geom(const d_grid * grd, const d_points * pnts) 
 	if (pnts->size() == 0)
 		return NULL;
 
-	int countX = grd->getCountX();
-	int countY = grd->getCountY();
+	size_t countX = grd->getCountX();
+	size_t countY = grd->getCountY();
 
 	REAL grd_startX, grd_endX;
 	REAL grd_startY, grd_endY;
@@ -207,9 +207,9 @@ d_grid * _grid_get_for_pnts_and_geom(const d_grid * grd, const d_points * pnts) 
 	minmax_value(pnts->X->begin(), pnts->X->end(), pnts_startX, pnts_endX);
 	minmax_value(pnts->Y->begin(), pnts->Y->end(), pnts_startY, pnts_endY);
 
-	int newgrd_X_from, newgrd_X_to;
-	int newgrd_Y_from, newgrd_Y_to;
-	int temp_int;
+	size_t newgrd_X_from, newgrd_X_to;
+	size_t newgrd_Y_from, newgrd_Y_to;
+	size_t temp_int;
 
 	if (pnts_startX < grd_startX)
 		newgrd_X_from = 0;
@@ -449,8 +449,8 @@ d_grid * _get_surfit_grid() {
 };
 
 void _grid_intersect1(const d_grid * grd1, const d_grid * grd2,
-		      int & x_from, int & x_to,
-		      int & y_from, int & y_to) 
+		      size_t & x_from, size_t & x_to,
+		      size_t & y_from, size_t & y_to) 
 {
 	REAL x_min2 = grd2->x_from(0);
 	REAL x_max2 = grd2->x_to(grd2->getCountX()-1) - (grd2->stepX*1e-6);

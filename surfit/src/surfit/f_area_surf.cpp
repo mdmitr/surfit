@@ -124,14 +124,14 @@ bool f_area_surf::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	if (area_mask == NULL)
 		return false;
 	
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_vec(matrix_size);
 
-	int i, I, J;
-	int points = 0;
+	size_t i, I, J;
+	size_t points = 0;
 	REAL x,y,z;
-	int NN = method_grid->getCountX();
-	int MM = method_grid->getCountY();
+	size_t NN = method_grid->getCountX();
+	size_t MM = method_grid->getCountY();
 
 	bitvec * mask = create_bitvec(matrix_size);
 	mask->init_false();
@@ -186,9 +186,9 @@ void f_area_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 		return;
 	}
 	
-	unsigned int i;
+	size_t i;
 	
-	for (i = 0; i < (unsigned int)matrix_size; i++) {
+	for (i = 0; i < (size_t)matrix_size; i++) {
 		if (area_mask->get(i) == false)
 			continue;
 		if ( (mask_solved->get(i) == false) && (mask_undefined->get(i) == false) ) {
@@ -218,14 +218,14 @@ bool f_area_surf::minimize_only_area_surf() {
 	if (area_mask == NULL)
 		return false;
 	
-	unsigned int i;
-	int I, J;
-	int NN, MM;
+	size_t i;
+	size_t I, J;
+	size_t NN, MM;
 	REAL x, y, z;
 	NN = method_grid->getCountX();
 	MM = method_grid->getCountY();
 	
-	for (i = 0; i < (unsigned int)area_mask->size(); i++) {
+	for (i = 0; i < (size_t)area_mask->size(); i++) {
 		if (area_mask->get(i) == false)
 			continue;
 		if ( (method_mask_solved->get(i) == false) && (method_mask_undefined->get(i) == false) ) 

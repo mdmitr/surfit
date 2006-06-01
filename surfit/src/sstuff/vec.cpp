@@ -27,7 +27,7 @@
 
 namespace surfit {
 
-vec * create_vec(int size, REAL default_value, int fill_default, int grow_by)
+vec * create_vec(size_t size, REAL default_value, int fill_default, size_t grow_by)
 {
 	return new vec(size, default_value, fill_default, grow_by);
 };
@@ -38,7 +38,7 @@ vec * create_vec(const vec &in) {
 
 vec::vec(const vec &in) {
 	if (this != &in) {
-		int newsize = in.size();
+		size_t newsize = in.size();
 		data = (REAL*)malloc(sizeof(REAL)*newsize);
 		if (data) {
 			datasize = newsize;
@@ -53,7 +53,7 @@ vec::vec(const vec &in) {
 	}
 };
 
-vec::vec(int newsize, REAL default_value, int fill_default, int igrow_by) {
+vec::vec(size_t newsize, REAL default_value, int fill_default, size_t igrow_by) {
 	grow_by = igrow_by;
 	if (newsize == 0) {
 		data = NULL;
@@ -67,7 +67,8 @@ vec::vec(int newsize, REAL default_value, int fill_default, int igrow_by) {
 		real_datasize = newsize;
 		// init
 		if (fill_default == 1) {
-			for (int i = 0; i < size(); i++) {
+			size_t i;
+			for (i = 0; i < size(); i++) {
 				operator()(i) = default_value;
 			}
 		}
@@ -90,7 +91,7 @@ void vec::release() {
 	delete this;
 };
 
-void vec::resize(int newsize, REAL default_value, int fill_default) {
+void vec::resize(size_t newsize, REAL default_value, int fill_default) {
 	if (datasize == newsize)
 		return;
 	if ((newsize == 0) && (data = NULL)) {
@@ -101,12 +102,13 @@ void vec::resize(int newsize, REAL default_value, int fill_default) {
 	REAL *tmpData = (REAL*)realloc(data, sizeof(REAL)*newsize);
 	if (tmpData) {
 		data = tmpData;
-		int oldsize = datasize;
+		size_t oldsize = datasize;
 		datasize = newsize;
 		real_datasize = datasize;
 		if (oldsize < newsize) {
 			if (fill_default == 1) {
-				for (int i = oldsize; i < newsize; i++) {
+				size_t i;
+				for (i = oldsize; i < newsize; i++) {
 					operator()(i) = default_value;
 				}
 			}
@@ -133,12 +135,12 @@ void vec::push_back(const REAL& x) {
 	}
 };
 
-void vec::set_grow(int igrow_by) {
+void vec::set_grow(size_t igrow_by) {
 	grow_by = igrow_by;
 };
 
-void vec::reserve(int reserve_size) {
-	int oldsize = real_datasize;
+void vec::reserve(size_t reserve_size) {
+	size_t oldsize = real_datasize;
 	if (oldsize < reserve_size) {
 		
 		REAL *tmpData = (REAL*)realloc(data, sizeof(REAL)*reserve_size);
@@ -158,7 +160,7 @@ void vec::reserve(int reserve_size) {
 	}
 };
 
-void vec::swap(int i, int j) {
+void vec::swap(size_t i, size_t j) {
 	#ifdef LSS_BOUNDS_CHECK
 	if ((i < 1) || (i > size()))
 			throw "invalid argument";
@@ -172,7 +174,8 @@ void vec::swap(int i, int j) {
 
 void vec::erase(REAL* del) {
 	REAL* cur = begin();
-	for (int i = 0; i < size(); i++, cur++) {
+	size_t i;
+	for (i = 0; i < size(); i++, cur++) {
 		if (cur == del) {
 			// perform deletion;
 			memmove(cur,cur+1,(size()-i+1)*sizeof(REAL));
@@ -183,7 +186,7 @@ void vec::erase(REAL* del) {
 	}
 };
 
-void vec::erase(int index) {
+void vec::erase(size_t index) {
 #ifdef LSS_BOUNDS_CHECK
 	if (index > datasize) 
 		throw "invalid argument";

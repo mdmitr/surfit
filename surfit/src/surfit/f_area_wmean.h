@@ -84,7 +84,7 @@ private:
 	d_surf * w_srf;
 
 	//! reprojects weight surface
-	void get_w_srf(int & i_from, int & i_to, int & j_from, int & j_to);
+	void get_w_srf(size_t & i_from, size_t & i_to, size_t & j_from, size_t & j_to);
 
 	//! mask for area
 	bitvec * area_mask;

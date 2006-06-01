@@ -34,7 +34,7 @@ namespace surfit {
 mutex matr_onesrow_mutex;
 #endif
 
-matr_onesrow::matr_onesrow(REAL ival, long iN,
+matr_onesrow::matr_onesrow(REAL ival, size_t iN,
 			   bitvec * imask) {
 	val = ival;
 	N = iN;
@@ -55,24 +55,24 @@ REAL matr_onesrow::norm() const {
 	return fabs(val);
 };
 
-long matr_onesrow::rows() const {
+size_t matr_onesrow::rows() const {
 	return N;
 };
 
-long matr_onesrow::cols() const {
+size_t matr_onesrow::cols() const {
 	return N;
 };
 
-REAL matr_onesrow::element_at(int i, int j, int * next_j) const 
+REAL matr_onesrow::element_at(size_t i, size_t j, size_t * next_j) const 
 {
-	int _next_j = INT_MAX;
+	size_t _next_j = UINT_MAX;
 	REAL res = REAL(0);
 
 	if ( !mask->get(i) )
 		res = val;
 
 	if (next_j) {
-		int q;
+		size_t q;
 		for (q = j; q < N; q++) {
 			*next_j = q;
 			if (mask->get(q))
@@ -84,22 +84,22 @@ REAL matr_onesrow::element_at(int i, int j, int * next_j) const
 	
 };
 
-REAL matr_onesrow::element_at_transposed(int i, int j, int * next_j) const 
+REAL matr_onesrow::element_at_transposed(size_t i, size_t j, size_t * next_j) const 
 {
 	return element_at(i, j, next_j);	
 };
 
-REAL matr_onesrow::at(int i, int j, int * next_j) const 
+REAL matr_onesrow::at(size_t i, size_t j, size_t * next_j) const 
 {
 	return element_at(i,j,next_j);
 };
 
-REAL matr_onesrow::at_transposed(int i, int j, int * next_j) const 
+REAL matr_onesrow::at_transposed(size_t i, size_t j, size_t * next_j) const 
 {
 	return element_at(i,j,next_j);
 };
 
-REAL matr_onesrow::mult_line(int J, const REAL * b_begin, const REAL * b_end)
+REAL matr_onesrow::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 {
 	if (mask->get(J))
 		return REAL(0);
@@ -115,7 +115,7 @@ REAL matr_onesrow::mult_line(int J, const REAL * b_begin, const REAL * b_end)
 		return res;
 	}
 		
-	int i;
+	size_t i;
 	REAL res = REAL(0);
 	for (i = 0; i < N; i++) {
 		if (mask->get(i))
@@ -133,7 +133,7 @@ REAL matr_onesrow::mult_line(int J, const REAL * b_begin, const REAL * b_end)
 	return res;
 };
 
-REAL matr_onesrow::mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end) 
+REAL matr_onesrow::mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end) 
 {
 	return mult_line(J, b_begin, b_end);
 };
@@ -148,7 +148,7 @@ void matr_onesrow::call_after_mult() {
 //
 //
 
-matr_row::matr_row(long iN,
+matr_row::matr_row(size_t iN,
 		   bitvec * imask,
 		   vec * ivalues) {
 	values = ivalues;
@@ -172,24 +172,24 @@ REAL matr_row::norm() const {
 	return norm2(values, 0);
 };
 
-long matr_row::rows() const {
+size_t matr_row::rows() const {
 	return N;
 };
 
-long matr_row::cols() const {
+size_t matr_row::cols() const {
 	return N;
 };
 
-REAL matr_row::element_at(int i, int j, int * next_j) const 
+REAL matr_row::element_at(size_t i, size_t j, size_t * next_j) const 
 {
-	int _next_j = INT_MAX;
+	size_t _next_j = UINT_MAX;
 	REAL res = REAL(0);
 
 	if ( !mask->get(i) )
 		res = (*values)(i)*(*values)(j);
 
 	if (next_j) {
-		int q;
+		size_t q;
 		for (q = j; q < N; q++) {
 			*next_j = q;
 			if (mask->get(q))
@@ -201,22 +201,22 @@ REAL matr_row::element_at(int i, int j, int * next_j) const
 	
 };
 
-REAL matr_row::element_at_transposed(int i, int j, int * next_j) const 
+REAL matr_row::element_at_transposed(size_t i, size_t j, size_t * next_j) const 
 {
 	return element_at(i, j, next_j);	
 };
 
-REAL matr_row::at(int i, int j, int * next_j) const 
+REAL matr_row::at(size_t i, size_t j, size_t * next_j) const 
 {
 	return element_at(i,j,next_j);
 };
 
-REAL matr_row::at_transposed(int i, int j, int * next_j) const 
+REAL matr_row::at_transposed(size_t i, size_t j, size_t * next_j) const 
 {
 	return element_at(i,j,next_j);
 };
 
-REAL matr_row::mult_line(int J, const REAL * b_begin, const REAL * b_end)
+REAL matr_row::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 {
 	if (mask->get(J))
 		return REAL(0);
@@ -224,7 +224,7 @@ REAL matr_row::mult_line(int J, const REAL * b_begin, const REAL * b_end)
 	if (prev_b_begin == b_begin)
 		return prev_val*(*values)(J);
 	
-	int i;
+	size_t i;
 	REAL res = REAL(0);
 	for (i = 0; i < N; i++) {
 		if (mask->get(i))
@@ -238,7 +238,7 @@ REAL matr_row::mult_line(int J, const REAL * b_begin, const REAL * b_end)
 	return res*(*values)(J);
 };
 
-REAL matr_row::mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end) 
+REAL matr_row::mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end) 
 {
 	return mult_line(J, b_begin, b_end);
 };

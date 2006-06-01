@@ -214,8 +214,8 @@ bool matlabSparseMatrix::writeMAT(const char * filename, const char * name) {
 	matrix_size += 16; // for dimensions array
 	matrix_size += 8;  // for array name
 
-	int i,j;
-	int count = 0;
+	size_t i,j;
+	size_t count = 0;
 	
 	for (i = 0; i < rows(); i++) {
 		for (j = 0; j < cols();) {
@@ -279,7 +279,7 @@ bool matlabSparseMatrix::writeMAT(const char * filename, const char * name) {
 		}
 	}
 	
-	int padding = (count*4) % 8;
+	size_t padding = (count*4) % 8;
 	for (i = 0; i < padding;) {
 		if ( !mWrite4(file, 0) ) return false;
 		i += 4;

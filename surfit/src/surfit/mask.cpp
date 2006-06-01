@@ -65,12 +65,12 @@ bool d_mask::getValue(REAL x, REAL y) const {
 	getCoordNode(0,0,start_x,start_y);
 	
 	x = x - start_x + grd->stepX/REAL(2);
-	int i = (int)floor(x / grd->stepX);
+	size_t i = (size_t)MAX(0,floor(x / grd->stepX));
 	if ((i >= grd->getCountX()) || (i < 0))
 		return false;
 
 	y = y - start_y + grd->stepY/REAL(2);
-	int j = (int)floor(y / grd->stepY);
+	size_t j = (size_t)MAX(0,floor(y / grd->stepY));
 	if ((j >= grd->getCountY()) || (j < 0))
 		return false;
 
@@ -161,7 +161,7 @@ int d_mask::get_j(REAL y) const {
 };
 
 void d_mask::OR(const d_mask * msk) {
-	int i;
+	size_t i;
 	for (i = 0; i < coeff->size(); i++) {
 		bool b1 = coeff->get(i);
 		bool b2 = msk->coeff->get(i);
@@ -174,7 +174,7 @@ void d_mask::OR(const d_mask * msk) {
 };
 
 void d_mask::XOR(const d_mask * msk) {
-	int i;
+	size_t i;
 	for (i = 0; i < coeff->size(); i++) {
 		bool b1 = coeff->get(i);
 		bool b2 = msk->coeff->get(i);
@@ -187,7 +187,7 @@ void d_mask::XOR(const d_mask * msk) {
 };
 
 void d_mask::AND(const d_mask * msk) {
-	int i;
+	size_t i;
 	for (i = 0; i < coeff->size(); i++) {
 		bool b1 = coeff->get(i);
 		bool b2 = msk->coeff->get(i);
@@ -200,7 +200,7 @@ void d_mask::AND(const d_mask * msk) {
 };
 
 void d_mask::NOT(const d_mask * msk) {
-	int i;
+	size_t i;
 	for (i = 0; i < coeff->size(); i++) {
 		bool b2 = msk->coeff->get(i);
 		bool res = !b2;

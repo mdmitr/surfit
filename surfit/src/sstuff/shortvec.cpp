@@ -29,7 +29,7 @@
 
 namespace surfit {
 
-shortvec * create_shortvec(int size, short default_value, int fill_default, int grow_by) {
+shortvec * create_shortvec(size_t size, short default_value, int fill_default, size_t grow_by) {
 	return new shortvec(size, default_value, fill_default, grow_by);
 };
 
@@ -39,13 +39,14 @@ shortvec * create_shortvec(const shortvec &in) {
 
 shortvec::shortvec(const shortvec &in) {
 	if (this != &in) {
-		int newsize = in.size();
+		size_t newsize = in.size();
 		data = (short*)malloc(sizeof(short)*newsize);
 		if (data) {
 			datasize = newsize;
 			short_datasize = datasize;
 			// init
-			for (int i = 0; i < size(); i++) {
+			size_t i;
+			for (i = 0; i < size(); i++) {
 				operator()(i) = in(i);
 			}
 		};
@@ -55,7 +56,7 @@ shortvec::shortvec(const shortvec &in) {
 	}
 };
 
-shortvec::shortvec(int newsize, short default_value, int fill_default, int igrow_by) {
+shortvec::shortvec(size_t newsize, short default_value, int fill_default, size_t igrow_by) {
 	grow_by = igrow_by;
 	if (newsize == 0) {
 		data = NULL;
@@ -69,7 +70,8 @@ shortvec::shortvec(int newsize, short default_value, int fill_default, int igrow
 		short_datasize = newsize;
 		// init
 		if (fill_default == 1) {
-			for (int i = 0; i < size(); i++) {
+			size_t i;
+			for (i = 0; i < size(); i++) {
 				operator()(i) = default_value;
 			}
 		}
@@ -91,7 +93,7 @@ void shortvec::release() {
 	delete this;
 };
 
-void shortvec::resize(int newsize, short default_value, int fill_default) {
+void shortvec::resize(size_t newsize, short default_value, int fill_default) {
 	if (datasize == newsize)
 		return;
 	if ((newsize == 0) && (data = NULL)) {
@@ -102,12 +104,13 @@ void shortvec::resize(int newsize, short default_value, int fill_default) {
 	short *tmpData = (short*)realloc(data, sizeof(short)*newsize);
 	if (tmpData) {
 		data = tmpData;
-		int oldsize = datasize;
+		size_t oldsize = datasize;
 		datasize = newsize;
 		short_datasize = datasize;
 		if (oldsize < newsize) {
 			if (fill_default == 1) {
-				for (int i = oldsize; i < newsize; i++) {
+				size_t i;
+				for (i = oldsize; i < newsize; i++) {
 					operator()(i) = default_value;
 				}
 			}
@@ -134,12 +137,12 @@ void shortvec::push_back(const short& x) {
 	}
 };
 
-void shortvec::set_grow(int igrow_by) {
+void shortvec::set_grow(size_t igrow_by) {
 	grow_by = igrow_by;
 };
 
-void shortvec::reserve(int reserve_size) {
-	int oldsize = short_datasize;
+void shortvec::reserve(size_t reserve_size) {
+	size_t oldsize = short_datasize;
 	if (oldsize < reserve_size) {
 		
 		short *tmpData = (short*)realloc(data, sizeof(short)*reserve_size);
@@ -159,7 +162,7 @@ void shortvec::reserve(int reserve_size) {
 	}
 };
 
-void shortvec::swap(int i, int j) {
+void shortvec::swap(size_t i, size_t j) {
 	#ifdef LSS_BOUNDS_CHECK
 	if ((i < 1) || (i > size()))
 			throw "invalid argument";
@@ -173,7 +176,8 @@ void shortvec::swap(int i, int j) {
 
 void shortvec::erase(short* del) {
 	short* cur = begin();
-	for (int i = 0; i < size(); i++, cur++) {
+	size_t i;
+	for (i = 0; i < size(); i++, cur++) {
 		if (cur == del) {
 			// perform deletion;
 			memmove(cur,cur+1,(size()-i+1)*sizeof(short));
@@ -184,7 +188,7 @@ void shortvec::erase(short* del) {
 	}
 };
 
-void shortvec::erase(int index) {
+void shortvec::erase(size_t index) {
 #ifdef LSS_BOUNDS_CHECK
 	if (index > datasize) 
 		throw "invalid argument";

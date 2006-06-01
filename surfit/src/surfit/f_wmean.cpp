@@ -67,10 +67,10 @@ bool f_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	writelog(LOG_MESSAGE,"weighted mean value = %g condition", mean);
 
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	
-	int aux_X_from, aux_X_to;
-	int aux_Y_from, aux_Y_to;
+	size_t aux_X_from, aux_X_to;
+	size_t aux_Y_from, aux_Y_to;
 	get_w_srf(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
 	if (w_srf == NULL)
 		return false;
@@ -78,16 +78,16 @@ bool f_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	REAL denom = 0;
 	REAL sum_values_solved = 0;
 
-	int NN = method_grid->getCountX();
-	int MM = method_grid->getCountY();
-	int nn = w_srf->getCountX();
-	int mm = w_srf->getCountY();
+	size_t NN = method_grid->getCountX();
+	size_t MM = method_grid->getCountY();
+	size_t nn = w_srf->getCountX();
+	size_t mm = w_srf->getCountY();
 	
 	vec * weights = create_vec(matrix_size, 0, false); // don't fill this vector
 	bitvec * mask = create_bitvec(matrix_size);
 	mask->init_false();
 
-	int i, j, pos;
+	size_t i, j, pos;
 	for (i = 0; i < NN; i++) {
 		for (j = 0; j < MM; j++) {
 			
@@ -177,23 +177,22 @@ bool f_wmean::solvable_without_cond(const bitvec * mask_solved,
 
 void f_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 	
-
-	int aux_X_from, aux_X_to;
-	int aux_Y_from, aux_Y_to;
+	size_t aux_X_from, aux_X_to;
+	size_t aux_Y_from, aux_Y_to;
 	get_w_srf(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
 	if (w_srf == NULL) {
 		mark_sums(mask_solved, mask_undefined);
 		return;
 	}
 	
-	int matrix_size = mask_solved->size();
-	int i;
-	int ii, jj;
+	size_t matrix_size = mask_solved->size();
+	size_t i;
+	size_t ii, jj;
 
-	int NN = method_grid->getCountX();
-	int MM = method_grid->getCountY();
-	int nn = w_srf->getCountX();
-	int mm = w_srf->getCountY();
+	size_t NN = method_grid->getCountX();
+	size_t MM = method_grid->getCountY();
+	size_t nn = w_srf->getCountX();
+	size_t mm = w_srf->getCountY();
 
 	for (i = 0; i < matrix_size; i++) {
 		if (mask_solved->get(i) == true)
@@ -205,8 +204,8 @@ void f_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_unde
 		
 		if ((ii >= aux_X_from) && (ii <= aux_X_to) && (jj >= aux_Y_from) && (jj <= aux_Y_to)) {
 			
-			int I = ii-aux_X_from;
-			int J = jj-aux_Y_from;
+			size_t I = ii-aux_X_from;
+			size_t J = jj-aux_Y_from;
 			
 			REAL weight = (*(w_srf->coeff))(I + J*nn);
 			if (weight == w_srf->undef_value)
@@ -230,7 +229,7 @@ bool f_wmean::minimize() {
 	return false;
 };
 
-void f_wmean::get_w_srf(int & i_from, int & i_to, int & j_from, int & j_to) {
+void f_wmean::get_w_srf(size_t & i_from, size_t & i_to, size_t & j_from, size_t & j_to) {
 	
 	_grid_intersect1(method_grid, srf->grd, i_from, i_to, j_from, j_to);
 	d_grid * aux_grid = _create_sub_grid(method_grid, i_from, i_to, j_from, j_to);

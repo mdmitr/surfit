@@ -28,7 +28,7 @@ namespace surfit {
 class shortvec;
 
 SSTUFF_EXPORT
-shortvec * create_shortvec(int size = 0, short default_value = short(0), int fill_default = 1, int grow_by = 250);
+shortvec * create_shortvec(size_t size = 0, short default_value = short(0), int fill_default = 1, size_t grow_by = 250);
 	
 SSTUFF_EXPORT
 shortvec * create_shortvec(const shortvec &in);
@@ -58,7 +58,7 @@ protected:
 	    \param fill_default use initial value filling
 	    \param grow_by value for resizing vector
 	*/
-	shortvec(int size = 0, short default_value = short(0), int fill_default = 1, int grow_by = 250);
+	shortvec(size_t size = 0, short default_value = short(0), int fill_default = 1, size_t grow_by = 250);
 	
 	//! Copy constructor
 	shortvec(const shortvec &in);
@@ -70,7 +70,7 @@ private:
 public:
 
 	friend SSTUFF_EXPORT
-	shortvec * create_shortvec(int size, short default_value, int fill_default, int grow_by);
+	shortvec * create_shortvec(size_t size, short default_value, int fill_default, size_t grow_by);
 	
 	friend SSTUFF_EXPORT
 	shortvec * create_shortvec(const shortvec &in);
@@ -96,16 +96,16 @@ public:
 	void erase(short*);
 
 	//! delete element by index
-	void erase(int index);
+	void erase(size_t index);
 		
 	//! resize vector
-	void resize(int newsize, short default_value = short(0), int fill_default = 1);
+	void resize(size_t newsize, short default_value = short(0), int fill_default = 1);
 
 	//! return vector size
-	int size() const { return datasize; };
+	size_t size() const { return datasize; };
 
 	//! return reference to i'th element
-	short& operator()(int i) {
+	short& operator()(size_t i) {
 #ifdef LSS_BOUNDS_CHECK
 		if ((i < 0) || (i >= size()))
 			throw "invalid argument";
@@ -115,7 +115,7 @@ public:
 	};
 		
 	//! return const reference to i'th element
-	const short& operator()(int i) const {
+	const short& operator()(size_t i) const {
 #ifdef LSS_BOUNDS_CHECK
 		if ((i < 0) || (i >= size()))
 			throw "invalid argument";
@@ -128,13 +128,13 @@ public:
 	void push_back(const short&);
 
 	//! set currently allocated vector size to reserve_size
-	void reserve(int reserve_size);
+	void reserve(size_t reserve_size);
 
 	//! set vector's grow factor
-	void set_grow(int grow_by);
+	void set_grow(size_t grow_by);
 
 	//! swap two elements
-	void swap(int i, int j);
+	void swap(size_t i, size_t j);
 
 	//! forget all allocated memory
 	void drop_data();
@@ -147,13 +147,13 @@ protected:
 	short* data;
 
 	//! short vector size in elements
-	int datasize;
+	size_t datasize;
 
 	//! size of allocated memory in elements
-	int short_datasize;
+	size_t short_datasize;
 	
 	//! grow factor
-	int grow_by;
+	size_t grow_by;
 };
 
 }; // namespace surfit

@@ -37,7 +37,7 @@
 namespace surfit {
 
 REAL ator(char * text) {
-	unsigned int pos = strcspn(text, "0123456789,.");
+	size_t pos = strcspn(text, "0123456789,.");
 	if (pos == strlen(text))
 		return FLT_MAX;
 	char * ptr = strchr(text,',');
@@ -246,7 +246,7 @@ bool three_columns_read(const char * filename,
 	int columns = 0;
 	int lines_readed = 0;
 	int current_column = 0;
-	int size = 0;
+	size_t size = 0;
 
 	// calculate number of columns!
 	fpos_t pos;
@@ -394,7 +394,7 @@ bool three_columns_read_with_names(const char * filename,
 	int columns = 0;
 	int lines_readed = 0;
 	int current_column = 0;
-	int size = 0;
+	size_t size = 0;
 
 	// calculate number of columns!
 	fpos_t pos;

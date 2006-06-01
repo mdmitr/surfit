@@ -43,9 +43,9 @@
 
 namespace surfit {
 
-matrD2_rect::matrD2_rect(int iN, int iNN, 
+matrD2_rect::matrD2_rect(size_t iN, size_t iNN, 
 			 REAL ihx, REAL ihy,
-		         int ix_from, int ix_to, int iy_from, int iy_to,
+		         size_t ix_from, size_t ix_to, size_t iy_from, size_t iy_to,
 			 const bitvec * imask_solved,
 			 const bitvec * imask_undefined,
 			 grid_line * ifault) : matr_rect(ix_from, ix_to, iy_from, iy_to, iNN)
@@ -68,7 +68,7 @@ matrD2_rect::matrD2_rect(int iN, int iNN,
 
 void matrD2_rect::make_mask(const bitvec * imask_solved, const bitvec * imask_undefined) {
 	mask = create_bitvec(matrNN*matrMM*10);
-	int j;
+	size_t j;
 	bool first_x, second_x, third_x;
 	bool first_xx, second_xx;
 	bool first_yy, second_yy;
@@ -80,8 +80,8 @@ void matrD2_rect::make_mask(const bitvec * imask_solved, const bitvec * imask_un
 		first_yy = second_yy = true;
 		first_y = second_y = third_y = true;
 		
-		int n = j % matrNN;
-		int m = (j - n)/matrNN;
+		size_t n = j % matrNN;
+		size_t m = (j - n)/matrNN;
 		
 		sums_points_D2(n, m, 
 			NN, MM, matrNN, matrMM,
@@ -111,15 +111,15 @@ void matrD2_rect::make_mask(const bitvec * imask_solved, const bitvec * imask_un
 };
 
 
-REAL matrD2_rect::element_at(int i, int j, int * next_j) const {
+REAL matrD2_rect::element_at(size_t i, size_t j, size_t * next_j) const {
 
 	REAL res = REAL(0);
-	int n = i % NN;
-	int m = (i-n)/NN;
+	size_t n = i % NN;
+	size_t m = (i-n)/NN;
 
 	if ((n < x_from) || (n > x_to))  {
 		if (next_j)
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 		return res;
 	}
 
@@ -131,17 +131,17 @@ REAL matrD2_rect::element_at(int i, int j, int * next_j) const {
 
 	if (m > y_to) {
 		if (next_j)
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 		return res;
 	}
 
 	n -= x_from;
 	m -= y_from;
-	int local_i = n + m*matrNN;
+	size_t local_i = n + m*matrNN;
 
-	int next_j_dx2  = INT_MAX;
-	int next_j_dxdy = INT_MAX;
-	int next_j_dy2  = INT_MAX;
+	size_t next_j_dx2  = UINT_MAX;
+	size_t next_j_dxdy = UINT_MAX;
+	size_t next_j_dy2  = UINT_MAX;
 	
 	bool b[10];
 
@@ -151,19 +151,19 @@ REAL matrD2_rect::element_at(int i, int j, int * next_j) const {
 
 };
 
-REAL matrD2_rect::element_at_transposed(int i, int j, int * next_j) const {
+REAL matrD2_rect::element_at_transposed(size_t i, size_t j, size_t * next_j) const {
 	return element_at(i, j, next_j);
 };
 
-REAL matrD2_rect::at(int i, int j, int * next_j) const {
+REAL matrD2_rect::at(size_t i, size_t j, size_t * next_j) const {
 
 	REAL res = REAL(0);
-	int n = i % NN;
-	int m = (i-n)/NN;
+	size_t n = i % NN;
+	size_t m = (i-n)/NN;
 
 	if ((n < x_from) || (n > x_to))  {
 		if (next_j)
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 		return res;
 	}
 
@@ -175,7 +175,7 @@ REAL matrD2_rect::at(int i, int j, int * next_j) const {
 
 	if (m > y_to) {
 		if (next_j)
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 		return res;
 	}
 
@@ -231,7 +231,7 @@ REAL matrD2_rect::at(int i, int j, int * next_j) const {
 				return REAL(0);
 			}
 			
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 			return REAL(0);
 		}
 	}
@@ -239,11 +239,11 @@ REAL matrD2_rect::at(int i, int j, int * next_j) const {
 	n -= x_from;
 	m -= y_from;
 
-	int local_i = n + m*matrNN;
+	size_t local_i = n + m*matrNN;
 
-	int next_j_dx2  = INT_MAX;
-	int next_j_dxdy = INT_MAX;
-	int next_j_dy2  = INT_MAX;
+	size_t next_j_dx2  = UINT_MAX;
+	size_t next_j_dxdy = UINT_MAX;
+	size_t next_j_dy2  = UINT_MAX;
 
 	bool b[10];
 		
@@ -253,27 +253,27 @@ REAL matrD2_rect::at(int i, int j, int * next_j) const {
 
 };
 
-REAL matrD2_rect::at_transposed(int i, int j, int * next_j) const {
+REAL matrD2_rect::at_transposed(size_t i, size_t j, size_t * next_j) const {
 	return at(i, j, next_j);
 };
 
-REAL matrD2_rect::mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end) {
+REAL matrD2_rect::mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end) {
 	return mult_line(J, b_begin, b_end);
 };
 
-REAL matrD2_rect::mult_line(int J, const REAL * b_begin, const REAL * b_end) {
+REAL matrD2_rect::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) {
 
 	if (mask_solved_undefined->get(J))
 		return REAL(0);
 
-	int n = J % NN;
-	int m = (J - n)/NN;
+	size_t n = J % NN;
+	size_t m = (J - n)/NN;
 
 	if  (!( (n >= x_from) && (n <= x_to) && (m >= y_from) && (m <= y_to) ))
 		return REAL(0);
 	
 	bool b[10];
-	int local_J = n-x_from + (m-y_from)*matrNN;
+	size_t local_J = n-x_from + (m-y_from)*matrNN;
 
 	mask->get10(local_J, b);
 
@@ -676,11 +676,11 @@ REAL matrD2_rect::mult_line(int J, const REAL * b_begin, const REAL * b_end) {
 
 };
 
-long matrD2_rect::cols() const {
+size_t matrD2_rect::cols() const {
 	return N_cols;
 };
 
-long matrD2_rect::rows() const {
+size_t matrD2_rect::rows() const {
 	return N_rows;
 };
 

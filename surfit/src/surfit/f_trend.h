@@ -82,14 +82,9 @@ protected:
 	bitvec * trend_mask_undefined;
 
 	//! calculates surface for limits
-	void get_tr_srf(int & i_from, int & i_to, int & j_from, int & j_to);
+	void get_tr_srf(size_t & i_from, size_t & i_to, size_t & j_from, size_t & j_to);
 
 };
-
-SURFIT_EXPORT
-d_grid * adopt_surf_grid(const d_surf * srf, d_grid * grd,
-			 int & from_x, int & to_x,
-			 int & from_y, int & to_y);
 
 }; // namespace surfit;
 

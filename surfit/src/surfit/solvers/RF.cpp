@@ -58,7 +58,7 @@ vec * RF(matr * A, const vec * b, int max_it, REAL tol, vec * X, REAL undef_valu
 	vec * x_0 = NULL;
 	if (!X) {
 		x_0 = create_vec(b->size());
-		int cnt;
+		size_t cnt;
 		for (cnt = 0; cnt < b->size(); cnt++) {
 			(*x_0)(cnt) = (*b)(cnt);
 		};

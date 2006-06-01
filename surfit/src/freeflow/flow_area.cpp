@@ -116,7 +116,7 @@ bool f_flow_area::solvable_without_cond(const bitvec * mask_solved,
 					const vec * X)
 {
 
-	int i;
+	size_t i;
 	for (i = 0; i < mask_solved->size(); i++) {
 		if (mask_solved->get(i))
 			goto sss;

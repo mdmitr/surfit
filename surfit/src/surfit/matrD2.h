@@ -48,7 +48,7 @@ public:
 	    \param imask_undefined bit-mask with undefined cells
 	    \param ifault grid based fault line
 	*/
-	matrD2(int iN, int iNN, 
+	matrD2(size_t iN, size_t iNN, 
 	       REAL ihx, REAL ihy,
 	       const bitvec * imask_solved,
 	       const bitvec * imask_undefined,
@@ -56,28 +56,28 @@ public:
  
 	virtual ~matrD2();
 
-	REAL element_at(int i, int j, int * next_j = NULL) const;
-	REAL element_at_transposed(int i, int j, int * next_j = NULL) const;
-	REAL at(int i, int j, int * next_j = NULL) const;
-	REAL at_transposed(int i, int j, int * next_j = NULL) const;
-	REAL mult_line(int J, const REAL * b_begin, const REAL * b_end);
-	REAL mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end);
+	REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
+	REAL element_at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
+	REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
+	REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
+	REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end);
+	REAL mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end);
 
-	virtual long cols() const;
-	virtual long rows() const;
+	virtual size_t cols() const;
+	virtual size_t rows() const;
 
 	REAL norm() const;
 
-	virtual void skip(int i, int j);
+	virtual void skip(size_t i, size_t j);
 
 protected:
 
 	//! matrix size
-	int N;
+	size_t N;
 	//! cols in grid
-	int NN; 
+	size_t NN; 
 	//! rows in geometry
-	int MM;
+	size_t MM;
 
 	//! grid step by X
 	REAL hx4;
@@ -102,8 +102,8 @@ protected:
 	bitvec * mask_solved_undefined;
 
 	//! calls from matrator()
-	REAL matrator_serve(int i, int j, bool * b,
-			    int * next_j) const;
+	REAL matrator_serve(size_t i, size_t j, bool * b,
+			    size_t * next_j) const;
 
 };
 
@@ -126,9 +126,9 @@ public:
 	    \param imask_undefined bit-mask with undefined cells
 	    \param ifault grid based fault line
 	*/
-	matrD2_rect(int iN, int iNN, 
+	matrD2_rect(size_t iN, size_t iNN, 
 		    REAL ihx, REAL ihy,
-		    int x_from, int x_to, int y_from, int y_to,
+		    size_t x_from, size_t x_to, size_t y_from, size_t y_to,
 		    const bitvec * imask_solved,
 		    const bitvec * imask_undefined,
 		    grid_line * ifault);
@@ -136,15 +136,15 @@ public:
 	//! A destructor
 	virtual ~matrD2_rect() {};
 
-	REAL element_at(int i, int j, int * next_j = NULL) const;
-	REAL element_at_transposed(int i, int j, int * next_j = NULL) const;
-	REAL at(int i, int j, int * next_j = NULL) const;
-	REAL at_transposed(int i, int j, int * next_j = NULL) const;
-	REAL mult_line(int J, const REAL * b_begin, const REAL * b_end);
-	REAL mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end);
+	REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
+	REAL element_at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
+	REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
+	REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
+	REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end);
+	REAL mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end);
 
-	virtual long cols() const;
-	virtual long rows() const;
+	virtual size_t cols() const;
+	virtual size_t rows() const;
 
 	REAL norm() const;
 
@@ -153,16 +153,16 @@ protected:
 	void make_mask(const bitvec * imask_solved, const bitvec * imask_undefined);
 	
 	//! matrix size 1
-	int N_cols; 
+	size_t N_cols; 
 
 	//! matrix size 2
-	int N_rows; 
+	size_t N_rows; 
 
 	//! cols in matrix
-	int matrNN; 
+	size_t matrNN; 
 
 	//! rows in matrix
-	int matrMM; 
+	size_t matrMM; 
 
 };
 

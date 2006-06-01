@@ -67,9 +67,9 @@ d_surf::d_surf(vec *icoeff, d_grid *igrd,
 };
 
 d_surf::d_surf(d_mask * msk) : data("d_surf") {
-	int size = msk->coeff->size();
+	size_t size = msk->coeff->size();
 	coeff = create_vec(size);
-	int i;
+	size_t i;
 	for (i = 0; i < size; i++) {
 		bool val = msk->coeff->get(i);
 		if (val)
@@ -132,7 +132,7 @@ bool d_surf::getMinMaxZ(REAL & minZ, REAL & maxZ) const {
 };
 
 bool d_surf::getMinMaxZ_mask(REAL & minZ, REAL & maxZ, const bitvec * msk) const {
-	int i;
+	size_t i;
 	REAL value;
 
 	minZ = FLT_MAX;
@@ -163,12 +163,12 @@ REAL d_surf::getValue(REAL x, REAL y) const {
 	getCoordNode(0,0,start_x,start_y);
 	
 	x = x - start_x + grd->stepX/REAL(2);
-	int i = (int)floor(x / grd->stepX);
+	size_t i = (size_t)MAX(0,floor(x / grd->stepX));
 	if ((i >= grd->getCountX()) || (i < 0))
 		return undef_value;
 
 	y = y - start_y + grd->stepY/REAL(2);
-	int j = (int)floor(y / grd->stepY);
+	size_t j = (size_t)MAX(0,floor(y / grd->stepY));
 	if ((j >= grd->getCountY()) || (j < 0))
 		return undef_value;
 
@@ -179,9 +179,9 @@ REAL d_surf::getValue(REAL x, REAL y) const {
 REAL d_surf::getInterpValue(REAL x, REAL y) const {
 	
 	REAL value = 0;
-	int I0, J0, I1, J1;
-	int surf_sizeX = getCountX();
-	int surf_sizeY = getCountY();
+	size_t I0, J0, I1, J1;
+	size_t surf_sizeX = getCountX();
+	size_t surf_sizeY = getCountY();
 	REAL z0, z1, z2, z3;
 	REAL x0, y0;
 	REAL delta_x, delta_y;
@@ -189,8 +189,8 @@ REAL d_surf::getInterpValue(REAL x, REAL y) const {
 	REAL hY = grd->stepY;
 	
 	const d_grid * g = grd;
-	I0 = (int)floor( (x - g->startX)/g->stepX );
-	J0 = (int)floor( (y - g->startY)/g->stepY );
+	I0 = (size_t)MAX(0,floor( (x - g->startX)/g->stepX ));
+	J0 = (size_t)MAX(0,floor( (y - g->startY)/g->stepY ));
 	
 	I1 = I0+1;
 	J1 = J0+1;
@@ -216,7 +216,7 @@ REAL d_surf::getInterpValue(REAL x, REAL y) const {
 	{
 		
 		REAL sum = REAL(0);
-		int cnt = 0;
+		size_t cnt = 0;
 		
 		if (z0 != this->undef_value) {
 			sum += z0;
@@ -266,8 +266,8 @@ REAL d_surf::getInterpValue(REAL x, REAL y) const {
 };
 
 REAL d_surf::getMeanValue(REAL x_from, REAL x_to, REAL y_from, REAL y_to) const {
-	int i_from, i_to;
-	int j_from, j_to;
+	size_t i_from, i_to;
+	size_t j_from, j_to;
 
 	
 	i_from = get_i(x_from);
@@ -282,16 +282,16 @@ REAL d_surf::getMeanValue(REAL x_from, REAL x_to, REAL y_from, REAL y_to) const 
 	j_to   = get_j(y_to);
 	j_to   = MIN(j_to, getCountY()-1);
 
-	int NN = getCountX();
+	size_t NN = getCountX();
 
-	int i,j;
-	int cnt = 0;
+	size_t i,j;
+	size_t cnt = 0;
 	REAL sum_value = 0;
 	REAL value;
 	for (j = j_from; j <= j_to; j++) {
 		for (i = i_from; i <= i_to; i++) {
 		
-			int pos = i + j*NN;
+			size_t pos = i + j*NN;
 			value = (*coeff)(pos);
 			if (value == this->undef_value)
 				continue;
@@ -308,7 +308,7 @@ REAL d_surf::getMeanValue(REAL x_from, REAL x_to, REAL y_from, REAL y_to) const 
 
 };
 
-REAL d_surf::getValueIJ(int I, int J) const {
+REAL d_surf::getValueIJ(size_t I, size_t J) const {
 	if (I < 0)
 		return FLT_MAX;
 	if (I >= grd->getCountX())
@@ -357,11 +357,11 @@ bool d_surf::writeTags(datafile *df) const {
 	
 };
 
-int d_surf::getCountX() const {
+size_t d_surf::getCountX() const {
 	return grd->getCountX();
 };
 
-int d_surf::getCountY() const {
+size_t d_surf::getCountY() const {
 	return grd->getCountY();
 };
 
@@ -373,23 +373,23 @@ REAL d_surf::getStepY() const {
 	return grd->stepY;
 };
 
-void d_surf::getCoordNode(int i, int j, REAL & x, REAL & y) const {
+void d_surf::getCoordNode(size_t i, size_t j, REAL & x, REAL & y) const {
 	grd->getCoordNode(i,j,x,y);
 };
 
-REAL d_surf::getCoordNodeX(int i) const {
+REAL d_surf::getCoordNodeX(size_t i) const {
 	return grd->getCoordNodeX(i);
 };
 
-REAL d_surf::getCoordNodeY(int j) const {
+REAL d_surf::getCoordNodeY(size_t j) const {
 	return grd->getCoordNodeY(j);
 };
 
-int d_surf::get_i(REAL x) const {
+size_t d_surf::get_i(REAL x) const {
 	return grd->get_i(x);
 };
 
-int d_surf::get_j(REAL y) const {
+size_t d_surf::get_j(REAL y) const {
 	return grd->get_j(y);
 };
 
@@ -401,24 +401,24 @@ REAL d_surf::wmean(const d_surf * wsrf) const {
 	
 	REAL res = REAL(0);
 
-	int aux_X_from, aux_X_to;
-	int aux_Y_from, aux_Y_to;
+	size_t aux_X_from, aux_X_to;
+	size_t aux_Y_from, aux_Y_to;
 	
 	_grid_intersect1(grd, wsrf->grd, aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
 	d_grid * aux_grid = _create_sub_grid(grd, aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
 	
 	d_surf * w_srf = _surf_project(wsrf, aux_grid);
 
-	int nn = aux_grid->getCountX();
-	int mm = aux_grid->getCountY();
+	size_t nn = aux_grid->getCountX();
+	size_t mm = aux_grid->getCountY();
 
-	int NN = getCountX();
-	int MM = getCountY();
+	size_t NN = getCountX();
+	size_t MM = getCountY();
 
 	REAL denom = 0;
 	REAL sum = 0;
 
-	int i, j, pos;
+	size_t i, j, pos;
 	for (i = 0; i < NN; i++) {
 		for (j = 0; j < MM; j++) {
 			
@@ -430,8 +430,8 @@ REAL d_surf::wmean(const d_surf * wsrf) const {
 
 			REAL weight = 0;
 			if ((i >= aux_X_from) && (i <= aux_X_to) && (j >= aux_Y_from) && (j <= aux_Y_to)) {
-				int I = i-aux_X_from;
-				int J = j-aux_Y_from;
+				size_t I = i-aux_X_from;
+				size_t J = j-aux_Y_from;
 				weight = (*(w_srf->coeff))(I + J*nn);
 				if (weight == w_srf->undef_value)
 					weight = 0;
@@ -470,7 +470,7 @@ bool d_surf::compare_grid(const d_surf * srf) const {
 };
 
 void d_surf::plus(const d_surf * srf) {
-	int i;
+	size_t i;
 	REAL val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val1 = (*srf->coeff)(i);
@@ -481,7 +481,7 @@ void d_surf::plus(const d_surf * srf) {
 };
 
 void d_surf::plus_mask(const d_surf * srf, const bitvec * mask) {
-	int i;
+	size_t i;
 	REAL val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		if (mask->get(i) == false)
@@ -494,7 +494,7 @@ void d_surf::plus_mask(const d_surf * srf, const bitvec * mask) {
 };
 
 void d_surf::minus(const d_surf * srf) {
-	int i;
+	size_t i;
 	REAL val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val1 = (*srf->coeff)(i);
@@ -505,7 +505,7 @@ void d_surf::minus(const d_surf * srf) {
 };
 
 void d_surf::minus_mask(const d_surf * srf, const bitvec * mask) {
-	int i;
+	size_t i;
 	REAL val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		if (mask->get(i) == false)
@@ -518,7 +518,7 @@ void d_surf::minus_mask(const d_surf * srf, const bitvec * mask) {
 };
 
 void d_surf::mult(const d_surf * srf) {
-	int i;
+	size_t i;
 	REAL val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val1 = (*srf->coeff)(i);
@@ -529,7 +529,7 @@ void d_surf::mult(const d_surf * srf) {
 };
 
 void d_surf::mult_mask(const d_surf * srf, const bitvec * mask) {
-	int i;
+	size_t i;
 	REAL val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		if (mask->get(i) == false)
@@ -542,7 +542,7 @@ void d_surf::mult_mask(const d_surf * srf, const bitvec * mask) {
 };
 
 void d_surf::div(const d_surf * srf) {
-	int i;
+	size_t i;
 	REAL val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val1 = (*srf->coeff)(i);
@@ -556,7 +556,7 @@ void d_surf::div(const d_surf * srf) {
 };
 
 void d_surf::div_mask(const d_surf * srf, const bitvec * mask) {
-	int i;
+	size_t i;
 	REAL val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		if (mask->get(i) == false)
@@ -572,7 +572,7 @@ void d_surf::div_mask(const d_surf * srf, const bitvec * mask) {
 };
 
 void d_surf::set(const d_surf * srf) {
-	int i;
+	size_t i;
 	REAL val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val1 = (*srf->coeff)(i);
@@ -583,7 +583,7 @@ void d_surf::set(const d_surf * srf) {
 };
 
 void d_surf::set_mask(const d_surf * srf, const bitvec * mask) {
-	int i;
+	size_t i;
 	REAL val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		if (mask->get(i) == false)
@@ -596,7 +596,7 @@ void d_surf::set_mask(const d_surf * srf, const bitvec * mask) {
 };
 
 void d_surf::plus(REAL val) {
-	int i;
+	size_t i;
 	REAL val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val2 = (*coeff)(i);
@@ -606,7 +606,7 @@ void d_surf::plus(REAL val) {
 };
 
 void d_surf::plus_mask(REAL val, const bitvec * mask) {
-	int i;
+	size_t i;
 	REAL val2;
 	for (i = 0; i < coeff->size(); i++) {
 		if (mask->get(i) == false)
@@ -618,7 +618,7 @@ void d_surf::plus_mask(REAL val, const bitvec * mask) {
 };
 
 void d_surf::minus(REAL val) {
-	int i;
+	size_t i;
 	REAL val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val2 = (*coeff)(i);
@@ -628,7 +628,7 @@ void d_surf::minus(REAL val) {
 };
 
 void d_surf::minus_mask(REAL val, const bitvec * mask) {
-	int i;
+	size_t i;
 	REAL val2;
 	for (i = 0; i < coeff->size(); i++) {
 		if (mask->get(i) == false)
@@ -640,7 +640,7 @@ void d_surf::minus_mask(REAL val, const bitvec * mask) {
 };
 
 void d_surf::mult(REAL val) {
-	int i;
+	size_t i;
 	REAL val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val2 = (*coeff)(i);
@@ -650,7 +650,7 @@ void d_surf::mult(REAL val) {
 };
 
 void d_surf::mult_mask(REAL val, const bitvec * mask) {
-	int i;
+	size_t i;
 	REAL val2;
 	for (i = 0; i < coeff->size(); i++) {
 		if (mask->get(i) == false)
@@ -662,7 +662,7 @@ void d_surf::mult_mask(REAL val, const bitvec * mask) {
 };
 
 void d_surf::div(REAL val) {
-	int i;
+	size_t i;
 	REAL val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val2 = (*coeff)(i);
@@ -672,7 +672,7 @@ void d_surf::div(REAL val) {
 };
 
 void d_surf::div_mask(REAL val, const bitvec * mask) {
-	int i;
+	size_t i;
 	REAL val2;
 	for (i = 0; i < coeff->size(); i++) {
 		if (mask->get(i) == false)
@@ -684,7 +684,7 @@ void d_surf::div_mask(REAL val, const bitvec * mask) {
 };
 
 void d_surf::set(REAL val) {
-	int i;
+	size_t i;
 	REAL val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val2 = (*coeff)(i);
@@ -694,7 +694,7 @@ void d_surf::set(REAL val) {
 };
 
 void d_surf::set_mask(REAL val, const bitvec * mask) {
-	int i;
+	size_t i;
 	REAL val2;
 	for (i = 0; i < coeff->size(); i++) {
 		if (mask->get(i) == false)
@@ -711,7 +711,7 @@ void d_surf::set_mask(REAL val, const bitvec * mask) {
 //
 //
 
-int d_surf::details_size() const {
+size_t d_surf::details_size() const {
 	return 1+MIN(details_h->size(),MIN(details_v->size(),details_d->size()));
 };
 
@@ -721,8 +721,8 @@ bool d_surf::decompose() {
 	bool enlarge_X = false;
 	bool enlarge_Y = false;
 
-	int countX = grd->getCountX();
-	int countY = grd->getCountY();
+	size_t countX = grd->getCountX();
+	size_t countY = grd->getCountY();
 
 	if (countX % 2 != 0)
 		enlarge_X = true;
@@ -730,7 +730,7 @@ bool d_surf::decompose() {
 	if (countY % 2 != 0)
 		enlarge_Y = true;
 	
-	int N = coeff->size()/4;
+	size_t N = coeff->size()/4;
 
 	if (N <= 1)
 		return false;
@@ -761,7 +761,7 @@ bool d_surf::decompose() {
 		coeff->release();
 	coeff = xa;
 
-	int new_size_x = 0;
+	size_t new_size_x = 0;
 	if (enlarge_X) {
 		new_size_x = (grd->getCountX() + 1) / 2;
 	} else {
@@ -773,7 +773,7 @@ bool d_surf::decompose() {
 	new_size_x = grd->getCountX();
 	
 	
-	int new_size_y = 0;
+	size_t new_size_y = 0;
 	if (enlarge_Y) {
 		new_size_y = (grd->getCountY() + 1) / 2;
 	} else {
@@ -814,7 +814,7 @@ REAL d_surf::calc_approx_norm(int norm_type) const {
 	switch(norm_type) {
 	case 0:
 		{
-			int i;
+			size_t i;
 			for (i = 0; i < coeff->size(); i++) {
 				res += (*coeff)(i)*(*coeff)(i);
 			}
@@ -829,7 +829,7 @@ REAL d_surf::calc_approx_norm(int norm_type) const {
 
 bool d_surf::reconstruct() {
 	
-	int N = details_d->size();
+	size_t N = details_d->size();
 
 	if (N == 0)
 		return false;
@@ -868,14 +868,14 @@ bool d_surf::reconstruct() {
 	coeff = approx;
 
 	// X
-	int new_count_x = grd->getCountX()*2;
+	size_t new_count_x = grd->getCountX()*2;
 	grd->stepX  /= REAL(2);
 	grd->startX -= grd->stepX/REAL(2);
 	grd->endX    = grd->startX + grd->stepX*(new_count_x-1);
 	if (*b_itX)
 		grd->endX -= grd->stepX;
 
-	int new_count_y = grd->getCountY()*2;
+	size_t new_count_y = grd->getCountY()*2;
 	grd->stepY  /= REAL(2);
 	grd->startY -= grd->stepY/REAL(2);
 	grd->endY    = grd->startY + grd->stepY*(new_count_y-1);
@@ -885,8 +885,8 @@ bool d_surf::reconstruct() {
 	enlarges_X->erase(b_itX);
 	enlarges_Y->erase(b_itY);
 
-	int check_x = getCountX();
-	int check_y = getCountY();
+	size_t check_x = getCountX();
+	size_t check_y = getCountY();
 	
 	return true;
 };
@@ -895,7 +895,7 @@ bool d_surf::full_reconstruct() {
 
 	writelog(LOG_MESSAGE,"surf : make reconstruction");
 	
-	int N = details_d->size();
+	size_t N = details_d->size();
 	bool res = true;
 
 	while ( (N > 0) && res ) {
@@ -908,17 +908,17 @@ bool d_surf::full_reconstruct() {
 };
 
 bool d_surf::add_noise(REAL std) {
-	int size = coeff->size();
-	int i;
+	size_t size = coeff->size();
+	size_t i;
 	for (i = 0; i < size; i++) {
 		(*coeff)(i) += norm_rand(std);
 	}
 	return true;
 };
 
-int d_surf::defined() const {
-	int defined = 0;
-	int i;
+size_t d_surf::defined() const {
+	size_t defined = 0;
+	size_t i;
 	if (coeff) {
 		const REAL * ptr = coeff->begin();
 		for (i = 0; i < coeff->size(); i++) {
@@ -930,7 +930,7 @@ int d_surf::defined() const {
 };
 
 void d_surf::set_undef_value(REAL new_undef_value) {
-	int i;
+	size_t i;
 	REAL old_undef = this->undef_value;
 	for (i = 0; i < coeff->size(); i++) {
 		REAL value = (*coeff)(i);

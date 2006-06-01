@@ -65,7 +65,7 @@ public:
 	virtual bool bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const;
 
 	//! returns amount of points (segment count + 1)
-	virtual int size() const;
+	virtual size_t size() const;
 
 	//! returns true if curve is closed
 	bool is_closed() const;

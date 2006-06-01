@@ -62,7 +62,7 @@ int globe_manager::load_tag(datafile * df, char * tagname) const {
 
 bool globe_manager::save(datafile *df) const {
 
-	unsigned int cnt;
+	size_t cnt;
 
 	for (cnt = 0; cnt < globe_dems->size(); cnt++) {
 		d_dem * fnc = *(globe_dems->begin()+cnt);

@@ -32,7 +32,7 @@ void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up,
 		     REAL ** sortx_begin, REAL ** sortx_end,
 		     REAL ** sorty_begin, REAL ** sorty_end,
 		     REAL * beginx, REAL * beginy,
-		     std::vector<unsigned int> &nn) {
+		     std::vector<size_t> &nn) {
 
 	if (x_left > x_right) return;
 	if (y_down > y_up) return;
@@ -53,7 +53,7 @@ void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up,
 	// Находим первую точку, больше y_up
 	i_sorty_to = std::lower_bound(i_sorty_from,sorty_end,&y_up,ptr_vector_less);
 	
-	typedef std::vector<unsigned int> vecInt;
+	typedef std::vector<size_t> vecInt;
 
 	vecInt nx(i_sortx_to-i_sortx_from);
 	int pos = 0;
@@ -86,7 +86,7 @@ void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up,
 		     REAL ** sortx_begin, REAL ** sortx_end,
 		     REAL ** sorty_begin, REAL ** sorty_end,
 		     REAL * beginx, REAL * beginy,
-		     std::vector<unsigned int> &nn,
+		     std::vector<size_t> &nn,
 		     REAL **& i_sortx_from, REAL **& i_sortx_to,
 		     REAL **& i_sorty_from, REAL **& i_sorty_to) {
 
@@ -109,7 +109,7 @@ void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up,
 	// Находим первую точку, больше y_up
 	i_sorty_to = std::lower_bound(i_sorty_from,sorty_end,&y_up,ptr_vector_less);
 	
-	typedef std::vector<unsigned int> vecInt;
+	typedef std::vector<size_t> vecInt;
 
 	vecInt nx(i_sortx_to-i_sortx_from);
 	int pos = 0;
@@ -136,7 +136,7 @@ void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up,
 void getPointsInSegment(REAL x_left, REAL x_right,
 			REAL ** sortx_begin, REAL ** sortx_end,
 			REAL * beginx,
-			std::vector<unsigned int> &nn) {
+			std::vector<size_t> &nn) {
 
 	if (x_left > x_right) return;
 	
@@ -162,7 +162,7 @@ void getPointsInSegment(REAL x_left, REAL x_right,
 void getPointsInSegment(REAL x_left, REAL x_right,
 			REAL ** sort_begin, REAL ** sort_end,
 			REAL * beginx,
-			std::vector<unsigned int> &nn,
+			std::vector<size_t> &nn,
 			REAL **& i_sort_from, REAL **& i_sort_to) {
 
 	if (x_left > x_right) return;

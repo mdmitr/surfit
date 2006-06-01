@@ -29,7 +29,7 @@
 
 namespace surfit {
 
-boolvec * create_boolvec(int size, bool default_value, int fill_default, int grow_by) {
+boolvec * create_boolvec(size_t size, bool default_value, int fill_default, size_t grow_by) {
 	return new boolvec(size, default_value, fill_default, grow_by);
 };
 
@@ -39,13 +39,14 @@ boolvec * create_boolvec(const boolvec & in) {
 
 boolvec::boolvec(const boolvec &in) {
 	if (this != &in) {
-		int newsize = in.size();
+		size_t newsize = in.size();
 		data = (bool*)malloc(sizeof(bool)*newsize);
 		if (data) {
 			datasize = newsize;
 			bool_datasize = datasize;
 			// init
-			for (int i = 0; i < size(); i++) {
+			size_t i;
+			for (i = 0; i < size(); i++) {
 				operator()(i) = in(i);
 			}
 		};
@@ -55,7 +56,7 @@ boolvec::boolvec(const boolvec &in) {
 	}
 };
 
-boolvec::boolvec(int newsize, bool default_value, int fill_default, int igrow_by) {
+boolvec::boolvec(size_t newsize, bool default_value, int fill_default, size_t igrow_by) {
 	grow_by = igrow_by;
 	if (newsize == 0) {
 		data = NULL;
@@ -69,7 +70,8 @@ boolvec::boolvec(int newsize, bool default_value, int fill_default, int igrow_by
 		bool_datasize = newsize;
 		// init
 		if (fill_default == 1) {
-			for (int i = 0; i < size(); i++) {
+			size_t i;
+			for (i = 0; i < size(); i++) {
 				operator()(i) = default_value;
 			}
 		}
@@ -91,7 +93,7 @@ void boolvec::release() {
 	delete this;
 };
 
-void boolvec::resize(int newsize, bool default_value, int fill_default) {
+void boolvec::resize(size_t newsize, bool default_value, int fill_default) {
 	if (datasize == newsize)
 		return;
 	if ((newsize == 0) && (data = NULL)) {
@@ -102,12 +104,13 @@ void boolvec::resize(int newsize, bool default_value, int fill_default) {
 	bool *tmpData = (bool*)realloc(data, sizeof(bool)*newsize);
 	if (tmpData) {
 		data = tmpData;
-		int oldsize = datasize;
+		size_t oldsize = datasize;
 		datasize = newsize;
 		bool_datasize = datasize;
 		if (oldsize < newsize) {
 			if (fill_default == 1) {
-				for (int i = oldsize; i < newsize; i++) {
+				size_t i;
+				for (i = oldsize; i < newsize; i++) {
 					operator()(i) = default_value;
 				}
 			}
@@ -134,12 +137,12 @@ void boolvec::push_back(const bool& x) {
 	}
 };
 
-void boolvec::set_grow(int igrow_by) {
+void boolvec::set_grow(size_t igrow_by) {
 	grow_by = igrow_by;
 };
 
-void boolvec::reserve(int reserve_size) {
-	int oldsize = bool_datasize;
+void boolvec::reserve(size_t reserve_size) {
+	size_t oldsize = bool_datasize;
 	if (oldsize < reserve_size) {
 		
 		bool *tmpData = (bool*)realloc(data, sizeof(bool)*reserve_size);
@@ -159,7 +162,7 @@ void boolvec::reserve(int reserve_size) {
 	}
 };
 
-void boolvec::swap(int i, int j) {
+void boolvec::swap(size_t i, size_t j) {
 	#ifdef LSS_BOUNDS_CHECK
 	if ((i < 1) || (i > size()))
 			throw "invalid argument";
@@ -173,7 +176,8 @@ void boolvec::swap(int i, int j) {
 
 void boolvec::erase(bool* del) {
 	bool* cur = begin();
-	for (int i = 0; i < size(); i++, cur++) {
+	size_t i;
+	for (i = 0; i < size(); i++, cur++) {
 		if (cur == del) {
 			// perform deletion;
 			memmove(cur,cur+1,(size()-i+1)*sizeof(bool));
@@ -184,7 +188,7 @@ void boolvec::erase(bool* del) {
 	}
 };
 
-void boolvec::erase(int index) {
+void boolvec::erase(size_t index) {
 #ifdef LSS_BOUNDS_CHECK
 	if (index > datasize) 
 		throw "invalid argument";

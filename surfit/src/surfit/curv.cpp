@@ -41,7 +41,7 @@ d_curv * create_curv(vec * iX, vec * iY,
 d_curv * create_curv(const d_curv * src) 
 {
 
-	int size = src->size();
+	size_t size = src->size();
 	vec * X = create_vec(*(src->X));
 	vec * Y = create_vec(*(src->Y));
 	
@@ -73,14 +73,14 @@ bool d_curv::bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const {
 	return false;
 };
 
-int d_curv::size() const {
+size_t d_curv::size() const {
 	if (X)
 		return X->size();
 	return 0;
 };
 
 bool d_curv::is_closed() const {
-	int s = size();
+	size_t s = size();
 	if (s <= 1)
 		return false;
 	bool x_equals = ( (*X)(0) == (*X)(s - 1));
@@ -92,7 +92,7 @@ void d_curv::close() {
 	if (is_closed()) 
 		return;
 
-	int old_size = size();
+	size_t old_size = size();
 	if (old_size == 0)
 		return;
 
@@ -152,7 +152,7 @@ bool d_curv::getMinMaxZ(REAL & minz, REAL & maxz) const {
 };
 
 bool d_curv::in_region(REAL x, REAL y) const {
-	int N = size();
+	size_t N = size();
 	if (N == 0)
 		return false;
 	
@@ -169,7 +169,7 @@ bool d_curv::in_region(REAL x, REAL y) const {
 	REAL * X_begin = X->begin();
 	REAL * Y_begin = Y->begin();
 
-	int i;
+	size_t i;
 	int test=0;
 	REAL x2,y2;
 
@@ -268,7 +268,7 @@ d_points * discretize_curv(const d_curv * crv, d_grid * grd, REAL value, const c
 		return NULL;
 
 	// using modified brezengham algorithm
-	int qq;
+	size_t qq;
 	REAL X2, X1, Y2, Y1;
 
 	vec * points_x = create_vec();
@@ -280,14 +280,14 @@ d_points * discretize_curv(const d_curv * crv, d_grid * grd, REAL value, const c
 		Y1 = (*(crv->Y))(qq);
 		Y2 = (*(crv->Y))(qq + 1);
 		
-		int x1 = grd->get_i(X1);
-		int x2 = grd->get_i(X2);
-		int y1 = grd->get_j(Y1);
-		int y2 = grd->get_j(Y2);
+		size_t x1 = grd->get_i(X1);
+		size_t x2 = grd->get_i(X2);
+		size_t y1 = grd->get_j(Y1);
+		size_t y2 = grd->get_j(Y2);
 			
 		int dx, dy, i1, i2, i, kx, ky;
 		int d;      // "отклонение" 
-		int x, y;
+		size_t x, y;
 		int flag;
 			
 		dy = y2 - y1;

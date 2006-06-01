@@ -681,7 +681,7 @@ bool surf_to_mask(REAL true_from, REAL true_to, const char * pos)
 		return false;
 	
 	bitvec * bcoeff = create_bitvec( srf->coeff->size() );
-	int i;
+	size_t i;
 	REAL val;
 	for (i = 0; i < srf->coeff->size(); i++) {
 		val = (*(srf->coeff))(i);
@@ -865,7 +865,7 @@ int surf_size() {
 
 void surfs_info() {
 	if (surfit_surfs->size() > 0) {
-		unsigned int surf_cnt;
+		size_t surf_cnt;
 		for (surf_cnt = 0; surf_cnt < surfit_surfs->size(); surf_cnt++) {
 			d_surf * a_srf = *(surfit_surfs->begin()+surf_cnt);
 			if (a_srf) {

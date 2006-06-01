@@ -486,7 +486,7 @@ void prepare_scattered_points(const d_points * pnts,
 	if (!pnts)
 		return;
 	
-	std::vector<unsigned int> * point_numbers = new std::vector<unsigned int>( pnts->size() );
+	std::vector<size_t> * point_numbers = new std::vector<size_t>( pnts->size() );
 	
 	int point_counter;
 	for (point_counter = 0; point_counter < pnts->size(); point_counter++) {
@@ -515,7 +515,7 @@ void bind_points_to_grid(d_grid *& old_grid,
 	std::vector<sub_points *> * tasks = new std::vector<sub_points *>;
 	tasks->reserve(old_size);
 
-	std::vector<unsigned int> * nums = new std::vector<unsigned int>;
+	std::vector<size_t> * nums = new std::vector<size_t>;
 	int nums_size;
 	
 	for (it = old_pnts->begin(); it != old_pnts->end(); it++) {
@@ -583,7 +583,7 @@ void bind_points_to_grid(d_grid *& old_grid,
 					sub_points * new_sub_points = new sub_points(node, nums);
 					tasks->push_back(new_sub_points);
 					
-					nums = new std::vector<unsigned int>;
+					nums = new std::vector<size_t>;
 				}
 				
 				if (total_size == old_size)

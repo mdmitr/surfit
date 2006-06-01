@@ -35,13 +35,10 @@ namespace surfit {
 class bitvec;
 
 SSTUFF_EXPORT
-bitvec * create_bitvec(int size = 0);
+bitvec * create_bitvec(size_t size = 0);
 
 SSTUFF_EXPORT
 bitvec * create_bitvec(const bitvec * src);
-
-//SSTUFF_EXPORT
-//bitvec * create_bitvec(int * begin, int * end, int size);
 
 /*! \class bitvec
     \brief A boolean vector with bit-based storage
@@ -51,18 +48,18 @@ class SSTUFF_EXPORT bitvec {
 protected:
 	
 	//! constructor
-	bitvec(int size = 0);
+	bitvec(size_t size = 0);
 
 	//! copy constructor
 	bitvec(const bitvec * src);
 
 	//! another constructor
-	bitvec(surfit_int32 * begin, surfit_int32 * end, int size);
+	bitvec(surfit_int32 * begin, surfit_int32 * end, size_t size);
 
 public:
 
 	friend SSTUFF_EXPORT
-	bitvec * create_bitvec(int size);
+	bitvec * create_bitvec(size_t size);
 
 	friend SSTUFF_EXPORT
 	bitvec * create_bitvec(const bitvec * src);
@@ -76,20 +73,20 @@ public:
 	void release();
 
 	//! returns value at a specified location
-	bool get(int pos) const {
+	bool get(size_t pos) const {
 		assert( (pos >= 0) && (pos < datasize) );
 		//return ( *(data + (pos >> offset)) & (1 <<(pos - ((pos >> offset)<<offset)))) != 0;
 		return ( *(data + (pos >> 5)) & (1 <<(pos & ((1 << 5) - 1)))) != 0;
 	};
 
 	//! sets value of element at a specified location to true
-	void set_true(int pos) {
+	void set_true(size_t pos) {
 		assert( (pos >= 0) && (pos < datasize) );
 		*(data + (pos >> 5)) |= (1 <<(pos - ((pos >> 5)<<5)));
 	};
 
 	//! sets value of element at a specified location to false
-	void set_false(int pos) {
+	void set_false(size_t pos) {
 		assert( (pos >= 0) && (pos < datasize) );
 		*(data + (pos >> 5)) &=~ (1 <<(pos - ((pos >> 5)<<5)));
 	};
@@ -107,28 +104,28 @@ public:
 	void invert();
 	
 	//! returns size of the vector
-	int size() const;
+	size_t size() const;
 
 	//! returns amount of "int"'s for save vector in memory
-	int int_size() const;
+	size_t int_size() const;
 
 	//! returns size of "true" elements
-	int true_size() const;
+	size_t true_size() const;
 
 	//! writes four values, starting from pos
-	void write4(int pos, 
+	void write4(size_t pos, 
 		    bool b1, bool b2, bool b3, bool b4); 
 	
 	//! reads four values, starting from pos
-	void get4(int pos, bool * b);
+	void get4(size_t pos, bool * b);
 	
 	//! writes 10 values, starting from pos
-	void write10(int pos, 
+	void write10(size_t pos, 
 		     bool b1, bool b2, bool b3, bool b4, bool b5,
 		     bool b6, bool b7, bool b8, bool b9, bool b10);
 	
 	//! reads 10 values, starting from pos
-	void get10(int pos, bool * b);
+	void get10(size_t pos, bool * b);
 
 	void AND(const bitvec * b);
 	void OR(const bitvec * b);
@@ -144,9 +141,9 @@ protected:
 	surfit_int32 * data;
 
 	//! amount of bits in bitvec
-	int datasize;
+	size_t datasize;
 	//! bitvec size in bytes
-	int byte_size;
+	size_t byte_size;
 	
 };
 

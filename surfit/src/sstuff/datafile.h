@@ -255,7 +255,7 @@ public:
 	//
 
 	//! (internal) writes string as binary
-	unsigned int writeBinaryString(const char * string);
+	size_t writeBinaryString(const char * string);
 	//! (internal) writes string
 	bool writeString(const char * string);
 	//! (internal) writes string as text

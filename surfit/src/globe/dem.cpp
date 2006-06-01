@@ -83,12 +83,12 @@ short d_dem::getValue(REAL x, REAL y) const {
 	getCoordNode(0,0,start_x,start_y);
 	
 	x = x - start_x + grd->stepX/REAL(2);
-	int i = (int)floor(x / grd->stepX);
+	size_t i = (size_t)MAX(0,floor(x / grd->stepX));
 	if ((i >= grd->getCountX()) || (i < 0))
 		return undef_value;
 
 	y = y - start_y + grd->stepY/REAL(2);
-	int j = (int)floor(y / grd->stepY);
+	size_t j = (size_t)MAX(0,floor(y / grd->stepY));
 	if ((j >= grd->getCountY()) || (j < 0))
 		return undef_value;
 
@@ -99,9 +99,9 @@ short d_dem::getValue(REAL x, REAL y) const {
 REAL d_dem::getInterpValue(REAL x, REAL y) const {
 	
 	REAL value = 0;
-	int I0, J0, I1, J1;
-	int func_sizeX = getCountX();
-	int func_sizeY = getCountY();
+	size_t I0, J0, I1, J1;
+	size_t func_sizeX = getCountX();
+	size_t func_sizeY = getCountY();
 	REAL z0, z1, z2, z3;
 	REAL x0, y0;
 	REAL delta_x, delta_y;
@@ -109,8 +109,8 @@ REAL d_dem::getInterpValue(REAL x, REAL y) const {
 	REAL hY = grd->stepY;
 	
 	const d_grid * g = grd;
-	I0 = (int)floor( (x - g->startX)/g->stepX );
-	J0 = (int)floor( (y - g->startY)/g->stepY );
+	I0 = (size_t)MAX(0,floor( (x - g->startX)/g->stepX ));
+	J0 = (size_t)MAX(0,floor( (y - g->startY)/g->stepY ));
 	
 	I1 = I0+1;
 	J1 = J0+1;

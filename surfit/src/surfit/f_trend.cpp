@@ -232,27 +232,27 @@ bool f_trend::minimize() {
 
 bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	
-	int matrix_size = method_basis_cntX*method_basis_cntY;
-	int NN = method_grid->getCountX();
-	int MM = method_grid->getCountY();
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t NN = method_grid->getCountX();
+	size_t MM = method_grid->getCountY();
 
-	int aux_X_from, aux_X_to;
-	int aux_Y_from, aux_Y_to;
+	size_t aux_X_from, aux_X_to;
+	size_t aux_Y_from, aux_Y_to;
 	get_tr_srf(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
 	if (tr_srf == NULL)
 		return false;
 
-	int nn = aux_X_to-aux_X_from;
+	size_t nn = aux_X_to-aux_X_from;
 	
 	trend_mask_solved = create_bitvec(method_mask_solved);
 	trend_mask_undefined = create_bitvec(method_mask_undefined);
 
-	int i,j;
+	size_t i,j;
 	for (j = aux_Y_from; j <= aux_Y_to; j++) {
 		for (i = aux_X_from; i <= aux_X_to; i++) {
 			REAL val = tr_srf->getValueIJ(i-aux_X_from,j-aux_Y_from);
 			if (val == tr_srf->undef_value) {
-				int pos = i + j*NN;
+				size_t pos = i + j*NN;
 				trend_mask_undefined->set_true(pos);
 				trend_mask_solved->set_false(pos);
 
@@ -363,7 +363,7 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	v = create_vec(matrix_size);
 
-	int points = calcVecV(matrix_size, method_X, T, v, NN, MM, 
+	size_t points = calcVecV(matrix_size, method_X, T, v, NN, MM, 
 			      trend_mask_solved,
 			      trend_mask_undefined, 
 			      aux_X_from, aux_X_to,
@@ -383,13 +383,13 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 void f_trend::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 
-	int NN = method_grid->getCountX();
+	size_t NN = method_grid->getCountX();
 
-	int aux_X_from, aux_X_to;
-	int aux_Y_from, aux_Y_to;
+	size_t aux_X_from, aux_X_to;
+	size_t aux_Y_from, aux_Y_to;
 	_grid_intersect1(method_grid, srf->grd, aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
 	
-	int i,j,pos;
+	size_t i,j,pos;
 	for (j = aux_Y_from; j <= aux_Y_to; j++) {
 		for (i = aux_X_from; i <= aux_X_to; i++) {
 			pos = i + j*NN;
@@ -448,14 +448,14 @@ bool f_trend::solvable_without_cond(const bitvec * mask_solved,
 				    const vec * X)
 {
 
-	int NN = method_grid->getCountX();
+	size_t NN = method_grid->getCountX();
 
-	int aux_X_from, aux_X_to;
-	int aux_Y_from, aux_Y_to;
+	size_t aux_X_from, aux_X_to;
+	size_t aux_Y_from, aux_Y_to;
 	_grid_intersect1(method_grid, srf->grd, aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
 	
-	int i,j,pos;
-	int cnt = 0;
+	size_t i,j,pos;
+	size_t cnt = 0;
 	for (j = aux_Y_from; j <= aux_Y_to; j++) {
 		for (i = aux_X_from; i <= aux_X_to; i++) {
 			pos = i + j*NN;
@@ -482,7 +482,7 @@ sss:
 
 };
 
-void f_trend::get_tr_srf(int & i_from, int & i_to, int & j_from, int & j_to) {
+void f_trend::get_tr_srf(size_t & i_from, size_t & i_to, size_t & j_from, size_t & j_to) {
 	
 	_grid_intersect1(method_grid, srf->grd, i_from, i_to, j_from, j_to);
 	d_grid * aux_grid = _create_sub_grid(method_grid, i_from, i_to, j_from, j_to);

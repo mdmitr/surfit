@@ -45,7 +45,7 @@
 
 namespace surfit {
 
-matrD2::matrD2(int iN, int iNN, 
+matrD2::matrD2(size_t iN, size_t iNN, 
 	       REAL ihx, REAL ihy,
 	       const bitvec * imask_solved, 
 	       const bitvec * imask_undefined,
@@ -72,7 +72,7 @@ matrD2::~matrD2() {
 
 void matrD2::make_mask(const bitvec * imask_solved, const bitvec * imask_undefined) {
 	mask = create_bitvec(rows()*10);
-	int j;
+	size_t j;
 	bool first_x, second_x, third_x;
 	bool first_xx, second_xx;
 	bool first_yy, second_yy;
@@ -84,8 +84,8 @@ void matrD2::make_mask(const bitvec * imask_solved, const bitvec * imask_undefin
 		first_yy = second_yy = true;
 		first_y = second_y = third_y = true;
 		
-		int n = j % NN;
-		int m = (j - n)/NN;
+		size_t n = j % NN;
+		size_t m = (j - n)/NN;
 		
 		sums_points_D2(n, m, 
 			NN, MM, NN, MM,
@@ -112,13 +112,13 @@ void matrD2::make_mask(const bitvec * imask_solved, const bitvec * imask_undefin
 	mask_solved_undefined->OR(imask_undefined);
 };
 
-REAL matrD2::matrator_serve(int i, int j,
+REAL matrD2::matrator_serve(size_t i, size_t j,
 			    bool * b,
-			    int * next_j) const {
+			    size_t * next_j) const {
 
-	int next_j_dx2  = INT_MAX;
-	int next_j_dxdy = INT_MAX;
-	int next_j_dy2  = INT_MAX;
+	size_t next_j_dx2  = UINT_MAX;
+	size_t next_j_dxdy = UINT_MAX;
+	size_t next_j_dy2  = UINT_MAX;
 
 	REAL res = REAL(0);
 	
@@ -142,11 +142,11 @@ REAL matrD2::matrator_serve(int i, int j,
 
 		if (j == i+2) {
 			res += _hx4; // 1;
-			next_j_dx2 = MIN(INT_MAX, next_j_dx2);
+			next_j_dx2 = MIN(UINT_MAX, next_j_dx2);
 			goto mark_second_x;
 		}
 
-		next_j_dx2 = MIN(INT_MAX, next_j_dx2);
+		next_j_dx2 = MIN(UINT_MAX, next_j_dx2);
 	}
 
 mark_second_x:
@@ -172,11 +172,11 @@ mark_second_x:
 
 		if (j == i+1) {
 			res += -2 * _hx4; // -2;
-			next_j_dx2 = MIN(INT_MAX, next_j_dx2);
+			next_j_dx2 = MIN(UINT_MAX, next_j_dx2);
 			goto mark_third_x;
 		}
 		
-		next_j_dx2 = MIN(INT_MAX, next_j_dx2);
+		next_j_dx2 = MIN(UINT_MAX, next_j_dx2);
 		
 	}
 
@@ -203,11 +203,11 @@ mark_third_x:
 
 		if (j == i) {
 			res += _hx4; // 1;
-			next_j_dx2 = MIN(INT_MAX, next_j_dx2);
+			next_j_dx2 = MIN(UINT_MAX, next_j_dx2);
 			goto mark_first_y;
 		}
 		
-		next_j_dx2 = MIN(INT_MAX, next_j_dx2);
+		next_j_dx2 = MIN(UINT_MAX, next_j_dx2);
 		
 	}
 
@@ -244,11 +244,11 @@ mark_first_y:
 
 		if (j == i+2*NN) {
 			res += _hy4; // 1;
-			next_j_dy2 = MIN(INT_MAX, next_j_dy2);
+			next_j_dy2 = MIN(UINT_MAX, next_j_dy2);
 			goto mark_second_y;
 		}
 
-		next_j_dy2 = MIN(INT_MAX, next_j_dy2);
+		next_j_dy2 = MIN(UINT_MAX, next_j_dy2);
 			
 	}
 
@@ -285,11 +285,11 @@ mark_second_y:
 
 		if (j == i+NN) {
 			res += -2 * _hy4; // -2;
-			next_j_dy2 = MIN(INT_MAX, next_j_dy2);
+			next_j_dy2 = MIN(UINT_MAX, next_j_dy2);
 			goto mark_third_y;
 		}
 
-		next_j_dy2 = MIN(INT_MAX, next_j_dy2);
+		next_j_dy2 = MIN(UINT_MAX, next_j_dy2);
 
 	}
 
@@ -326,11 +326,11 @@ mark_third_y:
 
 		if (j == i) {
 			res += _hy4; // 1;
-			next_j_dy2 = MIN(INT_MAX, next_j_dy2);
+			next_j_dy2 = MIN(UINT_MAX, next_j_dy2);
 			goto mark_first_xx;
 		}
 		
-		next_j_dy2 = MIN(INT_MAX, next_j_dy2);
+		next_j_dy2 = MIN(UINT_MAX, next_j_dy2);
 		
 	}
 
@@ -368,11 +368,11 @@ mark_first_xx:
 
 		if (j == i+NN+1) {
 			res += _hxy4; // 2;
-			next_j_dxdy = MIN(INT_MAX, next_j_dxdy);
+			next_j_dxdy = MIN(UINT_MAX, next_j_dxdy);
 			goto mark_second_xx;
 		}
 		
-		next_j_dxdy = MIN(INT_MAX, next_j_dxdy);
+		next_j_dxdy = MIN(UINT_MAX, next_j_dxdy);
 		
 	}
 
@@ -410,11 +410,11 @@ mark_second_xx:
 		
 		if (j == i+NN) {
 			res += -_hxy4; // -2;
-			next_j_dxdy = MIN(INT_MAX, next_j_dxdy);
+			next_j_dxdy = MIN(UINT_MAX, next_j_dxdy);
 			goto mark_first_yy;
 		}
 
-		next_j_dxdy = MIN(INT_MAX, next_j_dxdy);
+		next_j_dxdy = MIN(UINT_MAX, next_j_dxdy);
 				
 	}
 
@@ -452,11 +452,11 @@ mark_first_yy:
 
 		if (j == i+1) {
 			res += -_hxy4; // -2;
-			next_j_dxdy = MIN(INT_MAX, next_j_dxdy);
+			next_j_dxdy = MIN(UINT_MAX, next_j_dxdy);
 			goto mark_second_yy;
 		}
 
-		next_j_dxdy = MIN(INT_MAX, next_j_dxdy);
+		next_j_dxdy = MIN(UINT_MAX, next_j_dxdy);
 				
 	}
 
@@ -494,11 +494,11 @@ mark_second_yy:
 
 		if (j == i) {
 			res += _hxy4; // 2;
-			next_j_dxdy = MIN(INT_MAX, next_j_dxdy);
+			next_j_dxdy = MIN(UINT_MAX, next_j_dxdy);
 			goto exit;
 		}
 		
-		next_j_dxdy = MIN(INT_MAX, next_j_dxdy);
+		next_j_dxdy = MIN(UINT_MAX, next_j_dxdy);
 				
 	}
 
@@ -514,7 +514,7 @@ exit:
 
 };
 	
-REAL matrD2::element_at(int i, int j, int * next_j) const {
+REAL matrD2::element_at(size_t i, size_t j, size_t * next_j) const {
 
 		
 	bool b[10];
@@ -527,11 +527,11 @@ REAL matrD2::element_at(int i, int j, int * next_j) const {
 
 };
 
-REAL matrD2::element_at_transposed(int i, int j, int * next_j) const {
+REAL matrD2::element_at_transposed(size_t i, size_t j, size_t * next_j) const {
 	return element_at(i, j, next_j);
 };
 
-REAL matrD2::at(int i, int j, int * next_j) const {
+REAL matrD2::at(size_t i, size_t j, size_t * next_j) const {
 
 	bool zero = mask_solved_undefined->get(i);
 	if (!zero)
@@ -605,7 +605,7 @@ REAL matrD2::at(int i, int j, int * next_j) const {
 				return REAL(0);
 			}
 			
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 			return REAL(0);
 		}
 
@@ -619,15 +619,15 @@ REAL matrD2::at(int i, int j, int * next_j) const {
 
 };
 
-REAL matrD2::at_transposed(int i, int j, int * next_j) const {
+REAL matrD2::at_transposed(size_t i, size_t j, size_t * next_j) const {
 	return at(i, j, next_j);
 };
 
-REAL matrD2::mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end) {
+REAL matrD2::mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end) {
 	return mult_line(J, b_begin, b_end);
 };
 
-REAL matrD2::mult_line(int J, const REAL * b_begin, const REAL * b_end) {
+REAL matrD2::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) {
 
 	if (mask_solved_undefined->get(J))
 		return REAL(0);
@@ -1038,15 +1038,15 @@ REAL matrD2::norm() const {
 	return 16*REAL(_hx4 + _hy4 + _hxy4);
 };
 
-long matrD2::cols() const {
+size_t matrD2::cols() const {
 	return N;
 };
 
-long matrD2::rows() const {
+size_t matrD2::rows() const {
 	return N;
 };
 
-void matrD2::skip(int i, int j) {
+void matrD2::skip(size_t i, size_t j) {
 	mask_solved_undefined->set_true(i + j*NN);
 };
 

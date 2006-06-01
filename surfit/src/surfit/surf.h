@@ -78,7 +78,7 @@ public:
 	virtual REAL getMeanValue(REAL x_from, REAL x_to, REAL y_from, REAL y_to) const;
 
 	//! returns surface value at node (i,j)
-	virtual REAL getValueIJ(int i, int j) const;
+	virtual REAL getValueIJ(size_t i, size_t j) const;
 
 	//! returns minimum X-coordinate for the surface
 	virtual REAL getMinX() const;
@@ -111,10 +111,10 @@ public:
 	virtual bool getMinMaxZ_mask(REAL & minZ, REAL & maxZ, const bitvec * msk) const;
 
 	//! returns amount of cells for X direction
-	virtual int getCountX() const;
+	virtual size_t getCountX() const;
 
 	//! returns amount of cells for Y direction
-	virtual int getCountY() const;
+	virtual size_t getCountY() const;
 
 	//! returns distance between of centers of cells in X direction
 	virtual REAL getStepX() const;
@@ -123,22 +123,22 @@ public:
 	virtual REAL getStepY() const;
 
 	//! calculates coordinates of the center of the (i,j) cell
-	virtual void getCoordNode(int i, int j, REAL & x, REAL & y) const;
+	virtual void getCoordNode(size_t i, size_t j, REAL & x, REAL & y) const;
 
 	//! returns X-coordinate of the center of the (i,j) cell
-	virtual REAL getCoordNodeX(int i) const;
+	virtual REAL getCoordNodeX(size_t i) const;
 
 	//! returns Y-coordinate of the center of the (i,j) cell
-	virtual REAL getCoordNodeY(int j) const;
+	virtual REAL getCoordNodeY(size_t j) const;
 
 	//! returns i-cell number for X-coordinate
-	virtual int get_i(REAL x) const;
+	virtual size_t get_i(REAL x) const;
 	
 	//! returns j-cell number for Y-coordinate
-	virtual int get_j(REAL y) const;
+	virtual size_t get_j(REAL y) const;
 
 	//! returns amount of cells with defined values
-	virtual int defined() const;
+	virtual size_t defined() const;
 
 	//! writes tag for saving surf to datafile 
 	virtual bool writeTags(datafile * df) const;
@@ -221,7 +221,7 @@ public:
 	virtual bool full_reconstruct();
 
 	//! returns details size
-	virtual int  details_size() const;
+	virtual size_t  details_size() const;
 
 	//! calculates surface norm
 	virtual REAL calc_approx_norm(int norm_type) const;

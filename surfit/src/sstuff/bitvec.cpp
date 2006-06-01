@@ -24,7 +24,7 @@ namespace surfit {
 
 static int bits_per_byte = 32;
 
-bitvec * create_bitvec(int size) {
+bitvec * create_bitvec(size_t size) {
 	return new bitvec(size);
 };
 
@@ -32,7 +32,7 @@ bitvec * create_bitvec(const bitvec * src) {
 	return new bitvec(src);
 };
 
-bitvec::bitvec(int size) {
+bitvec::bitvec(size_t size) {
 	data = NULL;
 	byte_size = (size + bits_per_byte - 1)/bits_per_byte;
 	data = (surfit_int32*)malloc((byte_size+1)*sizeof(surfit_int32));
@@ -44,7 +44,7 @@ bitvec::bitvec(const bitvec * src) {
 	copy(src);
 };
 
-bitvec::bitvec(surfit_int32 * begin, surfit_int32 * end, int size) {
+bitvec::bitvec(surfit_int32 * begin, surfit_int32 * end, size_t size) {
 	data = begin;
 	byte_size = (size + bits_per_byte - 1)/bits_per_byte;
 	datasize = size;
@@ -69,7 +69,7 @@ void bitvec::copy(const bitvec * src) {
 };
 
 void bitvec::init_false() {
-	int i;
+	size_t i;
 	surfit_int32 * ptr = data;
 	for (i = 0; i < byte_size; i++) {
 		*ptr = 0;
@@ -79,13 +79,13 @@ void bitvec::init_false() {
 
 //! fills vector with true values
 void bitvec::init_true() {
-	int i;
+	size_t i;
 	for (i = 0; i < size(); i++) 
 		set_true(i);
 };
 
 void bitvec::invert() {
-	int i;
+	size_t i;
 	for (i = 0; i < size(); i++) {
 		if (get(i))
 			set_false(i);
@@ -94,17 +94,17 @@ void bitvec::invert() {
 	}
 };
 
-int bitvec::size() const {
+size_t bitvec::size() const {
 	return datasize;
 };
 
-int bitvec::int_size() const {
+size_t bitvec::int_size() const {
 	return byte_size;
 };
 
-int bitvec::true_size() const {
-	int i;
-	int cnt = 0;
+size_t bitvec::true_size() const {
+	size_t i;
+	size_t cnt = 0;
 	for (i = 0; i < datasize; i++) {
 		if (get(i))
 			cnt++;
@@ -112,10 +112,10 @@ int bitvec::true_size() const {
 	return cnt;
 };
 
-void bitvec::write4(int pos, 
+void bitvec::write4(size_t pos, 
 		    bool b1, bool b2, bool b3, bool b4) 
 {
-	int real_pos = pos*4;
+	size_t real_pos = pos*4;
 	
 	if (b1)
 		set_true(real_pos);
@@ -141,12 +141,12 @@ void bitvec::write4(int pos,
 		set_false(real_pos);
 };
 
-void bitvec::get4(int pos, bool * b) 
+void bitvec::get4(size_t pos, bool * b) 
 {
-	unsigned int real_pos = pos*4;
-	unsigned int d = real_pos & 31;
-	unsigned int q = real_pos>>5;
-	unsigned int t = ((unsigned int)data[q]) >> d;
+	size_t real_pos = pos*4;
+	size_t d = real_pos & 31;
+	size_t q = real_pos>>5;
+	size_t t = ((size_t)data[q]) >> d;
 	if (d > 32-5) 
 		t |= data[q+1] << (32-d);
 	(char&)b[0] = 1 & (t >> 0);
@@ -155,11 +155,11 @@ void bitvec::get4(int pos, bool * b)
 	(char&)b[3] = 1 & (t >> 3);
 };
 
-void bitvec::write10(int pos, 
+void bitvec::write10(size_t pos, 
 		     bool b1, bool b2, bool b3, bool b4, bool b5,
 		     bool b6, bool b7, bool b8, bool b9, bool b10) 
 {
-	int real_pos = pos*10;
+	size_t real_pos = pos*10;
 	
 	if (b1)
 		set_true(real_pos);
@@ -222,12 +222,12 @@ void bitvec::write10(int pos,
 	
 };
 
-void bitvec::get10(int pos, bool * b) 
+void bitvec::get10(size_t pos, bool * b) 
 {
-	unsigned int real_pos = pos*10;
-	unsigned int d = real_pos & 31;
-	unsigned int q = real_pos>>5;
-	unsigned int t = ((unsigned int)data[q]) >> d;
+	size_t real_pos = pos*10;
+	size_t d = real_pos & 31;
+	size_t q = real_pos>>5;
+	size_t t = ((size_t)data[q]) >> d;
 	if (d > 32-10)
 		t |= data[q+1] << (32-d);
 	(char&)b[0] = 1 & (t >> 0);
@@ -243,19 +243,19 @@ void bitvec::get10(int pos, bool * b)
 };
 
 void bitvec::AND(const bitvec * b) {
-	int i;
+	size_t i;
 	for (i = 0; i < byte_size; i++) 
 		*(data + i) &= *(b->begin()+i);
 };
 
 void bitvec::OR(const bitvec * b) {
-	int i;
+	size_t i;
 	for (i = 0; i < byte_size; i++) 
 		*(data + i) |= *(b->begin()+i);
 };
 
 void bitvec::XOR(const bitvec * b) {
-	int i;
+	size_t i;
 	for (i = 0; i < size(); i++) {
 		bool bb = (get(i) ^ b->get(i));
 		if (bb)
@@ -267,7 +267,7 @@ void bitvec::XOR(const bitvec * b) {
 
 
 void bitvec::NOT() {
-	int i;
+	size_t i;
 	for (i = 0; i < size(); i++) {
 		bool bb = !get(i);
 		if (bb)

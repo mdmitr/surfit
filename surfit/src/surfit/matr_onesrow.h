@@ -30,29 +30,29 @@ class vec;
 class SURFIT_EXPORT matr_onesrow : public matr {
 public:
 	//! constructor
-	matr_onesrow(REAL ival, long iN,
+	matr_onesrow(REAL ival, size_t iN,
 		     bitvec * imask);
 
 	//! A destructor
 	virtual ~matr_onesrow();
 
-	virtual REAL element_at(int i, int j, int * next_j = NULL) const;
-	virtual REAL element_at_transposed(int i, int j, int * next_j = NULL) const;
-	virtual REAL at(int i, int j, int * next_j = NULL) const;
-	virtual REAL at_transposed(int i, int j, int * next_j = NULL) const;
+	virtual REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
+	virtual REAL element_at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
+	virtual REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
+	virtual REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	
-	virtual REAL mult_line(int J, const REAL * b_begin, const REAL * b_end);
-	virtual REAL mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end);
+	virtual REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end);
+	virtual REAL mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end);
 	virtual void call_after_mult();
 	
-	virtual long cols() const;
-	virtual long rows() const;
+	virtual size_t cols() const;
+	virtual size_t rows() const;
 
 	virtual REAL norm() const;
 
 protected:
 
-	long N;
+	size_t N;
 	REAL val;
 	bitvec * mask;
 	const REAL * prev_b_begin;
@@ -63,30 +63,30 @@ protected:
 class SURFIT_EXPORT matr_row : public matr {
 public:
 	//! constructor
-	matr_row(long iN,
+	matr_row(size_t iN,
 	         bitvec * imask,
 		 vec * ivalues);
 
 	//! A destructor
 	virtual ~matr_row();
 
-	virtual REAL element_at(int i, int j, int * next_j = NULL) const;
-	virtual REAL element_at_transposed(int i, int j, int * next_j = NULL) const;
-	virtual REAL at(int i, int j, int * next_j = NULL) const;
-	virtual REAL at_transposed(int i, int j, int * next_j = NULL) const;
+	virtual REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
+	virtual REAL element_at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
+	virtual REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
+	virtual REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	
-	virtual REAL mult_line(int J, const REAL * b_begin, const REAL * b_end);
-	virtual REAL mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end);
+	virtual REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end);
+	virtual REAL mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end);
 	virtual void call_after_mult();
 	
-	virtual long cols() const;
-	virtual long rows() const;
+	virtual size_t cols() const;
+	virtual size_t rows() const;
 
 	virtual REAL norm() const;
 
 protected:
 
-	long N;
+	size_t N;
 	vec * values;
 	bitvec * mask;
 	const REAL * prev_b_begin;

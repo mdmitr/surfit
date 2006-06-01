@@ -29,28 +29,28 @@ class bitvec;
 class SURFIT_EXPORT matr_eye : public matr {
 public:
 	//! constructor
-	matr_eye(REAL ival, long iN, const bitvec * imask,
+	matr_eye(REAL ival, size_t iN, const bitvec * imask,
 		 const bitvec * imask_solved, const bitvec * imask_undefined);
 
 	//! A destructor
 	virtual ~matr_eye();
 
-	REAL element_at(int i, int j, int * next_j = NULL) const;
-	REAL element_at_transposed(int i, int j, int * next_j = NULL) const;
-	REAL at(int i, int j, int * next_j = NULL) const;
-	REAL at_transposed(int i, int j, int * next_j = NULL) const;
+	REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
+	REAL element_at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
+	REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
+	REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	
-	REAL mult_line(int J, const REAL * b_begin, const REAL * b_end);
-	REAL mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end);
+	REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end);
+	REAL mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end);
 	
-	virtual long cols() const;
-	virtual long rows() const;
+	virtual size_t cols() const;
+	virtual size_t rows() const;
 
 	REAL norm() const;
 
 protected:
 
-	long N;
+	size_t N;
 	REAL val;
 	const bitvec * mask;
 	const bitvec * mask_solved;

@@ -179,17 +179,17 @@ void f_area::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undef
 		return;
 	}
 	
-	unsigned int i;
+	size_t i;
 	
 	if (value == undef_value) {
-		for (i = 0; i < (unsigned int)matrix_size; i++) {
+		for (i = 0; i < (size_t)matrix_size; i++) {
 			if (area_mask->get(i) == false)
 				continue;
 			if (!mask_solved->get(i))
 				mask_undefined->set_true(i);
 		}
 	} else {
-		for (i = 0; i < (unsigned int)matrix_size; i++) {
+		for (i = 0; i < (size_t)matrix_size; i++) {
 			if (area_mask->get(i) == false)
 				continue;
 			if ( (mask_solved->get(i) == false) && (mask_undefined->get(i) == false) ) {
@@ -220,17 +220,17 @@ bool f_area::minimize_only_area() {
 	if (area_mask == NULL)
 		return false;
 	
-	unsigned int i;
+	size_t i;
 	
 	if (value == undef_value) {
-		for (i = 0; i < (unsigned int)area_mask->size(); i++) {
+		for (i = 0; i < (size_t)area_mask->size(); i++) {
 			if (area_mask->get(i) == false)
 				continue;
 			if (!method_mask_solved->get(i))
 				method_mask_undefined->set_true(i);
 		}
 	} else {
-		for (i = 0; i < (unsigned int)area_mask->size(); i++) {
+		for (i = 0; i < (size_t)area_mask->size(); i++) {
 			if (area_mask->get(i) == false)
 				continue;
 			if ( (method_mask_solved->get(i) == false) && (method_mask_undefined->get(i) == false) ) {

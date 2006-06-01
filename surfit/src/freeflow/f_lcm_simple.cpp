@@ -73,9 +73,9 @@ void f_lcm_simple::add_flow(functional * fnc) {
 
 bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
-	int matrix_size = method_basis_cntX*method_basis_cntY;
-	int NN = method_grid->getCountX();
-	int MM = method_grid->getCountY();
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t NN = method_grid->getCountX();
+	size_t MM = method_grid->getCountY();
 
 	matrD1 * oD1 = new matrD1(matrix_size, NN, 
 		method_stepX, method_stepY,
@@ -84,9 +84,9 @@ bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	
 	v = create_vec(matrix_size);
 
-	int points = calcVecV(matrix_size, method_X, oD1, v, NN, MM, method_mask_solved, method_mask_undefined);
+	size_t points = calcVecV(matrix_size, method_X, oD1, v, NN, MM, method_mask_solved, method_mask_undefined);
 
-	unsigned int i;
+	size_t i;
 	for (i = 0; i < flows->size(); i++) {
 		functional * ff = (*flows)[i];
 		if (!ff)
@@ -102,7 +102,7 @@ bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		delete T;
 		if (V == NULL)
 			continue;
-		int j;
+		size_t j;
 		REAL prod_val;
 
 		REAL mult = REAL(1)/(permeability/viscosity*multiplier);

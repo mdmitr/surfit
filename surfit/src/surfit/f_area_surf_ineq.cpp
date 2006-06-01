@@ -104,7 +104,7 @@ bool f_area_surf_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	REAL x, y, value;
 
-	int i;
+	size_t i;
 	for (i = 0; i < area_mask->size(); i++) {
 
 		if (area_mask->get(i) == false)
@@ -115,7 +115,7 @@ bool f_area_surf_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		if (method_mask_undefined->get(i))
 			continue;
 
-		int I, J;
+		size_t I, J;
 		one2two(i, I, J, method_grid->getCountX(), method_grid->getCountY());
 		method_grid->getCoordNode(I, J, x, y);
 
@@ -171,7 +171,7 @@ void f_area_surf_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * 
 	if (area_mask == NULL)
 		return;
 	
-	int i;
+	size_t i;
 	for (i = 0; i < area_mask->size(); i++) {
 
 		if (area_mask->get(i) == false)
@@ -197,9 +197,9 @@ bool f_area_surf_ineq::solvable_without_cond(const bitvec * mask_solved,
 	if (area_mask == NULL)
 		return false;
 	
-	unsigned int i;
+	size_t i;
 		
-	for (i = 0; i < (unsigned int)area_mask->size(); i++) {
+	for (i = 0; i < (size_t)area_mask->size(); i++) {
 
 		if (area_mask->get(i) == false)
 			continue;

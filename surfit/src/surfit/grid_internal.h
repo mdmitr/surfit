@@ -153,8 +153,8 @@ void _set_surfit_grid(d_grid * grd);
 
 SURFIT_EXPORT
 void _grid_intersect1(const d_grid * grd1, const d_grid * grd2,
-		      int & x_from, int & x_to,
-		      int & y_from, int & y_to);
+		      size_t & x_from, size_t & x_to,
+		      size_t & y_from, size_t & y_to);
 
 SURFIT_EXPORT
 d_grid * _create_sub_grid(const d_grid * grd, int x_from, int x_to, int y_from, int y_to);

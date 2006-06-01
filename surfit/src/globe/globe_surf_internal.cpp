@@ -31,7 +31,7 @@ namespace surfit {
 
 d_dem * _surf_to_dem(d_surf * srf) {
 	shortvec * coeff = create_shortvec( srf->coeff->size() );
-	int i;
+	size_t i;
 	REAL val;
 	for (i = 0; i < srf->coeff->size(); i++) {
 		val = (*(srf->coeff))(i);

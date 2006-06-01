@@ -57,7 +57,7 @@ char * solver_name = NULL;
 bool write_mat = false;
 int stop_execution = 0;
 
-int cpu = 1;
+size_t cpu = 1;
 
 int reproject_faults = 1;
 int reproject_undef_areas = 0;

@@ -34,7 +34,7 @@ namespace surfit {
 class boolvec;
 
 SSTUFF_EXPORT
-boolvec * create_boolvec(int size = 0, bool default_value = false, int fill_default = 1, int grow_by = 250);
+boolvec * create_boolvec(size_t size = 0, bool default_value = false, int fill_default = 1, size_t grow_by = 250);
 
 SSTUFF_EXPORT
 boolvec * create_boolvec(const boolvec &in);
@@ -64,7 +64,7 @@ protected:
 	    \param fill_default use initial value filling
 	    \param grow_by value for resizing vector
 	*/
-	boolvec(int size = 0, bool default_value = false, int fill_default = 1, int grow_by = 250);
+	boolvec(size_t size = 0, bool default_value = false, int fill_default = 1, size_t grow_by = 250);
 	
 	//! Copy constructor
 	boolvec(const boolvec &in);
@@ -76,7 +76,7 @@ private:
 public:
 
 	friend SSTUFF_EXPORT
-	boolvec * create_boolvec(int size, bool default_value, int fill_default, int grow_by);
+	boolvec * create_boolvec(size_t size, bool default_value, int fill_default, size_t grow_by);
 
 	friend SSTUFF_EXPORT
 	boolvec * create_boolvec(const boolvec &in);
@@ -84,7 +84,7 @@ public:
 	void release();
 	
 	//! returns pointer to begin of bool-array
-	bool* begin() {  return data; };
+	bool* begin() { return data; };
 
 	//! returns reference-pointer to begin of bool-array
 	bool *& ref_begin() { return data; }
@@ -102,16 +102,16 @@ public:
 	void erase(bool*);
 
 	//! removes element by index
-	void erase(int index);
+	void erase(size_t index);
 	
 	//! changes vector size
-	void resize(int newsize, bool default_value = false, int fill_default = 1);
+	void resize(size_t newsize, bool default_value = false, int fill_default = 1);
 
 	//! returns vector size
-	int size() const { return datasize; };
+	size_t size() const { return datasize; };
 	
 	//! returns reference to i'th element
-	bool& operator()(int i) {
+	bool& operator()(size_t i) {
 #ifdef LSS_BOUNDS_CHECK
 		if ((i < 0) || (i >= size()))
 			throw "invalid argument";
@@ -120,7 +120,7 @@ public:
 	};
 		
 	//! returns const reference to i'th element
-	const bool& operator()(int i) const {
+	const bool& operator()(size_t i) const {
 #ifdef LSS_BOUNDS_CHECK
 		if ((i < 0) || (i >= size()))
 			throw "invalid argument";
@@ -133,13 +133,13 @@ public:
 	void push_back(const bool&);
 
 	//! sets currently allocated vector size to reserve_size
-	void reserve(int reserve_size);
+	void reserve(size_t reserve_size);
 
 	//! sets vector's grow factor
-	void set_grow(int grow_by);
+	void set_grow(size_t grow_by);
 	
 	//! exchanges two elements values
-	void swap(int i, int j);
+	void swap(size_t i, size_t j);
 		
 	//! frees all allocated memory
 	void drop_data();
@@ -152,13 +152,13 @@ public:
 	bool * data;
 
 	//! real vector size in elements
-	int datasize;
+	size_t datasize;
 
 	//! size of allocated memory in elements
-	int bool_datasize;
+	size_t bool_datasize;
 	
 	//! grow factor
-	int grow_by;
+	size_t grow_by;
 };
 
 }; // namespace surfit

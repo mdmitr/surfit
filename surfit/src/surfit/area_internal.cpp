@@ -403,7 +403,7 @@ bool _area_save_shp(const d_area * area, const char * filename) {
 		else
 			*(PartType) = SHPP_OUTERRING;
 		
-		int j;
+		size_t j;
 		for (j = 0; j < crv->size(); j++) {
 			(*X)(pos) = (*(crv->X))(j);
 			(*Y)(pos) = (*(crv->Y))(j);

@@ -90,7 +90,7 @@ const char * get_solver_short_name(int pos) {
 const char * get_current_solver_short_name() {
 	if (solver_name == NULL)
 		return NULL;
-	unsigned int i;
+	size_t i;
 	for (i = 0; i < solvers.size(); i++) {
 		solver * slvr = solvers[i];
 		const char * name = slvr->get_short_name();
@@ -104,7 +104,7 @@ const char * get_current_solver_short_name() {
 const char * get_current_solver_long_name() {
 	if (solver_name == NULL)
 		return NULL;
-	unsigned int i;
+	size_t i;
 	for (i = 0; i < solvers.size(); i++) {
 		solver * slvr = solvers[i];
 		const char * name = slvr->get_short_name();
@@ -116,7 +116,7 @@ const char * get_current_solver_long_name() {
 };
 
 void solvers_info() {
-	unsigned int i;
+	size_t i;
 	for (i = 0; i < solvers.size(); i++) {
 		solver * slvr = solvers[i];
 		const char * short_name = slvr->get_short_name();
@@ -132,7 +132,7 @@ void solve(matr * T, const vec * V, vec *& X) {
 		return;
 	}
 	bool solved = false;
-	unsigned int i;
+	size_t i;
 	for (i = 0; i < solvers.size(); i++) {
 		solver * slvr = solvers[i];
 		const char * name = slvr->get_short_name();
@@ -266,7 +266,7 @@ struct axpy_job : public job
 		from = 0;
 		to = 0;
 	}
-	void set(REAL ia, const vec * ix, vec * iy, unsigned int ifrom, unsigned int ito)
+	void set(REAL ia, const vec * ix, vec * iy, size_t ifrom, size_t ito)
 	{
 		a = ia;
 		x = ix;
@@ -277,7 +277,7 @@ struct axpy_job : public job
 
 	virtual void do_job()
 	{
-		unsigned int i;
+		size_t i;
 		for (i = from; i < to; i++) {
 			(*y)(i) += a*(*x)(i);
 		}
@@ -286,7 +286,7 @@ struct axpy_job : public job
 	REAL a;
 	const vec * x;
 	vec * y;
-	unsigned int from, to;
+	size_t from, to;
 
 };
 
@@ -295,13 +295,13 @@ axpy_job axpy_jobs[MAX_CPU];
 void axpy(REAL a, const vec & x, vec & y)
 {
 	int m = 1;
-	unsigned int N = x.size();
-	unsigned int step = N/(cpu*m);
-	unsigned int ost = N % (cpu*m);
-	unsigned int J_from = 0;
-	unsigned int J_to = 0;
-	unsigned int i;
-	for (i = 0; i < (unsigned int)(cpu*m); i++) {
+	size_t N = x.size();
+	size_t step = N/(cpu*m);
+	size_t ost = N % (cpu*m);
+	size_t J_from = 0;
+	size_t J_to = 0;
+	size_t i;
+	for (i = 0; i < (size_t)(cpu*m); i++) {
 		J_to = J_from + step;
 		if (i == 0)
 			J_to += ost;
@@ -324,7 +324,7 @@ struct xpay_job : public job
 		from = 0;
 		to = 0;
 	}
-	void set(REAL ia, const vec * ix, vec * iy, unsigned int ifrom, unsigned int ito)
+	void set(REAL ia, const vec * ix, vec * iy, size_t ifrom, size_t ito)
 	{
 		a = ia;
 		x = ix;
@@ -335,7 +335,7 @@ struct xpay_job : public job
 
 	virtual void do_job()
 	{
-		unsigned int i;
+		size_t i;
 		for (i = from; i < to; i++) {
 			(*y)(i) = (*x)(i) + a*(*y)(i);
 		}
@@ -344,7 +344,7 @@ struct xpay_job : public job
 	REAL a;
 	const vec * x;
 	vec * y;
-	unsigned int from, to;
+	size_t from, to;
 
 };
 
@@ -352,13 +352,13 @@ xpay_job xpay_jobs[MAX_CPU];
 
 void xpay(REAL a, const vec & x, vec & y)
 {
-	unsigned int N = x.size();
-	unsigned int step = N/(cpu);
-	unsigned int ost = N % (cpu);
-	unsigned int J_from = 0;
-	unsigned int J_to = 0;
-	unsigned int i;
-	for (i = 0; i < (unsigned int)cpu; i++) {
+	size_t N = x.size();
+	size_t step = N/(cpu);
+	size_t ost = N % (cpu);
+	size_t J_from = 0;
+	size_t J_to = 0;
+	size_t i;
+	for (i = 0; i < (size_t)cpu; i++) {
 		J_to = J_from + step;
 		if (i == 0)
 			J_to += ost;
@@ -391,13 +391,13 @@ struct times_job : public job
 	virtual void do_job() 
 	{
 		res = 0;
-		unsigned int i;
+		size_t i;
 		for (i = 0; i < size; i++) 
 			res += *(a+i) * *(b+i);
 	}
 	const REAL * a;
 	const REAL * b;
-	unsigned int size;
+	size_t size;
 	REAL res;
 };
 
@@ -405,13 +405,13 @@ times_job times_jobs[MAX_CPU];
 
 REAL threaded_times(const vec * a, const vec * b)
 {
-	unsigned int N = a->size();
-	unsigned int step = N/(cpu);
-	unsigned int ost = N % (cpu);
-	unsigned int J_from = 0;
-	unsigned int J_to = 0;
-	unsigned int i;
-	for (i = 0; i < (unsigned int)cpu; i++) {
+	size_t N = a->size();
+	size_t step = N/(cpu);
+	size_t ost = N % (cpu);
+	size_t J_from = 0;
+	size_t J_to = 0;
+	size_t i;
+	for (i = 0; i < (size_t)cpu; i++) {
 		J_to = J_from + step;
 		if (i == 0)
 			J_to += ost;
@@ -424,7 +424,7 @@ REAL threaded_times(const vec * a, const vec * b)
 	do_jobs();
 
 	REAL res = 0;
-	for (i = 0; i < (unsigned int)cpu; i++) {
+	for (i = 0; i < (size_t)cpu; i++) {
 		times_job & f = times_jobs[i];
 		res += f.res;
 	}

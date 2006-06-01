@@ -66,10 +66,10 @@ vec * method_X;
 bool method_ok;
 bitvec * method_mask_solved;
 bitvec * method_mask_undefined;
-int basis_cnt = 8;
-int method_basis_cntX;
-int method_basis_cntY;
-int method_phase_counter;
+size_t basis_cnt = 8;
+size_t method_basis_cntX;
+size_t method_basis_cntY;
+size_t method_phase_counter;
 REAL method_scaleX;
 REAL method_shiftX;
 REAL method_scaleY;
@@ -85,8 +85,8 @@ bool doubleY;
 //
 /////////////////////////////////////////////////
 
-int one2one(int pos, d_grid * from, d_grid * to) {
-	int n, m;
+size_t one2one(size_t pos, d_grid * from, d_grid * to) {
+	size_t n, m;
 	one2two(pos, n, m, from->getCountX(), from->getCountY());
 	REAL x, y;
 	from->getCoordNode(n, m, x, y);
@@ -97,31 +97,27 @@ int one2one(int pos, d_grid * from, d_grid * to) {
 	return pos;
 };
 
-void two2two(int & n, int & m, d_grid * from, d_grid * to) {
+void two2two(size_t & n, size_t & m, d_grid * from, d_grid * to) {
 	REAL x, y;
 	from->getCoordNode(n, m, x, y);
 	n = to->get_i(x);
 	m = to->get_j(y);
 };
 
-void one2two(int pos, int & i, int & j, int NN, int MM) {
+void one2two(size_t pos, size_t & i, size_t & j, size_t NN, size_t MM) {
 	if (pos >= 0 && pos < NN*MM) {
 		i = pos % NN;
 		j = (pos - i)/NN;
 		return;
 	}
 
-	pos = -pos;
-	NN += 2;
-	MM += 2;
-	i = pos % NN;
-	j = (pos - i)/NN;
-	i -= 1;
-	j -= 1;
+	i = UINT_MAX;
+	j = UINT_MAX;
+	assert(0);
 
 };
 
-void two2one(int & pos, int i, int j, int NN, int MM) {
+void two2one(size_t & pos, size_t i, size_t j, size_t NN, size_t MM) {
 	
 	if ((i >= 0) && (i < NN) && (j >= 0) && (j < MM)) {
 		pos = i + j*NN;
@@ -129,44 +125,40 @@ void two2one(int & pos, int i, int j, int NN, int MM) {
 	}
 
 	if ((i < -1) || (i > NN+1) || (j < -1) || (j > MM+1)) {
-		pos = INT_MAX;
+		pos = UINT_MAX;
 		return;
 	}
 	
-	NN += 2;
-	MM += 2;
-	i += 1;
-	j += 1;
-	pos = i + j*NN;
-	pos = -pos;
+	assert(0);
+	pos = UINT_MAX;
 		
 };
 
-bool grid_bound(int pos, int NN, int MM) {
-	int n, m;
+bool grid_bound(size_t pos, size_t NN, size_t MM) {
+	size_t n, m;
 	one2two(pos, n, m, NN, MM);
 	return ( (n >= 0) && (n < NN) && (m >= 0) && (m < MM) );
 };
 
-bool grid_bound2(int n, int m, int NN, int MM) {
+bool grid_bound2(size_t n, size_t m, size_t NN, size_t MM) {
 	return ( (n >= 0) && (n < NN) && (m >= 0) && (m < MM) );
 };
 
-void project_vector(vec * A, int NN, int MM,
+void project_vector(vec * A, size_t NN, size_t MM,
 		    bool doubleX, bool doubleY) {
 
 	if (!doubleX && !doubleY)
 		return;
 
 	if (doubleY) {
-		int size = A->size();
+		size_t size = A->size();
 		A->resize(size*2);
 		vec::iterator A_it = A->begin() + size - 1;
 		vec::iterator new_A_it = A->begin() + size*2 - 1;
 		vec::iterator temp_it;
 		vec::iterator A_beg = A->begin();
 		while ( new_A_it != A->begin() - 1 ) {
-			int i;
+			size_t i;
 			temp_it = A_it;
 			for ( i = 0; i < NN; i++) {
 				*new_A_it = *A_it;
@@ -184,7 +176,7 @@ void project_vector(vec * A, int NN, int MM,
 
 	if (doubleX) {
 		NN *= 2;
-		int size = A->size();
+		size_t size = A->size();
 		A->resize(size*2);
 		vec::iterator A_it = A->begin() + size - 1;
 		vec::iterator new_A_it = A->begin() + size*2 - 1;
@@ -201,12 +193,12 @@ void project_vector(vec * A, int NN, int MM,
 	 	
 };
 
-d_grid * create_calc_grd(int basis_cntX, int basis_cntY) {
+d_grid * create_calc_grd(size_t basis_cntX, size_t basis_cntY) {
 
 	REAL grid_lengthX = surfit_grid->endX+surfit_grid->stepX - surfit_grid->startX;
-	int grid_nodesX = surfit_grid->getCountX();
+	size_t grid_nodesX = surfit_grid->getCountX();
 	REAL grid_lengthY = surfit_grid->endY+surfit_grid->stepY - surfit_grid->startY;
-	int grid_nodesY = surfit_grid->getCountY();
+	size_t grid_nodesY = surfit_grid->getCountY();
 
 	REAL grd_startX = surfit_grid->startX-surfit_grid->stepX/REAL(2);
 	REAL grd_endX = surfit_grid->endX+surfit_grid->stepX/REAL(2);
@@ -229,15 +221,15 @@ d_grid * create_calc_grd(int basis_cntX, int basis_cntY) {
 d_grid * create_last_grd() {
 
 	REAL grid_lengthX = surfit_grid->endX+surfit_grid->stepX - surfit_grid->startX;
-	int grid_nodesX = surfit_grid->getCountX();
+	size_t grid_nodesX = surfit_grid->getCountX();
 	REAL grid_lengthY = surfit_grid->endY+surfit_grid->stepY - surfit_grid->startY;
-	int grid_nodesY = surfit_grid->getCountY();
+	size_t grid_nodesY = surfit_grid->getCountY();
 
 	double log2 = log(double(2));
-	int last_basis_cntX = (int)ceil(log((REAL)grid_nodesX)/log2);
-	int last_basis_cntY = (int)ceil(log((REAL)grid_nodesY)/log2);
-	last_basis_cntX = (int)pow(2, last_basis_cntX);
-	last_basis_cntY = (int)pow(2, last_basis_cntY);
+	size_t last_basis_cntX = (size_t)ceil(log((REAL)grid_nodesX)/log2);
+	size_t last_basis_cntY = (size_t)ceil(log((REAL)grid_nodesY)/log2);
+	last_basis_cntX = (size_t)pow(2, last_basis_cntX);
+	last_basis_cntY = (size_t)pow(2, last_basis_cntY);
 
 	REAL grd_startX = surfit_grid->startX-surfit_grid->stepX/REAL(2);
 	REAL grd_endX = surfit_grid->endX+surfit_grid->stepX/REAL(2);
@@ -397,7 +389,7 @@ void grid_finish() {
 		method_ok = true;
 
 	if (method_ok) {
-		int i;
+		size_t i;
 		for (i = 0; i < method_mask_undefined->size(); i++) {
 			if (method_mask_undefined->get(i))
 				(*method_X)(i) = undef_value;
@@ -409,7 +401,7 @@ void grid_finish() {
 
 void grid_release() {
 
-	int i;
+	size_t i;
 	for (i = 0; i < method_X->size(); i++) {
 		if (method_mask_solved->get(i) == false)
 			(*method_X)(i) = undef_value;

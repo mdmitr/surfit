@@ -84,14 +84,14 @@ bool f_area_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	else
 		writelog(LOG_MESSAGE,"noname area_wmean value = %g condition", mean);
 	
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 	get_area_mask();
 	if (area_mask == false) 
 		return false;
 	
-	int aux_X_from, aux_X_to;
-	int aux_Y_from, aux_Y_to;
+	size_t aux_X_from, aux_X_to;
+	size_t aux_Y_from, aux_Y_to;
 	get_w_srf(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
 	if (w_srf == NULL)
 		return false;
@@ -99,17 +99,17 @@ bool f_area_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	REAL denom = 0;
 	REAL sum_values_solved = 0;
 
-	int NN = method_grid->getCountX();
-	int MM = method_grid->getCountY();
-	int nn = w_srf->getCountX();
-	int mm = w_srf->getCountY();
+	size_t NN = method_grid->getCountX();
+	size_t MM = method_grid->getCountY();
+	size_t nn = w_srf->getCountX();
+	size_t mm = w_srf->getCountY();
 	
 	vec * weights = create_vec(matrix_size); 
 	bitvec * mask = create_bitvec(matrix_size);
 	mask->init_true();
 
-	int i;
-	int ii, jj;
+	size_t i;
+	size_t ii, jj;
 	for (i = 0; i < area_mask->size(); i++) {
 		
 		if (area_mask->get(i) == false)
@@ -123,8 +123,8 @@ bool f_area_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		REAL weight = 0;
 
 		if ((ii >= aux_X_from) && (ii <= aux_X_to) && (jj >= aux_Y_from) && (jj <= aux_Y_to)) {
-			int I = ii-aux_X_from;
-			int J = jj-aux_Y_from;
+			size_t I = ii-aux_X_from;
+			size_t J = jj-aux_Y_from;
 			weight = (*(w_srf->coeff))(I + J*nn);
 			if (weight == w_srf->undef_value)
 				weight = 0;
@@ -192,9 +192,9 @@ bool f_area_wmean::solvable_without_cond(const bitvec * mask_solved,
 	if (area_mask == NULL)
 		return false;
 	
-	unsigned int i;
+	size_t i;
 	
-	for (i = 0; i < (unsigned int)area_mask->size(); i++) {
+	for (i = 0; i < (size_t)area_mask->size(); i++) {
 		
 		if (area_mask->get(i) == false)
 				continue;
@@ -215,22 +215,22 @@ void f_area_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask
 	if (area_mask == NULL) 
 		return;
 
-	int aux_X_from, aux_X_to;
-	int aux_Y_from, aux_Y_to;
+	size_t aux_X_from, aux_X_to;
+	size_t aux_Y_from, aux_Y_to;
 	
 	get_w_srf(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
 	if (w_srf == NULL)
 		return;
 	
-	unsigned int i;
-	int ii, jj;
+	size_t i;
+	size_t ii, jj;
 
-	int NN = method_grid->getCountX();
-	int MM = method_grid->getCountY();
-	int nn = w_srf->getCountX();
-	int mm = w_srf->getCountY();
+	size_t NN = method_grid->getCountX();
+	size_t MM = method_grid->getCountY();
+	size_t nn = w_srf->getCountX();
+	size_t mm = w_srf->getCountY();
 	
-	for (i = 0; i < (unsigned int)area_mask->size(); i++) {
+	for (i = 0; i < (size_t)area_mask->size(); i++) {
 		
 		if (area_mask->get(i) == false)
 			continue;
@@ -271,7 +271,7 @@ bool f_area_wmean::minimize() {
 	return false;
 };
 
-void f_area_wmean::get_w_srf(int & i_from, int & i_to, int & j_from, int & j_to) {
+void f_area_wmean::get_w_srf(size_t & i_from, size_t & i_to, size_t & j_from, size_t & j_to) {
 	
 	_grid_intersect1(method_grid, srf->grd, i_from, i_to, j_from, j_to);
 	d_grid * aux_grid = _create_sub_grid(method_grid, i_from, i_to, j_from, j_to);

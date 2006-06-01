@@ -67,13 +67,13 @@
 
 namespace surfit {
 
-void mirror_shortvec(shortvec * sv, int NN) {
+void mirror_shortvec(shortvec * sv, size_t NN) {
 
 	short * buff = (short*)malloc(NN*sizeof(short));
 
-	int MM = sv->size()/NN;
+	size_t MM = sv->size()/NN;
 
-	int j;
+	size_t j;
 	for (j = 0; j < MM/2; j++) {
 		short * src1 = sv->begin() + j*NN;
 		short * src2 = sv->begin() + (MM-j-1)*NN;
@@ -90,7 +90,7 @@ void mirror_shortvec(shortvec * sv, int NN) {
 
 };
 
-int calc_ptr(int i, int j, int N);
+size_t calc_ptr(size_t i, size_t j, size_t N);
 
 bool _dem_unload(d_dem *& srf) {
 	if (!srf)
@@ -293,6 +293,15 @@ bool read_esri_variable(FILE * f, char * read_buf, char * name, int & value) {
 	return false;
 };
 
+bool read_esri_variable(FILE * f, char * read_buf, char * name, size_t & value) {
+	if (strcmp( read_buf, name) == 0) {
+		fscanf(f, "%s", read_buf);
+		value = atoi(read_buf);
+		return true;
+	}
+	return false;
+};
+
 void read_dtm_variable(FILE * f, char * read_buf, char * name, char *& value) {
 	if (strcmp( read_buf, name) == 0) {
 		fscanf(f, "%s", read_buf);
@@ -377,8 +386,8 @@ d_dem * _dem_load_dtm(const char * hdr_file, const char * bin_file) {
 			*ptr = '\0'; 
 		}
 
-		int nrows = INT_MAX;
-		int ncols = INT_MAX;
+		size_t nrows = UINT_MAX;
+		size_t ncols = UINT_MAX;
 		int nbands = 1;
 		int nbits = 8;
 		char * byteorder = strdup("I");
@@ -389,7 +398,7 @@ d_dem * _dem_load_dtm(const char * hdr_file, const char * bin_file) {
 		double xdim = 1;
 		double ydim = 1;
 		int bandrowbytes = 0;
-		int totalrowbytes = INT_MAX;
+		size_t totalrowbytes = UINT_MAX;
 		int bandgapbytes = 0;
 		double nodata = 0;
 
@@ -397,7 +406,7 @@ d_dem * _dem_load_dtm(const char * hdr_file, const char * bin_file) {
 			fscanf(hdr, "%s", read_buf);
 			str_toupper(read_buf);
 			bool readed = false;
-			if ((ncols != INT_MAX) && (nrows == INT_MAX))
+			if ((ncols != UINT_MAX) && (nrows == UINT_MAX))
 				by_cols = false;
 			readed = read_esri_variable(hdr, read_buf, "NCOLS", ncols) && readed;
 			readed = read_esri_variable(hdr, read_buf, "NROWS", nrows) && readed;
@@ -425,7 +434,7 @@ d_dem * _dem_load_dtm(const char * hdr_file, const char * bin_file) {
 		}
 		*/
 
-		if ((ncols == INT_MAX) || (nrows == INT_MAX))
+		if ((ncols == UINT_MAX) || (nrows == UINT_MAX))
 		{
 			fclose(hdr);
 			writelog(LOG_ERROR, "Wrong header file");
@@ -625,7 +634,7 @@ d_dem * _dem_load_hgt_zip(const char * hgt_zip_file) {
 	shortvec * coeff = NULL;
 	void * ptr = NULL;
 	int read_bytes = 0;
-	int i;
+	size_t i;
 	int len;
 	double step;
 	d_grid * grd = NULL;
@@ -849,7 +858,7 @@ d_dem * _dem_load_hgt(const char * hgt_file) {
 		writelog(LOG_ERROR, "_dem_load_hgt : error while reading file: %s",hgt_file);
 	}
 
-	int i;
+	size_t  i;
 	for (i = 0; i < coeff->size(); i++) {
 		ByteSwap((*coeff)(i));
 	}
@@ -1402,14 +1411,14 @@ d_points * _dem_to_points(const d_dem * srf) {
 
 d_dem * _dem_project(const d_dem * srf, const d_grid * grd) {
 
-	int size_x = grd->getCountX();
-	int size_y = grd->getCountY();
+	size_t size_x = grd->getCountX();
+	size_t size_y = grd->getCountY();
 
 	shortvec * coeff = create_shortvec(size_x*size_y,0,0);  // do not fill this vector
 	
-	int dem_size = srf->coeff->size();
-	int dem_sizeX = srf->getCountX();
-	int dem_sizeY = srf->getCountY();
+	size_t dem_size = srf->coeff->size();
+	size_t dem_sizeX = srf->getCountX();
+	size_t dem_sizeY = srf->getCountY();
 
 	if (srf->getName())
 		writelog(LOG_MESSAGE,"Projecting dem \"%s\" (%d x %d) => (%d x %d)",srf->getName(), dem_sizeX, dem_sizeY, size_x, size_y);
@@ -1419,9 +1428,9 @@ d_dem * _dem_project(const d_dem * srf, const d_grid * grd) {
 	{
 
 		REAL x, y;
-		int I0, J0, I1, J1;
+		size_t I0, J0, I1, J1;
 		REAL value;
-		int i,j;
+		size_t i,j;
 		REAL z0, z1, z2, z3;
 		REAL x0, y0;
 		REAL delta_x, delta_y;
@@ -1434,8 +1443,8 @@ d_dem * _dem_project(const d_dem * srf, const d_grid * grd) {
 				grd->getCoordNode(i, j, x, y);
 				
 				d_grid * g = srf->grd;
-				I0 = (int)floor( (x - g->startX)/g->stepX );
-				J0 = (int)floor( (y - g->startY)/g->stepY );
+				I0 = (size_t)MAX(0,floor( (x - g->startX)/g->stepX ));
+				J0 = (size_t)MAX(0,floor( (y - g->startY)/g->stepY ));
 
 				I1 = I0+1;
 				J1 = J0+1;
@@ -1793,7 +1802,7 @@ d_dem * _dem_gradient(const d_dem * srf) {
 d_mask * _dem_to_mask(const d_dem * srf, short true_from, short true_to) {
 	
 	bitvec * bcoeff = create_bitvec( srf->coeff->size() );
-	int i;
+	size_t  i;
 	short val;
 	for (i = 0; i < srf->coeff->size(); i++) {
 		val = (*(srf->coeff))(i);
@@ -1815,7 +1824,7 @@ d_mask * _dem_to_mask(const d_dem * srf, short true_from, short true_to) {
 d_surf * _dem_to_surf(const d_dem * srf) {
 	
 	vec * coeff = create_vec( srf->coeff->size() );
-	int i;
+	size_t i;
 	short val;
 	for (i = 0; i < srf->coeff->size(); i++) {
 		val = (*(srf->coeff))(i);

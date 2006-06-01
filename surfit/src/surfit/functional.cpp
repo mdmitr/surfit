@@ -98,9 +98,9 @@ bool functional::wrap_sums(matr *& matrix, vec *& v) {
 
 	bool solvable = false;
 	
-	int size = functionals_add->size();
+	size_t size = functionals_add->size();
 	std::vector<matr *> * matrs = new std::vector<matr *>(size+1);
-	int i, q;
+	size_t i, q;
 
 	for (q = 0; q < size; q++) {
 		functional * f = (*functionals_add)[q];
@@ -206,8 +206,8 @@ bool functional::cond_make_matrix_and_vector(matr *& matrix, vec *& v, bitvec * 
 	vec * weights = create_vec();
 	v = create_vec(matrix_size);
 
-	int i,j;
-	for (i = 0; i < (int)functionals_cond->size(); i++) {
+	size_t i,j;
+	for (i = 0; i < functionals_cond->size(); i++) {
 		functional * cond = (*functionals_cond)[i];
 		matr * P_matr = NULL;
 		vec * P_v = NULL;

@@ -177,7 +177,7 @@ int area_size() {
 };
 
 void areas_info() {
-	unsigned int areas_counter;
+	size_t areas_counter;
 	for (areas_counter = 0; areas_counter < surfit_areas->size(); areas_counter++) {
 		d_area * a_area = *(surfit_areas->begin()+areas_counter);
 		_area_info(a_area);

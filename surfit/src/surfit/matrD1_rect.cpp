@@ -38,9 +38,9 @@
 
 namespace surfit {
 
-matrD1_rect::matrD1_rect(int iN, int iNN, 
+matrD1_rect::matrD1_rect(size_t iN, size_t iNN, 
 			 REAL ihx, REAL ihy,
-		         int ix_from, int ix_to, int iy_from, int iy_to, 
+		         size_t ix_from, size_t ix_to, size_t iy_from, size_t iy_to, 
 			 const bitvec * imask_solved,
 			 const bitvec * imask_undefined,
 			 grid_line * ifault) : matr_rect(ix_from, ix_to, iy_from, iy_to, iNN)
@@ -62,15 +62,15 @@ matrD1_rect::matrD1_rect(int iN, int iNN,
 
 void matrD1_rect::make_mask(const bitvec * imask_solved, const bitvec * imask_undefined) {
 	mask = create_bitvec(matrMM*matrNN*4);
-	int j;
+	size_t j;
 	bool first_x, second_x, first_y, second_y;
 	for (j = 0; j < matrMM*matrNN; j++) {
 		first_x = true;
 		second_x = true;
 		first_y = true;
 		second_y = true;
-		int n = j % matrNN;
-		int m = (j - n)/matrNN;
+		size_t n = j % matrNN;
+		size_t m = (j - n)/matrNN;
 	
 		sums_points_D1(n, m, 
 			NN, MM, matrNN, matrMM,
@@ -91,16 +91,16 @@ void matrD1_rect::make_mask(const bitvec * imask_solved, const bitvec * imask_un
 
 };
 
-REAL matrD1_rect::element_at(int i, int j, int * next_j) const {
+REAL matrD1_rect::element_at(size_t i, size_t j, size_t * next_j) const {
 
 
 	REAL res = REAL(0);
-	int n = i % NN;
-	int m = (i-n)/NN;
+	size_t n = i % NN;
+	size_t m = (i-n)/NN;
 
 	if ((n < x_from) || (n > x_to))  {
 		if (next_j)
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 		return res;
 	}
 
@@ -112,13 +112,13 @@ REAL matrD1_rect::element_at(int i, int j, int * next_j) const {
 
 	if (m > y_to) {
 		if (next_j)
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 		return res;
 	}
 
 	n -= x_from;
 	m -= y_from;
-	int local_i = n + m*matrNN;
+	size_t local_i = n + m*matrNN;
 	bool b[4];
 
 	mask->get4(local_i, b);
@@ -127,19 +127,19 @@ REAL matrD1_rect::element_at(int i, int j, int * next_j) const {
 	
 };
 
-REAL matrD1_rect::element_at_transposed(int i, int j, int * next_j) const {
+REAL matrD1_rect::element_at_transposed(size_t i, size_t j, size_t * next_j) const {
 	return element_at(i, j, next_j);
 };
 
-REAL matrD1_rect::at(int i, int j, int * next_j) const {
+REAL matrD1_rect::at(size_t i, size_t j, size_t * next_j) const {
 
 	REAL res = REAL(0);
-	int n = i % NN;
-	int m = (i-n)/NN;
+	size_t n = i % NN;
+	size_t m = (i-n)/NN;
 
 	if ((n < x_from) || (n > x_to))  {
 		if (next_j)
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 		return res;
 	}
 
@@ -151,7 +151,7 @@ REAL matrD1_rect::at(int i, int j, int * next_j) const {
 
 	if (m > y_to) {
 		if (next_j)
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 		return res;
 	}
 
@@ -182,7 +182,7 @@ REAL matrD1_rect::at(int i, int j, int * next_j) const {
 				return REAL(0);
 			}
 
-			*next_j = INT_MAX;
+			*next_j = UINT_MAX;
 			return REAL(0);
 			
 		}
@@ -190,7 +190,7 @@ REAL matrD1_rect::at(int i, int j, int * next_j) const {
 
 	n -= x_from;
 	m -= y_from;
-	int local_i = n + m*matrNN;
+	size_t local_i = n + m*matrNN;
 	bool b[4];
 
 	mask->get4(local_i, b);
@@ -199,26 +199,26 @@ REAL matrD1_rect::at(int i, int j, int * next_j) const {
 	
 };
 
-REAL matrD1_rect::at_transposed(int i, int j, int * next_j) const {
+REAL matrD1_rect::at_transposed(size_t i, size_t j, size_t * next_j) const {
 	return at(i, j, next_j);
 };
 
-REAL matrD1_rect::mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end) {
+REAL matrD1_rect::mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end) {
 	return mult_line(J, b_begin, b_end);
 };
 
-REAL matrD1_rect::mult_line(int J, const REAL * b_begin, const REAL * b_end) {
+REAL matrD1_rect::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) {
 		
 	if (mask_solved_undefined->get(J))
 		return REAL(0);
 
-	int n = J % NN;
-	int m = (J - n)/NN;
+	size_t n = J % NN;
+	size_t m = (J - n)/NN;
 
 	if  (!( (n >= x_from) && (n <= x_to) && (m >= y_from) && (m <= y_to) ))
 		return REAL(0);
 	
-	int local_J = n-x_from + (m-y_from)*matrNN;
+	size_t local_J = n-x_from + (m-y_from)*matrNN;
 	bool b[4];
 	mask->get4(local_J, b);
 
@@ -331,11 +331,11 @@ REAL matrD1_rect::mult_line(int J, const REAL * b_begin, const REAL * b_end) {
 
 };
 
-long matrD1_rect::cols() const {
+size_t matrD1_rect::cols() const {
 	return N_cols;
 };
 
-long matrD1_rect::rows() const {
+size_t matrD1_rect::rows() const {
 	return N_rows;
 };
 

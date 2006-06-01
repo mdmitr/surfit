@@ -334,7 +334,7 @@ d_mask * _mask_by_surf(const d_surf * srf) {
 	if (!srf)
 		return NULL;
 	bitvec * bcoeff = create_bitvec( srf->coeff->size() );
-	int i;
+	size_t i;
 	REAL val;
 	for (i = 0; i < srf->coeff->size(); i++) {
 		val = (*(srf->coeff))(i);

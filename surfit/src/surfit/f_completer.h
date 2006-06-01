@@ -73,15 +73,15 @@ private:
 };
 
 SURFIT_EXPORT
-int calcVecV(int size, 
+size_t calcVecV(size_t size, 
 	     vec * X,
 	     matr * T, 
 	     vec *& res,
-	     int NN, int MM,
+	     size_t NN, size_t MM,
 	     const bitvec * mask_solved,
 	     const bitvec * mask_undefined,
-	     int use_x_from = -1, int use_x_to = -1,
-	     int use_y_from = -1, int use_y_to = -1,
+	     size_t use_x_from = UINT_MAX, size_t use_x_to = UINT_MAX,
+	     size_t use_y_from = UINT_MAX, size_t use_y_to = UINT_MAX,
 	     d_surf * trend = NULL);
 
 SURFIT_EXPORT

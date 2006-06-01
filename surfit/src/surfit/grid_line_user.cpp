@@ -58,14 +58,14 @@ void debug_print_grid_line(const char * filename,
 			   bitvec * mask_undefined,
 			   const d_curv * crv) {
 
-	int NN = grd->getCountX();
+	size_t NN = grd->getCountX();
 
 	FILE * ff = fopen(filename,"w+");
 	fprintf(ff,"hold on\n");
 				
 	// draw grid
 	{
-		int i;
+		size_t i;
 		REAL x0, y0;
 		grd->getCoordNode(0,0,x0,y0);
 		REAL xN, yM;
@@ -95,8 +95,8 @@ void debug_print_grid_line(const char * filename,
 		
 		//char text1[6];
 		//char text2[6];
-		int j;
-		int J;
+		size_t j;
+		size_t J;
 		if (mask_solved && mask_undefined)
 		for (j = 0; j < grd->getCountY(); j++) {
 			for (i = 0; i < grd->getCountX(); i++) {
@@ -130,8 +130,8 @@ void debug_print_grid_line(const char * filename,
 		int i;
 		int J1, J2;
 		for (i = 0; i < fl_size; i++) {
-			J1 = (*(grd_line->first))(i);
-			J2 = (*(grd_line->second))(i);
+			J1 = (*(grd_line->first))[i];
+			J2 = (*(grd_line->second))[i];
 			
 			REAL x, y;
 			int NN = grd->getCountX();
@@ -140,11 +140,11 @@ void debug_print_grid_line(const char * filename,
 			REAL stepX2 = grd->stepX/REAL(2);
 			REAL stepY2 = grd->stepY/REAL(2);
 			
-			int n1,m1;
+			size_t n1,m1;
 			one2two(J1, n1, m1, NN, MM);
 			grd->getCoordNode(n1,m1,x,y);
 
-			int n2,m2;
+			size_t n2,m2;
 			one2two(J2, n2, m2, NN, MM);
 			
 			//int diff = (J2-J1);
@@ -187,7 +187,7 @@ void debug_print_grid_line(const char * filename,
 
 	// draw curv
 	if (crv) {
-		int i;
+		size_t i;
 		REAL x0, y0, x1, y1;
 		for (i = 0; i < crv->size() - 1; i++) {
 			x0 = (*(crv->X))(i);
@@ -206,7 +206,7 @@ void debug_print_grid_line(const char * filename,
 
 
 inline
-void add_val(intvec * v, int n, int m, int NN, int MM) {
+void add_val(std::vector<size_t> * v, int n, int m, int NN, int MM) {
 	if ((n < 0) || (n >= NN))
 		return;
 
@@ -218,9 +218,9 @@ void add_val(intvec * v, int n, int m, int NN, int MM) {
 };
 
 inline
-void add_val_pair(intvec * v1, int n1, int m1, 
-		  intvec * v2, int n2, int m2, 
-		  int NN, int MM) {
+void add_val_pair(std::vector<size_t> * v1, size_t n1, size_t m1, 
+				  std::vector<size_t> * v2, size_t n2, size_t m2, 
+		  size_t NN, size_t MM) {
 	
 /*	if ( ((n1 < 0) || (n2 < 0)) || 
 		 ((m1 < 0) || (m2 < 0)) || 
@@ -229,14 +229,14 @@ void add_val_pair(intvec * v1, int n1, int m1,
 		return;
 		*/
 	
-	int val1, val2;
+	size_t val1, val2;
 	two2one(val1, n1, m1, NN, MM);
 	two2one(val2, n2, m2, NN, MM);
-	if ((val1 == INT_MAX) || (val2 == INT_MAX))
+	if ((val1 == UINT_MAX) || (val2 == UINT_MAX))
 		return;
 	
 	if (v1->size() > 0) {
-		int prev_val1, prev_val2;
+		size_t prev_val1, prev_val2;
 		prev_val1 = *(v1->end()-1);
 		prev_val2 = *(v2->end()-1);
 		if ((val1 == prev_val1) && (val2 == prev_val2))
@@ -261,9 +261,9 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	if (!crv)
 		return grd_line;
 		
-	int NN = grd->getCountX();
-	int MM = grd->getCountY();
-	intvec * nns = create_intvec(); // ?
+	size_t NN = grd->getCountX();
+	size_t MM = grd->getCountY();
+	std::vector<size_t> * nns = new std::vector<size_t>(); // ?
 
 	REAL old_startX = grd->startX;
 	REAL old_startY = grd->startY;
@@ -282,7 +282,7 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	bool closed = crv->is_closed();
 	
 	// using modified brezengham algorithm
-	int qq;
+	size_t qq;
 	REAL X2, X1, Y2, Y1;
 		
 	for (qq = 0; qq < crv->size()-1; qq++) {
@@ -291,14 +291,14 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 		Y1 = (*(crv->Y))(qq);
 		Y2 = (*(crv->Y))(qq + 1);
 		
-		int x1 = grd->get_i(X1);
-		int x2 = grd->get_i(X2);
-		int y1 = grd->get_j(Y1);
-		int y2 = grd->get_j(Y2);
+		size_t x1 = grd->get_i(X1);
+		size_t x2 = grd->get_i(X2);
+		size_t y1 = grd->get_j(Y1);
+		size_t y2 = grd->get_j(Y2);
 			
 		int dx, dy, i1, i2, i, kx, ky;
 		int d;      // "residual" 
-		int x, y;
+		size_t x, y;
 		int flag;
 			
 		dy = y2 - y1;
@@ -425,8 +425,7 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	MM = grd->getCountY();
 
 	if (nns->size() == 0) {
-		if (nns)
-			nns->release();
+		delete nns;
 		if (crv)
 			crv->release();
 		return grd_line;
@@ -436,33 +435,33 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	int old_size = nns->size();
 	int write_pos = 0;
 	for (qq = 1; qq < nns->size(); qq++) {
-		if ( (*nns)(write_pos) != (*nns)(qq) ) {
+		if ( (*nns)[write_pos] != (*nns)[qq] ) {
 			write_pos++;
-			(*nns)(write_pos) = (*nns)(qq);
+			(*nns)[write_pos] = (*nns)[qq];
 		}
 	}
 	nns->resize(write_pos+1);
 
-	intvec * grd1 = create_intvec();
-	intvec * grd2 = create_intvec();
+	std::vector<size_t> * grd1 = new std::vector<size_t>();
+	std::vector<size_t> * grd2 = new std::vector<size_t>();
 	grd1->reserve(nns->size());
 	grd2->reserve(nns->size());
 
-	int n1, m1, n2, m2, pos1, pos2;
+	size_t n1, m1, n2, m2, pos1, pos2;
 
-	int i;
+	size_t i;
 	for (i = 0; i < nns->size()-1; i++) {
 
-		pos1 = (*nns)(i);
+		pos1 = (*nns)[i];
 		n1 = pos1 % NNN;
 		m1 = (pos1 - n1)/NNN;	
 
-		pos2 = (*nns)(i+1);
+		pos2 = (*nns)[i+1];
 		n2 = pos2 % NNN;
 		m2 = (pos2 - n2)/NNN;
 
-		int max_n = MAX(n1, n2);
-		int min_m = MIN(m1, m2);
+		size_t max_n = MAX(n1, n2);
+		size_t min_m = MIN(m1, m2);
 		
 		if (n2 != n1) { // horizontal line
 			add_val_pair(grd1, max_n-1, min_m, 
@@ -476,8 +475,7 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 		
 	}
 
-	if (nns)
-		nns->release();  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	delete nns;  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	nns = NULL;
 	
 	if (!grd_line) {

@@ -36,19 +36,25 @@ bool ptr_less(int * it1, int * it2)
 	return *it1 < *it2;
 };
 
-SURFIT_EXPORT
-void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up, 
-		     REAL ** sortx_begin, REAL ** sortx_end,
-		     REAL ** sorty_begin, REAL ** sorty_end,
-		     REAL * beginx, REAL * beginy,
-		     std::vector<unsigned int> &nn);
+inline
+bool ptr_size_t_less(std::vector<size_t>::iterator it1, std::vector<size_t>::iterator it2) 
+{
+	return *it1 < *it2;
+};
 
 SURFIT_EXPORT
 void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up, 
 		     REAL ** sortx_begin, REAL ** sortx_end,
 		     REAL ** sorty_begin, REAL ** sorty_end,
 		     REAL * beginx, REAL * beginy,
-		     std::vector<unsigned int> &nn,
+		     std::vector<size_t> &nn);
+
+SURFIT_EXPORT
+void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up, 
+		     REAL ** sortx_begin, REAL ** sortx_end,
+		     REAL ** sorty_begin, REAL ** sorty_end,
+		     REAL * beginx, REAL * beginy,
+		     std::vector<size_t> &nn,
 		     REAL **& i_sortx_begin, REAL **& i_sortx_end,
 		     REAL **& i_sorty_begin, REAL **& i_sorty_end);
 
@@ -56,13 +62,13 @@ SURFIT_EXPORT
 void getPointsInSegment(REAL x_left, REAL x_right, 
 			REAL ** sortx_begin, REAL ** sortx_end,
 			REAL * beginx,
-			std::vector<unsigned int> &nn);
+			std::vector<size_t> &nn);
 
 SURFIT_EXPORT
 void getPointsInSegment(REAL x_left, REAL x_right,
 			REAL ** sortx_begin, REAL ** sortx_end,
 			REAL * beginx,
-			std::vector<unsigned int> &nn,
+			std::vector<size_t> &nn,
 			REAL **& i_sort_from, REAL **& i_sort_to);
 
 }; // namespace surfit;

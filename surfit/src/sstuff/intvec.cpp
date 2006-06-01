@@ -43,7 +43,7 @@
 
 namespace surfit {
 
-intvec * create_intvec(int size, int default_value, int fill_default, int grow_by) {
+intvec * create_intvec(size_t size, int default_value, int fill_default, size_t grow_by) {
 	return new intvec(size, default_value, fill_default, grow_by);
 }
 
@@ -53,13 +53,14 @@ intvec * create_intvec(const intvec &in) {
 
 intvec::intvec(const intvec &in) {
 	if (this != &in) {
-		int newsize = in.size();
+		size_t newsize = in.size();
 		data = (int*)malloc(sizeof(int)*newsize);
 		if (data) {
 			datasize = newsize;
 			int_datasize = datasize;
 			// init
-			for (int i = 0; i < size(); i++) {
+			size_t i;
+			for (i = 0; i < size(); i++) {
 				operator()(i) = in(i);
 			}
 		};
@@ -70,7 +71,7 @@ intvec::intvec(const intvec &in) {
 	}
 };
 
-intvec::intvec(int newsize, int default_value, int fill_default, int igrow_by) {
+intvec::intvec(size_t newsize, int default_value, int fill_default, size_t igrow_by) {
 	grow_by = igrow_by;
 	if (newsize == 0) {
 		data = NULL;
@@ -84,7 +85,8 @@ intvec::intvec(int newsize, int default_value, int fill_default, int igrow_by) {
 		int_datasize = newsize;
 		// init
 		if (fill_default == 1) {
-			for (int i = 0; i < size(); i++) {
+			size_t i;
+			for (i = 0; i < size(); i++) {
 				operator()(i) = default_value;
 			}
 		}
@@ -107,7 +109,7 @@ void intvec::release() {
 	delete this;
 };
 
-void intvec::resize(int newsize, int default_value, int fill_default) {
+void intvec::resize(size_t newsize, int default_value, int fill_default) {
 	if (datasize == newsize)
 		return;
 	if ((newsize == 0) && (data = NULL)) {
@@ -118,12 +120,13 @@ void intvec::resize(int newsize, int default_value, int fill_default) {
 	int *tmpData = (int*)realloc(data, sizeof(int)*newsize);
 	if (tmpData) {
 		data = tmpData;
-		int oldsize = datasize;
+		size_t oldsize = datasize;
 		datasize = newsize;
 		int_datasize = datasize;
 		if (oldsize < newsize) {
 			if (fill_default == 1) {
-				for (int i = oldsize; i < newsize; i++) {
+				size_t i;
+				for (i = oldsize; i < newsize; i++) {
 					operator()(i) = default_value;
 				}
 			}
@@ -150,12 +153,12 @@ void intvec::push_back(const int& x) {
 	}
 };
 
-void intvec::set_grow(int igrow_by) {
+void intvec::set_grow(size_t igrow_by) {
 	grow_by = igrow_by;
 };
 
-void intvec::reserve(int reserve_size) {
-	int oldsize = int_datasize;
+void intvec::reserve(size_t reserve_size) {
+	size_t oldsize = int_datasize;
 	if (oldsize < reserve_size) {
 		
 		int *tmpData = (int*)realloc(data, sizeof(int)*reserve_size);
@@ -175,21 +178,22 @@ void intvec::reserve(int reserve_size) {
 	}
 };
 
-void intvec::swap(int i, int j) {
+void intvec::swap(size_t i, size_t j) {
 	#ifdef LSS_BOUNDS_CHECK
 	if ((i < 1) || (i > size()))
 			throw "invalid argument";
 	if ((j < 1) || (j > size()))
 			throw "invalid argument";
 	#endif
-	int temp = operator()(i);
+	size_t temp = operator()(i);
 	operator()(i) = operator()(j);
 	operator()(j) = temp;
 };
 
 void intvec::erase(int* del) {
 	int* cur = begin();
-	for (int i = 0; i < size(); i++, cur++) {
+	size_t i;
+	for (i = 0; i < size(); i++, cur++) {
 		if (cur == del) {
 			// perform deletion;
 			memmove(cur,cur+1,(size()-i+1)*sizeof(int));
@@ -200,7 +204,7 @@ void intvec::erase(int* del) {
 	}
 };
 
-void intvec::erase(int index) {
+void intvec::erase(size_t index) {
 #ifdef LSS_BOUNDS_CHECK
 	if (index > datasize) 
 		throw "invalid argument";

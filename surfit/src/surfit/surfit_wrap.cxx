@@ -1778,6 +1778,48 @@ SWIG_AsCharPtrAndSize(Tcl_Obj *obj, char** cptr, size_t* psize, int *alloc)
   #define SWIG_From_bool   Tcl_NewBooleanObj 
 
 
+SWIGINTERN int
+SWIG_AsVal_unsigned_SS_long SWIG_TCL_DECL_ARGS_2(Tcl_Obj *obj, unsigned long *val) {
+  long v;
+  if (Tcl_GetLongFromObj(0,obj, &v) == TCL_OK) {
+    if (v >= 0) {
+      if (val) *val = (long) v;
+      return SWIG_OK;
+    } else {
+      return SWIG_OverflowError;
+    }
+  } else {
+    int len = 0;
+    const char *nptr = Tcl_GetStringFromObj(obj, &len);
+    if (nptr && len > 0) {
+      char *endptr;
+      unsigned long v = strtoul(nptr, &endptr,0);
+      if (errno == ERANGE) {
+	errno = 0;
+	return SWIG_OverflowError;
+      } else {
+	if (*endptr == '\0') {
+	  if (val) *val = v;
+	  return SWIG_OK;
+	}
+      }
+    }
+  }
+  
+  return SWIG_TypeError;
+}
+
+
+SWIGINTERNINLINE int
+SWIG_AsVal_size_t SWIG_TCL_DECL_ARGS_2(Tcl_Obj * obj, size_t *val)
+{
+  unsigned long v;
+  int res = SWIG_AsVal_unsigned_SS_long SWIG_TCL_CALL_ARGS_2(obj, val ? &v : 0);
+  if (SWIG_IsOK(res) && val) *val = static_cast<size_t >(v);
+  return res;
+}
+
+
 #include "fileio.h"
 
 
@@ -4993,7 +5035,7 @@ SWIGINTERN int
 _wrap_hist_from_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
-  int arg3 ;
+  size_t arg3 ;
   bool result;
   int res1 ;
   char *buf1 = 0 ;
@@ -5001,7 +5043,7 @@ _wrap_hist_from_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int res2 ;
   char *buf2 = 0 ;
   int alloc2 = 0 ;
-  int val3 ;
+  size_t val3 ;
   int ecode3 = 0 ;
   
   if (SWIG_GetArgs(interp, objc, objv,"ooo:hist_from_surf histname surf_pos intervs ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
@@ -5015,11 +5057,11 @@ _wrap_hist_from_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "hist_from_surf" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = buf2;
-  ecode3 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[3], &val3);
+  ecode3 = SWIG_AsVal_size_t SWIG_TCL_CALL_ARGS_2(objv[3], &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "hist_from_surf" "', argument " "3"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "hist_from_surf" "', argument " "3"" of type '" "size_t""'");
   } 
-  arg3 = static_cast<int >(val3);
+  arg3 = static_cast<size_t >(val3);
   {
     try {
       if (surfit::stop_execution == 0) {
@@ -5166,7 +5208,7 @@ _wrap_hist_from_surf(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
       _v = SWIG_CheckState(res);
       if (_v) {
         {
-          int res = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(argv[2], NULL);
+          int res = SWIG_AsVal_size_t SWIG_TCL_CALL_ARGS_2(argv[2], NULL);
           _v = SWIG_CheckState(res);
         }
         if (_v) {

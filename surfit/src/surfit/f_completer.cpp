@@ -77,7 +77,7 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	v = create_vec(matrix_size);
 
-	int points = calcVecV(matrix_size, method_X, T, v, NN, MM, method_mask_solved, method_mask_undefined);
+	size_t points = calcVecV(matrix_size, method_X, T, v, NN, MM, method_mask_solved, method_mask_undefined);
 
 	matrix = T;
 
@@ -313,15 +313,15 @@ sss:
 	return true;
 };
 
-int calcVecV(int size, 
+size_t calcVecV(size_t size, 
 	     vec * X,
 	     matr * T, 
 	     vec *& res,
-	     int NN, int MM,
+	     size_t NN, size_t MM,
 	     const bitvec * mask_solved,
 	     const bitvec * mask_undefined,
-	     int x_from, int x_to,
-	     int y_from, int y_to,
+	     size_t x_from, size_t x_to,
+	     size_t y_from, size_t y_to,
 	     d_surf * trend) 
 {
 	int points = 0;
@@ -329,22 +329,22 @@ int calcVecV(int size,
 	if (!res)
 		res = create_vec(size);
 
-	int i,j;
-	int pos, pos_x, pos_y;
+	size_t i,j;
+	size_t pos, pos_x, pos_y;
 	REAL val, mult;
 
-	bool use_rect = ( (x_from != -1) && (x_to != -1) && (y_from != -1) && (y_to != -1) );
-	int nn = NN;
+	bool use_rect = ( (x_from != UINT_MAX) && (x_to != UINT_MAX) && (y_from != UINT_MAX) && (y_to != UINT_MAX) );
+	size_t nn = NN;
 	if (use_rect) {
 		nn = x_to - x_from + 1;
 	}
 
-	pos_x = INT_MAX;
-	pos_y = INT_MAX;
+	pos_x = UINT_MAX;
+	pos_y = UINT_MAX;
 
 	for (pos = 0; pos < mask_solved->size(); pos++) {
 
-		int local_pos = pos;
+		size_t local_pos = pos;
 
 		if (use_rect) {
 
@@ -362,7 +362,7 @@ int calcVecV(int size,
 			REAL trend_val = (*(trend->coeff))(local_pos);
 			if (trend_val != undef_value) {
 				for (j = 0; j < T->rows();) {
-					int prev_j = j;
+					size_t prev_j = j;
 					mult = T->element_at(pos,j,&j);
 					if (trend && (mult != 0)) {
 						(*res)(prev_j) += mult*trend_val;
@@ -394,7 +394,7 @@ int calcVecV(int size,
 	}
 
 	if (use_rect) {
-		int n,m;
+		size_t n,m;
 		for (m = 0; m < MM; m++) {
 			for (n = 0; n < NN; n++) {
 				if  (!( (n >= x_from) && (n <= x_to) && (m >= y_from) && (m <= y_to) ))

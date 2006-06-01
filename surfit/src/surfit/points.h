@@ -196,7 +196,7 @@ public:
 
 	//! constructor
 	sub_points(int icell_number, 
-		   std::vector<unsigned int> * ipoint_numbers);
+		   std::vector<size_t> * ipoint_numbers);
 	
 private:
 	//! destructor
@@ -212,9 +212,9 @@ public:
 	REAL sum_value(const d_points * pnts) const;
 	
 	//! number of cell
-	unsigned int cell_number;
+	size_t cell_number;
 	//! numbers of points for cell
-	std::vector<unsigned int> * point_numbers;
+	std::vector<size_t> * point_numbers;
 	
 };
 
@@ -222,11 +222,11 @@ typedef std::vector<sub_points *> sub_pnts;
 
 SURFIT_EXPORT
 /*! \ingroup internal_points
-    \fn void _sort_points(const d_points * pnts, std::vector<unsigned int> * nums, REAL **& sortx_begin, REAL **& sortx_end, REAL **& sorty_begin, REAL **& sorty_end);
+    \fn void _sort_points(const d_points * pnts, std::vector<size_t> * nums, REAL **& sortx_begin, REAL **& sortx_end, REAL **& sorty_begin, REAL **& sorty_end);
     \brief performs points sorting
 */
 void _sort_points(const d_points * pnts, 
-		  std::vector<unsigned int> * nums,
+		  std::vector<size_t> * nums,
 		  REAL **& sortx_begin, 
 		  REAL **& sortx_end, 
 		  REAL **& sorty_begin, 

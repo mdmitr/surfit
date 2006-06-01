@@ -303,7 +303,7 @@ void d_points::remove_with_value(REAL val) {
 };
 
 sub_points::sub_points(int icell_number, 
-		       std::vector<unsigned int> * ipoint_numbers)
+		       std::vector<size_t> * ipoint_numbers)
 {
 	cell_number = icell_number;
 	point_numbers = ipoint_numbers;
@@ -318,7 +318,7 @@ void sub_points::release() {
 };
 
 REAL sub_points::value(const d_points * pnts) const {
-	std::vector<unsigned int>::const_iterator ptr;
+	std::vector<size_t>::const_iterator ptr;
 	
 	REAL value = REAL(0);
 	REAL temp_value;
@@ -336,7 +336,7 @@ REAL sub_points::value(const d_points * pnts) const {
 };
 
 REAL sub_points::sum_value(const d_points * pnts) const {
-	std::vector<unsigned int>::const_iterator ptr;
+	std::vector<size_t>::const_iterator ptr;
 	
 	REAL value = REAL(0);
 	REAL temp_value;
@@ -351,7 +351,7 @@ REAL sub_points::sum_value(const d_points * pnts) const {
 };
 
 void _sort_points(const d_points * pnts, 
-		  std::vector<unsigned int> * nums,
+		  std::vector<size_t> * nums,
 		  REAL **& sortx_begin, 
 		  REAL **& sortx_end, 
 		  REAL **& sorty_begin, 

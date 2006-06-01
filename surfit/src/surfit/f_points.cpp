@@ -218,7 +218,7 @@ bool f_points::minimize_only_points() {
 			binded_grid = create_grid(method_grid);
 		}
 				
-		unsigned int i;
+		size_t i;
 		int num;
 		sub_points * sub_pnts;
 		REAL value;
@@ -226,7 +226,7 @@ bool f_points::minimize_only_points() {
 		int solved_add_size = 0;
 		int undefined_add_size = 0;
 
-		unsigned int pnts_size = f_sub_pnts->size();
+		size_t pnts_size = f_sub_pnts->size();
 	
 		for (i = 0; i < pnts_size; i++) {
 			sub_pnts = (*f_sub_pnts)[i];
@@ -264,9 +264,9 @@ void f_points::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_und
 		prepare_scattered_points(pnts, f_sub_pnts);
 	}
 	
-	unsigned int pnts_size = f_sub_pnts->size();
+	size_t pnts_size = f_sub_pnts->size();
 
-	unsigned int i;
+	size_t i;
 	int num;
 	sub_points * sub_pnts;
 	REAL value;

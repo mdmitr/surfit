@@ -763,7 +763,7 @@ int pnts_size() {
 };
 
 void pnts_info() {
-	unsigned int pnts_counter;
+	size_t pnts_counter;
 	for (pnts_counter = 0; pnts_counter < surfit_pnts->size(); pnts_counter++) {
 		d_points * pnts = *(surfit_pnts->begin()+pnts_counter);
 		_pnts_info(pnts);

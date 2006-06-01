@@ -482,7 +482,7 @@ bool datafile::skipTagName() {
 	
 	char t[4];
 	
-	unsigned int r = read( file, t, 4);
+	size_t r = read( file, t, 4);
 	r += read(file, word, TAG_WORD_SIZE);
 	
 	lseek(file, file_pos+4+strlen(word)+1, SEEK_SET);
@@ -580,8 +580,8 @@ bool datafile::writeEof() {
 	return res;
 };
 
-unsigned int datafile::writeBinaryString(const char * name) {
-	unsigned int r = 0;
+size_t datafile::writeBinaryString(const char * name) {
+	size_t r = 0;
 	r += write(file, name, strlen(name));
 	r += write(file, &zero, 1);
 	return r;
@@ -593,41 +593,41 @@ bool datafile::writeTextString(const char * string) {
 };
 
 bool datafile::writeString(const char * string) {
-	unsigned int r = write(file, string, strlen(string));
+	size_t r = write(file, string, strlen(string));
 	r += write(file, &zero, 1);
 	return (r > 0);
 };
 
 bool datafile::writeString(const char * name, const char * string) {
-	unsigned int r = writeBinaryString("char");
+	size_t r = writeBinaryString("char");
 	r += writeBinaryString(name);
 	r += write(file, string, strlen(string)+1);
 	return ( r > 0 );
 };
 
 bool datafile::writeInt(const char * name, const int & i) {
-	unsigned int r = writeBinaryString("int");
+	size_t r = writeBinaryString("int");
 	r += writeBinaryString(name);
 	r += write(file, (void *)&i, sizeof(int));
 	return ( r > 0 );
 };
 
 bool datafile::writeShort(const char * name, const short & i) {
-	unsigned int r = writeBinaryString("short");
+	size_t r = writeBinaryString("short");
 	r += writeBinaryString(name);
 	r += write(file, (void *)&i, sizeof(short));
 	return ( r > 0 );
 };
 
 bool datafile::writeReal(const char * name, const REAL & d) {
-	unsigned int r = writeBinaryString(REAL_NAME);
+	size_t r = writeBinaryString(REAL_NAME);
 	r += writeBinaryString(name);
 	r += write(file, (void *)&d, sizeof(REAL));
 	return (r > 0);
 };
 
 bool datafile::writeChar(const char * name, const char * c) {
-	unsigned int r = writeBinaryString("char");
+	size_t r = writeBinaryString("char");
 	r += writeBinaryString(name);
 	//r += write(file, (void *)c, strlen(csizeof(char));
 	r += writeBinaryString(c);
@@ -636,7 +636,7 @@ bool datafile::writeChar(const char * name, const char * c) {
 
 bool datafile::writeStringArray(const char * name, const strvec * data) {
 	int size = data->size();
-	unsigned int r = writeBinaryString("array");
+	size_t r = writeBinaryString("array");
 	r += writeBinaryString("string");
 	r += writeBinaryString(name);
 	r += write(file, (void *)&size, sizeof(int));
@@ -648,7 +648,7 @@ bool datafile::writeStringArray(const char * name, const strvec * data) {
 
 bool datafile::writeRealArray(const char * name, const vec * data) {
 	int size = data->size();
-	unsigned int r = writeBinaryString("array");
+	size_t r = writeBinaryString("array");
 	r += writeBinaryString(REAL_NAME);
 	r += writeBinaryString(name);
 	r += write(file, (void *)&size, sizeof(int));
@@ -657,7 +657,7 @@ bool datafile::writeRealArray(const char * name, const vec * data) {
 };
 
 bool datafile::writeBoolArray(const char * name, const boolvec * data) {
-	unsigned int r = writeBinaryString("array");
+	size_t r = writeBinaryString("array");
 	int size = data->size();
 	r += writeBinaryString("bool");
 	r += writeBinaryString(name);
@@ -667,7 +667,7 @@ bool datafile::writeBoolArray(const char * name, const boolvec * data) {
 };
 
 bool datafile::writeBitArray(const char * name, const bitvec * data) {
-	unsigned int r = writeBinaryString("array");
+	size_t r = writeBinaryString("array");
 	int int_size = data->int_size() + 1;
 	int size = data->size();
 	r += writeBinaryString("bit");
@@ -679,7 +679,7 @@ bool datafile::writeBitArray(const char * name, const bitvec * data) {
 };
 
 bool datafile::writeShortArray(const char * name, const shortvec * data) {
-	unsigned int r = writeBinaryString("array");
+	size_t r = writeBinaryString("array");
 	int size = data->size();
 	r += writeBinaryString("short");
 	r += writeBinaryString(name);
@@ -689,7 +689,7 @@ bool datafile::writeShortArray(const char * name, const shortvec * data) {
 };
 
 bool datafile::writeIntArray(const char * name, const intvec * data) {
-	unsigned int r = writeBinaryString("array");
+	size_t r = writeBinaryString("array");
 	int size = data->size();
 	r += writeBinaryString("int");
 	r += writeBinaryString(name);
@@ -718,7 +718,7 @@ bool datafile::ungetString(const char * string) {
 bool datafile::readTagName(char * tagname) {
 	int file_pos = lseek(file, 0, SEEK_CUR);
 	char t[4];
-	unsigned int r = read( file, t, 4);
+	size_t r = read( file, t, 4);
 	r += read( file, tagname, TAG_WORD_SIZE);
 	lseek(file, file_pos, SEEK_SET);
 	return (r > 0);
@@ -726,7 +726,7 @@ bool datafile::readTagName(char * tagname) {
 
 bool datafile::readWord() {
 	int file_pos = lseek(file, 0, SEEK_CUR);
-	unsigned int r = read(file, word, TAG_WORD_SIZE);
+	size_t r = read(file, word, TAG_WORD_SIZE);
 	if (lseek(file, file_pos + strlen(word)+1, SEEK_SET) == -1L)
 		return false;
 	return (r > 0);
@@ -738,33 +738,33 @@ bool datafile::skipBytes(long how_much) {
 };
 
 bool datafile::readBool(bool &b) {
-	unsigned int r = read( file, &b, sizeof(bool));
+	size_t r = read( file, &b, sizeof(bool));
 	return (r > 0);
 };
 
 bool datafile::readByte(unsigned char &c) {
-	unsigned int r = read( file, &c, sizeof(char));
+	size_t r = read( file, &c, sizeof(char));
 	return (r > 0);
 };
 
 bool datafile::readInt(int & i) {
-	unsigned int r = read( file, &i, sizeof(int));
+	size_t r = read( file, &i, sizeof(int));
 	return (r > 0);
 };
 
 bool datafile::readShort(short & i) {
-	unsigned int r = read( file, &i, sizeof(short));
+	size_t r = read( file, &i, sizeof(short));
 	return (r > 0);
 };
 
 bool datafile::readReal(REAL & d) {
-	unsigned int r = read( file, &d, sizeof(REAL));
+	size_t r = read( file, &d, sizeof(REAL));
 	return (r > 0);
 };
 
 bool datafile::readStringArray(strvec *& data) {
-	unsigned int r = 0;
-	unsigned int size = 0;
+	size_t r = 0;
+	size_t size = 0;
 	if (read( file,  &size, sizeof(int)) > 0) {
 		
 		data = create_strvec(size);
@@ -773,7 +773,7 @@ bool datafile::readStringArray(strvec *& data) {
 			return false;
 		}
 		
-		unsigned int i;
+		size_t i;
 		for (i = 0; i < size; i++) {
 			if (readWord() == false)
 				return false;
@@ -786,8 +786,8 @@ bool datafile::readStringArray(strvec *& data) {
 };
 
 bool datafile::readRealArray(vec *& data) {
-	unsigned int r = 0;
-	unsigned int size = 0;
+	size_t r = 0;
+	size_t size = 0;
 	if (read( file,  &size, sizeof(int)) > 0) {
 		
 		data = create_vec(size);
@@ -811,8 +811,8 @@ bool datafile::readRealArray(vec *& data) {
 };
 
 bool datafile::readBoolArray(boolvec *& data) {
-	unsigned int r = 0;
-	unsigned int size = 0;
+	size_t r = 0;
+	size_t size = 0;
 	if (read( file,  &size, sizeof(int)) > 0) {
 		
 		data = create_boolvec(size);
@@ -832,8 +832,8 @@ bool datafile::readBoolArray(boolvec *& data) {
 };
 
 bool datafile::readBitArray(bitvec *& data) {
-	unsigned int r = 0;
-	unsigned int size = 0;
+	size_t r = 0;
+	size_t size = 0;
 	if (read( file,  &size, sizeof(int)) > 0) {
 		
 		int elements = 0;
@@ -857,8 +857,8 @@ bool datafile::readBitArray(bitvec *& data) {
 };
 
 bool datafile::readShortArray(shortvec *& data) {
-	unsigned int r = 0;
-	unsigned int size = 0;
+	size_t r = 0;
+	size_t size = 0;
 	if (read( file,  &size, sizeof(int)) > 0) {
 		
 		data = create_shortvec(size);
@@ -878,8 +878,8 @@ bool datafile::readShortArray(shortvec *& data) {
 };
 
 bool datafile::readIntArray(intvec *& data) {
-	unsigned int r = 0;
-	unsigned int size = 0;
+	size_t r = 0;
+	size_t size = 0;
 	if (read( file,  &size, sizeof(int)) > 0) {
 		
 		data = create_intvec(size);

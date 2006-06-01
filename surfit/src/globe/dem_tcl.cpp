@@ -489,7 +489,7 @@ int dem_size() {
 
 void dems_info() {
 	if (globe_dems->size() > 0) {
-		unsigned int dem_cnt;
+		size_t dem_cnt;
 		for (dem_cnt = 0; dem_cnt < globe_dems->size(); dem_cnt++) {
 			d_dem * a_srf = *(globe_dems->begin()+dem_cnt);
 			if (a_srf) {

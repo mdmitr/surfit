@@ -275,7 +275,7 @@ bool mask_to_surf(const char * pos) {
 };
 
 bool mask_delall() {
-	unsigned int i;
+	size_t i;
 
 	if (surfit_masks == NULL)
 		return false;
@@ -308,7 +308,7 @@ bool mask_del(const char * pos) {
 
 void masks_info() {
 	if (surfit_masks->size() > 0) {
-		unsigned int mask_cnt;
+		size_t mask_cnt;
 		for (mask_cnt = 0; mask_cnt < surfit_masks->size(); mask_cnt++) {
 			d_mask * a_srf = *(surfit_masks->begin()+mask_cnt);
 			if (a_srf) {

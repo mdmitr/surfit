@@ -97,7 +97,7 @@ bool f_area_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	vec * diag = create_vec(matrix_size);
 
-	int i;
+	size_t i;
 	for (i = 0; i < area_mask->size(); i++) {
 
 		if (area_mask->get(i) == false)
@@ -154,7 +154,7 @@ void f_area_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 	if (area_mask == NULL)
 		return;
 	
-	int i;
+	size_t i;
 	for (i = 0; i < area_mask->size(); i++) {
 
 		if (area_mask->get(i) == false)
@@ -180,9 +180,9 @@ bool f_area_ineq::solvable_without_cond(const bitvec * mask_solved,
 	if (area_mask == NULL)
 		return false;
 	
-	unsigned int i;
+	size_t i;
 		
-	for (i = 0; i < (unsigned int)area_mask->size(); i++) {
+	for (i = 0; i < (size_t)area_mask->size(); i++) {
 
 		if (area_mask->get(i) == false)
 			continue;

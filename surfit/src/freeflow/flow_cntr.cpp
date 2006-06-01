@@ -111,7 +111,7 @@ bool f_flow_cntr::solvable_without_cond(const bitvec * mask_solved,
 					const vec * X)
 {
 
-	int i;
+	size_t i;
 	for (i = 0; i < mask_solved->size(); i++) {
 		if (mask_solved->get(i))
 			goto sss;
@@ -190,7 +190,7 @@ d_points * discretize_pcntr(const d_cntr * pcrv, d_grid * grd, const char * task
 		return NULL;
 
 	// using modified brezengham algorithm
-	int qq;
+	size_t qq;
 	REAL X2, X1, Y2, Y1, Z1, Z2;
 
 	std::vector<pos_s> * data = new std::vector<pos_s>();
@@ -359,7 +359,7 @@ d_points * discretize_pcntr(const d_cntr * pcrv, d_grid * grd, const char * task
 	points_y->reserve(data->size());
 	points_z->reserve(data->size());
 
-	int prev_pos = INT_MAX;
+	size_t prev_pos = UINT_MAX;
 	pos_s elem;
 	REAL total_weight = 0;
 	REAL sum_val = 0;
@@ -371,7 +371,7 @@ d_points * discretize_pcntr(const d_cntr * pcrv, d_grid * grd, const char * task
 			sum_val += elem.s;
 		} else {
 			// write
-			if (prev_pos != INT_MAX) {
+			if (prev_pos != UINT_MAX) {
 				int pos_x = prev_pos % NN;
 				int pos_y = (prev_pos - pos_x)/NN;
 				REAL x, y, z;

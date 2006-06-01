@@ -38,7 +38,7 @@ REAL _surf_debit(d_surf * fnc, REAL x, REAL y, REAL perm, REAL visc, REAL mult) 
 		return undef_value;
 	}
 
-	int i,j;
+	size_t i,j;
 
 	REAL stepX = fnc->grd->stepX;
 	REAL stepY = fnc->grd->stepY;
@@ -48,12 +48,12 @@ REAL _surf_debit(d_surf * fnc, REAL x, REAL y, REAL perm, REAL visc, REAL mult) 
 
 	fnc->grd->getCoordPoint(x, y, i, j);
 
-	int NN = fnc->getCountX();
-	int pos_0 = i + j*NN;
-	int pos_1 = (i-1) +     j*NN;
-	int pos_2 = i     + (j+1)*NN;
-	int pos_3 = (i+1) +     j*NN;
-	int pos_4 =  i    + (j-1)*NN;
+	size_t NN = fnc->getCountX();
+	size_t pos_0 = i + j*NN;
+	size_t pos_1 = (i-1) +     j*NN;
+	size_t pos_2 = i     + (j+1)*NN;
+	size_t pos_3 = (i+1) +     j*NN;
+	size_t pos_4 =  i    + (j-1)*NN;
 
 	REAL val0 = (*fnc->coeff)(pos_0);
 	REAL val1 = (*fnc->coeff)(pos_1);
@@ -96,8 +96,8 @@ REAL _surf_debit_rect(d_surf * fnc, REAL x1, REAL y1, REAL x2, REAL y2,
 		std::swap( y1, y2 );
 
 
-	int i1, j1;
-	int i2, j2;
+	size_t i1, j1;
+	size_t i2, j2;
 	
 	REAL stepX = fnc->grd->stepX;
 	REAL stepY = fnc->grd->stepY;
@@ -112,8 +112,8 @@ REAL _surf_debit_rect(d_surf * fnc, REAL x1, REAL y1, REAL x2, REAL y2,
 
 	fnc->grd->getCoordPoint(x2, y2, i2, j2);
 
-	int NN = fnc->getCountX();
-	int MM = fnc->getCountY();
+	size_t NN = fnc->getCountX();
+	size_t MM = fnc->getCountY();
 
 	if ((i1 < 1)   || 
 		(i1 >= NN-1) || 
@@ -126,13 +126,13 @@ REAL _surf_debit_rect(d_surf * fnc, REAL x1, REAL y1, REAL x2, REAL y2,
 		return FLT_MAX;
 
 	REAL res = REAL(0);
-	int pos1, pos2;
+	size_t pos1, pos2;
 	REAL val1, val2;
 
 	REAL hx = fnc->grd->stepX;
 	REAL hy = fnc->grd->stepY;
 
-	int i, j;
+	size_t i, j;
 
 	//         4
 	//    |--------|

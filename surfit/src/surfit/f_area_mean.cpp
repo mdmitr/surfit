@@ -76,7 +76,7 @@ bool f_area_mean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	else
 		writelog(LOG_MESSAGE,"noname area_mean value = %g condition", mean);
 	
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 	get_area_mask();
 	if (area_mask == NULL) 
@@ -85,10 +85,10 @@ bool f_area_mean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	bitvec * mask = create_bitvec(matrix_size);
 	mask->init_true();
 
-	int N = area_mask->true_size();
+	size_t N = area_mask->true_size();
 	REAL sum_values_solved = 0;
 
-	int i;
+	size_t i;
 	for (i = 0; i < area_mask->size(); i++) {
 		if (area_mask->get(i) == false)
 			continue;
@@ -135,8 +135,8 @@ bool f_area_mean::solvable_without_cond(const bitvec * mask_solved,
 	if (area_mask == NULL) 
 		return false;
 		
-	unsigned int i;
-	for (i = 0; i < (unsigned int)area_mask->size(); i++) {
+	size_t i;
+	for (i = 0; i < (size_t)area_mask->size(); i++) {
 		
 		if (area_mask->get(i) == false)
 			continue;
@@ -157,9 +157,9 @@ void f_area_mean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 	if (area_mask == NULL)
 		return;
 	
-	unsigned int i;
+	size_t i;
 		
-	for (i = 0; i < (unsigned int)area_mask->size(); i++) {
+	for (i = 0; i < (size_t)area_mask->size(); i++) {
 	
 		if (area_mask->get(i) == false)
 			continue;

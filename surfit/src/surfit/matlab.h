@@ -43,7 +43,7 @@ http://www.mathworks.com/access/helpdesk/help/pdf_doc/matlab/matfile_format.pdf
 class SURFIT_EXPORT matlabVector {
 public:
 	/*! \return i-th vector element */	
-	virtual REAL operator()(int i) const = 0;
+	virtual REAL operator()(size_t i) const = 0;
 	/*! \returns vector size */
 	virtual long size() const = 0;
 	/*! writes vector to mat-file (matlab binary format)
@@ -67,11 +67,11 @@ http://www.mathworks.com/access/helpdesk/help/pdf_doc/matlab/matfile_format.pdf
 class SURFIT_EXPORT matlabSparseMatrix {
 public:
 	/*! \return col's amount */
-	virtual long cols() const = 0;
+	virtual size_t cols() const = 0;
 	/*! \return row's amount */
-	virtual long rows() const = 0;
+	virtual size_t rows() const = 0;
 	/*! \return i,j-th matrix element */
-	virtual REAL element_at(int i, int j, int * next_i = NULL) const = 0;
+	virtual REAL element_at(size_t i, size_t j, size_t * next_i = NULL) const = 0;
 
 	/*! writes matrix to mat file (matlab binary format)
 	    \param filename mat-file filename

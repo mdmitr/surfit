@@ -28,7 +28,7 @@ namespace surfit {
 class intvec;
 
 SSTUFF_EXPORT
-intvec * create_intvec(int size = 0, int default_value = int(0), int fill_default = 1, int grow_by = 250);
+intvec * create_intvec(size_t size = 0, int default_value = int(0), int fill_default = 1, size_t grow_by = 250);
 
 SSTUFF_EXPORT
 intvec * create_intvec(const intvec &in);
@@ -59,7 +59,7 @@ protected:
 	    \param fill_default use initial value filling
 	    \param grow_by value for resizing vector
 	*/
-	intvec(int size = 0, int default_value = int(0), int fill_default = 1, int grow_by = 250);
+	intvec(size_t size = 0, int default_value = int(0), int fill_default = 1, size_t grow_by = 250);
 	
 	//! Copy constructor
 	intvec(const intvec &in);
@@ -71,7 +71,7 @@ private:
 public:
 
 	friend SSTUFF_EXPORT
-	intvec * create_intvec(int size, int default_value, int fill_default, int grow_by);
+	intvec * create_intvec(size_t size, int default_value, int fill_default, size_t grow_by);
 
 	friend SSTUFF_EXPORT
 	intvec * create_intvec(const intvec &in);
@@ -97,16 +97,16 @@ public:
 	void erase(int*);
 
 	//! delete element by index
-	void erase(int index);
+	void erase(size_t index);
 		
 	//! resize vector
-	void resize(int newsize, int default_value = int(0), int fill_default = 1);
+	void resize(size_t newsize, int default_value = int(0), int fill_default = 1);
 
 	//! return vector size
-	int size() const { return datasize; };
+	size_t size() const { return datasize; };
 
 	//! return reference to i'th element
-	int& operator()(int i) {
+	int& operator()(size_t i) {
 #ifdef LSS_BOUNDS_CHECK
 		if ((i < 0) || (i >= size()))
 			throw "invalid argument";
@@ -116,7 +116,7 @@ public:
 	};
 		
 	//! return const reference to i'th element
-	const int& operator()(int i) const {
+	const int& operator()(size_t i) const {
 #ifdef LSS_BOUNDS_CHECK
 		if ((i < 0) || (i >= size()))
 			throw "invalid argument";
@@ -129,13 +129,13 @@ public:
 	void push_back(const int&);
 
 	//! set currently allocated vector size to reserve_size
-	void reserve(int reserve_size);
+	void reserve(size_t reserve_size);
 
 	//! set vector's grow factor
-	void set_grow(int grow_by);
+	void set_grow(size_t grow_by);
 
 	//! swap two elements
-	void swap(int i, int j);
+	void swap(size_t i, size_t j);
 
 	//! forget all allocated memory
 	void drop_data();
@@ -148,13 +148,13 @@ protected:
 	int* data;
 
 	//! int vector size in elements
-	int datasize;
+	size_t datasize;
 
 	//! size of allocated memory in elements
-	int int_datasize;
+	size_t int_datasize;
 	
 	//! grow factor
-	int grow_by;
+	size_t grow_by;
 };
 
 }; // namespace surfit

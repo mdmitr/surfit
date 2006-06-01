@@ -21,6 +21,7 @@
 #define __surfit__grid__
 
 #include <math.h>
+#include <limits.h>
 
 namespace surfit {
 
@@ -74,41 +75,41 @@ public:
 	virtual void release();
 
 	//! calculates the amount of nodes in X direction
-	int getCountX() const;
+	size_t getCountX() const;
 
 	//! sets the amount of nodes in X direction
-	bool setCountX(int countX);
+	bool setCountX(size_t countX);
 
 	//! calculates the amount of nodes in Y direction
-	int getCountY() const;
+	size_t getCountY() const;
 
 	//! sets the amount of nodes in Y direction
-	bool setCountY(int countY);
+	bool setCountY(size_t countY);
 
 	//! returns coordinates of (i,j) node
-	void getCoordNode(int i, int j, REAL & x, REAL & y) const;
+	void getCoordNode(size_t i, size_t j, REAL & x, REAL & y) const;
 
 	//! returns X-coordinate of (i,j) node
-	REAL getCoordNodeX(int i) const { return startX + (i)*stepX; };
+	REAL getCoordNodeX(size_t i) const { return startX + (i)*stepX; };
 
 	//! returns Y-coordinate of (i,j) node
-	REAL getCoordNodeY(int j) const { return startY + (j)*stepY; };
+	REAL getCoordNodeY(size_t j) const { return startY + (j)*stepY; };
 	
 	//! calculates (i,j) of the cell for point with coords (x,y)
-	void getCoordPoint(REAL x, REAL y, int & i, int & j) const;
+	void getCoordPoint(REAL x, REAL y, size_t & i, size_t & j) const;
 
 	//! returns i number of (i,j) of the cell for point with coords (x,y)
-	int get_i(REAL x) const {
+	size_t get_i(REAL x) const {
 		if (stepX == 0)	
-			return -1;
-		return (int)floor((x-startX)/stepX + 0.5);
+			return UINT_MAX;
+		return (size_t)MAX(0,((x-startX)/stepX + 0.5));
 	};
 
 	//! returns j number of (i,j) of the cell for point with coords (x,y)
-	int get_j(REAL y) const {
+	size_t get_j(REAL y) const {
 		if (stepY == 0)	
-			return -1;
-		return (int)floor((y-startY)/stepY + 0.5);
+			return UINT_MAX;
+		return (size_t)MAX(0,floor((y-startY)/stepY + 0.5));
 	};
 
 	//! writes tag for saving grid to \ref datafile 
@@ -121,26 +122,26 @@ public:
 	void setName(const char * newname);
 
 	//! returns number of lines need to draw geometry
-	int getLinesCount() const;
+	size_t getLinesCount() const;
 
 	//! returns coordinates of line with number line_number
-	void getLine(int line_number, float &x0, float &y0, float &x1, float &y1) const;
+	void getLine(size_t line_number, float &x0, float &y0, float &x1, float &y1) const;
 
 	//! compares grid with another 
 	bool operator==(const d_grid * test) const;
 
 	//! returns cell bounds in OX direction
-	void x_from_to(int i, REAL & from, REAL & to) const;
+	void x_from_to(size_t i, REAL & from, REAL & to) const;
 	//! returns cell bounds in OY direction
-	void y_from_to(int j, REAL & from, REAL & to) const;
+	void y_from_to(size_t j, REAL & from, REAL & to) const;
 	//! returns lower cell bound in OX direction
-	REAL x_from(int i) const;
+	REAL x_from(size_t i) const;
 	//! returns upper cell bound in OX direction
-	REAL x_to(int i) const;
+	REAL x_to(size_t i) const;
 	//! returns lower cell bound in OY direction
-	REAL y_from(int j) const;
+	REAL y_from(size_t j) const;
 	//! returns upper cell bound in OY direction
-	REAL y_to(int j) const;
+	REAL y_to(size_t j) const;
 
 	//! X-coordinate of the first node
 	REAL startX;

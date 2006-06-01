@@ -231,8 +231,8 @@ bool _surf_full_recons(d_surf * srf);
 
 SURFIT_EXPORT
 d_grid * adopt_surf_grid(const d_surf * srf, d_grid * grd,
-		         int & from_x, int & to_x,
-		         int & from_y, int & to_y);
+		         size_t & from_x, size_t & to_x,
+		         size_t & from_y, size_t & to_y);
 
 SURFIT_EXPORT
 REAL _surf_mean_area(const d_surf * srf, const d_area * area);

@@ -34,10 +34,10 @@ class vec;
 
 SSTUFF_EXPORT
 /*! \ingroup internal
-    \fn vec * create_vec(int size = 0, REAL default_value = REAL(0), int fill_default = 1, int grow_by = 250);
+    \fn vec * create_vec(size_t size = 0, REAL default_value = REAL(0), int fill_default = 1, size_t grow_by = 250);
     \brief creates \ref vec object
 */
-vec * create_vec(int size = 0, REAL default_value = REAL(0), int fill_default = 1, int grow_by = 250);
+vec * create_vec(size_t size = 0, REAL default_value = REAL(0), int fill_default = 1, size_t grow_by = 250);
 
 SSTUFF_EXPORT
 /*! \ingroup internal
@@ -72,7 +72,7 @@ protected:
 	    \param fill_default use initial value filling
 	    \param grow_by value for resizing vector
     	*/
-	vec(int size = 0, REAL default_value = REAL(0), int fill_default = 1, int grow_by = 250);
+	vec(size_t size = 0, REAL default_value = REAL(0), int fill_default = 1, size_t grow_by = 250);
 	
 	//! Copy constructor
 	vec(const vec &in);
@@ -81,7 +81,7 @@ public:
 
 	friend SSTUFF_EXPORT
 	//! constructor
-	vec * create_vec(int size, REAL default_value, int fill_default, int grow_by);
+	vec * create_vec(size_t size, REAL default_value, int fill_default, size_t grow_by);
 
 	friend SSTUFF_EXPORT
 	//! copy constructor
@@ -111,16 +111,16 @@ public:
 	void erase(REAL*);
 
 	//! removes element by index
-	void erase(int index);
+	void erase(size_t index);
 		
 	//! changes vector size
-	void resize(int newsize, REAL default_value = REAL(0), int fill_default = 1);
+	void resize(size_t newsize, REAL default_value = REAL(0), int fill_default = 1);
 
 	//! returns vector size
-	int size() const { return datasize; };
+	size_t size() const { return datasize; };
 
 	//! returns reference to i'th element
-	REAL& operator()(int i) {
+	REAL& operator()(size_t i) {
 #ifdef LSS_BOUNDS_CHECK
 		if ((i < 0) || (i >= size()))
 			throw "invalid argument";
@@ -130,7 +130,7 @@ public:
 	};
 		
 	//! returns const reference to i'th element
-	const REAL& operator()(int i) const {
+	const REAL& operator()(size_t i) const {
 #ifdef LSS_BOUNDS_CHECK
 		if ((i < 0) || (i >= size()))
 			throw "invalid argument";
@@ -146,13 +146,13 @@ public:
 	void push_back(const REAL&);
 
 	//! sets currently allocated vector size to reserve_size
-	void reserve(int reserve_size);
+	void reserve(size_t reserve_size);
 
 	//! sets vector's grow factor
-	void set_grow(int grow_by);
+	void set_grow(size_t grow_by);
 
 	//! exchanges two elements
-	void swap(int i, int j);
+	void swap(size_t i, size_t j);
 
 	//! forgets all allocated memory
 	void drop_data();
@@ -165,13 +165,13 @@ protected:
 	REAL* data;
 
 	//! real vector size in elements
-	int datasize;
+	size_t datasize;
 
 	//! size of allocated memory in elements
-	int real_datasize;
+	size_t real_datasize;
 	
 	//! grow factor
-	int grow_by;
+	size_t grow_by;
 };
 
 }; // namespace surfit

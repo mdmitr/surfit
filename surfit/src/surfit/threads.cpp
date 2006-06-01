@@ -33,10 +33,10 @@ std::vector<job *> jobs;
 void init_threads(int cnt) {
 	cpu = MIN(cnt, MAX_CPU);
 #ifdef HAVE_THREADS
-	unsigned int ssize = slaves.size();
+	size_t ssize = slaves.size();
 	if (ssize == cpu)
 		return;
-	unsigned int i;
+	size_t i;
 	if ((int)ssize > cpu-1) {
 		for (i = 0; i < ssize-cpu-1; i++) {
 			slavethread * slave = *(slaves.end()-1);
@@ -52,7 +52,7 @@ void init_threads(int cnt) {
 		}
 	}
 	jobs.resize(cpu);
-	for (i = 0; i < (unsigned int)cpu; i++)
+	for (i = 0; i < (size_t)cpu; i++)
 		jobs[i] = NULL;
 #endif //threads
 };
@@ -73,13 +73,13 @@ void finish_threads() {
 */
 
 #ifdef HAVE_THREADS
-void set_job(job * j, unsigned int pos) {
+void set_job(job * j, size_t pos) {
 	jobs[pos] = j;
 };
 
 void do_jobs() {
 	
-	unsigned int i;
+	size_t i;
 	unsigned added_slaves = 0;
 	for (i = 1; i < jobs.size(); i++) {
 		job * j = jobs[i];

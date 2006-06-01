@@ -30,7 +30,7 @@
 namespace surfit {
 
 matr_diag::matr_diag(vec * ival, 
-		     long iN,
+		     size_t iN,
 		     const bitvec * imask) {
 	val = ival;
 	N = iN;
@@ -46,21 +46,21 @@ REAL matr_diag::norm() const {
 	return norm2(val->begin(), val->end());
 };
 
-long matr_diag::rows() const {
+size_t matr_diag::rows() const {
 	return N;
 };
 
-long matr_diag::cols() const {
+size_t matr_diag::cols() const {
 	return N;
 };
 
-REAL matr_diag::element_at(int i, int j, int * next_j) const 
+REAL matr_diag::element_at(size_t i, size_t j, size_t * next_j) const 
 {
-	int _next_j = INT_MAX;
+	size_t _next_j = UINT_MAX;
 	REAL res = REAL(0);
 
 	if (i < j) {
-		_next_j = INT_MAX;
+		_next_j = UINT_MAX;
 		goto exit;
 	}
 
@@ -72,7 +72,7 @@ REAL matr_diag::element_at(int i, int j, int * next_j) const
 	if (i == j) {
 		if (mask->get(j) == true)
 			res = (*val)(j);
-		_next_j = INT_MAX;
+		_next_j = UINT_MAX;
 		goto exit;
 	}
 
@@ -85,22 +85,22 @@ exit:
 	return res;	
 };
 
-REAL matr_diag::element_at_transposed(int i, int j, int * next_j) const 
+REAL matr_diag::element_at_transposed(size_t i, size_t j, size_t * next_j) const 
 {
 	return element_at(i, j, next_j);	
 };
 
-REAL matr_diag::at(int i, int j, int * next_j) const 
+REAL matr_diag::at(size_t i, size_t j, size_t * next_j) const 
 {
 	return element_at(i,j,next_j);
 };
 
-REAL matr_diag::at_transposed(int i, int j, int * next_j) const 
+REAL matr_diag::at_transposed(size_t i, size_t j, size_t * next_j) const 
 {
 	return element_at(i,j,next_j);
 };
 
-REAL matr_diag::mult_line(int J, const REAL * b_begin, const REAL * b_end) 
+REAL matr_diag::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) 
 {
 	if (mask->get(J))
 		return (*val)(J) * *(b_begin+J);
@@ -108,7 +108,7 @@ REAL matr_diag::mult_line(int J, const REAL * b_begin, const REAL * b_end)
 	return REAL(0);
 };
 
-REAL matr_diag::mult_transposed_line(int J, const REAL * b_begin, const REAL * b_end)  
+REAL matr_diag::mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end)  
 {
 	return mult_line(J, b_begin, b_end);
 };

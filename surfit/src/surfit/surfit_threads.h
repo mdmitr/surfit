@@ -31,7 +31,7 @@ struct job {
 };
 
 SURFIT_EXPORT
-void set_job(job * j, unsigned int pos);
+void set_job(job * j, size_t pos);
 
 SURFIT_EXPORT
 void do_jobs();

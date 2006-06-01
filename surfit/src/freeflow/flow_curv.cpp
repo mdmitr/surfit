@@ -108,7 +108,7 @@ bool f_flow_curv::solvable_without_cond(const bitvec * mask_solved,
 				       const vec * X)
 {
 
-	int i;
+	size_t i;
 	for (i = 0; i < mask_solved->size(); i++) {
 		if (mask_solved->get(i))
 			goto sss;
@@ -130,7 +130,7 @@ d_points * discretize_pcurv(const d_curv * crv, d_grid * grd, REAL value, const 
 		return NULL;
 
 	// using modified brezengham algorithm
-	int qq;
+	size_t qq;
 	REAL X2, X1, Y2, Y1;
 
 	vec * points_x = create_vec();
