@@ -301,7 +301,7 @@ int d_dem::get_j(REAL y) const {
 };
 
 void d_dem::plus(const d_dem * fnc) {
-	int i;
+	size_t i;
 	short val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val1 = (*fnc->coeff)(i);
@@ -312,7 +312,7 @@ void d_dem::plus(const d_dem * fnc) {
 };
 
 void d_dem::minus(const d_dem * fnc) {
-	int i;
+	size_t i;
 	short val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val1 = (*fnc->coeff)(i);
@@ -323,7 +323,7 @@ void d_dem::minus(const d_dem * fnc) {
 };
 
 void d_dem::mult(const d_dem * fnc) {
-	int i;
+	size_t i;
 	short val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val1 = (*fnc->coeff)(i);
@@ -334,7 +334,7 @@ void d_dem::mult(const d_dem * fnc) {
 };
 
 void d_dem::div(const d_dem * fnc) {
-	int i;
+	size_t i;
 	short val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val1 = (*fnc->coeff)(i);
@@ -345,7 +345,7 @@ void d_dem::div(const d_dem * fnc) {
 };
 
 void d_dem::set(const d_dem * fnc) {
-	int i;
+	size_t i;
 	short val1, val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val1 = (*fnc->coeff)(i);
@@ -356,7 +356,7 @@ void d_dem::set(const d_dem * fnc) {
 };
 
 void d_dem::plus(short val) {
-	int i;
+	size_t i;
 	short val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val2 = (*coeff)(i);
@@ -366,7 +366,7 @@ void d_dem::plus(short val) {
 };
 
 void d_dem::minus(short val) {
-	int i;
+	size_t i;
 	short val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val2 = (*coeff)(i);
@@ -376,7 +376,7 @@ void d_dem::minus(short val) {
 };
 
 void d_dem::mult(short val) {
-	int i;
+	size_t i;
 	short val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val2 = (*coeff)(i);
@@ -386,7 +386,7 @@ void d_dem::mult(short val) {
 };
 
 void d_dem::div(short val) {
-	int i;
+	size_t i;
 	short val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val2 = (*coeff)(i);
@@ -396,7 +396,7 @@ void d_dem::div(short val) {
 };
 
 void d_dem::set(short val) {
-	int i;
+	size_t i;
 	short val2;
 	for (i = 0; i < coeff->size(); i++) {
 		val2 = (*coeff)(i);
@@ -407,7 +407,7 @@ void d_dem::set(short val) {
 
 int d_dem::defined() const {
 	int defined = 0;
-	int i;
+	size_t i;
 	if (coeff) {
 		const short * ptr = coeff->begin();
 		for (i = 0; i < coeff->size(); i++) {
@@ -559,7 +559,7 @@ REAL d_dem::calc_approx_norm(int norm_type) const {
 	switch(norm_type) {
 	case 0:
 		{
-			int i;
+			size_t i;
 			for (i = 0; i < coeff->size(); i++) {
 				res += (*coeff)(i)*(*coeff)(i);
 			}
