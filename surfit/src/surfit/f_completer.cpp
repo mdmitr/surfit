@@ -59,9 +59,9 @@ const data * f_completer::this_get_data(int pos) const {
 
 bool f_completer::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
-	int matrix_size = method_basis_cntX*method_basis_cntY;
-	int NN = method_grid->getCountX();
-	int MM = method_grid->getCountY();
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t NN = method_grid->getCountX();
+	size_t MM = method_grid->getCountY();
 
 	matrD1 * oD1 = new matrD1(matrix_size, NN, 
 		method_stepX, method_stepY,
@@ -94,7 +94,7 @@ bool f_completer::minimize_step() {
 	vec * b = NULL;
 	bool solvable = make_matrix_and_vector(A,b);
 
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 	if ( !cond() ) {
 		if (solvable == false) {
@@ -219,11 +219,11 @@ bool f_completer::minimize() {
 			bitvec * saved_mask_undefined = create_bitvec(method_mask_undefined);
 			
 			int color;
-			int f_size = flood_areas->size();
+			size_t f_size = flood_areas->size();
 			
 			bool undef, solved;
 			
-			int pos = 0;
+			size_t pos = 0;
 			int exists = 0;
 			
 			for (color = 1; color <= flood_areas_cnt; color++) {
@@ -294,8 +294,8 @@ bool f_completer::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
 					const vec * X)
 {
-	int matrix_size = method_basis_cntX*method_basis_cntY;
-	int i, cnt = 0;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t i, cnt = 0;
 	for (i = 0; i < matrix_size; i++) {
 		if (mask_solved->get(i))
 			cnt++;

@@ -92,7 +92,7 @@ bool f_points::minimize() {
 		return minimize_only_points();
 	} else {
 
-		int matrix_size = method_basis_cntX*method_basis_cntY;
+		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 		matr * A = NULL;
 		vec * b = NULL;
@@ -129,13 +129,13 @@ bool f_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		prepare_scattered_points(pnts, f_sub_pnts);
 	}
 	
-	int points = 0;
-	int i;
+	size_t points = 0;
+	size_t i;
 	
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_vec(matrix_size);
 
-	int pnts_size = pnts->size();
+	size_t pnts_size = pnts->size();
 		
 	if (pnts->getName()) {
 		writelog(LOG_MESSAGE,"%s : (%s)", print_name, pnts->getName());
@@ -166,7 +166,7 @@ bool f_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		
 		sub_points * sub_pnts = (*f_sub_pnts)[i];
 
-		int pos = sub_pnts->cell_number;
+		size_t pos = sub_pnts->cell_number;
 
 		if ( (!method_mask_solved->get(pos)) && 
 		     (!method_mask_undefined->get(pos)) ) 

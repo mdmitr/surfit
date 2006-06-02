@@ -133,7 +133,7 @@ bool f_lcm_simple::minimize_step() {
 	vec * b = NULL;
 	bool solvable = make_matrix_and_vector(A,b);
 
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 	if ( !cond() ) {
 		if (solvable == false) {
@@ -241,7 +241,7 @@ bool f_lcm_simple::minimize() {
 			}
 		}
 
-		int matrix_size = method_basis_cntX*method_basis_cntY;
+		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 		std::vector<short int> * flood_areas = new std::vector<short int>(matrix_size);
 		int flood_areas_cnt = 0;
@@ -257,11 +257,11 @@ bool f_lcm_simple::minimize() {
 			bitvec * saved_mask_undefined = create_bitvec(method_mask_undefined);
 			
 			int color;
-			int f_size = flood_areas->size();
+			size_t f_size = flood_areas->size();
 			
 			bool undef, solved;
 			
-			int pos = 0;
+			size_t pos = 0;
 			int exists = 0;
 			
 			for (color = 1; color <= flood_areas_cnt; color++) {
@@ -329,8 +329,8 @@ bool f_lcm_simple::solvable_without_cond(const bitvec * mask_solved,
 					 const bitvec * mask_undefined,
 					 const vec * X)
 {
-	int matrix_size = method_basis_cntX*method_basis_cntY;
-	int i, cnt = 0;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t i, cnt = 0;
 	for (i = 0; i < matrix_size; i++) {
 		if (mask_solved->get(i)) {
 			cnt++;

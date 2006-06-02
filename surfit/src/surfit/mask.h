@@ -61,9 +61,9 @@ public:
 	bool getValue(REAL x, REAL y) const; 
 
 	//! returns mask value at node (i,j)
-	bool getValueIJ(int i, int j) const;
+	bool getValueIJ(size_t i, size_t j) const;
 	//! sets mask value for node (i,j)
-	void setValueIJ(int i, int j, bool value);
+	void setValueIJ(size_t i, size_t j, bool value);
 
 	//! returns minimum X-coordinate for the mask
 	REAL getMinX() const;
@@ -78,10 +78,10 @@ public:
 	REAL getMaxY() const;
 
 	//! returns amount of cells for X direction
-	int getCountX() const;
+	size_t getCountX() const;
 
 	//! returns amount of cells for Y direction
-	int getCountY() const;
+	size_t getCountY() const;
 
 	//! returns distance between of centers of cells in X direction
 	REAL getStepX() const;
@@ -90,19 +90,19 @@ public:
 	REAL getStepY() const;
 
 	//! calculates coordinates of the center of the (i,j) cell
-	void getCoordNode(int i, int j, REAL & x, REAL & y) const;
+	void getCoordNode(size_t i, size_t j, REAL & x, REAL & y) const;
 
 	//! returns X-coordinate of the center of the (i,j) cell
-	REAL getCoordNodeX(int i) const;
+	REAL getCoordNodeX(size_t i) const;
 
 	//! returns Y-coordinate of the center of the (i,j) cell
-	REAL getCoordNodeY(int j) const;
+	REAL getCoordNodeY(size_t j) const;
 
 	//! returns i-cell number for X-coordinate
-	int get_i(REAL x) const;
+	size_t get_i(REAL x) const;
 
 	//! returns j-cell number for Y-coordinate
-	int get_j(REAL y) const;
+	size_t get_j(REAL y) const;
 
 	//! for saving in surfit datafile
 	bool writeTags(datafile *df) const;

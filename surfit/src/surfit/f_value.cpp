@@ -63,7 +63,7 @@ bool f_value::minimize() {
 		return minimize_alone();
 	} else {
 		
-		int matrix_size = method_basis_cntX*method_basis_cntY;
+		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 		matr * A = NULL;
 		vec * b = NULL;
@@ -119,17 +119,17 @@ bool f_value::minimize_alone() {
 
 bool f_value::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
-	int matrix_size = method_mask_solved->size();
+	size_t matrix_size = method_mask_solved->size();
 
 	if (mask)
 		mask->release();
 	mask = create_bitvec(matrix_size);
-	int i;
+	size_t i;
 
 	v = create_vec(matrix_size);
 	matrix = NULL;
 
-	int points = 0;
+	size_t points = 0;
 
 	for (i = 0; i < matrix_size; i++) {
 		if (method_mask_solved->get(i))

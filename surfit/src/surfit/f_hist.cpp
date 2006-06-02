@@ -70,8 +70,8 @@ bool f_hist::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	else
 		writelog(LOG_MESSAGE,"noname histogramm");
 	
-	int matrix_size = method_basis_cntX*method_basis_cntY;
-	int points = 0;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t points = 0;
 
 	// it is necessary to split for areas first!
 
@@ -327,9 +327,9 @@ bool f_hist::solvable_without_cond(const bitvec * mask_solved,
 				   const bitvec * mask_undefined,
 				   const vec * X)
 {
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
-	int i;
+	size_t i;
 	for (i = 0; i < matrix_size; i++) {
 		
 		if (mask_solved->get(i))

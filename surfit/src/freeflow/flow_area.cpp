@@ -67,7 +67,7 @@ bool f_flow_area::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	else 
 		writelog(LOG_MESSAGE,"flow area noname, value = %g", value);
 	
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_vec(matrix_size);
 
 	bitvec * mask = NULL;
@@ -75,10 +75,10 @@ bool f_flow_area::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	if (!mask)
 		return false;
 
-	int true_size = mask->true_size();
+	size_t true_size = mask->true_size();
 		
-	int i;
-	int points = 0;
+	size_t i;
+	size_t points = 0;
 
 	for (i = 0; i < matrix_size; i++) {
 		

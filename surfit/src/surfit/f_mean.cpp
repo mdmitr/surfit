@@ -54,13 +54,13 @@ bool f_mean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	bitvec * mask = create_bitvec(method_mask_solved);
 	mask->OR(method_mask_undefined);
 	
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	matr_onesrow * T = new matr_onesrow(mult, matrix_size, mask);
 
-	int N = matrix_size;
+	size_t N = matrix_size;
 	REAL sum_values_solved = 0;
 
-	int i;
+	size_t i;
 	for (i = 0; i < matrix_size; i++) {
 		if (method_mask_undefined->get(i)) {
 			N--;
@@ -95,8 +95,8 @@ bool f_mean::solvable_without_cond(const bitvec * mask_solved,
 				   const bitvec * mask_undefined,
 				   const vec * X) 
 {
-	int matrix_size = X->size();
-	int i;
+	size_t matrix_size = X->size();
+	size_t i;
 	for (i = 0; i < matrix_size; i++) {
 		if ( (!mask_solved->get(i)) || (!mask_undefined->get(i)) )
 			return false;

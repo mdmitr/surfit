@@ -72,7 +72,7 @@ bool f_surf::minimize() {
 		vec * b = NULL;
 		bool solvable = make_matrix_and_vector(A,b);
 		
-		int matrix_size = method_basis_cntX*method_basis_cntY;
+		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 		
 		if ( !cond() ) {
 			if (solvable == false) {

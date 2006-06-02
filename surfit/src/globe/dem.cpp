@@ -136,7 +136,7 @@ REAL d_dem::getInterpValue(REAL x, REAL y) const {
 	{
 		
 		REAL sum = REAL(0);
-		int cnt = 0;
+		size_t cnt = 0;
 		
 		if (z0 != this->undef_value) {
 			sum += z0;
@@ -186,9 +186,9 @@ REAL d_dem::getInterpValue(REAL x, REAL y) const {
 };
 
 REAL d_dem::getMeanValue(REAL x_from, REAL x_to, REAL y_from, REAL y_to) const {
-	int i_from, i_to;
-	int j_from, j_to;
-
+	
+	size_t i_from, i_to;
+	size_t j_from, j_to;
 	
 	i_from = get_i(x_from);
 	i_from = MAX(0, i_from);
@@ -202,16 +202,16 @@ REAL d_dem::getMeanValue(REAL x_from, REAL x_to, REAL y_from, REAL y_to) const {
 	j_to   = get_j(y_to);
 	j_to   = MIN(j_to, getCountY()-1);
 
-	int NN = getCountX();
+	size_t NN = getCountX();
 
-	int i,j;
-	int cnt = 0;
+	size_t i,j;
+	size_t cnt = 0;
 	REAL sum_value = 0;
 	REAL value;
 	for (j = j_from; j <= j_to; j++) {
 		for (i = i_from; i <= i_to; i++) {
 		
-			int pos = i + j*NN;
+			size_t pos = i + j*NN;
 			value = (*coeff)(pos);
 			if (value == this->undef_value)
 				continue;
@@ -264,11 +264,11 @@ bool d_dem::writeTags(datafile *df) const {
 	
 };
 
-int d_dem::getCountX() const {
+size_t d_dem::getCountX() const {
 	return grd->getCountX();
 };
 
-int d_dem::getCountY() const {
+size_t d_dem::getCountY() const {
 	return grd->getCountY();
 };
 
@@ -280,23 +280,23 @@ REAL d_dem::getStepY() const {
 	return grd->stepY;
 };
 
-void d_dem::getCoordNode(int i, int j, REAL & x, REAL & y) const {
+void d_dem::getCoordNode(size_t i, size_t j, REAL & x, REAL & y) const {
 	grd->getCoordNode(i,j,x,y);
 };
 
-REAL d_dem::getCoordNodeX(int i) const {
+REAL d_dem::getCoordNodeX(size_t i) const {
 	return grd->getCoordNodeX(i);
 };
 
-REAL d_dem::getCoordNodeY(int j) const {
+REAL d_dem::getCoordNodeY(size_t j) const {
 	return grd->getCoordNodeY(j);
 };
 
-int d_dem::get_i(REAL x) const {
+size_t d_dem::get_i(REAL x) const {
 	return grd->get_i(x);
 };
 
-int d_dem::get_j(REAL y) const {
+size_t d_dem::get_j(REAL y) const {
 	return grd->get_j(y);
 };
 
@@ -405,8 +405,8 @@ void d_dem::set(short val) {
 	}
 };
 
-int d_dem::defined() const {
-	int defined = 0;
+size_t d_dem::defined() const {
+	size_t defined = 0;
 	size_t i;
 	if (coeff) {
 		const short * ptr = coeff->begin();
@@ -455,7 +455,7 @@ bool d_dem::compare_grid(const d_dem * fnc) const {
 //
 //
 
-int d_dem::details_size() const {
+size_t d_dem::details_size() const {
 	return store_pos;
 };
 
@@ -473,8 +473,8 @@ bool d_dem::decompose() {
 		bool enlarge_X = false;
 		bool enlarge_Y = false;
 		
-		int countX = grd->getCountX();
-		int countY = grd->getCountY();
+		size_t countX = grd->getCountX();
+		size_t countY = grd->getCountY();
 		
 		if (countX % 2 != 0)
 			enlarge_X = true;
@@ -482,7 +482,7 @@ bool d_dem::decompose() {
 		if (countY % 2 != 0)
 			enlarge_Y = true;
 		
-		int N = coeff->size()/4;
+		size_t N = coeff->size()/4;
 		
 		if (N <= 1)
 			return false;
@@ -494,7 +494,7 @@ bool d_dem::decompose() {
 		
 		coeff = new_coeff;
 		
-		int new_size_x = 0;
+		size_t new_size_x = 0;
 		if (enlarge_X) {
 			new_size_x = (grd->getCountX() + 1) / 2;
 		} else {
@@ -506,7 +506,7 @@ bool d_dem::decompose() {
 		new_size_x = grd->getCountX();
 		
 		
-		int new_size_y = 0;
+		size_t new_size_y = 0;
 		if (enlarge_Y) {
 			new_size_y = (grd->getCountY() + 1) / 2;
 		} else {

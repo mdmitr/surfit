@@ -78,7 +78,7 @@ bool f_area_surf::minimize() {
 		vec * b = NULL;
 		bool solvable = make_matrix_and_vector(A,b);
 		
-		int matrix_size = method_basis_cntX*method_basis_cntY;
+		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 		
 		if ( !cond() ) {
 			if (solvable == false) {
@@ -178,7 +178,7 @@ void f_area_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 	if ((functionals_add->size() == 0) && ( !cond() ) && (i_am_cond == false) )
 		return;	
 
-	int matrix_size = method_basis_cntX * method_basis_cntY;
+	size_t matrix_size = method_basis_cntX * method_basis_cntY;
 
 	get_area_mask();
 	if (area_mask == NULL) {

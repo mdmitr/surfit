@@ -126,16 +126,16 @@ void debug_print_grid_line(const char * filename,
 
 	// draw fault line
 	{
-		int fl_size = grd_line->size();
-		int i;
-		int J1, J2;
+		size_t fl_size = grd_line->size();
+		size_t i;
+		size_t J1, J2;
 		for (i = 0; i < fl_size; i++) {
 			J1 = (*(grd_line->first))[i];
 			J2 = (*(grd_line->second))[i];
 			
 			REAL x, y;
-			int NN = grd->getCountX();
-			int MM = grd->getCountY();
+			size_t NN = grd->getCountX();
+			size_t MM = grd->getCountY();
 			
 			REAL stepX2 = grd->stepX/REAL(2);
 			REAL stepY2 = grd->stepY/REAL(2);
@@ -156,7 +156,7 @@ void debug_print_grid_line(const char * filename,
 			if (m2 > m1)
 				diff = NN;
 			if (m2 < m1)
-				diff = -NN;
+				diff = -(int)NN;
 			
 			// right line
 			if (diff == 1) {
@@ -177,7 +177,7 @@ void debug_print_grid_line(const char * filename,
 			}
 			
 			// down line
-			if (diff == -NN) {
+			if (diff == -(int)NN) {
 				fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black');\n", 
 					x-stepX2, x+stepX2, y-stepY2, y-stepY2);
 			}
@@ -206,7 +206,7 @@ void debug_print_grid_line(const char * filename,
 
 
 inline
-void add_val(std::vector<size_t> * v, int n, int m, int NN, int MM) {
+void add_val(std::vector<size_t> * v, size_t n, size_t m, size_t NN, size_t MM) {
 	if ((n < 0) || (n >= NN))
 		return;
 
@@ -419,8 +419,8 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	grd->startY = old_startY;
 	grd->endX = old_endX;
 	grd->endY = old_endY;
-	int NNN = NN;
-	int MMM = MM;
+	size_t NNN = NN;
+	size_t MMM = MM;
 	NN = grd->getCountX();
 	MM = grd->getCountY();
 
@@ -432,8 +432,8 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	}
 
 	// repeats deletions
-	int old_size = nns->size();
-	int write_pos = 0;
+	size_t old_size = nns->size();
+	size_t write_pos = 0;
 	for (qq = 1; qq < nns->size(); qq++) {
 		if ( (*nns)[write_pos] != (*nns)[qq] ) {
 			write_pos++;

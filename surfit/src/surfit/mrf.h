@@ -26,7 +26,7 @@ class vec;
 
 SURFIT_EXPORT
 void _decomp1d(REAL * X_begin, 
-	       int N, // amount of elements to process
+	       size_t N, // amount of elements to process
 	       int distance, // distance between elements
 	       REAL undef_value,
 	       bool flag,
@@ -38,7 +38,7 @@ void _decomp2d(vec *& X,
 	       vec *& Xd,
 	       vec *& Xh,
 	       vec *& Xv,
-	       int N, int M,
+	       size_t N, size_t M,
 	       bool enlarge_X,
 	       bool enlarge_Y,
 	       REAL undef_value,
@@ -47,7 +47,7 @@ void _decomp2d(vec *& X,
 
 SURFIT_EXPORT		
 void _recons1d(REAL * X_begin, 
-	       int N, // amount of elements to process
+	       size_t N, // amount of elements to process
 	       int distance, // distance between elements
 	       REAL undef_value,
 	       bool flag,
@@ -59,7 +59,7 @@ void _recons2d(vec *& X,
 	       const vec * Xd,
 	       const vec * Xh,
 	       const vec * Xv,
-	       int N, int M,
+	       size_t N, size_t M,
 	       bool enlarge_X,
 	       bool enlarge_Y,
 	       REAL undef_value,

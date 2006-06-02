@@ -358,9 +358,9 @@ bool _mask_apply_to_surf(const d_mask * msk, d_surf * srf) {
 	if (!msk)
 		return false;
 	
-	int i,j;
-	int NN = srf->getCountX();
-	int MM = srf->getCountY();
+	size_t i,j;
+	size_t NN = srf->getCountX();
+	size_t MM = srf->getCountY();
 	REAL x,y;
 	bool val;
 	REAL surf_val;

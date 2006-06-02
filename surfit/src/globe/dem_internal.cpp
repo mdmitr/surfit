@@ -1374,7 +1374,7 @@ d_points * _dem_to_points(const d_dem * srf) {
 	REAL * Y_ptr = Y->begin();
 	REAL * Z_ptr = Z->begin();
 
-	int i,j;
+	size_t i,j;
 	REAL x,y,z;
 	for (j = 0; j < srf->getCountY(); j++) {
 		for (i = 0; i < srf->getCountX(); i++) {
@@ -1578,9 +1578,9 @@ bool _dem_resid(const d_dem * srf, const d_points * tsk, const char * filename) 
 
 REAL _dem_D1(const d_dem * srf) {
 
-	int i,j;
-	int NN = srf->getCountX();
-	int MM = srf->getCountY();
+	size_t i,j;
+	size_t NN = srf->getCountX();
+	size_t MM = srf->getCountY();
 
 	short * ptr = srf->coeff->begin();
 
@@ -1627,9 +1627,9 @@ REAL _dem_D1(const d_dem * srf) {
 
 REAL _dem_D2(const d_dem * srf) {
 
-	int i,j;
-	int NN = srf->getCountX();
-	int MM = srf->getCountY();
+	size_t i,j;
+	size_t NN = srf->getCountX();
+	size_t MM = srf->getCountY();
 
 	short * ptr = srf->coeff->begin();
 
@@ -1652,7 +1652,7 @@ REAL _dem_D2(const d_dem * srf) {
 	}
 
 	REAL dxdy = 0;
-	int dxdy_cnt = 0;
+	size_t dxdy_cnt = 0;
 	for (i = 0; i < NN-2; i++) {
 		for (j = 0; j < MM-2; j++) {
 			v1 = *(ptr + i + j*NN);
@@ -1670,7 +1670,7 @@ REAL _dem_D2(const d_dem * srf) {
 	}
 
 	REAL dy2 = 0;
-	int dy2_cnt = 0;
+	size_t dy2_cnt = 0;
 	for (i = 0; i < NN-1; i++) {
 		for (j = 0; j < MM-3; j++) {
 			v1 = *(ptr + i + j*NN);
@@ -1710,15 +1710,15 @@ void _add_globe_dems(d_dem * srf) {
 
 d_dem * _dem_gradient(const d_dem * srf) {
 	
-	int NN = srf->getCountX();
-	int MM = srf->getCountY();
+	size_t NN = srf->getCountX();
+	size_t MM = srf->getCountY();
 
 	bool first_x, second_x;
 	bool first_y, second_y;
 
 	shortvec * coeff = create_shortvec(NN*MM);
 
-	int i, j, pos, pos1;
+	size_t i, j, pos, pos1;
 	REAL val;
 	for (j = 0; j < MM; j++) {
 		for (i = 0; i < NN; i++) {

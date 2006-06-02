@@ -1944,16 +1944,16 @@ bool _surf_resid(const d_surf * srf, const d_points * pnts, const char * filenam
 
 REAL _surf_D1(const d_surf * srf) {
 
-	int i,j;
-	int NN = srf->getCountX();
-	int MM = srf->getCountY();
+	size_t i,j;
+	size_t NN = srf->getCountX();
+	size_t MM = srf->getCountY();
 
 	REAL * ptr = srf->coeff->begin();
 
 	REAL v1, v2;
 
 	REAL dx = 0;
-	int dx_cnt = 0;
+	size_t dx_cnt = 0;
 	for (i = 0; i < NN-2; i++) {
 		for (j = 0; j < MM-1; j++) {
 			v1 = *(ptr + i + j*NN);
@@ -1993,16 +1993,16 @@ REAL _surf_D1(const d_surf * srf) {
 
 REAL _surf_D2(const d_surf * srf) {
 
-	int i,j;
-	int NN = srf->getCountX();
-	int MM = srf->getCountY();
+	size_t i,j;
+	size_t NN = srf->getCountX();
+	size_t MM = srf->getCountY();
 
 	REAL * ptr = srf->coeff->begin();
 
 	REAL v1, v2, v3, v4;
 
 	REAL dx2 = 0;
-	int dx2_cnt = 0;
+	size_t dx2_cnt = 0;
 	for (i = 0; i < NN-3; i++) {
 		for (j = 0; j < MM-1; j++) {
 			v1 = *(ptr + i + j*NN);
@@ -2018,7 +2018,7 @@ REAL _surf_D2(const d_surf * srf) {
 	}
 
 	REAL dxdy = 0;
-	int dxdy_cnt = 0;
+	size_t dxdy_cnt = 0;
 	for (i = 0; i < NN-2; i++) {
 		for (j = 0; j < MM-2; j++) {
 			v1 = *(ptr + i + j*NN);
@@ -2036,7 +2036,7 @@ REAL _surf_D2(const d_surf * srf) {
 	}
 
 	REAL dy2 = 0;
-	int dy2_cnt = 0;
+	size_t dy2_cnt = 0;
 	for (i = 0; i < NN-1; i++) {
 		for (j = 0; j < MM-3; j++) {
 			v1 = *(ptr + i + j*NN);
@@ -2076,15 +2076,15 @@ void _add_surfit_surfs(d_surf * srf) {
 
 d_surf * _surf_gradient(const d_surf * srf) {
 	
-	int NN = srf->getCountX();
-	int MM = srf->getCountY();
+	size_t NN = srf->getCountX();
+	size_t MM = srf->getCountY();
 
 	bool first_x, second_x;
 	bool first_y, second_y;
 
 	vec * coeff = create_vec(NN*MM);
 
-	int i, j, pos, pos1;
+	size_t i, j, pos, pos1;
 	REAL val;
 	for (j = 0; j < MM; j++) {
 		for (i = 0; i < NN; i++) {

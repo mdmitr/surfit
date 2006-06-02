@@ -127,7 +127,7 @@ sss:
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 struct pos_s {
-	int pos;
+	size_t pos;
 	REAL s; // square
 };
 #endif
@@ -139,14 +139,14 @@ bool ptr_pos_s_less(const pos_s & it1, const pos_s & it2)
 	return it1.pos < it2.pos;
 };
 
-bool add_square_val(d_grid * grd, int x, int y,
+bool add_square_val(d_grid * grd, size_t x, size_t y,
                     REAL X1, REAL Y1, REAL Z1,
                     REAL X2, REAL Y2, REAL Z2,
                     std::vector<pos_s> * data) {
 
 	REAL rx1, rx2;
 	REAL ry1, ry2;
-	int NN = grd->getCountX();
+	size_t NN = grd->getCountX();
 
 	REAL lx1 = X1, lx2 = X2, ly1 = Y1, ly2 = Y2;
 	
@@ -363,17 +363,17 @@ d_points * discretize_pcntr(const d_cntr * pcrv, d_grid * grd, const char * task
 	pos_s elem;
 	REAL total_weight = 0;
 	REAL sum_val = 0;
-	int NN = grd->getCountX();
+	size_t NN = grd->getCountX();
 	
-	for (qq = 0; qq < (int)data->size(); qq++) {
+	for (qq = 0; qq < data->size(); qq++) {
 		elem = (*data)[qq];
 		if (prev_pos == elem.pos) {
 			sum_val += elem.s;
 		} else {
 			// write
 			if (prev_pos != UINT_MAX) {
-				int pos_x = prev_pos % NN;
-				int pos_y = (prev_pos - pos_x)/NN;
+				size_t pos_x = prev_pos % NN;
+				size_t pos_y = (prev_pos - pos_x)/NN;
 				REAL x, y, z;
 				grd->getCoordNode(pos_x, pos_y, x, y);
 				z = sum_val;
@@ -387,8 +387,8 @@ d_points * discretize_pcntr(const d_cntr * pcrv, d_grid * grd, const char * task
 		prev_pos = elem.pos;
 	};
 
-	int pos_x = prev_pos % NN;
-	int pos_y = (prev_pos - pos_x)/NN;
+	size_t pos_x = prev_pos % NN;
+	size_t pos_y = (prev_pos - pos_x)/NN;
 	REAL x, y, z;
 	grd->getCoordNode(pos_x, pos_y, x, y);
 	z = sum_val;

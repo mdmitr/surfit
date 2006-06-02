@@ -30,14 +30,14 @@
 namespace surfit {
 
 void _decomp1d(REAL * X_begin, 
-	       int N, 
+	       size_t N, 
 	       int distance, 
 	       REAL undef_value,
 	       bool flag,
 	       vec * buf)
 {
-	int i;
-	int pos = 0;
+	size_t i;
+	size_t pos = 0;
 
 	REAL s1, s2;
 	REAL a, d;
@@ -77,7 +77,7 @@ void _decomp1d(REAL * X_begin,
 		pos++;
 	}
 
-	int buf_size = N/2;
+	size_t buf_size = N/2;
 	for (i = 0; i < buf_size; i++) 
 		*(X_begin + buf_size*distance + i*distance) = (*buf)(i);
 	
@@ -85,20 +85,20 @@ void _decomp1d(REAL * X_begin,
 
 void _decomp2d(vec *& X,
 	       vec *& Xa, vec *& Xd, vec *& Xh, vec *& Xv,
-	       int N, int M, bool enlarge_cols, bool enlarge_rows,
+	       size_t N, size_t M, bool enlarge_cols, bool enlarge_rows,
 	       REAL undef_value,
 	       bool flag)
 {
 
-	int newN = N;
-	int newM = M;
+	size_t newN = N;
+	size_t newM = M;
 
 	if (enlarge_cols)
 		newN++;
 	if (enlarge_rows)
 		newM++;
 
-	int i, j;
+	size_t i, j;
 
 	if (enlarge_cols) {
 		X->resize(newN*M);
@@ -144,15 +144,15 @@ void _decomp2d(vec *& X,
 
 
 void _recons1d(REAL * X_begin, 
-	       int N, 
+	       size_t N, 
 	       int distance, 
 	       REAL undef_value,
 	       bool flag,
 	       vec * buf)
 {
 
-	int i;
-	int pos = 0;
+	size_t i;
+	size_t pos = 0;
 
 	REAL s1, s2;
 	REAL a, d;
@@ -208,15 +208,15 @@ void _recons2d(vec *& X,
 	       const vec * d,
 	       const vec * h,
 	       const vec * v,
-	       int N, int M,
+	       size_t N, size_t M,
 	       bool enlarged_cols,
 	       bool enlarged_rows,
 	       REAL undef_value,
 	       bool flag)
 {
 
-	int newN = 2*N;
-	int newM = 2*M;
+	size_t newN = 2*N;
+	size_t newM = 2*M;
 
 	X = create_vec(newN*newM, 0, 0, 0); // don't fill this vector
 
@@ -230,7 +230,7 @@ void _recons2d(vec *& X,
 	_recons1d(X->begin(), newN*newM/2, 1, undef_value, flag, buf);
  	_recons1d(X->begin() + newN*newM/2, newN*newM/2, 1, undef_value, flag, buf);
 
-	int i,j;
+	size_t i,j;
 
 	buf->resize(newM/2);
 	for (i = 0; i < newN; i++) {

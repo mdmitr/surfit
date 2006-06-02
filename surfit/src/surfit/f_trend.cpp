@@ -118,11 +118,11 @@ bool f_trend::minimize() {
 
 		if (reproject_faults && gfaults) {
 			if (method_prev_grid != NULL) {
-				int NN = method_prev_grid->getCountX();
-				int MM = method_prev_grid->getCountY();
+				size_t NN = method_prev_grid->getCountX();
+				size_t MM = method_prev_grid->getCountY();
 				
-				int newNN = NN;
-				int newMM = MM;
+				size_t newNN = NN;
+				size_t newMM = MM;
 				
 				if (doubleX)
 					newNN *= 2;
@@ -150,7 +150,7 @@ bool f_trend::minimize() {
 			
 		}
 
-		int matrix_size = method_basis_cntX*method_basis_cntY;
+		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 		std::vector<short int> * flood_areas = new std::vector<short int>(matrix_size);
 		int flood_areas_cnt = 0;
@@ -166,11 +166,11 @@ bool f_trend::minimize() {
 			bitvec * saved_mask_undefined = create_bitvec(method_mask_undefined);
 			
 			int color;
-			int f_size = flood_areas->size();
+			size_t f_size = flood_areas->size();
 			
 			bool undef, solved;
 			
-			int pos = 0;
+			size_t pos = 0;
 			int exists = 0;
 			
 			for (color = 1; color <= flood_areas_cnt; color++) {
@@ -418,7 +418,7 @@ bool f_trend::minimize_step() {
 	vec * b = NULL;
 	bool solvable = make_matrix_and_vector(A,b);
 
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 	if ( !cond() ) {
 		if (solvable == false) {

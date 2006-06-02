@@ -638,9 +638,9 @@ void _add_surfit_curvs(d_curv * contour) {
 
 d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 {
-	int n = crv->size()-1;
-	int i, m = 0;
-	int npm = 0;	
+	size_t n = crv->size()-1;
+	size_t i, m = 0;
+	size_t npm = 0;	
 	
 	REAL c_x, c_y;
 
@@ -654,8 +654,8 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 	
 	bool sec;
 
-	int NN = grd->getCountX();
-	int MM = grd->getCountY();
+	size_t NN = grd->getCountX();
+	size_t MM = grd->getCountY();
 	
 	// ?? ????????
 	lt_x = grd->getCoordNodeX(0) - grd->stepX/REAL(2);

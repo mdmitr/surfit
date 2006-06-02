@@ -383,7 +383,7 @@ bool _area_save_shp(const d_area * area, const char * filename) {
 	int * PartStart = (int*)malloc( nParts * sizeof(int) );
 	int * PartType = (int*)malloc( nParts * sizeof(int) );
 
-	int size = 0;
+	size_t size = 0;
 	int i;
 	for (i = 0; i < nParts; i++) {
 		const d_curv * crv = area->get_curv(i);
@@ -393,7 +393,7 @@ bool _area_save_shp(const d_area * area, const char * filename) {
 	vec * X = create_vec(size, 0, 0);
 	vec * Y = create_vec(size, 0, 0);
 
-	int pos = 0;
+	size_t pos = 0;
 	for (i = 0; i < nParts; i++) {
 		*(PartStart+i) = pos;
 		const d_curv * crv = area->get_curv(i);

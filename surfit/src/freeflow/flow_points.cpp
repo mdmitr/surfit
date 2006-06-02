@@ -80,12 +80,12 @@ bool f_flow_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		prepare_scattered_points(f_task, f_sub_tasks);
 	}
 	
-	int i;
+	size_t i;
 	
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_vec(matrix_size);
 
-	int task_size = f_task->size();
+	size_t task_size = f_task->size();
 		
 	if (f_task->getName()) {
 		writelog(LOG_MESSAGE,"flow points : (%s), %d points", f_task->getName(), f_task->size());
@@ -108,9 +108,9 @@ bool f_flow_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		binded_grid = create_grid(method_grid);
 	}
 	
-	int points = 0;
+	size_t points = 0;
 
-	for (i = 0; i < (int)f_sub_tasks->size(); i++) {
+	for (i = 0; i < f_sub_tasks->size(); i++) {
 		
 		sub_points * sub_pnts = (*f_sub_tasks)[i];
 		

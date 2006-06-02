@@ -200,7 +200,7 @@ bool functional::cond_make_matrix_and_vector(matr *& matrix, vec *& v, bitvec * 
 		return false;
 	
 	bool res = true;
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 	std::vector<matr *> * matrices = new std::vector<matr*>;
 	vec * weights = create_vec();

@@ -90,13 +90,13 @@ bool f_points_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		prepare_scattered_points(pnts, f_sub_pnts);
 	}
 	
-	int points = 0;
-	int i;
+	size_t points = 0;
+	size_t i;
 	
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_vec(matrix_size);
 
-	int pnts_size = pnts->size();
+	size_t pnts_size = pnts->size();
 		
 	if (pnts->getName()) {
 		writelog(LOG_MESSAGE,"%s inequality: (%s)", print_name, pnts->getName());

@@ -1136,31 +1136,31 @@ void flood_fill(d_grid * grd,
 void flood_fill_boolvec(d_grid * grd,
 			grid_line * line, 
 			boolvec * data,
-			int fill_pos,
+			size_t fill_pos,
 			const bitvec * mask_undefined) {
 
 	// floodfill algorithm
-	int max_i = grd->getCountX();
-	int NN = max_i;
-	int max_j = grd->getCountY();
-	int grid_size = max_i*max_j;
+	size_t max_i = grd->getCountX();
+	size_t NN = max_i;
+	size_t max_j = grd->getCountY();
+	size_t grid_size = max_i*max_j;
 
 	if (data->size() != grid_size)
 		return;
 
-	int fill_i = fill_pos % NN;
-	int fill_j = (fill_pos - fill_i)/NN;
+	size_t fill_i = fill_pos % NN;
+	size_t fill_j = (fill_pos - fill_i)/NN;
 
 	std::vector<size_t> * flood_points = new std::vector<size_t>();
 	flood_points->push_back(fill_i + NN * fill_j);
 
-	int max_points = 1;
-	int i;
+	size_t max_points = 1;
+	size_t i;
 	for (i = 0; i < max_points; i++) {
 		
 		bool flood;
 
-		int pos = (*flood_points)[i];
+		size_t pos = (*flood_points)[i];
 
 		if ( (*data)(pos) != false )
 			continue;
@@ -1168,8 +1168,8 @@ void flood_fill_boolvec(d_grid * grd,
 		fill_i = pos % NN;
 		fill_j = (pos - fill_i)/NN;
 
-		int left_i = fill_i;
-		int left_j = fill_j;
+		size_t left_i = fill_i;
+		size_t left_j = fill_j;
 		
 		// find left edge
 		while (true) {
@@ -1188,7 +1188,7 @@ void flood_fill_boolvec(d_grid * grd,
 		};
 		left_i++;
 
-		int right_i = fill_i, right_j = fill_j;
+		size_t right_i = fill_i, right_j = fill_j;
 		
 		// find right edge
 		while (true) {
@@ -1209,8 +1209,8 @@ void flood_fill_boolvec(d_grid * grd,
 		right_i--;
 		
 		// start the loop upwards and downwards
-		int i_pos;
-		int new_pos;
+		size_t i_pos;
+		size_t new_pos;
 		for (i_pos = left_i; i_pos <= right_i; i_pos++) {
 
 			// upwards
@@ -1267,9 +1267,9 @@ void fill_all_areas(std::vector<short int> *& flood_areas,
 		    const bitvec * mask_undefined)
 {
 	
-	int pos ;
+	size_t pos ;
 
-	int max_pos = grd->getCountX()*grd->getCountY();
+	size_t max_pos = grd->getCountX()*grd->getCountY();
 
 	if (!flood_areas)
 		flood_areas = new std::vector<short int>(max_pos);

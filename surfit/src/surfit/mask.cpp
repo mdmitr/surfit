@@ -77,8 +77,8 @@ bool d_mask::getValue(REAL x, REAL y) const {
 	return getValueIJ(i, j);
 };
 
-bool d_mask::getValueIJ(int i, int j) const {
-	int NN = grd->getCountX();
+bool d_mask::getValueIJ(size_t i, size_t j) const {
+	size_t NN = grd->getCountX();
 	return coeff->get(i + j*NN);
 };
 
@@ -125,11 +125,11 @@ bool d_mask::writeTags(datafile *df) const {
 	
 };
 
-int d_mask::getCountX() const {
+size_t d_mask::getCountX() const {
 	return grd->getCountX();
 };
 
-int d_mask::getCountY() const {
+size_t d_mask::getCountY() const {
 	return grd->getCountY();
 };
 
@@ -140,23 +140,23 @@ bool d_mask::compare_grid(const d_mask * mask) const {
 	       );
 };
 
-void d_mask::getCoordNode(int i, int j, REAL & x, REAL & y) const {
+void d_mask::getCoordNode(size_t i, size_t j, REAL & x, REAL & y) const {
 	grd->getCoordNode(i,j,x,y);
 };
 
-REAL d_mask::getCoordNodeX(int i) const {
+REAL d_mask::getCoordNodeX(size_t i) const {
 	return grd->getCoordNodeX(i);
 };
 
-REAL d_mask::getCoordNodeY(int j) const {
+REAL d_mask::getCoordNodeY(size_t j) const {
 	return grd->getCoordNodeY(j);
 };
 
-int d_mask::get_i(REAL x) const {
+size_t d_mask::get_i(REAL x) const {
 	return grd->get_i(x);
 };
 
-int d_mask::get_j(REAL y) const {
+size_t d_mask::get_j(REAL y) const {
 	return grd->get_j(y);
 };
 

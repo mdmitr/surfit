@@ -70,16 +70,16 @@ bool f_mask::minimize() {
 	else 
 		writelog(LOG_MESSAGE,"mask : noname, size=(%d x %d)", msk->getCountX(), msk->getCountY());
 
-	int NN = method_grid->getCountX();
-	int MM = method_grid->getCountY();
+	size_t NN = method_grid->getCountX();
+	size_t MM = method_grid->getCountY();
 
-	int i, j;
+	size_t i, j;
 	REAL x,y;
 	bool mask_value;
 	int N;
 
-	int geom_NN = method_grid->getCountX();
-	int geom_MM = method_grid->getCountY();
+	size_t geom_NN = method_grid->getCountX();
+	size_t geom_MM = method_grid->getCountY();
 
 	for (j = 0; j < geom_MM; j++) {
 		y = method_grid->getCoordNodeY(j);
@@ -124,8 +124,8 @@ bool f_mask::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		return false;
 	}
 	
-	int NN = method_grid->getCountX();
-	int MM = method_grid->getCountY();
+	size_t NN = method_grid->getCountX();
+	size_t MM = method_grid->getCountY();
 	
 	if (mask)
 		mask->release();
@@ -134,8 +134,8 @@ bool f_mask::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	v = create_vec( NN*MM );
 	
-	int i,j, pos;
-	int points = 0;
+	size_t i,j, pos;
+	size_t points = 0;
 	REAL x,y;
 
 	for (j = 0; j < MM; j++) {

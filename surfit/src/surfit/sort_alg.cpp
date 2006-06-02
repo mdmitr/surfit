@@ -56,7 +56,7 @@ void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up,
 	typedef std::vector<size_t> vecInt;
 
 	vecInt nx(i_sortx_to-i_sortx_from);
-	int pos = 0;
+	size_t pos = 0;
 	for (ix = i_sortx_from; ix != i_sortx_to; ++ix) {
 		nx[pos] = (*ix-beginx);
 		pos++;
@@ -112,7 +112,7 @@ void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up,
 	typedef std::vector<size_t> vecInt;
 
 	vecInt nx(i_sortx_to-i_sortx_from);
-	int pos = 0;
+	size_t pos = 0;
 	for (ix = i_sortx_from; ix != i_sortx_to; ++ix) {
 		nx[pos] = (*ix-beginx);
 		pos++;
@@ -150,7 +150,7 @@ void getPointsInSegment(REAL x_left, REAL x_right,
 	i_sortx_to = std::lower_bound(i_sortx_from,sortx_end,&x_right,ptr_vector_less);
 
 	nn.resize(i_sortx_to-i_sortx_from);
-	int pos = 0;
+	size_t pos = 0;
 	for (ix = i_sortx_from; ix != i_sortx_to; ++ix) {
 		nn[pos] = (*ix-beginx);
 		pos++;
@@ -177,7 +177,7 @@ void getPointsInSegment(REAL x_left, REAL x_right,
 	i_sort_to = std::lower_bound(i_sort_from,sort_end,&x_right,ptr_vector_less);
 
 	nn.resize(i_sort_to-i_sort_from);
-	int pos = 0;
+	size_t pos = 0;
 	for (ix = i_sort_from; ix != i_sort_to; ++ix) {
 		nn[pos] = (*ix-beginx);
 		pos++;

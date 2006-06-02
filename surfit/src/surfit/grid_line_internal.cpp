@@ -97,27 +97,27 @@ d_curv * _grid_line_to_curv(const grid_line * grd_line, const d_grid * grd) {
 	if (!grd)
 		return false;
 	
-	int N = grd_line->size();
+	size_t N = grd_line->size();
 	
 	vec * X = create_vec(2*N);
 	vec * Y = create_vec(2*N);
 	
-	int i;
-	int J1, J2;
+	size_t i;
+	size_t J1, J2;
 
 	REAL stepX2 = grd->stepX/REAL(2);
 	REAL stepY2 = grd->stepY/REAL(2);
-	int pos = 0;
+	size_t pos = 0;
 	
 	for (i = 0; i < N; i++) {
 		J1 = *(grd_line->first->begin() + i);
 		J2 = *(grd_line->second->begin() + i);
 		
 		REAL x, y;
-		int NN = grd->getCountX();
+		size_t NN = grd->getCountX();
 			
-		int n = J1 % NN;
-		int m = (J1 - n)/NN;
+		size_t n = J1 % NN;
+		size_t m = (J1 - n)/NN;
 		
 		grd->getCoordNode(n,m,x,y);
 		
@@ -157,7 +157,7 @@ d_curv * _grid_line_to_curv(const grid_line * grd_line, const d_grid * grd) {
 		}
 		
 		// down line
-		if (diff == -NN) {
+		if (diff == -(int)NN) {
 			(*X)(pos) = x-stepX2;
 			(*Y)(pos) = y-stepY2;
 			pos++;

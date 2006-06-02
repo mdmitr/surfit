@@ -57,13 +57,13 @@ inline
 bool incr_ptr(const REAL *& p, long i, 
               const bitvec * mask_solved,
 	      const bitvec * mask_undefined,
-	      int x_from, int x_to, int y_from, int y_to, int NN,
-	      int incr = 1)
+	      size_t x_from, size_t x_to, size_t y_from, size_t y_to, size_t NN,
+	      size_t incr = 1)
 {
 	p += incr;
 	
-	int n = i % NN;
-	int m = (i - n)/NN;
+	size_t n = i % NN;
+	size_t m = (i - n)/NN;
 	
 	if  (!( (n >= x_from) && (n <= x_to) && (m >= y_from) && (m <= y_to) ))
 		return false;
@@ -80,13 +80,13 @@ bool incr_ptr(const REAL *& p, long i,
 inline
 bool incr_ptr(const REAL *& p, long i, 
               const bitvec * mask_solved_undefined,
-	      int x_from, int x_to, int y_from, int y_to, int NN,
-	      int incr = 1)
+	      size_t x_from, size_t x_to, size_t y_from, size_t y_to, size_t NN,
+	      size_t incr = 1)
 {
 	p += incr;
 	
-	int n = i % NN;
-	int m = (i - n)/NN;
+	size_t n = i % NN;
+	size_t m = (i - n)/NN;
 	
 	if  (!( (n >= x_from) && (n <= x_to) && (m >= y_from) && (m <= y_to) ))
 		return false;
@@ -119,15 +119,15 @@ bool incr_ptr(const REAL *& p, long i,
 };
 
 inline
-void sums_points_D1(int i, int j, 
-		    int NN, int MM, 
-		    int local_NN, int local_MM,
+void sums_points_D1(size_t i, size_t j, 
+		    size_t NN, size_t MM, 
+		    size_t local_NN, size_t local_MM,
 		    const bitvec * mask_undefined,
 		    bool & first_x, bool & second_x,
 		    bool & first_y, bool & second_y,
-		    int offset_x = 0, int offset_y = 0) {
+		    size_t offset_x = 0, size_t offset_y = 0) {
 
-	int J = (i+offset_x) + (j+offset_y)*NN;
+	size_t J = (i+offset_x) + (j+offset_y)*NN;
 
 	// first_x
 	if (first_x)
@@ -182,15 +182,15 @@ void sums_points_D1(int i, int j,
 };
 
 inline
-void sums_points_D1_(int i, int j, 
-		     int NN, int MM, 
-		     int local_NN, int local_MM,
+void sums_points_D1_(size_t i, size_t j, 
+		     size_t NN, size_t MM, 
+		     size_t local_NN, size_t local_MM,
 		     const bitvec * mask_solved,
 		     bool & first_x, bool & second_x,
 		     bool & first_y, bool & second_y,
 		     int offset_x = 0, int offset_y = 0) {
 
-	int J = (i+offset_x) + (j+offset_y)*NN;
+	size_t J = (i+offset_x) + (j+offset_y)*NN;
 
 	// first_x
 	if (first_x)
@@ -245,17 +245,17 @@ void sums_points_D1_(int i, int j,
 };
 
 inline
-void sums_points_D2(int i, int j, 
-		    int NN, int MM,
-		    int local_NN, int local_MM,
+void sums_points_D2(size_t i, size_t j, 
+		    size_t NN, size_t MM,
+		    size_t local_NN, size_t local_MM,
 		    const bitvec * mask_undefined,
 		    bool & first_x,  bool & second_x, bool & third_x,
 		    bool & first_xx, bool & second_xx,
 		    bool & first_yy, bool & second_yy,
 		    bool & first_y,  bool & second_y, bool & third_y,
-		    int offset_x = 0, int offset_y = 0) {
+		    size_t offset_x = 0, size_t offset_y = 0) {
 
-	int J = (i+offset_x) + (j+offset_y)*NN;
+	size_t J = (i+offset_x) + (j+offset_y)*NN;
 
 	// first_x
 	if ( (i >= 0) && (i+2 < local_NN) ) { // i = 0 ... N-3

@@ -76,7 +76,7 @@ bool f_area::minimize() {
 		vec * b = NULL;
 		bool solvable = make_matrix_and_vector(A,b);
 		
-		int matrix_size = method_basis_cntX*method_basis_cntY;
+		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 		
 		if ( !cond() ) {
 			if (solvable == false) {
@@ -127,11 +127,11 @@ bool f_area::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	if (area_mask == NULL)
 		return false;
 	
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_vec(matrix_size);
 
-	int i;
-	int points = 0;
+	size_t i;
+	size_t points = 0;
 
 	bitvec * mask = create_bitvec(matrix_size);
 	mask->init_false();
@@ -171,7 +171,7 @@ void f_area::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undef
 	if ((functionals_add->size() == 0) && ( !cond() ) && (i_am_cond == false) )
 		return;	
 
-	int matrix_size = method_basis_cntX * method_basis_cntY;
+	size_t matrix_size = method_basis_cntX * method_basis_cntY;
 
 	get_area_mask();
 	if (area_mask == NULL) {

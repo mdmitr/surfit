@@ -71,9 +71,9 @@ bool f_area_ineq::minimize() {
 
 bool f_area_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
-	int points = 0;
+	size_t points = 0;
 	
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_vec(matrix_size);
 
 	if (leq) {

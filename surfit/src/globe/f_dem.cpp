@@ -68,7 +68,7 @@ bool f_dem::minimize() {
 		return minimize_only_dem();
 	} else {
 
-		int matrix_size = method_basis_cntX*method_basis_cntY;
+		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 		matr * A = NULL;
 		vec * b = NULL;

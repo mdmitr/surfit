@@ -208,7 +208,7 @@ bool solve_with_penalties(functional * fnc, matr * T, vec * V, vec *& X) {
 		//else
 		//	writelog(LOG_MESSAGE,"processing with penalties : %d iteration", counter);
 		
-		int matrix_size = X->size();
+		size_t matrix_size = X->size();
 		
 		
 		matr_sum * S_matrix = new matr_sum(1, T, weight, P_matrix);
@@ -216,7 +216,7 @@ bool solve_with_penalties(functional * fnc, matr * T, vec * V, vec *& X) {
 
 		vec * S_vec = create_vec(P_vec->size(),0,0);
 
-		int i;
+		size_t i;
 		for (i = 0; i < matrix_size; i++) {
 			(*S_vec)(i) = (*P_vec)(i)*weight + (*V)(i);
 		};

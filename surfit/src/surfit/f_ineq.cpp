@@ -58,10 +58,10 @@ bool f_ineq::minimize() {
 
 bool f_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
-	int points = 0;
-	int i;
+	size_t points = 0;
+	size_t i;
 	
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_vec(matrix_size);
 
 	if (leq)
@@ -134,9 +134,9 @@ bool f_ineq::solvable_without_cond(const bitvec * mask_solved,
 			           const vec * X)
 {
 
-	int matrix_size = method_basis_cntX*method_basis_cntY;
+	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
-	int i;
+	size_t i;
 	for (i = 0; i < matrix_size; i++) {
 		
 		if (mask_solved->get(i))

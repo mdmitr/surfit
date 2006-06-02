@@ -321,9 +321,9 @@ void grid_begin() {
 		method_grid->release();
 	method_grid = create_calc_grd(method_basis_cntX, method_basis_cntY);
 	
-	int NN = method_grid->getCountX();
-	int MM = method_grid->getCountY();
-	int matrix_size = NN*MM;
+	size_t NN = method_grid->getCountX();
+	size_t MM = method_grid->getCountY();
+	size_t matrix_size = NN*MM;
 	
 	if (!method_X) 
 		method_X = create_vec(matrix_size);
