@@ -154,7 +154,8 @@ bool f_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	} else {
 		bind_points_to_grid(method_sub_grid, pnts, f_sub_pnts, method_grid);
 		if (binded_grid)
-			binded_grid = create_grid(method_grid);
+			binded_grid->release();
+		binded_grid = create_grid(method_grid);
 	}
 
 	if (mask)

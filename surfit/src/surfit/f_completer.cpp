@@ -203,7 +203,7 @@ bool f_completer::minimize() {
 			}
 		}
 
-		int matrix_size = method_basis_cntX*method_basis_cntY;
+		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 		std::vector<short int> * flood_areas = new std::vector<short int>(matrix_size);
 		int flood_areas_cnt = 0;

@@ -505,22 +505,21 @@ void bind_points_to_grid(d_grid *& old_grid,
 			 d_grid *& grd)
 {
 	std::vector<sub_points *>::iterator it;
-	REAL oldx_from, oldx_to, oldy_from, oldy_to;
 	REAL x_from, x_to, y_from, y_to;
-	int i,j;
-	int node;
+	size_t i,j;
+	size_t node;
 
-	int old_size = old_pnts->size();
+	size_t old_size = old_pnts->size();
 
 	std::vector<sub_points *> * tasks = new std::vector<sub_points *>;
 	tasks->reserve(old_size);
 
 	std::vector<size_t> * nums = new std::vector<size_t>;
-	int nums_size;
+	size_t nums_size;
 	
 	for (it = old_pnts->begin(); it != old_pnts->end(); it++) {
 
-		int total_size = 0;
+		size_t total_size = 0;
 		sub_points * old_sub_points = *it;
 
 		REAL ** sortx_begin = NULL;
@@ -531,26 +530,21 @@ void bind_points_to_grid(d_grid *& old_grid,
 		_sort_points(pnts, old_sub_points->point_numbers,
 			     sortx_begin, sortx_end, sorty_begin, sorty_end);
 
-		int old_node = old_sub_points->cell_number;
+		size_t old_node = old_sub_points->cell_number;
 		i = old_node % old_grid->getCountX();
 		j = (old_node -i)/old_grid->getCountX();
-
-		oldx_from = old_grid->startX + (old_grid->endX - old_grid->startX)/REAL(old_grid->getCountX()-1)*REAL(i-0.5);
-		oldx_to   = old_grid->startX + (old_grid->endX - old_grid->startX)/REAL(old_grid->getCountX()-1)*REAL(i+0.5);
-		oldy_from = old_grid->startY + (old_grid->endY - old_grid->startY)/REAL(old_grid->getCountY()-1)*REAL(i-0.5);
-		oldy_to   = old_grid->startY + (old_grid->endY - old_grid->startY)/REAL(old_grid->getCountY()-1)*REAL(i+0.5);
 		
 		int prop_coeff_x = grd->getCountX()/old_grid->getCountX();
 		int prop_coeff_y = grd->getCountY()/old_grid->getCountY();
 
-		int i_from = i*prop_coeff_x;
-		int i_to = i_from + prop_coeff_x-1;
+		size_t i_from = i*prop_coeff_x;
+		size_t i_to = i_from + prop_coeff_x-1;
 		if (old_grid->stepX == grd->stepX) {
 			i_from = i;
 			i_to = i;
 		}
-		int j_from = j*prop_coeff_y;
-		int j_to = j_from + prop_coeff_y-1;
+		size_t j_from = j*prop_coeff_y;
+		size_t j_to = j_from + prop_coeff_y-1;
 		if (old_grid->stepY == grd->stepY) {
 			j_from = j;
 			j_to = j;
