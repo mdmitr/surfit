@@ -120,6 +120,10 @@ SOURCE=..\src\surfit\matrD1.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\surfit\matrD1_aniso.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\surfit\matrD1_rect.cpp
 # End Source File
 # Begin Source File
@@ -645,6 +649,10 @@ SOURCE=..\src\surfit\matr_onesrow.h
 # Begin Source File
 
 SOURCE=..\src\surfit\matrD1.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\matrD1_aniso.h
 # End Source File
 # Begin Source File
 
