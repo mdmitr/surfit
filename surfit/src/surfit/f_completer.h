@@ -39,7 +39,7 @@ class f_completer : public faultable {
 public:
 
 	//! constructor
-	f_completer(REAL iD1 = 1, REAL iD2 = 0);
+	f_completer(REAL iD1 = 1, REAL iD2 = 0, REAL ialpha = 0, REAL iw = 1);
 	//! destructor
 	~f_completer();
 
@@ -69,6 +69,11 @@ private:
 	REAL D1;
 	//! informational weight 
 	REAL D2;
+	
+	//! anisothropy angle
+	REAL angle;
+	//! anisothropy factor
+	REAL w;
 
 };
 

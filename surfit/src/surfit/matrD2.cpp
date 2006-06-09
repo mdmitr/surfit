@@ -121,7 +121,73 @@ REAL matrD2::matrator_serve(size_t i, size_t j,
 	size_t next_j_dy2  = UINT_MAX;
 
 	REAL res = REAL(0);
+
+	if ( (!FIRST_X) && (!SECOND_X) && (!THIRD_X) &&
+	     (!FIRST_Y) && (!SECOND_Y) && (!THIRD_Y) &&
+	     (!FIRST_XX) && (!SECOND_XX) && 
+	     (!FIRST_YY) && (!SECOND_YY) )
+	{
+		if (next_j) {
+
+			if (j < i-2*NN) {
+				*next_j = i-2*NN;
+				return REAL(0);
+			}
+			if (j < i-NN-1) {
+				*next_j = i-NN-1;
+				return REAL(0);
+			}
+			if (j < i-NN) {
+				*next_j = i-NN;
+				return REAL(0);
+			}
+			if (j < i-NN+1) {
+				*next_j = i-NN+1;
+				return REAL(0);
+			}
+			if (j < i-2) {
+				*next_j = i-2;
+				return REAL(0);
+			}
+			if (j < i-1) {
+				*next_j = i-1;
+				return REAL(0);
+			}
+			if (j < i) {
+				*next_j = i;
+				return REAL(0);
+			}
+			if (j < i+1) {
+				*next_j = i+1;
+				return REAL(0);
+			}
+			if (j < i+2) {
+				*next_j = i+2;
+				return REAL(0);
+			}
+			if (j < i+NN-1) {
+				*next_j = i+NN-1;
+				return REAL(0);
+			}
+			if (j < i+NN) {
+				*next_j = i+NN;
+				return REAL(0);
+			}
+			if (j < i+NN+1) {
+				*next_j = i+NN+1;
+				return REAL(0);
+			}
+			if (j < i+2*NN) {
+				*next_j = i+2*NN;
+				return REAL(0);
+			}
+			*next_j = UINT_MAX;
+			
+		}
+		return REAL(0);
+	}
 	
+	// u_{i,j} - 2 u_{i+1,j} + u_{i+2,j}
 	if (FIRST_X) {
 		if (j < i) {
 			next_j_dx2 = MIN(i, next_j_dx2);
@@ -151,6 +217,7 @@ REAL matrD2::matrator_serve(size_t i, size_t j,
 
 mark_second_x:
 	
+	// - 2 u_{i-1,j} + 4 u_{i,j} - 2 u_{i+1,j}
 	if (SECOND_X) {
 		
 		if (j < i-1) {
@@ -182,6 +249,7 @@ mark_second_x:
 
 mark_third_x:
 
+	// u_{i-2,j} - 2 u_{i-1,j} + u_{i,j}
 	if (THIRD_X) {
 		
 		if (j < i-2) {
@@ -213,6 +281,7 @@ mark_third_x:
 
 mark_first_y:
 
+	// u_{i,j} - 2 u_{i,j+1} + u_{i,j+2}
 	if (FIRST_Y) {
 		
 		if (j < i) {
@@ -254,6 +323,7 @@ mark_first_y:
 
 mark_second_y:
 
+	// - 2 u_{i,j-1} + 4 u_{i,j} - 2 u_{i,j+1}
 	if (SECOND_Y) {
 	
 		if (j < i-NN) {
@@ -295,6 +365,7 @@ mark_second_y:
 
 mark_third_y:
 
+	// u_{i,j-2} - 2 u_{i,j-1} + u_{i,j}
 	if (THIRD_Y) {
 	
 		if (j < i-2*NN) {
@@ -336,6 +407,7 @@ mark_third_y:
 
 mark_first_xx:
 
+	// 2 ( u_{i,j} - u_{i+1,j} - u_{i,j+1} + u_{i+1,j+1} )
 	if (FIRST_XX) {
 
 		if (j < i) {
@@ -378,6 +450,7 @@ mark_first_xx:
 
 mark_second_xx:
 
+	// 2 ( - u_{i-1,j} + u_{i,j} + u_{i-1,j+1} - u_{i,j+1} )
 	if (SECOND_XX) {
 
 		if (j < i-1) {
@@ -420,6 +493,7 @@ mark_second_xx:
 
 mark_first_yy:
 
+	// 2 ( - u_{i,j-1} + u_{i+1,j-1} + u_{i,j} - u_{i+1,j} )
 	if (FIRST_YY) {
 
 		if (j < i-NN) {
@@ -462,6 +536,7 @@ mark_first_yy:
 
 mark_second_yy:
 
+	// 2 ( u_{i-1,j-1} - u_{i,j-1} - u_{i-1,j} + u_{i,j} )
 	if (SECOND_YY) {
 
 		if (j < i-NN-1) {
@@ -784,7 +859,7 @@ REAL matrD2::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) {
 
 	}
 	
-	// - 2 u_{i,j-1} + 4 u_{i,j} + - 2 u_{i,j+1}
+	// - 2 u_{i,j-1} + 4 u_{i,j} - 2 u_{i,j+1}
 	if (SECOND_Y) {
 		
 		p = b_begin + J - NN - 1;

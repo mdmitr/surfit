@@ -24,10 +24,10 @@
 namespace surfit {
 
 inline
-bool incr_ptr(const REAL *& p, long i, 
+bool incr_ptr(const REAL *& p, size_t i, 
               const bitvec * mask_solved,
 	      const bitvec * mask_undefined,
-	      int incr = 1) 
+	      size_t incr = 1) 
 {
 	p += incr;
 	
@@ -41,9 +41,9 @@ bool incr_ptr(const REAL *& p, long i,
 };
 
 inline
-bool incr_ptr(const REAL *& p, long i, 
+bool incr_ptr(const REAL *& p, size_t i, 
               const bitvec * mask_solved_undefined,
-	      int incr = 1) 
+	      size_t incr = 1) 
 {
 	p += incr;
 	
@@ -54,7 +54,7 @@ bool incr_ptr(const REAL *& p, long i,
 };
 
 inline
-bool incr_ptr(const REAL *& p, long i, 
+bool incr_ptr(const REAL *& p, size_t i, 
               const bitvec * mask_solved,
 	      const bitvec * mask_undefined,
 	      size_t x_from, size_t x_to, size_t y_from, size_t y_to, size_t NN,
@@ -78,7 +78,7 @@ bool incr_ptr(const REAL *& p, long i,
 };
 
 inline
-bool incr_ptr(const REAL *& p, long i, 
+bool incr_ptr(const REAL *& p, size_t i, 
               const bitvec * mask_solved_undefined,
 	      size_t x_from, size_t x_to, size_t y_from, size_t y_to, size_t NN,
 	      size_t incr = 1)
@@ -98,11 +98,11 @@ bool incr_ptr(const REAL *& p, long i,
 };
 
 inline
-bool incr_ptr(const REAL *& p, long i, 
+bool incr_ptr(const REAL *& p, size_t i, 
               const bitvec * mask_solved,
 	      const bitvec * mask_undefined,
-	      int from, int to,
-	      int incr = 1)
+	      size_t from, size_t to,
+	      size_t incr = 1)
 {
 	p += incr;
 	
@@ -155,7 +155,7 @@ void sums_points_D1(size_t i, size_t j,
 	
 	// first_y
 	if (first_y)
-	if ( (j >= 0) && (j+1 < local_MM) ) {
+	if ( (j >= 0) && (j+1 < local_MM) ) {  // j = 0 ... M-2
 		
 		if ( mask_undefined->get(J) || 
 			 mask_undefined->get(J+NN) ) 
@@ -167,7 +167,7 @@ void sums_points_D1(size_t i, size_t j,
 	
 	// second_y
 	if (second_y)
-	if ( (j > 0) && (j < local_MM) ) {
+	if ( (j > 0) && (j < local_MM) ) { // j = 1 ... M-1
 		
 		if ( mask_undefined->get(J-NN) || 
 			 mask_undefined->get(J) )
@@ -218,7 +218,7 @@ void sums_points_D1_(size_t i, size_t j,
 	
 	// first_y
 	if (first_y)
-	if ( (j >= 0) && (j+1 < local_MM) ) {
+	if ( (j >= 0) && (j+1 < local_MM) ) { // j = 0 ... M-2
 		
 		if ( !mask_solved->get(J) || 
 			 !mask_solved->get(J+NN) ) 
@@ -230,7 +230,7 @@ void sums_points_D1_(size_t i, size_t j,
 	
 	// second_y
 	if (second_y)
-	if ( (j > 0) && (j < local_MM) ) {
+	if ( (j > 0) && (j < local_MM) ) { // j = 1 ... M-1
 		
 		if ( !mask_solved->get(J-NN) || 
 			 !mask_solved->get(J) )
@@ -270,7 +270,7 @@ void sums_points_D2(size_t i, size_t j,
 	}
 
 	// second_x
-	if ( (i > 0) && (i+1 < local_NN) ) { // i = 1 .. N-2
+	if ( (i > 0) && (i+1 < local_NN) ) { // i = 1 ... N-2
 		
 		if ( mask_undefined->get(J-1) || 
 			 mask_undefined->get(J)   || 
@@ -282,7 +282,7 @@ void sums_points_D2(size_t i, size_t j,
 	}
 
 	// third_x
-	if ( (i > 1) && (i < local_NN) ) { // i = 2 .. N-1
+	if ( (i > 1) && (i < local_NN) ) { // i = 2 ... N-1
 		
 		if ( mask_undefined->get(J-2) || 
 			 mask_undefined->get(J-1) || 
@@ -306,7 +306,7 @@ void sums_points_D2(size_t i, size_t j,
 	}
 
 	// second_y
-	if ( (j > 0) && (j+1 < local_MM) ) { // j = 1 .. M-2
+	if ( (j > 0) && (j+1 < local_MM) ) { // j = 1 ... M-2
 		
 		if ( mask_undefined->get(J-NN) || 
 			 mask_undefined->get(J)    || 
@@ -318,7 +318,7 @@ void sums_points_D2(size_t i, size_t j,
 	}
 
 	// third_y
-	if ( (j > 1) && (j < local_MM) ) { // j = 2 .. M-1
+	if ( (j > 1) && (j < local_MM) ) { // j = 2 ... M-1
 		
 		if ( mask_undefined->get(J-2*NN) || 
 			 mask_undefined->get(J-NN)   || 

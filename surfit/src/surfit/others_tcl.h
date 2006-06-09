@@ -23,7 +23,7 @@
 namespace surfit {
 
 /*! \ingroup tcl_rules_other
-    \fn bool completer(REAL D1 = 1, REAL D2 = 2);
+    \fn bool completer(REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
     \par Tcl syntax:
     completer D1 D2
@@ -41,54 +41,41 @@ namespace surfit {
     \par Math:
     This command adds the following functional to the functional sequence:
     \f[ 
-    \Phi(u_{1,1},\ldots,u_{N,M}) = 
-     \mathbf{D_1} \frac{h_y}{h_x} \left[ 
-     (u_{i+1,j}-u_{i,j})^2 + (u_{i,j} - u_{i-1,j})^2
-     \right] + 
-     \mathbf{D_1} \frac{h_x}{h_y} \left[ 
-     (u_{i,j+1}-u_{i,j})^2 + (u_{i,j-1} - u_{i,j})^2
-     \right] +
+    \Phi(u_{1,1},\ldots,u_{N,M}) = D_1 \Phi_1(u_{1,1},\ldots,u_{N,M}) + D_2 \Phi_2(u_{1,1},\ldots,u_{N,M}),
     \f]
-    \f[ 
-     +  \mathbf{D_2} \frac{h_y^2}{h_x^2}
-     \left[
-     (u_{i+2,j} - 2u_{i+1,j} + u_{i,j})^2  +
-     (u_{i+1,j} - 2u_{i,j} + u_{i-1,j})^2  +
-     (u_{i,j} - 2u_{i-1,j} + u_{i-2,j})^2 
-     \right] +
+    where
+    \f[
+    \Phi_1(u_{1,1},\ldots,u_{N,M}) = \left[ 
+    \sum\limits_{j=0}^{M-1} \sum\limits_{i=0}^{N-2}   
+    \left( \frac{ u_{i+1,j} - u_{i,j} } { h_x } \right)^2 
+    + 
+    \sum\limits_{i=0}^{N-1} \sum\limits_{j=0}^{M-2}   
+    \left( \frac{ u_{i,j+1} - u_{i,j} } { h_y } \right)^2 
+    \right]
     \f]
-    \f[ 
-     +  2 \mathbf{D_2} \left(
-     \left[
-     (u_{i+1,j+1} - u_{i,j+1} - u_{i+1,j} + u_{i,j})
-     \right] +
-     \left[
-     (u_{i,j+1} - u_{i-1,j+1} - u_{i,j} + u_{i-1,j})
-     \right] \right) +
+    \f[
+    \Phi_2 = \left[
+    \sum\limits_{j=0}^{M-1} \sum\limits_{i=0}^{N-3} 
+    \left( \frac{ u_{i+2,j} - 2u_{i+1,j} + u_{i,j} } {h_x^2} \right)^2
+    + \right.
     \f]
-    \f[ 
- +  \mathbf{D_2} \frac{h_x^2}{h_y^2}
-     \left[
-     (u_{i,j+2} - 2u_{i,j+1} + u_{i,j})^2  +
-     (u_{i,j+1} - 2u_{i,j} + u_{i,j-1})^2  +
-     (u_{i,j} - 2u_{i,j-1} + u_{i,j-2})^2 
-     \right] +
+    \f[
+    2\sum\limits_{j=0}^{M-2} \sum\limits_{i=0}^{N-2} 
+    \left( \frac{ (u_{i+1,j+1} - u_{i,j+1}) - (u_{i+1,j} - u_{i,j}) } { h_x h_y }  \right)^2
+    + 
     \f]
-    \f[ 
-     +  2 \mathbf{D_2} \left(
-     \left[
-     (u_{i+1,j+1} - u_{i+1,j} - u_{i,j+1} + u_{i,j})
-     \right] +
-     \left[
-     (u_{i+1,j} - u_{i+1,j-1} - u_{i,j} + u_{i,j-1})
-     \right] \right) = \min.
+    \f[
+    \left.
+    \sum\limits_{i=0}^{N-1} \sum\limits_{j=0}^{M-3} 
+    \left( \frac{ u_{i,j+2} - 2u_{i,j+1} + u_{i,j} } { h_y^2 } \right)^2
+    \right].
     \f]
 
 */
-bool completer(REAL D1 = 1, REAL D2 = 2);
+bool completer(REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
 /*! \ingroup tcl_rules_other
-    \fn bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2);
+    \fn bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
     \par Tcl syntax:
     completer_add weight D1 D2
@@ -102,7 +89,7 @@ bool completer(REAL D1 = 1, REAL D2 = 2);
     \param D2 weight coefficient for rule that the resulting surface should tend to plane surface
 
 */
-bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2);
+bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
 /*! \ingroup tcl_rules_other
     \fn bool value(REAL val = 0);

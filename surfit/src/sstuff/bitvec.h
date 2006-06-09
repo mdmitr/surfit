@@ -118,7 +118,7 @@ public:
 	
 	//! reads four values, starting from pos
 	void get4(size_t pos, bool * b);
-	
+
 	//! writes 10 values, starting from pos
 	void write10(size_t pos, 
 		     bool b1, bool b2, bool b3, bool b4, bool b5,

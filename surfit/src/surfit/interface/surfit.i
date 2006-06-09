@@ -115,8 +115,8 @@ void file_load(const char * filename);
 bool file_save(const char * filename);
 char * file_info(const char * filename);
 
-bool completer(REAL D1 = 1, REAL D2 = 2);
-bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2);
+bool completer(REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
+bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 bool value(REAL val = 0);
 bool value_add(REAL weight = 1, REAL val = 0);
 bool mean(REAL value, REAL mult = 0.001);

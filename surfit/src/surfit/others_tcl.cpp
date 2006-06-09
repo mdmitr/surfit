@@ -33,18 +33,18 @@
 
 namespace surfit {
 
-bool completer(REAL D1, REAL D2) {
-	f_completer * f_cmpltr = new f_completer(D1, D2);
+bool completer(REAL D1, REAL D2, REAL alpha, REAL w) {
+	f_completer * f_cmpltr = new f_completer(D1, D2, alpha, w);
 	functionals->push_back(f_cmpltr);
 	return true;
 };
 
-bool completer_add(REAL weight, REAL D1, REAL D2) {
+bool completer_add(REAL weight, REAL D1, REAL D2, REAL alpha, REAL w) {
 	functional * srf = get_modifiable_functional();
 	if (srf == NULL)
 		return false;
 	
-	f_completer * f_cmpltr = new f_completer(D1, D2);
+	f_completer * f_cmpltr = new f_completer(D1, D2, alpha, w);
 	srf->add_functional(f_cmpltr, weight);
 	return true;
 };

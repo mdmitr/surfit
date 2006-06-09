@@ -79,9 +79,9 @@ protected:
 	//! rows in geometry
 	size_t MM;
 
-	//! grid step by X
+	//! grid step by X power of 4
 	REAL hx4;
-	//! grid step by Y
+	//! grid step by Y power of 4
 	REAL hy4;
 
 	//! = \f$ \frac{h_y^2}{h_x^2} \f$

@@ -29,6 +29,7 @@
 #include "variables_tcl.h"
 #include "grid.h"
 #include "matrD1.h"
+#include "matrD1_aniso.h"
 #include "matrD2.h"
 #include "curv.h"
 #include "grid_line.h"
@@ -39,11 +40,13 @@
 
 namespace surfit {
 
-f_completer::f_completer(REAL iD1, REAL iD2) :
+f_completer::f_completer(REAL iD1, REAL iD2, REAL iangle, REAL iw) :
 faultable("f_completer", F_USUAL|F_FAULT)
 {
 	D1 = iD1;
 	D2 = iD2;
+	angle = iangle;
+	w = iw;
 };
 
 f_completer::~f_completer() {
@@ -63,10 +66,18 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	size_t NN = method_grid->getCountX();
 	size_t MM = method_grid->getCountY();
 
-	matrD1 * oD1 = new matrD1(matrix_size, NN, 
-		method_stepX, method_stepY,
-		method_mask_solved, method_mask_undefined, 
-		gfaults); 
+	matr * oD1 = NULL;
+	if (angle == 0 && w == 1)
+		oD1 = new matrD1(matrix_size, NN, 
+				 method_stepX, method_stepY,
+				 method_mask_solved, method_mask_undefined, 
+				 gfaults);
+	else 
+		oD1 = new matrD1_aniso(matrix_size, NN, 
+				       method_stepX, method_stepY,
+				       method_mask_solved, method_mask_undefined, 
+				       gfaults,
+				       angle, w);
 	
 	matrD2 * oD2 = new matrD2(matrix_size, NN, 
 		method_stepX, method_stepY,
