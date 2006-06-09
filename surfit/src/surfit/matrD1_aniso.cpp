@@ -33,13 +33,13 @@
 #define CHECK_PTR(p) if(true)
 #endif
 
-#define FIRST_X		b[0] 
-#define SECOND_X	b[1]
-#define FIRST_Y		b[2]
-#define SECOND_Y	b[3]
-#define FIRST_XY	FIRST_X && FIRST_Y	
-#define SECOND_XY	FIRST_X && SECOND_Y
-#define SECOND_YX	FIRST_Y && SECOND_X
+#define FIRST_X		(b[0])
+#define SECOND_X	(b[1])
+#define FIRST_Y		(b[2])
+#define SECOND_Y	(b[3])
+#define FIRST_XY	(FIRST_X && FIRST_Y)	
+#define SECOND_XY	(FIRST_X && SECOND_Y)
+#define SECOND_YX	(FIRST_Y && SECOND_X)
 
 namespace surfit {
 
@@ -116,6 +116,52 @@ REAL matrD1_aniso::matrator_serve(size_t i, size_t j, bool * b, size_t * next_j)
 
 	size_t next_j_dx = UINT_MAX;
 	size_t next_j_dy = UINT_MAX;
+
+	if ( (!FIRST_X) && (!SECOND_X) && (!FIRST_Y) && (!SECOND_Y) &&
+	     (!FIRST_XY) && (!SECOND_XY) && (!SECOND_YX) ) 
+	{
+		if (next_j) {
+			
+			if (j < i-NN) {
+				*next_j = i-NN;
+				return REAL(0);
+			}
+
+			if (j < i-NN+1) {
+				*next_j = i-NN+1;
+				return REAL(0);
+			}
+			
+			if (j < i-1) {
+				*next_j = i-1;
+				return REAL(0);
+			}
+			
+			if (j < i) {
+				*next_j = i;
+				return REAL(0);
+			}
+
+			if (j < i+1) {
+				*next_j = i+1;
+				return REAL(0);
+			}
+
+			if (j < i+NN-1) {
+				*next_j = i+NN-1;
+				return REAL(0);
+			}
+			
+			if (j < i+NN) {
+				*next_j = i+NN;
+				return REAL(0);
+			}
+
+			*next_j = UINT_MAX;
+						
+		}
+		return REAL(0);
+	}
 	
 	//  -(wmxx + mxx) * (u_{i+1,j} - u_{i,j}) 
 	if (FIRST_X) {
@@ -345,6 +391,11 @@ REAL matrD1_aniso::at(size_t i, size_t j, size_t * next_j) const {
 				*next_j = i-NN;
 				return REAL(0);
 			}
+
+			if (j < i-NN+1) {
+				*next_j = i-NN+1;
+				return REAL(0);
+			}
 			
 			if (j < i-1) {
 				*next_j = i-1;
@@ -353,6 +404,16 @@ REAL matrD1_aniso::at(size_t i, size_t j, size_t * next_j) const {
 			
 			if (j < i) {
 				*next_j = i;
+				return REAL(0);
+			}
+
+			if (j < i+1) {
+				*next_j = i+1;
+				return REAL(0);
+			}
+
+			if (j < i+NN-1) {
+				*next_j = i+NN-1;
 				return REAL(0);
 			}
 			

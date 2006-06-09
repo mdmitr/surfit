@@ -286,6 +286,11 @@ REAL matrD1::at(size_t i, size_t j, size_t * next_j) const {
 				*next_j = i;
 				return REAL(0);
 			}
+
+			if (j < i+1) {
+				*next_j = i+1;
+				return REAL(0);
+			}
 			
 			if (j < i+NN) {
 				*next_j = i+NN;
