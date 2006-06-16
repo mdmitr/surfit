@@ -134,7 +134,7 @@ void sums_points_D1(size_t i, size_t j,
 	if ( (i >= 0) && (i+1 < local_NN) ) { // i = 0 ... N-2
 		
 		if ( mask_undefined->get(J) || 
-			 mask_undefined->get(J+1) )
+		     mask_undefined->get(J+1) )
 			first_x = false;
 		
 	} else {
@@ -146,8 +146,8 @@ void sums_points_D1(size_t i, size_t j,
 	if ( (i > 0) && (i < local_NN) ) { // i = 1 .. N-1
 		
 		if ( mask_undefined->get(J-1) || 
-			 mask_undefined->get(J) )
-		    second_x = false;
+		     mask_undefined->get(J) )
+			second_x = false;
 		
 	} else {
 		second_x = false;
@@ -158,8 +158,8 @@ void sums_points_D1(size_t i, size_t j,
 	if ( (j >= 0) && (j+1 < local_MM) ) {  // j = 0 ... M-2
 		
 		if ( mask_undefined->get(J) || 
-			 mask_undefined->get(J+NN) ) 
-		    first_y = false;
+		     mask_undefined->get(J+NN) ) 
+			first_y = false;
 		
 	} else {
 		first_y = false;
@@ -170,7 +170,7 @@ void sums_points_D1(size_t i, size_t j,
 	if ( (j > 0) && (j < local_MM) ) { // j = 1 ... M-1
 		
 		if ( mask_undefined->get(J-NN) || 
-			 mask_undefined->get(J) )
+		     mask_undefined->get(J) )
 			second_y = false;
 		
 	} else {
@@ -182,64 +182,118 @@ void sums_points_D1(size_t i, size_t j,
 };
 
 inline
-void sums_points_D1_(size_t i, size_t j, 
-		     size_t NN, size_t MM, 
-		     size_t local_NN, size_t local_MM,
-		     const bitvec * mask_solved,
-		     bool & first_x, bool & second_x,
-		     bool & first_y, bool & second_y,
-		     int offset_x = 0, int offset_y = 0) {
+void sums_points_D1_aniso(size_t i, size_t j, 
+			  size_t NN, size_t MM, 
+			  size_t local_NN, size_t local_MM,
+			  const bitvec * mask_undefined,
+			  bool & first_x, bool & second_x,
+			  bool & first_y, bool & second_y,
+			  bool & first_xy, bool & first_yx,
+			  bool & second_xy, bool & second_yx,
+			  size_t offset_x = 0, size_t offset_y = 0) 
+{
 
 	size_t J = (i+offset_x) + (j+offset_y)*NN;
 
 	// first_x
-	if (first_x)
-	if ( (i >= 0) && (i+1 < local_NN) ) { // i = 0 ... N-2
-		
-		if ( !mask_solved->get(J) || 
-			 !mask_solved->get(J+1) )
+	if (first_x) {
+		if ( (i >= 0) && (i+1 < local_NN) ) { // i=0,\ldots,N-2
+			
+			if ( mask_undefined->get(J) || mask_undefined->get(J+1) )
+				first_x = false;
+			
+		} else {
 			first_x = false;
-		
-	} else {
-		first_x = false;
+		}
 	}
 
 	// second_x
-	if (second_x)
-	if ( (i > 0) && (i < local_NN) ) { // i = 1 .. N-1
-		
-		if ( !mask_solved->get(J-1) || 
-			 !mask_solved->get(J) )
-		    second_x = false;
-		
-	} else {
-		second_x = false;
+	if (second_x) {
+		if ( (i > 0) && (i < local_NN) ) { // i=1,\ldots,N-1
+			
+			if ( mask_undefined->get(J-1) || mask_undefined->get(J) )
+				second_x = false;
+			
+		} else {
+			second_x = false;
+		}
 	}
 	
 	// first_y
-	if (first_y)
-	if ( (j >= 0) && (j+1 < local_MM) ) { // j = 0 ... M-2
-		
-		if ( !mask_solved->get(J) || 
-			 !mask_solved->get(J+NN) ) 
-		    first_y = false;
-		
-	} else {
-		first_y = false;
+	if (first_y) {
+		if ( (j >= 0) && (j+1 < local_MM) ) {  // j=0,\ldots,M-2
+			
+			if ( mask_undefined->get(J) || mask_undefined->get(J+NN) ) 
+				first_y = false;
+			
+		} else {
+			first_y = false;
+		}
 	}
 	
 	// second_y
-	if (second_y)
-	if ( (j > 0) && (j < local_MM) ) { // j = 1 ... M-1
-		
-		if ( !mask_solved->get(J-NN) || 
-			 !mask_solved->get(J) )
+	if (second_y) {
+		if ( (j > 0) && (j < local_MM) ) { // j=1,\ldots,M-1
+			
+			if ( mask_undefined->get(J-NN) || mask_undefined->get(J) )
+				second_y = false;
+			
+		} else {
 			second_y = false;
-		
-	} else {
-		second_y = false;
+		}
+	}
+
+	// first_xy
+	if (first_xy) {
+		if ( (i >= 0) && (i+1 < local_NN) &&  // i=0,\ldots,N-2
+		     (j >= 0) && (j+1 < local_MM) ) { // j=0,\ldots,M-2
+			
+			if ( mask_undefined->get(J) || mask_undefined->get(J+1) )
+				first_xy = false;
+			
+		} else {
+			first_xy = false;
+		}
+	}
+
+	// first_yx
+	if (first_yx) {
+		if ( (i >= 0) && (i+1 < local_NN) &&  // i=0,\ldots,N-2
+		     (j >= 0) && (j+1 < local_MM) ) { // j=0,\ldots,M-2
+			
+			if ( mask_undefined->get(J) || mask_undefined->get(J+NN) )
+				first_yx = false;
+			
+		} else {
+			first_yx = false;
+		}
 	}
 	
+	// second_xy
+	if (second_xy) {
+		if ( (i >= 0) && (i+1 < local_NN) &&  // i=0,\ldots,N-2
+		     (j > 0) && (j < local_MM) ) {   //  j=1,\ldots,M-1
+			
+			if ( mask_undefined->get(J-NN) || mask_undefined->get(J-NN+1) )
+				second_xy = false;
+			
+		} else {
+			second_xy = false;
+		}
+	}
+
+	// second_yx
+	if (second_yx)
+	if ( (i > 0) && (i < local_NN) &&     // i=1,\ldots,N-1
+	     (j >= 0) && (j+1 < local_MM) ) { // j=0,\ldots,M-2
+		
+		if ( mask_undefined->get(J-1) || mask_undefined->get(J+NN-1) )
+			second_yx = false;
+		
+	} else {
+		second_yx = false;
+	}
+
 	return;
 
 };

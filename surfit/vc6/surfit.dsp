@@ -132,6 +132,10 @@ SOURCE=..\src\surfit\matrD2.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\surfit\matrD2_aniso.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\surfit\matrD2_rect.cpp
 # End Source File
 # End Group
@@ -657,6 +661,10 @@ SOURCE=..\src\surfit\matrD1_aniso.h
 # Begin Source File
 
 SOURCE=..\src\surfit\matrD2.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\matrD2_aniso.h
 # End Source File
 # End Group
 # Begin Group "common_h"

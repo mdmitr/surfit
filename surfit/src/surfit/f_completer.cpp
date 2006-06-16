@@ -31,6 +31,7 @@
 #include "matrD1.h"
 #include "matrD1_aniso.h"
 #include "matrD2.h"
+#include "matrD2_aniso.h"
 #include "curv.h"
 #include "grid_line.h"
 #include "surf.h"
@@ -67,22 +68,29 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	size_t MM = method_grid->getCountY();
 
 	matr * oD1 = NULL;
-	if (angle == 0 && w == 1)
+	matr * oD2 = NULL;
+	//if (angle == 0 && w == 1) {
+	if (false) {
 		oD1 = new matrD1(matrix_size, NN, 
 				 method_stepX, method_stepY,
 				 method_mask_solved, method_mask_undefined, 
 				 gfaults);
-	else 
+		oD2 = new matrD2(matrix_size, NN, 
+				 method_stepX, method_stepY,
+				 method_mask_solved, method_mask_undefined, 
+				 gfaults); 
+	} else {
 		oD1 = new matrD1_aniso(matrix_size, NN, 
 				       method_stepX, method_stepY,
 				       method_mask_solved, method_mask_undefined, 
 				       gfaults,
 				       angle, w);
-	
-	matrD2 * oD2 = new matrD2(matrix_size, NN, 
-		method_stepX, method_stepY,
-		method_mask_solved, method_mask_undefined, 
-		gfaults); 
+		oD2 = new matrD2_aniso(matrix_size, NN,
+				       method_stepX, method_stepY,
+				       method_mask_solved, method_mask_undefined, 
+				       gfaults,
+				       angle, w);
+	}
 	
 	matr_sum *  T = new matr_sum(D1, oD1, D2, oD2);
 

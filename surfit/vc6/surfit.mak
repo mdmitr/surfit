@@ -178,10 +178,14 @@ CLEAN :
 	-@erase "$(INTDIR)\matr_onesrow.sbr"
 	-@erase "$(INTDIR)\matrD1.obj"
 	-@erase "$(INTDIR)\matrD1.sbr"
+	-@erase "$(INTDIR)\matrD1_aniso.obj"
+	-@erase "$(INTDIR)\matrD1_aniso.sbr"
 	-@erase "$(INTDIR)\matrD1_rect.obj"
 	-@erase "$(INTDIR)\matrD1_rect.sbr"
 	-@erase "$(INTDIR)\matrD2.obj"
 	-@erase "$(INTDIR)\matrD2.sbr"
+	-@erase "$(INTDIR)\matrD2_aniso.obj"
+	-@erase "$(INTDIR)\matrD2_aniso.sbr"
 	-@erase "$(INTDIR)\matrD2_rect.obj"
 	-@erase "$(INTDIR)\matrD2_rect.sbr"
 	-@erase "$(INTDIR)\mrf.obj"
@@ -296,8 +300,10 @@ BSC32_SBRS= \
 	"$(INTDIR)\matr_eye.sbr" \
 	"$(INTDIR)\matr_onesrow.sbr" \
 	"$(INTDIR)\matrD1.sbr" \
+	"$(INTDIR)\matrD1_aniso.sbr" \
 	"$(INTDIR)\matrD1_rect.sbr" \
 	"$(INTDIR)\matrD2.sbr" \
+	"$(INTDIR)\matrD2_aniso.sbr" \
 	"$(INTDIR)\matrD2_rect.sbr" \
 	"$(INTDIR)\free_elements.sbr" \
 	"$(INTDIR)\license.sbr" \
@@ -402,8 +408,10 @@ LINK32_OBJS= \
 	"$(INTDIR)\matr_eye.obj" \
 	"$(INTDIR)\matr_onesrow.obj" \
 	"$(INTDIR)\matrD1.obj" \
+	"$(INTDIR)\matrD1_aniso.obj" \
 	"$(INTDIR)\matrD1_rect.obj" \
 	"$(INTDIR)\matrD2.obj" \
+	"$(INTDIR)\matrD2_aniso.obj" \
 	"$(INTDIR)\matrD2_rect.obj" \
 	"$(INTDIR)\free_elements.obj" \
 	"$(INTDIR)\license.obj" \
@@ -653,10 +661,14 @@ CLEAN :
 	-@erase "$(INTDIR)\matr_onesrow.sbr"
 	-@erase "$(INTDIR)\matrD1.obj"
 	-@erase "$(INTDIR)\matrD1.sbr"
+	-@erase "$(INTDIR)\matrD1_aniso.obj"
+	-@erase "$(INTDIR)\matrD1_aniso.sbr"
 	-@erase "$(INTDIR)\matrD1_rect.obj"
 	-@erase "$(INTDIR)\matrD1_rect.sbr"
 	-@erase "$(INTDIR)\matrD2.obj"
 	-@erase "$(INTDIR)\matrD2.sbr"
+	-@erase "$(INTDIR)\matrD2_aniso.obj"
+	-@erase "$(INTDIR)\matrD2_aniso.sbr"
 	-@erase "$(INTDIR)\matrD2_rect.obj"
 	-@erase "$(INTDIR)\matrD2_rect.sbr"
 	-@erase "$(INTDIR)\mrf.obj"
@@ -773,8 +785,10 @@ BSC32_SBRS= \
 	"$(INTDIR)\matr_eye.sbr" \
 	"$(INTDIR)\matr_onesrow.sbr" \
 	"$(INTDIR)\matrD1.sbr" \
+	"$(INTDIR)\matrD1_aniso.sbr" \
 	"$(INTDIR)\matrD1_rect.sbr" \
 	"$(INTDIR)\matrD2.sbr" \
+	"$(INTDIR)\matrD2_aniso.sbr" \
 	"$(INTDIR)\matrD2_rect.sbr" \
 	"$(INTDIR)\free_elements.sbr" \
 	"$(INTDIR)\license.sbr" \
@@ -879,8 +893,10 @@ LINK32_OBJS= \
 	"$(INTDIR)\matr_eye.obj" \
 	"$(INTDIR)\matr_onesrow.obj" \
 	"$(INTDIR)\matrD1.obj" \
+	"$(INTDIR)\matrD1_aniso.obj" \
 	"$(INTDIR)\matrD1_rect.obj" \
 	"$(INTDIR)\matrD2.obj" \
+	"$(INTDIR)\matrD2_aniso.obj" \
 	"$(INTDIR)\matrD2_rect.obj" \
 	"$(INTDIR)\free_elements.obj" \
 	"$(INTDIR)\license.obj" \
@@ -1026,6 +1042,12 @@ SOURCE=..\src\surfit\matrD1.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\src\surfit\matrD1_aniso.cpp
+
+"$(INTDIR)\matrD1_aniso.obj"	"$(INTDIR)\matrD1_aniso.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\src\surfit\matrD1_rect.cpp
 
 "$(INTDIR)\matrD1_rect.obj"	"$(INTDIR)\matrD1_rect.sbr" : $(SOURCE) "$(INTDIR)"
@@ -1035,6 +1057,12 @@ SOURCE=..\src\surfit\matrD1_rect.cpp
 SOURCE=..\src\surfit\matrD2.cpp
 
 "$(INTDIR)\matrD2.obj"	"$(INTDIR)\matrD2.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\matrD2_aniso.cpp
+
+"$(INTDIR)\matrD2_aniso.obj"	"$(INTDIR)\matrD2_aniso.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

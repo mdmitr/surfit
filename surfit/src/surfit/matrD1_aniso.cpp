@@ -37,9 +37,10 @@
 #define SECOND_X	(b[1])
 #define FIRST_Y		(b[2])
 #define SECOND_Y	(b[3])
-#define FIRST_XY	(FIRST_X && FIRST_Y)	
-#define SECOND_XY	(FIRST_X && SECOND_Y)
-#define SECOND_YX	(FIRST_Y && SECOND_X)
+#define FIRST_XY	(b[4])	
+#define FIRST_YX	(b[5])
+#define SECOND_XY	(b[6])
+#define SECOND_YX	(b[7])
 
 namespace surfit {
 
@@ -82,27 +83,39 @@ matrD1_aniso::~matrD1_aniso() {
 };
 
 void matrD1_aniso::make_mask(const bitvec * imask_solved, const bitvec * imask_undefined) {
-	mask = create_bitvec(rows()*4);
+	
+	mask = create_bitvec(rows()*8);
 	size_t j;
 	bool first_x, second_x, first_y, second_y;
+	bool first_xy, first_yx, second_xy, second_yx;
+	
 	for (j = 0; j < rows(); j++) {
+
 		first_x = true;
 		second_x = true;
 		first_y = true;
 		second_y = true;
+		first_xy = true;
+		first_yx = true;
+		second_xy = true;
+		second_yx = true;
 		size_t n = j % NN;
 		size_t m = (j - n)/NN;
 
-		sums_points_D1(n, m, 
-			NN, MM, NN, MM,
-			imask_undefined,
-			first_x, second_x, 
-			first_y, second_y);
+		sums_points_D1_aniso(n, m, 
+				     NN, MM, NN, MM,
+				     imask_undefined,
+				     first_x, second_x, 
+				     first_y, second_y,
+				     first_xy, first_yx,
+				     second_xy, second_yx);
 		
-		fault_points_D1(n, m, NN, MM, fault,
-				first_x, second_x, first_y, second_y);
+		fault_points_D1_aniso(n, m, NN, MM, fault,
+				      first_x, second_x, first_y, second_y,
+				      first_xy, first_yx, second_xy, second_yx);
 
-		mask->write4(j, first_x, second_x, first_y, second_y);
+		mask->write8(j, first_x, second_x, first_y, second_y,
+			        first_xy, first_yx, second_xy, second_yx);
 	}
 
 	mask_solved_undefined = create_bitvec(imask_solved);
@@ -118,7 +131,7 @@ REAL matrD1_aniso::matrator_serve(size_t i, size_t j, bool * b, size_t * next_j)
 	size_t next_j_dy = UINT_MAX;
 
 	if ( (!FIRST_X) && (!SECOND_X) && (!FIRST_Y) && (!SECOND_Y) &&
-	     (!FIRST_XY) && (!SECOND_XY) && (!SECOND_YX) ) 
+	     (!FIRST_XY) && (!FIRST_YX) && (!SECOND_XY) && (!SECOND_YX) ) 
 	{
 		if (next_j) {
 			
@@ -163,7 +176,7 @@ REAL matrD1_aniso::matrator_serve(size_t i, size_t j, bool * b, size_t * next_j)
 		return REAL(0);
 	}
 	
-	//  -(wmxx + mxx) * (u_{i+1,j} - u_{i,j}) 
+	// ( - wmxx - mxx ) * (u_{i+1,j} - u_{i,j}) 
 	if (FIRST_X) {
 		if (j < i) {
 			next_j_dx = MIN(i, next_j_dx);
@@ -171,13 +184,13 @@ REAL matrD1_aniso::matrator_serve(size_t i, size_t j, bool * b, size_t * next_j)
 		}
 
 		if (j == i) {
-			res += (wmxx + mxx); 
+			res += -( - wmxx - mxx ); 
 			next_j_dx = MIN(i+1, next_j_dx);
 			goto mark_second_x;
 		}
 
 		if (j == i+1) {
-			res += -(wmxx + mxx);
+			res += ( - wmxx - mxx );
 			next_j_dx = MIN(UINT_MAX, next_j_dx);
 			goto mark_second_x;
 		}
@@ -186,7 +199,7 @@ REAL matrD1_aniso::matrator_serve(size_t i, size_t j, bool * b, size_t * next_j)
 	
 mark_second_x:
 
-	// (wmxx + mxx) * ( u_{i,j} - u_{i-1,j} ) 
+	// ( wmxx + mxx ) * ( u_{i,j} - u_{i-1,j} ) 
 	if (SECOND_X) {
 
 		if (j < i-1) {
@@ -195,13 +208,13 @@ mark_second_x:
 		}
 
 		if (j == i-1) {
-			res += -(wmxx + mxx);
+			res += -( wmxx + mxx );
 			next_j_dx = MIN(i, next_j_dx);
 			goto mark_first_y;
 		}
 
 		if (j == i) {
-			res += (wmxx + mxx);
+			res += ( wmxx + mxx );
 			next_j_dx = MIN(UINT_MAX, next_j_dx);
 			goto mark_first_y;
 		}
@@ -210,7 +223,7 @@ mark_second_x:
 
 mark_first_y:
 
-	// -(wmyy + myy) * ( u_{i,j+1} - u_{i,j} )
+	// ( - wmyy - myy ) * ( u_{i,j+1} - u_{i,j} )
 	if (FIRST_Y) {
 
 		if (j < i) {
@@ -219,7 +232,7 @@ mark_first_y:
 		}
 
 		if (j == i) {
-			res += (wmyy + myy);
+			res += -( - wmyy - myy );
 			next_j_dy = MIN(i+NN, next_j_dy);
 			goto mark_second_y;
 		}
@@ -230,7 +243,7 @@ mark_first_y:
 		}
 
 		if (j == i+NN) {
-			res += -(wmyy + myy);
+			res += ( - wmyy - myy );
 			next_j_dy = MIN(UINT_MAX, next_j_dy);
 			goto mark_second_y;
 		}
@@ -239,7 +252,7 @@ mark_first_y:
 
 mark_second_y:
 
-	// (wmyy + myy) * ( u_{i,j} - u_{i,j-1} )
+	// ( wmyy + myy ) * ( u_{i,j} - u_{i,j-1} )
 	if (SECOND_Y) {
 
 		if (j < i-NN) {
@@ -248,7 +261,7 @@ mark_second_y:
 		}
 
 		if (j == i-NN) {
-			res += -(wmyy + myy);
+			res += -( wmyy + myy );
 			next_j_dy = MIN(i, next_j_dy);
 			goto mark_first_xy;
 		}
@@ -259,7 +272,7 @@ mark_second_y:
 		}
 
 		if (j == i) {
-			res += (wmyy + myy);
+			res += ( wmyy + myy );
 			next_j_dy = MIN(UINT_MAX, next_j_dy);
 			goto mark_first_xy;
 		}
@@ -267,8 +280,32 @@ mark_second_y:
 
 mark_first_xy:
 
-	// (-wmxy + mxy) * ( -2 u_{i,j} + u_{i+1,j} + u_{i,j+1} )
+	// ( - wmxy + mxy ) * ( u_{i+1,j} - u_{i,j} )
 	if (FIRST_XY) {
+
+		if (j < i) {
+			next_j_dx = MIN(i, next_j_dx);
+			goto mark_first_yx;
+		}
+
+		if (j == i) {
+			res += -( - wmxy + mxy );
+			next_j_dx = MIN(i+1, next_j_dx);
+			goto mark_first_yx;
+		}
+
+		if (j == i+1) {
+			res += ( - wmxy + mxy );
+			next_j_dx = MIN(UINT_MAX, next_j_dx);
+			goto mark_first_yx;
+		}
+
+	}
+
+mark_first_yx:
+
+	// ( - wmxy + mxy) * ( u_{i,j+1} - u_{i,j} )
+	if (FIRST_YX) {
 
 		if (j < i) {
 			next_j_dx = MIN(i, next_j_dx);
@@ -276,24 +313,18 @@ mark_first_xy:
 		}
 
 		if (j == i) {
-			res += -2*(-wmxy + mxy);
-			next_j_dx = MIN(i+1, next_j_dx);
-			goto mark_second_xy;
-		}
-
-		if (j == i+1) {
-			res += (-wmxy + mxy);
+			res += -( - wmxy + mxy);
 			next_j_dx = MIN(i+NN, next_j_dx);
 			goto mark_second_xy;
 		}
-
+		
 		if (j < i+NN) {
 			next_j_dx = MIN(i+NN, next_j_dx);
 			goto mark_second_xy;
 		}
 
 		if (j == i+NN) {
-			res += (-wmxy + mxy);
+			res += ( - wmxy + mxy);
 			next_j_dx = MIN(UINT_MAX, next_j_dx);
 			goto mark_second_xy;
 		}
@@ -302,7 +333,7 @@ mark_first_xy:
 
 mark_second_xy:
 
-	// (wmxy - mxy) * ( u_{i+1,j-1} - u_{i,j-1} )
+	// ( wmxy - mxy ) * ( u_{i+1,j-1} - u_{i,j-1} )
 	if (SECOND_XY) {
 
 		if (j < i-NN) {
@@ -311,13 +342,13 @@ mark_second_xy:
 		}
 
 		if (j == i-NN) {
-			res += -wmxy + mxy;
+			res += -( wmxy - mxy );
 			next_j_dy = MIN(i-NN+1, next_j_dy);
 			goto mark_second_yx;
 		}
 
 		if (j == i-NN+1) {
-			res += wmxy - mxy;
+			res += ( wmxy - mxy );
 			next_j_dy = MIN(UINT_MAX, next_j_dy);
 			goto mark_second_yx;
 		}
@@ -326,7 +357,7 @@ mark_second_xy:
 
 mark_second_yx:
 
-	// (wmxy - mxy) * ( u_{i-1,j+1} - u_{i-1,j} )
+	// ( wmxy - mxy ) * ( u_{i-1,j+1} - u_{i-1,j} )
 	if (SECOND_YX) {
 
 		if (j < i-1) {
@@ -335,7 +366,7 @@ mark_second_yx:
 		}
 
 		if (j == i-1) {
-			res += -wmxy + mxy;
+			res += -( wmxy - mxy );
 			next_j_dy = MIN(i+NN-1, next_j_dy);
 			goto exit;
 		}
@@ -346,7 +377,7 @@ mark_second_yx:
 		}
 
 		if (j == i+NN-1) {
-			res += wmxy - mxy;
+			res += ( wmxy - mxy );
 			next_j_dy = MIN(UINT_MAX, next_j_dy);
 			goto exit;
 		}
@@ -366,9 +397,9 @@ exit:
 
 REAL matrD1_aniso::element_at(size_t i, size_t j, size_t * next_j) const {
 
-	bool b[4];
+	bool b[8];
 
-	mask->get4(i, b);
+	mask->get8(i, b);
 
 	return matrator_serve(i, j, b, next_j);
 	
@@ -428,9 +459,9 @@ REAL matrD1_aniso::at(size_t i, size_t j, size_t * next_j) const {
 		}
 	}
 
-	bool b[4];
+	bool b[8];
 
-	mask->get4(i, b);
+	mask->get8(i, b);
 
 	return matrator_serve(i, j, b, next_j);
 	
@@ -457,11 +488,11 @@ REAL matrD1_aniso::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 	const REAL * p;
 
 	bool flag = false;
-	bool b[4];
+	bool b[8];
 
-	mask->get4(J, b);
+	mask->get8(J, b);
 
-	// -(wmxx + mxx) * ( u_{i+1,j} - u_{i,j} ) 
+	// (- wmxx - mxx) * ( u_{i+1,j} - u_{i,j} ) 
 	if (FIRST_X) {
 		
 		p = b_begin + J - 1;
@@ -470,7 +501,7 @@ REAL matrD1_aniso::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 		
 		if (flag) {
 			CHECK_PTR(p)
-				res += *p * (wmxx + mxx);
+				res += *p * -(- wmxx - mxx);
 			else
 				assert(0);
 		}
@@ -479,7 +510,7 @@ REAL matrD1_aniso::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 
 		if (flag) {
 			CHECK_PTR(p)
-				res += *p * -(wmxx + mxx);
+				res += *p * (- wmxx - mxx);
 			else
 				assert(0);
 		}
@@ -511,7 +542,7 @@ REAL matrD1_aniso::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 		
 	}
 
-	// -(wmyy + myy) * ( u_{i,j+1} - u_{i,j} )
+	// ( - wmyy - myy ) * ( u_{i,j+1} - u_{i,j} )
 	if (FIRST_Y) {
 
 		p = b_begin + J - 1;
@@ -520,7 +551,7 @@ REAL matrD1_aniso::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 
 		if (flag) {
 			CHECK_PTR(p)
-				res += *p * (wmyy + myy);
+				res += *p * -( - wmyy - myy );
 			else
 				assert(0);
 		}
@@ -529,7 +560,7 @@ REAL matrD1_aniso::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 
 		if (flag) {
 			CHECK_PTR(p)
-				res += *p * -(wmyy + myy);
+				res += *p * ( - wmyy - myy );
 			else
 				assert(0);
 		}
@@ -561,7 +592,7 @@ REAL matrD1_aniso::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 		
 	}
 
-	// ( -wmxy + mxy ) * ( -2 u_{i,j} + u_{i+1,j} + u_{i,j+1} )
+	// ( - wmxy + mxy ) * ( u_{i+1,j} - u_{i,j} )
 	if (FIRST_XY) {
 
 		p = b_begin + J - 1;
@@ -570,7 +601,7 @@ REAL matrD1_aniso::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 
 		if (flag) {
 			CHECK_PTR(p)
-				res += *p * (2*(wmxy-mxy));
+				res += *p * -( - wmxy + mxy );
 			else
 				assert(0);
 		}
@@ -579,16 +610,32 @@ REAL matrD1_aniso::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 
 		if (flag) {
 			CHECK_PTR(p)
-				res += *p * (-wmxy + mxy);
+				res += *p * ( - wmxy + mxy);
 			else
 				assert(0);
 		}
 
-		flag = incr_ptr(p,J+NN,mask_solved_undefined,NN-1);
+	}
+
+	// ( - wmxy + mxy ) * ( u_{i,j+1} - u_{i,j}  )
+	if (FIRST_YX) {
+
+		p = b_begin + J - 1;
+
+		flag = incr_ptr(p,J,mask_solved_undefined);
 
 		if (flag) {
 			CHECK_PTR(p)
-				res += *p * (-wmxy + mxy);
+				res += *p * -( - wmxy + mxy );
+			else
+				assert(0);
+		}
+
+		flag = incr_ptr(p,J+NN,mask_solved_undefined,NN);
+
+		if (flag) {
+			CHECK_PTR(p)
+				res += *p * ( - wmxy + mxy );
 			else
 				assert(0);
 		}
@@ -604,7 +651,7 @@ REAL matrD1_aniso::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 
 		if (flag) {
 			CHECK_PTR(p)
-				res += *p * -(wmxy - mxy);
+				res += *p * -( wmxy - mxy );
 			else
 				assert(0);
 		}
@@ -613,14 +660,14 @@ REAL matrD1_aniso::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 
 		if (flag) {
 			CHECK_PTR(p)
-				res += *p * (wmxy - mxy);
+				res += *p * ( wmxy - mxy );
 			else
 				assert(0);
 		}
 
 	}
 
-	// (wmxy - mxy) * ( u_{i-1,j+1} - u_{i-1,j} )
+	// ( wmxy - mxy ) * ( u_{i-1,j+1} - u_{i-1,j} )
 	if (SECOND_YX) {
 
 		p = b_begin + J - 1 - 1;
@@ -629,7 +676,7 @@ REAL matrD1_aniso::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 
 		if (flag) {
 			CHECK_PTR(p)
-				res += *p * -(wmxy - mxy);
+				res += *p * -( wmxy - mxy );
 			else
 				assert(0);
 		}
@@ -638,7 +685,7 @@ REAL matrD1_aniso::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 
 		if (flag) {
 			CHECK_PTR(p)
-				res += *p * (wmxy - mxy);
+				res += *p * ( wmxy - mxy );
 			else
 				assert(0);
 		}

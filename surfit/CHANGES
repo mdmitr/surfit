@@ -7,3 +7,6 @@ surfit 2.1
 		curv_load_shp curvs_load_shp curv_save_shp
 		area_load_shp areas_load_shp area_save_shp
 		cntr_load_shp cntrs_load_shp cntr_save_shp
+	+ added anisotropy for completer
+
+	* small bugfix with taking faults into account

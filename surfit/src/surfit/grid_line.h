@@ -103,6 +103,15 @@ void fault_points_D1(size_t n, size_t m, size_t NN, size_t MM,
 		     size_t offset_x = 0, size_t offset_y = 0);
 
 SURFIT_EXPORT
+void fault_points_D1_aniso(size_t n, size_t m, size_t NN, size_t MM, 
+			   grid_line * fault,
+			   bool & first_x, bool & second_x, 
+			   bool & first_y, bool & second_y,
+			   bool & first_xy, bool & first_yx,
+			   bool & second_xy, bool & second_yx,
+			   size_t offset_x = 0, size_t offset_y = 0);
+
+SURFIT_EXPORT
 void fault_points_D2(size_t n, size_t m, size_t NN, size_t MM, 
 		     grid_line * fault,
 		     bool & first_x,  bool & second_x,  bool & third_x, 

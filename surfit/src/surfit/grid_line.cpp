@@ -158,8 +158,8 @@ void fault_points_D1(size_t n, size_t m,
 
 	// _first_
 
-	std::vector<size_t>::iterator * ptr_from = fault->sort_by_first_begin;
-	std::vector<size_t>::iterator * ptr;
+	size_t ** ptr_from = fault->sort_by_first_begin;
+	size_t ** ptr;
 
 	size_t pos2find;
 	
@@ -167,22 +167,18 @@ first_find_J:
 
 	if (first_y || second_y || first_x || second_x ) {
 		pos2find = J; 
-		std::vector<size_t>::iterator it(&pos2find);
-				
+		
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
-				       it, 
+				       &pos2find, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
-			if (**ptr == J) {
+			if (**ptr == pos2find) {
 				pos = *ptr - fault->first->begin();
 				J2 = *(fault->second->begin() + pos);
-				if (pos2find > J2)
-					diff = pos2find - J2;
-				else 
-					diff = J2 - pos2find;
-								
+				diff = abs(pos2find - J2);
+				
 				// vertical
 				if (diff == 1) {
 					if (J2 > pos2find)
@@ -206,96 +202,6 @@ first_find_J:
 		}
 	}
 
-first_find_J_1:
-	
-	if (first_x) {
-		
-		pos2find = J+1; 
-		std::vector<size_t>::iterator it(&pos2find);
-
-		ptr = std::lower_bound(ptr_from, 
-				       fault->sort_by_first_end, 
-				       it, 
-				       ptr_size_t_less);
-		
-		if (ptr && (ptr != fault->sort_by_first_end)) {
-			if (**ptr == J) {
-				pos = *ptr - fault->first->begin();
-				J2 = *(fault->second->begin() + pos);
-				if (pos2find > J2)
-					diff = pos2find - J2;
-				else 
-					diff = J2 - pos2find;
-				
-				// vertical
-				if (diff == 1) {
-					if (J2 > pos2find)
-						;	
-					else
-						first_x = false;
-				}
-				
-				// horizontal
-				if (diff == NN) {
-					if (J2 > pos2find)
-						;	
-					else
-						;	
-				}
-				
-				ptr_from = ptr+1;
-				goto first_find_J_1;
-				
-			}
-		}
-		
-	}
-
-first_find_J_NN:
-	
-	if (first_y) {
-		
-		pos2find = J+NN; 
-		
-		std::vector<size_t>::iterator it(&pos2find);
-		ptr = std::lower_bound(ptr_from, 
-				       fault->sort_by_first_end, 
-				       it, 
-				       ptr_size_t_less);
-		
-		if (ptr && (ptr != fault->sort_by_first_end)) {
-			if (**ptr == J) {
-				pos = *ptr - fault->first->begin();
-				J2 = *(fault->second->begin() + pos);
-				if (pos2find > J2)
-					diff = pos2find - J2;
-				else 
-					diff = J2 - pos2find;
-				
-				// vertical
-				if (diff == 1) {
-					if (J2 > pos2find)
-						;
-					else
-						first_y = false;
-				}
-				
-				// horizontal
-				if (diff == NN) {
-					if (J2 > pos2find)
-						;	
-					else
-						;
-				}
-				
-				ptr_from = ptr+1;
-				goto first_find_J_NN;
-				
-			}
-		}
-		
-	}
-
 	// _second_
 
 	ptr_from = fault->sort_by_second_begin;
@@ -305,21 +211,17 @@ second_find_J:
 	if (first_x || second_x || first_y || second_y) {
 		
 		pos2find = J; 
-		std::vector<size_t>::iterator it(&pos2find);
-
+		
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
-				       it, 
+				       &pos2find, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
-			if (**ptr == J) {
+			if (**ptr == pos2find) {
 				pos = *ptr - fault->second->begin();
 				J2 = *(fault->first->begin() + pos);
-				if (pos2find > J2)
-					diff = pos2find - J2;
-				else 
-					diff = J2 - pos2find;
+				diff = abs(pos2find - J2);
 				
 				// vertical
 				if (diff == 1) {
@@ -345,19 +247,175 @@ second_find_J:
 		
 	}
 	
-second_find_J_1:
+	return;
 
-	if (first_x) {
-		
-		pos2find = J+1; 
+};
+
+void fault_points_D1_aniso(size_t n, size_t m, 
+			   size_t NN, size_t MM, 
+			   grid_line * fault,
+			   bool & first_x, bool & second_x, 
+			   bool & first_y, bool & second_y,
+			   bool & first_xy, bool & first_yx,
+			   bool & second_xy, bool & second_yx,
+			   size_t offset_x, size_t offset_y) 
+{
+	if (!fault)
+		return;
+
+	size_t J = (n+offset_x) + (m+offset_y)*NN;
+	size_t pos;
+	size_t J2;
+	size_t diff;
+
+	// _first_
+
+	std::vector<size_t>::iterator * ptr_from = fault->sort_by_first_begin;
+	std::vector<size_t>::iterator * ptr;
+
+	size_t pos2find;
+
+first_find_J__NN:
+
+	if ( second_xy ) {
+
+		pos2find = J-NN; 
 		std::vector<size_t>::iterator it(&pos2find);
+				
+		ptr = std::lower_bound(ptr_from, 
+				       fault->sort_by_first_end, 
+				       it, 
+				       ptr_size_t_less);
+		
+		if (ptr && (ptr != fault->sort_by_first_end)) {
+			if (**ptr == pos2find) {
+				pos = *ptr - fault->first->begin();
+				J2 = *(fault->second->begin() + pos);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
+								
+				// vertical
+				if (diff == 1) {
+					if (J2 > pos2find) { // fault between $u_{i+1,j-}$ and $u_{i,j-1}$
+						second_xy = false;
+					}
+				}
+				
+				ptr_from = ptr+1;
+				goto first_find_J__NN;
+				
+			}
+		}
+
+	}
+	
+first_find_J__1:
+
+	if ( second_yx ) {
+
+		pos2find = J-1; 
+		std::vector<size_t>::iterator it(&pos2find);
+				
+		ptr = std::lower_bound(ptr_from, 
+				       fault->sort_by_first_end, 
+				       it, 
+				       ptr_size_t_less);
+		
+		if (ptr && (ptr != fault->sort_by_first_end)) {
+			if (**ptr == pos2find) {
+				pos = *ptr - fault->first->begin();
+				J2 = *(fault->second->begin() + pos);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
+								
+				// horizontal
+				if (diff == NN) {
+					if (J2 > pos2find) { // fault between $u_{i-1,j}$ and $u_{i-1,j+1}$
+						second_yx = false;
+					}
+				}
+				
+				ptr_from = ptr+1;
+				goto first_find_J__1;
+				
+			}
+		}
+
+	}
+
+first_find_J:
+
+	if ( first_y || second_y || first_x || second_x || first_xy || first_yx || second_xy || second_yx) {
+		pos2find = J; 
+		std::vector<size_t>::iterator it(&pos2find);
+				
+		ptr = std::lower_bound(ptr_from, 
+				       fault->sort_by_first_end, 
+				       it, 
+				       ptr_size_t_less);
+		
+		if (ptr && (ptr != fault->sort_by_first_end)) {
+			if (**ptr == pos2find) {
+				pos = *ptr - fault->first->begin();
+				J2 = *(fault->second->begin() + pos);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
+								
+				// vertical
+				if (diff == 1) {
+					if (J2 > pos2find) { // fault between $u_{i+1,j}$ and $u_{i,j}$
+						first_x = false;
+						first_xy = false;
+						first_yx = false;
+					} else { // fault between $u_{i-1.j}$ and $u_{i,j}$
+						second_x = false;
+						second_yx = false;
+					}
+				}
+				
+				// horizontal
+				if (diff == NN) {
+					if (J2 > pos2find) { // fault between $u_{i,j+1}$ and $u_{i,j}$
+						first_y = false;
+						first_xy = false;
+						first_yx = false;
+					} else { // fault between $u_{i,j-1}$ and $u_{i,j}$
+						second_y = false;
+						second_xy = false;
+					}
+				}
+				
+				ptr_from = ptr+1;
+				goto first_find_J;
+				
+			}
+		}
+	}
+
+	// _second_
+
+	ptr_from = fault->sort_by_second_begin;
+
+second_find_J__NN:
+
+	if ( second_xy ) {
+		
+		pos2find = J-NN; 
+		std::vector<size_t>::iterator it(&pos2find);
+
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
 				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
-			if (**ptr == J) {
+			if (**ptr == pos2find) {
 				pos = *ptr - fault->second->begin();
 				J2 = *(fault->first->begin() + pos);
 				if (pos2find > J2)
@@ -365,43 +423,73 @@ second_find_J_1:
 				else 
 					diff = J2 - pos2find;
 				
+			
 				// vertical
 				if (diff == 1) {
-					if (J2 > pos2find)
-						;	
-					else
-						first_x = false;
-				}
-				
-				// horizontal
-				if (diff == NN) {
-					if (J2 > pos2find)
-						;	
-					else
-						;	
+					if (J2 > pos2find) { // fault between $u_{i+1,j-}$ and $u_{i,j-1}$
+						second_xy = false;
+					}
 				}
 				
 				ptr_from = ptr+1;
-				goto second_find_J_1;
+				goto second_find_J__NN;
 				
 			}
 		}
 		
 	}
 
-second_find_J_NN:
-	
-	if (first_y) {
+second_find_J__1:
+
+	if ( second_yx ) {
 		
-		pos2find = J+NN; 
+		pos2find = J-1; 
 		std::vector<size_t>::iterator it(&pos2find);
+
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
 				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
-			if (**ptr == J) {
+			if (**ptr == pos2find) {
+				pos = *ptr - fault->second->begin();
+				J2 = *(fault->first->begin() + pos);
+				if (pos2find > J2)
+					diff = pos2find - J2;
+				else 
+					diff = J2 - pos2find;
+				
+			
+				// horizontal
+				if (diff == NN) {
+					if (J2 > pos2find) { // fault between $u_{i-1,j}$ and $u_{i-1,j+1}$
+						second_yx = false;
+					}
+				}
+				
+				ptr_from = ptr+1;
+				goto second_find_J__1;
+				
+			}
+		}
+		
+	}
+
+second_find_J:
+
+	if (first_x || second_x || first_y || second_y || first_xy || first_yx || second_xy || second_yx) {
+		
+		pos2find = J; 
+		std::vector<size_t>::iterator it(&pos2find);
+
+		ptr = std::lower_bound(ptr_from, 
+				       fault->sort_by_second_end, 
+				       it, 
+				       ptr_size_t_less);
+		
+		if (ptr && (ptr != fault->sort_by_second_end)) {
+			if (**ptr == pos2find) {
 				pos = *ptr - fault->second->begin();
 				J2 = *(fault->first->begin() + pos);
 				if (pos2find > J2)
@@ -411,22 +499,30 @@ second_find_J_NN:
 				
 				// vertical
 				if (diff == 1) {
-					if (J2 > pos2find)
-						;
-					else
-						first_y = false;
+					if (J2 > pos2find) { // fault between $u_{i+1,j}$ and $u_{i,j}$
+						first_x = false;
+						first_xy = false;
+						first_yx = false;
+					} else { // fault between $u_{i-1.j}$ and $u_{i,j}$
+						second_x = false;
+						second_yx = false;
+					}
 				}
 				
 				// horizontal
 				if (diff == NN) {
-					if (J2 > pos2find)
-						;
-					else
-						;
+					if (J2 > pos2find) { // fault between $u_{i,j+1}$ and $u_{i,j}$
+						first_y = false;
+						first_xy = false;
+						first_yx = false;
+					} else { // fault between $u_{i,j-1}$ and $u_{i,j}$
+						second_y = false;
+						second_xy = false;
+					}
 				}
 				
 				ptr_from = ptr+1;
-				goto second_find_J_NN;
+				goto second_find_J;
 				
 			}
 		}

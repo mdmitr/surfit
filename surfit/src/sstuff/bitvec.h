@@ -119,6 +119,14 @@ public:
 	//! reads four values, starting from pos
 	void get4(size_t pos, bool * b);
 
+	//! writes six values, starting from pos
+	void write8(size_t pos, 
+		    bool b1, bool b2, bool b3, bool b4, 
+		    bool b5, bool b6, bool b7, bool b8); 
+
+	//! reads six values, starting from pos
+	void get8(size_t pos, bool * b);
+
 	//! writes 10 values, starting from pos
 	void write10(size_t pos, 
 		     bool b1, bool b2, bool b3, bool b4, bool b5,
