@@ -77,4 +77,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "fault.dat" 
+surf_save "fault.dat" "map_faults" 
