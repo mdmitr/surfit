@@ -29,10 +29,6 @@
 #include "datafile.h"
 #include "free_elements.h"
 
-#ifdef HAVE_GL_WORKS
-#include "dem_show.h"
-#endif
-
 namespace surfit {
 
 void globe_manager::release() {
