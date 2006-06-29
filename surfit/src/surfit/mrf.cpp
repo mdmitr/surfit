@@ -102,9 +102,11 @@ void _decomp2d(vec *& X,
 
 	if (enlarge_cols) {
 		X->resize(newN*M);
-		for (j = M-1; j >= 0; j--) {
+		for (j = M-1; ; j--) {
 			memmove(X->begin() + j*N + j, X->begin() + j*N, N*sizeof(REAL));
 			(*X)(j*N + j + N) = (*X)(j*N + j + N - 1);
+			if (j == 0)
+				break;
 		}
 	}
 	if (enlarge_rows) {
