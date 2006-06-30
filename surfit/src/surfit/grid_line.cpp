@@ -1409,6 +1409,8 @@ void fill_all_areas(std::vector<short int> *& flood_areas,
 
 	flood_areas_cnt = color;
 
+#ifdef DEBUG
+
 	/*
 	FILE * ff = fopen("c:\\qqq.m","w+");
 	fprintf(ff,"hold on\n");
@@ -1548,6 +1550,7 @@ void fill_all_areas(std::vector<short int> *& flood_areas,
 		
 	fclose(ff);
 	*/
+#endif
 
 	return;
 
@@ -1633,7 +1636,9 @@ std::vector<size_t> * nodes_in_curv(grid_line * line, d_grid * grd, bitvec * mas
 		*(line->second->begin()+i) = pos;
 	};
 
-	line->sort();	
+	line->sort();
+	
+#ifdef DEBUG
 
 /*
 {
@@ -1784,6 +1789,7 @@ FILE * ff = fopen("c:\\qqq.m","w+");
 	fflush(ff);
 }
 */
+#endif
 	std::vector<short int> * data = new std::vector<short int>(nn*mm);
 
 	// check for undefined elements in sub_grid!
@@ -1886,6 +1892,7 @@ FILE * ff = fopen("c:\\qqq.m","w+");
 	
 	// Рисовка
 
+#ifdef DEBUG
 	/*
 	FILE * ff = fopen("c:\\qqq.m","w+");
 	fprintf(ff,"hold on\n");
@@ -2039,6 +2046,7 @@ FILE * ff = fopen("c:\\qqq.m","w+");
 		
 	fclose(ff);
 	*/
+#endif
 
 	if (small_grd)
 		small_grd->release();

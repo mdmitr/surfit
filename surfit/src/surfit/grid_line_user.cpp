@@ -484,6 +484,7 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 		grd_line->add(grd1, grd2);
 	}
 
+#ifdef DEBUG
 	/*
 
 	FILE * ff = fopen("c:\\qqq.m","w+");
@@ -686,6 +687,7 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	fflush(ff);
 	fclose(ff);
 	*/
+#endif
 	
 	if (crv)
 		crv->release();
