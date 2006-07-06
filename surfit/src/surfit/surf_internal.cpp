@@ -52,6 +52,13 @@
 #include <netcdf.h>
 #endif
 
+#ifdef HAVE_LIBJPEG
+extern "C" {
+#include <windows.h>
+#include <jpeglib.h>
+};
+#endif
+
 namespace surfit {
 
 int calc_ptr(int i, int j, int N);
@@ -1355,7 +1362,7 @@ bool _surf_save_xyz(const d_surf * srf, const char * filename) {
 	FILE * f = fopen(filename,"w");
 
 	if (!f) {
-		writelog(LOG_ERROR, "Can't write data to file %s",filename,strerror( errno ));
+		writelog(LOG_ERROR, "Can't write data to file %s : %s",filename,strerror( errno ));
 		return false;
 	}
 
@@ -1381,6 +1388,167 @@ bool _surf_save_xyz(const d_surf * srf, const char * filename) {
 
 	return true;
 };
+
+
+d_surf * _surf_load_jpg(const char * filename, const char * surfname, REAL minz, REAL maxz, REAL startX, REAL startY, REAL stepX, REAL stepY) {
+	
+	writelog(LOG_MESSAGE, "loading surface from JPEG file %s",filename);
+
+#ifndef HAVE_LIBJPEG
+	writelog(LOG_ERROR, "this function not implemented because netCDF library wasn't found");
+	return NULL;
+#else
+	
+	struct jpeg_decompress_struct cinfo;
+	struct jpeg_error_mgr jerr;
+
+	cinfo.err = jpeg_std_error(&jerr);
+	jpeg_create_decompress(&cinfo);
+	
+	FILE * infile;		// source file 
+	JSAMPARRAY buffer;	// Output row buffer
+	int row_stride;		// physical row width in output buffer 
+	size_t i;
+	
+	if ((infile = fopen(filename, "rb")) == NULL) {
+		writelog(LOG_ERROR, "can't open %s : %s", filename, strerror(errno) );
+		return NULL;
+	}
+	
+	jpeg_stdio_src(&cinfo, infile);
+
+	jpeg_read_header(&cinfo, TRUE);
+	
+	// set parameters for decompression 
+	cinfo.out_color_space = JCS_GRAYSCALE;
+	
+	// Start decompressor 
+	
+	(void) jpeg_start_decompress(&cinfo);
+	
+	row_stride = cinfo.output_width * cinfo.output_components;
+	// Make a one-row-high sample array that will go away when done with image 
+	buffer = (*cinfo.mem->alloc_sarray)
+		((j_common_ptr) &cinfo, JPOOL_IMAGE, row_stride, 1);
+
+	vec * coeff = create_vec( cinfo.output_height * cinfo.output_width, 0, 0);
+		
+	// Here we use the library's state variable cinfo.output_scanline as the
+	// loop counter, so that we don't have to keep track ourselves.
+	
+	while (cinfo.output_scanline < cinfo.output_height) {
+		(void) jpeg_read_scanlines(&cinfo, buffer, 1);
+		for (i = 0; i < cinfo.output_width; i++) {
+			if (maxz != minz)
+				(*coeff)( i + (cinfo.output_height - cinfo.output_scanline)*cinfo.output_width ) = (maxz-minz)*buffer[0][i]/REAL(255) + minz;
+			else
+				(*coeff)( i + (cinfo.output_height - cinfo.output_scanline)*cinfo.output_width ) = buffer[0][i];
+		}
+	}
+
+	// Finish decompression 
+	
+	(void) jpeg_finish_decompress(&cinfo);
+	
+	// Release JPEG decompression object 
+	jpeg_destroy_decompress(&cinfo);
+	
+	fclose(infile);
+
+
+	d_grid * grd = create_grid(startX, startX + stepX*(cinfo.output_width-1), stepX,
+				   startY, startY + stepY*(cinfo.output_height-1), stepY);
+
+
+	d_surf * res = create_surf(coeff, grd);
+
+	if (surfname)
+		res->setName(surfname);
+	else {
+		char * name = get_name(filename);
+		res->setName(name);
+		sstuff_free_char(name);
+	}
+
+	return res;
+#endif
+};
+
+bool _surf_save_jpg(const d_surf * srf, const char * filename, int quality) {
+
+	quality = MAX(255,MIN(0, quality));
+	if (!filename)
+		return false;
+
+	if (!srf) {
+		writelog(LOG_ERROR,"surf_save_jpg : no surf loaded");
+		return false;
+	}
+
+	if (srf->getName())
+		writelog(LOG_MESSAGE,"Saving surf %s to file %s (JPEG)", srf->getName(), filename);
+	else 
+		writelog(LOG_MESSAGE,"Saving surf (noname) to file %s (JPEG)", filename);
+
+#ifndef HAVE_LIBJPEG
+	writelog(LOG_ERROR, "this function not implemented because netCDF library wasn't found");
+	return false;
+#else
+
+	jpeg_compress_struct cinfo;
+	jpeg_error_mgr jerr;
+	cinfo.err = jpeg_std_error(&jerr);
+	jpeg_create_compress(&cinfo);
+	int row_stride = 1;
+
+	size_t i;
+	REAL minz, maxz;
+	srf->getMinMaxZ(minz, maxz);
+	int NN = srf->getCountX();
+	int MM = srf->getCountY();
+
+	JSAMPLE * row_data = (JSAMPLE *)malloc( NN*sizeof(JSAMPLE) );
+
+	FILE * outfile;
+	if ((outfile = fopen(filename, "wb")) == NULL) {
+		writelog(LOG_ERROR, "can't open %s : %s", filename, strerror(errno));
+		return false;
+	}
+	jpeg_stdio_dest(&cinfo, outfile);
+
+	// Set parameters for compression, including image size & colorspace.
+	cinfo.image_width = NN; 	/* image width and height, in pixels */
+	cinfo.image_height = MM;
+	cinfo.input_components = 1;	/* # of color components per pixel */
+	cinfo.in_color_space = JCS_GRAYSCALE; /* colorspace of input image */
+
+	jpeg_set_defaults(&cinfo);
+	jpeg_set_quality(&cinfo, quality, true);
+
+	// start compress
+	jpeg_start_compress(&cinfo, TRUE);
+
+	while (cinfo.next_scanline < cinfo.image_height) {
+		// fill row with grayscale colours
+		for (i = 0; i < NN; i++) {
+			REAL val = srf->getValueIJ(NN-1-i, MM-cinfo.next_scanline-1);
+			int color = 0;
+			if (val != srf->undef_value)
+				color = 255 - MAX(0,MIN(254,floor((val-minz)/(maxz-minz)*254+0.5)));
+			*(row_data + i) = color;
+		}
+		(void) jpeg_write_scanlines(&cinfo, &row_data, 1);
+	}
+
+	jpeg_finish_compress(&cinfo);
+	jpeg_destroy_compress(&cinfo);
+	free(row_data);
+
+	return true;
+#endif
+
+};
+
 
 d_points * _surf_to_pnts(const d_surf * srf) {
 	

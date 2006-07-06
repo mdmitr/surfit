@@ -94,6 +94,21 @@ bool surf_load_grass(const char * filename, const char * surfname = 0);
 bool surf_load_arcgis(const char * filename, const char * surfname = 0);
 
 /*! \ingroup tcl_surf_save_load
+    \fn bool surf_load_jpg(const char * filename, const char * surfname = 0,
+			   REAL minz = 0, REAL maxz = 0, 
+			   REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1)
+
+    \par Tcl syntax:
+    surf_load_jpg "filename" "surfname"
+
+    \par Description:
+    loads surface from JPEG file
+*/
+bool surf_load_jpg(const char * filename, const char * surfname = 0,
+		   REAL minz = 0, REAL maxz = 0, 
+		   REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1);
+
+/*! \ingroup tcl_surf_save_load
     \fn bool surf_save(const char * filename, const char * surface_name_or_position = "0");
 
     \par Tcl syntax:
@@ -167,6 +182,21 @@ bool surf_save_arcgis(const char * filename, const char * surface_name_or_positi
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
 */
 bool surf_save_xyz(const char * filename, const char * surface_name_or_position = "0");
+
+/*! \ingroup tcl_surf_save_load
+    \fn bool surf_save_jpg(const char * filename, const char * surface_name_or_position = "0", int quality = 255);
+
+    \par Tcl syntax:
+    surf_save_jpg "filename" "surface_name_or_position"
+
+    \par Description:
+    saves surface to JPEG in grayscale colours
+
+    \param filename jpeg file
+    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
+    \param quality jpeg quality 0..255
+*/
+bool surf_save_jpg(const char * filename, const char * surface_name_or_position = "0", int quality = 255);
 
 //
 // MATH OPERATIONS

@@ -238,6 +238,24 @@ bool surf_save_xyz(const char * filename, const char * pos) {
 	return _surf_save_xyz(srf, filename);
 };
 
+bool surf_load_jpg(const char * filename, const char * surfname,
+		   REAL minz, REAL maxz, REAL startX, REAL startY, REAL stepX, REAL stepY) {
+	d_surf * srf = _surf_load_jpg(filename, surfname,
+				      minz, maxz, startX, startY, stepX, stepY);
+	if (srf) {
+		surfit_surfs->push_back(srf);
+		return true;
+	}
+	return false;
+};
+
+bool surf_save_jpg(const char * filename, const char * pos, int quality) {
+	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (!srf)
+		return false;
+	return _surf_save_jpg(srf, filename, quality);
+};
+
 bool surf_to_pnts(const char * surf_pos) {
 	
 	writelog(LOG_MESSAGE,"converting surf to points");

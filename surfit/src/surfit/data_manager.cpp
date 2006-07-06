@@ -663,6 +663,9 @@ bool surfit_manager::auto_load(const char * filename, const char * first1024, in
 		if (strcmp( uext, ".BLN" ) == 0) {
 			res = area_read_bln(filename, name);
 		}
+		if (strcmp( uext, ".JPG" ) == 0) {
+			res = surf_load_jpg(filename, name);
+		}
 	}
 
 	if ( strncmp(first1024, "CDF", 3) == 0 ) {
