@@ -54,7 +54,6 @@
 
 #ifdef HAVE_LIBJPEG
 extern "C" {
-#include <windows.h>
 #include <jpeglib.h>
 };
 #endif
@@ -1534,8 +1533,8 @@ bool _surf_save_jpg(const d_surf * srf, const char * filename, int quality) {
 			REAL val = srf->getValueIJ(NN-1-i, MM-cinfo.next_scanline-1);
 			int color = 0;
 			if (val != srf->undef_value)
-				color = 255 - MAX(0,MIN(254,floor((val-minz)/(maxz-minz)*254+0.5)));
-			*(row_data + i) = color;
+				color = 255 - (int)MAX(0,MIN(254,floor((val-minz)/(maxz-minz)*254+0.5)));
+			*(row_data + i) = (JSAMPLE)color;
 		}
 		(void) jpeg_write_scanlines(&cinfo, &row_data, 1);
 	}
