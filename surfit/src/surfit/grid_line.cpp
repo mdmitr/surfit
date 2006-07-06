@@ -158,8 +158,8 @@ void fault_points_D1(size_t n, size_t m,
 
 	// _first_
 
-	size_t ** ptr_from = fault->sort_by_first_begin;
-	size_t ** ptr;
+	std::vector<size_t>::iterator * ptr_from = fault->sort_by_first_begin;
+	std::vector<size_t>::iterator * ptr;
 
 	size_t pos2find;
 	
