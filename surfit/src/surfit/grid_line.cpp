@@ -167,10 +167,11 @@ first_find_J:
 
 	if (first_y || second_y || first_x || second_x ) {
 		pos2find = J; 
+		std::vector<size_t>::iterator it(&pos2find);
 		
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_first_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_first_end)) {
@@ -211,10 +212,11 @@ second_find_J:
 	if (first_x || second_x || first_y || second_y) {
 		
 		pos2find = J; 
+		std::vector<size_t>::iterator it(&pos2find);
 		
 		ptr = std::lower_bound(ptr_from, 
 				       fault->sort_by_second_end, 
-				       &pos2find, 
+				       it, 
 				       ptr_size_t_less);
 		
 		if (ptr && (ptr != fault->sort_by_second_end)) {
