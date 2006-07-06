@@ -8,5 +8,6 @@ surfit 2.1
 		area_load_shp areas_load_shp area_save_shp
 		cntr_load_shp cntrs_load_shp cntr_save_shp
 	+ added anisotropy for completer
+	+ added import/export of surfaces to JPEG images (export in grayscale colormap)
 
 	* small bugfix with taking faults into account
