@@ -57,12 +57,13 @@ host_triplet = @host@
 @HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/ptypes.h \
 @HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/punknown.cxx
 @HAVE_PTHREAD_INSTALLED_TRUE@am__append_4 = -lpthread 
-@HAVE_ZLIB_INSTALLED_TRUE@am__append_5 = src/globe/minizip/ioapi.c \
+@HAVE_JPEG_INSTALLED_TRUE@am__append_5 = -ljpeg
+@HAVE_ZLIB_INSTALLED_TRUE@am__append_6 = src/globe/minizip/ioapi.c \
 @HAVE_ZLIB_INSTALLED_TRUE@	src/globe/minizip/unzip.c \
 @HAVE_ZLIB_INSTALLED_TRUE@	src/globe/minizip/crypt.h \
 @HAVE_ZLIB_INSTALLED_TRUE@	src/globe/minizip/ioapi.h \
 @HAVE_ZLIB_INSTALLED_TRUE@	src/globe/minizip/unzip.h
-@HAVE_ZLIB_INSTALLED_TRUE@am__append_6 = -lz
+@HAVE_ZLIB_INSTALLED_TRUE@am__append_7 = -lz
 DIST_COMMON = $(am__configure_deps) $(libfreeflow_la_HEADERS) \
 	$(libglobe_la_HEADERS) $(libsstuff_la_HEADERS) \
 	$(libsurfit_la_HEADERS) $(srcdir)/Makefile.am \
@@ -126,7 +127,8 @@ am_libsstuff_la_OBJECTS = bitvec.lo boolvec.lo datafile.lo fileio.lo \
 	strvec.lo sstuff.lo stepFunc.lo vec.lo vec_alg.lo
 libsstuff_la_OBJECTS = $(am_libsstuff_la_OBJECTS)
 libsurfit_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) libsstuff.la $(am__DEPENDENCIES_1)
+	$(am__DEPENDENCIES_1) libsstuff.la $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
 am__libsurfit_la_SOURCES_DIST = src/surfit/area.cpp \
 	src/surfit/area_internal.cpp src/surfit/area_tcl.cpp \
 	src/surfit/cmofs.cpp src/surfit/cntr.cpp \
@@ -156,8 +158,9 @@ am__libsurfit_la_SOURCES_DIST = src/surfit/area.cpp \
 	src/surfit/license.cpp src/surfit/mask.cpp \
 	src/surfit/mask_internal.cpp src/surfit/mask_tcl.cpp \
 	src/surfit/matlab.cpp src/surfit/matr.cpp \
-	src/surfit/matrD1.cpp src/surfit/matrD1_rect.cpp \
-	src/surfit/matrD2.cpp src/surfit/matrD2_rect.cpp \
+	src/surfit/matrD1.cpp src/surfit/matrD1_aniso.cpp \
+	src/surfit/matrD1_rect.cpp src/surfit/matrD2.cpp \
+	src/surfit/matrD2_aniso.cpp src/surfit/matrD2_rect.cpp \
 	src/surfit/matr_diag.cpp src/surfit/matr_eye.cpp \
 	src/surfit/matr_onesrow.cpp src/surfit/mrf.cpp \
 	src/surfit/others_tcl.cpp src/surfit/pnts_internal.cpp \
@@ -169,21 +172,22 @@ am__libsurfit_la_SOURCES_DIST = src/surfit/area.cpp \
 	src/surfit/threads.cpp src/surfit/variables.cpp \
 	src/surfit/solvers/CG.cpp src/surfit/solvers/J.cpp \
 	src/surfit/solvers/JCG.cpp src/surfit/solvers/RF.cpp \
-	src/surfit/solvers/SSOR.cpp src/surfit/ptypes/pasync.cxx \
-	src/surfit/ptypes/pasync.h src/surfit/ptypes/patomic.cxx \
-	src/surfit/ptypes/pexcept.cxx src/surfit/ptypes/pfatal.cxx \
-	src/surfit/ptypes/pmem.cxx src/surfit/ptypes/pmsgq.cxx \
-	src/surfit/ptypes/pport.h src/surfit/ptypes/psemaphore.cxx \
-	src/surfit/ptypes/pstring.cxx src/surfit/ptypes/pthread.cxx \
-	src/surfit/ptypes/ptimedsem.cxx src/surfit/ptypes/ptypes.h \
-	src/surfit/ptypes/punknown.cxx src/surfit/area_tcl.h \
-	src/surfit/cntr_tcl.h src/surfit/curvs_tcl.h \
-	src/surfit/curv_tcl.h src/surfit/f_points_tcl.h \
-	src/surfit/grid_line_tcl.h src/surfit/grid_tcl.h \
-	src/surfit/hist_tcl.h src/surfit/mask_tcl.h \
-	src/surfit/other_tcl.h src/surfit/others_tcl.h \
-	src/surfit/pnts_tcl.h src/surfit/surfs_tcl.h \
-	src/surfit/surf_tcl.h
+	src/surfit/solvers/SSOR.cpp src/surfit/shapelib/shapefil.h \
+	src/surfit/shapelib/dbfopen.c src/surfit/shapelib/shpopen.c \
+	src/surfit/ptypes/pasync.cxx src/surfit/ptypes/pasync.h \
+	src/surfit/ptypes/patomic.cxx src/surfit/ptypes/pexcept.cxx \
+	src/surfit/ptypes/pfatal.cxx src/surfit/ptypes/pmem.cxx \
+	src/surfit/ptypes/pmsgq.cxx src/surfit/ptypes/pport.h \
+	src/surfit/ptypes/psemaphore.cxx src/surfit/ptypes/pstring.cxx \
+	src/surfit/ptypes/pthread.cxx src/surfit/ptypes/ptimedsem.cxx \
+	src/surfit/ptypes/ptypes.h src/surfit/ptypes/punknown.cxx \
+	src/surfit/area_tcl.h src/surfit/cntr_tcl.h \
+	src/surfit/curvs_tcl.h src/surfit/curv_tcl.h \
+	src/surfit/f_points_tcl.h src/surfit/grid_line_tcl.h \
+	src/surfit/grid_tcl.h src/surfit/hist_tcl.h \
+	src/surfit/mask_tcl.h src/surfit/other_tcl.h \
+	src/surfit/others_tcl.h src/surfit/pnts_tcl.h \
+	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h
 @HAVE_PTHREAD_INSTALLED_TRUE@am__objects_2 = pasync.lo patomic.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	pexcept.lo pfatal.lo pmem.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	pmsgq.lo psemaphore.lo pstring.lo \
@@ -203,12 +207,13 @@ am_libsurfit_la_OBJECTS = area.lo area_internal.lo area_tcl.lo \
 	grid_line_tcl.lo grid_line_user.lo grid_tcl.lo grid_user.lo \
 	hist.lo hist_internal.lo hist_tcl.lo license.lo mask.lo \
 	mask_internal.lo mask_tcl.lo matlab.lo matr.lo matrD1.lo \
-	matrD1_rect.lo matrD2.lo matrD2_rect.lo matr_diag.lo \
-	matr_eye.lo matr_onesrow.lo mrf.lo others_tcl.lo \
-	pnts_internal.lo pnts_tcl.lo points.lo solvers.lo sort_alg.lo \
-	surf.lo surfs_tcl.lo surf_internal.lo surf_tcl.lo surfit.lo \
-	surfit_wrap.lo threads.lo variables.lo CG.lo J.lo JCG.lo RF.lo \
-	SSOR.lo $(am__objects_2)
+	matrD1_aniso.lo matrD1_rect.lo matrD2.lo matrD2_aniso.lo \
+	matrD2_rect.lo matr_diag.lo matr_eye.lo matr_onesrow.lo mrf.lo \
+	others_tcl.lo pnts_internal.lo pnts_tcl.lo points.lo \
+	solvers.lo sort_alg.lo surf.lo surfs_tcl.lo surf_internal.lo \
+	surf_tcl.lo surfit.lo surfit_wrap.lo threads.lo variables.lo \
+	CG.lo J.lo JCG.lo RF.lo SSOR.lo dbfopen.lo shpopen.lo \
+	$(am__objects_2)
 libsurfit_la_OBJECTS = $(am_libsurfit_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -284,6 +289,8 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 F77 = @F77@
 FFLAGS = @FFLAGS@
+HAVE_JPEG_INSTALLED_FALSE = @HAVE_JPEG_INSTALLED_FALSE@
+HAVE_JPEG_INSTALLED_TRUE = @HAVE_JPEG_INSTALLED_TRUE@
 HAVE_PTHREAD_INSTALLED_FALSE = @HAVE_PTHREAD_INSTALLED_FALSE@
 HAVE_PTHREAD_INSTALLED_TRUE = @HAVE_PTHREAD_INSTALLED_TRUE@
 HAVE_ZLIB_INSTALLED_FALSE = @HAVE_ZLIB_INSTALLED_FALSE@
@@ -375,7 +382,7 @@ EXTRA_DIST = vc6/surfit* vc6/freeflow* vc6/globe* \
 	src/globe/interface/*.i doc/gallery/* doc/src/* doc/html/* \
 	doc/surfit.cfg doc/make_doc* make_release.bat make_debug.bat \
 	clean.bat make_rpm_fc4 make_rpm_rh73 surfit.spec.fc4 \
-	surfit.spec.rh73
+	surfit.spec.rh73 CHANGES
 lib_LTLIBRARIES = libsstuff.la libsurfit.la $(am__append_1) \
 	$(am__append_2)
 libsstuff_ladir = $(prefix)/include/sstuff
@@ -396,7 +403,7 @@ libsstuff_la_HEADERS = src/sstuff/bitvec.h src/sstuff/bitvec_alg.h \
 	src/sstuff/sstuff_ie.h src/sstuff/stepFunc.h src/sstuff/vec.h \
 	src/sstuff/vec_alg.h
 libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB)
-libsstuff_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libsstuff.dll
+libsstuff_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsstuff.dll
 libsurfit_ladir = $(prefix)/include/surfit
 libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/area_internal.cpp src/surfit/area_tcl.cpp \
@@ -427,8 +434,9 @@ libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/license.cpp src/surfit/mask.cpp \
 	src/surfit/mask_internal.cpp src/surfit/mask_tcl.cpp \
 	src/surfit/matlab.cpp src/surfit/matr.cpp \
-	src/surfit/matrD1.cpp src/surfit/matrD1_rect.cpp \
-	src/surfit/matrD2.cpp src/surfit/matrD2_rect.cpp \
+	src/surfit/matrD1.cpp src/surfit/matrD1_aniso.cpp \
+	src/surfit/matrD1_rect.cpp src/surfit/matrD2.cpp \
+	src/surfit/matrD2_aniso.cpp src/surfit/matrD2_rect.cpp \
 	src/surfit/matr_diag.cpp src/surfit/matr_eye.cpp \
 	src/surfit/matr_onesrow.cpp src/surfit/mrf.cpp \
 	src/surfit/others_tcl.cpp src/surfit/pnts_internal.cpp \
@@ -440,8 +448,9 @@ libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/threads.cpp src/surfit/variables.cpp \
 	src/surfit/solvers/CG.cpp src/surfit/solvers/J.cpp \
 	src/surfit/solvers/JCG.cpp src/surfit/solvers/RF.cpp \
-	src/surfit/solvers/SSOR.cpp $(am__append_3) \
-	src/surfit/area_tcl.h src/surfit/cntr_tcl.h \
+	src/surfit/solvers/SSOR.cpp src/surfit/shapelib/shapefil.h \
+	src/surfit/shapelib/dbfopen.c src/surfit/shapelib/shpopen.c \
+	$(am__append_3) src/surfit/area_tcl.h src/surfit/cntr_tcl.h \
 	src/surfit/curvs_tcl.h src/surfit/curv_tcl.h \
 	src/surfit/f_points_tcl.h src/surfit/grid_line_tcl.h \
 	src/surfit/grid_tcl.h src/surfit/hist_tcl.h \
@@ -471,18 +480,20 @@ libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/hist_internal.h src/surfit/license.h \
 	src/surfit/mask.h src/surfit/mask_internal.h \
 	src/surfit/matfile.h src/surfit/matlab.h src/surfit/matr.h \
-	src/surfit/matrD1.h src/surfit/matrD2.h src/surfit/matr_diag.h \
-	src/surfit/matr_eye.h src/surfit/matr_onesrow.h \
-	src/surfit/mrf.h src/surfit/pnts_internal.h \
-	src/surfit/points.h src/surfit/solvers.h src/surfit/sort_alg.h \
-	src/surfit/surfit.h src/surfit/solvers.h src/surfit/surf.h \
+	src/surfit/matrD1.h src/surfit/matrD1_aniso.h \
+	src/surfit/matrD2.h src/surfit/matrD2_aniso.h \
+	src/surfit/matr_diag.h src/surfit/matr_eye.h \
+	src/surfit/matr_onesrow.h src/surfit/mrf.h \
+	src/surfit/pnts_internal.h src/surfit/points.h \
+	src/surfit/solvers.h src/surfit/sort_alg.h src/surfit/surfit.h \
+	src/surfit/solvers.h src/surfit/surf.h \
 	src/surfit/surf_internal.h src/surfit/surfit_ie.h \
 	src/surfit/surfit_threads.h src/surfit/surfit_solvers.h \
 	src/surfit/threads.h src/surfit/variables.h \
 	src/surfit/variables_internal.h src/surfit/variables_tcl.h
 libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) \
-	libsstuff.la $(am__append_4)
-libsurfit_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libsurfit.dll
+	libsstuff.la $(am__append_4) $(am__append_5)
+libsurfit_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit.dll
 libfreeflow_ladir = $(prefix)/include/freeflow
 libfreeflow_la_SOURCES = src/freeflow/flow_data_manager.cpp \
 	src/freeflow/flow_surf_internal.cpp \
@@ -500,7 +511,7 @@ libfreeflow_la_HEADERS = src/freeflow/flow_data_manager.h \
 	src/freeflow/flow_area.h src/freeflow/flow_cntr.h \
 	src/freeflow/flow_curv.h src/freeflow/flow_points.h
 libfreeflow_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la libsurfit.la
-libfreeflow_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libfreeflow.dll
+libfreeflow_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libfreeflow.dll
 libglobe_ladir = $(prefix)/include/globe
 libglobe_la_SOURCES = src/globe/dem.cpp src/globe/dems_tcl.cpp \
 	src/globe/dem_internal.cpp src/globe/dem_tcl.cpp \
@@ -508,7 +519,7 @@ libglobe_la_SOURCES = src/globe/dem.cpp src/globe/dems_tcl.cpp \
 	src/globe/globe_data_manager.cpp \
 	src/globe/globe_surf_internal.cpp src/globe/globe_surf_tcl.cpp \
 	src/globe/globe_variables.cpp src/globe/globe_wrap.cxx \
-	src/globe/shortmrf.cpp $(am__append_5) src/globe/dems_tcl.h \
+	src/globe/shortmrf.cpp $(am__append_6) src/globe/dems_tcl.h \
 	src/globe/dem_tcl.h src/globe/globe_surf_tcl.h
 libglobe_la_HEADERS = src/globe/dem.h src/globe/dem_internal.h \
 	src/globe/f_dem.h src/globe/globe.h \
@@ -516,8 +527,8 @@ libglobe_la_HEADERS = src/globe/dem.h src/globe/dem_internal.h \
 	src/globe/globe_ie.h src/globe/globe_variables.h \
 	src/globe/shortmrf.h
 libglobe_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la \
-	libsurfit.la $(am__append_6)
-libglobe_la_LDFLAGS = -version-info 2:0:0 -no-undefined --dllname libglobe.dll
+	libsurfit.la $(am__append_7)
+libglobe_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libglobe.dll
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -636,6 +647,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data_manager.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/datafile.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dbfopen.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dem.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dem_internal.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dem_tcl.Plo@am__quote@
@@ -710,8 +722,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matlab.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrD1.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrD1_aniso.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrD1_rect.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrD2.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrD2_aniso.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrD2_rect.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matr_diag.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matr_eye.Plo@am__quote@
@@ -736,6 +750,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rnd.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shortmrf.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shortvec.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shpopen.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/solvers.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sort_alg.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sstuff.Plo@am__quote@
@@ -787,6 +802,20 @@ unzip.lo: src/globe/minizip/unzip.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/globe/minizip/unzip.c' object='unzip.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o unzip.lo `test -f 'src/globe/minizip/unzip.c' || echo '$(srcdir)/'`src/globe/minizip/unzip.c
+
+dbfopen.lo: src/surfit/shapelib/dbfopen.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT dbfopen.lo -MD -MP -MF "$(DEPDIR)/dbfopen.Tpo" -c -o dbfopen.lo `test -f 'src/surfit/shapelib/dbfopen.c' || echo '$(srcdir)/'`src/surfit/shapelib/dbfopen.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/dbfopen.Tpo" "$(DEPDIR)/dbfopen.Plo"; else rm -f "$(DEPDIR)/dbfopen.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/surfit/shapelib/dbfopen.c' object='dbfopen.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o dbfopen.lo `test -f 'src/surfit/shapelib/dbfopen.c' || echo '$(srcdir)/'`src/surfit/shapelib/dbfopen.c
+
+shpopen.lo: src/surfit/shapelib/shpopen.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT shpopen.lo -MD -MP -MF "$(DEPDIR)/shpopen.Tpo" -c -o shpopen.lo `test -f 'src/surfit/shapelib/shpopen.c' || echo '$(srcdir)/'`src/surfit/shapelib/shpopen.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/shpopen.Tpo" "$(DEPDIR)/shpopen.Plo"; else rm -f "$(DEPDIR)/shpopen.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/surfit/shapelib/shpopen.c' object='shpopen.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o shpopen.lo `test -f 'src/surfit/shapelib/shpopen.c' || echo '$(srcdir)/'`src/surfit/shapelib/shpopen.c
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -1495,6 +1524,13 @@ matrD1.lo: src/surfit/matrD1.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o matrD1.lo `test -f 'src/surfit/matrD1.cpp' || echo '$(srcdir)/'`src/surfit/matrD1.cpp
 
+matrD1_aniso.lo: src/surfit/matrD1_aniso.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT matrD1_aniso.lo -MD -MP -MF "$(DEPDIR)/matrD1_aniso.Tpo" -c -o matrD1_aniso.lo `test -f 'src/surfit/matrD1_aniso.cpp' || echo '$(srcdir)/'`src/surfit/matrD1_aniso.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/matrD1_aniso.Tpo" "$(DEPDIR)/matrD1_aniso.Plo"; else rm -f "$(DEPDIR)/matrD1_aniso.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/matrD1_aniso.cpp' object='matrD1_aniso.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o matrD1_aniso.lo `test -f 'src/surfit/matrD1_aniso.cpp' || echo '$(srcdir)/'`src/surfit/matrD1_aniso.cpp
+
 matrD1_rect.lo: src/surfit/matrD1_rect.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT matrD1_rect.lo -MD -MP -MF "$(DEPDIR)/matrD1_rect.Tpo" -c -o matrD1_rect.lo `test -f 'src/surfit/matrD1_rect.cpp' || echo '$(srcdir)/'`src/surfit/matrD1_rect.cpp; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/matrD1_rect.Tpo" "$(DEPDIR)/matrD1_rect.Plo"; else rm -f "$(DEPDIR)/matrD1_rect.Tpo"; exit 1; fi
@@ -1508,6 +1544,13 @@ matrD2.lo: src/surfit/matrD2.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/matrD2.cpp' object='matrD2.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o matrD2.lo `test -f 'src/surfit/matrD2.cpp' || echo '$(srcdir)/'`src/surfit/matrD2.cpp
+
+matrD2_aniso.lo: src/surfit/matrD2_aniso.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT matrD2_aniso.lo -MD -MP -MF "$(DEPDIR)/matrD2_aniso.Tpo" -c -o matrD2_aniso.lo `test -f 'src/surfit/matrD2_aniso.cpp' || echo '$(srcdir)/'`src/surfit/matrD2_aniso.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/matrD2_aniso.Tpo" "$(DEPDIR)/matrD2_aniso.Plo"; else rm -f "$(DEPDIR)/matrD2_aniso.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/matrD2_aniso.cpp' object='matrD2_aniso.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o matrD2_aniso.lo `test -f 'src/surfit/matrD2_aniso.cpp' || echo '$(srcdir)/'`src/surfit/matrD2_aniso.cpp
 
 matrD2_rect.lo: src/surfit/matrD2_rect.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT matrD2_rect.lo -MD -MP -MF "$(DEPDIR)/matrD2_rect.Tpo" -c -o matrD2_rect.lo `test -f 'src/surfit/matrD2_rect.cpp' || echo '$(srcdir)/'`src/surfit/matrD2_rect.cpp; \

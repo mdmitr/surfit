@@ -140,6 +140,7 @@ libsurfit_la_SOURCES += src/surfit/matrD1.cpp
 libsurfit_la_SOURCES += src/surfit/matrD1_aniso.cpp                                                    
 libsurfit_la_SOURCES += src/surfit/matrD1_rect.cpp                                               
 libsurfit_la_SOURCES += src/surfit/matrD2.cpp                                                    
+libsurfit_la_SOURCES += src/surfit/matrD2_aniso.cpp
 libsurfit_la_SOURCES += src/surfit/matrD2_rect.cpp                                               
 libsurfit_la_SOURCES += src/surfit/matr_diag.cpp                                                 
 libsurfit_la_SOURCES += src/surfit/matr_eye.cpp                                                  
@@ -249,6 +250,7 @@ libsurfit_la_HEADERS += src/surfit/matr.h
 libsurfit_la_HEADERS += src/surfit/matrD1.h            
 libsurfit_la_HEADERS += src/surfit/matrD1_aniso.h            
 libsurfit_la_HEADERS += src/surfit/matrD2.h            
+libsurfit_la_HEADERS += src/surfit/matrD2_aniso.h
 libsurfit_la_HEADERS += src/surfit/matr_diag.h         
 libsurfit_la_HEADERS += src/surfit/matr_eye.h          
 libsurfit_la_HEADERS += src/surfit/matr_onesrow.h      
@@ -279,6 +281,9 @@ libsurfit_la_HEADERS += src/surfit/variables_tcl.h
 libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) libsstuff.la 
 if HAVE_PTHREAD_INSTALLED
 libsurfit_la_LIBADD += -lpthread 
+endif
+if HAVE_JPEG_INSTALLED
+libsurfit_la_LIBADD += -ljpeg
 endif
 libsurfit_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit.dll
 

@@ -14,13 +14,18 @@ AC_SUBST(LIBTOOL_DEPS)
 
 # check for pthread 
 AC_CHECK_LIB(pthread, main, [PTHREAD_INSTALLED="YES"], PTHREAD_INSTALLED="")
-AH_TEMPLATE([HAVE_THREADS],["Define if you want to compile with multithreading support"])
 
+AH_TEMPLATE([HAVE_THREADS],["Define if you want to compile with multithreading support"])
 AH_TEMPLATE([HAVE_NETCDF],["Define if you want to compile with GMT maps format support"])
+AH_TEMPLATE([HAVE_LIBJPEG],["Define if you want to compile with JPEG import/export support"])
 
 # check for zlib
 AC_CHECK_HEADERS(zlib.h)
 AC_CHECK_LIB(z, zlibVersion, [ZLIB_INSTALLED="YES"], ZLIB_INSTALLED="")
+
+# check for libjpeg
+AC_CHECK_HEADERS(jpeglib.h)
+AC_CHECK_LIB(jpeg, main, [JPEG_INSTALLED="YES"], JPEG_INSTALLED="")
 
 CXXFLAGS="-O3"
 
@@ -212,6 +217,10 @@ if [[ "$NETCDF_INSTALLED" = "YES" ]] ; then
 	AC_DEFINE(HAVE_NETCDF)
 fi
 
+if [[ "$JPEG_INSTALLED" = "YES" ]] ; then
+	AC_DEFINE(HAVE_LIBJPEG)
+fi
+
 AC_SUBST(TCLINCLUDE)
 AC_SUBST(TCLLIB)
 AC_SUBST(NETCDFINCLUDE)
@@ -221,6 +230,7 @@ AC_CONFIG_HEADER(config.h:config.h.in)
 
 AM_CONDITIONAL(HAVE_PTHREAD_INSTALLED, [test "x$PTHREAD_INSTALLED" != "x"])
 AM_CONDITIONAL(HAVE_ZLIB_INSTALLED, [test "x$ZLIB_INSTALLED" != "x"])
+AM_CONDITIONAL(HAVE_JPEG_INSTALLED, [test "x$JPEG_INSTALLED" != "x"])
 AM_CONDITIONAL(MAKE_FREEFLOW,  [test "x$BUILD_FREEFLOW" != "x"])
 AM_CONDITIONAL(MAKE_GLOBE,     [test "x$BUILD_GLOBE" != "x"])
 
