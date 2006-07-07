@@ -1565,8 +1565,8 @@ d_surf * _surf_load_bmp(const char * filename, const char * surfname, REAL minz,
 	vec * coeff = create_vec( NN*MM, 0, 0, 0);
 
 	size_t i,j;
-	int gray_color;
-	int alpha;
+	double gray_color;
+	double alpha;
 	for (j = 0; j < MM; j++) {
 		for (i = 0; i < NN; i++) {
 			gray_color = bmp(i,j)->Red * 0.299 +
@@ -1628,7 +1628,7 @@ bool _surf_save_bmp(const d_surf * srf, const char * filename) {
 	srf->getMinMaxZ(minz, maxz);
 
 	size_t i, j;
-	int gray_color;
+	double gray_color;
 	for (j = 0; j < MM; j++) {
 		for (i = 0; i < NN; i++) {
 			REAL value = srf->getValueIJ(i,MM-j-1);
@@ -1639,9 +1639,9 @@ bool _surf_save_bmp(const d_surf * srf, const char * filename) {
 				res(i,j)->Alpha = 255;
 			} else {
 				gray_color = MAX(0,MIN(255,floor((value - minz)/(maxz-minz)*255 + 0.5)));
-				res(i,j)->Red = gray_color;
-				res(i,j)->Green = gray_color;
-				res(i,j)->Blue = gray_color;
+				res(i,j)->Red = (ebmpBYTE)gray_color;
+				res(i,j)->Green = (ebmpBYTE)gray_color;
+				res(i,j)->Blue = (ebmpBYTE)gray_color;
 				res(i,j)->Alpha = 0;
 			}
 
