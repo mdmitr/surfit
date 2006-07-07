@@ -58,6 +58,8 @@ extern "C" {
 };
 #endif
 
+#include "EasyBmp/EasyBMP.h"
+
 namespace surfit {
 
 int calc_ptr(int i, int j, int N);
@@ -1388,13 +1390,12 @@ bool _surf_save_xyz(const d_surf * srf, const char * filename) {
 	return true;
 };
 
-
 d_surf * _surf_load_jpg(const char * filename, const char * surfname, REAL minz, REAL maxz, REAL startX, REAL startY, REAL stepX, REAL stepY) {
 	
 	writelog(LOG_MESSAGE, "loading surface from JPEG file %s",filename);
 
 #ifndef HAVE_LIBJPEG
-	writelog(LOG_ERROR, "this function not implemented because netCDF library wasn't found");
+	writelog(LOG_ERROR, "this function not implemented because libjpeg library wasn't found");
 	return NULL;
 #else
 	
@@ -1503,8 +1504,8 @@ bool _surf_save_jpg(const d_surf * srf, const char * filename, int quality) {
 	size_t i;
 	REAL minz, maxz;
 	srf->getMinMaxZ(minz, maxz);
-	int NN = srf->getCountX();
-	int MM = srf->getCountY();
+	size_t NN = srf->getCountX();
+	size_t MM = srf->getCountY();
 
 	JSAMPLE * row_data = (JSAMPLE *)malloc( NN*sizeof(JSAMPLE) );
 
@@ -1548,6 +1549,111 @@ bool _surf_save_jpg(const d_surf * srf, const char * filename, int quality) {
 
 };
 
+d_surf * _surf_load_bmp(const char * filename, const char * surfname, REAL minz, REAL maxz, REAL startX, REAL startY, REAL stepX, REAL stepY) {
+	
+	writelog(LOG_MESSAGE, "loading surface from BMP file %s",filename);
+
+	BMP bmp;
+	if (bmp.ReadFromFile(filename) == false) {
+		writelog(LOG_ERROR,"Error loading surface from bitmap!");
+		return NULL;
+	}
+
+	size_t NN = bmp.TellWidth();
+	size_t MM = bmp.TellHeight();
+
+	vec * coeff = create_vec( NN*MM, 0, 0, 0);
+
+	size_t i,j;
+	int gray_color;
+	int alpha;
+	for (j = 0; j < MM; j++) {
+		for (i = 0; i < NN; i++) {
+			gray_color = bmp(i,j)->Red * 0.299 +
+				     bmp(i,j)->Green * 0.587 +
+				     bmp(i,j)->Blue * 0.114;
+			alpha = bmp(i,j)->Alpha;
+			if (alpha == 255)
+				(*coeff)(i + (MM-1-j)*NN) = FLT_MAX;
+			else {
+				if (minz != maxz)
+					(*coeff)(i + (MM-1-j)*NN) = (maxz-minz)*gray_color/REAL(255) + minz;
+				else
+					(*coeff)(i + (MM-1-j)*NN) = gray_color;
+			}
+		}
+	}
+
+	d_grid * grd = create_grid(startX, startX + stepX*(NN-1), stepX,
+				   startY, startY + stepY*(MM-1), stepY);
+
+
+	d_surf * res = create_surf(coeff, grd);
+
+	if (surfname)
+		res->setName(surfname);
+	else {
+		char * name = get_name(filename);
+		res->setName(name);
+		sstuff_free_char(name);
+	}
+
+	return res;
+
+};
+
+bool _surf_save_bmp(const d_surf * srf, const char * filename) {
+
+	if (!filename)
+		return false;
+
+	if (!srf) {
+		writelog(LOG_ERROR,"surf_save_bmp : no surf loaded");
+		return false;
+	}
+
+	if (srf->getName())
+		writelog(LOG_MESSAGE,"Saving surf %s to file %s (BMP)", srf->getName(), filename);
+	else 
+		writelog(LOG_MESSAGE,"Saving surf (noname) to file %s (BMP)", filename);
+
+
+	size_t NN = srf->getCountX();
+	size_t MM = srf->getCountY();
+	
+	BMP res;
+	res.SetSize(NN,MM);
+	res.SetBitDepth(32);
+	REAL minz, maxz;
+	srf->getMinMaxZ(minz, maxz);
+
+	size_t i, j;
+	int gray_color;
+	for (j = 0; j < MM; j++) {
+		for (i = 0; i < NN; i++) {
+			REAL value = srf->getValueIJ(i,MM-j-1);
+			if (value == srf->undef_value) {
+				res(i,j)->Red = 0;
+				res(i,j)->Green = 0;
+				res(i,j)->Blue = 0;
+				res(i,j)->Alpha = 255;
+			} else {
+				gray_color = MAX(0,MIN(255,floor((value - minz)/(maxz-minz)*255 + 0.5)));
+				res(i,j)->Red = gray_color;
+				res(i,j)->Green = gray_color;
+				res(i,j)->Blue = gray_color;
+				res(i,j)->Alpha = 0;
+			}
+
+		}
+	}
+	
+
+	res.WriteToFile(filename);
+
+	return true;
+
+};
 
 d_points * _surf_to_pnts(const d_surf * srf) {
 	

@@ -89,6 +89,15 @@ d_surf * _surf_load_jpg(const char * filename, const char * surfname,
 
 SURFIT_EXPORT
 /*! \ingroup internal_surf
+    \fn bool _surf_load_bmp(const char * filename, const char * surfname, REAL minz = 0, REAL maxz = 0)
+    \brief loads surf from JPEG file
+*/
+d_surf * _surf_load_bmp(const char * filename, const char * surfname, 
+			REAL minz = 0, REAL maxz = 0, 
+			REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1); 
+
+SURFIT_EXPORT
+/*! \ingroup internal_surf
     \fn bool _surf_save(const d_surf * srf, const char * filename);
     \brief saves surf to ROFF file (see \ref datafile for details) in active \ref rw_mode
     \param srf surf class to save
@@ -144,6 +153,13 @@ SURFIT_EXPORT
     \brief saves surf to JPEG format
 */
 bool _surf_save_jpg(const d_surf * srf, const char * filename, int quality = 255);
+
+SURFIT_EXPORT
+/*! \ingroup internal_surf
+    \fn bool _surf_save_bmp(const d_surf * srf, const char * filename);
+    \brief saves surf to Windows Bitmap format
+*/
+bool _surf_save_bmp(const d_surf * srf, const char * filename);
 
 SURFIT_EXPORT
 /*! \ingroup internal_surf
