@@ -187,7 +187,11 @@ am__libsurfit_la_SOURCES_DIST = src/surfit/area.cpp \
 	src/surfit/grid_tcl.h src/surfit/hist_tcl.h \
 	src/surfit/mask_tcl.h src/surfit/other_tcl.h \
 	src/surfit/others_tcl.h src/surfit/pnts_tcl.h \
-	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h
+	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h \
+	src/surfit/EasyBmp/EasyBMP.cpp src/surfit/EasyBmp/EasyBMP.h \
+	src/surfit/EasyBmp/EasyBMP_BMP.h \
+	src/surfit/EasyBmp/EasyBMP_DataStructures.h \
+	src/surfit/EasyBmp/EasyBMP_VariousBMPutilites.h
 @HAVE_PTHREAD_INSTALLED_TRUE@am__objects_2 = pasync.lo patomic.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	pexcept.lo pfatal.lo pmem.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	pmsgq.lo psemaphore.lo pstring.lo \
@@ -213,7 +217,7 @@ am_libsurfit_la_OBJECTS = area.lo area_internal.lo area_tcl.lo \
 	solvers.lo sort_alg.lo surf.lo surfs_tcl.lo surf_internal.lo \
 	surf_tcl.lo surfit.lo surfit_wrap.lo threads.lo variables.lo \
 	CG.lo J.lo JCG.lo RF.lo SSOR.lo dbfopen.lo shpopen.lo \
-	$(am__objects_2)
+	$(am__objects_2) EasyBMP.lo
 libsurfit_la_OBJECTS = $(am_libsurfit_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -405,6 +409,7 @@ libsstuff_la_HEADERS = src/sstuff/bitvec.h src/sstuff/bitvec_alg.h \
 libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB)
 libsstuff_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsstuff.dll
 libsurfit_ladir = $(prefix)/include/surfit
+# EasyBmp
 libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/area_internal.cpp src/surfit/area_tcl.cpp \
 	src/surfit/cmofs.cpp src/surfit/cntr.cpp \
@@ -456,7 +461,11 @@ libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/grid_tcl.h src/surfit/hist_tcl.h \
 	src/surfit/mask_tcl.h src/surfit/other_tcl.h \
 	src/surfit/others_tcl.h src/surfit/pnts_tcl.h \
-	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h
+	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h \
+	src/surfit/EasyBmp/EasyBMP.cpp src/surfit/EasyBmp/EasyBMP.h \
+	src/surfit/EasyBmp/EasyBMP_BMP.h \
+	src/surfit/EasyBmp/EasyBMP_DataStructures.h \
+	src/surfit/EasyBmp/EasyBMP_VariousBMPutilites.h
 libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/cmofs.h src/surfit/cntr.h \
 	src/surfit/cntr_internal.h src/surfit/curv.h \
@@ -627,6 +636,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CG.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/EasyBMP.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/J.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/JCG.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RF.Plo@am__quote@
@@ -1796,6 +1806,13 @@ punknown.lo: src/surfit/ptypes/punknown.cxx
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/ptypes/punknown.cxx' object='punknown.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o punknown.lo `test -f 'src/surfit/ptypes/punknown.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/punknown.cxx
+
+EasyBMP.lo: src/surfit/EasyBmp/EasyBMP.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT EasyBMP.lo -MD -MP -MF "$(DEPDIR)/EasyBMP.Tpo" -c -o EasyBMP.lo `test -f 'src/surfit/EasyBmp/EasyBMP.cpp' || echo '$(srcdir)/'`src/surfit/EasyBmp/EasyBMP.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/EasyBMP.Tpo" "$(DEPDIR)/EasyBMP.Plo"; else rm -f "$(DEPDIR)/EasyBMP.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/EasyBmp/EasyBMP.cpp' object='EasyBMP.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o EasyBMP.lo `test -f 'src/surfit/EasyBmp/EasyBMP.cpp' || echo '$(srcdir)/'`src/surfit/EasyBmp/EasyBMP.cpp
 
 .cxx.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \

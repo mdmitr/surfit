@@ -275,7 +275,12 @@ libsurfit_la_HEADERS += src/surfit/threads.h
 libsurfit_la_HEADERS += src/surfit/variables.h         
 libsurfit_la_HEADERS += src/surfit/variables_internal.h
 libsurfit_la_HEADERS += src/surfit/variables_tcl.h     
-
+# EasyBmp
+libsurfit_la_SOURCES += src/surfit/EasyBmp/EasyBMP.cpp
+libsurfit_la_SOURCES += src/surfit/EasyBmp/EasyBMP.h
+libsurfit_la_SOURCES += src/surfit/EasyBmp/EasyBMP_BMP.h
+libsurfit_la_SOURCES += src/surfit/EasyBmp/EasyBMP_DataStructures.h
+libsurfit_la_SOURCES += src/surfit/EasyBmp/EasyBMP_VariousBMPutilites.h
 
 
 libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) libsstuff.la 
