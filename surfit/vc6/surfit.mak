@@ -82,6 +82,8 @@ CLEAN :
 	-@erase "$(INTDIR)\data_manager.sbr"
 	-@erase "$(INTDIR)\dbfopen.obj"
 	-@erase "$(INTDIR)\dbfopen.sbr"
+	-@erase "$(INTDIR)\EasyBMP.obj"
+	-@erase "$(INTDIR)\EasyBMP.sbr"
 	-@erase "$(INTDIR)\f_area.obj"
 	-@erase "$(INTDIR)\f_area.sbr"
 	-@erase "$(INTDIR)\f_area_ineq.obj"
@@ -362,7 +364,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\sort_alg.sbr" \
 	"$(INTDIR)\surfit.sbr" \
 	"$(INTDIR)\surfit_wrap.sbr" \
-	"$(INTDIR)\threads.sbr"
+	"$(INTDIR)\threads.sbr" \
+	"$(INTDIR)\EasyBMP.sbr"
 
 "$(OUTDIR)\surfit.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -370,7 +373,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=tcl83.lib netcdfs.lib libjpeg.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libsurfit.pdb" /machine:I386 /nodefaultlib:"LIBCMT" /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib" 
+LINK32_FLAGS=tcl83.lib netcdfs.lib libjpeg.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libsurfit.pdb" /machine:I386 /nodefaultlib:"LIBC" /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\matlab.obj" \
 	"$(INTDIR)\matr.obj" \
@@ -471,6 +474,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\surfit.obj" \
 	"$(INTDIR)\surfit_wrap.obj" \
 	"$(INTDIR)\threads.obj" \
+	"$(INTDIR)\EasyBMP.obj" \
 	"..\bin\libsstuff.lib"
 
 "..\bin\libsurfit.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -531,6 +535,8 @@ CLEAN :
 	-@erase "$(INTDIR)\data_manager.sbr"
 	-@erase "$(INTDIR)\dbfopen.obj"
 	-@erase "$(INTDIR)\dbfopen.sbr"
+	-@erase "$(INTDIR)\EasyBMP.obj"
+	-@erase "$(INTDIR)\EasyBMP.sbr"
 	-@erase "$(INTDIR)\f_area.obj"
 	-@erase "$(INTDIR)\f_area.sbr"
 	-@erase "$(INTDIR)\f_area_ineq.obj"
@@ -813,7 +819,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\sort_alg.sbr" \
 	"$(INTDIR)\surfit.sbr" \
 	"$(INTDIR)\surfit_wrap.sbr" \
-	"$(INTDIR)\threads.sbr"
+	"$(INTDIR)\threads.sbr" \
+	"$(INTDIR)\EasyBMP.sbr"
 
 "$(OUTDIR)\surfit.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -821,7 +828,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=tcl83d.lib netcdfs.lib libjpeg.lib /nologo /dll /pdb:none /map:"$(INTDIR)\libsurfit.map" /debug /machine:I386 /nodefaultlib:"LIBCMT" /nodefaultlib:"LIBCMTD" /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib" 
+LINK32_FLAGS=tcl83d.lib netcdfs.lib libjpeg.lib /nologo /dll /pdb:none /map:"$(INTDIR)\libsurfit.map" /debug /machine:I386 /nodefaultlib:"LIBC" /nodefaultlib:"LIBCMT" /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\matlab.obj" \
 	"$(INTDIR)\matr.obj" \
@@ -922,6 +929,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\surfit.obj" \
 	"$(INTDIR)\surfit_wrap.obj" \
 	"$(INTDIR)\threads.obj" \
+	"$(INTDIR)\EasyBMP.obj" \
 	"..\bin\libsstuff.lib"
 
 "..\bin\libsurfit.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -1545,6 +1553,12 @@ SOURCE=..\src\surfit\shapelib\dbfopen.c
 SOURCE=..\src\surfit\shapelib\shpopen.c
 
 "$(INTDIR)\shpopen.obj"	"$(INTDIR)\shpopen.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\EasyBmp\EasyBMP.cpp
+
+"$(INTDIR)\EasyBMP.obj"	"$(INTDIR)\EasyBMP.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

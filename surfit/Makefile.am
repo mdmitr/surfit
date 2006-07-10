@@ -155,6 +155,7 @@ libsurfit_la_SOURCES += src/surfit/sort_alg.cpp
 libsurfit_la_SOURCES += src/surfit/surf.cpp                                                      
 libsurfit_la_SOURCES += src/surfit/surfs_tcl.cpp                                                 
 libsurfit_la_SOURCES += src/surfit/surf_internal.cpp                                             
+libsurfit_la_SOURCES += src/surfit/surf_internal_io.cpp                                             
 libsurfit_la_SOURCES += src/surfit/surf_tcl.cpp                                                  
 libsurfit_la_SOURCES += src/surfit/surfit.cpp            
 libsurfit_la_SOURCES += src/surfit/surfit_wrap.cxx       
@@ -289,6 +290,9 @@ libsurfit_la_LIBADD += -lpthread
 endif
 if HAVE_JPEG_INSTALLED
 libsurfit_la_LIBADD += -ljpeg
+endif
+if HAVE_PNG_INSTALLED
+libsurfit_la_LIBADD += -lpng
 endif
 libsurfit_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit.dll
 

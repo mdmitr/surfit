@@ -124,6 +124,21 @@ bool surf_load_bmp(const char * filename, const char * surfname = 0,
 		   REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1);
 
 /*! \ingroup tcl_surf_save_load
+    \fn bool surf_load_png(const char * filename, const char * surfname = 0,
+			   REAL minz = 0, REAL maxz = 0, 
+			   REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1)
+
+    \par Tcl syntax:
+    surf_load_png "filename" "surfname" 
+
+    \par Description:
+    loads surface from PNG image file
+*/
+bool surf_load_png(const char * filename, const char * surfname = 0,
+		   REAL minz = 0, REAL maxz = 0, 
+		   REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1);
+
+/*! \ingroup tcl_surf_save_load
     \fn bool surf_save(const char * filename, const char * surface_name_or_position = "0");
 
     \par Tcl syntax:
@@ -226,6 +241,20 @@ bool surf_save_jpg(const char * filename, const char * surface_name_or_position 
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
 */
 bool surf_save_bmp(const char * filename, const char * surface_name_or_position = "0");
+
+/*! \ingroup tcl_surf_save_load
+    \fn bool surf_save_png(const char * filename, const char * surface_name_or_position = "0");
+
+    \par Tcl syntax:
+    surf_save_bmp "filename" "surface_name_or_position"
+
+    \par Description:
+    saves surface to PNG image file in grayscale colours
+
+    \param filename PNG file
+    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
+*/
+bool surf_save_png(const char * filename, const char * surface_name_or_position = "0");
 
 //
 // MATH OPERATIONS

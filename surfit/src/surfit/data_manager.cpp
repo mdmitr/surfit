@@ -669,6 +669,9 @@ bool surfit_manager::auto_load(const char * filename, const char * first1024, in
 		if (strcmp( uext, ".BMP" ) == 0) {
 			res = surf_load_bmp(filename, name);
 		}
+		if (strcmp( uext, ".PNG" ) == 0) {
+			res = surf_load_png(filename, name);
+		}
 	}
 
 	if ( strncmp(first1024, "CDF", 3) == 0 ) {

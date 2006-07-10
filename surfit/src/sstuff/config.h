@@ -10,6 +10,9 @@
 /* Define if you want to compile with jpeg format support */
 #define HAVE_LIBJPEG 1
 
+/* Define if you want to compile with png format support */
+#define HAVE_LIBPNG 1
+
 /* Define if you have OpenGL libraries */
 #define HAVE_GL_WORKS 1
 
@@ -26,9 +29,7 @@
 #define HAVE_STDINT_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
-#ifndef HAVE_STDLIB_H
 #define HAVE_STDLIB_H 1
-#endif
 
 /* Define to 1 if you have the <strings.h> header file. */
 #define HAVE_STRINGS_H 1

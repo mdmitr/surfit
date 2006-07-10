@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 tcl83.lib netcdfs.lib libjpeg.lib /nologo /dll /machine:I386 /nodefaultlib:"LIBCMT" /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib"
+# ADD LINK32 tcl83.lib netcdfs.lib libjpeg.lib /nologo /dll /machine:I386 /nodefaultlib:"LIBC" /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib"
 # SUBTRACT LINK32 /pdb:none /debug
 
 !ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 tcl83d.lib netcdfs.lib libjpeg.lib /nologo /dll /pdb:none /map /debug /machine:I386 /nodefaultlib:"LIBCMT" /nodefaultlib:"LIBCMTD" /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib"
+# ADD LINK32 tcl83d.lib netcdfs.lib libjpeg.lib libpng.lib zdll.lib /nologo /dll /pdb:none /map /debug /machine:I386 /nodefaultlib:"LIBC" /nodefaultlib:"LIBCMT" /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib"
 
 !ENDIF 
 
@@ -244,6 +244,10 @@ SOURCE=..\src\surfit\surf.cpp
 # Begin Source File
 
 SOURCE=..\src\surfit\surf_internal.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\surf_internal_io.cpp
 # End Source File
 # Begin Source File
 
@@ -562,6 +566,30 @@ SOURCE=..\src\surfit\shapelib\shapefil.h
 # Begin Source File
 
 SOURCE=..\src\surfit\shapelib\shpopen.c
+# End Source File
+# End Group
+# Begin Group "EasyBmp"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\src\surfit\EasyBmp\EasyBMP.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\EasyBmp\EasyBMP.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\EasyBmp\EasyBMP_BMP.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\EasyBmp\EasyBMP_DataStructures.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\EasyBmp\EasyBMP_VariousBMPutilities.h
 # End Source File
 # End Group
 # Begin Source File
