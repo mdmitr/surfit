@@ -25,10 +25,6 @@ NULL=
 NULL=nul
 !ENDIF 
 
-CPP=cl.exe
-MTL=midl.exe
-RSC=rc.exe
-
 !IF  "$(CFG)" == "sstuff - Win32 Release"
 
 OUTDIR=.\../Release
@@ -55,6 +51,28 @@ CLEAN :
 	-@erase "$(INTDIR)\interp.sbr"
 	-@erase "$(INTDIR)\intvec.obj"
 	-@erase "$(INTDIR)\intvec.sbr"
+	-@erase "$(INTDIR)\pasync.obj"
+	-@erase "$(INTDIR)\pasync.sbr"
+	-@erase "$(INTDIR)\patomic.obj"
+	-@erase "$(INTDIR)\patomic.sbr"
+	-@erase "$(INTDIR)\pexcept.obj"
+	-@erase "$(INTDIR)\pexcept.sbr"
+	-@erase "$(INTDIR)\pfatal.obj"
+	-@erase "$(INTDIR)\pfatal.sbr"
+	-@erase "$(INTDIR)\pmem.obj"
+	-@erase "$(INTDIR)\pmem.sbr"
+	-@erase "$(INTDIR)\pmsgq.obj"
+	-@erase "$(INTDIR)\pmsgq.sbr"
+	-@erase "$(INTDIR)\psemaphore.obj"
+	-@erase "$(INTDIR)\psemaphore.sbr"
+	-@erase "$(INTDIR)\pstring.obj"
+	-@erase "$(INTDIR)\pstring.sbr"
+	-@erase "$(INTDIR)\pthread.obj"
+	-@erase "$(INTDIR)\pthread.sbr"
+	-@erase "$(INTDIR)\ptimedsem.obj"
+	-@erase "$(INTDIR)\ptimedsem.sbr"
+	-@erase "$(INTDIR)\punknown.obj"
+	-@erase "$(INTDIR)\punknown.sbr"
 	-@erase "$(INTDIR)\read_txt.obj"
 	-@erase "$(INTDIR)\read_txt.sbr"
 	-@erase "$(INTDIR)\rnd.obj"
@@ -67,6 +85,8 @@ CLEAN :
 	-@erase "$(INTDIR)\stepFunc.sbr"
 	-@erase "$(INTDIR)\strvec.obj"
 	-@erase "$(INTDIR)\strvec.sbr"
+	-@erase "$(INTDIR)\threads.obj"
+	-@erase "$(INTDIR)\threads.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\vec.obj"
 	-@erase "$(INTDIR)\vec.sbr"
@@ -80,8 +100,42 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
+CPP=cl.exe
 CPP_PROJ=/nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../sstuff/src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+MTL=midl.exe
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
+RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\sstuff.bsc" 
 BSC32_SBRS= \
@@ -92,6 +146,17 @@ BSC32_SBRS= \
 	"$(INTDIR)\strvec.sbr" \
 	"$(INTDIR)\vec.sbr" \
 	"$(INTDIR)\vec_alg.sbr" \
+	"$(INTDIR)\pasync.sbr" \
+	"$(INTDIR)\patomic.sbr" \
+	"$(INTDIR)\pexcept.sbr" \
+	"$(INTDIR)\pfatal.sbr" \
+	"$(INTDIR)\pmem.sbr" \
+	"$(INTDIR)\pmsgq.sbr" \
+	"$(INTDIR)\psemaphore.sbr" \
+	"$(INTDIR)\pstring.sbr" \
+	"$(INTDIR)\pthread.sbr" \
+	"$(INTDIR)\ptimedsem.sbr" \
+	"$(INTDIR)\punknown.sbr" \
 	"$(INTDIR)\datafile.sbr" \
 	"$(INTDIR)\fileio.sbr" \
 	"$(INTDIR)\geom_alg.sbr" \
@@ -99,7 +164,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\read_txt.sbr" \
 	"$(INTDIR)\rnd.sbr" \
 	"$(INTDIR)\sstuff.sbr" \
-	"$(INTDIR)\stepFunc.sbr"
+	"$(INTDIR)\stepFunc.sbr" \
+	"$(INTDIR)\threads.sbr"
 
 "$(OUTDIR)\sstuff.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -116,6 +182,17 @@ LINK32_OBJS= \
 	"$(INTDIR)\strvec.obj" \
 	"$(INTDIR)\vec.obj" \
 	"$(INTDIR)\vec_alg.obj" \
+	"$(INTDIR)\pasync.obj" \
+	"$(INTDIR)\patomic.obj" \
+	"$(INTDIR)\pexcept.obj" \
+	"$(INTDIR)\pfatal.obj" \
+	"$(INTDIR)\pmem.obj" \
+	"$(INTDIR)\pmsgq.obj" \
+	"$(INTDIR)\psemaphore.obj" \
+	"$(INTDIR)\pstring.obj" \
+	"$(INTDIR)\pthread.obj" \
+	"$(INTDIR)\ptimedsem.obj" \
+	"$(INTDIR)\punknown.obj" \
 	"$(INTDIR)\datafile.obj" \
 	"$(INTDIR)\fileio.obj" \
 	"$(INTDIR)\geom_alg.obj" \
@@ -123,7 +200,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\read_txt.obj" \
 	"$(INTDIR)\rnd.obj" \
 	"$(INTDIR)\sstuff.obj" \
-	"$(INTDIR)\stepFunc.obj"
+	"$(INTDIR)\stepFunc.obj" \
+	"$(INTDIR)\threads.obj"
 
 "..\bin\libsstuff.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -156,6 +234,28 @@ CLEAN :
 	-@erase "$(INTDIR)\interp.sbr"
 	-@erase "$(INTDIR)\intvec.obj"
 	-@erase "$(INTDIR)\intvec.sbr"
+	-@erase "$(INTDIR)\pasync.obj"
+	-@erase "$(INTDIR)\pasync.sbr"
+	-@erase "$(INTDIR)\patomic.obj"
+	-@erase "$(INTDIR)\patomic.sbr"
+	-@erase "$(INTDIR)\pexcept.obj"
+	-@erase "$(INTDIR)\pexcept.sbr"
+	-@erase "$(INTDIR)\pfatal.obj"
+	-@erase "$(INTDIR)\pfatal.sbr"
+	-@erase "$(INTDIR)\pmem.obj"
+	-@erase "$(INTDIR)\pmem.sbr"
+	-@erase "$(INTDIR)\pmsgq.obj"
+	-@erase "$(INTDIR)\pmsgq.sbr"
+	-@erase "$(INTDIR)\psemaphore.obj"
+	-@erase "$(INTDIR)\psemaphore.sbr"
+	-@erase "$(INTDIR)\pstring.obj"
+	-@erase "$(INTDIR)\pstring.sbr"
+	-@erase "$(INTDIR)\pthread.obj"
+	-@erase "$(INTDIR)\pthread.sbr"
+	-@erase "$(INTDIR)\ptimedsem.obj"
+	-@erase "$(INTDIR)\ptimedsem.sbr"
+	-@erase "$(INTDIR)\punknown.obj"
+	-@erase "$(INTDIR)\punknown.sbr"
 	-@erase "$(INTDIR)\read_txt.obj"
 	-@erase "$(INTDIR)\read_txt.sbr"
 	-@erase "$(INTDIR)\rnd.obj"
@@ -168,6 +268,8 @@ CLEAN :
 	-@erase "$(INTDIR)\stepFunc.sbr"
 	-@erase "$(INTDIR)\strvec.obj"
 	-@erase "$(INTDIR)\strvec.sbr"
+	-@erase "$(INTDIR)\threads.obj"
+	-@erase "$(INTDIR)\threads.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\vc60.pdb"
 	-@erase "$(INTDIR)\vec.obj"
@@ -183,57 +285,8 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../sstuff/src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
-MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
-BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\sstuff.bsc" 
-BSC32_SBRS= \
-	"$(INTDIR)\bitvec.sbr" \
-	"$(INTDIR)\boolvec.sbr" \
-	"$(INTDIR)\intvec.sbr" \
-	"$(INTDIR)\shortvec.sbr" \
-	"$(INTDIR)\strvec.sbr" \
-	"$(INTDIR)\vec.sbr" \
-	"$(INTDIR)\vec_alg.sbr" \
-	"$(INTDIR)\datafile.sbr" \
-	"$(INTDIR)\fileio.sbr" \
-	"$(INTDIR)\geom_alg.sbr" \
-	"$(INTDIR)\interp.sbr" \
-	"$(INTDIR)\read_txt.sbr" \
-	"$(INTDIR)\rnd.sbr" \
-	"$(INTDIR)\sstuff.sbr" \
-	"$(INTDIR)\stepFunc.sbr"
-
-"$(OUTDIR)\sstuff.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
-    $(BSC32) @<<
-  $(BSC32_FLAGS) $(BSC32_SBRS)
-<<
-
-LINK32=link.exe
-LINK32_FLAGS=tcl83d.lib /nologo /dll /pdb:none /map:"$(INTDIR)\libsstuff.map" /debug /machine:I386 /out:"../bin/libsstuff.dll" /implib:"../bin/libsstuff.lib" 
-LINK32_OBJS= \
-	"$(INTDIR)\bitvec.obj" \
-	"$(INTDIR)\boolvec.obj" \
-	"$(INTDIR)\intvec.obj" \
-	"$(INTDIR)\shortvec.obj" \
-	"$(INTDIR)\strvec.obj" \
-	"$(INTDIR)\vec.obj" \
-	"$(INTDIR)\vec_alg.obj" \
-	"$(INTDIR)\datafile.obj" \
-	"$(INTDIR)\fileio.obj" \
-	"$(INTDIR)\geom_alg.obj" \
-	"$(INTDIR)\interp.obj" \
-	"$(INTDIR)\read_txt.obj" \
-	"$(INTDIR)\rnd.obj" \
-	"$(INTDIR)\sstuff.obj" \
-	"$(INTDIR)\stepFunc.obj"
-
-"..\bin\libsstuff.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
-    $(LINK32) @<<
-  $(LINK32_FLAGS) $(LINK32_OBJS)
-<<
-
-!ENDIF 
+CPP=cl.exe
+CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../sstuff/src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -264,6 +317,83 @@ LINK32_OBJS= \
    $(CPP) @<<
    $(CPP_PROJ) $< 
 <<
+
+MTL=midl.exe
+MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
+RSC=rc.exe
+BSC32=bscmake.exe
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\sstuff.bsc" 
+BSC32_SBRS= \
+	"$(INTDIR)\bitvec.sbr" \
+	"$(INTDIR)\boolvec.sbr" \
+	"$(INTDIR)\intvec.sbr" \
+	"$(INTDIR)\shortvec.sbr" \
+	"$(INTDIR)\strvec.sbr" \
+	"$(INTDIR)\vec.sbr" \
+	"$(INTDIR)\vec_alg.sbr" \
+	"$(INTDIR)\pasync.sbr" \
+	"$(INTDIR)\patomic.sbr" \
+	"$(INTDIR)\pexcept.sbr" \
+	"$(INTDIR)\pfatal.sbr" \
+	"$(INTDIR)\pmem.sbr" \
+	"$(INTDIR)\pmsgq.sbr" \
+	"$(INTDIR)\psemaphore.sbr" \
+	"$(INTDIR)\pstring.sbr" \
+	"$(INTDIR)\pthread.sbr" \
+	"$(INTDIR)\ptimedsem.sbr" \
+	"$(INTDIR)\punknown.sbr" \
+	"$(INTDIR)\datafile.sbr" \
+	"$(INTDIR)\fileio.sbr" \
+	"$(INTDIR)\geom_alg.sbr" \
+	"$(INTDIR)\interp.sbr" \
+	"$(INTDIR)\read_txt.sbr" \
+	"$(INTDIR)\rnd.sbr" \
+	"$(INTDIR)\sstuff.sbr" \
+	"$(INTDIR)\stepFunc.sbr" \
+	"$(INTDIR)\threads.sbr"
+
+"$(OUTDIR)\sstuff.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
+    $(BSC32) @<<
+  $(BSC32_FLAGS) $(BSC32_SBRS)
+<<
+
+LINK32=link.exe
+LINK32_FLAGS=tcl83d.lib /nologo /dll /pdb:none /map:"$(INTDIR)\libsstuff.map" /debug /machine:I386 /out:"../bin/libsstuff.dll" /implib:"../bin/libsstuff.lib" 
+LINK32_OBJS= \
+	"$(INTDIR)\bitvec.obj" \
+	"$(INTDIR)\boolvec.obj" \
+	"$(INTDIR)\intvec.obj" \
+	"$(INTDIR)\shortvec.obj" \
+	"$(INTDIR)\strvec.obj" \
+	"$(INTDIR)\vec.obj" \
+	"$(INTDIR)\vec_alg.obj" \
+	"$(INTDIR)\pasync.obj" \
+	"$(INTDIR)\patomic.obj" \
+	"$(INTDIR)\pexcept.obj" \
+	"$(INTDIR)\pfatal.obj" \
+	"$(INTDIR)\pmem.obj" \
+	"$(INTDIR)\pmsgq.obj" \
+	"$(INTDIR)\psemaphore.obj" \
+	"$(INTDIR)\pstring.obj" \
+	"$(INTDIR)\pthread.obj" \
+	"$(INTDIR)\ptimedsem.obj" \
+	"$(INTDIR)\punknown.obj" \
+	"$(INTDIR)\datafile.obj" \
+	"$(INTDIR)\fileio.obj" \
+	"$(INTDIR)\geom_alg.obj" \
+	"$(INTDIR)\interp.obj" \
+	"$(INTDIR)\read_txt.obj" \
+	"$(INTDIR)\rnd.obj" \
+	"$(INTDIR)\sstuff.obj" \
+	"$(INTDIR)\stepFunc.obj" \
+	"$(INTDIR)\threads.obj"
+
+"..\bin\libsstuff.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ENDIF 
 
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
@@ -318,6 +448,72 @@ SOURCE=..\src\sstuff\vec_alg.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\src\sstuff\ptypes\pasync.cxx
+
+"$(INTDIR)\pasync.obj"	"$(INTDIR)\pasync.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\sstuff\ptypes\patomic.cxx
+
+"$(INTDIR)\patomic.obj"	"$(INTDIR)\patomic.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\sstuff\ptypes\pexcept.cxx
+
+"$(INTDIR)\pexcept.obj"	"$(INTDIR)\pexcept.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\sstuff\ptypes\pfatal.cxx
+
+"$(INTDIR)\pfatal.obj"	"$(INTDIR)\pfatal.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\sstuff\ptypes\pmem.cxx
+
+"$(INTDIR)\pmem.obj"	"$(INTDIR)\pmem.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\sstuff\ptypes\pmsgq.cxx
+
+"$(INTDIR)\pmsgq.obj"	"$(INTDIR)\pmsgq.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\sstuff\ptypes\psemaphore.cxx
+
+"$(INTDIR)\psemaphore.obj"	"$(INTDIR)\psemaphore.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\sstuff\ptypes\pstring.cxx
+
+"$(INTDIR)\pstring.obj"	"$(INTDIR)\pstring.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\sstuff\ptypes\pthread.cxx
+
+"$(INTDIR)\pthread.obj"	"$(INTDIR)\pthread.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\sstuff\ptypes\ptimedsem.cxx
+
+"$(INTDIR)\ptimedsem.obj"	"$(INTDIR)\ptimedsem.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\sstuff\ptypes\punknown.cxx
+
+"$(INTDIR)\punknown.obj"	"$(INTDIR)\punknown.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\src\sstuff\datafile.cpp
 
 "$(INTDIR)\datafile.obj"	"$(INTDIR)\datafile.sbr" : $(SOURCE) "$(INTDIR)"
@@ -363,6 +559,12 @@ SOURCE=..\src\sstuff\sstuff.cpp
 SOURCE=..\src\sstuff\stepFunc.cpp
 
 "$(INTDIR)\stepFunc.obj"	"$(INTDIR)\stepFunc.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\sstuff\threads.cpp
+
+"$(INTDIR)\threads.obj"	"$(INTDIR)\threads.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

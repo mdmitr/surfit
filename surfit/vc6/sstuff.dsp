@@ -44,7 +44,6 @@ RSC=rc.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SSTUFF_EXPORTS" /YX /FD /c
 # ADD CPP /nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../sstuff/src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr /FD /Gs /Gs /c
-# SUBTRACT CPP /Z<none>
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x419 /d "NDEBUG"
@@ -71,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SSTUFF_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../sstuff/src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../sstuff/src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x419 /d "_DEBUG"
@@ -124,6 +123,66 @@ SOURCE=..\src\sstuff\vec.cpp
 SOURCE=..\src\sstuff\vec_alg.cpp
 # End Source File
 # End Group
+# Begin Group "ptypes"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\src\sstuff\ptypes\pasync.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\ptypes\pasync.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\ptypes\patomic.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\ptypes\pexcept.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\ptypes\pfatal.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\ptypes\pmem.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\ptypes\pmsgq.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\ptypes\pport.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\ptypes\psemaphore.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\ptypes\pstring.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\ptypes\pthread.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\ptypes\ptimedsem.cxx
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\ptypes\ptypes.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\ptypes\punknown.cxx
+# End Source File
+# End Group
 # Begin Source File
 
 SOURCE=..\src\sstuff\datafile.cpp
@@ -155,6 +214,10 @@ SOURCE=..\src\sstuff\sstuff.cpp
 # Begin Source File
 
 SOURCE=..\src\sstuff\stepFunc.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\threads.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -239,6 +302,10 @@ SOURCE=..\src\sstuff\sstuff_ie.h
 # Begin Source File
 
 SOURCE=..\src\sstuff\stepFunc.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\threads.h
 # End Source File
 # End Group
 # End Target

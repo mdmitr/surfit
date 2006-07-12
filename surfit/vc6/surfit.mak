@@ -25,10 +25,6 @@ NULL=
 NULL=nul
 !ENDIF 
 
-CPP=cl.exe
-MTL=midl.exe
-RSC=rc.exe
-
 !IF  "$(CFG)" == "surfit - Win32 Release"
 
 OUTDIR=.\../Release
@@ -80,10 +76,6 @@ CLEAN :
 	-@erase "$(INTDIR)\data.sbr"
 	-@erase "$(INTDIR)\data_manager.obj"
 	-@erase "$(INTDIR)\data_manager.sbr"
-	-@erase "$(INTDIR)\dbfopen.obj"
-	-@erase "$(INTDIR)\dbfopen.sbr"
-	-@erase "$(INTDIR)\EasyBMP.obj"
-	-@erase "$(INTDIR)\EasyBMP.sbr"
 	-@erase "$(INTDIR)\f_area.obj"
 	-@erase "$(INTDIR)\f_area.sbr"
 	-@erase "$(INTDIR)\f_area_ineq.obj"
@@ -198,38 +190,14 @@ CLEAN :
 	-@erase "$(INTDIR)\mrf.sbr"
 	-@erase "$(INTDIR)\others_tcl.obj"
 	-@erase "$(INTDIR)\others_tcl.sbr"
-	-@erase "$(INTDIR)\pasync.obj"
-	-@erase "$(INTDIR)\pasync.sbr"
-	-@erase "$(INTDIR)\patomic.obj"
-	-@erase "$(INTDIR)\patomic.sbr"
-	-@erase "$(INTDIR)\pexcept.obj"
-	-@erase "$(INTDIR)\pexcept.sbr"
-	-@erase "$(INTDIR)\pfatal.obj"
-	-@erase "$(INTDIR)\pfatal.sbr"
-	-@erase "$(INTDIR)\pmem.obj"
-	-@erase "$(INTDIR)\pmem.sbr"
-	-@erase "$(INTDIR)\pmsgq.obj"
-	-@erase "$(INTDIR)\pmsgq.sbr"
 	-@erase "$(INTDIR)\pnts_internal.obj"
 	-@erase "$(INTDIR)\pnts_internal.sbr"
 	-@erase "$(INTDIR)\pnts_tcl.obj"
 	-@erase "$(INTDIR)\pnts_tcl.sbr"
 	-@erase "$(INTDIR)\points.obj"
 	-@erase "$(INTDIR)\points.sbr"
-	-@erase "$(INTDIR)\psemaphore.obj"
-	-@erase "$(INTDIR)\psemaphore.sbr"
-	-@erase "$(INTDIR)\pstring.obj"
-	-@erase "$(INTDIR)\pstring.sbr"
-	-@erase "$(INTDIR)\pthread.obj"
-	-@erase "$(INTDIR)\pthread.sbr"
-	-@erase "$(INTDIR)\ptimedsem.obj"
-	-@erase "$(INTDIR)\ptimedsem.sbr"
-	-@erase "$(INTDIR)\punknown.obj"
-	-@erase "$(INTDIR)\punknown.sbr"
 	-@erase "$(INTDIR)\RF.obj"
 	-@erase "$(INTDIR)\RF.sbr"
-	-@erase "$(INTDIR)\shpopen.obj"
-	-@erase "$(INTDIR)\shpopen.sbr"
 	-@erase "$(INTDIR)\solvers.obj"
 	-@erase "$(INTDIR)\solvers.sbr"
 	-@erase "$(INTDIR)\sort_alg.obj"
@@ -248,8 +216,6 @@ CLEAN :
 	-@erase "$(INTDIR)\surfit_wrap.sbr"
 	-@erase "$(INTDIR)\surfs_tcl.obj"
 	-@erase "$(INTDIR)\surfs_tcl.sbr"
-	-@erase "$(INTDIR)\threads.obj"
-	-@erase "$(INTDIR)\threads.sbr"
 	-@erase "$(INTDIR)\variables.obj"
 	-@erase "$(INTDIR)\variables.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
@@ -261,8 +227,42 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
+CPP=cl.exe
 CPP_PROJ=/nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../src/sstuff" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+MTL=midl.exe
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
+RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\surfit.bsc" 
 BSC32_SBRS= \
@@ -290,7 +290,6 @@ BSC32_SBRS= \
 	"$(INTDIR)\grid_internal.sbr" \
 	"$(INTDIR)\grid_tcl.sbr" \
 	"$(INTDIR)\grid_user.sbr" \
-	"$(INTDIR)\variables.sbr" \
 	"$(INTDIR)\mask.sbr" \
 	"$(INTDIR)\mask_internal.sbr" \
 	"$(INTDIR)\mask_tcl.sbr" \
@@ -346,26 +345,12 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_trend.sbr" \
 	"$(INTDIR)\surfs_tcl.sbr" \
 	"$(INTDIR)\functional.sbr" \
-	"$(INTDIR)\pasync.sbr" \
-	"$(INTDIR)\patomic.sbr" \
-	"$(INTDIR)\pexcept.sbr" \
-	"$(INTDIR)\pfatal.sbr" \
-	"$(INTDIR)\pmem.sbr" \
-	"$(INTDIR)\pmsgq.sbr" \
-	"$(INTDIR)\psemaphore.sbr" \
-	"$(INTDIR)\pstring.sbr" \
-	"$(INTDIR)\pthread.sbr" \
-	"$(INTDIR)\ptimedsem.sbr" \
-	"$(INTDIR)\punknown.sbr" \
-	"$(INTDIR)\dbfopen.sbr" \
-	"$(INTDIR)\shpopen.sbr" \
 	"$(INTDIR)\data_manager.sbr" \
 	"$(INTDIR)\mrf.sbr" \
 	"$(INTDIR)\sort_alg.sbr" \
 	"$(INTDIR)\surfit.sbr" \
 	"$(INTDIR)\surfit_wrap.sbr" \
-	"$(INTDIR)\threads.sbr" \
-	"$(INTDIR)\EasyBMP.sbr"
+	"$(INTDIR)\variables.sbr"
 
 "$(OUTDIR)\surfit.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -399,7 +384,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\grid_internal.obj" \
 	"$(INTDIR)\grid_tcl.obj" \
 	"$(INTDIR)\grid_user.obj" \
-	"$(INTDIR)\variables.obj" \
 	"$(INTDIR)\mask.obj" \
 	"$(INTDIR)\mask_internal.obj" \
 	"$(INTDIR)\mask_tcl.obj" \
@@ -455,26 +439,12 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_trend.obj" \
 	"$(INTDIR)\surfs_tcl.obj" \
 	"$(INTDIR)\functional.obj" \
-	"$(INTDIR)\pasync.obj" \
-	"$(INTDIR)\patomic.obj" \
-	"$(INTDIR)\pexcept.obj" \
-	"$(INTDIR)\pfatal.obj" \
-	"$(INTDIR)\pmem.obj" \
-	"$(INTDIR)\pmsgq.obj" \
-	"$(INTDIR)\psemaphore.obj" \
-	"$(INTDIR)\pstring.obj" \
-	"$(INTDIR)\pthread.obj" \
-	"$(INTDIR)\ptimedsem.obj" \
-	"$(INTDIR)\punknown.obj" \
-	"$(INTDIR)\dbfopen.obj" \
-	"$(INTDIR)\shpopen.obj" \
 	"$(INTDIR)\data_manager.obj" \
 	"$(INTDIR)\mrf.obj" \
 	"$(INTDIR)\sort_alg.obj" \
 	"$(INTDIR)\surfit.obj" \
 	"$(INTDIR)\surfit_wrap.obj" \
-	"$(INTDIR)\threads.obj" \
-	"$(INTDIR)\EasyBMP.obj" \
+	"$(INTDIR)\variables.obj" \
 	"..\bin\libsstuff.lib"
 
 "..\bin\libsurfit.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -533,10 +503,6 @@ CLEAN :
 	-@erase "$(INTDIR)\data.sbr"
 	-@erase "$(INTDIR)\data_manager.obj"
 	-@erase "$(INTDIR)\data_manager.sbr"
-	-@erase "$(INTDIR)\dbfopen.obj"
-	-@erase "$(INTDIR)\dbfopen.sbr"
-	-@erase "$(INTDIR)\EasyBMP.obj"
-	-@erase "$(INTDIR)\EasyBMP.sbr"
 	-@erase "$(INTDIR)\f_area.obj"
 	-@erase "$(INTDIR)\f_area.sbr"
 	-@erase "$(INTDIR)\f_area_ineq.obj"
@@ -651,38 +617,14 @@ CLEAN :
 	-@erase "$(INTDIR)\mrf.sbr"
 	-@erase "$(INTDIR)\others_tcl.obj"
 	-@erase "$(INTDIR)\others_tcl.sbr"
-	-@erase "$(INTDIR)\pasync.obj"
-	-@erase "$(INTDIR)\pasync.sbr"
-	-@erase "$(INTDIR)\patomic.obj"
-	-@erase "$(INTDIR)\patomic.sbr"
-	-@erase "$(INTDIR)\pexcept.obj"
-	-@erase "$(INTDIR)\pexcept.sbr"
-	-@erase "$(INTDIR)\pfatal.obj"
-	-@erase "$(INTDIR)\pfatal.sbr"
-	-@erase "$(INTDIR)\pmem.obj"
-	-@erase "$(INTDIR)\pmem.sbr"
-	-@erase "$(INTDIR)\pmsgq.obj"
-	-@erase "$(INTDIR)\pmsgq.sbr"
 	-@erase "$(INTDIR)\pnts_internal.obj"
 	-@erase "$(INTDIR)\pnts_internal.sbr"
 	-@erase "$(INTDIR)\pnts_tcl.obj"
 	-@erase "$(INTDIR)\pnts_tcl.sbr"
 	-@erase "$(INTDIR)\points.obj"
 	-@erase "$(INTDIR)\points.sbr"
-	-@erase "$(INTDIR)\psemaphore.obj"
-	-@erase "$(INTDIR)\psemaphore.sbr"
-	-@erase "$(INTDIR)\pstring.obj"
-	-@erase "$(INTDIR)\pstring.sbr"
-	-@erase "$(INTDIR)\pthread.obj"
-	-@erase "$(INTDIR)\pthread.sbr"
-	-@erase "$(INTDIR)\ptimedsem.obj"
-	-@erase "$(INTDIR)\ptimedsem.sbr"
-	-@erase "$(INTDIR)\punknown.obj"
-	-@erase "$(INTDIR)\punknown.sbr"
 	-@erase "$(INTDIR)\RF.obj"
 	-@erase "$(INTDIR)\RF.sbr"
-	-@erase "$(INTDIR)\shpopen.obj"
-	-@erase "$(INTDIR)\shpopen.sbr"
 	-@erase "$(INTDIR)\solvers.obj"
 	-@erase "$(INTDIR)\solvers.sbr"
 	-@erase "$(INTDIR)\sort_alg.obj"
@@ -701,8 +643,6 @@ CLEAN :
 	-@erase "$(INTDIR)\surfit_wrap.sbr"
 	-@erase "$(INTDIR)\surfs_tcl.obj"
 	-@erase "$(INTDIR)\surfs_tcl.sbr"
-	-@erase "$(INTDIR)\threads.obj"
-	-@erase "$(INTDIR)\threads.sbr"
 	-@erase "$(INTDIR)\variables.obj"
 	-@erase "$(INTDIR)\variables.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
@@ -716,8 +656,42 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP=cl.exe
+CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+MTL=midl.exe
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
+RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\surfit.bsc" 
 BSC32_SBRS= \
@@ -745,7 +719,6 @@ BSC32_SBRS= \
 	"$(INTDIR)\grid_internal.sbr" \
 	"$(INTDIR)\grid_tcl.sbr" \
 	"$(INTDIR)\grid_user.sbr" \
-	"$(INTDIR)\variables.sbr" \
 	"$(INTDIR)\mask.sbr" \
 	"$(INTDIR)\mask_internal.sbr" \
 	"$(INTDIR)\mask_tcl.sbr" \
@@ -801,26 +774,12 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_trend.sbr" \
 	"$(INTDIR)\surfs_tcl.sbr" \
 	"$(INTDIR)\functional.sbr" \
-	"$(INTDIR)\pasync.sbr" \
-	"$(INTDIR)\patomic.sbr" \
-	"$(INTDIR)\pexcept.sbr" \
-	"$(INTDIR)\pfatal.sbr" \
-	"$(INTDIR)\pmem.sbr" \
-	"$(INTDIR)\pmsgq.sbr" \
-	"$(INTDIR)\psemaphore.sbr" \
-	"$(INTDIR)\pstring.sbr" \
-	"$(INTDIR)\pthread.sbr" \
-	"$(INTDIR)\ptimedsem.sbr" \
-	"$(INTDIR)\punknown.sbr" \
-	"$(INTDIR)\dbfopen.sbr" \
-	"$(INTDIR)\shpopen.sbr" \
 	"$(INTDIR)\data_manager.sbr" \
 	"$(INTDIR)\mrf.sbr" \
 	"$(INTDIR)\sort_alg.sbr" \
 	"$(INTDIR)\surfit.sbr" \
 	"$(INTDIR)\surfit_wrap.sbr" \
-	"$(INTDIR)\threads.sbr" \
-	"$(INTDIR)\EasyBMP.sbr"
+	"$(INTDIR)\variables.sbr"
 
 "$(OUTDIR)\surfit.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -828,7 +787,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=tcl83d.lib netcdfs.lib libjpeg.lib /nologo /dll /pdb:none /map:"$(INTDIR)\libsurfit.map" /debug /machine:I386 /nodefaultlib:"LIBC" /nodefaultlib:"LIBCMT" /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib" 
+LINK32_FLAGS=tcl83d.lib /nologo /dll /pdb:none /map:"$(INTDIR)\libsurfit.map" /debug /machine:I386 /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\matlab.obj" \
 	"$(INTDIR)\matr.obj" \
@@ -854,7 +813,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\grid_internal.obj" \
 	"$(INTDIR)\grid_tcl.obj" \
 	"$(INTDIR)\grid_user.obj" \
-	"$(INTDIR)\variables.obj" \
 	"$(INTDIR)\mask.obj" \
 	"$(INTDIR)\mask_internal.obj" \
 	"$(INTDIR)\mask_tcl.obj" \
@@ -910,26 +868,12 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_trend.obj" \
 	"$(INTDIR)\surfs_tcl.obj" \
 	"$(INTDIR)\functional.obj" \
-	"$(INTDIR)\pasync.obj" \
-	"$(INTDIR)\patomic.obj" \
-	"$(INTDIR)\pexcept.obj" \
-	"$(INTDIR)\pfatal.obj" \
-	"$(INTDIR)\pmem.obj" \
-	"$(INTDIR)\pmsgq.obj" \
-	"$(INTDIR)\psemaphore.obj" \
-	"$(INTDIR)\pstring.obj" \
-	"$(INTDIR)\pthread.obj" \
-	"$(INTDIR)\ptimedsem.obj" \
-	"$(INTDIR)\punknown.obj" \
-	"$(INTDIR)\dbfopen.obj" \
-	"$(INTDIR)\shpopen.obj" \
 	"$(INTDIR)\data_manager.obj" \
 	"$(INTDIR)\mrf.obj" \
 	"$(INTDIR)\sort_alg.obj" \
 	"$(INTDIR)\surfit.obj" \
 	"$(INTDIR)\surfit_wrap.obj" \
-	"$(INTDIR)\threads.obj" \
-	"$(INTDIR)\EasyBMP.obj" \
+	"$(INTDIR)\variables.obj" \
 	"..\bin\libsstuff.lib"
 
 "..\bin\libsurfit.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -938,36 +882,6 @@ LINK32_OBJS= \
 <<
 
 !ENDIF 
-
-.c{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.c{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
 
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
@@ -1124,12 +1038,6 @@ SOURCE=.\..\src\surfit\grid_user.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=.\..\src\surfit\variables.cpp
-
-"$(INTDIR)\variables.obj"	"$(INTDIR)\variables.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
 SOURCE=..\src\surfit\mask.cpp
 
 "$(INTDIR)\mask.obj"	"$(INTDIR)\mask.sbr" : $(SOURCE) "$(INTDIR)"
@@ -1216,7 +1124,7 @@ CPP_SWITCHES=/nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../src/sstuff" /D "WIN32" 
 
 !ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
 
-CPP_SWITCHES=/nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\grid_line.obj"	"$(INTDIR)\grid_line.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -1478,90 +1386,6 @@ SOURCE=..\src\surfit\functional.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\src\surfit\ptypes\pasync.cxx
-
-"$(INTDIR)\pasync.obj"	"$(INTDIR)\pasync.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\src\surfit\ptypes\patomic.cxx
-
-"$(INTDIR)\patomic.obj"	"$(INTDIR)\patomic.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\src\surfit\ptypes\pexcept.cxx
-
-"$(INTDIR)\pexcept.obj"	"$(INTDIR)\pexcept.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\src\surfit\ptypes\pfatal.cxx
-
-"$(INTDIR)\pfatal.obj"	"$(INTDIR)\pfatal.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\src\surfit\ptypes\pmem.cxx
-
-"$(INTDIR)\pmem.obj"	"$(INTDIR)\pmem.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\src\surfit\ptypes\pmsgq.cxx
-
-"$(INTDIR)\pmsgq.obj"	"$(INTDIR)\pmsgq.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\src\surfit\ptypes\psemaphore.cxx
-
-"$(INTDIR)\psemaphore.obj"	"$(INTDIR)\psemaphore.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\src\surfit\ptypes\pstring.cxx
-
-"$(INTDIR)\pstring.obj"	"$(INTDIR)\pstring.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\src\surfit\ptypes\pthread.cxx
-
-"$(INTDIR)\pthread.obj"	"$(INTDIR)\pthread.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\src\surfit\ptypes\ptimedsem.cxx
-
-"$(INTDIR)\ptimedsem.obj"	"$(INTDIR)\ptimedsem.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\src\surfit\ptypes\punknown.cxx
-
-"$(INTDIR)\punknown.obj"	"$(INTDIR)\punknown.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\src\surfit\shapelib\dbfopen.c
-
-"$(INTDIR)\dbfopen.obj"	"$(INTDIR)\dbfopen.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\src\surfit\shapelib\shpopen.c
-
-"$(INTDIR)\shpopen.obj"	"$(INTDIR)\shpopen.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\src\surfit\EasyBmp\EasyBMP.cpp
-
-"$(INTDIR)\EasyBMP.obj"	"$(INTDIR)\EasyBMP.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
 SOURCE=..\src\surfit\data_manager.cpp
 
 "$(INTDIR)\data_manager.obj"	"$(INTDIR)\data_manager.sbr" : $(SOURCE) "$(INTDIR)"
@@ -1582,7 +1406,7 @@ CPP_SWITCHES=/nologo /MT /W3 /GR /GX /Op /Ob2 /I "../src/sstuff" /D "WIN32" /D "
 
 !ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
 
-CPP_SWITCHES=/nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\mrf.obj"	"$(INTDIR)\mrf.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -1618,7 +1442,7 @@ CPP_SWITCHES=/nologo /MT /W3 /GR /GX /Op /Oy- /Ob2 /I "../src/sstuff" /D "WIN32"
 
 !ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
 
-CPP_SWITCHES=/nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\surfit_wrap.obj"	"$(INTDIR)\surfit_wrap.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -1628,9 +1452,9 @@ CPP_SWITCHES=/nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /D "WIN32" 
 
 !ENDIF 
 
-SOURCE=..\src\surfit\threads.cpp
+SOURCE=.\..\src\surfit\variables.cpp
 
-"$(INTDIR)\threads.obj"	"$(INTDIR)\threads.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\variables.obj"	"$(INTDIR)\variables.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SURFIT_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MTd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x419 /d "_DEBUG"
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 tcl83d.lib netcdfs.lib libjpeg.lib libpng.lib zdll.lib /nologo /dll /pdb:none /map /debug /machine:I386 /nodefaultlib:"LIBC" /nodefaultlib:"LIBCMT" /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib"
+# ADD LINK32 tcl83d.lib /nologo /dll /pdb:none /map /debug /machine:I386 /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib"
 
 !ENDIF 
 
@@ -207,14 +207,6 @@ SOURCE=.\..\src\surfit\grid_tcl.cpp
 SOURCE=.\..\src\surfit\grid_user.cpp
 # End Source File
 # End Group
-# Begin Group "variables_cpp"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\..\src\surfit\variables.cpp
-# End Source File
-# End Group
 # Begin Group "data_cpp"
 
 # PROP Default_Filter ""
@@ -244,10 +236,6 @@ SOURCE=..\src\surfit\surf.cpp
 # Begin Source File
 
 SOURCE=..\src\surfit\surf_internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\surf_internal_io.cpp
 # End Source File
 # Begin Source File
 
@@ -504,94 +492,6 @@ SOURCE=..\src\surfit\surfs_tcl.cpp
 SOURCE=..\src\surfit\functional.cpp
 # End Source File
 # End Group
-# Begin Group "ptypes_cxx"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=..\src\surfit\ptypes\pasync.cxx
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\ptypes\patomic.cxx
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\ptypes\pexcept.cxx
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\ptypes\pfatal.cxx
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\ptypes\pmem.cxx
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\ptypes\pmsgq.cxx
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\ptypes\psemaphore.cxx
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\ptypes\pstring.cxx
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\ptypes\pthread.cxx
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\ptypes\ptimedsem.cxx
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\ptypes\punknown.cxx
-# End Source File
-# End Group
-# Begin Group "shapelib"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=..\src\surfit\shapelib\dbfopen.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\shapelib\shapefil.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\shapelib\shpopen.c
-# End Source File
-# End Group
-# Begin Group "EasyBmp"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=..\src\surfit\EasyBmp\EasyBMP.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\EasyBmp\EasyBMP.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\EasyBmp\EasyBMP_BMP.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\EasyBmp\EasyBMP_DataStructures.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\EasyBmp\EasyBMP_VariousBMPutilities.h
-# End Source File
-# End Group
 # Begin Source File
 
 SOURCE=..\src\surfit\data_manager.cpp
@@ -633,7 +533,7 @@ SOURCE=.\..\src\surfit\surfit_wrap.cxx
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\surfit\threads.cpp
+SOURCE=.\..\src\surfit\variables.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -1046,14 +946,6 @@ SOURCE=..\src\surfit\sort_alg.h
 # Begin Source File
 
 SOURCE=.\..\src\surfit\surfit.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\surfit_threads.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\surfit\threads.h
 # End Source File
 # End Group
 # Begin Group "Interface"
