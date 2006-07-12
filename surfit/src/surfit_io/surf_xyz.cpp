@@ -30,6 +30,8 @@
 #include "variables_tcl.h"
 #include "grid.h"
 
+#include <errno.h>
+
 namespace surfit {
 
 bool _surf_save_xyz(const d_surf * srf, const char * filename) {

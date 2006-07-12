@@ -15,7 +15,7 @@
 @SET_MAKE@
 
 
-SOURCES = $(libfreeflow_la_SOURCES) $(libglobe_la_SOURCES) $(libsstuff_la_SOURCES) $(libsurfit_la_SOURCES)
+SOURCES = $(libfreeflow_la_SOURCES) $(libglobe_la_SOURCES) $(libsstuff_la_SOURCES) $(libsurfit_la_SOURCES) $(libsurfit_io_la_SOURCES)
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
@@ -41,29 +41,30 @@ build_triplet = @build@
 host_triplet = @host@
 @MAKE_FREEFLOW_TRUE@am__append_1 = libfreeflow.la 
 @MAKE_GLOBE_TRUE@am__append_2 = libglobe.la 
-@HAVE_PTHREAD_INSTALLED_TRUE@am__append_3 =  \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/pasync.cxx \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/pasync.h \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/patomic.cxx \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/pexcept.cxx \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/pfatal.cxx \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/pmem.cxx \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/pmsgq.cxx \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/pport.h \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/psemaphore.cxx \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/pstring.cxx \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/pthread.cxx \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/ptimedsem.cxx \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/ptypes.h \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/surfit/ptypes/punknown.cxx
-@HAVE_PTHREAD_INSTALLED_TRUE@am__append_4 = -lpthread 
-@HAVE_JPEG_INSTALLED_TRUE@am__append_5 = -ljpeg
-@HAVE_ZLIB_INSTALLED_TRUE@am__append_6 = src/globe/minizip/ioapi.c \
+@MAKE_SURFIT_IO_TRUE@am__append_3 = libsurfit_io.la
+@HAVE_PTHREAD_INSTALLED_TRUE@am__append_4 =  \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pasync.cxx \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pasync.h \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/patomic.cxx \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pexcept.cxx \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pfatal.cxx \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pmem.cxx \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pmsgq.cxx \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pport.h \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/psemaphore.cxx \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pstring.cxx \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pthread.cxx \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/ptimedsem.cxx \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/ptypes.h \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/punknown.cxx
+@HAVE_PTHREAD_INSTALLED_TRUE@am__append_5 = -lpthread 
+@HAVE_JPEG_INSTALLED_TRUE@am__append_6 = -ljpeg
+@HAVE_ZLIB_INSTALLED_TRUE@am__append_7 = src/globe/minizip/ioapi.c \
 @HAVE_ZLIB_INSTALLED_TRUE@	src/globe/minizip/unzip.c \
 @HAVE_ZLIB_INSTALLED_TRUE@	src/globe/minizip/crypt.h \
 @HAVE_ZLIB_INSTALLED_TRUE@	src/globe/minizip/ioapi.h \
 @HAVE_ZLIB_INSTALLED_TRUE@	src/globe/minizip/unzip.h
-@HAVE_ZLIB_INSTALLED_TRUE@am__append_7 = -lz
+@HAVE_ZLIB_INSTALLED_TRUE@am__append_8 = -lz
 DIST_COMMON = $(am__configure_deps) $(libfreeflow_la_HEADERS) \
 	$(libglobe_la_HEADERS) $(libsstuff_la_HEADERS) \
 	$(libsurfit_la_HEADERS) $(srcdir)/Makefile.am \
@@ -121,82 +122,35 @@ am_libglobe_la_OBJECTS = dem.lo dems_tcl.lo dem_internal.lo dem_tcl.lo \
 	$(am__objects_1)
 libglobe_la_OBJECTS = $(am_libglobe_la_OBJECTS)
 @MAKE_GLOBE_TRUE@am_libglobe_la_rpath = -rpath $(libdir)
-libsstuff_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
-am_libsstuff_la_OBJECTS = bitvec.lo boolvec.lo datafile.lo fileio.lo \
-	geom_alg.lo interp.lo intvec.lo read_txt.lo rnd.lo shortvec.lo \
-	strvec.lo sstuff.lo stepFunc.lo vec.lo vec_alg.lo
-libsstuff_la_OBJECTS = $(am_libsstuff_la_OBJECTS)
-libsurfit_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) libsstuff.la $(am__DEPENDENCIES_1) \
+libsstuff_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
-am__libsurfit_la_SOURCES_DIST = src/surfit/area.cpp \
-	src/surfit/area_internal.cpp src/surfit/area_tcl.cpp \
-	src/surfit/cmofs.cpp src/surfit/cntr.cpp \
-	src/surfit/cntr_internal.cpp src/surfit/cntr_tcl.cpp \
-	src/surfit/curv.cpp src/surfit/curvs_tcl.cpp \
-	src/surfit/curv_internal.cpp src/surfit/curv_tcl.cpp \
-	src/surfit/data.cpp src/surfit/data_manager.cpp \
-	src/surfit/free_elements.cpp src/surfit/functional.cpp \
-	src/surfit/f_area.cpp src/surfit/f_area_surf.cpp \
-	src/surfit/f_area_surf_ineq.cpp src/surfit/f_area_ineq.cpp \
-	src/surfit/f_area_mean.cpp src/surfit/f_area_wmean.cpp \
-	src/surfit/f_cntr.cpp src/surfit/f_cntr_ineq.cpp \
-	src/surfit/f_completer.cpp src/surfit/f_curv.cpp \
-	src/surfit/f_curv_ineq.cpp src/surfit/f_curv_surf.cpp \
-	src/surfit/f_curv_surf_ineq.cpp src/surfit/f_surf.cpp \
-	src/surfit/f_surf_ineq.cpp src/surfit/f_hist.cpp \
-	src/surfit/f_ineq.cpp src/surfit/f_mask.cpp \
-	src/surfit/f_mean.cpp src/surfit/f_points.cpp \
-	src/surfit/f_points_ineq.cpp src/surfit/f_points_tcl.cpp \
-	src/surfit/f_trend.cpp src/surfit/f_value.cpp \
-	src/surfit/f_wmean.cpp src/surfit/grid.cpp \
-	src/surfit/grid_internal.cpp src/surfit/grid_line.cpp \
-	src/surfit/grid_line_internal.cpp src/surfit/grid_line_tcl.cpp \
-	src/surfit/grid_line_user.cpp src/surfit/grid_tcl.cpp \
-	src/surfit/grid_user.cpp src/surfit/hist.cpp \
-	src/surfit/hist_internal.cpp src/surfit/hist_tcl.cpp \
-	src/surfit/license.cpp src/surfit/mask.cpp \
-	src/surfit/mask_internal.cpp src/surfit/mask_tcl.cpp \
-	src/surfit/matlab.cpp src/surfit/matr.cpp \
-	src/surfit/matrD1.cpp src/surfit/matrD1_aniso.cpp \
-	src/surfit/matrD1_rect.cpp src/surfit/matrD2.cpp \
-	src/surfit/matrD2_aniso.cpp src/surfit/matrD2_rect.cpp \
-	src/surfit/matr_diag.cpp src/surfit/matr_eye.cpp \
-	src/surfit/matr_onesrow.cpp src/surfit/mrf.cpp \
-	src/surfit/others_tcl.cpp src/surfit/pnts_internal.cpp \
-	src/surfit/pnts_tcl.cpp src/surfit/points.cpp \
-	src/surfit/solvers.cpp src/surfit/sort_alg.cpp \
-	src/surfit/surf.cpp src/surfit/surfs_tcl.cpp \
-	src/surfit/surf_internal.cpp src/surfit/surf_tcl.cpp \
-	src/surfit/surfit.cpp src/surfit/surfit_wrap.cxx \
-	src/surfit/threads.cpp src/surfit/variables.cpp \
-	src/surfit/solvers/CG.cpp src/surfit/solvers/J.cpp \
-	src/surfit/solvers/JCG.cpp src/surfit/solvers/RF.cpp \
-	src/surfit/solvers/SSOR.cpp src/surfit/shapelib/shapefil.h \
-	src/surfit/shapelib/dbfopen.c src/surfit/shapelib/shpopen.c \
-	src/surfit/ptypes/pasync.cxx src/surfit/ptypes/pasync.h \
-	src/surfit/ptypes/patomic.cxx src/surfit/ptypes/pexcept.cxx \
-	src/surfit/ptypes/pfatal.cxx src/surfit/ptypes/pmem.cxx \
-	src/surfit/ptypes/pmsgq.cxx src/surfit/ptypes/pport.h \
-	src/surfit/ptypes/psemaphore.cxx src/surfit/ptypes/pstring.cxx \
-	src/surfit/ptypes/pthread.cxx src/surfit/ptypes/ptimedsem.cxx \
-	src/surfit/ptypes/ptypes.h src/surfit/ptypes/punknown.cxx \
-	src/surfit/area_tcl.h src/surfit/cntr_tcl.h \
-	src/surfit/curvs_tcl.h src/surfit/curv_tcl.h \
-	src/surfit/f_points_tcl.h src/surfit/grid_line_tcl.h \
-	src/surfit/grid_tcl.h src/surfit/hist_tcl.h \
-	src/surfit/mask_tcl.h src/surfit/other_tcl.h \
-	src/surfit/others_tcl.h src/surfit/pnts_tcl.h \
-	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h \
-	src/surfit/EasyBmp/EasyBMP.cpp src/surfit/EasyBmp/EasyBMP.h \
-	src/surfit/EasyBmp/EasyBMP_BMP.h \
-	src/surfit/EasyBmp/EasyBMP_DataStructures.h \
-	src/surfit/EasyBmp/EasyBMP_VariousBMPutilites.h
+am__libsstuff_la_SOURCES_DIST = src/sstuff/bitvec.cpp \
+	src/sstuff/boolvec.cpp src/sstuff/datafile.cpp \
+	src/sstuff/fileio.cpp src/sstuff/geom_alg.cpp \
+	src/sstuff/interp.cpp src/sstuff/intvec.cpp \
+	src/sstuff/read_txt.cpp src/sstuff/rnd.cpp \
+	src/sstuff/shortvec.cpp src/sstuff/strvec.cpp \
+	src/sstuff/sstuff.cpp src/sstuff/stepFunc.cpp \
+	src/sstuff/vec.cpp src/sstuff/vec_alg.cpp \
+	src/sstuff/threads.cpp src/sstuff/ptypes/pasync.cxx \
+	src/sstuff/ptypes/pasync.h src/sstuff/ptypes/patomic.cxx \
+	src/sstuff/ptypes/pexcept.cxx src/sstuff/ptypes/pfatal.cxx \
+	src/sstuff/ptypes/pmem.cxx src/sstuff/ptypes/pmsgq.cxx \
+	src/sstuff/ptypes/pport.h src/sstuff/ptypes/psemaphore.cxx \
+	src/sstuff/ptypes/pstring.cxx src/sstuff/ptypes/pthread.cxx \
+	src/sstuff/ptypes/ptimedsem.cxx src/sstuff/ptypes/ptypes.h \
+	src/sstuff/ptypes/punknown.cxx
 @HAVE_PTHREAD_INSTALLED_TRUE@am__objects_2 = pasync.lo patomic.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	pexcept.lo pfatal.lo pmem.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	pmsgq.lo psemaphore.lo pstring.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	pthread.lo ptimedsem.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	punknown.lo
+am_libsstuff_la_OBJECTS = bitvec.lo boolvec.lo datafile.lo fileio.lo \
+	geom_alg.lo interp.lo intvec.lo read_txt.lo rnd.lo shortvec.lo \
+	strvec.lo sstuff.lo stepFunc.lo vec.lo vec_alg.lo threads.lo \
+	$(am__objects_2)
+libsstuff_la_OBJECTS = $(am_libsstuff_la_OBJECTS)
+libsurfit_la_DEPENDENCIES = $(am__DEPENDENCIES_1) libsstuff.la
 am_libsurfit_la_OBJECTS = area.lo area_internal.lo area_tcl.lo \
 	cmofs.lo cntr.lo cntr_internal.lo cntr_tcl.lo curv.lo \
 	curvs_tcl.lo curv_internal.lo curv_tcl.lo data.lo \
@@ -215,10 +169,21 @@ am_libsurfit_la_OBJECTS = area.lo area_internal.lo area_tcl.lo \
 	matrD2_rect.lo matr_diag.lo matr_eye.lo matr_onesrow.lo mrf.lo \
 	others_tcl.lo pnts_internal.lo pnts_tcl.lo points.lo \
 	solvers.lo sort_alg.lo surf.lo surfs_tcl.lo surf_internal.lo \
-	surf_tcl.lo surfit.lo surfit_wrap.lo threads.lo variables.lo \
-	CG.lo J.lo JCG.lo RF.lo SSOR.lo dbfopen.lo shpopen.lo \
-	$(am__objects_2) EasyBMP.lo
+	surf_tcl.lo surfit.lo surfit_wrap.lo variables.lo CG.lo J.lo \
+	JCG.lo RF.lo SSOR.lo
 libsurfit_la_OBJECTS = $(am_libsurfit_la_OBJECTS)
+libsurfit_io_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) libsstuff.la libsurfit.la \
+	$(am__DEPENDENCIES_1)
+am_libsurfit_io_la_OBJECTS = area_bln.lo area_io_tcl.lo area_shp.lo \
+	cntr_io_tcl.lo cntr_shp.lo curv_bln.lo curv_io_tcl.lo \
+	curv_shp.lo pnts_io_tcl.lo pnts_shp.lo surfit_io.lo \
+	surfit_io_data_manager.lo surfit_io_variables.lo \
+	surf_arcgis.lo surf_bmp.lo surf_gmt.lo surf_grass.lo \
+	surf_grd.lo surf_io_tcl.lo surf_jpg.lo surf_xyz.lo \
+	surfit_io_wrap.lo dbfopen.lo shpopen.lo EasyBMP.lo
+libsurfit_io_la_OBJECTS = $(am_libsurfit_io_la_OBJECTS)
+@MAKE_SURFIT_IO_TRUE@am_libsurfit_io_la_rpath = -rpath $(libdir)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -239,10 +204,12 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(libfreeflow_la_SOURCES) $(libglobe_la_SOURCES) \
-	$(libsstuff_la_SOURCES) $(libsurfit_la_SOURCES)
+	$(libsstuff_la_SOURCES) $(libsurfit_la_SOURCES) \
+	$(libsurfit_io_la_SOURCES)
 DIST_SOURCES = $(libfreeflow_la_SOURCES) \
-	$(am__libglobe_la_SOURCES_DIST) $(libsstuff_la_SOURCES) \
-	$(am__libsurfit_la_SOURCES_DIST)
+	$(am__libglobe_la_SOURCES_DIST) \
+	$(am__libsstuff_la_SOURCES_DIST) $(libsurfit_la_SOURCES) \
+	$(libsurfit_io_la_SOURCES)
 libfreeflow_laHEADERS_INSTALL = $(INSTALL_HEADER)
 libglobe_laHEADERS_INSTALL = $(INSTALL_HEADER)
 libsstuff_laHEADERS_INSTALL = $(INSTALL_HEADER)
@@ -315,6 +282,8 @@ MAKE_FREEFLOW_FALSE = @MAKE_FREEFLOW_FALSE@
 MAKE_FREEFLOW_TRUE = @MAKE_FREEFLOW_TRUE@
 MAKE_GLOBE_FALSE = @MAKE_GLOBE_FALSE@
 MAKE_GLOBE_TRUE = @MAKE_GLOBE_TRUE@
+MAKE_SURFIT_IO_FALSE = @MAKE_SURFIT_IO_FALSE@
+MAKE_SURFIT_IO_TRUE = @MAKE_SURFIT_IO_TRUE@
 NETCDFINCLUDE = @NETCDFINCLUDE@
 NETCDFLIB = @NETCDFLIB@
 OBJDUMP = @OBJDUMP@
@@ -388,7 +357,7 @@ EXTRA_DIST = vc6/surfit* vc6/freeflow* vc6/globe* \
 	clean.bat make_rpm_fc4 make_rpm_rh73 surfit.spec.fc4 \
 	surfit.spec.rh73 CHANGES
 lib_LTLIBRARIES = libsstuff.la libsurfit.la $(am__append_1) \
-	$(am__append_2)
+	$(am__append_2) $(am__append_3)
 libsstuff_ladir = $(prefix)/include/sstuff
 libsstuff_la_SOURCES = src/sstuff/bitvec.cpp src/sstuff/boolvec.cpp \
 	src/sstuff/datafile.cpp src/sstuff/fileio.cpp \
@@ -397,7 +366,7 @@ libsstuff_la_SOURCES = src/sstuff/bitvec.cpp src/sstuff/boolvec.cpp \
 	src/sstuff/rnd.cpp src/sstuff/shortvec.cpp \
 	src/sstuff/strvec.cpp src/sstuff/sstuff.cpp \
 	src/sstuff/stepFunc.cpp src/sstuff/vec.cpp \
-	src/sstuff/vec_alg.cpp
+	src/sstuff/vec_alg.cpp src/sstuff/threads.cpp $(am__append_4)
 libsstuff_la_HEADERS = src/sstuff/bitvec.h src/sstuff/bitvec_alg.h \
 	src/sstuff/boolvec.h src/sstuff/byteswap_alg.h \
 	src/sstuff/config.h src/sstuff/datafile.h src/sstuff/fileio.h \
@@ -405,11 +374,10 @@ libsstuff_la_HEADERS = src/sstuff/bitvec.h src/sstuff/bitvec_alg.h \
 	src/sstuff/read_txt.h src/sstuff/real.h src/sstuff/rnd.h \
 	src/sstuff/shortvec.h src/sstuff/strvec.h src/sstuff/sstuff.h \
 	src/sstuff/sstuff_ie.h src/sstuff/stepFunc.h src/sstuff/vec.h \
-	src/sstuff/vec_alg.h
-libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB)
+	src/sstuff/vec_alg.h src/sstuff/threads.h
+libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(am__append_5)
 libsstuff_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsstuff.dll
 libsurfit_ladir = $(prefix)/include/surfit
-# EasyBmp
 libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/area_internal.cpp src/surfit/area_tcl.cpp \
 	src/surfit/cmofs.cpp src/surfit/cntr.cpp \
@@ -450,22 +418,16 @@ libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/surf.cpp src/surfit/surfs_tcl.cpp \
 	src/surfit/surf_internal.cpp src/surfit/surf_tcl.cpp \
 	src/surfit/surfit.cpp src/surfit/surfit_wrap.cxx \
-	src/surfit/threads.cpp src/surfit/variables.cpp \
-	src/surfit/solvers/CG.cpp src/surfit/solvers/J.cpp \
-	src/surfit/solvers/JCG.cpp src/surfit/solvers/RF.cpp \
-	src/surfit/solvers/SSOR.cpp src/surfit/shapelib/shapefil.h \
-	src/surfit/shapelib/dbfopen.c src/surfit/shapelib/shpopen.c \
-	$(am__append_3) src/surfit/area_tcl.h src/surfit/cntr_tcl.h \
+	src/surfit/variables.cpp src/surfit/solvers/CG.cpp \
+	src/surfit/solvers/J.cpp src/surfit/solvers/JCG.cpp \
+	src/surfit/solvers/RF.cpp src/surfit/solvers/SSOR.cpp \
+	src/surfit/area_tcl.h src/surfit/cntr_tcl.h \
 	src/surfit/curvs_tcl.h src/surfit/curv_tcl.h \
 	src/surfit/f_points_tcl.h src/surfit/grid_line_tcl.h \
 	src/surfit/grid_tcl.h src/surfit/hist_tcl.h \
 	src/surfit/mask_tcl.h src/surfit/other_tcl.h \
 	src/surfit/others_tcl.h src/surfit/pnts_tcl.h \
-	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h \
-	src/surfit/EasyBmp/EasyBMP.cpp src/surfit/EasyBmp/EasyBMP.h \
-	src/surfit/EasyBmp/EasyBMP_BMP.h \
-	src/surfit/EasyBmp/EasyBMP_DataStructures.h \
-	src/surfit/EasyBmp/EasyBMP_VariousBMPutilites.h
+	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h
 libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/cmofs.h src/surfit/cntr.h \
 	src/surfit/cntr_internal.h src/surfit/curv.h \
@@ -497,12 +459,46 @@ libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/solvers.h src/surfit/sort_alg.h src/surfit/surfit.h \
 	src/surfit/solvers.h src/surfit/surf.h \
 	src/surfit/surf_internal.h src/surfit/surfit_ie.h \
-	src/surfit/surfit_threads.h src/surfit/surfit_solvers.h \
-	src/surfit/threads.h src/surfit/variables.h \
+	src/surfit/surfit_solvers.h src/surfit/variables.h \
 	src/surfit/variables_internal.h src/surfit/variables_tcl.h
-libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) \
-	libsstuff.la $(am__append_4) $(am__append_5)
+libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la 
 libsurfit_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit.dll
+libsurfit_io_ladir = $(prefix)/include/surfit_io
+# shapelib
+# EasyBmp
+libsurfit_io_la_SOURCES = src/surfit_io/area_bln.cpp \
+	src/surfit_io/area_io_tcl.cpp src/surfit_io/area_shp.cpp \
+	src/surfit_io/cntr_io_tcl.cpp src/surfit_io/cntr_shp.cpp \
+	src/surfit_io/curv_bln.cpp src/surfit_io/curv_io_tcl.cpp \
+	src/surfit_io/curv_shp.cpp src/surfit_io/pnts_io_tcl.cpp \
+	src/surfit_io/pnts_shp.cpp src/surfit_io/surfit_io.cpp \
+	src/surfit_io/surfit_io_data_manager.cpp \
+	src/surfit_io/surfit_io_variables.cpp \
+	src/surfit_io/surf_arcgis.cpp src/surfit_io/surf_bmp.cpp \
+	src/surfit_io/surf_gmt.cpp src/surfit_io/surf_grass.cpp \
+	src/surfit_io/surf_grd.cpp src/surfit_io/surf_io_tcl.cpp \
+	src/surfit_io/surf_jpg.cpp src/surfit_io/surf_xyz.cpp \
+	src/surfit_io/surfit_io_wrap.cxx \
+	src/surfit_io/shapelib/shapefil.h \
+	src/surfit_io/shapelib/dbfopen.c \
+	src/surfit_io/shapelib/shpopen.c \
+	src/surfit_io/EasyBmp/EasyBMP.cpp \
+	src/surfit_io/EasyBmp/EasyBMP.h \
+	src/surfit_io/EasyBmp/EasyBMP_BMP.h \
+	src/surfit_io/EasyBmp/EasyBMP_DataStructures.h \
+	src/surfit_io/EasyBmp/EasyBMP_VariousBMPutilites.h \
+	src/surfit_io/area_io_tcl.h src/surfit_io/cntr_io_tcl.h \
+	src/surfit_io/curv_io_tcl.h src/surfit_io/pnts_io_tcl.h \
+	src/surfit_io/surfit_io_tcl.h src/surfit_io/surf_io_tcl.h
+libsurfit_io_la_HEADER = src/surfit_io/area_io.h \
+	src/surfit_io/cntr_io.h src/surfit_io/curv_io.h \
+	src/surfit_io/pnts_io.h src/surfit_io/surfit_io.h \
+	src/surfit_io/surfit_io_data_manager.h \
+	src/surfit_io/surfit_io_ie.h \
+	src/surfit_io/surfit_io_variables.h src/surfit_io/surf_io.h
+libsurfit_io_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) \
+	libsstuff.la libsurfit.la $(am__append_6)
+libsurfit_io_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit_io.dll
 libfreeflow_ladir = $(prefix)/include/freeflow
 libfreeflow_la_SOURCES = src/freeflow/flow_data_manager.cpp \
 	src/freeflow/flow_surf_internal.cpp \
@@ -528,7 +524,7 @@ libglobe_la_SOURCES = src/globe/dem.cpp src/globe/dems_tcl.cpp \
 	src/globe/globe_data_manager.cpp \
 	src/globe/globe_surf_internal.cpp src/globe/globe_surf_tcl.cpp \
 	src/globe/globe_variables.cpp src/globe/globe_wrap.cxx \
-	src/globe/shortmrf.cpp $(am__append_6) src/globe/dems_tcl.h \
+	src/globe/shortmrf.cpp $(am__append_7) src/globe/dems_tcl.h \
 	src/globe/dem_tcl.h src/globe/globe_surf_tcl.h
 libglobe_la_HEADERS = src/globe/dem.h src/globe/dem_internal.h \
 	src/globe/f_dem.h src/globe/globe.h \
@@ -536,7 +532,7 @@ libglobe_la_HEADERS = src/globe/dem.h src/globe/dem_internal.h \
 	src/globe/globe_ie.h src/globe/globe_variables.h \
 	src/globe/shortmrf.h
 libglobe_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la \
-	libsurfit.la $(am__append_7)
+	libsurfit.la $(am__append_8)
 libglobe_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libglobe.dll
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -628,6 +624,8 @@ libsstuff.la: $(libsstuff_la_OBJECTS) $(libsstuff_la_DEPENDENCIES)
 	$(CXXLINK) -rpath $(libdir) $(libsstuff_la_LDFLAGS) $(libsstuff_la_OBJECTS) $(libsstuff_la_LIBADD) $(LIBS)
 libsurfit.la: $(libsurfit_la_OBJECTS) $(libsurfit_la_DEPENDENCIES) 
 	$(CXXLINK) -rpath $(libdir) $(libsurfit_la_LDFLAGS) $(libsurfit_la_OBJECTS) $(libsurfit_la_LIBADD) $(LIBS)
+libsurfit_io.la: $(libsurfit_io_la_OBJECTS) $(libsurfit_io_la_DEPENDENCIES) 
+	$(CXXLINK) $(am_libsurfit_io_la_rpath) $(libsurfit_io_la_LDFLAGS) $(libsurfit_io_la_OBJECTS) $(libsurfit_io_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -642,16 +640,24 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RF.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SSOR.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/area.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/area_bln.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/area_internal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/area_io_tcl.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/area_shp.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/area_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bitvec.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/boolvec.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmofs.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cntr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cntr_internal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cntr_io_tcl.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cntr_shp.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cntr_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/curv.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/curv_bln.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/curv_internal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/curv_io_tcl.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/curv_shp.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/curv_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/curvs_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@
@@ -749,6 +755,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pmem.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pmsgq.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pnts_internal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pnts_io_tcl.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pnts_shp.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pnts_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/points.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/psemaphore.Plo@am__quote@
@@ -767,9 +775,21 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stepFunc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strvec.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surf.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surf_arcgis.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surf_bmp.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surf_gmt.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surf_grass.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surf_grd.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surf_internal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surf_io_tcl.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surf_jpg.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surf_tcl.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surf_xyz.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surfit.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surfit_io.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surfit_io_data_manager.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surfit_io_variables.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surfit_io_wrap.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surfit_wrap.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surfs_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/threads.Plo@am__quote@
@@ -813,19 +833,19 @@ unzip.lo: src/globe/minizip/unzip.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o unzip.lo `test -f 'src/globe/minizip/unzip.c' || echo '$(srcdir)/'`src/globe/minizip/unzip.c
 
-dbfopen.lo: src/surfit/shapelib/dbfopen.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT dbfopen.lo -MD -MP -MF "$(DEPDIR)/dbfopen.Tpo" -c -o dbfopen.lo `test -f 'src/surfit/shapelib/dbfopen.c' || echo '$(srcdir)/'`src/surfit/shapelib/dbfopen.c; \
+dbfopen.lo: src/surfit_io/shapelib/dbfopen.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT dbfopen.lo -MD -MP -MF "$(DEPDIR)/dbfopen.Tpo" -c -o dbfopen.lo `test -f 'src/surfit_io/shapelib/dbfopen.c' || echo '$(srcdir)/'`src/surfit_io/shapelib/dbfopen.c; \
 @am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/dbfopen.Tpo" "$(DEPDIR)/dbfopen.Plo"; else rm -f "$(DEPDIR)/dbfopen.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/surfit/shapelib/dbfopen.c' object='dbfopen.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/surfit_io/shapelib/dbfopen.c' object='dbfopen.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o dbfopen.lo `test -f 'src/surfit/shapelib/dbfopen.c' || echo '$(srcdir)/'`src/surfit/shapelib/dbfopen.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o dbfopen.lo `test -f 'src/surfit_io/shapelib/dbfopen.c' || echo '$(srcdir)/'`src/surfit_io/shapelib/dbfopen.c
 
-shpopen.lo: src/surfit/shapelib/shpopen.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT shpopen.lo -MD -MP -MF "$(DEPDIR)/shpopen.Tpo" -c -o shpopen.lo `test -f 'src/surfit/shapelib/shpopen.c' || echo '$(srcdir)/'`src/surfit/shapelib/shpopen.c; \
+shpopen.lo: src/surfit_io/shapelib/shpopen.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT shpopen.lo -MD -MP -MF "$(DEPDIR)/shpopen.Tpo" -c -o shpopen.lo `test -f 'src/surfit_io/shapelib/shpopen.c' || echo '$(srcdir)/'`src/surfit_io/shapelib/shpopen.c; \
 @am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/shpopen.Tpo" "$(DEPDIR)/shpopen.Plo"; else rm -f "$(DEPDIR)/shpopen.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/surfit/shapelib/shpopen.c' object='shpopen.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/surfit_io/shapelib/shpopen.c' object='shpopen.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o shpopen.lo `test -f 'src/surfit/shapelib/shpopen.c' || echo '$(srcdir)/'`src/surfit/shapelib/shpopen.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o shpopen.lo `test -f 'src/surfit_io/shapelib/shpopen.c' || echo '$(srcdir)/'`src/surfit_io/shapelib/shpopen.c
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -1127,6 +1147,90 @@ vec_alg.lo: src/sstuff/vec_alg.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/vec_alg.cpp' object='vec_alg.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o vec_alg.lo `test -f 'src/sstuff/vec_alg.cpp' || echo '$(srcdir)/'`src/sstuff/vec_alg.cpp
+
+threads.lo: src/sstuff/threads.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT threads.lo -MD -MP -MF "$(DEPDIR)/threads.Tpo" -c -o threads.lo `test -f 'src/sstuff/threads.cpp' || echo '$(srcdir)/'`src/sstuff/threads.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/threads.Tpo" "$(DEPDIR)/threads.Plo"; else rm -f "$(DEPDIR)/threads.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/threads.cpp' object='threads.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o threads.lo `test -f 'src/sstuff/threads.cpp' || echo '$(srcdir)/'`src/sstuff/threads.cpp
+
+pasync.lo: src/sstuff/ptypes/pasync.cxx
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pasync.lo -MD -MP -MF "$(DEPDIR)/pasync.Tpo" -c -o pasync.lo `test -f 'src/sstuff/ptypes/pasync.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/pasync.cxx; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pasync.Tpo" "$(DEPDIR)/pasync.Plo"; else rm -f "$(DEPDIR)/pasync.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/ptypes/pasync.cxx' object='pasync.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pasync.lo `test -f 'src/sstuff/ptypes/pasync.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/pasync.cxx
+
+patomic.lo: src/sstuff/ptypes/patomic.cxx
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT patomic.lo -MD -MP -MF "$(DEPDIR)/patomic.Tpo" -c -o patomic.lo `test -f 'src/sstuff/ptypes/patomic.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/patomic.cxx; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/patomic.Tpo" "$(DEPDIR)/patomic.Plo"; else rm -f "$(DEPDIR)/patomic.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/ptypes/patomic.cxx' object='patomic.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o patomic.lo `test -f 'src/sstuff/ptypes/patomic.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/patomic.cxx
+
+pexcept.lo: src/sstuff/ptypes/pexcept.cxx
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pexcept.lo -MD -MP -MF "$(DEPDIR)/pexcept.Tpo" -c -o pexcept.lo `test -f 'src/sstuff/ptypes/pexcept.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/pexcept.cxx; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pexcept.Tpo" "$(DEPDIR)/pexcept.Plo"; else rm -f "$(DEPDIR)/pexcept.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/ptypes/pexcept.cxx' object='pexcept.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pexcept.lo `test -f 'src/sstuff/ptypes/pexcept.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/pexcept.cxx
+
+pfatal.lo: src/sstuff/ptypes/pfatal.cxx
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pfatal.lo -MD -MP -MF "$(DEPDIR)/pfatal.Tpo" -c -o pfatal.lo `test -f 'src/sstuff/ptypes/pfatal.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/pfatal.cxx; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pfatal.Tpo" "$(DEPDIR)/pfatal.Plo"; else rm -f "$(DEPDIR)/pfatal.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/ptypes/pfatal.cxx' object='pfatal.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pfatal.lo `test -f 'src/sstuff/ptypes/pfatal.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/pfatal.cxx
+
+pmem.lo: src/sstuff/ptypes/pmem.cxx
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pmem.lo -MD -MP -MF "$(DEPDIR)/pmem.Tpo" -c -o pmem.lo `test -f 'src/sstuff/ptypes/pmem.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/pmem.cxx; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pmem.Tpo" "$(DEPDIR)/pmem.Plo"; else rm -f "$(DEPDIR)/pmem.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/ptypes/pmem.cxx' object='pmem.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pmem.lo `test -f 'src/sstuff/ptypes/pmem.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/pmem.cxx
+
+pmsgq.lo: src/sstuff/ptypes/pmsgq.cxx
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pmsgq.lo -MD -MP -MF "$(DEPDIR)/pmsgq.Tpo" -c -o pmsgq.lo `test -f 'src/sstuff/ptypes/pmsgq.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/pmsgq.cxx; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pmsgq.Tpo" "$(DEPDIR)/pmsgq.Plo"; else rm -f "$(DEPDIR)/pmsgq.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/ptypes/pmsgq.cxx' object='pmsgq.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pmsgq.lo `test -f 'src/sstuff/ptypes/pmsgq.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/pmsgq.cxx
+
+psemaphore.lo: src/sstuff/ptypes/psemaphore.cxx
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT psemaphore.lo -MD -MP -MF "$(DEPDIR)/psemaphore.Tpo" -c -o psemaphore.lo `test -f 'src/sstuff/ptypes/psemaphore.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/psemaphore.cxx; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/psemaphore.Tpo" "$(DEPDIR)/psemaphore.Plo"; else rm -f "$(DEPDIR)/psemaphore.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/ptypes/psemaphore.cxx' object='psemaphore.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o psemaphore.lo `test -f 'src/sstuff/ptypes/psemaphore.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/psemaphore.cxx
+
+pstring.lo: src/sstuff/ptypes/pstring.cxx
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pstring.lo -MD -MP -MF "$(DEPDIR)/pstring.Tpo" -c -o pstring.lo `test -f 'src/sstuff/ptypes/pstring.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/pstring.cxx; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pstring.Tpo" "$(DEPDIR)/pstring.Plo"; else rm -f "$(DEPDIR)/pstring.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/ptypes/pstring.cxx' object='pstring.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pstring.lo `test -f 'src/sstuff/ptypes/pstring.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/pstring.cxx
+
+pthread.lo: src/sstuff/ptypes/pthread.cxx
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pthread.lo -MD -MP -MF "$(DEPDIR)/pthread.Tpo" -c -o pthread.lo `test -f 'src/sstuff/ptypes/pthread.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/pthread.cxx; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pthread.Tpo" "$(DEPDIR)/pthread.Plo"; else rm -f "$(DEPDIR)/pthread.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/ptypes/pthread.cxx' object='pthread.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pthread.lo `test -f 'src/sstuff/ptypes/pthread.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/pthread.cxx
+
+ptimedsem.lo: src/sstuff/ptypes/ptimedsem.cxx
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ptimedsem.lo -MD -MP -MF "$(DEPDIR)/ptimedsem.Tpo" -c -o ptimedsem.lo `test -f 'src/sstuff/ptypes/ptimedsem.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/ptimedsem.cxx; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/ptimedsem.Tpo" "$(DEPDIR)/ptimedsem.Plo"; else rm -f "$(DEPDIR)/ptimedsem.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/ptypes/ptimedsem.cxx' object='ptimedsem.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ptimedsem.lo `test -f 'src/sstuff/ptypes/ptimedsem.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/ptimedsem.cxx
+
+punknown.lo: src/sstuff/ptypes/punknown.cxx
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT punknown.lo -MD -MP -MF "$(DEPDIR)/punknown.Tpo" -c -o punknown.lo `test -f 'src/sstuff/ptypes/punknown.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/punknown.cxx; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/punknown.Tpo" "$(DEPDIR)/punknown.Plo"; else rm -f "$(DEPDIR)/punknown.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/ptypes/punknown.cxx' object='punknown.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o punknown.lo `test -f 'src/sstuff/ptypes/punknown.cxx' || echo '$(srcdir)/'`src/sstuff/ptypes/punknown.cxx
 
 area.lo: src/surfit/area.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT area.lo -MD -MP -MF "$(DEPDIR)/area.Tpo" -c -o area.lo `test -f 'src/surfit/area.cpp' || echo '$(srcdir)/'`src/surfit/area.cpp; \
@@ -1681,13 +1785,6 @@ surfit_wrap.lo: src/surfit/surfit_wrap.cxx
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surfit_wrap.lo `test -f 'src/surfit/surfit_wrap.cxx' || echo '$(srcdir)/'`src/surfit/surfit_wrap.cxx
 
-threads.lo: src/surfit/threads.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT threads.lo -MD -MP -MF "$(DEPDIR)/threads.Tpo" -c -o threads.lo `test -f 'src/surfit/threads.cpp' || echo '$(srcdir)/'`src/surfit/threads.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/threads.Tpo" "$(DEPDIR)/threads.Plo"; else rm -f "$(DEPDIR)/threads.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/threads.cpp' object='threads.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o threads.lo `test -f 'src/surfit/threads.cpp' || echo '$(srcdir)/'`src/surfit/threads.cpp
-
 variables.lo: src/surfit/variables.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT variables.lo -MD -MP -MF "$(DEPDIR)/variables.Tpo" -c -o variables.lo `test -f 'src/surfit/variables.cpp' || echo '$(srcdir)/'`src/surfit/variables.cpp; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/variables.Tpo" "$(DEPDIR)/variables.Plo"; else rm -f "$(DEPDIR)/variables.Tpo"; exit 1; fi
@@ -1730,89 +1827,166 @@ SSOR.lo: src/surfit/solvers/SSOR.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o SSOR.lo `test -f 'src/surfit/solvers/SSOR.cpp' || echo '$(srcdir)/'`src/surfit/solvers/SSOR.cpp
 
-pasync.lo: src/surfit/ptypes/pasync.cxx
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pasync.lo -MD -MP -MF "$(DEPDIR)/pasync.Tpo" -c -o pasync.lo `test -f 'src/surfit/ptypes/pasync.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/pasync.cxx; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pasync.Tpo" "$(DEPDIR)/pasync.Plo"; else rm -f "$(DEPDIR)/pasync.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/ptypes/pasync.cxx' object='pasync.lo' libtool=yes @AMDEPBACKSLASH@
+area_bln.lo: src/surfit_io/area_bln.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT area_bln.lo -MD -MP -MF "$(DEPDIR)/area_bln.Tpo" -c -o area_bln.lo `test -f 'src/surfit_io/area_bln.cpp' || echo '$(srcdir)/'`src/surfit_io/area_bln.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/area_bln.Tpo" "$(DEPDIR)/area_bln.Plo"; else rm -f "$(DEPDIR)/area_bln.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/area_bln.cpp' object='area_bln.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pasync.lo `test -f 'src/surfit/ptypes/pasync.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/pasync.cxx
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o area_bln.lo `test -f 'src/surfit_io/area_bln.cpp' || echo '$(srcdir)/'`src/surfit_io/area_bln.cpp
 
-patomic.lo: src/surfit/ptypes/patomic.cxx
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT patomic.lo -MD -MP -MF "$(DEPDIR)/patomic.Tpo" -c -o patomic.lo `test -f 'src/surfit/ptypes/patomic.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/patomic.cxx; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/patomic.Tpo" "$(DEPDIR)/patomic.Plo"; else rm -f "$(DEPDIR)/patomic.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/ptypes/patomic.cxx' object='patomic.lo' libtool=yes @AMDEPBACKSLASH@
+area_io_tcl.lo: src/surfit_io/area_io_tcl.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT area_io_tcl.lo -MD -MP -MF "$(DEPDIR)/area_io_tcl.Tpo" -c -o area_io_tcl.lo `test -f 'src/surfit_io/area_io_tcl.cpp' || echo '$(srcdir)/'`src/surfit_io/area_io_tcl.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/area_io_tcl.Tpo" "$(DEPDIR)/area_io_tcl.Plo"; else rm -f "$(DEPDIR)/area_io_tcl.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/area_io_tcl.cpp' object='area_io_tcl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o patomic.lo `test -f 'src/surfit/ptypes/patomic.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/patomic.cxx
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o area_io_tcl.lo `test -f 'src/surfit_io/area_io_tcl.cpp' || echo '$(srcdir)/'`src/surfit_io/area_io_tcl.cpp
 
-pexcept.lo: src/surfit/ptypes/pexcept.cxx
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pexcept.lo -MD -MP -MF "$(DEPDIR)/pexcept.Tpo" -c -o pexcept.lo `test -f 'src/surfit/ptypes/pexcept.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/pexcept.cxx; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pexcept.Tpo" "$(DEPDIR)/pexcept.Plo"; else rm -f "$(DEPDIR)/pexcept.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/ptypes/pexcept.cxx' object='pexcept.lo' libtool=yes @AMDEPBACKSLASH@
+area_shp.lo: src/surfit_io/area_shp.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT area_shp.lo -MD -MP -MF "$(DEPDIR)/area_shp.Tpo" -c -o area_shp.lo `test -f 'src/surfit_io/area_shp.cpp' || echo '$(srcdir)/'`src/surfit_io/area_shp.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/area_shp.Tpo" "$(DEPDIR)/area_shp.Plo"; else rm -f "$(DEPDIR)/area_shp.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/area_shp.cpp' object='area_shp.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pexcept.lo `test -f 'src/surfit/ptypes/pexcept.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/pexcept.cxx
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o area_shp.lo `test -f 'src/surfit_io/area_shp.cpp' || echo '$(srcdir)/'`src/surfit_io/area_shp.cpp
 
-pfatal.lo: src/surfit/ptypes/pfatal.cxx
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pfatal.lo -MD -MP -MF "$(DEPDIR)/pfatal.Tpo" -c -o pfatal.lo `test -f 'src/surfit/ptypes/pfatal.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/pfatal.cxx; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pfatal.Tpo" "$(DEPDIR)/pfatal.Plo"; else rm -f "$(DEPDIR)/pfatal.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/ptypes/pfatal.cxx' object='pfatal.lo' libtool=yes @AMDEPBACKSLASH@
+cntr_io_tcl.lo: src/surfit_io/cntr_io_tcl.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cntr_io_tcl.lo -MD -MP -MF "$(DEPDIR)/cntr_io_tcl.Tpo" -c -o cntr_io_tcl.lo `test -f 'src/surfit_io/cntr_io_tcl.cpp' || echo '$(srcdir)/'`src/surfit_io/cntr_io_tcl.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cntr_io_tcl.Tpo" "$(DEPDIR)/cntr_io_tcl.Plo"; else rm -f "$(DEPDIR)/cntr_io_tcl.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/cntr_io_tcl.cpp' object='cntr_io_tcl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pfatal.lo `test -f 'src/surfit/ptypes/pfatal.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/pfatal.cxx
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cntr_io_tcl.lo `test -f 'src/surfit_io/cntr_io_tcl.cpp' || echo '$(srcdir)/'`src/surfit_io/cntr_io_tcl.cpp
 
-pmem.lo: src/surfit/ptypes/pmem.cxx
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pmem.lo -MD -MP -MF "$(DEPDIR)/pmem.Tpo" -c -o pmem.lo `test -f 'src/surfit/ptypes/pmem.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/pmem.cxx; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pmem.Tpo" "$(DEPDIR)/pmem.Plo"; else rm -f "$(DEPDIR)/pmem.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/ptypes/pmem.cxx' object='pmem.lo' libtool=yes @AMDEPBACKSLASH@
+cntr_shp.lo: src/surfit_io/cntr_shp.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cntr_shp.lo -MD -MP -MF "$(DEPDIR)/cntr_shp.Tpo" -c -o cntr_shp.lo `test -f 'src/surfit_io/cntr_shp.cpp' || echo '$(srcdir)/'`src/surfit_io/cntr_shp.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cntr_shp.Tpo" "$(DEPDIR)/cntr_shp.Plo"; else rm -f "$(DEPDIR)/cntr_shp.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/cntr_shp.cpp' object='cntr_shp.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pmem.lo `test -f 'src/surfit/ptypes/pmem.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/pmem.cxx
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cntr_shp.lo `test -f 'src/surfit_io/cntr_shp.cpp' || echo '$(srcdir)/'`src/surfit_io/cntr_shp.cpp
 
-pmsgq.lo: src/surfit/ptypes/pmsgq.cxx
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pmsgq.lo -MD -MP -MF "$(DEPDIR)/pmsgq.Tpo" -c -o pmsgq.lo `test -f 'src/surfit/ptypes/pmsgq.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/pmsgq.cxx; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pmsgq.Tpo" "$(DEPDIR)/pmsgq.Plo"; else rm -f "$(DEPDIR)/pmsgq.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/ptypes/pmsgq.cxx' object='pmsgq.lo' libtool=yes @AMDEPBACKSLASH@
+curv_bln.lo: src/surfit_io/curv_bln.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT curv_bln.lo -MD -MP -MF "$(DEPDIR)/curv_bln.Tpo" -c -o curv_bln.lo `test -f 'src/surfit_io/curv_bln.cpp' || echo '$(srcdir)/'`src/surfit_io/curv_bln.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/curv_bln.Tpo" "$(DEPDIR)/curv_bln.Plo"; else rm -f "$(DEPDIR)/curv_bln.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/curv_bln.cpp' object='curv_bln.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pmsgq.lo `test -f 'src/surfit/ptypes/pmsgq.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/pmsgq.cxx
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o curv_bln.lo `test -f 'src/surfit_io/curv_bln.cpp' || echo '$(srcdir)/'`src/surfit_io/curv_bln.cpp
 
-psemaphore.lo: src/surfit/ptypes/psemaphore.cxx
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT psemaphore.lo -MD -MP -MF "$(DEPDIR)/psemaphore.Tpo" -c -o psemaphore.lo `test -f 'src/surfit/ptypes/psemaphore.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/psemaphore.cxx; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/psemaphore.Tpo" "$(DEPDIR)/psemaphore.Plo"; else rm -f "$(DEPDIR)/psemaphore.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/ptypes/psemaphore.cxx' object='psemaphore.lo' libtool=yes @AMDEPBACKSLASH@
+curv_io_tcl.lo: src/surfit_io/curv_io_tcl.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT curv_io_tcl.lo -MD -MP -MF "$(DEPDIR)/curv_io_tcl.Tpo" -c -o curv_io_tcl.lo `test -f 'src/surfit_io/curv_io_tcl.cpp' || echo '$(srcdir)/'`src/surfit_io/curv_io_tcl.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/curv_io_tcl.Tpo" "$(DEPDIR)/curv_io_tcl.Plo"; else rm -f "$(DEPDIR)/curv_io_tcl.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/curv_io_tcl.cpp' object='curv_io_tcl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o psemaphore.lo `test -f 'src/surfit/ptypes/psemaphore.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/psemaphore.cxx
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o curv_io_tcl.lo `test -f 'src/surfit_io/curv_io_tcl.cpp' || echo '$(srcdir)/'`src/surfit_io/curv_io_tcl.cpp
 
-pstring.lo: src/surfit/ptypes/pstring.cxx
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pstring.lo -MD -MP -MF "$(DEPDIR)/pstring.Tpo" -c -o pstring.lo `test -f 'src/surfit/ptypes/pstring.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/pstring.cxx; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pstring.Tpo" "$(DEPDIR)/pstring.Plo"; else rm -f "$(DEPDIR)/pstring.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/ptypes/pstring.cxx' object='pstring.lo' libtool=yes @AMDEPBACKSLASH@
+curv_shp.lo: src/surfit_io/curv_shp.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT curv_shp.lo -MD -MP -MF "$(DEPDIR)/curv_shp.Tpo" -c -o curv_shp.lo `test -f 'src/surfit_io/curv_shp.cpp' || echo '$(srcdir)/'`src/surfit_io/curv_shp.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/curv_shp.Tpo" "$(DEPDIR)/curv_shp.Plo"; else rm -f "$(DEPDIR)/curv_shp.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/curv_shp.cpp' object='curv_shp.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pstring.lo `test -f 'src/surfit/ptypes/pstring.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/pstring.cxx
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o curv_shp.lo `test -f 'src/surfit_io/curv_shp.cpp' || echo '$(srcdir)/'`src/surfit_io/curv_shp.cpp
 
-pthread.lo: src/surfit/ptypes/pthread.cxx
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pthread.lo -MD -MP -MF "$(DEPDIR)/pthread.Tpo" -c -o pthread.lo `test -f 'src/surfit/ptypes/pthread.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/pthread.cxx; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pthread.Tpo" "$(DEPDIR)/pthread.Plo"; else rm -f "$(DEPDIR)/pthread.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/ptypes/pthread.cxx' object='pthread.lo' libtool=yes @AMDEPBACKSLASH@
+pnts_io_tcl.lo: src/surfit_io/pnts_io_tcl.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pnts_io_tcl.lo -MD -MP -MF "$(DEPDIR)/pnts_io_tcl.Tpo" -c -o pnts_io_tcl.lo `test -f 'src/surfit_io/pnts_io_tcl.cpp' || echo '$(srcdir)/'`src/surfit_io/pnts_io_tcl.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pnts_io_tcl.Tpo" "$(DEPDIR)/pnts_io_tcl.Plo"; else rm -f "$(DEPDIR)/pnts_io_tcl.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/pnts_io_tcl.cpp' object='pnts_io_tcl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pthread.lo `test -f 'src/surfit/ptypes/pthread.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/pthread.cxx
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pnts_io_tcl.lo `test -f 'src/surfit_io/pnts_io_tcl.cpp' || echo '$(srcdir)/'`src/surfit_io/pnts_io_tcl.cpp
 
-ptimedsem.lo: src/surfit/ptypes/ptimedsem.cxx
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ptimedsem.lo -MD -MP -MF "$(DEPDIR)/ptimedsem.Tpo" -c -o ptimedsem.lo `test -f 'src/surfit/ptypes/ptimedsem.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/ptimedsem.cxx; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/ptimedsem.Tpo" "$(DEPDIR)/ptimedsem.Plo"; else rm -f "$(DEPDIR)/ptimedsem.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/ptypes/ptimedsem.cxx' object='ptimedsem.lo' libtool=yes @AMDEPBACKSLASH@
+pnts_shp.lo: src/surfit_io/pnts_shp.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pnts_shp.lo -MD -MP -MF "$(DEPDIR)/pnts_shp.Tpo" -c -o pnts_shp.lo `test -f 'src/surfit_io/pnts_shp.cpp' || echo '$(srcdir)/'`src/surfit_io/pnts_shp.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pnts_shp.Tpo" "$(DEPDIR)/pnts_shp.Plo"; else rm -f "$(DEPDIR)/pnts_shp.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/pnts_shp.cpp' object='pnts_shp.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ptimedsem.lo `test -f 'src/surfit/ptypes/ptimedsem.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/ptimedsem.cxx
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pnts_shp.lo `test -f 'src/surfit_io/pnts_shp.cpp' || echo '$(srcdir)/'`src/surfit_io/pnts_shp.cpp
 
-punknown.lo: src/surfit/ptypes/punknown.cxx
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT punknown.lo -MD -MP -MF "$(DEPDIR)/punknown.Tpo" -c -o punknown.lo `test -f 'src/surfit/ptypes/punknown.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/punknown.cxx; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/punknown.Tpo" "$(DEPDIR)/punknown.Plo"; else rm -f "$(DEPDIR)/punknown.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/ptypes/punknown.cxx' object='punknown.lo' libtool=yes @AMDEPBACKSLASH@
+surfit_io.lo: src/surfit_io/surfit_io.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT surfit_io.lo -MD -MP -MF "$(DEPDIR)/surfit_io.Tpo" -c -o surfit_io.lo `test -f 'src/surfit_io/surfit_io.cpp' || echo '$(srcdir)/'`src/surfit_io/surfit_io.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/surfit_io.Tpo" "$(DEPDIR)/surfit_io.Plo"; else rm -f "$(DEPDIR)/surfit_io.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/surfit_io.cpp' object='surfit_io.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o punknown.lo `test -f 'src/surfit/ptypes/punknown.cxx' || echo '$(srcdir)/'`src/surfit/ptypes/punknown.cxx
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surfit_io.lo `test -f 'src/surfit_io/surfit_io.cpp' || echo '$(srcdir)/'`src/surfit_io/surfit_io.cpp
 
-EasyBMP.lo: src/surfit/EasyBmp/EasyBMP.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT EasyBMP.lo -MD -MP -MF "$(DEPDIR)/EasyBMP.Tpo" -c -o EasyBMP.lo `test -f 'src/surfit/EasyBmp/EasyBMP.cpp' || echo '$(srcdir)/'`src/surfit/EasyBmp/EasyBMP.cpp; \
+surfit_io_data_manager.lo: src/surfit_io/surfit_io_data_manager.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT surfit_io_data_manager.lo -MD -MP -MF "$(DEPDIR)/surfit_io_data_manager.Tpo" -c -o surfit_io_data_manager.lo `test -f 'src/surfit_io/surfit_io_data_manager.cpp' || echo '$(srcdir)/'`src/surfit_io/surfit_io_data_manager.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/surfit_io_data_manager.Tpo" "$(DEPDIR)/surfit_io_data_manager.Plo"; else rm -f "$(DEPDIR)/surfit_io_data_manager.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/surfit_io_data_manager.cpp' object='surfit_io_data_manager.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surfit_io_data_manager.lo `test -f 'src/surfit_io/surfit_io_data_manager.cpp' || echo '$(srcdir)/'`src/surfit_io/surfit_io_data_manager.cpp
+
+surfit_io_variables.lo: src/surfit_io/surfit_io_variables.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT surfit_io_variables.lo -MD -MP -MF "$(DEPDIR)/surfit_io_variables.Tpo" -c -o surfit_io_variables.lo `test -f 'src/surfit_io/surfit_io_variables.cpp' || echo '$(srcdir)/'`src/surfit_io/surfit_io_variables.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/surfit_io_variables.Tpo" "$(DEPDIR)/surfit_io_variables.Plo"; else rm -f "$(DEPDIR)/surfit_io_variables.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/surfit_io_variables.cpp' object='surfit_io_variables.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surfit_io_variables.lo `test -f 'src/surfit_io/surfit_io_variables.cpp' || echo '$(srcdir)/'`src/surfit_io/surfit_io_variables.cpp
+
+surf_arcgis.lo: src/surfit_io/surf_arcgis.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT surf_arcgis.lo -MD -MP -MF "$(DEPDIR)/surf_arcgis.Tpo" -c -o surf_arcgis.lo `test -f 'src/surfit_io/surf_arcgis.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_arcgis.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/surf_arcgis.Tpo" "$(DEPDIR)/surf_arcgis.Plo"; else rm -f "$(DEPDIR)/surf_arcgis.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/surf_arcgis.cpp' object='surf_arcgis.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surf_arcgis.lo `test -f 'src/surfit_io/surf_arcgis.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_arcgis.cpp
+
+surf_bmp.lo: src/surfit_io/surf_bmp.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT surf_bmp.lo -MD -MP -MF "$(DEPDIR)/surf_bmp.Tpo" -c -o surf_bmp.lo `test -f 'src/surfit_io/surf_bmp.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_bmp.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/surf_bmp.Tpo" "$(DEPDIR)/surf_bmp.Plo"; else rm -f "$(DEPDIR)/surf_bmp.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/surf_bmp.cpp' object='surf_bmp.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surf_bmp.lo `test -f 'src/surfit_io/surf_bmp.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_bmp.cpp
+
+surf_gmt.lo: src/surfit_io/surf_gmt.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT surf_gmt.lo -MD -MP -MF "$(DEPDIR)/surf_gmt.Tpo" -c -o surf_gmt.lo `test -f 'src/surfit_io/surf_gmt.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_gmt.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/surf_gmt.Tpo" "$(DEPDIR)/surf_gmt.Plo"; else rm -f "$(DEPDIR)/surf_gmt.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/surf_gmt.cpp' object='surf_gmt.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surf_gmt.lo `test -f 'src/surfit_io/surf_gmt.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_gmt.cpp
+
+surf_grass.lo: src/surfit_io/surf_grass.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT surf_grass.lo -MD -MP -MF "$(DEPDIR)/surf_grass.Tpo" -c -o surf_grass.lo `test -f 'src/surfit_io/surf_grass.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_grass.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/surf_grass.Tpo" "$(DEPDIR)/surf_grass.Plo"; else rm -f "$(DEPDIR)/surf_grass.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/surf_grass.cpp' object='surf_grass.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surf_grass.lo `test -f 'src/surfit_io/surf_grass.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_grass.cpp
+
+surf_grd.lo: src/surfit_io/surf_grd.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT surf_grd.lo -MD -MP -MF "$(DEPDIR)/surf_grd.Tpo" -c -o surf_grd.lo `test -f 'src/surfit_io/surf_grd.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_grd.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/surf_grd.Tpo" "$(DEPDIR)/surf_grd.Plo"; else rm -f "$(DEPDIR)/surf_grd.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/surf_grd.cpp' object='surf_grd.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surf_grd.lo `test -f 'src/surfit_io/surf_grd.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_grd.cpp
+
+surf_io_tcl.lo: src/surfit_io/surf_io_tcl.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT surf_io_tcl.lo -MD -MP -MF "$(DEPDIR)/surf_io_tcl.Tpo" -c -o surf_io_tcl.lo `test -f 'src/surfit_io/surf_io_tcl.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_io_tcl.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/surf_io_tcl.Tpo" "$(DEPDIR)/surf_io_tcl.Plo"; else rm -f "$(DEPDIR)/surf_io_tcl.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/surf_io_tcl.cpp' object='surf_io_tcl.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surf_io_tcl.lo `test -f 'src/surfit_io/surf_io_tcl.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_io_tcl.cpp
+
+surf_jpg.lo: src/surfit_io/surf_jpg.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT surf_jpg.lo -MD -MP -MF "$(DEPDIR)/surf_jpg.Tpo" -c -o surf_jpg.lo `test -f 'src/surfit_io/surf_jpg.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_jpg.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/surf_jpg.Tpo" "$(DEPDIR)/surf_jpg.Plo"; else rm -f "$(DEPDIR)/surf_jpg.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/surf_jpg.cpp' object='surf_jpg.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surf_jpg.lo `test -f 'src/surfit_io/surf_jpg.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_jpg.cpp
+
+surf_xyz.lo: src/surfit_io/surf_xyz.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT surf_xyz.lo -MD -MP -MF "$(DEPDIR)/surf_xyz.Tpo" -c -o surf_xyz.lo `test -f 'src/surfit_io/surf_xyz.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_xyz.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/surf_xyz.Tpo" "$(DEPDIR)/surf_xyz.Plo"; else rm -f "$(DEPDIR)/surf_xyz.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/surf_xyz.cpp' object='surf_xyz.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surf_xyz.lo `test -f 'src/surfit_io/surf_xyz.cpp' || echo '$(srcdir)/'`src/surfit_io/surf_xyz.cpp
+
+surfit_io_wrap.lo: src/surfit_io/surfit_io_wrap.cxx
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT surfit_io_wrap.lo -MD -MP -MF "$(DEPDIR)/surfit_io_wrap.Tpo" -c -o surfit_io_wrap.lo `test -f 'src/surfit_io/surfit_io_wrap.cxx' || echo '$(srcdir)/'`src/surfit_io/surfit_io_wrap.cxx; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/surfit_io_wrap.Tpo" "$(DEPDIR)/surfit_io_wrap.Plo"; else rm -f "$(DEPDIR)/surfit_io_wrap.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/surfit_io_wrap.cxx' object='surfit_io_wrap.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surfit_io_wrap.lo `test -f 'src/surfit_io/surfit_io_wrap.cxx' || echo '$(srcdir)/'`src/surfit_io/surfit_io_wrap.cxx
+
+EasyBMP.lo: src/surfit_io/EasyBmp/EasyBMP.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT EasyBMP.lo -MD -MP -MF "$(DEPDIR)/EasyBMP.Tpo" -c -o EasyBMP.lo `test -f 'src/surfit_io/EasyBmp/EasyBMP.cpp' || echo '$(srcdir)/'`src/surfit_io/EasyBmp/EasyBMP.cpp; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/EasyBMP.Tpo" "$(DEPDIR)/EasyBMP.Plo"; else rm -f "$(DEPDIR)/EasyBMP.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/EasyBmp/EasyBMP.cpp' object='EasyBMP.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/EasyBmp/EasyBMP.cpp' object='EasyBMP.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o EasyBMP.lo `test -f 'src/surfit/EasyBmp/EasyBMP.cpp' || echo '$(srcdir)/'`src/surfit/EasyBmp/EasyBMP.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o EasyBMP.lo `test -f 'src/surfit_io/EasyBmp/EasyBMP.cpp' || echo '$(srcdir)/'`src/surfit_io/EasyBmp/EasyBMP.cpp
 
 .cxx.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \

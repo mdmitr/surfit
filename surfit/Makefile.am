@@ -187,7 +187,6 @@ libsurfit_la_SOURCES += src/surfit/surf_internal.cpp
 libsurfit_la_SOURCES += src/surfit/surf_tcl.cpp                                                  
 libsurfit_la_SOURCES += src/surfit/surfit.cpp            
 libsurfit_la_SOURCES += src/surfit/surfit_wrap.cxx       
-libsurfit_la_SOURCES += src/surfit/threads.cpp
 libsurfit_la_SOURCES += src/surfit/variables.cpp         
 libsurfit_la_SOURCES += src/surfit/solvers/CG.cpp
 libsurfit_la_SOURCES += src/surfit/solvers/J.cpp
@@ -276,15 +275,13 @@ libsurfit_la_SOURCES += src/surfit/surfs_tcl.h
 libsurfit_la_HEADERS += src/surfit/surf_internal.h     
 libsurfit_la_SOURCES += src/surfit/surf_tcl.h          
 libsurfit_la_HEADERS += src/surfit/surfit_ie.h                
-libsurfit_la_HEADERS += src/surfit/surfit_threads.h
 libsurfit_la_HEADERS += src/surfit/surfit_solvers.h  
-libsurfit_la_HEADERS += src/surfit/threads.h
 libsurfit_la_HEADERS += src/surfit/variables.h         
 libsurfit_la_HEADERS += src/surfit/variables_internal.h
 libsurfit_la_HEADERS += src/surfit/variables_tcl.h     
 
 
-libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) libsstuff.la 
+libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la 
 libsurfit_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit.dll
 
 
@@ -312,10 +309,11 @@ libsurfit_io_la_SOURCES += src/surfit_io/surf_grd.cpp
 libsurfit_io_la_SOURCES += src/surfit_io/surf_io_tcl.cpp           
 libsurfit_io_la_SOURCES += src/surfit_io/surf_jpg.cpp              
 libsurfit_io_la_SOURCES += src/surfit_io/surf_xyz.cpp              
+libsurfit_io_la_SOURCES += src/surfit_io/surfit_io_wrap.cxx              
 # shapelib
 libsurfit_io_la_SOURCES += src/surfit_io/shapelib/shapefil.h
 libsurfit_io_la_SOURCES += src/surfit_io/shapelib/dbfopen.c
-libsurfit_io_la_SOURCES += src/surfit/shapelib/shpopen.c
+libsurfit_io_la_SOURCES += src/surfit_io/shapelib/shpopen.c
 # EasyBmp
 libsurfit_io_la_SOURCES += src/surfit_io/EasyBmp/EasyBMP.cpp
 libsurfit_io_la_SOURCES += src/surfit_io/EasyBmp/EasyBMP.h
@@ -341,7 +339,7 @@ libsurfit_io_la_HEADER  += src/surfit_io/surf_io.h
 libsurfit_io_la_SOURCES += src/surfit_io/surf_io_tcl.h           
 
 
-libsurfit_io_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la libsurfit.la
+libsurfit_io_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) libsstuff.la libsurfit.la
 if HAVE_JPEG_INSTALLED
 libsurfit_io_la_LIBADD += -ljpeg
 endif

@@ -32,6 +32,7 @@
 #include "surf_internal.h"
 
 #include <float.h>
+#include <errno.h>
 
 namespace surfit {
 

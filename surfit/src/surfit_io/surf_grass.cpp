@@ -31,6 +31,7 @@
 #include "grid.h"
 
 #include <float.h>
+#include <errno.h>
 
 namespace surfit {
 

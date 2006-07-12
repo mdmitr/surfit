@@ -22,6 +22,8 @@
 #include "curv.h"
 #include "curv_io.h"
 
+#include <errno.h>
+
 namespace surfit {
 
 bool curv_load_bln(const char * filename) {

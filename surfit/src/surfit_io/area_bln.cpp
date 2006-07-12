@@ -33,6 +33,8 @@
 #include "variables_tcl.h"
 #include "grid.h"
 
+#include <errno.h>
+
 namespace surfit {
 
 bool _area_save_bln(const d_area * area, const char * filename) {

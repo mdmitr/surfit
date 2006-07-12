@@ -30,6 +30,8 @@
 #include "variables_tcl.h"
 #include "grid.h"
 
+#include <errno.h>
+
 namespace surfit {
 
 d_surf * _surf_load_grd(const char * filename, const char * surfname) 
