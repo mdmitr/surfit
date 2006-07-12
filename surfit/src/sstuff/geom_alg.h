@@ -17,8 +17,8 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#ifndef __surfit_geom_alg__
-#define __surfit_geom_alg__
+#ifndef __sstuff_geom_alg__
+#define __sstuff_geom_alg__
 
 #include <float.h>
 #include <math.h>

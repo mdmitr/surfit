@@ -10,9 +10,6 @@
 /* Define if you want to compile with jpeg format support */
 #define HAVE_LIBJPEG 1
 
-/* Define if you want to compile with png format support */
-#define HAVE_LIBPNG 1
-
 /* Define if you have OpenGL libraries */
 #define HAVE_GL_WORKS 1
 
