@@ -34,6 +34,7 @@
 #include "points.h"
 #include "curv.h"
 #include "grid_line_internal.h"
+#include "datafile.h"
 
 #include "sort_alg.h"
 
@@ -1030,6 +1031,199 @@ int _surf_cells_in_area(const d_surf * srf, const d_area * area) {
 
 void _surfit_surf_add(d_surf * srf) {
 	surfit_surfs->push_back(srf);
+};
+
+d_surf * _surf_load_df(datafile * df, const char * surfname) {
+
+	if (!surfname) 
+		writelog(LOG_MESSAGE,"loading surf with no name from file %s",df->get_filename());
+	else 
+		writelog(LOG_MESSAGE,"loading surf \"%s\" from file %s",surfname,df->get_filename());
+
+	if (!df->condition()) {
+		return NULL;
+	}
+
+	char error[] = "surf_load : wrong datafile format";
+
+	bool err = false;
+	d_surf * srf = NULL;
+	vec * icoeff = NULL;
+	d_grid * grd = NULL;
+	char * name = NULL;
+	REAL undef_value = FLT_MAX;
+
+	vec * coeff = NULL;
+	
+	bool loaded = false;
+	
+	while ( !loaded ) {
+		
+		if (df->findTag("surf","func")) {
+			
+			df->skipTagName();
+			if (!df->readWord()) goto exit;
+			
+			while ( !df->isWord("endtag" ) ) {
+				
+				if ( df->isWord("char") ) {
+					// read char name
+					if (!df->readWord()) goto exit;
+					if ( df->isWord("name") ) {
+						if ( !df->readWord() ) goto exit;
+						name = (char*)malloc(strlen(df->getWord())+1);
+						strcpy(name,df->getWord());
+						if (!df->readWord()) goto exit;
+						continue;
+					}
+				}
+
+				if ( df->isWord(REAL_NAME) ) {
+					// read char name
+					if (!df->readWord()) goto exit;
+					
+					if ( df->isWord("undef_value") ) {
+						if ( !df->readReal(undef_value) ) goto exit;
+						goto cont;
+					}
+
+					if (!df->skipReal(false)) goto exit;
+					goto cont;
+				}
+				
+				if ( df->isWord("array") ) {
+					if (!df->readWord()) goto exit;
+					if ( df->isWord(REAL_NAME) ) {
+						if (!df->readWord()) goto exit;
+						if ( df->isWord("coeff") ) {
+							df->readRealArray(coeff);
+							goto cont;
+						}
+					}
+					if ( !df->skipArray(false) ) goto exit;
+				}
+				
+				if ( df->isWord("tag") ) {
+					if (!df->readWord()) goto exit;
+					if ( df->isWord("grid") ) {
+						if ( !_grid_load_df_tag_readed(df, grd) ) goto exit;
+						goto cont;
+					}
+					if (!df->skipToEndTag()) goto exit;
+					goto cont;
+				}
+								
+				if ( !df->skip(false) ) goto exit;
+				goto cont;
+cont:
+				if ( !df->readWord() ) goto exit;
+				continue;
+			}
+		} else {
+			goto exit;
+		}
+		
+		if ( !coeff ) {
+			writelog(LOG_ERROR,"surf_load : empty coeff");
+			err = true;
+		}
+		
+		if ( !grd ) {
+			writelog(LOG_ERROR,"surf_load : empty geometry");
+			err = true;
+		}
+		
+		if (err) {
+			if (coeff)
+				coeff->release();
+			if (grd)
+				grd->release();
+			free(name);
+			return false;
+		}
+		
+		srf = create_surf(coeff, grd, name);
+		srf->undef_value = undef_value;
+		free(name);
+		
+		if (!surfname) {
+			return srf;
+		} else {
+			if (srf->getName()) {
+				if (strcmp(srf->getName(),surfname) == 0) {
+					return srf;
+				}
+			}
+			if (srf)
+				srf->release();
+			srf = NULL;
+		}
+		
+	}
+	
+	return srf;
+
+exit:
+
+	if (!surfname)
+		writelog(LOG_ERROR, "surf_load : this file have no surf");
+	else 
+		writelog(LOG_ERROR, "surf_load : this file have no surf named %s", surfname);
+	return NULL;
+
+};
+
+d_surf * _surf_load(const char * filename, const char * surfname) {
+
+	datafile * df = new datafile(filename, DF_MODE_READ); // read
+
+	d_surf * res = _surf_load_df(df, surfname);
+
+	if (!res)
+		goto exit;
+
+	delete df;
+	return res;
+
+exit:
+
+	if (res)
+		res->release();
+	delete df;
+	return NULL;
+};
+	
+bool _surf_save(const d_surf * srf, const char * filename) {
+	
+	bool res = true;
+
+	datafile *df = new datafile(filename, DF_MODE_WRITE); // write
+	if (!df->condition()) {
+		delete df;
+		return false;
+	}
+
+	res = _surf_save_df(srf, df);
+
+	bool op = df->writeEof();				res = ( op && res );
+	
+	delete df;
+	return res;
+};
+
+bool _surf_save_df(const d_surf * srf, datafile * df) {
+
+	if (!srf->getName()) 
+		writelog(LOG_MESSAGE,"saving surf with no name to file %s",df->get_filename());
+	else 
+		writelog(LOG_MESSAGE,"saving surf \"%s\" to file %s",srf->getName(),df->get_filename());
+		
+	bool res = true;
+	bool op;
+	
+	op = srf->writeTags(df);           res = ( op && res );
+	
+	return res;
 };
 
 }; // namespace surfit;

@@ -31,7 +31,7 @@
 #include "functional.h"
 #include "bitvec.h"
 #include "intvec.h"
-#include "surfit_threads.h"
+#include "threads.h"
 
 #include <vector>
 #include <algorithm>

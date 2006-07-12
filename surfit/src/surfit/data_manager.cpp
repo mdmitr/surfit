@@ -62,8 +62,6 @@
 #include "functional.h"
 #include "cmofs.h"
 
-#include "shapelib/shapefil.h"
-
 namespace surfit {
 
 char * file_info(const char * filename) {
@@ -622,27 +620,6 @@ int surfit_manager::data_count() const {
 	return res;
 };
 
-bool load_ESRI_shape(const char * filename, const char * name) {
-	SHPHandle hSHP = SHPOpen(filename, "rb");
-	if( hSHP == NULL )
-		return false;
-	int shpType;
-	SHPGetInfo(hSHP, NULL, &shpType, NULL, NULL);
-	SHPClose( hSHP );
-
-	switch (shpType) {
-	case SHPT_POINT:
-		return pnts_load_shp(filename, name);
-	case SHPT_ARC:
-		return curvs_load_shp(filename);
-	case SHPT_POLYGON:
-		return areas_load_shp(filename);
-	case SHPT_POLYGONZ:
-		return cntrs_load_shp(filename);
-	default:
-		return false;
-	}
-};
 
 bool surfit_manager::auto_load(const char * filename, const char * first1024, int readed) const {
 
@@ -659,63 +636,6 @@ bool surfit_manager::auto_load(const char * filename, const char * first1024, in
 	if (first1024 == NULL)
 		return false;
 
-	if (ext != NULL) {
-		if (strcmp( uext, ".BLN" ) == 0) {
-			res = area_read_bln(filename, name);
-		}
-		if (strcmp( uext, ".JPG" ) == 0) {
-			res = surf_load_jpg(filename, name);
-		}
-		if (strcmp( uext, ".BMP" ) == 0) {
-			res = surf_load_bmp(filename, name);
-		}
-		if (strcmp( uext, ".PNG" ) == 0) {
-			res = surf_load_png(filename, name);
-		}
-	}
-
-	if ( strncmp(first1024, "CDF", 3) == 0 ) {
-		try {
-			res = surf_load_gmt(filename);
-		} catch (...) {
-			goto exit;
-		}
-		goto exit;
-	}
-	
-	if ( strncmp(first1024,"DSAA",4) == 0 ) {
-		try {
-			res = surf_load_grd(filename);
-		} catch (...) {
-			goto exit;
-		}
-		goto exit;
-	}
-
-	if ( strncmp(first1024,"north:",6) == 0 ) {
-		try {
-			res = surf_load_grass(filename);
-		} catch (...) {
-			goto exit;
-		}
-		goto exit;
-	}
-	if ( strncmp(first1024,"ncols ",6) == 0 ) {
-		try {
-			res = surf_load_arcgis(filename);
-		} catch (...) {
-			goto exit;
-		}
-		goto exit;
-	}
-	if ( strncmp(first1024,"\0x00\0x00\0x27\0x0A",4) == 0 ) {
-		try {
-			res = load_ESRI_shape(filename, name);
-		} catch (...) {
-			goto exit;
-		}
-		goto exit;
-	}
 	if (columns == 2) {
 		try {
 			res = curv_read(filename);

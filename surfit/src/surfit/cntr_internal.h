@@ -43,20 +43,6 @@ d_cntr * _cntr_load(const char * filename, const char * cntrname);
 
 SURFIT_EXPORT
 /*! \ingroup internal_cntr
-    \fn d_cntr * _cntr_load_shp(const char * filename, const char * cntrname);
-    \brief loads \ref cntr from ERSI shape file
-*/
-d_cntr * _cntr_load_shp(const char * filename, const char * cntrname);
-
-SURFIT_EXPORT
-/*! \ingroup internal_cntr
-    \fn d_cntr * _cntr_load_shp(const char * filename);
-    \brief loads all \ref cntr "contours" from ERSI shape file
-*/
-bool _cntrs_load_shp(const char * filename);
-
-SURFIT_EXPORT
-/*! \ingroup internal_cntr
     \fn bool _cntr_write(const d_cntr * contour, const char * filename, const char * mask);
     \brief writes \ref cntr to formatted text file. 
 */
@@ -75,13 +61,6 @@ SURFIT_EXPORT
     \brief writes \ref cntr tags to \ref datafile
 */
 bool _cntr_save_df(const d_cntr * contour, datafile * df);
-
-SURFIT_EXPORT
-/*! \ingroup internal_cntr
-    \fn bool _cntr_save_shp(const d_cntr * contour, const char * filename);
-    \brief writes \ref cntr to ESRI shape file
-*/
-bool _cntr_save_shp(const d_cntr * contour, const char * filename);
 
 SURFIT_EXPORT
 /*! \ingroup internal_cntr

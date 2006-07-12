@@ -26,7 +26,7 @@
 #include "variables_tcl.h"
 #include "variables_internal.h"
 #include "license.h"
-#include "surfit_threads.h"
+#include "threads.h"
 #include "other_tcl.h"
 
 #include "rnd.h"
@@ -145,6 +145,13 @@ void surfit_init_all() {
 
 };
 
+void init_threads(int cnt) {
+	sstuff_init_threads(cnt);
+};
+
+int get_threads() {
+	return sstuff_get_threads();
+};
 
 void surfit_init_variables(Tcl_Interp * iinterp) {
 

@@ -77,13 +77,6 @@ SURFIT_EXPORT
 */
 d_points * _pnts_load_df(datafile * df, const char * pntsname);
 
-SURFIT_EXPORT
-/*! \ingroup internal
-    \fn d_points * _pnts_load_shp(const char * filename, const char * pntsname);
-    \brief reads \ref d_points from ESRI shape file
-*/
-d_points * _pnts_load_shp(const char * filename, const char * pntsname, const char * param = "VALUE");
-
 //////////////
 // save
 
@@ -112,15 +105,6 @@ SURFIT_EXPORT
     \brief writes \ref d_points tags to \ref datafile
 */
 bool _pnts_save_df(const d_points * pnts, datafile * df);
-
-SURFIT_EXPORT
-/*! \ingroup internal
-    \fn bool _pnts_save_shp(const d_points * pnts, const char * filename);
-    \brief saves \ref d_points to ESRI shapefile format
-    \param filename filename
-    \param pnts pointer to \ref d_points
-*/
-bool _pnts_save_shp(const d_points * pnts, const char * filename);
 
 //////////////
 // stuff

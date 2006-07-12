@@ -38,23 +38,23 @@ protected:
 public:
 	virtual bool auto_load(const char * filename, const char * first1024, int readed) const = 0;
 	//! loads tag with tag_name from ROFF file (if it is possible)	
-	virtual int load_tag(datafile *df, char * tag_name) const = 0; // -1 = error, 0 = not found, 1 = ok
+	virtual int load_tag(datafile *df, char * tag_name) const { return 0; }; // -1 = error, 0 = not found, 1 = ok
 	//! saves memory to ROFF file (see \ref datafile)
-	virtual bool save(datafile *df) const = 0;
+	virtual bool save(datafile *df) const { return false; };
 	//! unloads data from memory
-	virtual void clear_data() const = 0;
+	virtual void clear_data() const {};
 	//! unloads gridding rules from memory
 	virtual void clear_rules() const;
 	//! prints some info about loaded \ref data into memory
-	virtual void mem_info() const = 0;
+	virtual void mem_info() const {};
 	//! delete this
 	virtual void release() = 0;
 	//! returns amount of \ref data class supported by manager
-	virtual int data_count() const = 0;
+	virtual int data_count() const { return 0; };
 	//! returns i'th data
-	virtual const data * data_get(int i) const = 0;
+	virtual const data * data_get(int i) const { return NULL; };
 	//! returns names of supported data types
-	virtual char * types_info() const = 0;
+	virtual char * types_info() const { return NULL; };
 	//! returns maximum and minimum values for Z-coordinate
 	virtual void getMinMaxZ(REAL & minZ, REAL & maxZ) const;
 	//! if object have bounds, then fill them!

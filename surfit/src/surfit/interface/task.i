@@ -41,10 +41,8 @@ bool points_geq(const char * points_name_or_position = "0", REAL mult = 0.001);
 //save load
 bool pnts_load(const char * filename, const char * pntsname=NULL);
 void pnts_read(const char * filename, const char * pntsname=NULL, int col1=1, int col2=2, int col3=3, int col4=0, const char *delimiter=" \t", int skip_lines = 0, int grow_by=250);
-bool pnts_load_shp(const char * filename, const char * pntsname=NULL, const char * param = "VALUE");
 bool pnts_save(const char * filename, const char * points_name_or_position = "0");
 bool pnts_write(const char * filename, const char * points_name_or_position = "0", const char * delimiter = "\t");
-bool pnts_save_shp(const char * filename, const char * points_name_or_position = "0");
 // math
 bool pnts_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, const char * points_name_or_position = "0");
 bool pnts_inverse_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, const char * points_name_or_position = "0");

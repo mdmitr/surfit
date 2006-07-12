@@ -58,20 +58,6 @@ bool cntr_load(const char * filename, const char * cntrname) {
 	return false;
 };
 
-bool cntr_load_shp(const char * filename, const char * cntrname) {
-	
-	d_cntr * contour = _cntr_load_shp(filename, cntrname);
-	if (contour) {
-		surfit_cntrs->push_back(contour);
-		return true;
-	}
-	return false;
-};
-
-bool cntrs_load_shp(const char * filename) {
-	return _cntrs_load_shp(filename);
-};
-
 bool cntr_write(const char * filename, const char * pos, const char * delimiter) 
 {
 	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
@@ -96,17 +82,6 @@ bool cntr_save(const char * filename, const char * pos) {
 	writelog(LOG_MESSAGE,"Saving cntr to file %s", filename);
 
 	return _cntr_save(contour, filename);
-};
-
-bool cntr_save_shp(const char * filename, const char * pos) {
-
-	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	if (contour == NULL)
-		return false;
-	
-	writelog(LOG_MESSAGE,"Saving cntr to ESRI shape file %s", filename);
-
-	return _cntr_save_shp(contour, filename);
 };
 
 bool cntr_plus_real(REAL value, const char * pos) {

@@ -67,34 +67,6 @@ bool cntr_read(const char * filename, const char * cntrname,
 bool cntr_load(const char * filename, const char * cntrname = NULL);
 
 /*! \ingroup tcl_cntr_save_load
-    \fn bool cntr_load_shp(const char * filename, const char * cntrname = NULL);
-    
-    \par Tcl syntax:
-    cntr_load_shp "filename" "cntrname"
-
-    \par Description:
-    reads \ref d_cntr "countour" named 'cntrname' from ERSI shape file
-
-    \par Example:
-    cntr_load_shp "C:\\my_cntr.shp" "my_cntr"
-*/
-bool cntr_load_shp(const char * filename, const char * cntrname = NULL);
-
-/*! \ingroup tcl_cntr_save_load
-    \fn bool cntrs_load_shp(const char * filename);
-    
-    \par Tcl syntax:
-    cntrs_load_shp "filename" "cntrname"
-
-    \par Description:
-    reads all \ref d_cntr "countours" from ERSI shape file
-
-    \par Example:
-    cntrs_load_shp "C:\\my_cntr.shp"
-*/
-bool cntrs_load_shp(const char * filename);
-
-/*! \ingroup tcl_cntr_save_load
     \fn bool cntr_write(const char * filename, const char * cntr_name_or_position = "0", const char * delimiter = "\t");
     
     \par Tcl syntax:
@@ -121,20 +93,6 @@ bool cntr_write(const char * filename, const char * cntr_name_or_position = "0",
     cntr_save "C:\\my_cntr.dat" "my_cntr"
 */
 bool cntr_save(const char * filename, const char * cntr_name_or_position = "0");
-
-/*! \ingroup tcl_cntr_save_load
-    \fn bool cntr_save_shp(const char * filename, const char * cntr_name_or_position = "0");
-    
-    \par Tcl syntax:
-    cntr_save_shp "filename" "cntr_name_or_position"
-
-    \par Description:
-    saves \ref d_cntr "contour" to ESRI shape file
-
-    \par Example:
-    cntr_save_shp "C:\\my_cntr.shp" "my_cntr"
-*/
-bool cntr_save_shp(const char * filename, const char * cntr_name_or_position = "0");
 
 ///////////////
 // math

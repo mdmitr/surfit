@@ -51,15 +51,6 @@ bool pnts_load(const char * filename, const char * pntsname) {
 	return false;
 };
 
-bool pnts_load_shp(const char * filename, const char * pntsname, const char * param) {
-	d_points * pnts = _pnts_load_shp(filename, pntsname, param);
-	if (pnts) {
-		surfit_pnts->push_back(pnts);
-		return true;
-	}
-	return false;
-};
-
 bool pnts_add_noise(REAL std, const char * pos) {
 	
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
@@ -101,17 +92,6 @@ bool pnts_save(const char * filename, const char * pos) {
 	writelog(LOG_MESSAGE,"Saving points to file %s", filename);
 
 	return _pnts_save(pnts, filename);
-};
-
-bool pnts_save_shp(const char * filename, const char * pos) {
-	
-	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (pnts == NULL)
-		return false;
-
-	writelog(LOG_MESSAGE,"Saving points to ESRI shapefile format %s", filename);
-
-	return _pnts_save_shp(pnts, filename);
 };
 
 int pnts_getCount(const char * pos) {

@@ -71,15 +71,10 @@ class grid_line;
 bool curv_read(const char * filename, const char * curvname=NULL, 
                int col1=1, int col2=2,
 	       const char * delimiters=" \t", int skip_lines = 0, int grow_by=250);
-bool curv_read_bln(const char * filename);
 bool curv_load(const char * filename, const char * curvname = NULL);
-bool curv_load_shp(const char * filename, const char * curvname = NULL);
-bool curvs_load_shp(const char * filename);
 
 bool curv_write(const char * filename, const char * curv_name_or_position = "0", const char * delimiter = "\t");
-bool curv_write_bln(const char * filename, const char * curv_name_or_position = "0", int orient = 1);
 bool curv_save(const char * filename, const char * curv_name_or_position = "0");
-bool curv_save_shp(const char * filename, const char * curv_name_or_position = "0");
 
 // other
 const char * curv_getName(const char * curv_name_or_position = "0");
@@ -98,11 +93,8 @@ bool cntr_read(const char * filename, const char * cntrname,
 		       int col1=1, int col2=2, int col3=3,
 		       const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
 bool cntr_load(const char * filename, const char * cntrname = NULL);
-bool cntr_load_shp(const char * filename, const char * cntrname = NULL);
-bool cntrs_load_shp(const char * filename);
 bool cntr_write(const char * filename, const char * cntr_name_or_position = "0", const char * delimiter = "\t");
 bool cntr_save(const char * filename, const char * cntr_name_or_position = "0");
-bool cntr_save_shp(const char * filename, const char * cntr_name_or_position = "0");
 // math
 bool cntr_plus_real(REAL value, const char * cntr_name_or_position = "0");
 bool cntr_minus_real(REAL value, const char * cntr_name_or_position = "0");
@@ -124,14 +116,9 @@ void cntrs_info();
 bool area_read(const char * filename, const char * areaname=NULL, 
      	       int col1=1, int col2=2,
 	       const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
-bool area_read_bln(const char * filename, const char * areaname = NULL);
 bool area_load(const char * filename, const char * areaname = NULL);
-bool area_load_shp(const char * filename, const char * areaname = NULL);
-bool areas_load_shp(const char * filename);
 bool area_write(const char * filename, const char * area_name_or_position = "0", const char * delimiter = "\t");
-bool area_write_bln(const char * filename, const char * area_name_or_position = "0", int orient = 1);
 bool area_save(const char * filename, const char * area_name_or_position = "0");
-bool area_save_shp(const char * filename, const char * area_name_or_position = "0");
 
 // other
 const char * area_getName(const char * area_name_or_position = "0");

@@ -48,32 +48,6 @@ bool curv_read(const char * filename, const char * curvname,
 
 };
 
-bool curv_read_bln(const char * filename) {
-	FILE * file = fopen(filename, "r");
-	if (!file) {
-		writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
-		return false;
-	}
-	if (ferror(file) != 0) {
-		writelog(LOG_ERROR, "loading from BLN: file error.");
-		fclose(file);
-		return false;
-	}
-
-	bool res = false;
-
-	int orient = 1;
-	d_curv * crv = _curv_read_bln(file, orient);
-	while (crv != NULL) {
-		res = true;
-		surfit_curvs->push_back(crv);
-		crv = _curv_read_bln(file, orient);
-	}
-
-	fclose(file);
-	return res;
-};
-
 bool curv_load(const char * filename, const char * curvname) {
 	d_curv * curve = _curv_load(filename, curvname);
 	if (curve) {
@@ -81,19 +55,6 @@ bool curv_load(const char * filename, const char * curvname) {
 		return false;
 	}
 	return true;
-};
-
-bool curv_load_shp(const char * filename, const char * curvname) {
-	d_curv * curve = _curv_load_shp(filename, curvname);
-	if (curve) {
-		surfit_curvs->push_back(curve);
-		return false;
-	}
-	return true;
-};
-
-bool curvs_load_shp(const char * filename) {
-	return _curvs_load_shp(filename);
 };
 
 bool curv_write(const char * filename, const char * pos, const char * delimiter) 
@@ -109,28 +70,6 @@ bool curv_write(const char * filename, const char * pos, const char * delimiter)
 	return _curv_write(curve, filename, buf);
 };
 
-bool curv_write_bln(const char * filename, const char * curv_pos, int orient) {
-	d_curv * crv = get_element<d_curv>(curv_pos, surfit_curvs->begin(), surfit_curvs->end());
-	if (crv == NULL)
-		return false;
-
-	FILE * file = fopen(filename, "a");
-	if (!file) {
-		writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
-		return false;
-	}
-	if (ferror(file) != 0) {
-		writelog(LOG_ERROR, "writing BLN: file error.");
-		fclose(file);
-		return false;
-	}
-
-	bool res = _curv_write_bln(crv, file, orient);
-	fclose(file);
-
-	return res;
-};
-
 bool curv_save(const char * filename, const char * pos) {
 	d_curv * curve = get_element<d_curv>(pos, surfit_curvs->begin(), surfit_curvs->end());
 	if (curve == NULL)
@@ -139,16 +78,6 @@ bool curv_save(const char * filename, const char * pos) {
 	writelog(LOG_MESSAGE,"Saving curv to file %s", filename);
 
 	return _curv_save(curve, filename);
-};
-
-bool curv_save_shp(const char * filename, const char * pos) {
-	d_curv * curve = get_element<d_curv>(pos, surfit_curvs->begin(), surfit_curvs->end());
-	if (curve == NULL)
-		return false;
-
-	writelog(LOG_MESSAGE,"Saving curv to ERSI shp file %s", filename);
-
-	return _curv_save_shp(curve, filename);
 };
 
 bool curv_setName(const char * new_name, const char * pos) {

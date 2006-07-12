@@ -34,7 +34,7 @@
 #include "license.h"
 #include "others_tcl.h"
 #include "hist_tcl.h"
-#include "surfit_threads.h"
+#include "threads.h"
 #include "solvers.h"
 #include "other_tcl.h"
 

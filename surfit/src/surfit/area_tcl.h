@@ -52,20 +52,6 @@ bool area_read(const char * filename, const char * areaname=NULL	,
 	       const char * delimiter=" ", int skip_lines = 0, int grow_by=250);
 
 /*! \ingroup tcl_area_save_load
-    \fn bool area_read_bln(const char * filename, const char * areaname = NULL);
-    
-    \par Tcl syntax:
-    area_read_read "filename" "area_name" 
-
-    \par Description:
-    reads \ref d_area "area" from Surfer BLN files and sets its name to "areaname"
-
-    \par Example
-    area_read_bln "C:\\area.bln" area_from_bln
-*/
-bool area_read_bln(const char * filename, const char * areaname = NULL);
-
-/*! \ingroup tcl_area_save_load
     \fn bool area_load(const char * filename, const char * area_name = NULL);
     
     \par Tcl syntax:
@@ -82,39 +68,6 @@ bool area_read_bln(const char * filename, const char * areaname = NULL);
     area_load "C:\\area.dat" my_area
 */
 bool area_load(const char * filename, const char * area_name = NULL);
-
-/*! \ingroup tcl_area_save_load
-    \fn bool area_load_shp(const char * filename, const char * area_name = NULL);
-    
-    \par Tcl syntax:
-    area_load_shp "filename" "area_name"
-
-    \par Description:
-    loads \ref d_area "area" named "area_name" from ERSI shape file.
-
-    \param filename ERSI shape file name
-    \param area_name \ref d_area "area" name for load
-    
-    \par Example
-    area_load_shp "C:\\area.shp" my_area
-*/
-bool area_load_shp(const char * filename, const char * area_name = NULL);
-
-/*! \ingroup tcl_area_save_load
-    \fn bool areas_load_shp(const char * filename);
-    
-    \par Tcl syntax:
-    areas_load_shp "filename" 
-
-    \par Description:
-    loads all \ref d_area "areas" from ERSI shape file.
-
-    \param filename ERSI shape file name
-    
-    \par Example
-    areas_load_shp "C:\\area.shp" 
-*/
-bool areas_load_shp(const char * filename);
 
 /*! \ingroup tcl_area_save_load
     \fn bool area_write(const char * filename, const char * area_name_or_position, const char * delimiter);
@@ -135,24 +88,6 @@ bool areas_load_shp(const char * filename);
 bool area_write(const char * filename, const char * area_name_or_position = "0", const char * delimiter = "\t");
 
 /*! \ingroup tcl_area_save_load
-    \fn bool area_write_bln(const char * filename, const char * area_name_or_position = "0", int orient = 1);
-    
-    \par Tcl syntax:
-    area_write_bln "filename" "area_name_or_position" orient
-
-    \par Description:
-    writes \ref d_area "area" to Surfer BLN file
-
-    \param filename name for BLN file
-    \param area_name_or_position area name, or area position number
-    \param orient This value is equal to 1 if the region is inside area and equal to 0 if the region is outside area 
-    
-    \par Example
-    area_write_bln "C:\\area.bln" my_area 1
-*/
-bool area_write_bln(const char * filename, const char * area_name_or_position = "0", int flag = 1);
-
-/*! \ingroup tcl_area_save_load
     \fn bool area_save(const char * filename, const char * area_name_or_position = "0");
     
     \par Tcl syntax:
@@ -168,23 +103,6 @@ bool area_write_bln(const char * filename, const char * area_name_or_position = 
     area_save "C:\\area.dat" my_area
 */
 bool area_save(const char * filename, const char * area_name_or_position = "0");
-
-/*! \ingroup tcl_area_save_load
-    \fn bool area_save_shp(const char * filename, const char * area_name_or_position = "0");
-    
-    \par Tcl syntax:
-    area_save_shp "filename" "area_name_or_position"
-
-    \par Description:
-    saves \ref d_area "area" to ERSI shape file
-
-    \param filename ERSI shape file name
-    \param area_name_or_position \ref d_area "area" name, or area position number
-    
-    \par Example
-    area_save_shp "C:\\area.shp" my_area
-*/
-bool area_save_shp(const char * filename, const char * area_name_or_position = "0");
 
 //////////////
 // other

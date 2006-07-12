@@ -46,19 +46,6 @@ bool area_read(const char * filename, const char * areaname,
 
 };
 
-bool area_read_bln(const char * filename, const char * areaname) {
-	
-	bool res = false;
-	
-	d_area * area = _area_read_bln(filename, areaname);
-	if (area) {
-		surfit_areas->push_back(area);
-		res = true;
-	}
-	
-	return res;
-};
-
 bool area_load(const char * filename, const char * areaname) {
 	d_area * area = _area_load(filename, areaname);
 	if (area) {
@@ -66,19 +53,6 @@ bool area_load(const char * filename, const char * areaname) {
 		return true;
 	}
 	return false;
-};
-
-bool area_load_shp(const char * filename, const char * areaname) {
-	d_area * area = _area_load_shp(filename, areaname);
-	if (area) {
-		surfit_areas->push_back(area);
-		return true;
-	}
-	return false;
-};
-
-bool areas_load_shp(const char * filename) {
-	return _areas_load_shp(filename);
 };
 
 bool area_write(const char * filename, const char * pos, const char * delimiter) 
@@ -94,15 +68,6 @@ bool area_write(const char * filename, const char * pos, const char * delimiter)
 	return _area_write(area, filename, buf);
 };
 
-bool area_write_bln(const char * filename, const char * area_pos, int orient) {
-	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
-	if (area == NULL)
-		return false;
-	
-	bool res = _area_write_bln(area, filename);
-	return res;
-};
-
 bool area_save(const char * filename, const char * pos) {
 	d_area * area = get_element<d_area>(pos, surfit_areas->begin(), surfit_areas->end());
 	if (area == NULL)
@@ -111,16 +76,6 @@ bool area_save(const char * filename, const char * pos) {
 	writelog(LOG_MESSAGE,"Saving area to file %s", filename);
 
 	return _area_save(area, filename);
-};
-
-bool area_save_shp(const char * filename, const char * pos) {
-	d_area * area = get_element<d_area>(pos, surfit_areas->begin(), surfit_areas->end());
-	if (area == NULL)
-		return false;
-
-	writelog(LOG_MESSAGE,"Saving area to ERSI shape file %s", filename);
-
-	return _area_save_shp(area, filename);
 };
 
 bool area_setName(const char * new_name, const char * pos) {
