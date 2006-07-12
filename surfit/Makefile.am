@@ -37,6 +37,10 @@ if MAKE_GLOBE
 lib_LTLIBRARIES += libglobe.la 
 endif
 
+if MAKE_SURFIT_IO
+lib_LTLIBRARIES += libsurfit_io.la
+endif
+
 libsstuff_ladir = $(prefix)/include/sstuff
 libsstuff_la_SOURCES =  src/sstuff/bitvec.cpp       
 libsstuff_la_SOURCES += src/sstuff/boolvec.cpp      
@@ -53,6 +57,25 @@ libsstuff_la_SOURCES += src/sstuff/sstuff.cpp
 libsstuff_la_SOURCES += src/sstuff/stepFunc.cpp     
 libsstuff_la_SOURCES += src/sstuff/vec.cpp          
 libsstuff_la_SOURCES += src/sstuff/vec_alg.cpp      
+libsstuff_la_SOURCES += src/sstuff/threads.cpp      
+if HAVE_PTHREAD_INSTALLED
+libsstuff_la_SOURCES += src/sstuff/ptypes/pasync.cxx
+libsstuff_la_SOURCES += src/sstuff/ptypes/pasync.h
+libsstuff_la_SOURCES += src/sstuff/ptypes/patomic.cxx
+libsstuff_la_SOURCES += src/sstuff/ptypes/pexcept.cxx
+libsstuff_la_SOURCES += src/sstuff/ptypes/pfatal.cxx
+libsstuff_la_SOURCES += src/sstuff/ptypes/pmem.cxx
+libsstuff_la_SOURCES += src/sstuff/ptypes/pmsgq.cxx
+libsstuff_la_SOURCES += src/sstuff/ptypes/pport.h
+libsstuff_la_SOURCES += src/sstuff/ptypes/psemaphore.cxx
+libsstuff_la_SOURCES += src/sstuff/ptypes/pstring.cxx
+libsstuff_la_SOURCES += src/sstuff/ptypes/pthread.cxx
+libsstuff_la_SOURCES += src/sstuff/ptypes/ptimedsem.cxx
+libsstuff_la_SOURCES += src/sstuff/ptypes/ptypes.h
+libsstuff_la_SOURCES += src/sstuff/ptypes/punknown.cxx
+endif
+
+
 libsstuff_la_HEADERS =  src/sstuff/bitvec.h       
 libsstuff_la_HEADERS += src/sstuff/bitvec_alg.h   
 libsstuff_la_HEADERS += src/sstuff/boolvec.h      
@@ -73,9 +96,15 @@ libsstuff_la_HEADERS += src/sstuff/sstuff_ie.h
 libsstuff_la_HEADERS += src/sstuff/stepFunc.h     
 libsstuff_la_HEADERS += src/sstuff/vec.h          
 libsstuff_la_HEADERS += src/sstuff/vec_alg.h      
+libsstuff_la_HEADERS += src/sstuff/threads.h      
 
 libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB)
 libsstuff_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsstuff.dll
+
+if HAVE_PTHREAD_INSTALLED
+libsstuff_la_LIBADD += -lpthread 
+endif
+
 
 
 libsurfit_ladir = $(prefix)/include/surfit
@@ -155,7 +184,6 @@ libsurfit_la_SOURCES += src/surfit/sort_alg.cpp
 libsurfit_la_SOURCES += src/surfit/surf.cpp                                                      
 libsurfit_la_SOURCES += src/surfit/surfs_tcl.cpp                                                 
 libsurfit_la_SOURCES += src/surfit/surf_internal.cpp                                             
-libsurfit_la_SOURCES += src/surfit/surf_internal_io.cpp                                             
 libsurfit_la_SOURCES += src/surfit/surf_tcl.cpp                                                  
 libsurfit_la_SOURCES += src/surfit/surfit.cpp            
 libsurfit_la_SOURCES += src/surfit/surfit_wrap.cxx       
@@ -166,28 +194,6 @@ libsurfit_la_SOURCES += src/surfit/solvers/J.cpp
 libsurfit_la_SOURCES += src/surfit/solvers/JCG.cpp
 libsurfit_la_SOURCES += src/surfit/solvers/RF.cpp
 libsurfit_la_SOURCES += src/surfit/solvers/SSOR.cpp
-
-libsurfit_la_SOURCES += src/surfit/shapelib/shapefil.h
-libsurfit_la_SOURCES += src/surfit/shapelib/dbfopen.c
-libsurfit_la_SOURCES += src/surfit/shapelib/shpopen.c
-
-if HAVE_PTHREAD_INSTALLED
-libsurfit_la_SOURCES += src/surfit/ptypes/pasync.cxx
-libsurfit_la_SOURCES += src/surfit/ptypes/pasync.h
-libsurfit_la_SOURCES += src/surfit/ptypes/patomic.cxx
-libsurfit_la_SOURCES += src/surfit/ptypes/pexcept.cxx
-libsurfit_la_SOURCES += src/surfit/ptypes/pfatal.cxx
-libsurfit_la_SOURCES += src/surfit/ptypes/pmem.cxx
-libsurfit_la_SOURCES += src/surfit/ptypes/pmsgq.cxx
-libsurfit_la_SOURCES += src/surfit/ptypes/pport.h
-libsurfit_la_SOURCES += src/surfit/ptypes/psemaphore.cxx
-libsurfit_la_SOURCES += src/surfit/ptypes/pstring.cxx
-libsurfit_la_SOURCES += src/surfit/ptypes/pthread.cxx
-libsurfit_la_SOURCES += src/surfit/ptypes/ptimedsem.cxx
-libsurfit_la_SOURCES += src/surfit/ptypes/ptypes.h
-libsurfit_la_SOURCES += src/surfit/ptypes/punknown.cxx
-endif
-         
 
 
 libsurfit_la_HEADERS  = src/surfit/area.h              
@@ -276,25 +282,70 @@ libsurfit_la_HEADERS += src/surfit/threads.h
 libsurfit_la_HEADERS += src/surfit/variables.h         
 libsurfit_la_HEADERS += src/surfit/variables_internal.h
 libsurfit_la_HEADERS += src/surfit/variables_tcl.h     
-# EasyBmp
-libsurfit_la_SOURCES += src/surfit/EasyBmp/EasyBMP.cpp
-libsurfit_la_SOURCES += src/surfit/EasyBmp/EasyBMP.h
-libsurfit_la_SOURCES += src/surfit/EasyBmp/EasyBMP_BMP.h
-libsurfit_la_SOURCES += src/surfit/EasyBmp/EasyBMP_DataStructures.h
-libsurfit_la_SOURCES += src/surfit/EasyBmp/EasyBMP_VariousBMPutilites.h
 
 
 libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) libsstuff.la 
-if HAVE_PTHREAD_INSTALLED
-libsurfit_la_LIBADD += -lpthread 
-endif
-if HAVE_JPEG_INSTALLED
-libsurfit_la_LIBADD += -ljpeg
-endif
-if HAVE_PNG_INSTALLED
-libsurfit_la_LIBADD += -lpng
-endif
 libsurfit_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit.dll
+
+
+libsurfit_io_ladir = $(prefix)/include/surfit_io
+
+
+libsurfit_io_la_SOURCES =  src/surfit_io/area_bln.cpp              
+libsurfit_io_la_SOURCES += src/surfit_io/area_io_tcl.cpp           
+libsurfit_io_la_SOURCES += src/surfit_io/area_shp.cpp              
+libsurfit_io_la_SOURCES += src/surfit_io/cntr_io_tcl.cpp           
+libsurfit_io_la_SOURCES += src/surfit_io/cntr_shp.cpp              
+libsurfit_io_la_SOURCES += src/surfit_io/curv_bln.cpp              
+libsurfit_io_la_SOURCES += src/surfit_io/curv_io_tcl.cpp           
+libsurfit_io_la_SOURCES += src/surfit_io/curv_shp.cpp              
+libsurfit_io_la_SOURCES += src/surfit_io/pnts_io_tcl.cpp           
+libsurfit_io_la_SOURCES += src/surfit_io/pnts_shp.cpp              
+libsurfit_io_la_SOURCES += src/surfit_io/surfit_io.cpp             
+libsurfit_io_la_SOURCES += src/surfit_io/surfit_io_data_manager.cpp
+libsurfit_io_la_SOURCES += src/surfit_io/surfit_io_variables.cpp   
+libsurfit_io_la_SOURCES += src/surfit_io/surf_arcgis.cpp           
+libsurfit_io_la_SOURCES += src/surfit_io/surf_bmp.cpp              
+libsurfit_io_la_SOURCES += src/surfit_io/surf_gmt.cpp              
+libsurfit_io_la_SOURCES += src/surfit_io/surf_grass.cpp            
+libsurfit_io_la_SOURCES += src/surfit_io/surf_grd.cpp              
+libsurfit_io_la_SOURCES += src/surfit_io/surf_io_tcl.cpp           
+libsurfit_io_la_SOURCES += src/surfit_io/surf_jpg.cpp              
+libsurfit_io_la_SOURCES += src/surfit_io/surf_xyz.cpp              
+# shapelib
+libsurfit_io_la_SOURCES += src/surfit_io/shapelib/shapefil.h
+libsurfit_io_la_SOURCES += src/surfit_io/shapelib/dbfopen.c
+libsurfit_io_la_SOURCES += src/surfit/shapelib/shpopen.c
+# EasyBmp
+libsurfit_io_la_SOURCES += src/surfit_io/EasyBmp/EasyBMP.cpp
+libsurfit_io_la_SOURCES += src/surfit_io/EasyBmp/EasyBMP.h
+libsurfit_io_la_SOURCES += src/surfit_io/EasyBmp/EasyBMP_BMP.h
+libsurfit_io_la_SOURCES += src/surfit_io/EasyBmp/EasyBMP_DataStructures.h
+libsurfit_io_la_SOURCES += src/surfit_io/EasyBmp/EasyBMP_VariousBMPutilites.h
+
+
+libsurfit_io_la_HEADER  =  src/surfit_io/area_io.h               
+libsurfit_io_la_SOURCES += src/surfit_io/area_io_tcl.h           
+libsurfit_io_la_HEADER  += src/surfit_io/cntr_io.h               
+libsurfit_io_la_SOURCES += src/surfit_io/cntr_io_tcl.h           
+libsurfit_io_la_HEADER  += src/surfit_io/curv_io.h               
+libsurfit_io_la_SOURCES += src/surfit_io/curv_io_tcl.h           
+libsurfit_io_la_HEADER  += src/surfit_io/pnts_io.h               
+libsurfit_io_la_SOURCES += src/surfit_io/pnts_io_tcl.h           
+libsurfit_io_la_HEADER  += src/surfit_io/surfit_io.h             
+libsurfit_io_la_HEADER  += src/surfit_io/surfit_io_data_manager.h
+libsurfit_io_la_HEADER  += src/surfit_io/surfit_io_ie.h          
+libsurfit_io_la_SOURCES += src/surfit_io/surfit_io_tcl.h         
+libsurfit_io_la_HEADER  += src/surfit_io/surfit_io_variables.h   
+libsurfit_io_la_HEADER  += src/surfit_io/surf_io.h               
+libsurfit_io_la_SOURCES += src/surfit_io/surf_io_tcl.h           
+
+
+libsurfit_io_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la libsurfit.la
+if HAVE_JPEG_INSTALLED
+libsurfit_io_la_LIBADD += -ljpeg
+endif
+libsurfit_io_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit_io.dll
 
 
 libfreeflow_ladir = $(prefix)/include/freeflow

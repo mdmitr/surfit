@@ -54,8 +54,15 @@ AC_ARG_ENABLE(pthread,
 	PTHREAD_INSTALLED="" 
 	fi])
 
+AC_ARG_ENABLE(surfit_io, [  --enable-surfit_io       turn on surfit_io compilation [default=yes]])
 AC_ARG_ENABLE(freeflow, [  --enable-freeflow       turn on freeflow compilation [default=yes]])
 AC_ARG_ENABLE(globe,    [  --enable-globe          turn on globe compilation [default=yes]])
+
+if test x$enable_surfit_io != xno; then
+   BUILD_SURFIT_IO="YES"
+else
+   BUILD_SURFIT_IO=""
+fi                
 
 if test x$enable_freeflow != xno; then
    BUILD_FREEFLOW="YES"
@@ -241,6 +248,7 @@ AM_CONDITIONAL(HAVE_PTHREAD_INSTALLED, [test "x$PTHREAD_INSTALLED" != "x"])
 AM_CONDITIONAL(HAVE_ZLIB_INSTALLED, [test "x$ZLIB_INSTALLED" != "x"])
 AM_CONDITIONAL(HAVE_JPEG_INSTALLED, [test "x$JPEG_INSTALLED" != "x"])
 AM_CONDITIONAL(HAVE_PNG_INSTALLED, [test "x$PNG_INSTALLED" != "x"])
+AM_CONDITIONAL(MAKE_SURFIT_IO,  [test "x$BUILD_SURFIT_IO" != "x"])
 AM_CONDITIONAL(MAKE_FREEFLOW,  [test "x$BUILD_FREEFLOW" != "x"])
 AM_CONDITIONAL(MAKE_GLOBE,     [test "x$BUILD_GLOBE" != "x"])
 
