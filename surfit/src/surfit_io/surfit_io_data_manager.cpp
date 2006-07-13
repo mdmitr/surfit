@@ -89,6 +89,10 @@ bool surfit_io_manager::auto_load(const char * filename, const char * first1024,
 			res = surf_load_bmp(filename, name);
 			goto exit;
 		}
+		if (strcmp( uext, ".XYZ" ) == 0) {
+			res = surf_load_xyz(filename, name);
+			goto exit;
+		}
 	}
 
 	if ( strncmp(first1024,"\0x00\0x00\0x27\0x0A",4) == 0 ) {

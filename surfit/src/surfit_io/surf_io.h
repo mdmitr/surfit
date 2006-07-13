@@ -51,6 +51,13 @@ d_surf * _surf_load_arcgis(const char * filename, const char * surfname);
 
 SURFIT_IO_EXPORT
 /*! \ingroup internal_surf
+    \fn bool _surf_load_xyz(const char * filename, const char * surfname)
+    \brief loads surf from XYZ 3 column text file
+*/
+d_surf * _surf_load_xyz(const char * filename, const char * surfname); 
+
+SURFIT_IO_EXPORT
+/*! \ingroup internal_surf
     \fn bool _surf_load_jpg(const char * filename, const char * surfname, REAL minz = 0, REAL maxz = 0)
     \brief loads surf from JPEG file
 */

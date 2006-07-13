@@ -190,7 +190,7 @@ d_surf * _surf_load_arcgis(const char * filename, const char * surfname) {
 	return res;
 
 exit:
-	writelog(LOG_ERROR, "surf_load_grass : Wrong file format %s", filename);
+	writelog(LOG_ERROR, "surf_load_arcgis : Wrong file format %s", filename);
 	
 	if (res)
 		res->release();

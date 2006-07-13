@@ -60,6 +60,15 @@ bool surf_load_arcgis(const char * filename, const char * surfname) {
 	return false;
 };
 
+bool surf_load_xyz(const char * filename, const char * surfname) {
+	d_surf * srf = _surf_load_xyz(filename, surfname);
+	if (srf) {
+		surfit_surfs->push_back(srf);
+		return true;
+	}
+	return false;
+};
+
 bool surf_load_jpg(const char * filename, const char * surfname,
 		   REAL minz, REAL maxz, REAL startX, REAL startY, REAL stepX, REAL stepY) {
 	d_surf * srf = _surf_load_jpg(filename, surfname,

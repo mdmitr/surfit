@@ -55,7 +55,6 @@ d_surf::d_surf(vec *icoeff, d_grid *igrd,
 	grd = igrd;
 	coeff = icoeff;
 	setName(newname);
-	show_smooth = true;
 	undef_value = FLT_MAX;
 
 	details_d = new std::vector<vec*>;
@@ -79,7 +78,6 @@ d_surf::d_surf(d_mask * msk) : data("d_surf") {
 	}
 	grd = create_grid(msk->grd);
 	setName(msk->getName());
-	show_smooth = true;
 	undef_value = FLT_MAX;
 
 	details_d = new std::vector<vec*>;

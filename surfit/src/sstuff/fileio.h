@@ -30,6 +30,8 @@ namespace surfit {
 #define LOG_WARNING 3
 #define LOG_DEBUG 4
 
+extern SSTUFF_EXPORT int stop_on_error;
+
 SSTUFF_EXPORT
 /*! \ingroup internal
     \fn void writelog (int errlevel, const char *tmplt, ...);

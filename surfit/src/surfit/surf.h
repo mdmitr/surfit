@@ -232,9 +232,6 @@ public:
 	//! coefficients for each basis surface
 	vec * coeff;
 	
-	//! sets surface draw type - ( true - with triangles, false - with plates )
-	bool show_smooth;
-
 	//! all values in coeff equal to undef_value interprets as undefined
 	REAL undef_value;
 

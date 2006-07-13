@@ -749,6 +749,8 @@ char * types_info() {
 
 void file_load(const char * filename) {
 
+	int prev_stop_on_error = stop_on_error;
+	stop_on_error = false;
 	int readed;
 	char * first1024 = read_first1024(filename, readed);
 
@@ -778,6 +780,8 @@ void file_load(const char * filename) {
 		surfit_data_manager->auto_load(filename, first1024, readed);
 	
 	sstuff_free_char(first1024);
+
+	stop_on_error = prev_stop_on_error;
 	
 };
 

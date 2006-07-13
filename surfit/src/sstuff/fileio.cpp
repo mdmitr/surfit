@@ -51,6 +51,7 @@ char * debug = "Debug: ";
 FILE * logfile = NULL;
 char * logfilename = NULL;
 int loglevel = 0;
+int stop_on_error = 1;
 // 0 - General messages
 // 1 - Error messages
 // 2 - Warning messages
@@ -151,8 +152,10 @@ void writelog (int errlevel, const char *tmplt, ...) {
 	va_end (ap);
 	if ( (logfile) && (ferror(logfile) == 0) ) fflush(logfile);
 
-	if (errlevel == LOG_ERROR) 
-		throw "Execution stopped";
+	if (stop_on_error == 1) {
+		if (errlevel == LOG_ERROR) 
+			throw "Execution stopped";
+	}
 };
 
 void Tcl_printf (const char *tmplt, ...) {
