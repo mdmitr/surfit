@@ -1,4 +1,13 @@
-surfit 2.1
+surfit 2.1 changes:
+
+	! libjpeg-6b
+	! EasyBMP-1.03
+	! shapelib-1.2.10
+	! netcdf-2.5.0
+	! zlib-1.2.3
+
+	* small bugfix with taking faults into account
+
 	+ added input/output of GMT maps (CDF format) : surf_load_gmt and surf_save_gmt commands
 	+ added input/output of GRASS maps (ASCII format) : surf_load_grass and surf_save_grass commands
 	+ added input/output of ArcGIS maps (ASCII format) : surf_load_arcgis and surf_save_arcgis commands
@@ -8,6 +17,10 @@ surfit 2.1
 		area_load_shp areas_load_shp area_save_shp
 		cntr_load_shp cntrs_load_shp cntr_save_shp
 	+ added anisotropy for completer
-	+ added import/export of surfaces to JPEG images (export in grayscale colormap)
+	+ added import/export of surfaces to JPEG images (export in grayscale colormap) :
+		surf_load_jpg surf_save_jpg
+	+ added import/export of surfaces to BMP images (export in grayscale colormap) :
+		surf_load_bmp surf_save_bmp
+	+ added import of surfaces from XYZ text files 
+		surf_load_xyz
 
-	* small bugfix with taking faults into account
