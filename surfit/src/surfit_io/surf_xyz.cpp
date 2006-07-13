@@ -168,7 +168,10 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
 
 	// now trying to find the OX axis
 	bool founded;
-	for (i = 0; i < pnt_cnt-1; i++) {
+	if (pnt_cnt <= 7)
+		goto exit;
+
+	for (i = 0; i < MAX(0,pnt_cnt-7); i++) {
 		founded = true;
 		x0 = (*X)(i);
 		x1 = (*X)(i+1);
@@ -183,7 +186,7 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
 			x1 = (*X)(i+j);
 			y1 = (*Y)(i+j);
 			dist2 = (x1 - x0)*(x1 - x0) + (y1 - y0)*(y1 - y0);
-			if ( fabs(dist1 - dist2) > dist1/10e+6 ){
+			if ( fabs(dist1 - dist2) > MAX(dist1/10e+6,1e-4) ){
 				founded = false;
 				break;
 			}
