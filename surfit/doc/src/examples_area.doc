@@ -142,3 +142,23 @@ areas 2 and 4, magenta for area 6):
 This result was obtained with <TT>"examples/surfit/curvs/area_wmean.tcl"</TT> script. 
 
 */
+
+/*! \example area_completer.tcl
+This example shows how to use \ref area_completer gridding rule. This rule allows you to
+apply \ref completer rule in some area. This example shows how to modify resulting surface
+behaviour in the central (blue) area. The \ref completer gridding rule was modified: anisotropy
+with angle 30 degrees and factor 3 was added inside area.
+
+\htmlonly
+Here is the image of the resulting surface 
+
+<P ALIGN=CENTER>
+<IMG alt="resulting surface" src="area_completer.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. Resulting surface </P>
+
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/curvs/area_completer.tcl"</TT> script. 
+
+*/

@@ -4,7 +4,7 @@
 <TT><B>surfit</B></TT> uses originally developed gridding method called CMOFS 
 (consecutive minization of functionals sequence). The CMOFS method described below, 
 allows to strictly determine the influence for each data, used for gridding. 
-To process data with CMOFS algorithm it is necessary to create so-called "gridding rule". 
+To process data with CMOFS algorithm it is necessary to create so-called <A HREF="group__tcl__rules.html">"gridding rule"</A>. 
 Gridding rule is a functional that describes how to use data in gridding.
 The order of gridding rules defines the priority levels for each data. 
 For example, we can think, what data given in scattered 
