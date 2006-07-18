@@ -24,7 +24,7 @@
 
 namespace surfit {
 
-class d_curv;
+class d_area;
 class grid_line;
 class d_surf;
 class bitvec;
@@ -56,6 +56,8 @@ public:
 	void mark_solved_and_undefined(bitvec * mask_solved, 
 				       bitvec * mask_undefined,
 				       bool i_am_cond);
+
+	void set_area(const d_area * iarea, bool iinside);
 	
 protected:
 	
@@ -74,6 +76,13 @@ private:
 	REAL angle;
 	//! anisothropy factor
 	REAL w;
+
+	// for area_completer
+	const d_area * area;
+	bool area_inside;
+
+	bitvec * saved_mask_solved;
+	bitvec * saved_mask_undefined;
 
 };
 

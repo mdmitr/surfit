@@ -37,6 +37,8 @@ namespace surfit {
 
     \param D1 weight coefficient for rule that the resulting surface should tend to constant surface
     \param D2 weight coefficient for rule that the resulting surface should tend to plane surface
+    \param alpha anisotropy angle (degrees)
+    \param w anisotropy factor
   
     \par Math:
     This command adds the following functional to the functional sequence:

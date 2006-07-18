@@ -38,6 +38,7 @@
 #include "f_curv_ineq.h"
 #include "f_curv_surf.h"
 #include "f_curv_surf_ineq.h"
+#include "f_completer.h"
 #include "variables_tcl.h"
 
 namespace surfit {
@@ -313,6 +314,33 @@ bool area_wmean(REAL mean, const char * area_pos, const char * surf_pos, REAL mu
 
 	f_area_wmean * f = new f_area_wmean(mean, srf, area, mult, (inside == 1) );
 	functionals->push_back(f);
+	return true;
+};
+
+bool area_completer(const char * area_pos, REAL D1, REAL D2, REAL alpha, REAL w, int inside) {
+	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
+	if (area == NULL)
+		return false;
+
+	f_completer * f = new f_completer(D1, D2, alpha, w);
+	f->set_area(area, (inside == 1));
+	functionals->push_back(f);
+	return true;
+};
+
+bool area_completer_add(const char * area_pos, REAL weight, REAL D1, REAL D2, REAL alpha, REAL w, int inside) {
+
+	functional * srf = get_modifiable_functional();
+	if (srf == NULL)
+		return false;
+
+	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
+	if (area == NULL)
+		return false;
+
+	f_completer * f = new f_completer(D1, D2, alpha, w);
+	f->set_area(area, (inside == 1));
+	srf->add_functional(f, weight);
 	return true;
 };
 

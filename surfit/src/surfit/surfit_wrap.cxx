@@ -28764,6 +28764,1188 @@ _wrap_area_wmean(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
 
 
 SWIGINTERN int
+_wrap_area_completer__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  double arg5 ;
+  int arg6 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  int val6 ;
+  int ecode6 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:area_completer area_name_or_position D1 D2 alpha w inside ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  ecode2 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[2], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "area_completer" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast<double >(val2);
+  ecode3 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[3], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "area_completer" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast<double >(val3);
+  ecode4 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[4], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "area_completer" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast<double >(val4);
+  ecode5 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[5], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "area_completer" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast<double >(val5);
+  ecode6 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[6], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "area_completer" "', argument " "6"" of type '" "int""'");
+  } 
+  arg6 = static_cast<int >(val6);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer((char const *)arg1,arg2,arg3,arg4,arg5,arg6);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  double arg5 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:area_completer area_name_or_position D1 D2 alpha w ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  ecode2 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[2], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "area_completer" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast<double >(val2);
+  ecode3 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[3], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "area_completer" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast<double >(val3);
+  ecode4 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[4], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "area_completer" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast<double >(val4);
+  ecode5 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[5], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "area_completer" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast<double >(val5);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer((char const *)arg1,arg2,arg3,arg4,arg5);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_completer area_name_or_position D1 D2 alpha ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  ecode2 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[2], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "area_completer" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast<double >(val2);
+  ecode3 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[3], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "area_completer" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast<double >(val3);
+  ecode4 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[4], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "area_completer" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast<double >(val4);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer((char const *)arg1,arg2,arg3,arg4);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_completer area_name_or_position D1 D2 ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  ecode2 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[2], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "area_completer" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast<double >(val2);
+  ecode3 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[3], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "area_completer" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast<double >(val3);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer((char const *)arg1,arg2,arg3);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  double arg2 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_completer area_name_or_position D1 ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  ecode2 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[2], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "area_completer" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast<double >(val2);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer((char const *)arg1,arg2);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer__SWIG_5(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:area_completer area_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer((char const *)arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer__SWIG_6(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  bool result;
+  
+  if (SWIG_GetArgs(interp, objc, objv,":area_completer ") == TCL_ERROR) SWIG_fail;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer();
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  Tcl_Obj *CONST *argv = objv+1;
+  int argc = objc-1;
+  if (argc == 0) {
+    return _wrap_area_completer__SWIG_6(clientData, interp, objc, argv - 1);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_area_completer__SWIG_5(clientData, interp, objc, argv - 1);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_area_completer__SWIG_4(clientData, interp, objc, argv - 1);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_area_completer__SWIG_3(clientData, interp, objc, argv - 1);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_area_completer__SWIG_2(clientData, interp, objc, argv - 1);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_area_completer__SWIG_1(clientData, interp, objc, argv - 1);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_area_completer__SWIG_0(clientData, interp, objc, argv - 1);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'area_completer'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  int arg7 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  int val7 ;
+  int ecode7 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:area_completer_add area_name_or_position weight D1 D2 alpha w inside ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer_add" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  ecode2 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[2], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "area_completer_add" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast<double >(val2);
+  ecode3 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[3], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "area_completer_add" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast<double >(val3);
+  ecode4 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[4], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "area_completer_add" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast<double >(val4);
+  ecode5 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[5], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "area_completer_add" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast<double >(val5);
+  ecode6 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[6], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "area_completer_add" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast<double >(val6);
+  ecode7 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[7], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "area_completer_add" "', argument " "7"" of type '" "int""'");
+  } 
+  arg7 = static_cast<int >(val7);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer_add((char const *)arg1,arg2,arg3,arg4,arg5,arg6,arg7);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:area_completer_add area_name_or_position weight D1 D2 alpha w ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer_add" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  ecode2 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[2], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "area_completer_add" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast<double >(val2);
+  ecode3 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[3], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "area_completer_add" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast<double >(val3);
+  ecode4 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[4], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "area_completer_add" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast<double >(val4);
+  ecode5 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[5], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "area_completer_add" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast<double >(val5);
+  ecode6 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[6], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "area_completer_add" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast<double >(val6);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer_add((char const *)arg1,arg2,arg3,arg4,arg5,arg6);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  double arg5 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:area_completer_add area_name_or_position weight D1 D2 alpha ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer_add" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  ecode2 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[2], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "area_completer_add" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast<double >(val2);
+  ecode3 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[3], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "area_completer_add" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast<double >(val3);
+  ecode4 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[4], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "area_completer_add" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast<double >(val4);
+  ecode5 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[5], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "area_completer_add" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast<double >(val5);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer_add((char const *)arg1,arg2,arg3,arg4,arg5);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer_add__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_completer_add area_name_or_position weight D1 D2 ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer_add" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  ecode2 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[2], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "area_completer_add" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast<double >(val2);
+  ecode3 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[3], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "area_completer_add" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast<double >(val3);
+  ecode4 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[4], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "area_completer_add" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast<double >(val4);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer_add((char const *)arg1,arg2,arg3,arg4);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer_add__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_completer_add area_name_or_position weight D1 ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer_add" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  ecode2 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[2], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "area_completer_add" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast<double >(val2);
+  ecode3 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[3], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "area_completer_add" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast<double >(val3);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer_add((char const *)arg1,arg2,arg3);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer_add__SWIG_5(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  double arg2 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_completer_add area_name_or_position weight ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer_add" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  ecode2 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[2], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "area_completer_add" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast<double >(val2);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer_add((char const *)arg1,arg2);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer_add__SWIG_6(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:area_completer_add area_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer_add" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer_add((char const *)arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer_add__SWIG_7(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  bool result;
+  
+  if (SWIG_GetArgs(interp, objc, objv,":area_completer_add ") == TCL_ERROR) SWIG_fail;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::area_completer_add();
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_completer_add(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  Tcl_Obj *CONST *argv = objv+1;
+  int argc = objc-1;
+  if (argc == 0) {
+    return _wrap_area_completer_add__SWIG_7(clientData, interp, objc, argv - 1);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_area_completer_add__SWIG_6(clientData, interp, objc, argv - 1);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_area_completer_add__SWIG_5(clientData, interp, objc, argv - 1);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_area_completer_add__SWIG_4(clientData, interp, objc, argv - 1);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_area_completer_add__SWIG_3(clientData, interp, objc, argv - 1);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_area_completer_add__SWIG_2(clientData, interp, objc, argv - 1);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_area_completer_add__SWIG_1(clientData, interp, objc, argv - 1);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_area_completer_add__SWIG_0(clientData, interp, objc, argv - 1);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'area_completer_add'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
 _wrap_contour__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   bool result;
@@ -34774,6 +35956,8 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "area_surf_geq", (swig_wrapper_func) _wrap_area_surf_geq, NULL},
     { SWIG_prefix "area_mean", (swig_wrapper_func) _wrap_area_mean, NULL},
     { SWIG_prefix "area_wmean", (swig_wrapper_func) _wrap_area_wmean, NULL},
+    { SWIG_prefix "area_completer", (swig_wrapper_func) _wrap_area_completer, NULL},
+    { SWIG_prefix "area_completer_add", (swig_wrapper_func) _wrap_area_completer_add, NULL},
     { SWIG_prefix "contour", (swig_wrapper_func) _wrap_contour, NULL},
     { SWIG_prefix "contour_add", (swig_wrapper_func) _wrap_contour_add, NULL},
     { SWIG_prefix "contour_leq", (swig_wrapper_func) _wrap_contour_leq, NULL},

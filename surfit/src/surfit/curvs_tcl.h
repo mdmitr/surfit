@@ -513,6 +513,38 @@ bool area_mean(REAL mean, const char * area_name_or_position = "0", REAL mult = 
 */
 bool area_wmean(REAL mean, const char * area_name_or_position = "0", const char * surf_name_or_position = "0", REAL mult = 0.001, int inside = 1);
 
+/*! \ingroup tcl_rules_areas
+    \fn bool area_completer(const char * area_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
+
+    \par Tcl syntax:
+    area_completer "area_name_or_position" D1 D2 alpha w inside
+
+    \par Description
+    This rule implements \ref completer rule inside or outside \ref d_area "area"
+
+    \param D1 weight coefficient for rule that the resulting surface should tend to constant surface
+    \param D2 weight coefficient for rule that the resulting surface should tend to plane surface
+    \param alpha anisotropy angle (degrees)
+    \param w anisotropy factor
+*/
+bool area_completer(const char * area_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
+
+/*! \ingroup tcl_rules_areas
+    \fn bool area_completer_add(const char * area_name_or_position = "0", REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
+
+    \par Tcl syntax:
+    area_completer_add "area_name_or_position" weight D1 D2 alpha w inside
+
+    \par Description
+    This rule adds rule \ref area_completer with informational "weight" to the previous rule.
+
+    \param D1 weight coefficient for rule that the resulting surface should tend to constant surface
+    \param D2 weight coefficient for rule that the resulting surface should tend to plane surface
+    \param alpha anisotropy angle (degrees)
+    \param w anisotropy factor
+*/
+bool area_completer_add(const char * area_name_or_position = "0", REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
+
 //////////////
 //
 // contour

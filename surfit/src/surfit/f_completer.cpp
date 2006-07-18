@@ -48,9 +48,21 @@ faultable("f_completer", F_USUAL|F_FAULT)
 	D2 = iD2;
 	angle = iangle;
 	w = iw;
+	area = NULL;
+	area_inside = true;
+	saved_mask_solved = NULL;
+	saved_mask_undefined = NULL;
 };
 
 f_completer::~f_completer() {
+	if (saved_mask_solved) {
+		saved_mask_solved->release();
+		saved_mask_solved = NULL;
+	}
+	if (saved_mask_undefined) {
+		saved_mask_undefined->release();
+		saved_mask_undefined = NULL;
+	}
 };
 
 int f_completer::this_get_data_count() const {
@@ -66,6 +78,25 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	size_t NN = method_grid->getCountX();
 	size_t MM = method_grid->getCountY();
+
+	bool solved_saved = (saved_mask_solved != NULL);
+	bool undefined_saved = (saved_mask_undefined != NULL);
+	bool undefined_mask_modified = false;
+	
+	if (area != NULL) {
+		undefined_mask_modified = true;
+		if ( undefined_saved == false ) 
+			saved_mask_undefined = create_bitvec(method_mask_undefined);
+
+		// set "undefined" mask outside area
+		bitvec * area_mask = nodes_in_area_mask(area, method_grid, method_mask_undefined);
+		if (area_mask) {
+			if (area_inside != false) 
+				area_mask->invert();
+			method_mask_undefined->OR(area_mask);
+			area_mask->release();
+		}
+	}
 
 	matr * oD1 = NULL;
 	matr * oD2 = NULL;
@@ -99,6 +130,14 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	size_t points = calcVecV(matrix_size, method_X, T, v, NN, MM, method_mask_solved, method_mask_undefined);
 
 	matrix = T;
+
+	if (undefined_mask_modified == true) {
+		if (undefined_saved == false) {
+			method_mask_undefined->copy(saved_mask_undefined);
+			saved_mask_undefined->release();
+			saved_mask_undefined = NULL;
+		}
+	}
 
 	bool solvable = completer_solvable(points, D1, D2);
 
@@ -171,7 +210,11 @@ bool f_completer::minimize() {
 		if (reproject_faults && gfaults) {
 			if (method_prev_grid != NULL) {
 				
-				bitvec * saved_mask_solved = create_bitvec(method_mask_solved);
+				if (saved_mask_solved) {
+					saved_mask_solved->release();
+					saved_mask_solved = NULL;
+				}
+				saved_mask_solved = create_bitvec(method_mask_solved);
 				method_mask_solved->init_false();
 				
 				int size = method_mask_solved->size();
@@ -187,8 +230,10 @@ bool f_completer::minimize() {
 				minimize_step();
 								
 				method_mask_solved->copy(saved_mask_solved);
-				if (saved_mask_solved)
+				if (saved_mask_solved) {
 					saved_mask_solved->release();
+					saved_mask_solved = NULL;
+				}
 			}
 			
 		}
@@ -200,7 +245,11 @@ bool f_completer::minimize() {
 				grid_line * undef_grd_line = trace_undef_grd_line(method_mask_undefined, method_grid->getCountX());
 				if (undef_grd_line) {
 					
-					bitvec * saved_mask_solved = create_bitvec(method_mask_solved);
+					if (saved_mask_solved) {
+						saved_mask_solved->release();
+						saved_mask_solved = NULL;
+					}
+					saved_mask_solved = create_bitvec(method_mask_solved);
 					int size = method_mask_solved->size();
 					int i;
 					
@@ -214,8 +263,10 @@ bool f_completer::minimize() {
 					
 					undef_grd_line->release();
 					method_mask_solved->copy(saved_mask_solved);
-					if (saved_mask_solved)
+					if (saved_mask_solved) {
 						saved_mask_solved->release();
+						saved_mask_solved = NULL;
+					}
 					
 				}
 
@@ -234,8 +285,16 @@ bool f_completer::minimize() {
 			writelog(LOG_MESSAGE,"completer : flood_areas_cnt = %d", flood_areas_cnt);
 			writelog(LOG_MESSAGE,"completer : processing each isolated area (%d)...", flood_areas_cnt);
 			
-			bitvec * saved_mask_solved = create_bitvec(method_mask_solved);
-			bitvec * saved_mask_undefined = create_bitvec(method_mask_undefined);
+			if (saved_mask_solved) {
+					saved_mask_solved->release();
+					saved_mask_solved = NULL;
+			}
+			saved_mask_solved = create_bitvec(method_mask_solved);
+			if (saved_mask_undefined) {
+				saved_mask_undefined->release();
+				saved_mask_undefined = NULL;
+			}
+			saved_mask_undefined = create_bitvec(method_mask_undefined);
 			
 			int color;
 			size_t f_size = flood_areas->size();
@@ -285,10 +344,14 @@ bool f_completer::minimize() {
 			method_mask_solved->copy(saved_mask_solved);
 			method_mask_undefined->copy(saved_mask_undefined);
 			
-			if (saved_mask_solved)
+			if (saved_mask_solved) {
 				saved_mask_solved->release();
-			if (saved_mask_undefined)
+				saved_mask_solved = NULL;
+			}
+			if (saved_mask_undefined) {
 				saved_mask_undefined->release();
+				saved_mask_undefined = NULL;
+			}
 			
 		}
 
@@ -304,7 +367,39 @@ bool f_completer::minimize() {
 
 void f_completer::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 	
-	set_solved(mask_solved, mask_undefined);
+	if (area) {
+		if (saved_mask_undefined) {
+			saved_mask_undefined->release();
+			saved_mask_undefined = NULL;
+		}
+
+		saved_mask_undefined = create_bitvec(mask_undefined);
+		bitvec * area_mask = nodes_in_area_mask(area, method_grid, method_mask_undefined);
+		if (area_mask) {
+
+			if (area_inside == false)
+				area_mask->invert();
+
+			size_t matrix_size = method_basis_cntX * method_basis_cntY;
+			size_t i;
+			for (i = 0; i < (size_t)matrix_size; i++) {
+				if (area_mask->get(i) == false)
+					continue;
+				if (mask_undefined->get(i) == false)
+					mask_solved->set_true(i);
+			}
+			
+			area_mask->release();
+		}
+
+		mask_undefined->copy(saved_mask_undefined);
+		saved_mask_undefined->release();
+		saved_mask_undefined = NULL;
+	} else {
+				
+		set_solved(mask_solved, mask_undefined);
+		
+	}
 	mark_sums(mask_solved, mask_undefined);
 
 };
@@ -330,6 +425,11 @@ bool f_completer::solvable_without_cond(const bitvec * mask_solved,
 
 sss:
 	return true;
+};
+
+void f_completer::set_area(const d_area * iarea, bool iinside) {
+	area = iarea;
+	area_inside = iinside;
 };
 
 size_t calcVecV(size_t size, 
@@ -435,7 +535,7 @@ void set_solved(bitvec * mask_solved, bitvec * mask_undefined) {
 	int N = mask_solved->size();
 	int i;
 	for (i = 0; i < N; i++) {
-		if (!mask_undefined->get(i))
+		if (mask_undefined->get(i) == false)
 			mask_solved->set_true(i);
 	}
 };
