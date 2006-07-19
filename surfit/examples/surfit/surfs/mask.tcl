@@ -1,45 +1,62 @@
 #
+# This script was generated with funner v2.0beta
+
+# 
+# load plugins
+# 
 load libsurfit[info sharedlibextension]
 
-# removing all previous data and gridding rules
-clear_data
+# remove all previous data and gridding rules
+clear_data 
 
-# setting map name for calculating surfit
-set map_name map_mask
+# set name of surface
+set map_name "map_mask" 
 
-# set tolerance for cg solver
-set tol 1e-5
+# set solver
+set_solver "cg" 
 
-##
-## loading initial data 
-##
-surf_load func.func
-# convering func to defarea
-surf_to_mask 0 60
-mask_not
-surf_load func.func
+# set tolerance for solver
+set tol 1e-005 
 
 ##
-## constructing grid
+## load initial data 
 ##
-grid_get -10 10 0.2 -10 10 0.4
-
+ 
+# load mask from surfit datafile 
+mask_load "mask.mask" "test_mask"  
+ 
+# load surface from surfit datafile 
+surf_load "func.func" "test_func"  
+ 
 ##
-## constructing functionals sequence
+## construct grid 
 ##
-mask undef
-surface
-completer 1 2
-
+grid_get -10 10 0.2 -10 10 0.4 
+ 
 ##
-## runing cmofs algorithm
-##
-surfit
-
-##
-## saving results
+## create gridding rules
 ##
 
-grid_unload
-surf_del 0
-surf_save mask.dat map_mask
+# resulting surface where mask is true = constant value 
+mask undef "test_mask"  
+
+# resulting surface = surface values 
+surface "test_func" 
+
+# resulting surface should tend to be constant or plane 
+completer 
+
+##
+## run gridding algorithm
+##
+surfit 
+
+##
+## save results 
+##
+
+# unload grid from memory
+grid_unload 
+
+# save surface to surfit datafile 
+surf_save "mask.dat" "map_mask" 
