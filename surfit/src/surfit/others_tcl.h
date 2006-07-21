@@ -83,7 +83,7 @@ bool completer(REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
     completer_add weight D1 D2
 
     \par Description:
-    This rule modifies previous (modifiable) rule by adding the \ref completer rule with some weight.
+    This function modifies previous (modifiable) rule by adding the \ref completer rule with some weight.
     This rule applies to whole resulting surface.
 
     \param weight informational weight for this rule
@@ -120,7 +120,7 @@ bool value(REAL val = 0);
     value_add weight val
 
     \par Description:
-    This rule modifies previous (modifiable) rule by adding the \ref value rule with some weight.
+    This function modifies previous (modifiable) rule by adding the \ref value rule with some weight.
     This rule applies to whole resulting surface.
 
     \param weight informational weight for this rule

@@ -95,7 +95,7 @@ d_mask * _mask_load_df(datafile * df, const char * maskname) {
 				
 				if ( df->isWord("array") ) {
 					if (!df->readWord()) goto exit;
-					if ( df->isWord("int") ) {
+					if ( df->isWord("bit") ) {
 						if (!df->readWord()) goto exit;
 						if ( df->isWord("coeff") ) {
 							df->readBitArray(icoeff);

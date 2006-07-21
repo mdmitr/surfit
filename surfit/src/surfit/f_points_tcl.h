@@ -51,7 +51,7 @@ bool points(const char * points_name_or_position = "0");
     points_add weight "points_name_or_position"
 
     \par Description:
-    This rule modifies previous (modifiable) rule by adding the \ref points rule with some weight.
+    This function modifies previous (modifiable) rule by adding the \ref points rule with some weight.
 
     \param weight informational weight for this rule
     \param points_name_or_position name of \ref d_points "points" dataset, or points position number.

@@ -46,7 +46,7 @@ bool dem(const char * dem_name_or_position = "0");
     dem_add weight "dem_name_or_position"
 
     \par Description:
-    This rule modifies previous (modifiable) rule by adding the \ref dem rule with some weight.
+    This function modifies previous (modifiable) rule by adding the \ref dem rule with some weight.
 
     \param weight informational weight for this rule
     \param dem_name_or_position name of \ref d_dem "DEM" dataset, or DEM position number

@@ -46,7 +46,7 @@ bool surface(const char * surface_name_or_position = "0");
     surface_add weight "surface_name_or_position"
 
     \par Description:
-    This rule modifies previous (modifiable) rule by adding the \ref surface rule with some weight.
+    This function modifies previous (modifiable) rule by adding the \ref surface rule with some weight.
 
     \param weight informational weight for this rule
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
@@ -203,9 +203,9 @@ bool trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name_or_position = "0"
     trend_add weight D1 D2 "surface_name_or_position"
 
     \par Description:
-    This rule modifies previous (modifiable) rule by adding the \ref trend rule with some weight.
+    This function modifies previous (modifiable) rule by adding the \ref trend rule with some weight.
 
-    \param weight informational weight for this rule
+    \param weight informational weight for \ref trend rule
     \param D1 informational weight for rule that sounds "resulting surface should have the same gradients as trend surface"
     \param D2 informational weight for rule that sounds "resulting surface should have the same curvature as trend surface"
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number. This is a trend surface.
@@ -219,9 +219,10 @@ bool trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_name_
     mask val "surface_name_or_position"
 
     \par Description:
-    Using this rule the resulting surface approximates cells where mask is true with constant real number
+    Using this rule the resulting surface approximates cells where mask is true with constant real number.
+    In case val is equal to word "undef", resulting surface would have "undefined values" for cells where mask is true.
 
-    \param val real number for cells approximation
+    \param val real number or word "undef" for approximation.
     \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number
 
     \par Math:
@@ -233,6 +234,73 @@ bool trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_name_
 
 */
 bool mask(const char * val, const char * mask_name_or_position = "0");
+
+/*! \ingroup tcl_rules_masks
+    \fn bool mask_add(REAL val, REAL weight = 1, const char * mask_name_or_position = "0");
+
+    \par Tcl syntax:
+    mask_add val weight "surface_name_or_position"
+
+    \par Description:
+    This function modifies previous (modifiable) rule by adding the \ref mask rule with some weight.
+
+    \param val real number for approximation.
+    \param weight informational weight for \ref mask rule
+    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number
+*/
+bool mask_add(REAL val, REAL weight = 1, const char * mask_name_or_position = "0");
+
+/*! \ingroup tcl_rules_masks
+    \fn bool mask_leq(REAL value, const char * mask_name_or_position = "0", REAL mult = 0.001);
+    
+    \par Tcl syntax:
+    mask_leq value "mask_name_or_position" mult
+
+    \par Description:
+    This rule adds the surface condition - "the resulting surface should be lower than or equal to value where mask is true".
+    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
+    your conditions and if they are correct, try to change "mult" parameter.
+
+    \param value resulting surface values should be lower than or equal to this real number
+    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number.
+    \param mult multiplier parameter for \ref penalty algorithm
+    
+    \par Math:
+    This command adds the condition:
+    \f[
+    u_{i,j} \leq z,
+    \f]
+    where (i,j) - indices of the cells where mask is true, z - constant value
+
+*/
+bool mask_leq(REAL value, const char * mask_name_or_position = "0", REAL mult = 0.001);
+
+/*! \ingroup tcl_rules_masks
+    \fn bool mask_geq(REAL value, const char * mask_name_or_position = "0", REAL mult = 0.001);
+    
+    \par Tcl syntax:
+    mask_geq value "mask_name_or_position" mult
+
+    \par Description:
+    This rule adds the surface condition - "the resulting surface should be greater than or equal to value where mask is true".
+    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
+    your conditions and if they are correct, try to change "mult" parameter.
+
+    \param value resulting surface values should be greater than or equal to this real number
+    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number.
+    \param mult multiplier parameter for \ref penalty algorithm
+    
+    \par Math:
+    This command adds the condition:
+    \f[
+    u_{i,j} \geq z,
+    \f]
+    where (i,j) - indices of the cells where mask is true, z - constant value
+
+    \sa mask_leq area_leq area_geq
+
+*/
+bool mask_geq(REAL value, const char * mask_name_or_position = "0", REAL mult = 0.001);
 	
 }; // namespace surfit;
 

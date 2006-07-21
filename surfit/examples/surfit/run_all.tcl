@@ -67,6 +67,15 @@ if { [source "surface_ineq.tcl"] == 0 } {
 if { [source "trend.tcl"] == 0 } {
 	return 0
 }
+if { [source "mask.tcl"] == 0 } {
+	return 0
+}
+if { [source "mask_add.tcl"] == 0 } {
+	return 0
+}
+if { [source "mask_ineq.tcl"] == 0 } {
+	return 0
+}
 cd ..
 
 #

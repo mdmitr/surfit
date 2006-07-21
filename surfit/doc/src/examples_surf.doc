@@ -88,3 +88,36 @@ Here is the image of the resulting \ref d_surf "surface":
 
 This result was obtained with <TT>"examples/surfit/surfs/mask.tcl"</TT> script. 
 */
+
+/*! \example mask_add.tcl
+
+This example shows how to add gridding rule \ref value with respect to \ref d_mask "mask".
+
+Here is the image of the resulting \ref d_surf "surface":
+
+\htmlonly
+<P ALIGN=CENTER>
+<IMG alt="surface" src="mask_add.jpg" border="0">
+<IMG alt="mask" src="mask_add2.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. surface and mask </P>
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/surfs/mask_add.tcl"</TT> script. 
+*/
+
+/*! \example mask_ineq.tcl
+
+This example shows how to set inequality conditions with \ref d_mask "mask".
+
+Here is the image of the resulting \ref d_surf "surface":
+
+\htmlonly
+<P ALIGN=CENTER>
+<IMG alt="surface" src="mask_ineq.jpg" border="0">
+</P>
+<P ALIGN=CENTER> Pic 1. surface built with inequality by mask </P>
+\endhtmlonly
+
+This result was obtained with <TT>"examples/surfit/surfs/mask_ineq.tcl"</TT> script. 
+*/

@@ -25,6 +25,7 @@
 #include "f_surf_ineq.h"
 #include "f_trend.h"
 #include "f_mask.h"
+#include "f_mask_ineq.h"
 #include "variables.h"
 #include "variables_tcl.h"
 
@@ -110,6 +111,40 @@ bool mask(const char * Value, const char * pos) {
 		return false;
 	
 	f_mask * f = new f_mask(msk, value);
+	functionals->push_back(f);
+	return true;
+};
+
+bool mask_add(REAL value, REAL weight, const char * pos) {
+	functional * mf = get_modifiable_functional();
+	if (mf == NULL)
+		return false;
+
+	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
+	if (msk == NULL)
+		return false;
+
+	f_mask * f = new f_mask(msk, value);
+	mf->add_functional(f, weight);
+	return true;
+};
+
+bool mask_leq(REAL value, const char * mask_pos, REAL mult) {
+	d_mask * mask = get_element<d_mask>(mask_pos, surfit_masks->begin(), surfit_masks->end());
+	if (mask == NULL)
+		return false;
+
+	f_mask_ineq * f = new f_mask_ineq(value, mask, true, mult);
+	functionals->push_back(f);
+	return true;
+};
+
+bool mask_geq(REAL value, const char * mask_pos, REAL mult) {
+	d_mask * mask = get_element<d_mask>(mask_pos, surfit_masks->begin(), surfit_masks->end());
+	if (mask == NULL)
+		return false;
+
+	f_mask_ineq * f = new f_mask_ineq(value, mask, false, mult);
 	functionals->push_back(f);
 	return true;
 };

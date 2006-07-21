@@ -32,6 +32,9 @@ bool surface_geq(const char * surface_name_or_position = "0", REAL mult = 0.001)
 bool trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name_or_position = "0");
 bool trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_name_or_position = "0");
 bool mask(const char * val, const char * mask_name_or_position = "0");
+bool mask_add(REAL val, REAL weigh = 1, const char * mask_name_or_position = "0");
+bool mask_leq(REAL value, const char * mask_name_or_position = "0", REAL mult = 0.001);
+bool mask_geq(REAL value, const char * mask_name_or_position = "0", REAL mult = 0.001);
 
 //
 // surf

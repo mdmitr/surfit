@@ -472,6 +472,10 @@ SOURCE=..\src\surfit\f_mask.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\surfit\f_mask_ineq.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\surfit\f_surf.cpp
 # End Source File
 # Begin Source File
@@ -884,6 +888,10 @@ SOURCE=..\src\surfit\f_curv_surf_ineq.h
 # Begin Source File
 
 SOURCE=..\src\surfit\f_mask.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_mask_ineq.h
 # End Source File
 # Begin Source File
 

@@ -159,7 +159,7 @@ bool curve_surf(const char * surf_name_or_position = "0", const char * curv_name
     curve_surf_add "surf_name_or_position" weight "curv_name_or_position"
 
     \par Description:
-    This rule modifies previous (modifiable) rule by adding the \ref curve_surf rule with some weight. 
+    This function modifies previous (modifiable) rule by adding the \ref curve_surf rule with some weight. 
     Using this rule, the resulting surface approximates curve with other surface "values" taking into 
     account a previous (modifiable) rule.
     
@@ -295,7 +295,7 @@ bool area(const char * value="undef", const char * area_name_or_position = "0", 
     area_add value weight "area_name_or_position" inside
 
     \par Description:
-    This rule modifies previous (modifiable) rule by adding the \ref area rule with some weight. Use this rule
+    This function modifies previous (modifiable) rule by adding the \ref area rule with some weight. Use this rule
     if you don't know "value" exactly. Using this rule the resulting surface approximates area with "value" 
     taking into account a previous (modifiable) rule.
 
@@ -404,7 +404,7 @@ bool area_surf(const char * surf_name_or_position = "0", const char * area_name_
     area_surf_add "surf_name_or_position" weight "area_name_or_position" inside
 
     \par Description:
-    This rule modifies previous (modifiable) rule by adding the \ref area_surf rule with some weight. 
+    This function modifies previous (modifiable) rule by adding the \ref area_surf rule with some weight. 
     Using this rule the resulting surface approximates area with other surface "values" taking into
     account a previous (modifiable) rule.
 
