@@ -21,80 +21,87 @@
 
 #include "fileio.h"
 
-#include "f_mask_ineq.h"
+#include "f_mask_surf_ineq.h"
 #include "bitvec.h"
 #include "vec.h"
 #include "matr_diag.h"
 #include "mask.h"
 #include "grid_line.h"
 #include "grid.h"
+#include "surf.h"
 
 #include "grid_user.h"
+#include "grid_line_user.h"
 
 namespace surfit {
 
-f_mask_ineq::f_mask_ineq(REAL ivalue, const d_mask * imask, bool ileq, REAL imult) :
-functional("f_mask_ineq", F_CONDI)
+f_mask_surf_ineq::f_mask_surf_ineq(const d_surf * ifnc, const d_mask * imask, bool ileq, REAL imult) :
+functional("f_mask_surf_ineq", F_CONDI)
 {
 	leq = ileq;
-	value = ivalue;
 	mult = imult;
 	mask = imask;
+	fnc = ifnc;
 };
 
-f_mask_ineq::~f_mask_ineq() {
+f_mask_surf_ineq::~f_mask_surf_ineq() {
 	cleanup();
 };
 
-void f_mask_ineq::cleanup() {
+void f_mask_surf_ineq::cleanup() {
 };
 
-int f_mask_ineq::this_get_data_count() const {
-	return 1;
+int f_mask_surf_ineq::this_get_data_count() const {
+	return 2;
 };
 
-const data * f_mask_ineq::this_get_data(int pos) const {
-	return mask;
+const data * f_mask_surf_ineq::this_get_data(int pos) const {
+	if (pos == 0)
+		return mask;
+	if (pos == 1)
+		return fnc;
+	return NULL;
 };
 
-bool f_mask_ineq::minimize() {
+bool f_mask_surf_ineq::minimize() {
 
 	return false;
 
 };
 
-bool f_mask_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_mask_surf_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	size_t points = 0;
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
-	size_t NN = method_basis_cntX;
-	size_t MM = method_basis_cntY;
 	v = create_vec(matrix_size);
 
 	if (leq) {
 		if (mask->getName()) 
-			writelog(LOG_MESSAGE,"inequality for mask (%s) leq %g", mask->getName(), value);
+			writelog(LOG_MESSAGE,"inequality for mask (%s) leq surface", mask->getName());
 		else
-			writelog(LOG_MESSAGE,"inequality for noname mask leq %g", value);
+			writelog(LOG_MESSAGE,"inequality for noname mask leq surface");
 	} else {
 		if (mask->getName())
-			writelog(LOG_MESSAGE,"inequality for mask (%s) geq %g", mask->getName(), value);
+			writelog(LOG_MESSAGE,"inequality for mask (%s) geq surface", mask->getName());
 		else
-			writelog(LOG_MESSAGE,"inequality for noname mask geq %g", value);
+			writelog(LOG_MESSAGE,"inequality for noname mask geq surface");
 	}
-
-	vec * diag = create_vec(matrix_size);
 
 	bitvec * matr_mask = create_bitvec(matrix_size);
 	matr_mask->init_false();
 
+	vec * diag = create_vec(matrix_size);
+
+	REAL x, y, value;
+	size_t NN = method_basis_cntX;
+	size_t MM = method_basis_cntY;
+	size_t I, J;
+
 	size_t i;
 	for (i = 0; i < matrix_size; i++) {
 
-		size_t I, J;
 		one2two(i, I, J, NN, MM);
-		REAL x, y;
 		method_grid->getCoordNode(I, J, x, y);
 
 		if (mask->getValue(x,y) == false)
@@ -103,6 +110,12 @@ bool f_mask_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		if (method_mask_solved->get(i))
 			continue;
 		if (method_mask_undefined->get(i))
+			continue;
+
+		//value = fnc->getMeanValue(x-stepX2, x+stepX2, y-stepY2, y+stepY2);
+		value = fnc->getInterpValue(x, y);
+
+		if (value == fnc->undef_value)
 			continue;
 		
 		REAL x_value = (*method_X)(i);
@@ -145,19 +158,19 @@ bool f_mask_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	return solvable;
 };
 
-void f_mask_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+void f_mask_surf_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	size_t NN = method_basis_cntX;
-
+	size_t MM = method_basis_cntY;
+	
 	size_t i;
+	size_t I,J;
+	REAL x,y;
+
 	for (i = 0; i < matrix_size; i++) {
 
-		size_t I, J;
-
-		I = i % NN;
-		J = (i - I)/NN;
-		REAL x, y;
+		one2two(i, I, J, NN, MM);
 		method_grid->getCoordNode(I, J, x, y);
 
 		if (mask->getValue(x,y) == false)
@@ -174,23 +187,22 @@ void f_mask_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 
 };
 
-bool f_mask_ineq::solvable_without_cond(const bitvec * mask_solved,
+bool f_mask_surf_ineq::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
 					const vec * X)
 {
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	size_t NN = method_basis_cntX;
-
+	size_t MM = method_basis_cntY;
+	
 	size_t i;
-		
-	for (i = 0; i < (size_t)mask->coeff->size(); i++) {
+	size_t I,J;
+	REAL x,y;
 
-		size_t I, J;
+	for (i = 0; i < matrix_size; i++) {
 
-		I = i % NN;
-		J = (i - I)/NN;
-		REAL x, y;
+		one2two(i, I, J, NN, MM);
 		method_grid->getCoordNode(I, J, x, y);
 
 		if (mask->getValue(x,y) == false)
@@ -207,8 +219,10 @@ bool f_mask_ineq::solvable_without_cond(const bitvec * mask_solved,
 
 };
 
-void f_mask_ineq::drop_private_data() {
+void f_mask_surf_ineq::drop_private_data() {
 };
+
+
 
 }; // namespace surfit;
 

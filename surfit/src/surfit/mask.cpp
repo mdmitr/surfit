@@ -215,7 +215,26 @@ bool d_mask::getMinMaxZ(REAL & minz, REAL & maxz) const {
 	return false;
 };
 
+bitvec * d_mask::get_bitvec_mask(const d_grid * grid) const {
+	size_t NN = grid->getCountX();
+	size_t MM = grid->getCountY();
 
+	bitvec * res = create_bitvec( NN*MM );
+	res->init_false();
+
+	size_t i,j;
+	REAL x,y;
+
+	for (j = 0; j < MM; j++) {
+		for (i = 0; i < NN; i++) {
+			grid->getCoordNode(i, j, x, y);
+			if ( getValue(x,y) == true )
+				res->set_true( i + j*NN );
+		}
+	}
+
+	return res;
+};
 
 
 

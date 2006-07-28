@@ -10,7 +10,7 @@ load libsurfit[info sharedlibextension]
 clear_data 
 
 # set name of surface
-set map_name "map_area_completer" 
+set map_name "map_mask_surf_ineq" 
 
 # set solver
 set_solver "cg" 
@@ -22,26 +22,29 @@ set tol 1e-005
 ## load initial data 
 ##
  
-# load points from text file 
-pnts_read "11points.txt" "11points"  
+# load mask from surfit datafile 
+mask_load "mask.mask" "test_mask"  
  
-# load area from text file 
-area_read "some_area.txt" "some_area"  
+# load surface from surfit datafile 
+surf_load "func.func" "test_func"  
+ 
+# load points from text file 
+pnts_read "points.txt" "points"  
  
 ##
 ## construct grid 
 ##
-grid 
+grid_get -10 10 0.2 -10 10 0.4 
  
 ##
 ## create gridding rules
 ##
 
 # resulting surface at points = points values 
-points "11points" 
+points "points" 
 
-# resulting surface should tend to be constant or plane inside(outside) area 
-area_completer "some_area" 1 2 30 2 1 
+# resulting surface <= surface values where mask is true... 
+mask_surf_leq "test_func" "test_mask"  
 
 # resulting surface should tend to be constant or plane 
 completer 
@@ -59,4 +62,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "map_area_completer.dat" "map_area_completer" 
+surf_save "mask_surf_ineq.dat" "map_mask_surf_ineq" 

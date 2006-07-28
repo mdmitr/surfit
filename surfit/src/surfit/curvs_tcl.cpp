@@ -328,7 +328,7 @@ bool area_completer(const char * area_pos, REAL D1, REAL D2, REAL alpha, REAL w,
 	return true;
 };
 
-bool area_completer_add(const char * area_pos, REAL weight, REAL D1, REAL D2, REAL alpha, REAL w, int inside) {
+bool area_completer_add(REAL weight, const char * area_pos, REAL D1, REAL D2, REAL alpha, REAL w, int inside) {
 
 	functional * srf = get_modifiable_functional();
 	if (srf == NULL)

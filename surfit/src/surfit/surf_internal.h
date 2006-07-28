@@ -33,6 +33,7 @@ class d_surf;
 class d_curv;
 class grid_line;
 class d_area;
+class d_mask;
 
 SURFIT_EXPORT
 /*! \ingroup internal_surf
@@ -175,7 +176,13 @@ SURFIT_EXPORT
 REAL _surf_mean_area(const d_surf * srf, const d_area * area);
 
 SURFIT_EXPORT
+REAL _surf_mean_mask(const d_surf * srf, const d_mask * mask);
+
+SURFIT_EXPORT
 REAL _surf_wmean_area(const d_surf * srf, const d_surf * wsrf, const d_area * area);
+
+SURFIT_EXPORT
+REAL _surf_wmean_mask(const d_surf * srf, const d_surf * wsrf, const d_mask * mask);
 
 SURFIT_EXPORT
 REAL _surf_sum_area(const d_surf * srf, const d_area * crv);

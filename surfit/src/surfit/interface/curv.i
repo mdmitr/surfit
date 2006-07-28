@@ -49,7 +49,7 @@ bool area_surf_geq(const char * surf_name_or_position = "0", const char * area_n
 bool area_mean(REAL mean, const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
 bool area_wmean(REAL mean, const char * area_name_or_position = "0", const char * surf_name_or_position = "0", REAL mult = 0.001, int inside = 1);
 bool area_completer(const char * area_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
-bool area_completer_add(const char * area_name_or_position = "0", REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
+bool area_completer_add(REAL weight = 1, const char * area_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
 
 bool contour(const char * cntr_name_or_position = "0");
 bool contour_add(REAL weight, const char * cntr_name_or_position = "0");

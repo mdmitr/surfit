@@ -530,10 +530,10 @@ bool area_wmean(REAL mean, const char * area_name_or_position = "0", const char 
 bool area_completer(const char * area_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_completer_add(const char * area_name_or_position = "0", REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
+    \fn bool area_completer_add(REAL weight = 1, const char * area_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
 
     \par Tcl syntax:
-    area_completer_add "area_name_or_position" weight D1 D2 alpha w inside
+    area_completer_add weight "area_name_or_position" D1 D2 alpha w inside
 
     \par Description
     This rule adds rule \ref area_completer with informational "weight" to the previous rule.
@@ -543,7 +543,7 @@ bool area_completer(const char * area_name_or_position = "0", REAL D1 = 1, REAL 
     \param alpha anisotropy angle (degrees)
     \param w anisotropy factor
 */
-bool area_completer_add(const char * area_name_or_position = "0", REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
+bool area_completer_add(REAL weight = 1, const char * area_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
 
 //////////////
 //

@@ -817,6 +817,19 @@ REAL surf_area_mean(const char * area_pos, const char * surf_pos) {
 	return _surf_mean_area(srf, area);
 };
 
+REAL surf_mask_mean(const char * mask_pos, const char * surf_pos) {
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (!srf)
+		return false;
+
+
+	d_mask * mask = get_element<d_mask>(mask_pos, surfit_masks->begin(), surfit_masks->end());
+	if (!mask)
+		return false;
+
+	return _surf_mean_mask(srf, mask);
+};
+
 REAL surf_area_wmean(const char * area_pos, const char * wsurf_pos, const char * surf_pos) {
 	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (!srf)
@@ -832,6 +845,23 @@ REAL surf_area_wmean(const char * area_pos, const char * wsurf_pos, const char *
 		return false;
 
 	return _surf_wmean_area(srf, wsrf, area);
+};
+
+REAL surf_mask_wmean(const char * mask_pos, const char * wsurf_pos, const char * surf_pos) {
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (!srf)
+		return false;
+
+	d_surf * wsrf = get_element<d_surf>(wsurf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (!wsrf)
+		return false;
+
+
+	d_mask * mask = get_element<d_mask>(mask_pos, surfit_masks->begin(), surfit_masks->end());
+	if (!mask)
+		return false;
+
+	return _surf_wmean_mask(srf, wsrf, mask);
 };
 
 REAL surf_sum_area(const char * area_pos,  const char * surf_pos) {

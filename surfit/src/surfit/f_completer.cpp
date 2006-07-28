@@ -35,6 +35,7 @@
 #include "curv.h"
 #include "grid_line.h"
 #include "surf.h"
+#include "mask.h"
 
 #include "grid_user.h"
 #include "grid_line_user.h"
@@ -50,6 +51,7 @@ faultable("f_completer", F_USUAL|F_FAULT)
 	w = iw;
 	area = NULL;
 	area_inside = true;
+	mask = NULL;
 	saved_mask_solved = NULL;
 	saved_mask_undefined = NULL;
 };
@@ -95,6 +97,19 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, vec *& v) {
 				area_mask->invert();
 			method_mask_undefined->OR(area_mask);
 			area_mask->release();
+		}
+	}
+
+	if (mask != NULL) {
+		undefined_mask_modified = true;
+		if ( undefined_saved == false ) 
+			saved_mask_undefined = create_bitvec(method_mask_undefined);
+
+		// set "undefined" where mask is false
+		bitvec * mask_mask = mask->get_bitvec_mask(method_grid);
+		if (mask_mask) {
+			method_mask_undefined->OR(mask_mask);
+			mask_mask->release();
 		}
 	}
 
@@ -395,6 +410,34 @@ void f_completer::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 		mask_undefined->copy(saved_mask_undefined);
 		saved_mask_undefined->release();
 		saved_mask_undefined = NULL;
+
+	} else 	if (mask) {
+
+		if (saved_mask_undefined) {
+			saved_mask_undefined->release();
+			saved_mask_undefined = NULL;
+		}
+
+		saved_mask_undefined = create_bitvec(mask_undefined);
+		bitvec * mask_mask = mask->get_bitvec_mask(method_grid);
+		if (mask_mask) {
+
+			size_t matrix_size = method_basis_cntX * method_basis_cntY;
+			size_t i;
+			for (i = 0; i < (size_t)matrix_size; i++) {
+				if (mask_mask->get(i) == true)
+					continue;
+				if (mask_undefined->get(i) == false)
+					mask_solved->set_true(i);
+			}
+			
+			mask_mask->release();
+		}
+
+		mask_undefined->copy(saved_mask_undefined);
+		saved_mask_undefined->release();
+		saved_mask_undefined = NULL;
+
 	} else {
 				
 		set_solved(mask_solved, mask_undefined);
@@ -430,6 +473,10 @@ sss:
 void f_completer::set_area(const d_area * iarea, bool iinside) {
 	area = iarea;
 	area_inside = iinside;
+};
+
+void f_completer::set_mask(const d_mask * imask) {
+	mask = imask;
 };
 
 size_t calcVecV(size_t size, 

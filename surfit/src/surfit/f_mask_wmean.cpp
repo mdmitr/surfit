@@ -21,53 +21,63 @@
 
 #include "fileio.h"
 
-#include "f_wmean.h"
+#include "f_mask_wmean.h"
 #include "vec.h"
-#include "vec_alg.h"
 #include "bitvec.h"
 #include "matr_onesrow.h"
 #include "grid_user.h"
-#include "surf.h"
-#include "surf_internal.h"
+#include "mask.h"
+#include "grid_line.h"
 #include "grid.h"
 #include "grid_internal.h"
+#include "surf.h"
+#include "surf_internal.h"
+
+#include "grid_line_user.h"
 
 namespace surfit {
 
-f_wmean::f_wmean(REAL imean, const d_surf * isrf, REAL imult) :
-functional("f_wmean", F_CONDI) 
+f_mask_wmean::f_mask_wmean(REAL imean, const d_surf * isrf, const d_mask * imask, REAL imult) :
+functional("f_mask_wmean", F_CONDI) 
 {
 	mean = imean;
+	mask = imask;
 	srf = isrf;
 	mult = imult;
+	if (mask->getName()) {
+		setNameF("f_mask_wmean %s", mask->getName());
+	}
 	w_srf = NULL;
 };
 
-f_wmean::~f_wmean() {
-	cleanup();
+f_mask_wmean::~f_mask_wmean() {
+	cleanup();	
 };
 
-void f_wmean::cleanup() {
+void f_mask_wmean::cleanup() {
 	if (w_srf)
 		w_srf->release_private();
 	w_srf = NULL;
 };
 
-int f_wmean::this_get_data_count() const {
-	return 1;
+int f_mask_wmean::this_get_data_count() const {
+	return 2;
 };
 
-const data * f_wmean::this_get_data(int pos) const {
-	if (pos == 1)
+const data * f_mask_wmean::this_get_data(int pos) const {
+	if (pos == 0)
 		return srf;
+	if (pos == 1)
+		return mask;
 	return NULL;
 };
 
-bool f_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_mask_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
-	writelog(LOG_MESSAGE,"weighted mean value = %g condition", mean);
-
-	size_t matrix_size = method_basis_cntX*method_basis_cntY;
+	if (mask->getName())
+		writelog(LOG_MESSAGE,"mask_wmean %s value = %g condition", mask->getName(), mean);
+	else
+		writelog(LOG_MESSAGE,"noname mask_wmean value = %g condition", mean);
 	
 	size_t aux_X_from, aux_X_to;
 	size_t aux_Y_from, aux_Y_to;
@@ -82,41 +92,45 @@ bool f_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	size_t MM = method_grid->getCountY();
 	size_t nn = w_srf->getCountX();
 	size_t mm = w_srf->getCountY();
+
+	size_t matrix_size = NN*MM;
 	
 	vec * weights = create_vec(matrix_size, 0, false); // don't fill this vector
-	bitvec * mask = create_bitvec(matrix_size);
-	mask->init_false();
+	bitvec * matr_mask = create_bitvec(matrix_size);
+	matr_mask->init_false();
 
-	size_t i, j, pos;
-	for (i = 0; i < NN; i++) {
-		for (j = 0; j < MM; j++) {
-			
-			two2one(pos, i, j, NN, MM);
+	size_t i;
+	size_t ii, jj;
+	REAL x,y;
 
-			if (method_mask_undefined->get(pos)) {
-				(*weights)(pos) = 0;
-				mask->set_true(pos);
-				continue;
-			}
+	for (i = 0; i < matrix_size; i++) {
+		
+		one2two(i, ii, jj, NN, MM);
+		method_grid->getCoordNode(ii, jj, x, y);
 
-			REAL weight = 0;
-			if ((i >= aux_X_from) && (i <= aux_X_to) && (j >= aux_Y_from) && (j <= aux_Y_to)) {
-				int I = i-aux_X_from;
-				int J = j-aux_Y_from;
-				weight = (*(w_srf->coeff))(I + J*nn);
-				if (weight == w_srf->undef_value)
-					weight = 0;
-			}
-
-			if (weight < 0)
-				weight = 0;
-
-			(*weights)(pos) = weight;
-
-			denom += weight;
-
+		if (mask->getValue(x,y) == false) {
+			(*weights)(i) = 0;
+			matr_mask->set_true(i);
+			continue;
 		}
-	}
+		
+		if (method_mask_undefined->get(i)) {
+			(*weights)(i) = 0;
+			matr_mask->set_true(i);
+			continue;
+		}
+						
+		REAL weight = w_srf->getValue(x,y);
+		if (weight < 0)
+			weight = 0;
+		if (weight == w_srf->undef_value)
+			weight = 0;
+		
+		(*weights)(i) = weight;
+		
+		denom += weight;
+
+	};
 
 	REAL coeff = matrix_size / denom * mult;
 	denom *= coeff;
@@ -127,31 +141,37 @@ bool f_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 		REAL weight = (*weights)(i);
 		if (weight == 0) {
-			mask->set_true(i);
+			matr_mask->set_true(i);
 		}
+
+		one2two(i, ii, jj, NN, MM);
+		method_grid->getCoordNode(ii, jj, x, y);
+
+		if (mask->getValue(x,y) == false)
+			continue;
 			
 		if (method_mask_undefined->get(i))
 			continue;
 		
 		if (method_mask_solved->get(i)) {
 			sum_values_solved += (*method_X)(i)*weight;
-			mask->set_true(i);
+			matr_mask->set_true(i);
 		}
-		
 	}
 
-	matr_row * T = new matr_row(matrix_size, mask, weights);
-		
+	matr_row * T = new matr_row(matrix_size, matr_mask, weights);
+	
 	matrix = T;
 
 	REAL v_val = mean*denom - sum_values_solved;
 
 	v = create_vec(matrix_size, 0, false);
 	for (i = 0; i < matrix_size; i++) {
-		if ( (method_mask_solved->get(i))  || (method_mask_undefined->get(i)) )
+		
+		if ( matr_mask->get(i) )
 			(*v)(i) = 0;
 		else
-			(*v)(i) = v_val * (*weights)(i);
+			(*v)(i) = v_val*(*weights)(i);
 	}
 
 	bool solvable = false;
@@ -161,50 +181,73 @@ bool f_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 };
 
-bool f_wmean::solvable_without_cond(const bitvec * mask_solved,
-				    const bitvec * mask_undefined,
-				    const vec * X)
+bool f_mask_wmean::solvable_without_cond(const bitvec * mask_solved,
+					const bitvec * mask_undefined,
+					const vec * X)
 {
-	size_t matrix_size = X->size();
 	size_t i;
+	size_t NN = method_basis_cntX;
+	size_t MM = method_basis_cntY;
+	size_t matrix_size = NN*MM;
+
+	size_t ii, jj;
+	REAL x, y;
+	
 	for (i = 0; i < matrix_size; i++) {
-		if ( (!mask_solved->get(i)) || (!mask_undefined->get(i)) )
+
+		one2two(i, ii, jj, NN, MM);
+		method_grid->getCoordNode(ii, jj, x, y);
+		
+		if (mask->getValue(x,y) == false)
+				continue;
+		
+		if ( (mask_solved->get(i) == false) && 
+		     (mask_undefined->get(i) == false) ) 
+		{
 			return false;
+		}
 	}
+
 	return true;
 };
 
-void f_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+void f_mask_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 	
 	size_t aux_X_from, aux_X_to;
 	size_t aux_Y_from, aux_Y_to;
-	get_w_srf(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
-	if (w_srf == NULL) {
-		mark_sums(mask_solved, mask_undefined);
-		return;
-	}
 	
-	size_t matrix_size = mask_solved->size();
+	get_w_srf(aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
+	if (w_srf == NULL)
+		return;
+	
 	size_t i;
 	size_t ii, jj;
 
 	size_t NN = method_grid->getCountX();
 	size_t MM = method_grid->getCountY();
+	size_t matrix_size = NN*MM;
 	size_t nn = w_srf->getCountX();
 	size_t mm = w_srf->getCountY();
 
+	REAL x, y;
+	
 	for (i = 0; i < matrix_size; i++) {
+
+		one2two(i, ii, jj, NN, MM);
+		method_grid->getCoordNode(ii, jj, x, y);
+		
+		if (mask->getValue(x,y) == false)
+			continue;
+		
 		if (mask_solved->get(i) == true)
 			continue;
 		if (mask_undefined->get(i) == true)
 			continue;
 
-		one2two(i, ii, jj, NN, MM);
-		
 		if ((ii >= aux_X_from) && (ii <= aux_X_to) && (jj >= aux_Y_from) && (jj <= aux_Y_to)) {
 			
-			size_t I = ii-aux_X_from;
-			size_t J = jj-aux_Y_from;
+			int I = ii-aux_X_from;
+			int J = jj-aux_Y_from;
 			
 			REAL weight = (*(w_srf->coeff))(I + J*nn);
 			if (weight == w_srf->undef_value)
@@ -216,19 +259,21 @@ void f_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_unde
 			mask_solved->set_true(i);
 			
 		} 
-	}
+		
+	};
 
 	mark_sums(mask_solved, mask_undefined);
+		
+	return;
 	
-
 };
 
-bool f_wmean::minimize() {
+bool f_mask_wmean::minimize() {
 
 	return false;
 };
 
-void f_wmean::get_w_srf(size_t & i_from, size_t & i_to, size_t & j_from, size_t & j_to) {
+void f_mask_wmean::get_w_srf(size_t & i_from, size_t & i_to, size_t & j_from, size_t & j_to) {
 	
 	_grid_intersect1(method_grid, srf->grd, i_from, i_to, j_from, j_to);
 	d_grid * aux_grid = _create_sub_grid(method_grid, i_from, i_to, j_from, j_to);
@@ -246,12 +291,11 @@ void f_wmean::get_w_srf(size_t & i_from, size_t & i_to, size_t & j_from, size_t 
 		aux_grid->release();
 };
 
-void f_wmean::drop_private_data() {
+void f_mask_wmean::drop_private_data() {
 	if (w_srf)
 		w_srf->release_private();
 	w_srf = NULL;
 };
-
 
 }; // namespace surfit;
 

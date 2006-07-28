@@ -263,6 +263,20 @@ REAL surf_mean(const char * surface_name_or_position = "0");
 REAL surf_area_mean(const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
+    \fn REAL surf_mask_mean(const char * mask_name_or_position = "0", const char * surface_name_or_position = "0");
+
+    \par Tcl syntax:
+    surf_mask_mean "mask_name_or_position" "surface_name_or_position"
+
+    \par Description:
+    returns mean value for surface where mask is "true"
+
+    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number
+    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
+*/
+REAL surf_mask_mean(const char * mask_name_or_position = "0", const char * surface_name_or_position = "0");
+
+/*! \ingroup tcl_surf_math
     \fn REAL surf_wmean(const char * wsurface_name_or_position = "0", const char * surface_name_or_position = "0");
 
     \par Tcl syntax:
@@ -291,6 +305,20 @@ REAL surf_wmean(const char * wsurface_name_or_position = "0", const char * surfa
 */
 REAL surf_area_wmean(const char * area_name_or_position = "0", const char * wsurface_name_or_position = "0", const char * surface_name_or_position = "0");
 
+/*! \ingroup tcl_surf_math
+    \fn REAL surf_mask_wmean(const char * mask_name_or_position = "0", const char * wsurface_name_or_position = "0", const char * surface_name_or_position = "0");
+
+    \par Tcl syntax:
+    surf_mask_wmean "mask_name_or_position" "wsurface_name_or_position" "surface_name_or_position"
+
+    \par Description:
+    returns weighted mean value for surface where mask is "true"
+
+    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number
+    \param wsurface_name_or_position name of weighting \ref d_surf "surface" dataset, or surface position number
+    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
+*/
+REAL surf_mask_wmean(const char * mask_name_or_position = "0", const char * wsurface_name_or_position = "0", const char * surface_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_sum(const char * surface_name_or_position = "0");

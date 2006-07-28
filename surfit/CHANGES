@@ -7,6 +7,7 @@ surfit 2.1 changes:
 	! zlib-1.2.3
 
 	* small bugfix with taking faults into account
+	* bugfix with mask input/output to surfit datafile
 
 	+ added input/output of GMT maps (CDF format) : surf_load_gmt and surf_save_gmt commands
 	+ added input/output of GRASS maps (ASCII format) : surf_load_grass and surf_save_grass commands
@@ -23,4 +24,31 @@ surfit 2.1 changes:
 		surf_load_bmp surf_save_bmp
 	+ added import of surfaces from XYZ text files 
 		surf_load_xyz
+
+New examples:
+	area_completer.tcl
+	mask.tcl
+	mask_add.tcl
+	mask_ineq.tcl
+	mask_surf.tcl
+	mask_surf_add.tcl
+
+New gridding rules
+	+ area_completer
+	+ area_completer_add
+	+ mask_add
+	+ mask_leq
+	+ mask_geq
+	+ mask_surf
+	+ mask_surf_add
+	+ mask_surf_leq
+	+ mask_surf_geq
+	+ mask_mean
+	+ mask_wmean
+	+ mask_completer
+	+ mask_completer_add
+
+Other new commands:
+	+ surf_mask_mean
+	+ surf_mask_wmean
 

@@ -26,6 +26,11 @@
 #include "f_trend.h"
 #include "f_mask.h"
 #include "f_mask_ineq.h"
+#include "f_mask_surf.h"
+#include "f_mask_surf_ineq.h"
+#include "f_mask_mean.h"
+#include "f_mask_wmean.h"
+#include "f_completer.h"
 #include "variables.h"
 #include "variables_tcl.h"
 
@@ -146,6 +151,121 @@ bool mask_geq(REAL value, const char * mask_pos, REAL mult) {
 
 	f_mask_ineq * f = new f_mask_ineq(value, mask, false, mult);
 	functionals->push_back(f);
+	return true;
+};
+
+bool mask_surf(const char * surf_pos, const char * mask_pos) {
+
+	d_surf * surf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (surf == NULL)
+		return false;
+
+	d_mask * mask = get_element<d_mask>(mask_pos, surfit_masks->begin(), surfit_masks->end());
+	if (mask == NULL)
+		return false;
+
+	f_mask_surf * f = new f_mask_surf(surf, mask);
+	functionals->push_back(f);
+	return true;
+};
+
+bool mask_surf_add(const char * surf_pos, REAL weight, const char * mask_pos) {
+
+	functional * srf = get_modifiable_functional();
+	if (srf == NULL)
+		return false;
+
+	d_surf * surf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (surf == NULL)
+		return false;
+
+	d_mask * mask = get_element<d_mask>(mask_pos, surfit_masks->begin(), surfit_masks->end());
+	if (mask == NULL)
+		return false;
+
+	f_mask_surf * f = new f_mask_surf(surf, mask);
+	srf->add_functional(f, weight);
+	return true;
+};
+
+bool mask_surf_leq(const char * surf_pos, const char * mask_pos, REAL mult) {
+
+	d_surf * surf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (surf == NULL)
+		return false;
+
+	d_mask * mask = get_element<d_mask>(mask_pos, surfit_masks->begin(), surfit_masks->end());
+	if (mask == NULL)
+		return false;
+
+	f_mask_surf_ineq * f = new f_mask_surf_ineq(surf, mask, true, mult);
+	functionals->push_back(f);
+	return true;
+};
+
+bool mask_surf_geq(const char * surf_pos, const char * mask_pos, REAL mult) {
+
+	d_surf * surf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (surf == NULL)
+		return false;
+
+	d_mask * mask = get_element<d_mask>(mask_pos, surfit_masks->begin(), surfit_masks->end());
+	if (mask == NULL)
+		return false;
+
+	f_mask_surf_ineq * f = new f_mask_surf_ineq(surf, mask, false, mult);
+	functionals->push_back(f);
+	return true;
+};
+
+bool mask_mean(REAL mean, const char * pos, REAL mult) {
+	d_mask * mask = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
+	if (mask == NULL)
+		return false;
+
+	f_mask_mean * f = new f_mask_mean(mean, mask, mult);
+	functionals->push_back(f);
+	return true;
+};
+
+bool mask_wmean(REAL mean, const char * mask_pos, const char * surf_pos, REAL mult) {
+	d_mask * mask = get_element<d_mask>(mask_pos, surfit_masks->begin(), surfit_masks->end());
+	if (mask == NULL)
+		return false;
+
+	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (srf == NULL)
+		return false;
+
+	f_mask_wmean * f = new f_mask_wmean(mean, srf, mask, mult);
+	functionals->push_back(f);
+	return true;
+};
+
+bool mask_completer(const char * mask_pos, REAL D1, REAL D2, REAL alpha, REAL w) {
+	d_mask * mask = get_element<d_mask>(mask_pos, surfit_masks->begin(), surfit_masks->end());
+	if (mask == NULL)
+		return false;
+
+	f_completer * f = new f_completer(D1, D2, alpha, w);
+	f->set_mask(mask);
+	functionals->push_back(f);
+	return true;
+};
+
+bool mask_completer_add(REAL weight, const char * mask_pos, REAL D1, REAL D2, REAL alpha, REAL w) {
+
+	functional * srf = get_modifiable_functional();
+	if (srf == NULL)
+		return false;
+
+	d_mask * mask = get_element<d_mask>(mask_pos, surfit_masks->begin(), surfit_masks->end());
+	if (mask == NULL)
+		return false;
+
+	f_completer * f = new f_completer(D1, D2, alpha, w);
+	f->set_mask(mask);
+	srf->add_functional(f, weight);
 	return true;
 };
 

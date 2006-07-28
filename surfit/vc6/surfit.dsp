@@ -476,6 +476,22 @@ SOURCE=..\src\surfit\f_mask_ineq.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\surfit\f_mask_mean.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_mask_surf.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_mask_surf_ineq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_mask_wmean.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\surfit\f_surf.cpp
 # End Source File
 # Begin Source File
@@ -892,6 +908,22 @@ SOURCE=..\src\surfit\f_mask.h
 # Begin Source File
 
 SOURCE=..\src\surfit\f_mask_ineq.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_mask_mean.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_mask_surf.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_mask_surf_ineq.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_mask_wmean.h
 # End Source File
 # Begin Source File
 

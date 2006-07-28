@@ -33,6 +33,7 @@
 #include "variables_internal.h"
 #include "points.h"
 #include "curv.h"
+#include "mask.h"
 #include "grid_line_internal.h"
 #include "datafile.h"
 
@@ -926,6 +927,42 @@ REAL _surf_mean_area(const d_surf * srf, const d_area * area) {
 	
 };
 
+REAL _surf_mean_mask(const d_surf * srf, const d_mask * mask) {
+	
+	size_t NN = srf->getCountX();
+	size_t MM = srf->getCountY();
+	size_t size = NN*MM;
+
+	size_t i, j, N = 0;
+	REAL sum = 0;
+	REAL value;
+	REAL x, y;
+	for (j = 0; j < MM; j++) {
+		for (i = 0; i < NN; i++) {
+			
+			srf->getCoordNode(i, j, x, y);
+			
+			if (mask->getValue(x,y) == false)
+				continue;
+			
+			value = (*(srf->coeff))(i + j*NN); 
+			
+			if (value == srf->undef_value)
+				continue;
+			
+			sum += value;
+			N++;
+		}
+	}
+
+	if (N == 0)
+		return srf->undef_value;
+
+	return sum/REAL(N);
+	
+};
+
+
 REAL _surf_wmean_area(const d_surf * srf, const d_surf * wsrf, const d_area * area) {
 	
 	bitvec * mask = nodes_in_area_mask(area, srf->grd);
@@ -984,6 +1021,60 @@ REAL _surf_wmean_area(const d_surf * srf, const d_surf * wsrf, const d_area * ar
 		w_srf->release();
 	if (mask)
 		mask->release();
+
+	return sum/denom;
+	
+};
+
+REAL _surf_wmean_mask(const d_surf * srf, const d_surf * wsrf, const d_mask * mask) {
+	
+	size_t i;
+	
+	if (mask == NULL) 
+		return srf->undef_value;
+	
+	size_t aux_X_from, aux_X_to;
+	size_t aux_Y_from, aux_Y_to;
+	_grid_intersect1(srf->grd, wsrf->grd, aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
+	d_grid * aux_grid = _create_sub_grid(srf->grd, aux_X_from, aux_X_to, aux_Y_from, aux_Y_to);
+	d_surf * w_srf = _surf_project(wsrf, aux_grid);
+	size_t nn = aux_grid->getCountX();
+	size_t mm = aux_grid->getCountY();
+	size_t NN = srf->getCountX();
+	size_t MM = srf->getCountY();
+	
+	if (aux_grid)
+		aux_grid->release();
+
+	REAL denom = 0;
+	size_t ii, jj;
+	REAL sum = 0;
+	REAL value;
+	REAL x, y;
+	for (i = 0; i < NN*MM; i++) {
+
+		one2two(i, ii, jj, NN, MM);
+		srf->getCoordNode(ii, jj, x, y);
+
+		if (mask->getValue(x,y) == false)
+			continue;
+		
+		value = (*(srf->coeff))(i);
+		if (value == srf->undef_value)
+			continue;
+
+		REAL weight = w_srf->getValue(x,y);
+		if (weight == w_srf->undef_value)
+			weight = 0;
+		if (weight <= 0)
+			continue;
+
+		sum += value*weight;
+		denom += weight;
+	}
+
+	if (w_srf)
+		w_srf->release();
 
 	return sum/denom;
 	

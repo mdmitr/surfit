@@ -301,6 +301,175 @@ bool mask_leq(REAL value, const char * mask_name_or_position = "0", REAL mult = 
 
 */
 bool mask_geq(REAL value, const char * mask_name_or_position = "0", REAL mult = 0.001);
-	
+
+/*! \ingroup tcl_rules_masks
+    \fn bool mask_surf(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0");
+
+    \par Tcl syntax:
+    mask_surf "surf_name_or_position" mult
+
+    \par Description:
+    Using this rule the resulting surface approximates values taken from the other surface in 
+    least squares meaning where mask is "true".
+    
+    \param surf_name_or_position name of \ref d_surf "surface", or surface position number.
+    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number.
+    
+    \par Math:
+    This command adds the following functional to the functional sequence:
+    \f[
+    \Phi(u_{1,1},\ldots,u_{N,M}) = \sum_{p=1}^P \left( u_{i,j} - z(x_i, y_j) \right)^2,
+    \f]
+    where (i,j) - indices of the cells, where mask is "true", \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
+
+*/
+bool mask_surf(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0");
+
+/*! \ingroup tcl_rules_masks
+    \fn bool mask_surf_add(const char * surf_name_or_position = "0", REAL weight = 1, const char * mask_name_or_position = "0");
+
+    \par Tcl syntax:
+    mask_surf_add "surf_name_or_position" weight "mask_name_or_position"
+
+    \par Description:
+    This function modifies previous (modifiable) rule by adding the \ref mask_surf rule with some weight. 
+    Using this rule the resulting surface approximates other surface "values" where mask is "true", taking into
+    account a previous (modifiable) rule.
+
+    \param surf_name_or_position name of \ref d_surf "surface", or surface position number.
+    \param weight informational weight for this rule
+    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number.
+    
+    \par Math:
+    This command modifies previous functional \f$ \Phi_0 \f$ by adding \f$ \Phi_1 \f$:
+    \f[
+    \Phi(u_{1,1},\ldots,u_{N,M}) = \Phi_0(u_{1,1},\ldots,u_{N,M}) + w\Phi_1(u_{1,1},\ldots,u_{N,M}),
+    \f]
+    where \f$ w \f$ - informational weight,
+    \f[
+    \Phi_1(u_{1,1},\ldots,u_{N,M}) = \sum_{p=1}^P \left( u_{i,j} - z(x_i, y_j) \right)^2,
+    \f]
+    where (i,j) - indices of the cells where mask is "true", \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
+
+*/
+bool mask_surf_add(const char * surf_name_or_position = "0", REAL weight = 1, const char * mask_name_or_position = "0");
+
+/*! \ingroup tcl_rules_masks
+    \fn bool mask_surf_leq(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0", REAL mult = 0.001);
+    
+    \par Tcl syntax:
+    mask_surf_leq "surf_name_or_position_or_position" "mask_name_or_position" mult 
+
+    \par Description:
+    This rule adds the surface condition - "the resulting surface should be lower than or equal to other surface values where mask is true".
+    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
+    your conditions and if they are correct, try to change "mult" parameter.
+
+    \par Math:
+    This command adds the condition:
+    \f[
+    u_{i,j} \leq f(x_{u_i},y_{u_j})
+    \f]
+    where (i,j) - indices of the cells where mask is true, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
+
+*/
+bool mask_surf_leq(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0", REAL mult = 0.001);
+
+/*! \ingroup tcl_rules_masks
+    \fn bool mask_surf_geq(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0", REAL mult = 0.001);
+    
+    \par Tcl syntax:
+    mask_surf_geq "surf_name_or_position_or_position" "mask_name_or_position" mult
+
+    \par Description:
+    This rule adds the surface condition - "the resulting surface should be greater than or equal to other surface values where mask is true".
+    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
+    your conditions and if they are correct, try to change "mult" parameter.
+
+    \par Math:
+    This command adds the condition:
+    \f[
+    u_{i,j} \geq f(x_{u_i},y_{u_j})
+    \f]
+    where (i,j) - indices of the cells where mask is true, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
+
+*/
+bool mask_surf_geq(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0", REAL mult = 0.001);
+
+/*! \ingroup tcl_rules_masks
+    \fn bool mask_mean(REAL mean, const char * mask_name_or_position = "0", REAL mult = 0.001);
+    
+    \par Tcl syntax:
+    mask_mean mean_value "mask_name_or_position" mult
+
+    \par Description:
+    This rule adds the surface condition - "the resulting surface mean value should be 
+    equal to real number where mask is true". In case of the \ref penalty algorithm bad convergence or unexpected 
+    (wrong) result, you should carefully review your conditions and if they are correct, try 
+    to change "mult" parameter.
+
+    \par Math:
+    This command adds the condition:
+    \f[
+    \frac {\sum\limits_{i,j} u_{i,j}} {Q} = m
+    \f]
+    where (i,j) - indices of the cells where mask is true, Q - number of cells in mask, m - desired mean value
+*/
+bool mask_mean(REAL mean, const char * mask_name_or_position = "0", REAL mult = 0.001);
+
+/*! \ingroup tcl_rules_masks
+    \fn bool mask_wmean(REAL mean, const char * mask_name_or_position = "0", const char * surf_name_or_position = "0", REAL mult = 0.001);
+    
+    \par Tcl syntax:
+    mask_wmean weighted_mean_value "mask_name_or_position" "surf_name_or_position_or_position" mult
+
+    \par Description:
+    This rule adds the surface condition - "the resulting surface weighted mean value  
+    should be equal to real number where mask is true". In case of the \ref penalty algorithm bad 
+    convergence or unexpected (wrong) result, you should carefully review your conditions 
+    and if they are correct, try to change "mult" parameter.
+
+    \par Math:
+    This command adds the condition:
+    \f[
+    \frac {\sum\limits_{i,j} z(x_i,y_j) u_{i,j}} {z(x_i,y_j)} = m
+    \f]
+    where (i,j) - indices of the cells where mask is true, \f$z(x_i,y_j)\f$ - weighted surface value for the (i,j) cell,
+    m - desired weighted mean value
+*/
+bool mask_wmean(REAL mean, const char * mask_name_or_position = "0", const char * surf_name_or_position = "0", REAL mult = 0.001);
+
+/*! \ingroup tcl_rules_masks
+    \fn bool mask_completer(const char * mask_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
+
+    \par Tcl syntax:
+    mask_completer "mask_name_or_position" D1 D2 alpha w 
+
+    \par Description
+    This rule implements \ref completer rule where \ref d_mask "mask" is true
+
+    \param D1 weight coefficient for rule that the resulting surface should tend to constant surface
+    \param D2 weight coefficient for rule that the resulting surface should tend to plane surface
+    \param alpha anisotropy angle (degrees)
+    \param w anisotropy factor
+*/
+bool mask_completer(const char * mask_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
+
+/*! \ingroup tcl_rules_masks
+    \fn bool mask_completer_add(REAL weight = 1,const char * mask_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
+
+    \par Tcl syntax:
+    mask_completer_add weight "mask_name_or_position" D1 D2 alpha w inside
+
+    \par Description
+    This rule adds rule \ref mask_completer with informational "weight" to the previous rule.
+
+    \param D1 weight coefficient for rule that the resulting surface should tend to constant surface
+    \param D2 weight coefficient for rule that the resulting surface should tend to plane surface
+    \param alpha anisotropy angle (degrees)
+    \param w anisotropy factor
+*/
+bool mask_completer_add(REAL weight = 1, const char * mask_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);	
+
 }; // namespace surfit;
 

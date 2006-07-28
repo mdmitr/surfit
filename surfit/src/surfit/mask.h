@@ -119,6 +119,8 @@ public:
 	//! xor operation with another mask
 	virtual void XOR(const d_mask * msk);
 
+	bitvec * get_bitvec_mask(const d_grid * grid) const;
+
 	//! equidistant grid for mask
 	d_grid * grd;
 

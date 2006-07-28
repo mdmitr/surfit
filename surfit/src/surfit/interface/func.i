@@ -35,6 +35,14 @@ bool mask(const char * val, const char * mask_name_or_position = "0");
 bool mask_add(REAL val, REAL weigh = 1, const char * mask_name_or_position = "0");
 bool mask_leq(REAL value, const char * mask_name_or_position = "0", REAL mult = 0.001);
 bool mask_geq(REAL value, const char * mask_name_or_position = "0", REAL mult = 0.001);
+bool mask_surf(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0");
+bool mask_surf_add(const char * surf_name_or_position = "0", REAL weight = 1, const char * mask_name_or_position = "0");
+bool mask_surf_leq(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0", REAL mult = 0.001);
+bool mask_surf_geq(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0", REAL mult = 0.001);
+bool mask_mean(REAL mean, const char * mask_name_or_position = "0", REAL mult = 0.001);
+bool mask_wmean(REAL mean, const char * mask_name_or_position = "0", const char * surf_name_or_position = "0", REAL mult = 0.001);
+bool mask_completer(const char * mask_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
+bool mask_completer_add(REAL weight = 1, const char * mask_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
 //
 // surf
@@ -58,8 +66,10 @@ REAL surf_maxz(const char * surface_name_or_position = "0");
 REAL surf_area_maxz(const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
 REAL surf_mean(const char * surface_name_or_position = "0");
 REAL surf_area_mean(const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+REAL surf_mask_mean(const char * mask_name_or_position = "0", const char * surface_name_or_position = "0");
 REAL surf_wmean(const char * surface_name_or_position = "0", const char * surface_name_or_position = "0");
-REAL surf_area_wmean(const char * area_name_or_position = "0", const char * surface_name_or_position = "0", const char * surface_name_or_position = "0");
+REAL surf_area_wmean(const char * area_name_or_position = "0", const char * wsurface_name_or_position = "0", const char * surface_name_or_position = "0");
+REAL surf_mask_wmean(const char * mask_name_or_position = "0", const char * wsurface_name_or_position = "0", const char * surface_name_or_position = "0");
 REAL surf_std(REAL mean, const char * surface_name_or_position = "0");
 REAL surf_sum(const char * surface_name_or_position = "0");
 bool surf_plus(const char * surface1_name_or_position, const char * surface2_name_or_position);
