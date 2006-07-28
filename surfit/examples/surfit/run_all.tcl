@@ -22,6 +22,9 @@ if { [source "area_surf_ineq.tcl"] == 0 } {
 if { [source "area_wmean.tcl"] == 0 } {
 	return 0
 }
+if { [source "area_completer.tcl"] == 0 } {
+	return 0
+}
 if { [source "contour.tcl"] == 0 } {
 	return 0
 }
@@ -74,6 +77,24 @@ if { [source "mask_add.tcl"] == 0 } {
 	return 0
 }
 if { [source "mask_ineq.tcl"] == 0 } {
+	return 0
+}
+if { [source "mask_surf.tcl"] == 0 } {
+	return 0
+}
+if { [source "mask_surf_add.tcl"] == 0 } {
+	return 0
+}
+if { [source "mask_surf_ineq.tcl"] == 0 } {
+	return 0
+}
+if { [source "mask_mean.tcl"] == 0 } {
+	return 0
+}
+if { [source "mask_wmean.tcl"] == 0 } {
+	return 0
+}
+if { [source "mask_completer.tcl"] == 0 } {
 	return 0
 }
 cd ..
