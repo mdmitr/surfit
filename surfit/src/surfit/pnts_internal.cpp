@@ -367,6 +367,9 @@ void bind_points_to_grid(d_grid *& old_grid,
 			
 			size_t total_size = 0;
 			sub_points * old_sub_points = *it;
+
+			REAL minx, maxx, miny, maxy;
+			old_sub_points->bounds(minx, maxx, miny, maxy, pnts);
 			
 			REAL ** sortx_begin = NULL;
 			REAL ** sortx_end   = NULL;
@@ -380,6 +383,7 @@ void bind_points_to_grid(d_grid *& old_grid,
 			i = old_node % old_grid->getCountX();
 			j = (old_node -i)/old_grid->getCountX();
 			
+			/*
 			size_t i_from = i*prop_coeff_x;
 			size_t i_to = i_from + prop_coeff_x-1;
 			if (old_grid->stepX == grd->stepX) {
@@ -392,6 +396,17 @@ void bind_points_to_grid(d_grid *& old_grid,
 				j_from = j;
 				j_to = j;
 			}
+			*/
+
+			size_t i_from = grd->get_i(minx);
+			size_t i_to   = grd->get_i(maxx);
+			if (maxx == grd->startX + (i_to + REAL(0.5))*grd->stepX)
+				i_to++;
+			
+			size_t j_from = grd->get_j(miny);
+			size_t j_to   = grd->get_j(maxy);
+			if (maxy == grd->startY + (j_to + REAL(0.5))*grd->stepY)
+				j_to++;
 			
 			old_size = old_sub_points->point_numbers->size();
 			
@@ -399,10 +414,21 @@ void bind_points_to_grid(d_grid *& old_grid,
 				
 				x_from = grd->startX + (i - REAL(0.5))*grd->stepX;
 				x_to   = grd->startX + (i + REAL(0.5))*grd->stepX;
+
+				if (i == i_from)
+					x_from = MIN(x_from, minx);
+				if (i == i_to)
+					x_to = MAX(x_to, maxx);
 				
 				for (j = j_from; j <= j_to; j++) {
+
 					y_from = grd->startY + (j - REAL(0.5))*grd->stepY;
 					y_to   = grd->startY + (j + REAL(0.5))*grd->stepY;
+					
+					if (j == j_from)
+						y_from = MIN(y_from, miny);
+					if (j == j_to)
+						y_to = MAX(y_to, maxy);
 					
 					getPointsInRect(x_from, x_to, y_from, y_to,
 						sortx_begin, sortx_end,

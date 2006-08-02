@@ -350,6 +350,27 @@ REAL sub_points::sum_value(const d_points * pnts) const {
 	return value;
 };
 
+void sub_points::bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy, const d_points * pnts) const
+{
+	minx = FLT_MAX;
+	maxx = -FLT_MAX;
+	miny = FLT_MAX;
+	maxy = -FLT_MAX;
+
+	REAL x, y;
+
+	std::vector<size_t>::const_iterator ptr;
+	for (ptr = point_numbers->begin(); ptr != point_numbers->end(); ptr++) {
+		x = (*(pnts->X))(*ptr);
+		y = (*(pnts->Y))(*ptr);
+		minx = MIN(x, minx);
+		maxx = MAX(x, maxx);
+		miny = MIN(y, miny);
+		maxy = MAX(y, maxy);
+	}
+
+};
+
 void _sort_points(const d_points * pnts, 
 		  std::vector<size_t> * nums,
 		  REAL **& sortx_begin, 

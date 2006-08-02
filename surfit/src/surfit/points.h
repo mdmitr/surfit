@@ -210,6 +210,9 @@ public:
 	REAL value(const d_points * pnts) const;
 	//! calculates sum of values of all subset of points values
 	REAL sum_value(const d_points * pnts) const;
+
+	//! calculate bounds
+	void bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy, const d_points * pnts) const;
 	
 	//! number of cell
 	size_t cell_number;
