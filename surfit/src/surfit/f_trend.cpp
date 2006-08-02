@@ -258,7 +258,7 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 				if ((D1 > 0) || (D2 > 0)) {
 					
-					if (j-1 >= aux_Y_from) {
+					if (j >= aux_Y_from+1) {
 						pos = i + (j-1)*NN;
 						trend_mask_undefined->set_true(pos);
 						trend_mask_solved->set_false(pos);
@@ -270,7 +270,7 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 						trend_mask_solved->set_false(pos);
 					}
 					
-					if (i-1 >= aux_X_from) {
+					if (i >= aux_X_from+1) {
 						pos = i-1 + j*NN;
 						trend_mask_undefined->set_true(pos);
 						trend_mask_solved->set_false(pos);
@@ -286,19 +286,19 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 				if (D2 > 0) {
 
-					if ((i-1 >= aux_X_from) && (j-1 >= aux_Y_from)) {
+					if ((i >= aux_X_from+1) && (j >= aux_Y_from+1)) {
 						pos = i-1 + (j-1)*NN;
 						trend_mask_undefined->set_true(pos);
 						trend_mask_solved->set_false(pos);
 					}
 
-					if ((i+1 <= aux_X_to) && (j-1 >= aux_Y_from)) {
+					if ((i+1 <= aux_X_to) && (j >= aux_Y_from+1)) {
 						pos = i+1 + (j-1)*NN;
 						trend_mask_undefined->set_true(pos);
 						trend_mask_solved->set_false(pos);
 					}
 
-					if ((i-1 >= aux_X_from) && (j+1 <= aux_Y_to)) {
+					if ((i >= aux_X_from+1) && (j+1 <= aux_Y_to)) {
 						pos = i-1 + (j+1)*NN;
 						trend_mask_undefined->set_true(pos);
 						trend_mask_solved->set_false(pos);
@@ -310,7 +310,7 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 						trend_mask_solved->set_false(pos);
 					}
 
-					if (j-2 >= aux_Y_from) {
+					if (j >= aux_Y_from+2) {
 						pos = i + (j-2)*NN;
 						trend_mask_undefined->set_true(pos);
 						trend_mask_solved->set_false(pos);
@@ -322,7 +322,7 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 						trend_mask_solved->set_false(pos);
 					}
 					
-					if (i-2 >= aux_X_from) {
+					if (i >= aux_X_from+2) {
 						pos = i-2 + j*NN;
 						trend_mask_undefined->set_true(pos);
 						trend_mask_solved->set_false(pos);

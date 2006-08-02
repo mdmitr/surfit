@@ -129,27 +129,27 @@ REAL matrD2::matrator_serve(size_t i, size_t j,
 	{
 		if (next_j) {
 
-			if (j < i-2*NN) {
+			if (j+2*NN < i) {
 				*next_j = i-2*NN;
 				return REAL(0);
 			}
-			if (j < i-NN-1) {
+			if (j+NN+1 < i) {
 				*next_j = i-NN-1;
 				return REAL(0);
 			}
-			if (j < i-NN) {
+			if (j+NN < i) {
 				*next_j = i-NN;
 				return REAL(0);
 			}
-			if (j < i-NN+1) {
+			if (j+NN-1 < i) {
 				*next_j = i-NN+1;
 				return REAL(0);
 			}
-			if (j < i-2) {
+			if (j+2 < i) {
 				*next_j = i-2;
 				return REAL(0);
 			}
-			if (j < i-1) {
+			if (j+1 < i) {
 				*next_j = i-1;
 				return REAL(0);
 			}
@@ -220,12 +220,12 @@ mark_second_x:
 	// - 2 u_{i-1,j} + 4 u_{i,j} - 2 u_{i+1,j}
 	if (SECOND_X) {
 		
-		if (j < i-1) {
+		if (j+1 < i) {
 			next_j_dx2 = MIN(i-1, next_j_dx2);
 			goto mark_third_x;
 		}
 
-		if (j == i-1) {
+		if (j+1 == i) {
 			res += -2 * _hx4; // -2;
 			next_j_dx2 = MIN(i, next_j_dx2);
 			goto mark_third_x;
@@ -252,18 +252,18 @@ mark_third_x:
 	// u_{i-2,j} - 2 u_{i-1,j} + u_{i,j}
 	if (THIRD_X) {
 		
-		if (j < i-2) {
+		if (j+2 < i) {
 			next_j_dx2 = MIN(i-2, next_j_dx2);
 			goto mark_first_y;
 		}
 
-		if (j == i-2) {
+		if (j+2 == i) {
 			res += _hx4; // 1;
 			next_j_dx2 = MIN(i-1, next_j_dx2);
 			goto mark_first_y;
 		}
 
-		if (j == i-1) {
+		if (j+1 == i) {
 			res += -2 * _hx4; // -2;
 			next_j_dx2 = MIN(i, next_j_dx2);
 			goto mark_first_y;
@@ -326,12 +326,12 @@ mark_second_y:
 	// - 2 u_{i,j-1} + 4 u_{i,j} - 2 u_{i,j+1}
 	if (SECOND_Y) {
 	
-		if (j < i-NN) {
+		if (j+NN < i) {
 			next_j_dy2 = MIN(i-NN, next_j_dy2);
 			goto mark_third_y;
 		}
 
-		if (j == i-NN) {
+		if (j+NN == i) {
 			res += -2 * _hy4; // -2;
 			next_j_dy2 = MIN(i, next_j_dy2);
 			goto mark_third_y;
@@ -368,23 +368,23 @@ mark_third_y:
 	// u_{i,j-2} - 2 u_{i,j-1} + u_{i,j}
 	if (THIRD_Y) {
 	
-		if (j < i-2*NN) {
+		if (j+2*NN < i) {
 			next_j_dy2 = MIN(i-2*NN, next_j_dy2);
 			goto mark_first_xx;
 		}
 
-		if (j == i-2*NN) {
+		if (j+2*NN == i) {
 			res += _hy4; // 1;
 			next_j_dy2 = MIN(i-NN, next_j_dy2);
 			goto mark_first_xx;
 		}
 
-		if (j < i-NN) {
+		if (j+NN < i) {
 			next_j_dy2 = MIN(i-NN, next_j_dy2);
 			goto mark_first_xx;
 		}
 
-		if (j == i-NN) {
+		if (j+NN == i) {
 			res += -2 * _hy4; // -2;
 			next_j_dy2 = MIN(i, next_j_dy2);
 			goto mark_first_xx;
@@ -453,12 +453,12 @@ mark_second_xx:
 	// 2 ( - u_{i-1,j} + u_{i,j} + u_{i-1,j+1} - u_{i,j+1} )
 	if (SECOND_XX) {
 
-		if (j < i-1) {
+		if (j+1 < i) {
 			next_j_dxdy = MIN(i-1, next_j_dxdy);
 			goto mark_first_yy;
 		}
 
-		if (j == i-1) {
+		if (j+1 == i) {
 			res += -_hxy4; // -2;
 			next_j_dxdy = MIN(i, next_j_dxdy);
 			goto mark_first_yy;
@@ -496,18 +496,18 @@ mark_first_yy:
 	// 2 ( - u_{i,j-1} + u_{i+1,j-1} + u_{i,j} - u_{i+1,j} )
 	if (FIRST_YY) {
 
-		if (j < i-NN) {
+		if (j+NN < i) {
 			next_j_dxdy = MIN(i-NN, next_j_dxdy);
 			goto mark_second_yy;
 		}
 
-		if (j == i-NN) {
+		if (j+NN == i) {
 			res += -_hxy4; // -2;
 			next_j_dxdy = MIN(i-NN+1, next_j_dxdy);
 			goto mark_second_yy;
 		}
 
-		if (j == i-NN+1) {
+		if (j+NN-1 == i) {
 			res += _hxy4; // 2;
 			next_j_dxdy = MIN(i, next_j_dxdy);
 			goto mark_second_yy;
@@ -539,29 +539,29 @@ mark_second_yy:
 	// 2 ( u_{i-1,j-1} - u_{i,j-1} - u_{i-1,j} + u_{i,j} )
 	if (SECOND_YY) {
 
-		if (j < i-NN-1) {
+		if (j+NN+1 < i) {
 			next_j_dxdy = MIN(i-NN-1, next_j_dxdy);
 			goto exit;
 		}
 
-		if (j == i-NN-1) {
+		if (j+NN+1 == i) {
 			res += _hxy4; // 2;
 			next_j_dxdy = MIN(i-NN, next_j_dxdy);
 			goto exit;
 		}
 		
-		if (j == i-NN) {
+		if (j+NN == i) {
 			res += -_hxy4; // -2;
 			next_j_dxdy = MIN(i-1, next_j_dxdy);
 			goto exit;
 		}
 		
-		if (j < i-1) {
+		if (j+1 < i) {
 			next_j_dxdy = MIN(i-1, next_j_dxdy);
 			goto exit;
 		}
 
-		if (j == i-1) {
+		if (j+1 == i) {
 			res += -_hxy4; // -2;
 			next_j_dxdy = MIN(i, next_j_dxdy);
 			goto exit;
@@ -615,32 +615,32 @@ REAL matrD2::at(size_t i, size_t j, size_t * next_j) const {
 	if ( zero ) {
 		if (next_j) {
 			
-			if (j < i-2*NN) {
+			if (j+2*NN < i) {
 				*next_j = i-2*NN;
 				return REAL(0);
 			}
 			
-			if (j < i-NN-1) {
+			if (j+NN+1 < i) {
 				*next_j = i-NN-1;
 				return REAL(0);
 			}
 			
-			if (j < i-NN) {
+			if (j+NN < i) {
 				*next_j = i-NN;
 				return REAL(0);
 			}
 
-			if (j < i-NN+1) {
+			if (j+NN-1 < i) {
 				*next_j = i-NN+1;
 				return REAL(0);
 			}
 			
-			if (j < i-2) {
+			if (j+2 < i) {
 				*next_j = i-2;
 				return REAL(0);
 			}
 			
-			if (j < i-1) {
+			if (j+1 < i) {
 				*next_j = i-1;
 				return REAL(0);
 			}

@@ -106,12 +106,12 @@ REAL matrD1::matrator_serve(size_t i, size_t j, bool * b, size_t * next_j) const
 	{
 		if (next_j) {
 			
-			if (j < i-NN) {
+			if (j+NN < i) {
 				*next_j = i-NN;
 				return REAL(0);
 			}
 			
-			if (j < i-1) {
+			if (j+1 < i) {
 				*next_j = i-1;
 				return REAL(0);
 			}
@@ -163,12 +163,12 @@ mark_second_x:
 	// u_{i-1,j} - u_{i,j}
 	if (SECOND_X) {
 
-		if (j < i-1) {
+		if (j+1 < i) {
 			next_j_dx = MIN(i-1, next_j_dx);
 			goto mark_first_y;
 		}
 
-		if (j == i-1) {
+		if (j+1 == i) {
 			res += -_hx2; // -1;
 			next_j_dx = MIN(i, next_j_dx);
 			goto mark_first_y;
@@ -216,12 +216,12 @@ mark_second_y:
 	// u_{i,j-1} - u_{i,j}
 	if (SECOND_Y) {
 		
-		if (j < i-NN) {
+		if (j+NN < i) {
 			next_j_dy = MIN(i-NN, next_j_dy);
 			goto exit;
 		}
 
-		if (j == i-NN) {
+		if (j+NN == i) {
 			res += -_hy2; // -1;
 			next_j_dy = MIN(i, next_j_dy);
 			goto exit;
@@ -272,12 +272,12 @@ REAL matrD1::at(size_t i, size_t j, size_t * next_j) const {
 	if ( zero ) {
 		if (next_j) {
 			
-			if (j < i-NN) {
+			if (j+NN < i) {
 				*next_j = i-NN;
 				return REAL(0);
 			}
 			
-			if (j < i-1) {
+			if (j+1 < i) {
 				*next_j = i-1;
 				return REAL(0);
 			}

@@ -135,17 +135,17 @@ REAL matrD1_aniso::matrator_serve(size_t i, size_t j, bool * b, size_t * next_j)
 	{
 		if (next_j) {
 			
-			if (j < i-NN) {
+			if (j+NN < i) {
 				*next_j = i-NN;
 				return REAL(0);
 			}
 
-			if (j < i-NN+1) {
+			if (j+NN-1 < i) {
 				*next_j = i-NN+1;
 				return REAL(0);
 			}
 			
-			if (j < i-1) {
+			if (j+1 < i) {
 				*next_j = i-1;
 				return REAL(0);
 			}
@@ -202,12 +202,12 @@ mark_second_x:
 	// ( wmxx + mxx ) * ( u_{i,j} - u_{i-1,j} ) 
 	if (SECOND_X) {
 
-		if (j < i-1) {
+		if (j+1 < i) {
 			next_j_dx = MIN(i-1, next_j_dx);
 			goto mark_first_y;
 		}
 
-		if (j == i-1) {
+		if (j+1 == i) {
 			res += -( wmxx + mxx );
 			next_j_dx = MIN(i, next_j_dx);
 			goto mark_first_y;
@@ -255,12 +255,12 @@ mark_second_y:
 	// ( wmyy + myy ) * ( u_{i,j} - u_{i,j-1} )
 	if (SECOND_Y) {
 
-		if (j < i-NN) {
+		if (j+NN < i) {
 			next_j_dy = MIN(i-NN, next_j_dy);
 			goto mark_first_xy;
 		}
 
-		if (j == i-NN) {
+		if (j+NN == i) {
 			res += -( wmyy + myy );
 			next_j_dy = MIN(i, next_j_dy);
 			goto mark_first_xy;
@@ -336,18 +336,18 @@ mark_second_xy:
 	// ( wmxy - mxy ) * ( u_{i+1,j-1} - u_{i,j-1} )
 	if (SECOND_XY) {
 
-		if (j < i-NN) {
+		if (j+NN < i) {
 			next_j_dy = MIN(i-NN, next_j_dy);
 			goto mark_second_yx;
 		}
 
-		if (j == i-NN) {
+		if (j+NN == i) {
 			res += -( wmxy - mxy );
 			next_j_dy = MIN(i-NN+1, next_j_dy);
 			goto mark_second_yx;
 		}
 
-		if (j == i-NN+1) {
+		if (j+NN-1 == i) {
 			res += ( wmxy - mxy );
 			next_j_dy = MIN(UINT_MAX, next_j_dy);
 			goto mark_second_yx;
@@ -360,12 +360,12 @@ mark_second_yx:
 	// ( wmxy - mxy ) * ( u_{i-1,j+1} - u_{i-1,j} )
 	if (SECOND_YX) {
 
-		if (j < i-1) {
+		if (j+1 < i) {
 			next_j_dy = MIN(i-1, next_j_dy);
 			goto exit;
 		}
 
-		if (j == i-1) {
+		if (j+1 == i) {
 			res += -( wmxy - mxy );
 			next_j_dy = MIN(i+NN-1, next_j_dy);
 			goto exit;
@@ -418,17 +418,17 @@ REAL matrD1_aniso::at(size_t i, size_t j, size_t * next_j) const {
 	if ( zero ) {
 		if (next_j) {
 			
-			if (j < i-NN) {
+			if (j+NN < i) {
 				*next_j = i-NN;
 				return REAL(0);
 			}
 
-			if (j < i-NN+1) {
+			if (j+NN-1 < i) {
 				*next_j = i-NN+1;
 				return REAL(0);
 			}
 			
-			if (j < i-1) {
+			if (j+1 < i) {
 				*next_j = i-1;
 				return REAL(0);
 			}

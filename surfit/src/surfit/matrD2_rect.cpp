@@ -186,27 +186,27 @@ REAL matrD2_rect::at(size_t i, size_t j, size_t * next_j) const {
 	if ( zero ) {
 		if (next_j) {
 			
-			if (j < i-2*NN) {
+			if (j+2*NN < i) {
 				*next_j = i-2*NN;
 				return REAL(0);
 			}
 			
-			if (j < i-NN-1) {
+			if (j+NN+1 < i) {
 				*next_j = i-NN-1;
 				return REAL(0);
 			}
 			
-			if (j < i-NN) {
+			if (j+NN < i) {
 				*next_j = i-NN;
 				return REAL(0);
 			}
 			
-			if (j < i-2) {
+			if (j+2 < i) {
 				*next_j = i-2;
 				return REAL(0);
 			}
 			
-			if (j < i-1) {
+			if (j+1 < i) {
 				*next_j = i-1;
 				return REAL(0);
 			}
