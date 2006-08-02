@@ -25,7 +25,7 @@ curv_read "ZAM2.txt" "ZAM2" 2 1
 area_read "ZAM5.txt" "ZAM5" 2 1
 curv_read "lines/frac_236_ver.txt" "frac_236_ver"
 
-grid_get 28300 41400 50 45500 64700 50
+grid_get 28300 41400 30 45500 64700 30
 
 points "press2001"
 curve 21.4 "VNK1"

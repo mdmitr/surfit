@@ -121,3 +121,11 @@ Here is the image of the resulting \ref d_surf "surface":
 
 This result was obtained with <TT>"examples/surfit/surfs/mask_ineq.tcl"</TT> script. 
 */
+
+mask_completer.tcl
+mask_ineq.tcl
+mask_mean.tcl
+mask_surf.tcl
+mask_surf_add.tcl
+mask_surf_ineq.tcl
+mask_wmean.tcl

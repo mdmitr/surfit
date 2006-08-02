@@ -108,6 +108,16 @@ CLEAN :
 	-@erase "$(INTDIR)\f_ineq.sbr"
 	-@erase "$(INTDIR)\f_mask.obj"
 	-@erase "$(INTDIR)\f_mask.sbr"
+	-@erase "$(INTDIR)\f_mask_ineq.obj"
+	-@erase "$(INTDIR)\f_mask_ineq.sbr"
+	-@erase "$(INTDIR)\f_mask_mean.obj"
+	-@erase "$(INTDIR)\f_mask_mean.sbr"
+	-@erase "$(INTDIR)\f_mask_surf.obj"
+	-@erase "$(INTDIR)\f_mask_surf.sbr"
+	-@erase "$(INTDIR)\f_mask_surf_ineq.obj"
+	-@erase "$(INTDIR)\f_mask_surf_ineq.sbr"
+	-@erase "$(INTDIR)\f_mask_wmean.obj"
+	-@erase "$(INTDIR)\f_mask_wmean.sbr"
 	-@erase "$(INTDIR)\f_mean.obj"
 	-@erase "$(INTDIR)\f_mean.sbr"
 	-@erase "$(INTDIR)\f_points.obj"
@@ -182,8 +192,6 @@ CLEAN :
 	-@erase "$(INTDIR)\matrD1_rect.sbr"
 	-@erase "$(INTDIR)\matrD2.obj"
 	-@erase "$(INTDIR)\matrD2.sbr"
-	-@erase "$(INTDIR)\matrD2_aniso.obj"
-	-@erase "$(INTDIR)\matrD2_aniso.sbr"
 	-@erase "$(INTDIR)\matrD2_rect.obj"
 	-@erase "$(INTDIR)\matrD2_rect.sbr"
 	-@erase "$(INTDIR)\mrf.obj"
@@ -275,7 +283,6 @@ BSC32_SBRS= \
 	"$(INTDIR)\matrD1_aniso.sbr" \
 	"$(INTDIR)\matrD1_rect.sbr" \
 	"$(INTDIR)\matrD2.sbr" \
-	"$(INTDIR)\matrD2_aniso.sbr" \
 	"$(INTDIR)\matrD2_rect.sbr" \
 	"$(INTDIR)\free_elements.sbr" \
 	"$(INTDIR)\license.sbr" \
@@ -340,6 +347,11 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_curv_surf.sbr" \
 	"$(INTDIR)\f_curv_surf_ineq.sbr" \
 	"$(INTDIR)\f_mask.sbr" \
+	"$(INTDIR)\f_mask_ineq.sbr" \
+	"$(INTDIR)\f_mask_mean.sbr" \
+	"$(INTDIR)\f_mask_surf.sbr" \
+	"$(INTDIR)\f_mask_surf_ineq.sbr" \
+	"$(INTDIR)\f_mask_wmean.sbr" \
 	"$(INTDIR)\f_surf.sbr" \
 	"$(INTDIR)\f_surf_ineq.sbr" \
 	"$(INTDIR)\f_trend.sbr" \
@@ -369,7 +381,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\matrD1_aniso.obj" \
 	"$(INTDIR)\matrD1_rect.obj" \
 	"$(INTDIR)\matrD2.obj" \
-	"$(INTDIR)\matrD2_aniso.obj" \
 	"$(INTDIR)\matrD2_rect.obj" \
 	"$(INTDIR)\free_elements.obj" \
 	"$(INTDIR)\license.obj" \
@@ -434,6 +445,11 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_curv_surf.obj" \
 	"$(INTDIR)\f_curv_surf_ineq.obj" \
 	"$(INTDIR)\f_mask.obj" \
+	"$(INTDIR)\f_mask_ineq.obj" \
+	"$(INTDIR)\f_mask_mean.obj" \
+	"$(INTDIR)\f_mask_surf.obj" \
+	"$(INTDIR)\f_mask_surf_ineq.obj" \
+	"$(INTDIR)\f_mask_wmean.obj" \
 	"$(INTDIR)\f_surf.obj" \
 	"$(INTDIR)\f_surf_ineq.obj" \
 	"$(INTDIR)\f_trend.obj" \
@@ -535,6 +551,16 @@ CLEAN :
 	-@erase "$(INTDIR)\f_ineq.sbr"
 	-@erase "$(INTDIR)\f_mask.obj"
 	-@erase "$(INTDIR)\f_mask.sbr"
+	-@erase "$(INTDIR)\f_mask_ineq.obj"
+	-@erase "$(INTDIR)\f_mask_ineq.sbr"
+	-@erase "$(INTDIR)\f_mask_mean.obj"
+	-@erase "$(INTDIR)\f_mask_mean.sbr"
+	-@erase "$(INTDIR)\f_mask_surf.obj"
+	-@erase "$(INTDIR)\f_mask_surf.sbr"
+	-@erase "$(INTDIR)\f_mask_surf_ineq.obj"
+	-@erase "$(INTDIR)\f_mask_surf_ineq.sbr"
+	-@erase "$(INTDIR)\f_mask_wmean.obj"
+	-@erase "$(INTDIR)\f_mask_wmean.sbr"
 	-@erase "$(INTDIR)\f_mean.obj"
 	-@erase "$(INTDIR)\f_mean.sbr"
 	-@erase "$(INTDIR)\f_points.obj"
@@ -609,8 +635,6 @@ CLEAN :
 	-@erase "$(INTDIR)\matrD1_rect.sbr"
 	-@erase "$(INTDIR)\matrD2.obj"
 	-@erase "$(INTDIR)\matrD2.sbr"
-	-@erase "$(INTDIR)\matrD2_aniso.obj"
-	-@erase "$(INTDIR)\matrD2_aniso.sbr"
 	-@erase "$(INTDIR)\matrD2_rect.obj"
 	-@erase "$(INTDIR)\matrD2_rect.sbr"
 	-@erase "$(INTDIR)\mrf.obj"
@@ -704,7 +728,6 @@ BSC32_SBRS= \
 	"$(INTDIR)\matrD1_aniso.sbr" \
 	"$(INTDIR)\matrD1_rect.sbr" \
 	"$(INTDIR)\matrD2.sbr" \
-	"$(INTDIR)\matrD2_aniso.sbr" \
 	"$(INTDIR)\matrD2_rect.sbr" \
 	"$(INTDIR)\free_elements.sbr" \
 	"$(INTDIR)\license.sbr" \
@@ -769,6 +792,11 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_curv_surf.sbr" \
 	"$(INTDIR)\f_curv_surf_ineq.sbr" \
 	"$(INTDIR)\f_mask.sbr" \
+	"$(INTDIR)\f_mask_ineq.sbr" \
+	"$(INTDIR)\f_mask_mean.sbr" \
+	"$(INTDIR)\f_mask_surf.sbr" \
+	"$(INTDIR)\f_mask_surf_ineq.sbr" \
+	"$(INTDIR)\f_mask_wmean.sbr" \
 	"$(INTDIR)\f_surf.sbr" \
 	"$(INTDIR)\f_surf_ineq.sbr" \
 	"$(INTDIR)\f_trend.sbr" \
@@ -798,7 +826,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\matrD1_aniso.obj" \
 	"$(INTDIR)\matrD1_rect.obj" \
 	"$(INTDIR)\matrD2.obj" \
-	"$(INTDIR)\matrD2_aniso.obj" \
 	"$(INTDIR)\matrD2_rect.obj" \
 	"$(INTDIR)\free_elements.obj" \
 	"$(INTDIR)\license.obj" \
@@ -863,6 +890,11 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_curv_surf.obj" \
 	"$(INTDIR)\f_curv_surf_ineq.obj" \
 	"$(INTDIR)\f_mask.obj" \
+	"$(INTDIR)\f_mask_ineq.obj" \
+	"$(INTDIR)\f_mask_mean.obj" \
+	"$(INTDIR)\f_mask_surf.obj" \
+	"$(INTDIR)\f_mask_surf_ineq.obj" \
+	"$(INTDIR)\f_mask_wmean.obj" \
 	"$(INTDIR)\f_surf.obj" \
 	"$(INTDIR)\f_surf_ineq.obj" \
 	"$(INTDIR)\f_trend.obj" \
@@ -949,11 +981,6 @@ SOURCE=..\src\surfit\matrD2.cpp
 
 
 SOURCE=..\src\surfit\matrD2_aniso.cpp
-
-"$(INTDIR)\matrD2_aniso.obj"	"$(INTDIR)\matrD2_aniso.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
 SOURCE=..\src\surfit\matrD2_rect.cpp
 
 "$(INTDIR)\matrD2_rect.obj"	"$(INTDIR)\matrD2_rect.sbr" : $(SOURCE) "$(INTDIR)"
@@ -1353,6 +1380,36 @@ SOURCE=..\src\surfit\f_curv_surf_ineq.cpp
 SOURCE=..\src\surfit\f_mask.cpp
 
 "$(INTDIR)\f_mask.obj"	"$(INTDIR)\f_mask.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\f_mask_ineq.cpp
+
+"$(INTDIR)\f_mask_ineq.obj"	"$(INTDIR)\f_mask_ineq.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\f_mask_mean.cpp
+
+"$(INTDIR)\f_mask_mean.obj"	"$(INTDIR)\f_mask_mean.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\f_mask_surf.cpp
+
+"$(INTDIR)\f_mask_surf.obj"	"$(INTDIR)\f_mask_surf.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\f_mask_surf_ineq.cpp
+
+"$(INTDIR)\f_mask_surf_ineq.obj"	"$(INTDIR)\f_mask_surf_ineq.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\f_mask_wmean.cpp
+
+"$(INTDIR)\f_mask_wmean.obj"	"$(INTDIR)\f_mask_wmean.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

@@ -26,7 +26,7 @@ set tol 1e-007
 pnts_read "points.txt" "points"  
  
 # load mask from surfit datafile 
-mask_load "mask_not.mask" "test_mask"  
+mask_load "mask.mask" "test_mask"  
  
 ##
 ## construct grid 
@@ -41,11 +41,10 @@ grid_get -10 10 0.2 -10 10 0.4
 points "points" 
 
 # resulting surface should tend to be constant or plane where mask is true 
-mask_completer "test_mask" 1 2 
-#30 2  
+mask_completer "test_mask" 1 2 30 2  
 
 # resulting surface should tend to be constant or plane 
-#completer 
+completer 
 
 ##
 ## run gridding algorithm

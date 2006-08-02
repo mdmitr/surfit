@@ -63,6 +63,8 @@ We do it in three steps:
 (<A HREF="canyon__map_8tcl-example.html">canyon_map.tcl</A>).
 
 \image html canyon.jpg "Resulting DEM"
+
+If you wish, you can download all source data for this example from <A HREF="http://www.gridding.info/surfit.php">here</A>.
                          
 */
 
