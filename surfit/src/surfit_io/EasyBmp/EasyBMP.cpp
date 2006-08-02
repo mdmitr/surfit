@@ -19,6 +19,7 @@
 *************************************************/
 
 #include "EasyBMP.h"
+#include <string.h>
 
 /* These functions are defined in EasyBMP_DataStructures.h */
 
