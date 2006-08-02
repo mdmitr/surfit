@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 tcl83.lib mkl_c.lib libsstuff.lib libsurfit.lib /nologo /dll /machine:I386 /out:"../bin/libmklbooster.dll" /implib:"../bin/libmklbooster.lib" /libpath:"../../bin"
+# ADD LINK32 tcl83.lib mkl_c.lib libsstuff.lib libsurfit.lib /nologo /dll /machine:I386 /out:"../../bin/libmklbooster.dll" /implib:"../../bin/libmklbooster.lib" /libpath:"../../bin"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "mklbooster - Win32 Debug"
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 tcl83d.lib mkl_c.lib libsurfit.lib libsstuff.lib /nologo /dll /debug /machine:I386 /out:"../bin/libmklbooster.dll" /implib:"../bin/libmklbooster.lib" /pdbtype:sept /libpath:"../../bin"
+# ADD LINK32 tcl83d.lib mkl_c.lib libsurfit.lib libsstuff.lib /nologo /dll /debug /machine:I386 /out:"../../bin/libmklbooster.dll" /implib:"../../bin/libmklbooster.lib" /pdbtype:sept /libpath:"../../bin"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 

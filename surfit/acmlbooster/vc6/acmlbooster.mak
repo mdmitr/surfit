@@ -25,6 +25,10 @@ NULL=
 NULL=nul
 !ENDIF 
 
+CPP=cl.exe
+MTL=midl.exe
+RSC=rc.exe
+
 !IF  "$(CFG)" == "acmlbooster - Win32 Release"
 
 OUTDIR=.\../Release
@@ -35,11 +39,11 @@ OutDir=.\../Release
 
 !IF "$(RECURSE)" == "0" 
 
-ALL : "..\bin\libacmlbooster.dll" "$(OUTDIR)\acmlbooster.bsc"
+ALL : "..\..\bin\libacmlbooster.dll" "$(OUTDIR)\acmlbooster.bsc"
 
 !ELSE 
 
-ALL : "..\bin\libacmlbooster.dll" "$(OUTDIR)\acmlbooster.bsc"
+ALL : "..\..\bin\libacmlbooster.dll" "$(OUTDIR)\acmlbooster.bsc"
 
 !ENDIF 
 
@@ -58,49 +62,15 @@ CLEAN :
 	-@erase "$(INTDIR)\acmlbooster_wrap.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(OUTDIR)\acmlbooster.bsc"
-	-@erase "..\bin\libacmlbooster.dll"
+	-@erase "..\..\bin\libacmlbooster.dll"
 	-@erase "..\bin\libacmlbooster.exp"
 	-@erase "..\bin\libacmlbooster.lib"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP=cl.exe
 CPP_PROJ=/nologo /MT /W3 /GX /O2 /Ob2 /I "../../src/sstuff" /I "../../src/surfit" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ACMLBOOSTER_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\acmlbooster.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
-
-.c{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.c{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-MTL=midl.exe
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
-RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\acmlbooster.bsc" 
 BSC32_SBRS= \
@@ -115,14 +85,14 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=tcl83.lib libacml.lib libsstuff.lib libsurfit.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libacmlbooster.pdb" /machine:I386 /nodefaultlib:"msvcrt.lib" /out:"../bin/libacmlbooster.dll" /implib:"../bin/libacmlbooster.lib" /libpath:"../../bin" 
+LINK32_FLAGS=tcl83.lib libacml.lib libsstuff.lib libsurfit.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libacmlbooster.pdb" /machine:I386 /nodefaultlib:"msvcrt.lib" /out:"../../bin/libacmlbooster.dll" /implib:"../../bin/libacmlbooster.lib" /libpath:"../../bin" 
 LINK32_OBJS= \
 	"$(INTDIR)\acml_cg.obj" \
 	"$(INTDIR)\acml_threads.obj" \
 	"$(INTDIR)\acmlbooster.obj" \
 	"$(INTDIR)\acmlbooster_wrap.obj"
 
-"..\bin\libacmlbooster.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"..\..\bin\libacmlbooster.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -137,11 +107,11 @@ OutDir=.\../Debug
 
 !IF "$(RECURSE)" == "0" 
 
-ALL : "..\bin\libacmlbooster.dll" "$(OUTDIR)\acmlbooster.bsc"
+ALL : "..\..\bin\libacmlbooster.dll" "$(OUTDIR)\acmlbooster.bsc"
 
 !ELSE 
 
-ALL : "..\bin\libacmlbooster.dll" "$(OUTDIR)\acmlbooster.bsc"
+ALL : "..\..\bin\libacmlbooster.dll" "$(OUTDIR)\acmlbooster.bsc"
 
 !ENDIF 
 
@@ -162,16 +132,43 @@ CLEAN :
 	-@erase "$(INTDIR)\vc60.pdb"
 	-@erase "$(OUTDIR)\acmlbooster.bsc"
 	-@erase "$(OUTDIR)\libacmlbooster.pdb"
-	-@erase "..\bin\libacmlbooster.dll"
+	-@erase "..\..\bin\libacmlbooster.dll"
+	-@erase "..\..\bin\libacmlbooster.ilk"
 	-@erase "..\bin\libacmlbooster.exp"
-	-@erase "..\bin\libacmlbooster.ilk"
 	-@erase "..\bin\libacmlbooster.lib"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP=cl.exe
 CPP_PROJ=/nologo /MTd /W3 /Gm /GX /Zi /Od /I "../../src/sstuff" /I "../../src/surfit" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ACMLBOOSTER_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\acmlbooster.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
+BSC32=bscmake.exe
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\acmlbooster.bsc" 
+BSC32_SBRS= \
+	"$(INTDIR)\acml_cg.sbr" \
+	"$(INTDIR)\acml_threads.sbr" \
+	"$(INTDIR)\acmlbooster.sbr" \
+	"$(INTDIR)\acmlbooster_wrap.sbr"
+
+"$(OUTDIR)\acmlbooster.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
+    $(BSC32) @<<
+  $(BSC32_FLAGS) $(BSC32_SBRS)
+<<
+
+LINK32=link.exe
+LINK32_FLAGS=tcl83d.lib libacml.lib libsurfit.lib libsstuff.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\libacmlbooster.pdb" /debug /machine:I386 /nodefaultlib:"msvcrt.lib" /out:"../../bin/libacmlbooster.dll" /implib:"../../bin/libacmlbooster.lib" /pdbtype:sept /libpath:"../../bin" 
+LINK32_OBJS= \
+	"$(INTDIR)\acml_cg.obj" \
+	"$(INTDIR)\acml_threads.obj" \
+	"$(INTDIR)\acmlbooster.obj" \
+	"$(INTDIR)\acmlbooster_wrap.obj"
+
+"..\..\bin\libacmlbooster.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ENDIF 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -202,37 +199,6 @@ CPP_PROJ=/nologo /MTd /W3 /Gm /GX /Zi /Od /I "../../src/sstuff" /I "../../src/su
    $(CPP) @<<
    $(CPP_PROJ) $< 
 <<
-
-MTL=midl.exe
-MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
-RSC=rc.exe
-BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\acmlbooster.bsc" 
-BSC32_SBRS= \
-	"$(INTDIR)\acml_cg.sbr" \
-	"$(INTDIR)\acml_threads.sbr" \
-	"$(INTDIR)\acmlbooster.sbr" \
-	"$(INTDIR)\acmlbooster_wrap.sbr"
-
-"$(OUTDIR)\acmlbooster.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
-    $(BSC32) @<<
-  $(BSC32_FLAGS) $(BSC32_SBRS)
-<<
-
-LINK32=link.exe
-LINK32_FLAGS=tcl83d.lib libacml.lib libsurfit.lib libsstuff.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\libacmlbooster.pdb" /debug /machine:I386 /nodefaultlib:"msvcrt.lib" /out:"../bin/libacmlbooster.dll" /implib:"../bin/libacmlbooster.lib" /pdbtype:sept /libpath:"../../bin" 
-LINK32_OBJS= \
-	"$(INTDIR)\acml_cg.obj" \
-	"$(INTDIR)\acml_threads.obj" \
-	"$(INTDIR)\acmlbooster.obj" \
-	"$(INTDIR)\acmlbooster_wrap.obj"
-
-"..\bin\libacmlbooster.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
-    $(LINK32) @<<
-  $(LINK32_FLAGS) $(LINK32_OBJS)
-<<
-
-!ENDIF 
 
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"

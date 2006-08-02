@@ -43,7 +43,7 @@ struct acml_garb {
 acml_garb acml_garbage;
 
 void init_acml_solvers() {
-	Tcl_printf("acmlbooster version %s, Copyright (c) 2002-2006 M.V.Dmitrievsky\n", "1.0");
+	Tcl_printf("acmlbooster version %s, Copyright (c) 2002-2006 M.V.Dmitrievsky\n", "2.1");
 	Tcl_printf("acmlbooster comes with ABSOLUTELY NO WARRANTY; for details type `show_w'.\n");
 	Tcl_printf("This is free software, and you are welcome to redistribute it\n");
 	Tcl_printf("under certain conditions; type `show_c' for details.\n");

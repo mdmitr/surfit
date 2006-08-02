@@ -20,7 +20,7 @@
 #include "acmlbooster_ie.h"
 #include "acmlbooster.h"
 #include "variables_tcl.h"
-#include "surfit_threads.h"
+#include "threads.h"
 
 #include <acml.h>
 
@@ -65,7 +65,7 @@ DAXPY_job DAXPY_jobs[MAX_CPU];
 
 void threaded_DAXPY(int *n,double *alpha,double *x,int *incx,double *y,int *incy)
 {
-	int i;
+	size_t i;
 	unsigned int step = *n/(cpu);
 	unsigned int ost = *n % (cpu);
 	unsigned int J_from = 0;
@@ -122,7 +122,7 @@ DDOT_job DDOT_jobs[MAX_CPU];
 
 double threaded_DDOT(int *n,double *x,int *incx,double *y,int *incy)
 {
-	int i;
+	size_t i;
 	unsigned int step = *n/(cpu);
 	unsigned int ost = *n % (cpu);
 	unsigned int J_from = 0;
@@ -181,7 +181,7 @@ DSCAL_job DSCAL_jobs[MAX_CPU];
 
 void threaded_DSCAL(int *n,double *alpha,double *x,int *incx)
 {
-	int i;
+	size_t i;
 	unsigned int step = *n/(cpu);
 	unsigned int ost = *n % (cpu);
 	unsigned int J_from = 0;
