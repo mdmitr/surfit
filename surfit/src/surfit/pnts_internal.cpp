@@ -400,12 +400,12 @@ void bind_points_to_grid(d_grid *& old_grid,
 
 			size_t i_from = grd->get_i(minx);
 			size_t i_to   = grd->get_i(maxx);
-			if (maxx == grd->startX + (i_to + REAL(0.5))*grd->stepX)
+			if (maxx <= grd->startX + (i_to + REAL(0.5))*grd->stepX)
 				i_to++;
 			
 			size_t j_from = grd->get_j(miny);
 			size_t j_to   = grd->get_j(maxy);
-			if (maxy == grd->startY + (j_to + REAL(0.5))*grd->stepY)
+			if (maxy <= grd->startY + (j_to + REAL(0.5))*grd->stepY)
 				j_to++;
 			
 			old_size = old_sub_points->point_numbers->size();

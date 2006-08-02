@@ -159,13 +159,14 @@ am_libsurfit_la_OBJECTS = area.lo area_internal.lo area_tcl.lo \
 	f_area_mean.lo f_area_wmean.lo f_cntr.lo f_cntr_ineq.lo \
 	f_completer.lo f_curv.lo f_curv_ineq.lo f_curv_surf.lo \
 	f_curv_surf_ineq.lo f_surf.lo f_surf_ineq.lo f_hist.lo \
-	f_ineq.lo f_mask.lo f_mean.lo f_points.lo f_points_ineq.lo \
-	f_points_tcl.lo f_trend.lo f_value.lo f_wmean.lo grid.lo \
-	grid_internal.lo grid_line.lo grid_line_internal.lo \
-	grid_line_tcl.lo grid_line_user.lo grid_tcl.lo grid_user.lo \
-	hist.lo hist_internal.lo hist_tcl.lo license.lo mask.lo \
-	mask_internal.lo mask_tcl.lo matlab.lo matr.lo matrD1.lo \
-	matrD1_aniso.lo matrD1_rect.lo matrD2.lo matrD2_aniso.lo \
+	f_ineq.lo f_mask.lo f_mask_ineq.lo f_mask_surf.lo \
+	f_mask_surf_ineq.lo f_mask_mean.lo f_mask_wmean.lo f_mean.lo \
+	f_points.lo f_points_ineq.lo f_points_tcl.lo f_trend.lo \
+	f_value.lo f_wmean.lo grid.lo grid_internal.lo grid_line.lo \
+	grid_line_internal.lo grid_line_tcl.lo grid_line_user.lo \
+	grid_tcl.lo grid_user.lo hist.lo hist_internal.lo hist_tcl.lo \
+	license.lo mask.lo mask_internal.lo mask_tcl.lo matlab.lo \
+	matr.lo matrD1.lo matrD1_aniso.lo matrD1_rect.lo matrD2.lo \
 	matrD2_rect.lo matr_diag.lo matr_eye.lo matr_onesrow.lo mrf.lo \
 	others_tcl.lo pnts_internal.lo pnts_tcl.lo points.lo \
 	solvers.lo sort_alg.lo surf.lo surfs_tcl.lo surf_internal.lo \
@@ -378,6 +379,7 @@ libsstuff_la_HEADERS = src/sstuff/bitvec.h src/sstuff/bitvec_alg.h \
 libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(am__append_5)
 libsstuff_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsstuff.dll
 libsurfit_ladir = $(prefix)/include/surfit
+#libsurfit_la_SOURCES += src/surfit/matrD2_aniso.cpp
 libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/area_internal.cpp src/surfit/area_tcl.cpp \
 	src/surfit/cmofs.cpp src/surfit/cntr.cpp \
@@ -395,21 +397,23 @@ libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/f_curv_surf_ineq.cpp src/surfit/f_surf.cpp \
 	src/surfit/f_surf_ineq.cpp src/surfit/f_hist.cpp \
 	src/surfit/f_ineq.cpp src/surfit/f_mask.cpp \
-	src/surfit/f_mean.cpp src/surfit/f_points.cpp \
-	src/surfit/f_points_ineq.cpp src/surfit/f_points_tcl.cpp \
-	src/surfit/f_trend.cpp src/surfit/f_value.cpp \
-	src/surfit/f_wmean.cpp src/surfit/grid.cpp \
-	src/surfit/grid_internal.cpp src/surfit/grid_line.cpp \
-	src/surfit/grid_line_internal.cpp src/surfit/grid_line_tcl.cpp \
-	src/surfit/grid_line_user.cpp src/surfit/grid_tcl.cpp \
-	src/surfit/grid_user.cpp src/surfit/hist.cpp \
-	src/surfit/hist_internal.cpp src/surfit/hist_tcl.cpp \
-	src/surfit/license.cpp src/surfit/mask.cpp \
-	src/surfit/mask_internal.cpp src/surfit/mask_tcl.cpp \
-	src/surfit/matlab.cpp src/surfit/matr.cpp \
-	src/surfit/matrD1.cpp src/surfit/matrD1_aniso.cpp \
-	src/surfit/matrD1_rect.cpp src/surfit/matrD2.cpp \
-	src/surfit/matrD2_aniso.cpp src/surfit/matrD2_rect.cpp \
+	src/surfit/f_mask_ineq.cpp src/surfit/f_mask_surf.cpp \
+	src/surfit/f_mask_surf_ineq.cpp src/surfit/f_mask_mean.cpp \
+	src/surfit/f_mask_wmean.cpp src/surfit/f_mean.cpp \
+	src/surfit/f_points.cpp src/surfit/f_points_ineq.cpp \
+	src/surfit/f_points_tcl.cpp src/surfit/f_trend.cpp \
+	src/surfit/f_value.cpp src/surfit/f_wmean.cpp \
+	src/surfit/grid.cpp src/surfit/grid_internal.cpp \
+	src/surfit/grid_line.cpp src/surfit/grid_line_internal.cpp \
+	src/surfit/grid_line_tcl.cpp src/surfit/grid_line_user.cpp \
+	src/surfit/grid_tcl.cpp src/surfit/grid_user.cpp \
+	src/surfit/hist.cpp src/surfit/hist_internal.cpp \
+	src/surfit/hist_tcl.cpp src/surfit/license.cpp \
+	src/surfit/mask.cpp src/surfit/mask_internal.cpp \
+	src/surfit/mask_tcl.cpp src/surfit/matlab.cpp \
+	src/surfit/matr.cpp src/surfit/matrD1.cpp \
+	src/surfit/matrD1_aniso.cpp src/surfit/matrD1_rect.cpp \
+	src/surfit/matrD2.cpp src/surfit/matrD2_rect.cpp \
 	src/surfit/matr_diag.cpp src/surfit/matr_eye.cpp \
 	src/surfit/matr_onesrow.cpp src/surfit/mrf.cpp \
 	src/surfit/others_tcl.cpp src/surfit/pnts_internal.cpp \
@@ -428,6 +432,7 @@ libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/mask_tcl.h src/surfit/other_tcl.h \
 	src/surfit/others_tcl.h src/surfit/pnts_tcl.h \
 	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h
+#libsurfit_la_HEADERS += src/surfit/matrD2_aniso.h
 libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/cmofs.h src/surfit/cntr.h \
 	src/surfit/cntr_internal.h src/surfit/curv.h \
@@ -442,17 +447,19 @@ libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/f_curv_surf.h src/surfit/f_curv_surf_ineq.h \
 	src/surfit/f_surf.h src/surfit/f_surf_ineq.h \
 	src/surfit/f_hist.h src/surfit/f_ineq.h src/surfit/f_mask.h \
-	src/surfit/f_mean.h src/surfit/f_points.h \
-	src/surfit/f_points_ineq.h src/surfit/f_trend.h \
-	src/surfit/f_value.h src/surfit/f_wmean.h src/surfit/grid.h \
-	src/surfit/grid_internal.h src/surfit/grid_line.h \
-	src/surfit/grid_line_internal.h src/surfit/grid_line_user.h \
-	src/surfit/grid_user.h src/surfit/hist.h \
-	src/surfit/hist_internal.h src/surfit/license.h \
-	src/surfit/mask.h src/surfit/mask_internal.h \
-	src/surfit/matfile.h src/surfit/matlab.h src/surfit/matr.h \
-	src/surfit/matrD1.h src/surfit/matrD1_aniso.h \
-	src/surfit/matrD2.h src/surfit/matrD2_aniso.h \
+	src/surfit/f_mask_ineq.h src/surfit/f_mask_surf.h \
+	src/surfit/f_mask_surf_ineq.h src/surfit/f_mask_mean.h \
+	src/surfit/f_mask_wmean.h src/surfit/f_mean.h \
+	src/surfit/f_points.h src/surfit/f_points_ineq.h \
+	src/surfit/f_trend.h src/surfit/f_value.h src/surfit/f_wmean.h \
+	src/surfit/grid.h src/surfit/grid_internal.h \
+	src/surfit/grid_line.h src/surfit/grid_line_internal.h \
+	src/surfit/grid_line_user.h src/surfit/grid_user.h \
+	src/surfit/hist.h src/surfit/hist_internal.h \
+	src/surfit/license.h src/surfit/mask.h \
+	src/surfit/mask_internal.h src/surfit/matfile.h \
+	src/surfit/matlab.h src/surfit/matr.h src/surfit/matrD1.h \
+	src/surfit/matrD1_aniso.h src/surfit/matrD2.h \
 	src/surfit/matr_diag.h src/surfit/matr_eye.h \
 	src/surfit/matr_onesrow.h src/surfit/mrf.h \
 	src/surfit/pnts_internal.h src/surfit/points.h \
@@ -687,6 +694,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_lcm_simple.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_lcm_simple_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_mask.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_mask_ineq.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_mask_mean.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_mask_surf.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_mask_surf_ineq.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_mask_wmean.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_mean.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_points.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_points_ineq.Plo@am__quote@
@@ -741,7 +753,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrD1_aniso.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrD1_rect.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrD2.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrD2_aniso.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrD2_rect.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matr_diag.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matr_eye.Plo@am__quote@
@@ -1463,6 +1474,41 @@ f_mask.lo: src/surfit/f_mask.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o f_mask.lo `test -f 'src/surfit/f_mask.cpp' || echo '$(srcdir)/'`src/surfit/f_mask.cpp
 
+f_mask_ineq.lo: src/surfit/f_mask_ineq.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT f_mask_ineq.lo -MD -MP -MF "$(DEPDIR)/f_mask_ineq.Tpo" -c -o f_mask_ineq.lo `test -f 'src/surfit/f_mask_ineq.cpp' || echo '$(srcdir)/'`src/surfit/f_mask_ineq.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/f_mask_ineq.Tpo" "$(DEPDIR)/f_mask_ineq.Plo"; else rm -f "$(DEPDIR)/f_mask_ineq.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/f_mask_ineq.cpp' object='f_mask_ineq.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o f_mask_ineq.lo `test -f 'src/surfit/f_mask_ineq.cpp' || echo '$(srcdir)/'`src/surfit/f_mask_ineq.cpp
+
+f_mask_surf.lo: src/surfit/f_mask_surf.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT f_mask_surf.lo -MD -MP -MF "$(DEPDIR)/f_mask_surf.Tpo" -c -o f_mask_surf.lo `test -f 'src/surfit/f_mask_surf.cpp' || echo '$(srcdir)/'`src/surfit/f_mask_surf.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/f_mask_surf.Tpo" "$(DEPDIR)/f_mask_surf.Plo"; else rm -f "$(DEPDIR)/f_mask_surf.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/f_mask_surf.cpp' object='f_mask_surf.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o f_mask_surf.lo `test -f 'src/surfit/f_mask_surf.cpp' || echo '$(srcdir)/'`src/surfit/f_mask_surf.cpp
+
+f_mask_surf_ineq.lo: src/surfit/f_mask_surf_ineq.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT f_mask_surf_ineq.lo -MD -MP -MF "$(DEPDIR)/f_mask_surf_ineq.Tpo" -c -o f_mask_surf_ineq.lo `test -f 'src/surfit/f_mask_surf_ineq.cpp' || echo '$(srcdir)/'`src/surfit/f_mask_surf_ineq.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/f_mask_surf_ineq.Tpo" "$(DEPDIR)/f_mask_surf_ineq.Plo"; else rm -f "$(DEPDIR)/f_mask_surf_ineq.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/f_mask_surf_ineq.cpp' object='f_mask_surf_ineq.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o f_mask_surf_ineq.lo `test -f 'src/surfit/f_mask_surf_ineq.cpp' || echo '$(srcdir)/'`src/surfit/f_mask_surf_ineq.cpp
+
+f_mask_mean.lo: src/surfit/f_mask_mean.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT f_mask_mean.lo -MD -MP -MF "$(DEPDIR)/f_mask_mean.Tpo" -c -o f_mask_mean.lo `test -f 'src/surfit/f_mask_mean.cpp' || echo '$(srcdir)/'`src/surfit/f_mask_mean.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/f_mask_mean.Tpo" "$(DEPDIR)/f_mask_mean.Plo"; else rm -f "$(DEPDIR)/f_mask_mean.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/f_mask_mean.cpp' object='f_mask_mean.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o f_mask_mean.lo `test -f 'src/surfit/f_mask_mean.cpp' || echo '$(srcdir)/'`src/surfit/f_mask_mean.cpp
+
+f_mask_wmean.lo: src/surfit/f_mask_wmean.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT f_mask_wmean.lo -MD -MP -MF "$(DEPDIR)/f_mask_wmean.Tpo" -c -o f_mask_wmean.lo `test -f 'src/surfit/f_mask_wmean.cpp' || echo '$(srcdir)/'`src/surfit/f_mask_wmean.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/f_mask_wmean.Tpo" "$(DEPDIR)/f_mask_wmean.Plo"; else rm -f "$(DEPDIR)/f_mask_wmean.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/f_mask_wmean.cpp' object='f_mask_wmean.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o f_mask_wmean.lo `test -f 'src/surfit/f_mask_wmean.cpp' || echo '$(srcdir)/'`src/surfit/f_mask_wmean.cpp
+
 f_mean.lo: src/surfit/f_mean.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT f_mean.lo -MD -MP -MF "$(DEPDIR)/f_mean.Tpo" -c -o f_mean.lo `test -f 'src/surfit/f_mean.cpp' || echo '$(srcdir)/'`src/surfit/f_mean.cpp; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/f_mean.Tpo" "$(DEPDIR)/f_mean.Plo"; else rm -f "$(DEPDIR)/f_mean.Tpo"; exit 1; fi
@@ -1658,13 +1704,6 @@ matrD2.lo: src/surfit/matrD2.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/matrD2.cpp' object='matrD2.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o matrD2.lo `test -f 'src/surfit/matrD2.cpp' || echo '$(srcdir)/'`src/surfit/matrD2.cpp
-
-matrD2_aniso.lo: src/surfit/matrD2_aniso.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT matrD2_aniso.lo -MD -MP -MF "$(DEPDIR)/matrD2_aniso.Tpo" -c -o matrD2_aniso.lo `test -f 'src/surfit/matrD2_aniso.cpp' || echo '$(srcdir)/'`src/surfit/matrD2_aniso.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/matrD2_aniso.Tpo" "$(DEPDIR)/matrD2_aniso.Plo"; else rm -f "$(DEPDIR)/matrD2_aniso.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/matrD2_aniso.cpp' object='matrD2_aniso.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o matrD2_aniso.lo `test -f 'src/surfit/matrD2_aniso.cpp' || echo '$(srcdir)/'`src/surfit/matrD2_aniso.cpp
 
 matrD2_rect.lo: src/surfit/matrD2_rect.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT matrD2_rect.lo -MD -MP -MF "$(DEPDIR)/matrD2_rect.Tpo" -c -o matrD2_rect.lo `test -f 'src/surfit/matrD2_rect.cpp' || echo '$(srcdir)/'`src/surfit/matrD2_rect.cpp; \
