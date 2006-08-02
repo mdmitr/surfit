@@ -27,6 +27,8 @@
 #include "strvec.h"
 
 #include <string.h>
+#include <assert.h>
+
 #include "points.h"
 #include "pnts_internal.h"
 #include "sort_alg.h"
@@ -347,83 +349,184 @@ void bind_points_to_grid(d_grid *& old_grid,
 
 	std::vector<size_t> * nums = new std::vector<size_t>;
 	size_t nums_size;
+
+	int prop_coeff_x = grd->getCountX()/old_grid->getCountX();
+	int prop_coeff_y = grd->getCountY()/old_grid->getCountY();
+
+	bool use_fast_bind = true;
+
+	if ( prop_coeff_x * old_grid->getCountX() != grd->getCountX() )
+		use_fast_bind = false;
 	
-	for (it = old_pnts->begin(); it != old_pnts->end(); it++) {
-
-		size_t total_size = 0;
-		sub_points * old_sub_points = *it;
-
-		REAL ** sortx_begin = NULL;
-		REAL ** sortx_end   = NULL;
-		REAL ** sorty_begin = NULL;
-		REAL ** sorty_end   = NULL;
-
-		_sort_points(pnts, old_sub_points->point_numbers,
-			     sortx_begin, sortx_end, sorty_begin, sorty_end);
-
-		size_t old_node = old_sub_points->cell_number;
-		i = old_node % old_grid->getCountX();
-		j = (old_node -i)/old_grid->getCountX();
+	if ( prop_coeff_y * old_grid->getCountY() != grd->getCountY() )
+		use_fast_bind = false;
+	
+	if (use_fast_bind) {
 		
-		int prop_coeff_x = grd->getCountX()/old_grid->getCountX();
-		int prop_coeff_y = grd->getCountY()/old_grid->getCountY();
-
-		size_t i_from = i*prop_coeff_x;
-		size_t i_to = i_from + prop_coeff_x-1;
-		if (old_grid->stepX == grd->stepX) {
-			i_from = i;
-			i_to = i;
-		}
-		size_t j_from = j*prop_coeff_y;
-		size_t j_to = j_from + prop_coeff_y-1;
-		if (old_grid->stepY == grd->stepY) {
-			j_from = j;
-			j_to = j;
-		}
-
-		old_size = old_sub_points->point_numbers->size();
-					
-		for (i = i_from; i <= i_to; i++) {
+		for (it = old_pnts->begin(); it != old_pnts->end(); it++) {
 			
-			x_from = grd->startX + (i - REAL(0.5))*grd->stepX;
-			x_to   = grd->startX + (i + REAL(0.5))*grd->stepX;
+			size_t total_size = 0;
+			sub_points * old_sub_points = *it;
+			
+			REAL ** sortx_begin = NULL;
+			REAL ** sortx_end   = NULL;
+			REAL ** sorty_begin = NULL;
+			REAL ** sorty_end   = NULL;
+			
+			_sort_points(pnts, old_sub_points->point_numbers,
+				sortx_begin, sortx_end, sorty_begin, sorty_end);
+			
+			size_t old_node = old_sub_points->cell_number;
+			i = old_node % old_grid->getCountX();
+			j = (old_node -i)/old_grid->getCountX();
+			
+			size_t i_from = i*prop_coeff_x;
+			size_t i_to = i_from + prop_coeff_x-1;
+			if (old_grid->stepX == grd->stepX) {
+				i_from = i;
+				i_to = i;
+			}
+			size_t j_from = j*prop_coeff_y;
+			size_t j_to = j_from + prop_coeff_y-1;
+			if (old_grid->stepY == grd->stepY) {
+				j_from = j;
+				j_to = j;
+			}
+			
+			old_size = old_sub_points->point_numbers->size();
+			
+			for (i = i_from; i <= i_to; i++) {
+				
+				x_from = grd->startX + (i - REAL(0.5))*grd->stepX;
+				x_to   = grd->startX + (i + REAL(0.5))*grd->stepX;
+				
+				for (j = j_from; j <= j_to; j++) {
+					y_from = grd->startY + (j - REAL(0.5))*grd->stepY;
+					y_to   = grd->startY + (j + REAL(0.5))*grd->stepY;
+					
+					getPointsInRect(x_from, x_to, y_from, y_to,
+						sortx_begin, sortx_end,
+						sorty_begin, sorty_end,
+						pnts->X->begin(), pnts->Y->begin(),
+						*nums);
+					
+					nums_size = nums->size();
+					total_size += nums_size;
+					
+					if (nums_size > 0) {
+						
+						node = i+j*grd->getCountX();
+						
+						sub_points * new_sub_points = new sub_points(node, nums);
+						tasks->push_back(new_sub_points);
+						
+						nums = new std::vector<size_t>;
+					}
+					
+					if (total_size == old_size)
+						break;
+				}
+				
+				if (total_size == old_size)
+					break;
+			}
+			if (total_size != old_size)
+				assert(0);
+			if (*it)
+				(*it)->release();
+			*it = NULL;
+			
+			free(sortx_begin);
+			free(sorty_begin);
+			
+		}
+		
+	} else {
 
-			for (j = j_from; j <= j_to; j++) {
-				y_from = grd->startY + (j - REAL(0.5))*grd->stepY;
-				y_to   = grd->startY + (j + REAL(0.5))*grd->stepY;
+		REAL prop_coeff_x = (REAL)grd->getCountX()/(REAL)old_grid->getCountX();
+		REAL prop_coeff_y = (REAL)grd->getCountY()/(REAL)old_grid->getCountY();
+
+		for (it = old_pnts->begin(); it != old_pnts->end(); it++) {
+			
+			size_t total_size = 0;
+			sub_points * old_sub_points = *it;
+			
+			REAL ** sortx_begin = NULL;
+			REAL ** sortx_end   = NULL;
+			REAL ** sorty_begin = NULL;
+			REAL ** sorty_end   = NULL;
+			
+			_sort_points(pnts, old_sub_points->point_numbers,
+				sortx_begin, sortx_end, sorty_begin, sorty_end);
+			
+			size_t old_node = old_sub_points->cell_number;
+			i = old_node % old_grid->getCountX();
+			j = (old_node -i)/old_grid->getCountX();
+			
+			REAL old_x_from = old_grid->startX + (i - REAL(0.5))*old_grid->stepX;
+			REAL old_x_to   = old_grid->startX + (i + REAL(0.5))*old_grid->stepX;
+			REAL old_y_from = old_grid->startY + (j - REAL(0.5))*old_grid->stepY;
+			REAL old_y_to   = old_grid->startY + (j + REAL(0.5))*old_grid->stepY;
+
+			size_t i_from = grd->get_i(old_x_from);
+			size_t i_to   = grd->get_i(old_x_to);
+			size_t j_from = grd->get_j(old_y_from);
+			size_t j_to   = grd->get_j(old_y_to);
+			
+			x_from = grd->startX + (i_from - REAL(0.5))*grd->stepX;
+			x_to   = grd->startX + (i_to + REAL(0.5))*grd->stepX;
+			y_from = grd->startY + (j_from - REAL(0.5))*grd->stepY;
+			y_to   = grd->startY + (j_to + REAL(0.5))*grd->stepY;
+			
+			old_size = old_sub_points->point_numbers->size();
+			
+			for (i = i_from; i <= i_to; i++) {
 				
-				getPointsInRect(x_from, x_to, y_from, y_to,
-					sortx_begin, sortx_end,
-					sorty_begin, sorty_end,
-					pnts->X->begin(), pnts->Y->begin(),
-					*nums);
+				x_from = grd->startX + (i - REAL(0.5))*grd->stepX;
+				x_to   = grd->startX + (i + REAL(0.5))*grd->stepX;
 				
-				nums_size = nums->size();
-				total_size += nums_size;
-				
-				if (nums_size > 0) {
+				for (j = j_from; j <= j_to; j++) {
+					y_from = grd->startY + (j - REAL(0.5))*grd->stepY;
+					y_to   = grd->startY + (j + REAL(0.5))*grd->stepY;
 					
-					node = i+j*grd->getCountX();
+					getPointsInRect(x_from, x_to, y_from, y_to,
+						sortx_begin, sortx_end,
+						sorty_begin, sorty_end,
+						pnts->X->begin(), pnts->Y->begin(),
+						*nums);
 					
-					sub_points * new_sub_points = new sub_points(node, nums);
-					tasks->push_back(new_sub_points);
+					nums_size = nums->size();
+					total_size += nums_size;
 					
-					nums = new std::vector<size_t>;
+					if (nums_size > 0) {
+						
+						node = i+j*grd->getCountX();
+						
+						sub_points * new_sub_points = new sub_points(node, nums);
+						tasks->push_back(new_sub_points);
+						
+						nums = new std::vector<size_t>;
+					}
+					
+					if (total_size == old_size)
+						break;
 				}
 				
 				if (total_size == old_size)
 					break;
 			}
 
-			if (total_size == old_size)
-					break;
-		}
-		if (*it)
-			(*it)->release();
-		*it = NULL;
+			if (total_size != old_size)
+				assert(0);
 
-		free(sortx_begin);
-		free(sorty_begin);
+			if (*it)
+				(*it)->release();
+			*it = NULL;
+			
+			free(sortx_begin);
+			free(sorty_begin);
+			
+		}
 
 	}
 

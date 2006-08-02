@@ -25,6 +25,7 @@
 #include "bitvec.h"
 #include "vec.h"
 #include "surf.h"
+#include "surf_internal.h"
 #include "surf_tcl.h"
 #include "variables_tcl.h"
 #include "grid_tcl.h"
@@ -356,6 +357,22 @@ void grid_begin() {
 
 void grid_finish() {
 
+	if (
+		(method_grid->getCountX() >= surfit_grid->getCountX()) &&
+		(method_grid->getCountY() >= surfit_grid->getCountY())
+	   )
+		method_ok = true;
+
+	if (method_ok) {
+		size_t i;
+		for (i = 0; i < method_mask_undefined->size(); i++) {
+			if (method_mask_undefined->get(i))
+				(*method_X)(i) = undef_value;
+		}
+		return;		
+	}
+
+
 	if (method_sub_grid)
 		method_sub_grid->release();
 	method_sub_grid = create_grid(method_grid);
@@ -366,37 +383,59 @@ void grid_finish() {
 	
 	doubleX = false;
 	doubleY = false;
+	bool use_fast_project = true;
 	
 	if (method_grid->getCountX() < surfit_grid->getCountX()) {
 		method_basis_cntX *= 2;
 		doubleX = true;
+		if (method_basis_cntX > surfit_grid->getCountX()) {
+			doubleX = false;
+			use_fast_project = false;
+			method_basis_cntX = surfit_grid->getCountX();
+		}
 	}
 	
 	if (method_grid->getCountY() < surfit_grid->getCountY()) {
 		method_basis_cntY *= 2;
 		doubleY = true;
+		if (method_basis_cntY > surfit_grid->getCountY()) {
+			doubleY = false;
+			use_fast_project = false;
+			method_basis_cntY = surfit_grid->getCountY();
+		}
 	}
 	
 	// updating sigma's coeff
-	project_vector(method_X, 
-		method_grid->getCountX(), method_grid->getCountY(),
-		doubleX, doubleY);
-	
-	if (
-		(method_grid->getCountX() >= surfit_grid->getCountX()) &&
-		(method_grid->getCountY() >= surfit_grid->getCountY())
-		)
-		method_ok = true;
-
-	if (method_ok) {
-		size_t i;
-		for (i = 0; i < method_mask_undefined->size(); i++) {
-			if (method_mask_undefined->get(i))
-				(*method_X)(i) = undef_value;
+	if (use_fast_project)
+		project_vector(method_X, method_grid->getCountX(), method_grid->getCountY(), doubleX, doubleY);
+	else {
+		d_surf * current_surf = create_surf(method_X, method_grid, map_name);
+		d_surf * projected_surf = NULL;
+		if (doubleX && doubleY)
+			projected_surf = _surf_project(current_surf, surfit_grid);
+		else {
+			d_grid * proj_grid = create_grid(surfit_grid);
+			if (doubleX)
+				proj_grid->stepX = method_grid->stepX/REAL(2);
+			if (doubleY)
+				proj_grid->stepY = method_grid->stepY/REAL(2);
+			projected_surf = _surf_project(current_surf, proj_grid);
+			proj_grid->release();
+			
 		}
-		
+		current_surf->coeff = NULL;
+		current_surf->grd = NULL;
+		current_surf->release();
+		method_X->release();
+		method_X = projected_surf->coeff;
+		projected_surf->coeff = NULL;
+		method_grid->release();
+		method_grid = projected_surf->grd;
+		projected_surf->grd = NULL;
+		projected_surf->release();
 	}
-
+		
+	
 };
 
 void grid_release() {
