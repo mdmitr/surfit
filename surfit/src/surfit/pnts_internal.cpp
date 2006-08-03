@@ -344,6 +344,9 @@ void bind_points_to_grid(d_grid *& old_grid,
 
 	size_t old_size = old_pnts->size();
 
+	size_t NN = grd->getCountX();
+	size_t MM = grd->getCountY();
+
 	std::vector<sub_points *> * tasks = new std::vector<sub_points *>;
 	tasks->reserve(old_size);
 	
@@ -365,20 +368,21 @@ void bind_points_to_grid(d_grid *& old_grid,
 		
 		_sort_points(pnts, old_sub_points->point_numbers,
 			sortx_begin, sortx_end, sorty_begin, sorty_end);
-		
-		size_t old_node = old_sub_points->cell_number;
-		i = old_node % old_grid->getCountX();
-		j = (old_node -i)/old_grid->getCountX();
-		
+
 		size_t i_from = grd->get_i(minx);
 		size_t i_to   = grd->get_i(maxx);
 		size_t j_from = grd->get_j(miny);
 		size_t j_to   = grd->get_j(maxy);
-		
-		if (maxx <= grd->startX + (i_to + REAL(0.5))*grd->stepX)
-			i_to++;
-		if (maxy <= grd->startY + (j_to + REAL(0.5))*grd->stepY)
-			j_to++;
+
+		i_from = MIN(i_from, NN-1);
+		j_from = MIN(j_from, MM-1);
+		i_to = MIN(i_to, NN-1);
+		j_to = MIN(j_to, MM-1);
+
+		i_from = MAX(i_from, 0);
+		j_from = MAX(j_from, 0);
+		i_to = MAX(i_to, 0);
+		j_to = MAX(j_to, 0);
 		
 		old_size = old_sub_points->point_numbers->size();
 		
@@ -388,9 +392,9 @@ void bind_points_to_grid(d_grid *& old_grid,
 			x_to   = grd->startX + (i + REAL(0.5))*grd->stepX;
 			
 			if (i == i_from)
-				x_from = MIN(x_from, minx);
+				x_from = MIN(x_from, minx) - grd->stepX/REAL(100.);
 			if (i == i_to)
-				x_to = MAX(x_to, maxx);
+				x_to = MAX(x_to, maxx) + grd->stepX/REAL(100.);
 			
 			for (j = j_from; j <= j_to; j++) {
 				
@@ -398,9 +402,9 @@ void bind_points_to_grid(d_grid *& old_grid,
 				y_to   = grd->startY + (j + REAL(0.5))*grd->stepY;
 				
 				if (j == j_from)
-					y_from = MIN(y_from, miny);
+					y_from = MIN(y_from, miny) - grd->stepY/REAL(100.);
 				if (j == j_to)
-					y_to = MAX(y_to, maxy);
+					y_to = MAX(y_to, maxy) + grd->stepY/REAL(100.);
 				
 				getPointsInRect(x_from, x_to, y_from, y_to,
 					sortx_begin, sortx_end,
