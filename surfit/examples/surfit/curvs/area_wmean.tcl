@@ -87,3 +87,5 @@ grid_unload
 
 # save surface to surfit datafile 
 surf_save "area_wmean.dat" "map_area_wmean" 
+
+puts [concat "Surface weighted mean value in area6 : " [surf_area_wmean "area6" "test_func" "map_area_wmean"]]
