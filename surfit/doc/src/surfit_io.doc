@@ -1,0 +1,32 @@
+/*! \page surfit_io surfit_io library description
+
+<B><TT>surfit_io</TT></B> is a library that provides import/export various data in various 
+formats for <B><TT>surfit</TT></B>
+
+Here is a list of supported formats and commands:
+
+\ref d_surf "surface" :
+\li import/export of SURFER surface (GRD-ASCII format) : \ref surf_load_grd, \ref surf_save_grd
+\li import/export of surfaces from XYZ text files : \ref surf_load_xyz, \ref surf_save_xyz
+\li import/export of GMT surfaces (CDF format) : \ref surf_load_gmt, \ref surf_save_gmt 
+\li import/export of GRASS surfaces (ASCII format) : \ref surf_load_grass, \ref surf_save_grass 
+\li import/export of ArcGIS surfaces (ASCII format) : \ref surf_load_arcgis, \ref surf_save_arcgis
+\li import/export of JPEG images (export in grayscale colormap) : \ref surf_load_jpg, \ref surf_save_jpg
+\li import/export of BMP images (export in grayscale colormap) : \ref surf_load_bmp, \ref surf_save_bmp
+
+\ref d_points "points" :
+\li import/export of ERSI shapfiles : \ref pnts_load_shp, \ref pnts_save_shp 
+
+\ref d_curv "curve" :
+\li import/export of Surfer BLN files : \ref curv_load_bln, \ref curv_save_bln
+\li import/export of ERSI shapfiles : \ref curv_load_shp, \ref curvs_load_shp, \ref curv_save_shp
+
+\ref d_area "area" :
+\li import/export of Surfer BLN files : \ref area_load_bln, \ref area_save_bln
+\li import/export of ERSI shapfiles : \ref area_load_shp, \ref areas_load_shp, \ref area_save_shp
+
+\ref d_cntr "contour" :
+\li import/export of ERSI shapfiles : \ref cntr_load_shp, \ref cntrs_load_shp, \ref cntr_save_shp
+
+*/
+

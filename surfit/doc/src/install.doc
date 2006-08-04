@@ -1,7 +1,7 @@
 /*! \page install Install instructions
 
 <H2>Use installer (Windows only):</H2>
-It's very simple! :) Just run surfit-2.0.exe.
+It's very simple! :) Just run surfit-2.1.exe.
 
 <H2>Building surfit from sources:</H2>
 
@@ -11,8 +11,8 @@ First of all you must have installed :
 <H3>WINDOWS:</H3>
 
 Under Windows surfit can be built with Microsoft VC++ 6.0:
-\li extract archive surfit-2.0.tar.gz
-\li examine directory surfit-2.0/vc6  
+\li extract archive surfit-2.1.tar.gz
+\li examine directory surfit-2.1/vc6  
 
 Before building make shure that you have TCL library installed!
 
@@ -22,9 +22,9 @@ Before building make shure that you have TCL library installed!
 <TR>
 <TD>
 <pre>
-$ gunzip surfit-2.0.tar.gz
-$ tar xvf surfit-2.0.tar
-$ cd surfit-2.0
+$ gunzip surfit-2.1.tar.gz
+$ tar xvf surfit-2.1.tar
+$ cd surfit-2.1
 $ ./configure
 $ make
 $ make install
