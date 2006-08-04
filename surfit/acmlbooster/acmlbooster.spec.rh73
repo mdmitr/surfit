@@ -1,6 +1,6 @@
 
 %define name acmlbooster
-%define version 1.0
+%define version 2.1
 %define release rh73
 
 Summary: computation speed booster for surfit

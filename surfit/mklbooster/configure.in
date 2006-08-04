@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT(src/mklbooster_wrap.cxx)
-AM_INIT_AUTOMAKE(mklbooster,1.0)
+AM_INIT_AUTOMAKE(mklbooster,2.1)
 
 # test for c++ features
 AC_PROG_CXX

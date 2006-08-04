@@ -3,10 +3,10 @@ rm `find -name "core*"`
 rm `find -name "*.dat"`
 rm `find -name "*.log"`
 make dist
-cp mklbooster-1.0.tar.gz $HOME/rpm/SOURCES/
+cp mklbooster-2.1.tar.gz $HOME/rpm/SOURCES/
 cat rpmmacros > $HOME/.rpmmacros
 rpmbuild -ba mklbooster.spec.fc4
-cp $HOME/rpm/SRPMS/mklbooster-1.0-fc4.src.rpm mklbooster-1.0-fc4.src.rpm
-cp $HOME/rpm/RPMS/i386/mklbooster-1.0-fc4.i386.rpm mklbooster-1.0-fc4.i386.rpm
+cp $HOME/rpm/SRPMS/mklbooster-2.1-fc4.src.rpm mklbooster-2.1-fc4.src.rpm
+cp $HOME/rpm/RPMS/i386/mklbooster-2.1-fc4.i386.rpm mklbooster-2.1-fc4.i386.rpm
 
 
