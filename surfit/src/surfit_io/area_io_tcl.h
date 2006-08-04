@@ -30,6 +30,10 @@ namespace surfit {
 
     \par Example
     area_load_bln "C:\\area.bln" area_from_bln
+
+    \par Implemented in library:
+    libsurfit_io
+
 */
 bool area_load_bln(const char * filename, const char * areaname = NULL);
 
@@ -47,6 +51,9 @@ bool area_load_bln(const char * filename, const char * areaname = NULL);
     
     \par Example
     area_load_shp "C:\\area.shp" my_area
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool area_load_shp(const char * filename, const char * area_name = NULL);
 
@@ -63,6 +70,9 @@ bool area_load_shp(const char * filename, const char * area_name = NULL);
     
     \par Example
     areas_load_shp "C:\\area.shp" 
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool areas_load_shp(const char * filename);
 
@@ -81,6 +91,9 @@ bool areas_load_shp(const char * filename);
     
     \par Example
     area_save_bln "C:\\area.bln" my_area 1
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool area_save_bln(const char * filename, const char * area_name_or_position = "0", int flag = 1);
 
@@ -98,6 +111,9 @@ bool area_save_bln(const char * filename, const char * area_name_or_position = "
     
     \par Example
     area_save_shp "C:\\area.shp" my_area
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool area_save_shp(const char * filename, const char * area_name_or_position = "0");
 

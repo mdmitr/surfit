@@ -30,6 +30,9 @@ namespace surfit {
 
     \par Example:
     cntr_load_shp "C:\\my_cntr.shp" "my_cntr"
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool cntr_load_shp(const char * filename, const char * cntrname = NULL);
 
@@ -44,6 +47,9 @@ bool cntr_load_shp(const char * filename, const char * cntrname = NULL);
 
     \par Example:
     cntrs_load_shp "C:\\my_cntr.shp"
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool cntrs_load_shp(const char * filename);
 
@@ -58,6 +64,9 @@ bool cntrs_load_shp(const char * filename);
 
     \par Example:
     cntr_save_shp "C:\\my_cntr.shp" "my_cntr"
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool cntr_save_shp(const char * filename, const char * cntr_name_or_position = "0");
 

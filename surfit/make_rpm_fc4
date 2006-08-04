@@ -6,10 +6,10 @@ cd doc
 sh make_docs
 cd ..
 make dist
-cp surfit-2.0.tar.gz $HOME/rpm/SOURCES/
+cp surfit-2.1.tar.gz $HOME/rpm/SOURCES/
 cat rpmmacros > $HOME/.rpmmacros
 rpmbuild -ba surfit.spec.fc4
-cp $HOME/rpm/SRPMS/surfit-2.0-fc4.src.rpm surfit-2.0-fc4.src.rpm
-cp $HOME/rpm/RPMS/i386/surfit-2.0-fc4.i386.rpm surfit-2.0-fc4.i386.rpm
+cp $HOME/rpm/SRPMS/surfit-2.1-fc4.src.rpm surfit-2.1-fc4.src.rpm
+cp $HOME/rpm/RPMS/i386/surfit-2.1-fc4.i386.rpm surfit-2.1-fc4.i386.rpm
 
 

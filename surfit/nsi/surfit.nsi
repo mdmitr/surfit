@@ -12,10 +12,10 @@
 
   ;Name and file
   Name "surfit"
-  OutFile "surfit-2.0-setup.exe"
+  OutFile "surfit-2.1-setup.exe"
 
   ;Default installation folder
-  InstallDir "$PROGRAMFILES\surfit-2.0"
+  InstallDir "$PROGRAMFILES\surfit-2.1"
   
   ;Get installation folder from registry if available
   InstallDirRegKey HKCU "Software\surfit" ""
@@ -59,8 +59,8 @@ FunctionEnd
 
 Function .onInit
 
-  StrCpy $STARTMENU_FOLDER "surfit-2.0"
-  StrCpy $VERSION "2.0"
+  StrCpy $STARTMENU_FOLDER "surfit-2.1"
+  StrCpy $VERSION "2.1"
 
   InitPluginsDir
   SearchPath $1 tclsh83.exe

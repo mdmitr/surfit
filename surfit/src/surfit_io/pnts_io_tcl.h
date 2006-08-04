@@ -30,6 +30,9 @@ namespace surfit {
 
     \par Example:
     pnts_load_shp "C:\\my_points.shp" "my_points" "VALUE"
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool pnts_load_shp(const char * filename, const char * pntsname = NULL, const char * param = "VALUE");
 
@@ -44,6 +47,9 @@ bool pnts_load_shp(const char * filename, const char * pntsname = NULL, const ch
 
     \par Example
     pnts_save_shp "C:\\points.shp" "my_points"
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool pnts_save_shp(const char * filename, const char * points_name_or_position = "0");
 

@@ -27,6 +27,9 @@ namespace surfit {
 
     \par Description:
     loads \ref d_curv "curve" from BLN file
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool curv_load_bln(const char * filename);
 
@@ -38,6 +41,9 @@ bool curv_load_bln(const char * filename);
 
     \par Description:
     loads \ref d_curv "curve" named "curvname" from ERSI shape file
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool curv_load_shp(const char * filename, const char * curvname = NULL);
 
@@ -49,6 +55,9 @@ bool curv_load_shp(const char * filename, const char * curvname = NULL);
 
     \par Description:
     loads all \ref d_curv "curves" from ERSI shape file
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool curvs_load_shp(const char * filename);
 
@@ -67,6 +76,9 @@ bool curvs_load_shp(const char * filename);
     
     \par Example
     curv_save_bln "C:\\curv.bln" my_curv 1
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool curv_save_bln(const char * filename, const char * curv_name_or_position = "0", int orient = 1);
 
@@ -78,6 +90,9 @@ bool curv_save_bln(const char * filename, const char * curv_name_or_position = "
 
     \par Description:
     saves \ref d_curv "curve" to ERSI shape file
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool curv_save_shp(const char * filename, const char * curv_name_or_position = "0");
 

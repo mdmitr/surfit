@@ -25,7 +25,7 @@ struct Tcl_Interp;
 
 namespace surfit {
 
-#define FREEFLOW_VERSION "2.0"
+#define FREEFLOW_VERSION "2.1"
 
 FLOW_EXPORT
 void freeflow_init_variables(Tcl_Interp * interp);

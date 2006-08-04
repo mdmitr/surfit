@@ -13,11 +13,11 @@
 ;General
 
   ;Name and file
-  Name "acmlbooster-1.0"
-  OutFile "acmlbooster-1.0-setup.exe"
+  Name "acmlbooster-2.1"
+  OutFile "acmlbooster-2.1-setup.exe"
 
   ;Default installation folder
-  InstallDir "$PROGRAMFILES\surfit-2.0"
+  InstallDir "$PROGRAMFILES\surfit-2.1"
   
   ;Get installation folder from registry if available
   InstallDirRegKey HKCU "Software\surfit" ""
@@ -64,7 +64,7 @@ Function .onInit
   ReadRegStr $STARTMENU_FOLDER HKCU "Software\surfit" "StartMenuFolder"
   ReadRegStr $SURFIT_VERSION HKCU "Software\surfit" "Version"
 
-  ${VersionCompare} "2.0" $SURFIT_VERSION" $R0
+  ${VersionCompare} "2.1" $SURFIT_VERSION" $R0
 
   InitPluginsDir
 

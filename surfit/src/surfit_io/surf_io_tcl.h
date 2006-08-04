@@ -30,6 +30,9 @@ namespace surfit {
 
     \param filename Surfer grd file (ASCII format)
     \param surfname name for surface (optional)
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool surf_load_grd(const char * filename, const char * surfname = 0);
 
@@ -41,6 +44,9 @@ bool surf_load_grd(const char * filename, const char * surfname = 0);
 
     \par Description:
     loads surface from Generic Mapping Tools grd file (CDF format)
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool surf_load_gmt(const char * filename, const char * surfname = 0);
 
@@ -52,6 +58,9 @@ bool surf_load_gmt(const char * filename, const char * surfname = 0);
 
     \par Description:
     loads surface from GRASS ASCII file
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool surf_load_grass(const char * filename, const char * surfname = 0);
 
@@ -63,6 +72,9 @@ bool surf_load_grass(const char * filename, const char * surfname = 0);
 
     \par Description:
     loads surface from ArcGIS ASCII file
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool surf_load_arcgis(const char * filename, const char * surfname = 0);
 
@@ -74,6 +86,9 @@ bool surf_load_arcgis(const char * filename, const char * surfname = 0);
 
     \par Description:
     loads surface from XYZ 3-column text file
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool surf_load_xyz(const char * filename, const char * surfname = 0);
 
@@ -87,6 +102,9 @@ bool surf_load_xyz(const char * filename, const char * surfname = 0);
 
     \par Description:
     loads surface from JPEG file
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool surf_load_jpg(const char * filename, const char * surfname = 0,
 		   REAL minz = 0, REAL maxz = 0, 
@@ -102,6 +120,9 @@ bool surf_load_jpg(const char * filename, const char * surfname = 0,
 
     \par Description:
     loads surface from Windows bitmap file
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool surf_load_bmp(const char * filename, const char * surfname = 0,
 		   REAL minz = 0, REAL maxz = 0, 
@@ -128,6 +149,9 @@ bool surf_load_bmp(const char * filename, const char * surfname = 0,
 
     \param filename SURFER grd file (ASCII format)
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool surf_save_grd(const char * filename, const char * surface_name_or_position = "0");
 
@@ -139,6 +163,9 @@ bool surf_save_grd(const char * filename, const char * surface_name_or_position 
 
     \par Description:
     saves surface to Generic Mapping Tools grd file (CDF format)
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool surf_save_gmt(const char * filename, const char * surface_name_or_position = "0");
 
@@ -150,6 +177,9 @@ bool surf_save_gmt(const char * filename, const char * surface_name_or_position 
 
     \par Description:
     saves surface to GRASS ASCII file
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool surf_save_grass(const char * filename, const char * surface_name_or_position = "0");
 
@@ -161,6 +191,9 @@ bool surf_save_grass(const char * filename, const char * surface_name_or_positio
 
     \par Description:
     saves surface to ArcGIS ASCII file
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool surf_save_arcgis(const char * filename, const char * surface_name_or_position = "0");
 
@@ -175,6 +208,9 @@ bool surf_save_arcgis(const char * filename, const char * surface_name_or_positi
 
     \param filename XYZ text file
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool surf_save_xyz(const char * filename, const char * surface_name_or_position = "0");
 
@@ -190,6 +226,9 @@ bool surf_save_xyz(const char * filename, const char * surface_name_or_position 
     \param filename jpeg file
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
     \param quality jpeg quality 0..255
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool surf_save_jpg(const char * filename, const char * surface_name_or_position = "0", int quality = 255);
 
@@ -204,6 +243,9 @@ bool surf_save_jpg(const char * filename, const char * surface_name_or_position 
 
     \param filename bitmap file
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
+
+    \par Implemented in library:
+    libsurfit_io
 */
 bool surf_save_bmp(const char * filename, const char * surface_name_or_position = "0");
 

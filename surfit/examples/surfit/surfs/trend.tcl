@@ -1,5 +1,5 @@
 #
-# This script was generated with funner v2.0beta
+# This script was generated with funner v2.1beta (www.gridding.info)
 
 # 
 # load plugins
