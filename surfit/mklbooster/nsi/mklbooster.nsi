@@ -137,7 +137,7 @@ Section "binaries" SecBinary
   Push $INSTDIR/bin
   Call AddToPath
                 
-  File "..\bin\libmklbooster.dll"
+  File "..\..\bin\libmklbooster.dll"
 
 SectionEnd
 

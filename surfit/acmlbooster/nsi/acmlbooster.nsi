@@ -73,7 +73,7 @@ Function .onInit
   
   wanna_surfit:
 
-  	MessageBox MB_YESNO "Installer can't find surfit library! Installation will be aborted. Do you want to download surfit? Press NO to abort installation" IDYES manual
+  	MessageBox MB_YESNO "Installer can't find surfit-2.1 library! Installation will be aborted. Do you want to download surfit? Press NO to abort installation" IDYES manual
 
 		Abort 
 
@@ -137,7 +137,7 @@ Section "binaries" SecBinary
   Push $INSTDIR/bin
   Call AddToPath
 
-  File "..\bin\libacmlbooster.dll"
+  File "..\..\bin\libacmlbooster.dll"
 
 SectionEnd
 

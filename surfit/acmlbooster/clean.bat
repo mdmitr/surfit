@@ -1,7 +1,9 @@
+cd ..
 mkdir bin
 cd bin
-del libmklbooster.*
+del libacmlbooster.*
 cd ..
+cd acmlbooster
 
 del /Q /S *.dat
 del /Q /S *.grd

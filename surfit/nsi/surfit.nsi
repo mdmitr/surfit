@@ -6,6 +6,9 @@
 
   !include "MUI.nsh"
   !include "path_man.nsi"
+  !include "WordFunc.nsh"
+
+  !insertmacro VersionCompare
 
 ;--------------------------------
 ;General
@@ -27,6 +30,7 @@
   Var MUI_TEMP
   Var STARTMENU_FOLDER
   Var VERSION
+  Var SURFIT_VERSION
 
 ;--------------------------------
 ;Interface Settings
@@ -58,6 +62,19 @@ Function ConnectInternet
 FunctionEnd
 
 Function .onInit
+
+  ReadRegStr $SURFIT_VERSION HKCU "Software\surfit" "Version"
+
+  StrCmp $SURFIT_VERSION "" can_continue_install
+
+  ${VersionCompare} "2.1" $SURFIT_VERSION" $R0
+
+  StrCmp $R0 "0" can_continue_install
+
+  MessageBox MB_OK "You should uninstall installed version of surfit first!"
+  Abort
+
+can_continue_install:
 
   StrCpy $STARTMENU_FOLDER "surfit-2.1"
   StrCpy $VERSION "2.1"
@@ -226,6 +243,11 @@ SectionGroup "sources" SecSources
 	  SetOutPath "$INSTDIR\src\globe"
 	  File /r /x CVS "..\src\globe\*.*"
 	SectionEnd
+       
+	Section "surfit_io" SecSurfitIOSources
+	  SetOutPath "$INSTDIR\src\surfit_io"
+	  File /r /x CVS "..\src\surfit_io\*.*"
+	SectionEnd
 
 	Section "VC6 project files" SecVC6
 	  SetOutPath "$INSTDIR\vc6"
@@ -264,6 +286,7 @@ SectionEnd
   LangString DESC_SecSurfitSources ${LANG_ENGLISH} "surfit sources."
   LangString DESC_SecFreeflowSources ${LANG_ENGLISH} "freeflow sources."
   LangString DESC_SecGlobeSources ${LANG_ENGLISH} "globe sources."
+  LangString DESC_SecSurfitIOSources ${LANG_ENGLISH} "surfit_io sources."
   LangString DESC_SecDocs ${LANG_ENGLISH} "documentation for surfit, freeflow and globe"
   LangString DESC_Src ${LANG_ENGLISH} "source files (*.cpp, *.h, ...)"
   LangString DESC_Examples ${LANG_ENGLISH} "set of scripts for example"
@@ -280,6 +303,7 @@ SectionEnd
     !insertmacro MUI_DESCRIPTION_TEXT ${SecSurfitSources} $(DESC_SecSurfitSources)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecFreeflowSources} $(DESC_SecFreeflowSources)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecGlobeSources} $(DESC_SecGlobeSources)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecSurfitIOSources} $(DESC_SecSurfitIOSources)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecDocs} $(DESC_SecDocs)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecSources} $(DESC_Src)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecExamples} $(DESC_Examples)
