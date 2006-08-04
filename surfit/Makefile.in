@@ -44,29 +44,30 @@ host_triplet = @host@
 @MAKE_SURFIT_IO_TRUE@am__append_3 = libsurfit_io.la
 @HAVE_PTHREAD_INSTALLED_TRUE@am__append_4 =  \
 @HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pasync.cxx \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pasync.h \
 @HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/patomic.cxx \
 @HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pexcept.cxx \
 @HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pfatal.cxx \
 @HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pmem.cxx \
 @HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pmsgq.cxx \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pport.h \
 @HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/psemaphore.cxx \
 @HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pstring.cxx \
 @HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pthread.cxx \
 @HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/ptimedsem.cxx \
-@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/ptypes.h \
 @HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/punknown.cxx
-@HAVE_PTHREAD_INSTALLED_TRUE@am__append_5 = -lpthread 
-@HAVE_JPEG_INSTALLED_TRUE@am__append_6 = -ljpeg
-@HAVE_ZLIB_INSTALLED_TRUE@am__append_7 = src/globe/minizip/ioapi.c \
+@HAVE_PTHREAD_INSTALLED_TRUE@am__append_5 =  \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pasync.h \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/pport.h \
+@HAVE_PTHREAD_INSTALLED_TRUE@	src/sstuff/ptypes/ptypes.h
+@HAVE_PTHREAD_INSTALLED_TRUE@am__append_6 = -lpthread 
+@HAVE_JPEG_INSTALLED_TRUE@am__append_7 = -ljpeg
+@HAVE_ZLIB_INSTALLED_TRUE@am__append_8 = src/globe/minizip/ioapi.c \
 @HAVE_ZLIB_INSTALLED_TRUE@	src/globe/minizip/unzip.c \
 @HAVE_ZLIB_INSTALLED_TRUE@	src/globe/minizip/crypt.h \
 @HAVE_ZLIB_INSTALLED_TRUE@	src/globe/minizip/ioapi.h \
 @HAVE_ZLIB_INSTALLED_TRUE@	src/globe/minizip/unzip.h
-@HAVE_ZLIB_INSTALLED_TRUE@am__append_8 = -lz
-DIST_COMMON = $(am__configure_deps) $(libfreeflow_la_HEADERS) \
-	$(libglobe_la_HEADERS) $(libsstuff_la_HEADERS) \
+@HAVE_ZLIB_INSTALLED_TRUE@am__append_9 = -lz
+DIST_COMMON = $(am__configure_deps) $(am__libsstuff_la_HEADERS_DIST) \
+	$(libfreeflow_la_HEADERS) $(libglobe_la_HEADERS) \
 	$(libsurfit_io_la_HEADERS) $(libsurfit_la_HEADERS) \
 	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
 	$(srcdir)/config.h.in $(top_srcdir)/configure COPYING INSTALL \
@@ -135,13 +136,12 @@ am__libsstuff_la_SOURCES_DIST = src/sstuff/bitvec.cpp \
 	src/sstuff/sstuff.cpp src/sstuff/stepFunc.cpp \
 	src/sstuff/vec.cpp src/sstuff/vec_alg.cpp \
 	src/sstuff/threads.cpp src/sstuff/ptypes/pasync.cxx \
-	src/sstuff/ptypes/pasync.h src/sstuff/ptypes/patomic.cxx \
-	src/sstuff/ptypes/pexcept.cxx src/sstuff/ptypes/pfatal.cxx \
-	src/sstuff/ptypes/pmem.cxx src/sstuff/ptypes/pmsgq.cxx \
-	src/sstuff/ptypes/pport.h src/sstuff/ptypes/psemaphore.cxx \
+	src/sstuff/ptypes/patomic.cxx src/sstuff/ptypes/pexcept.cxx \
+	src/sstuff/ptypes/pfatal.cxx src/sstuff/ptypes/pmem.cxx \
+	src/sstuff/ptypes/pmsgq.cxx src/sstuff/ptypes/psemaphore.cxx \
 	src/sstuff/ptypes/pstring.cxx src/sstuff/ptypes/pthread.cxx \
-	src/sstuff/ptypes/ptimedsem.cxx src/sstuff/ptypes/ptypes.h \
-	src/sstuff/ptypes/punknown.cxx src/sstuff/sstuff_ie.h
+	src/sstuff/ptypes/ptimedsem.cxx src/sstuff/ptypes/punknown.cxx \
+	src/sstuff/sstuff_ie.h
 @HAVE_PTHREAD_INSTALLED_TRUE@am__objects_2 = pasync.lo patomic.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	pexcept.lo pfatal.lo pmem.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	pmsgq.lo psemaphore.lo pstring.lo \
@@ -215,6 +215,16 @@ DIST_SOURCES = $(libfreeflow_la_SOURCES) \
 	$(libsurfit_io_la_SOURCES)
 libfreeflow_laHEADERS_INSTALL = $(INSTALL_HEADER)
 libglobe_laHEADERS_INSTALL = $(INSTALL_HEADER)
+am__libsstuff_la_HEADERS_DIST = src/sstuff/bitvec.h \
+	src/sstuff/bitvec_alg.h src/sstuff/boolvec.h \
+	src/sstuff/byteswap_alg.h src/sstuff/config.h \
+	src/sstuff/datafile.h src/sstuff/fileio.h \
+	src/sstuff/geom_alg.h src/sstuff/interp.h src/sstuff/intvec.h \
+	src/sstuff/read_txt.h src/sstuff/real.h src/sstuff/rnd.h \
+	src/sstuff/shortvec.h src/sstuff/strvec.h src/sstuff/sstuff.h \
+	src/sstuff/stepFunc.h src/sstuff/vec.h src/sstuff/vec_alg.h \
+	src/sstuff/threads.h src/sstuff/ptypes/pasync.h \
+	src/sstuff/ptypes/pport.h src/sstuff/ptypes/ptypes.h
 libsstuff_laHEADERS_INSTALL = $(INSTALL_HEADER)
 libsurfit_io_laHEADERS_INSTALL = $(INSTALL_HEADER)
 libsurfit_laHEADERS_INSTALL = $(INSTALL_HEADER)
@@ -354,7 +364,7 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 AUTOMAKE_OPTIONS = foreign
-INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io
+INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/sstuff/ptypes -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io
 EXTRA_DIST = vc6/surfit* vc6/freeflow* vc6/globe* \
 	src/surfit/interface/*.i examples/* src/freeflow/interface/*.i \
 	src/globe/interface/*.i src/surfit_io/interface/*.i \
@@ -381,8 +391,8 @@ libsstuff_la_HEADERS = src/sstuff/bitvec.h src/sstuff/bitvec_alg.h \
 	src/sstuff/read_txt.h src/sstuff/real.h src/sstuff/rnd.h \
 	src/sstuff/shortvec.h src/sstuff/strvec.h src/sstuff/sstuff.h \
 	src/sstuff/stepFunc.h src/sstuff/vec.h src/sstuff/vec_alg.h \
-	src/sstuff/threads.h
-libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(am__append_5)
+	src/sstuff/threads.h $(am__append_5)
+libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(am__append_6)
 libsstuff_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsstuff.dll
 libsurfit_ladir = $(prefix)/include/surfit
 #libsurfit_la_SOURCES += src/surfit/matrD2_aniso.cpp
@@ -511,7 +521,7 @@ libsurfit_io_la_HEADERS = src/surfit_io/area_io.h \
 	src/surfit_io/surfit_io_data_manager.h \
 	src/surfit_io/surfit_io_variables.h src/surfit_io/surf_io.h
 libsurfit_io_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) \
-	libsstuff.la libsurfit.la $(am__append_6)
+	libsstuff.la libsurfit.la $(am__append_7)
 libsurfit_io_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit_io.dll
 libfreeflow_ladir = $(prefix)/include/freeflow
 libfreeflow_la_SOURCES = src/freeflow/flow_data_manager.cpp \
@@ -539,7 +549,7 @@ libglobe_la_SOURCES = src/globe/dem.cpp src/globe/dems_tcl.cpp \
 	src/globe/globe_data_manager.cpp \
 	src/globe/globe_surf_internal.cpp src/globe/globe_surf_tcl.cpp \
 	src/globe/globe_variables.cpp src/globe/globe_wrap.cxx \
-	src/globe/shortmrf.cpp $(am__append_7) src/globe/dems_tcl.h \
+	src/globe/shortmrf.cpp $(am__append_8) src/globe/dems_tcl.h \
 	src/globe/dem_tcl.h src/globe/globe_surf_tcl.h \
 	src/globe/globe_ie.h
 libglobe_la_HEADERS = src/globe/dem.h src/globe/dem_internal.h \
@@ -547,7 +557,7 @@ libglobe_la_HEADERS = src/globe/dem.h src/globe/dem_internal.h \
 	src/globe/globe_data_manager.h src/globe/globe_surf_internal.h \
 	src/globe/globe_variables.h src/globe/shortmrf.h
 libglobe_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la \
-	libsurfit.la $(am__append_8)
+	libsurfit.la $(am__append_9)
 libglobe_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libglobe.dll
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -2202,7 +2212,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/doc $(distdir)/doc/gallery $(distdir)/doc/html $(distdir)/doc/src $(distdir)/examples $(distdir)/src/freeflow $(distdir)/src/freeflow/interface $(distdir)/src/globe $(distdir)/src/globe/interface $(distdir)/src/sstuff $(distdir)/src/surfit $(distdir)/src/surfit/interface $(distdir)/src/surfit_io $(distdir)/src/surfit_io/interface $(distdir)/vc6
+	$(mkdir_p) $(distdir)/doc $(distdir)/doc/gallery $(distdir)/doc/html $(distdir)/doc/src $(distdir)/examples $(distdir)/src/freeflow $(distdir)/src/freeflow/interface $(distdir)/src/globe $(distdir)/src/globe/interface $(distdir)/src/sstuff $(distdir)/src/sstuff/ptypes $(distdir)/src/surfit $(distdir)/src/surfit/interface $(distdir)/src/surfit_io $(distdir)/src/surfit_io/interface $(distdir)/vc6
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \

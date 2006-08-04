@@ -43,8 +43,8 @@ int sstuff_get_threads();
 
 extern SSTUFF_EXPORT int cpu;
 
-#include "ptypes/ptypes.h"
-#include "ptypes/pasync.h"
+#include "ptypes.h"
+#include "pasync.h"
 
 USING_PTYPES
 

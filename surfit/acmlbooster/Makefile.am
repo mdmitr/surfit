@@ -4,7 +4,7 @@ $(OBJECTS): libtool
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
 
-INCLUDES = $(TCLINCLUDE) $(SSTUFFINCLUDE) $(SURFITINCLUDE) $(ACMLINCLUDE)
+INCLUDES = $(TCLINCLUDE) $(SSTUFFINCLUDE) $(SSTUFFINCLUDE)/ptypes $(SURFITINCLUDE) $(ACMLINCLUDE)
 EXTRA_DIST = vc6/acmlbooster*
 EXTRA_DIST += src/interface/*.i
 EXTRA_DIST += make_release.bat

@@ -4,7 +4,7 @@ $(OBJECTS): libtool
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
 
-INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io
+INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/sstuff/ptypes -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io
 EXTRA_DIST = vc6/surfit*
 EXTRA_DIST += vc6/freeflow*
 EXTRA_DIST += vc6/globe*
@@ -61,18 +61,15 @@ libsstuff_la_SOURCES += src/sstuff/vec_alg.cpp
 libsstuff_la_SOURCES += src/sstuff/threads.cpp      
 if HAVE_PTHREAD_INSTALLED
 libsstuff_la_SOURCES += src/sstuff/ptypes/pasync.cxx
-libsstuff_la_SOURCES += src/sstuff/ptypes/pasync.h
 libsstuff_la_SOURCES += src/sstuff/ptypes/patomic.cxx
 libsstuff_la_SOURCES += src/sstuff/ptypes/pexcept.cxx
 libsstuff_la_SOURCES += src/sstuff/ptypes/pfatal.cxx
 libsstuff_la_SOURCES += src/sstuff/ptypes/pmem.cxx
 libsstuff_la_SOURCES += src/sstuff/ptypes/pmsgq.cxx
-libsstuff_la_SOURCES += src/sstuff/ptypes/pport.h
 libsstuff_la_SOURCES += src/sstuff/ptypes/psemaphore.cxx
 libsstuff_la_SOURCES += src/sstuff/ptypes/pstring.cxx
 libsstuff_la_SOURCES += src/sstuff/ptypes/pthread.cxx
 libsstuff_la_SOURCES += src/sstuff/ptypes/ptimedsem.cxx
-libsstuff_la_SOURCES += src/sstuff/ptypes/ptypes.h
 libsstuff_la_SOURCES += src/sstuff/ptypes/punknown.cxx
 endif
 
@@ -98,6 +95,12 @@ libsstuff_la_HEADERS += src/sstuff/stepFunc.h
 libsstuff_la_HEADERS += src/sstuff/vec.h          
 libsstuff_la_HEADERS += src/sstuff/vec_alg.h      
 libsstuff_la_HEADERS += src/sstuff/threads.h      
+if HAVE_PTHREAD_INSTALLED
+libsstuff_la_HEADERS += src/sstuff/ptypes/pasync.h
+libsstuff_la_HEADERS += src/sstuff/ptypes/pport.h
+libsstuff_la_HEADERS += src/sstuff/ptypes/ptypes.h
+endif
+
 
 libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB)
 libsstuff_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsstuff.dll
