@@ -67,10 +67,10 @@ host_triplet = @host@
 @HAVE_ZLIB_INSTALLED_TRUE@am__append_8 = -lz
 DIST_COMMON = $(am__configure_deps) $(libfreeflow_la_HEADERS) \
 	$(libglobe_la_HEADERS) $(libsstuff_la_HEADERS) \
-	$(libsurfit_la_HEADERS) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
-	$(top_srcdir)/configure COPYING INSTALL config.guess \
-	config.sub depcomp install-sh ltmain.sh missing
+	$(libsurfit_io_la_HEADERS) $(libsurfit_la_HEADERS) \
+	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(srcdir)/config.h.in $(top_srcdir)/configure COPYING INSTALL \
+	config.guess config.sub depcomp install-sh ltmain.sh missing
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.in
@@ -89,7 +89,9 @@ am__vpath_adj = case $$p in \
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(libdir)" \
 	"$(DESTDIR)$(libfreeflow_ladir)" "$(DESTDIR)$(libglobe_ladir)" \
-	"$(DESTDIR)$(libsstuff_ladir)" "$(DESTDIR)$(libsurfit_ladir)"
+	"$(DESTDIR)$(libsstuff_ladir)" \
+	"$(DESTDIR)$(libsurfit_io_ladir)" \
+	"$(DESTDIR)$(libsurfit_ladir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
@@ -114,7 +116,7 @@ am__libglobe_la_SOURCES_DIST = src/globe/dem.cpp \
 	src/globe/minizip/unzip.c src/globe/minizip/crypt.h \
 	src/globe/minizip/ioapi.h src/globe/minizip/unzip.h \
 	src/globe/dems_tcl.h src/globe/dem_tcl.h \
-	src/globe/globe_surf_tcl.h
+	src/globe/globe_surf_tcl.h src/globe/globe_ie.h
 @HAVE_ZLIB_INSTALLED_TRUE@am__objects_1 = ioapi.lo unzip.lo
 am_libglobe_la_OBJECTS = dem.lo dems_tcl.lo dem_internal.lo dem_tcl.lo \
 	f_dem.lo globe.lo globe_data_manager.lo globe_surf_internal.lo \
@@ -139,7 +141,7 @@ am__libsstuff_la_SOURCES_DIST = src/sstuff/bitvec.cpp \
 	src/sstuff/ptypes/pport.h src/sstuff/ptypes/psemaphore.cxx \
 	src/sstuff/ptypes/pstring.cxx src/sstuff/ptypes/pthread.cxx \
 	src/sstuff/ptypes/ptimedsem.cxx src/sstuff/ptypes/ptypes.h \
-	src/sstuff/ptypes/punknown.cxx
+	src/sstuff/ptypes/punknown.cxx src/sstuff/sstuff_ie.h
 @HAVE_PTHREAD_INSTALLED_TRUE@am__objects_2 = pasync.lo patomic.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	pexcept.lo pfatal.lo pmem.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	pmsgq.lo psemaphore.lo pstring.lo \
@@ -214,9 +216,11 @@ DIST_SOURCES = $(libfreeflow_la_SOURCES) \
 libfreeflow_laHEADERS_INSTALL = $(INSTALL_HEADER)
 libglobe_laHEADERS_INSTALL = $(INSTALL_HEADER)
 libsstuff_laHEADERS_INSTALL = $(INSTALL_HEADER)
+libsurfit_io_laHEADERS_INSTALL = $(INSTALL_HEADER)
 libsurfit_laHEADERS_INSTALL = $(INSTALL_HEADER)
 HEADERS = $(libfreeflow_la_HEADERS) $(libglobe_la_HEADERS) \
-	$(libsstuff_la_HEADERS) $(libsurfit_la_HEADERS)
+	$(libsstuff_la_HEADERS) $(libsurfit_io_la_HEADERS) \
+	$(libsurfit_la_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -350,13 +354,14 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 AUTOMAKE_OPTIONS = foreign
-INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/surfit -Isrc/freeflow
+INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io
 EXTRA_DIST = vc6/surfit* vc6/freeflow* vc6/globe* \
 	src/surfit/interface/*.i examples/* src/freeflow/interface/*.i \
-	src/globe/interface/*.i doc/gallery/* doc/src/* doc/html/* \
-	doc/surfit.cfg doc/make_doc* make_release.bat make_debug.bat \
-	clean.bat make_rpm_fc4 make_rpm_rh73 surfit.spec.fc4 \
-	surfit.spec.rh73 CHANGES
+	src/globe/interface/*.i src/surfit_io/interface/*.i \
+	doc/gallery/* doc/src/* doc/html/* doc/surfit.cfg \
+	doc/make_doc* make_release.bat make_debug.bat clean.bat \
+	make_rpm_fc4 make_rpm_rh73 surfit.spec.fc4 surfit.spec.rh73 \
+	CHANGES
 lib_LTLIBRARIES = libsstuff.la libsurfit.la $(am__append_1) \
 	$(am__append_2) $(am__append_3)
 libsstuff_ladir = $(prefix)/include/sstuff
@@ -367,15 +372,16 @@ libsstuff_la_SOURCES = src/sstuff/bitvec.cpp src/sstuff/boolvec.cpp \
 	src/sstuff/rnd.cpp src/sstuff/shortvec.cpp \
 	src/sstuff/strvec.cpp src/sstuff/sstuff.cpp \
 	src/sstuff/stepFunc.cpp src/sstuff/vec.cpp \
-	src/sstuff/vec_alg.cpp src/sstuff/threads.cpp $(am__append_4)
+	src/sstuff/vec_alg.cpp src/sstuff/threads.cpp $(am__append_4) \
+	src/sstuff/sstuff_ie.h
 libsstuff_la_HEADERS = src/sstuff/bitvec.h src/sstuff/bitvec_alg.h \
 	src/sstuff/boolvec.h src/sstuff/byteswap_alg.h \
 	src/sstuff/config.h src/sstuff/datafile.h src/sstuff/fileio.h \
 	src/sstuff/geom_alg.h src/sstuff/interp.h src/sstuff/intvec.h \
 	src/sstuff/read_txt.h src/sstuff/real.h src/sstuff/rnd.h \
 	src/sstuff/shortvec.h src/sstuff/strvec.h src/sstuff/sstuff.h \
-	src/sstuff/sstuff_ie.h src/sstuff/stepFunc.h src/sstuff/vec.h \
-	src/sstuff/vec_alg.h src/sstuff/threads.h
+	src/sstuff/stepFunc.h src/sstuff/vec.h src/sstuff/vec_alg.h \
+	src/sstuff/threads.h
 libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(am__append_5)
 libsstuff_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsstuff.dll
 libsurfit_ladir = $(prefix)/include/surfit
@@ -431,7 +437,8 @@ libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/grid_tcl.h src/surfit/hist_tcl.h \
 	src/surfit/mask_tcl.h src/surfit/other_tcl.h \
 	src/surfit/others_tcl.h src/surfit/pnts_tcl.h \
-	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h
+	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h \
+	src/surfit/surfit_ie.h
 #libsurfit_la_HEADERS += src/surfit/matrD2_aniso.h
 libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/cmofs.h src/surfit/cntr.h \
@@ -465,9 +472,9 @@ libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/pnts_internal.h src/surfit/points.h \
 	src/surfit/solvers.h src/surfit/sort_alg.h src/surfit/surfit.h \
 	src/surfit/solvers.h src/surfit/surf.h \
-	src/surfit/surf_internal.h src/surfit/surfit_ie.h \
-	src/surfit/surfit_solvers.h src/surfit/variables.h \
-	src/surfit/variables_internal.h src/surfit/variables_tcl.h
+	src/surfit/surf_internal.h src/surfit/surfit_solvers.h \
+	src/surfit/variables.h src/surfit/variables_internal.h \
+	src/surfit/variables_tcl.h
 libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la 
 libsurfit_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit.dll
 libsurfit_io_ladir = $(prefix)/include/surfit_io
@@ -493,15 +500,15 @@ libsurfit_io_la_SOURCES = src/surfit_io/area_bln.cpp \
 	src/surfit_io/EasyBmp/EasyBMP.h \
 	src/surfit_io/EasyBmp/EasyBMP_BMP.h \
 	src/surfit_io/EasyBmp/EasyBMP_DataStructures.h \
-	src/surfit_io/EasyBmp/EasyBMP_VariousBMPutilites.h \
+	src/surfit_io/EasyBmp/EasyBMP_VariousBMPutilities.h \
 	src/surfit_io/area_io_tcl.h src/surfit_io/cntr_io_tcl.h \
 	src/surfit_io/curv_io_tcl.h src/surfit_io/pnts_io_tcl.h \
-	src/surfit_io/surfit_io_tcl.h src/surfit_io/surf_io_tcl.h
-libsurfit_io_la_HEADER = src/surfit_io/area_io.h \
+	src/surfit_io/surfit_io_ie.h src/surfit_io/surfit_io_tcl.h \
+	src/surfit_io/surf_io_tcl.h
+libsurfit_io_la_HEADERS = src/surfit_io/area_io.h \
 	src/surfit_io/cntr_io.h src/surfit_io/curv_io.h \
 	src/surfit_io/pnts_io.h src/surfit_io/surfit_io.h \
 	src/surfit_io/surfit_io_data_manager.h \
-	src/surfit_io/surfit_io_ie.h \
 	src/surfit_io/surfit_io_variables.h src/surfit_io/surf_io.h
 libsurfit_io_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) \
 	libsstuff.la libsurfit.la $(am__append_6)
@@ -515,10 +522,11 @@ libfreeflow_la_SOURCES = src/freeflow/flow_data_manager.cpp \
 	src/freeflow/flow_curvs_tcl.cpp src/freeflow/flow_area.cpp \
 	src/freeflow/flow_cntr.cpp src/freeflow/flow_curv.cpp \
 	src/freeflow/flow_points.cpp src/freeflow/flow_points_tcl.cpp \
-	src/freeflow/flow_surf_tcl.h src/freeflow/f_lcm_simple_tcl.h \
-	src/freeflow/flow_curvs_tcl.h src/freeflow/flow_points_tcl.h
+	src/freeflow/flow_surf_tcl.h src/freeflow/flow_ie.h \
+	src/freeflow/f_lcm_simple_tcl.h src/freeflow/flow_curvs_tcl.h \
+	src/freeflow/flow_points_tcl.h
 libfreeflow_la_HEADERS = src/freeflow/flow_data_manager.h \
-	src/freeflow/flow_surf_internal.h src/freeflow/flow_ie.h \
+	src/freeflow/flow_surf_internal.h \
 	src/freeflow/flow_variables.h src/freeflow/f_lcm_simple.h \
 	src/freeflow/flow_area.h src/freeflow/flow_cntr.h \
 	src/freeflow/flow_curv.h src/freeflow/flow_points.h
@@ -532,12 +540,12 @@ libglobe_la_SOURCES = src/globe/dem.cpp src/globe/dems_tcl.cpp \
 	src/globe/globe_surf_internal.cpp src/globe/globe_surf_tcl.cpp \
 	src/globe/globe_variables.cpp src/globe/globe_wrap.cxx \
 	src/globe/shortmrf.cpp $(am__append_7) src/globe/dems_tcl.h \
-	src/globe/dem_tcl.h src/globe/globe_surf_tcl.h
+	src/globe/dem_tcl.h src/globe/globe_surf_tcl.h \
+	src/globe/globe_ie.h
 libglobe_la_HEADERS = src/globe/dem.h src/globe/dem_internal.h \
 	src/globe/f_dem.h src/globe/globe.h \
 	src/globe/globe_data_manager.h src/globe/globe_surf_internal.h \
-	src/globe/globe_ie.h src/globe/globe_variables.h \
-	src/globe/shortmrf.h
+	src/globe/globe_variables.h src/globe/shortmrf.h
 libglobe_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la \
 	libsurfit.la $(am__append_8)
 libglobe_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libglobe.dll
@@ -2108,6 +2116,23 @@ uninstall-libsstuff_laHEADERS:
 	  echo " rm -f '$(DESTDIR)$(libsstuff_ladir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(libsstuff_ladir)/$$f"; \
 	done
+install-libsurfit_io_laHEADERS: $(libsurfit_io_la_HEADERS)
+	@$(NORMAL_INSTALL)
+	test -z "$(libsurfit_io_ladir)" || $(mkdir_p) "$(DESTDIR)$(libsurfit_io_ladir)"
+	@list='$(libsurfit_io_la_HEADERS)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f=$(am__strip_dir) \
+	  echo " $(libsurfit_io_laHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(libsurfit_io_ladir)/$$f'"; \
+	  $(libsurfit_io_laHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(libsurfit_io_ladir)/$$f"; \
+	done
+
+uninstall-libsurfit_io_laHEADERS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(libsurfit_io_la_HEADERS)'; for p in $$list; do \
+	  f=$(am__strip_dir) \
+	  echo " rm -f '$(DESTDIR)$(libsurfit_io_ladir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(libsurfit_io_ladir)/$$f"; \
+	done
 install-libsurfit_laHEADERS: $(libsurfit_la_HEADERS)
 	@$(NORMAL_INSTALL)
 	test -z "$(libsurfit_ladir)" || $(mkdir_p) "$(DESTDIR)$(libsurfit_ladir)"
@@ -2177,7 +2202,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/doc $(distdir)/doc/gallery $(distdir)/doc/html $(distdir)/doc/src $(distdir)/examples $(distdir)/src/freeflow $(distdir)/src/freeflow/interface $(distdir)/src/globe $(distdir)/src/globe/interface $(distdir)/src/sstuff $(distdir)/src/surfit $(distdir)/src/surfit/interface $(distdir)/vc6
+	$(mkdir_p) $(distdir)/doc $(distdir)/doc/gallery $(distdir)/doc/html $(distdir)/doc/src $(distdir)/examples $(distdir)/src/freeflow $(distdir)/src/freeflow/interface $(distdir)/src/globe $(distdir)/src/globe/interface $(distdir)/src/sstuff $(distdir)/src/surfit $(distdir)/src/surfit/interface $(distdir)/src/surfit_io $(distdir)/src/surfit_io/interface $(distdir)/vc6
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -2308,7 +2333,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(LTLIBRARIES) $(HEADERS) config.h
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(libfreeflow_ladir)" "$(DESTDIR)$(libglobe_ladir)" "$(DESTDIR)$(libsstuff_ladir)" "$(DESTDIR)$(libsurfit_ladir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(libfreeflow_ladir)" "$(DESTDIR)$(libglobe_ladir)" "$(DESTDIR)$(libsstuff_ladir)" "$(DESTDIR)$(libsurfit_io_ladir)" "$(DESTDIR)$(libsurfit_ladir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-am
@@ -2359,7 +2384,7 @@ info-am:
 
 install-data-am: install-libfreeflow_laHEADERS \
 	install-libglobe_laHEADERS install-libsstuff_laHEADERS \
-	install-libsurfit_laHEADERS
+	install-libsurfit_io_laHEADERS install-libsurfit_laHEADERS
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 
@@ -2395,7 +2420,8 @@ ps-am:
 
 uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES \
 	uninstall-libfreeflow_laHEADERS uninstall-libglobe_laHEADERS \
-	uninstall-libsstuff_laHEADERS uninstall-libsurfit_laHEADERS
+	uninstall-libsstuff_laHEADERS uninstall-libsurfit_io_laHEADERS \
+	uninstall-libsurfit_laHEADERS
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
 
@@ -2410,14 +2436,15 @@ uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES \
 	install-exec-am install-exec-hook install-info install-info-am \
 	install-libLTLIBRARIES install-libfreeflow_laHEADERS \
 	install-libglobe_laHEADERS install-libsstuff_laHEADERS \
-	install-libsurfit_laHEADERS install-man install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-hook uninstall-info-am \
+	install-libsurfit_io_laHEADERS install-libsurfit_laHEADERS \
+	install-man install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
+	uninstall-am uninstall-hook uninstall-info-am \
 	uninstall-libLTLIBRARIES uninstall-libfreeflow_laHEADERS \
 	uninstall-libglobe_laHEADERS uninstall-libsstuff_laHEADERS \
-	uninstall-libsurfit_laHEADERS
+	uninstall-libsurfit_io_laHEADERS uninstall-libsurfit_laHEADERS
 
 
 $(OBJECTS): libtool

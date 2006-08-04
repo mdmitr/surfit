@@ -39,6 +39,7 @@ rm -rf ${RPM_BUILD_ROOT}
 %{_prefix}/lib/libsurfit*
 %{_prefix}/lib/libfreeflow*
 %{_prefix}/lib/libglobe*
+%{_prefix}/lib/libsurfit_io*
 %dir %{_prefix}/include/sstuff
 %{_prefix}/include/sstuff/*.h
 %dir %{_prefix}/include/surfit
@@ -47,6 +48,8 @@ rm -rf ${RPM_BUILD_ROOT}
 %{_prefix}/include/freeflow/*.h
 %dir %{_prefix}/include/globe
 %{_prefix}/include/globe/*.h
+%dir %{_prefix}/include/surfit_io
+%{_prefix}/include/surfit_io/*.h
 %dir %{_prefix}/share/%{name}-%{version}
 %{_prefix}/share/%{name}-%{version}/*
 

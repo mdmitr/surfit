@@ -4,7 +4,7 @@ $(OBJECTS): libtool
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
 
-INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/surfit -Isrc/freeflow
+INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io
 EXTRA_DIST = vc6/surfit*
 EXTRA_DIST += vc6/freeflow*
 EXTRA_DIST += vc6/globe*
@@ -12,6 +12,7 @@ EXTRA_DIST += src/surfit/interface/*.i
 EXTRA_DIST += examples/*
 EXTRA_DIST += src/freeflow/interface/*.i
 EXTRA_DIST += src/globe/interface/*.i
+EXTRA_DIST += src/surfit_io/interface/*.i
 EXTRA_DIST += doc/gallery/*
 EXTRA_DIST += doc/src/*
 EXTRA_DIST += doc/html/*
@@ -92,7 +93,7 @@ libsstuff_la_HEADERS += src/sstuff/rnd.h
 libsstuff_la_HEADERS += src/sstuff/shortvec.h     
 libsstuff_la_HEADERS += src/sstuff/strvec.h
 libsstuff_la_HEADERS += src/sstuff/sstuff.h       
-libsstuff_la_HEADERS += src/sstuff/sstuff_ie.h    
+libsstuff_la_SOURCES += src/sstuff/sstuff_ie.h    
 libsstuff_la_HEADERS += src/sstuff/stepFunc.h     
 libsstuff_la_HEADERS += src/sstuff/vec.h          
 libsstuff_la_HEADERS += src/sstuff/vec_alg.h      
@@ -284,7 +285,7 @@ libsurfit_la_HEADERS += src/surfit/surf.h
 libsurfit_la_SOURCES += src/surfit/surfs_tcl.h         
 libsurfit_la_HEADERS += src/surfit/surf_internal.h     
 libsurfit_la_SOURCES += src/surfit/surf_tcl.h          
-libsurfit_la_HEADERS += src/surfit/surfit_ie.h                
+libsurfit_la_SOURCES += src/surfit/surfit_ie.h                
 libsurfit_la_HEADERS += src/surfit/surfit_solvers.h  
 libsurfit_la_HEADERS += src/surfit/variables.h         
 libsurfit_la_HEADERS += src/surfit/variables_internal.h
@@ -329,24 +330,24 @@ libsurfit_io_la_SOURCES += src/surfit_io/EasyBmp/EasyBMP.cpp
 libsurfit_io_la_SOURCES += src/surfit_io/EasyBmp/EasyBMP.h
 libsurfit_io_la_SOURCES += src/surfit_io/EasyBmp/EasyBMP_BMP.h
 libsurfit_io_la_SOURCES += src/surfit_io/EasyBmp/EasyBMP_DataStructures.h
-libsurfit_io_la_SOURCES += src/surfit_io/EasyBmp/EasyBMP_VariousBMPutilites.h
+libsurfit_io_la_SOURCES += src/surfit_io/EasyBmp/EasyBMP_VariousBMPutilities.h
 
 
-libsurfit_io_la_HEADER  =  src/surfit_io/area_io.h               
-libsurfit_io_la_SOURCES += src/surfit_io/area_io_tcl.h           
-libsurfit_io_la_HEADER  += src/surfit_io/cntr_io.h               
-libsurfit_io_la_SOURCES += src/surfit_io/cntr_io_tcl.h           
-libsurfit_io_la_HEADER  += src/surfit_io/curv_io.h               
-libsurfit_io_la_SOURCES += src/surfit_io/curv_io_tcl.h           
-libsurfit_io_la_HEADER  += src/surfit_io/pnts_io.h               
-libsurfit_io_la_SOURCES += src/surfit_io/pnts_io_tcl.h           
-libsurfit_io_la_HEADER  += src/surfit_io/surfit_io.h             
-libsurfit_io_la_HEADER  += src/surfit_io/surfit_io_data_manager.h
-libsurfit_io_la_HEADER  += src/surfit_io/surfit_io_ie.h          
-libsurfit_io_la_SOURCES += src/surfit_io/surfit_io_tcl.h         
-libsurfit_io_la_HEADER  += src/surfit_io/surfit_io_variables.h   
-libsurfit_io_la_HEADER  += src/surfit_io/surf_io.h               
-libsurfit_io_la_SOURCES += src/surfit_io/surf_io_tcl.h           
+libsurfit_io_la_HEADERS  =  src/surfit_io/area_io.h               
+libsurfit_io_la_SOURCES  += src/surfit_io/area_io_tcl.h           
+libsurfit_io_la_HEADERS  += src/surfit_io/cntr_io.h               
+libsurfit_io_la_SOURCES  += src/surfit_io/cntr_io_tcl.h           
+libsurfit_io_la_HEADERS  += src/surfit_io/curv_io.h               
+libsurfit_io_la_SOURCES  += src/surfit_io/curv_io_tcl.h           
+libsurfit_io_la_HEADERS  += src/surfit_io/pnts_io.h               
+libsurfit_io_la_SOURCES  += src/surfit_io/pnts_io_tcl.h           
+libsurfit_io_la_HEADERS  += src/surfit_io/surfit_io.h             
+libsurfit_io_la_HEADERS  += src/surfit_io/surfit_io_data_manager.h
+libsurfit_io_la_SOURCES  += src/surfit_io/surfit_io_ie.h          
+libsurfit_io_la_SOURCES  += src/surfit_io/surfit_io_tcl.h         
+libsurfit_io_la_HEADERS  += src/surfit_io/surfit_io_variables.h   
+libsurfit_io_la_HEADERS  += src/surfit_io/surf_io.h               
+libsurfit_io_la_SOURCES  += src/surfit_io/surf_io_tcl.h           
 
 
 libsurfit_io_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) libsstuff.la libsurfit.la
@@ -374,7 +375,7 @@ libfreeflow_la_SOURCES += src/freeflow/flow_points_tcl.cpp
 libfreeflow_la_HEADERS  = src/freeflow/flow_data_manager.h     
 libfreeflow_la_HEADERS += src/freeflow/flow_surf_internal.h 
 libfreeflow_la_SOURCES += src/freeflow/flow_surf_tcl.h 
-libfreeflow_la_HEADERS += src/freeflow/flow_ie.h               
+libfreeflow_la_SOURCES += src/freeflow/flow_ie.h               
 libfreeflow_la_HEADERS += src/freeflow/flow_variables.h        
 libfreeflow_la_HEADERS += src/freeflow/f_lcm_simple.h          
 libfreeflow_la_SOURCES += src/freeflow/f_lcm_simple_tcl.h      
@@ -419,7 +420,7 @@ libglobe_la_HEADERS += src/globe/globe.h
 libglobe_la_HEADERS += src/globe/globe_data_manager.h 
 libglobe_la_HEADERS += src/globe/globe_surf_internal.h
 libglobe_la_SOURCES += src/globe/globe_surf_tcl.h     
-libglobe_la_HEADERS += src/globe/globe_ie.h           
+libglobe_la_SOURCES += src/globe/globe_ie.h           
 libglobe_la_HEADERS += src/globe/globe_variables.h    
 libglobe_la_HEADERS += src/globe/shortmrf.h
                                  
