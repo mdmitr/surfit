@@ -15,6 +15,8 @@ Under Windows surfit can be built with Microsoft VC++ 6.0:
 \li examine directory surfit-2.1/vc6  
 
 Before building make shure that you have TCL library installed!
+May be you'll want to install netCDF library to build libsurfit_io with GMT import/export.
+You can download it from http://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf-3.6.1.tar.gz
 
 <H3>UNIX:</H3>
 
