@@ -107,6 +107,12 @@ Function .onInit
 
 FunctionEnd
 
+  Function .onInstSuccess
+    MessageBox MB_YESNO "Congratulations, installation is completed! Do you want to download GUI for surfit?" IDNO NoGui
+      ExecShell "open" "http://www.gridding.info/funner.php"
+    NoGui:
+  FunctionEnd
+
 
 ;--------------------------------
 ;Pages
@@ -180,8 +186,16 @@ SectionGroup "binaries" SecBinary
 	  SetOutPath "$INSTDIR\bin"
 	  File "..\bin\libsstuff.dll"
 	  File "..\bin\libglobe.dll"
-	  File "..\..\zlib123-dll\zlib1.dll"
+	  File "..\bin\zlib1.dll"
 	SectionEnd
+
+	Section "libsurfit_io" SecSurfitIODll
+	  SetOutPath "$INSTDIR\bin"
+	  File "..\bin\libsurfit_io.dll"
+	  File "..\bin\netcdf.dll"
+	  File "..\bin\shapelib.dll"
+        SectionEnd
+	 
 
 SectionGroupEnd
 
@@ -246,6 +260,7 @@ SectionEnd
   LangString DESC_SecSurfitDll ${LANG_ENGLISH} "libsurfit.dll"
   LangString DESC_SecFreeflowDll ${LANG_ENGLISH} "libfreeflow.dll"
   LangString DESC_SecGlobeDll ${LANG_ENGLISH} "libglobe.dll"
+  LangString DESC_SecSurfitIODll ${LANG_ENGLISH} "libsurfit_io.dll"
   LangString DESC_SecSurfitSources ${LANG_ENGLISH} "surfit sources."
   LangString DESC_SecFreeflowSources ${LANG_ENGLISH} "freeflow sources."
   LangString DESC_SecGlobeSources ${LANG_ENGLISH} "globe sources."
@@ -261,6 +276,7 @@ SectionEnd
     !insertmacro MUI_DESCRIPTION_TEXT ${SecSurfitDll} $(DESC_SecSurfitDll)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecFreeflowDll} $(DESC_SecFreeflowDll)    
     !insertmacro MUI_DESCRIPTION_TEXT ${SecGlobeDll} $(DESC_SecGlobeDll)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecSurfitIODll} $(DESC_SecSurfitIODll)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecSurfitSources} $(DESC_SecSurfitSources)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecFreeflowSources} $(DESC_SecFreeflowSources)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecGlobeSources} $(DESC_SecGlobeSources)
