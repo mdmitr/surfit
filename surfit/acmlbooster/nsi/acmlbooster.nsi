@@ -121,7 +121,7 @@ Section "binaries" SecBinary
   SectionIn RO
 
   ;Store installation folder
-  WriteRegStr HKCU "Software\surfit-1.0" "" $INSTDIR
+  WriteRegStr HKCU "Software\surfit-2.1" "" $INSTDIR
   
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall_acmlbooster.exe"
