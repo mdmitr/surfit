@@ -1,0 +1,49 @@
+surfit is a computer program which enables to calculate regular grid 
+from various data (scattered points, curves, surfaces, etc), conditions 
+and inequalities by setting called "gridding rules".
+
+*****************************
+* surfit library version 2.1:
+*****************************
+binaries for Linux 2.6:surfit-2.1-fc4.i386.rpm                
+binaries for Linux 2.4:surfit-2.1-rh73.i386.rpm               
+binaries for Windows NT/2000/XP: surfit-2.1-setup.exe                   
+sources + examples + docs:surfit-2.1.tar.gz
+plugin for SAGA-GAS (Windows only) : surfit4saga-2.1-setup.exe                      
+
+*************************************************
+* acmlbooster 2.1 is a plugin library for surfit 
+* based on AMD ACML library. Allow to reduce 
+* computation time to 15-30%.
+*************************************************
+binaries for Linux 2.6:acmlbooster-2.1-fc4.i386.rpm           
+binaries for Linux 2.4:acmlbooster-2.1-rh73.i386.rpm          
+binaries for Windows NT/2000/XP:acmlbooster-2.1-setup.exe              
+sources + examples:acmlbooster-2.1.tar.gz                 
+
+*************************************************
+* mklbooster 2.1 is a plugin library for surfit 
+* based on Intel MKL library. Allow to reduce 
+* computation time to 15-30%.
+*************************************************
+binaries for Linux 2.6:mklbooster-2.1-fc4.i386.rpm            
+binaries for Linux 2.4:mklbooster-2.1-rh73.i386.rpm           
+binaries for Windows NT/2000/XP:mklbooster-2.1-setup.exe               
+sources + examples:mklbooster-2.1.tar.gz                  
+
+***********************************************************
+* Tool for creating surfit scripts and visualizing results:
+* Location: http://www.gridding.info/funner.php
+***********************************************************
+binaries for Linux 2.6:funner-2.1beta-fc4.i386.rpm            
+binaries for Linux 2.4:funner-2.1beta-rh73.i386.rpm           
+binaries for Windows NT/2000/XP:funner-2.1beta-setup.exe               
+
+***********************************************************
+* Tcl - scripting language, need to be installed before surfit
+* Location: http://www.gridding.info/funner.php
+***********************************************************
+binaries for Linux 2.6:tcl83-8.3.5-96.0.1_3.rhfc1.at.i386.rpm
+binaries for Linux 2.4:tcl83-8.3.5-96.0.1_3.rh7.3.at.i386.rpm
+binaries for Windows NT/2000/XP:ActiveTcl8.3.5.0-win32-ix86.exe        
+sources:tcl8.3.5-src.tar.gz

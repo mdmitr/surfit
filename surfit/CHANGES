@@ -1,5 +1,8 @@
 surfit 2.1 changes:
 
+	! new module : libsurfit_io - import/export data in various formats
+ 	! new module : surfit4saga - surfit plugin for SAGA-GIS
+
 	! new library used : libjpeg-6b (libsurfit_io)
 	! new library used : EasyBMP-1.03 (libsurfit_io)
 	! new library used : shapelib-1.2.10 (libsurfit_io)
