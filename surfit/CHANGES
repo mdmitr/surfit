@@ -1,10 +1,10 @@
 surfit 2.1 changes:
 
-	! libjpeg-6b
-	! EasyBMP-1.03
-	! shapelib-1.2.10
-	! netcdf-2.5.0
-	! zlib-1.2.3
+	! new library used : libjpeg-6b (libsurfit_io)
+	! new library used : EasyBMP-1.03 (libsurfit_io)
+	! new library used : shapelib-1.2.10 (libsurfit_io)
+	! new library used : netcdf-2.5.0 (libsurfit_io)
+	! new library used : zlib-1.2.3 (libglobe)
 
 	* small bugfix with taking faults into account
 	* bugfix with mask input/output to surfit datafile
