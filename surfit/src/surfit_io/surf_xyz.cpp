@@ -180,16 +180,20 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
 		dist1 = (x1 - x0)*(x1 - x0) + (y1 - y0)*(y1 - y0);
 		if (dist1 == 0)
 			goto exit;
+		dist1 = sqrt(dist1);
 		for (j = 2; j < 6; j++) {
 			x0 = x1;
 			y0 = y1;
 			x1 = (*X)(i+j);
 			y1 = (*Y)(i+j);
 			dist2 = (x1 - x0)*(x1 - x0) + (y1 - y0)*(y1 - y0);
-			if ( fabs(dist1 - dist2) > MAX(dist1/10e+6,1e-4) ){
-				founded = false;
-				break;
-			}
+			dist2 = sqrt(dist2);
+			REAL max_dist = MAX(dist1, dist2);
+			if (max_dist)
+				if ( fabs(dist1 - dist2) / max_dist > 0.01 ){
+					founded = false;
+					break;
+				}
 		}
 		if (founded == true)
 			break;
