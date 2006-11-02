@@ -101,7 +101,7 @@ bool two_columns_read(const char * filename,
 	if (fsetpos(file, &pos) != 0)
 		goto two_columns_read_failed;
 
-	columns = calc_columns(string_buf, MY_READ_BUF_SIZE);
+	columns = calc_columns(string_buf, MY_READ_BUF_SIZE, seps);
 
 	if (col1 > columns)
 		goto two_columns_read_failed;
@@ -259,7 +259,7 @@ bool three_columns_read(const char * filename,
 	if (fsetpos(file, &pos) != 0)
 		goto three_columns_read_failed;
 
-	columns = calc_columns(string_buf, MY_READ_BUF_SIZE);
+	columns = calc_columns(string_buf, MY_READ_BUF_SIZE, seps);
 	
 	if (col1 > columns)
 		goto three_columns_read_failed;
@@ -407,7 +407,7 @@ bool three_columns_read_with_names(const char * filename,
 	if (fsetpos(file, &pos) != 0)
 		goto three_columns_read_failed;
 
-	columns = calc_columns(string_buf, MY_READ_BUF_SIZE);
+	columns = calc_columns(string_buf, MY_READ_BUF_SIZE, seps);
 
 	if (col1 > columns)
 		goto three_columns_read_failed;

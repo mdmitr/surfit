@@ -76,7 +76,7 @@ bool surfit_io_manager::auto_load(const char * filename, const char * first1024,
 
 	bool res = false;
 
-	int columns = calc_columns(first1024, readed);
+	int columns = calc_columns(first1024, readed, " \t");
 
 	if (columns == 3) {
 		res = surf_load_xyz(filename, name);
