@@ -273,6 +273,17 @@ REAL pnts_maxz(const char * points_name_or_position = "0");
 bool pnts_add_noise(REAL std, const char * points_name_or_position = "0");
 
 /*! \ingroup tcl_pnts_math
+    \fn bool pnts_abs(const char * points_name_or_position = "0");
+    
+    \par Tcl syntax:
+    pnts_abs "points_name_or_position"
+
+    \par Description:
+    calculates absolute values for points
+*/
+bool pnts_abs(const char * points_name_or_position = "0");
+
+/*! \ingroup tcl_pnts_math
     \fn REAL pnts_mean(const char * points_name_or_position = "0")
     
     \par Tcl syntax:

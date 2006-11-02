@@ -134,6 +134,9 @@ public:
 
 	//! calculates standart deviation value from mean value
 	REAL std(REAL mean) const;
+
+	//! calculates absolute Z values for all points
+	void abs();
         
 	//! X data array
 	vec * X;

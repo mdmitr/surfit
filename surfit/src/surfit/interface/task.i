@@ -58,6 +58,7 @@ REAL pnts_miny(const char * points_name_or_position = "0");
 REAL pnts_maxy(const char * points_name_or_position = "0");
 REAL pnts_minz(const char * points_name_or_position = "0");
 REAL pnts_maxz(const char * points_name_or_position = "0");
+bool pnts_abs(const char * points_name_or_position = "0");
 bool pnts_add_noise(REAL std, const char * points_name_or_position = "0");
 REAL pnts_mean(const char * points_name_or_position = "0");
 REAL pnts_std(REAL mean, const char * points_name_or_position = "0");

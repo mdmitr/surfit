@@ -627,6 +627,14 @@ REAL pnts_maxz(const char * pos) {
 	return pnts->maxz();
 };
 
+bool pnts_abs(const char * pos) {
+	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
+	if (pnts == NULL)
+		return false;
+	pnts->abs();
+	return true;
+};
+
 bool pnts_setName(const char * new_name, const char * pos) {
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)

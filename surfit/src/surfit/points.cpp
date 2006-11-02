@@ -302,6 +302,13 @@ void d_points::remove_with_value(REAL val) {
 
 };
 
+void d_points::abs() {
+	int i,N = size();
+	for (i = 0; i < N; i++) {
+		(*Z)(i) = fabs( (*Z)(i) );
+	}
+};
+
 sub_points::sub_points(int icell_number, 
 		       std::vector<size_t> * ipoint_numbers)
 {
