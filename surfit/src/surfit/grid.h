@@ -102,7 +102,7 @@ public:
 	size_t get_i(REAL x) const {
 		if (stepX == 0)	
 			return UINT_MAX;
-		return (size_t)MAX(0,((x-startX)/stepX + 0.5));
+		return (size_t)MAX(0,floor((x-startX)/stepX + 0.5));
 	};
 
 	//! returns j number of (i,j) of the cell for point with coords (x,y)

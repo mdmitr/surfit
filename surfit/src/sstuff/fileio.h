@@ -81,7 +81,7 @@ SSTUFF_EXPORT
 char * read_first1024(const char * filename, int & readed);
 
 SSTUFF_EXPORT
-int calc_columns(const char * Str, int readed);
+int calc_columns(const char * Str, int readed, char * seps);
 
 SSTUFF_EXPORT
 char * get_name(const char * filename);

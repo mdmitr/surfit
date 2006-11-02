@@ -111,6 +111,8 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
 	int nx = 0, ny = 0;
 	int div;
 	size_t I, J;
+
+	REAL qq = undef_value;
 	// loading all points
 
 	if (!three_columns_read(filename, 
@@ -153,7 +155,7 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
 			continue;
 		}
 
-		if (z >= FLT_MAX / REAL(2)) {
+		if ((z >= FLT_MAX / REAL(2)) || ( z == undef_value )) {
 			X->erase(i);
 			Y->erase(i);
 			Z->erase(i);
@@ -319,6 +321,7 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
 	}
 
 	res = create_surf(coeff, grd);
+	res->set_undef_value(undef_value);
 
 	if (surfname)
 		res->setName(surfname);

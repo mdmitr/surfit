@@ -174,16 +174,8 @@ void vec::swap(size_t i, size_t j) {
 
 void vec::erase(REAL* del) {
 	REAL* cur = begin();
-	size_t i;
-	for (i = 0; i < size(); i++, cur++) {
-		if (cur == del) {
-			// perform deletion;
-			memmove(cur,cur+1,(size()-i+1)*sizeof(REAL));
-			datasize--;
-			real_datasize--;
-			return;
-		}
-	}
+	size_t i = del-cur;
+	erase(i);
 };
 
 void vec::erase(size_t index) {
@@ -192,8 +184,8 @@ void vec::erase(size_t index) {
 		throw "invalid argument";
 #endif
 	REAL* cur = begin();
-	cur += index-1;
-	memmove(cur,cur+1,(size()-index+1)*sizeof(REAL));
+	cur += index;
+	memmove(cur,cur+1,(size()-index-1)*sizeof(REAL));
 	datasize--;
 	real_datasize--;
 	return;

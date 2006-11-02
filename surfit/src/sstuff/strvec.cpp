@@ -157,16 +157,8 @@ void strvec::swap(int i, int j) {
 
 void strvec::erase(char** del) {
 	char** cur = begin();
-	for (int i = 0; i < size(); i++, cur++) {
-		if (cur == del) {
-			// perform deletion;
-			free( *del );
-			memmove(cur,cur+1,(size()-i+1)*sizeof(char*));
-			datasize--;
-			real_datasize--;
-			return;
-		}
-	}
+	size_t i = del - cur;
+	erase(i);
 };
 
 void strvec::erase(int index) {

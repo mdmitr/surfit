@@ -512,22 +512,14 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	{
 		int i;
 		int x, y, pos;
-		int x2, y2, pos2;
-		char text[6];
+		char text[10];
 		for (i = 0; i < nns->size()-1; i++) {
 			pos = (*nns)(i);
-			x = pos % NN;
-			y = (pos - x)/NN;
-			pos2 = (*nns)(i+1);
-			x2 = pos2 % NN;
-			y2 = (pos2 - x2)/NN;
-
+			x = pos % NNN;
+			y = (pos - x)/NNN;
 			REAL X, Y;
 			grd->getCoordNode(x,y,X,Y);
-			REAL X2, Y2;
-			grd->getCoordNode(x2,y2,X2,Y2);
 			fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",X,Y);
-			fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','black','LineWidth',4);\n",X,X2,Y,Y2);
 			//itoa(i , text, 10);
 			//fprintf(ff,"text(%lf, %lf, '%s');\n",X,Y,text);
 
@@ -564,7 +556,7 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 			fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','cyan');\n",x_0,x_1,y_0,y_1);
 		}
 		
-		char text[6];
+		char text[10];
 		int j;
 		for (j = 0; j < grd->getCountY(); j++) {
 			for (i = 0; i < grd->getCountX(); i++) {

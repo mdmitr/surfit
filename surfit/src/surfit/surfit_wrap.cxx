@@ -10050,6 +10050,92 @@ _wrap_pnts_maxz(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
 
 
 SWIGINTERN int
+_wrap_pnts_abs__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:pnts_abs points_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pnts_abs" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::pnts_abs((char const *)arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_pnts_abs__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  bool result;
+  
+  if (SWIG_GetArgs(interp, objc, objv,":pnts_abs ") == TCL_ERROR) SWIG_fail;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::pnts_abs();
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_pnts_abs(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  Tcl_Obj *CONST *argv = objv+1;
+  int argc = objc-1;
+  if (argc == 0) {
+    return _wrap_pnts_abs__SWIG_1(clientData, interp, objc, argv - 1);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_pnts_abs__SWIG_0(clientData, interp, objc, argv - 1);
+    }
+  }
+  
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'pnts_abs'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
 _wrap_pnts_add_noise__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   double arg1 ;
   char *arg2 = (char *) 0 ;
@@ -38946,6 +39032,7 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "pnts_maxy", (swig_wrapper_func) _wrap_pnts_maxy, NULL},
     { SWIG_prefix "pnts_minz", (swig_wrapper_func) _wrap_pnts_minz, NULL},
     { SWIG_prefix "pnts_maxz", (swig_wrapper_func) _wrap_pnts_maxz, NULL},
+    { SWIG_prefix "pnts_abs", (swig_wrapper_func) _wrap_pnts_abs, NULL},
     { SWIG_prefix "pnts_add_noise", (swig_wrapper_func) _wrap_pnts_add_noise, NULL},
     { SWIG_prefix "pnts_mean", (swig_wrapper_func) _wrap_pnts_mean, NULL},
     { SWIG_prefix "pnts_std", (swig_wrapper_func) _wrap_pnts_std, NULL},

@@ -192,16 +192,8 @@ void intvec::swap(size_t i, size_t j) {
 
 void intvec::erase(int* del) {
 	int* cur = begin();
-	size_t i;
-	for (i = 0; i < size(); i++, cur++) {
-		if (cur == del) {
-			// perform deletion;
-			memmove(cur,cur+1,(size()-i+1)*sizeof(int));
-			datasize--;
-			int_datasize--;
-			return;
-		}
-	}
+	size_t i = del-cur;
+	erase(i);
 };
 
 void intvec::erase(size_t index) {
@@ -210,8 +202,8 @@ void intvec::erase(size_t index) {
 		throw "invalid argument";
 #endif
 	int* cur = begin();
-	cur += index-1;
-	memmove(cur,cur+1,(size()-index+1)*sizeof(int));
+	cur += index;
+	memmove(cur,cur+1,(size()-index-1)*sizeof(int));
 	datasize--;
 	int_datasize--;
 	return;

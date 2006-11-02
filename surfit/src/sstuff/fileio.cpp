@@ -253,7 +253,7 @@ char * read_first1024(const char * filename, int & readed)
 	
 };
 
-int calc_columns(const char * Str, int readed) {
+int calc_columns(const char * Str, int readed, char * seps) {
 
 	char * str = strdup(Str);
 
@@ -262,7 +262,6 @@ int calc_columns(const char * Str, int readed) {
 		*pos = '\0';
 	}
 
-	char seps[] = " \t";
 	int columns = 0;
 
 	char * token = strtok( str, seps );

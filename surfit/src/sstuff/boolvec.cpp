@@ -176,16 +176,8 @@ void boolvec::swap(size_t i, size_t j) {
 
 void boolvec::erase(bool* del) {
 	bool* cur = begin();
-	size_t i;
-	for (i = 0; i < size(); i++, cur++) {
-		if (cur == del) {
-			// perform deletion;
-			memmove(cur,cur+1,(size()-i+1)*sizeof(bool));
-			datasize--;
-			bool_datasize--;
-			return;
-		}
-	}
+	size_t i = del-cur;
+	erase(i);
 };
 
 void boolvec::erase(size_t index) {
@@ -194,8 +186,8 @@ void boolvec::erase(size_t index) {
 		throw "invalid argument";
 #endif
 	bool* cur = begin();
-	cur += index-1;
-	memmove(cur,cur+1,(size()-index+1)*sizeof(bool));
+	cur += index;
+	memmove(cur,cur+1,(size()-index-1)*sizeof(bool));
 	datasize--;
 	bool_datasize--;
 	return;

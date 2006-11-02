@@ -631,7 +631,7 @@ bool surfit_manager::auto_load(const char * filename, const char * first1024, in
 	str_toupper(uname);
 
 	bool res = false;
-	int columns = calc_columns(first1024, readed);
+	int columns = calc_columns(first1024, readed, " \t");
 
 	if (first1024 == NULL)
 		return false;
