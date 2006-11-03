@@ -53,7 +53,7 @@ bool two_columns_read(const char * filename,
 		      vec *& vcol1, vec *& vcol2,
 		      int read_lines)
 {
-	FILE * file = fopen(filename, "r");
+	FILE * file = fopen(filename, "rb");
 	if (!file) {
 		writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
 		return false;
@@ -209,7 +209,7 @@ bool three_columns_read(const char * filename,
                         vec *& vcol1, vec *& vcol2, vec *& vcol3,
 			int read_lines)
 {
-	FILE * file = fopen(filename, "r");
+	FILE * file = fopen(filename, "rb");
 	if (!file) {
 		writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
 		return false;
@@ -355,7 +355,7 @@ bool three_columns_read_with_names(const char * filename,
 				   strvec *& names,
 				   int read_lines)
 {
-	FILE * file = fopen(filename, "r");
+	FILE * file = fopen(filename, "rb");
 	if (!file) {
 		writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
 		return false;
@@ -397,16 +397,16 @@ bool three_columns_read_with_names(const char * filename,
 	size_t size = 0;
 
 	// calculate number of columns!
-	fpos_t pos;
-	if (fgetpos(file, &pos) != 0)
+	long pos = ftell(file);
+	if (pos == -1L)
 		goto three_columns_read_failed;
 
 	if (!fgets(string_buf,MY_READ_BUF_SIZE,file)) 
 		goto three_columns_read_failed;
 
-	if (fsetpos(file, &pos) != 0)
+	if (fseek(file, pos, SEEK_SET) != 0)
 		goto three_columns_read_failed;
-
+	
 	columns = calc_columns(string_buf, MY_READ_BUF_SIZE, seps);
 
 	if (col1 > columns)
@@ -548,7 +548,7 @@ bool four_columns_read(const char * filename,
                        vec *& vcol1, vec *& vcol2,
                        vec *& vcol3, vec *& vcol4)
 {
-	FILE * file = fopen(filename, "r");
+	FILE * file = fopen(filename, "rb");
 	if (!file) {
 		writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
 		return false;
