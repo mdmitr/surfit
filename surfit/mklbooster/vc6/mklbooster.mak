@@ -63,13 +63,13 @@ CLEAN :
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(OUTDIR)\mklbooster.bsc"
 	-@erase "..\..\bin\libmklbooster.dll"
-	-@erase "..\bin\libmklbooster.exp"
-	-@erase "..\bin\libmklbooster.lib"
+	-@erase "..\..\bin\libmklbooster.exp"
+	-@erase "..\..\bin\libmklbooster.lib"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MT /W3 /GX /O2 /Ob2 /I "../../src/sstuff" /I "../../src/surfit" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "MKLBOOSTER_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\mklbooster.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MT /W3 /GX /O2 /Ob2 /I "../../src/sstuff" /I "../../src/sstuff/ptypes" /I "../../src/surfit" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "MKLBOOSTER_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\mklbooster.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\mklbooster.bsc" 
@@ -133,14 +133,14 @@ CLEAN :
 	-@erase "$(OUTDIR)\libmklbooster.pdb"
 	-@erase "$(OUTDIR)\mklbooster.bsc"
 	-@erase "..\..\bin\libmklbooster.dll"
+	-@erase "..\..\bin\libmklbooster.exp"
 	-@erase "..\..\bin\libmklbooster.ilk"
-	-@erase "..\bin\libmklbooster.exp"
-	-@erase "..\bin\libmklbooster.lib"
+	-@erase "..\..\bin\libmklbooster.lib"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MTd /W3 /Gm /GX /Zi /Od /I "../../src/sstuff" /I "../../src/surfit" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "MKLBOOSTER_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\mklbooster.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MTd /W3 /Gm /GX /Zi /Od /I "../../src/sstuff" /I "../../src/sstuff/ptypes" /I "../../src/surfit" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "MKLBOOSTER_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\mklbooster.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\mklbooster.bsc" 
