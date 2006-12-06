@@ -28,6 +28,8 @@ void sstuff_free_char(char * ptr) {
 };
 
 void str_toupper(char * str) {
+	if (str == NULL)
+		return;
 	char * ptr = str;
 	while (*ptr != '\0') {
 		*ptr = toupper(*ptr);
