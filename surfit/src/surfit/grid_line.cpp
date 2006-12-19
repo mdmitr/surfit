@@ -2099,8 +2099,10 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 	max_j = MIN(max_j, MM-1);
 
 	// расширяем сознание
-	min_i--;
-	min_j--;
+	if (min_i > 0)
+		min_i--;
+	if (min_j > 0)
+		min_j--;
 	max_i++;
 	max_j++;
 
@@ -2326,6 +2328,7 @@ bitvec * nodes_in_area_mask(const d_area * area, d_grid * grd, bitvec * mask_und
 
 		grid_line * grd_line = NULL;
 		grd_line = curv_to_grid_line(grd_line, crv, grd);
+
 		if (grd_line == NULL)
 			continue;
 
