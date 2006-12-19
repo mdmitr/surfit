@@ -41,13 +41,13 @@ void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up,
 	i_psVec i_sortx_from, i_sortx_to, ix;
 	i_psVec i_sorty_from, i_sorty_to, iy;
 	
-	// Находим первую точку, меньше x_left
+	// find first point less than x_left
 	i_sortx_from = std::lower_bound(sortx_begin,sortx_end,&x_left,ptr_vector_less);
 	if (i_sortx_from == sortx_end) return;
-	// Находим первую точку, больше x_right
+	// find first point greater than x_right
 	i_sortx_to = std::lower_bound(i_sortx_from,sortx_end,&x_right,ptr_vector_less);
 
-	// Находим первую точку, меньше y_down
+	// find first point less than y_down
 	i_sorty_from = std::lower_bound(sorty_begin,sorty_end,&y_down,ptr_vector_less);
 	if (i_sortx_from == sortx_end) return;
 	// Находим первую точку, больше y_up
@@ -97,16 +97,16 @@ void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up,
 	i_psVec ix;
 	i_psVec iy;
 	
-	// Находим первую точку, меньше x_left
+	// find first point less than x_left
 	i_sortx_from = std::lower_bound(sortx_begin,sortx_end,&x_left,ptr_vector_less);
 	if (i_sortx_from == sortx_end) return;
-	// Находим первую точку, больше x_right
+	// find first point greater than x_right
 	i_sortx_to = std::lower_bound(i_sortx_from,sortx_end,&x_right,ptr_vector_less);
 
-	// Находим первую точку, меньше y_down
+	// find first point less than y_down
 	i_sorty_from = std::lower_bound(sorty_begin,sorty_end,&y_down,ptr_vector_less);
 	if (i_sortx_from == sortx_end) return;
-	// Находим первую точку, больше y_up
+	// find first point greater than y_up
 	i_sorty_to = std::lower_bound(i_sorty_from,sorty_end,&y_up,ptr_vector_less);
 	
 	typedef std::vector<size_t> vecInt;
@@ -143,10 +143,10 @@ void getPointsInSegment(REAL x_left, REAL x_right,
 	typedef REAL **  i_psVec;
 	i_psVec i_sortx_from, i_sortx_to, ix;
 		
-	// Находим первую точку, меньше x_left
+	// find first point less than x_left
 	i_sortx_from = std::lower_bound(sortx_begin,sortx_end,&x_left,ptr_vector_less);
 	if (i_sortx_from == sortx_end) return;
-	// Находим первую точку, больше x_right
+	// find first point greater than x_right
 	i_sortx_to = std::lower_bound(i_sortx_from,sortx_end,&x_right,ptr_vector_less);
 
 	nn.resize(i_sortx_to-i_sortx_from);
@@ -170,10 +170,10 @@ void getPointsInSegment(REAL x_left, REAL x_right,
 	typedef REAL **  i_psVec;
 	i_psVec ix;
 		
-	// Находим первую точку, меньше x_left
+	// find first point less than x_left
 	i_sort_from = std::lower_bound(sort_begin,sort_end,&x_left,ptr_vector_less);
 	if (i_sort_from == sort_end) return;
-	// Находим первую точку, больше x_right
+	// find first point greater than x_right
 	i_sort_to = std::lower_bound(i_sort_from,sort_end,&x_right,ptr_vector_less);
 
 	nn.resize(i_sort_to-i_sort_from);
