@@ -58,13 +58,13 @@ void debug_print_grid_line(const char * filename,
 			   bitvec * mask_undefined,
 			   const d_curv * crv) {
 
-	size_t NN = grd->getCountX();
-
 	FILE * ff = fopen(filename,"w+");
 	fprintf(ff,"hold on\n");
 				
 	// draw grid
-	{
+	if (grd) {
+		size_t NN = grd->getCountX();
+
 		size_t i;
 		REAL x0, y0;
 		grd->getCoordNode(0,0,x0,y0);
@@ -125,7 +125,7 @@ void debug_print_grid_line(const char * filename,
 	}
 
 	// draw fault line
-	{
+	if (grd && grd_line) {
 		size_t fl_size = grd_line->size();
 		size_t i;
 		size_t J1, J2;
@@ -219,21 +219,26 @@ void add_val(std::vector<size_t> * v, size_t n, size_t m, size_t NN, size_t MM) 
 
 inline
 void add_val_pair(std::vector<size_t> * v1, size_t n1, size_t m1, 
-				  std::vector<size_t> * v2, size_t n2, size_t m2, 
+		  std::vector<size_t> * v2, size_t n2, size_t m2, 
 		  size_t NN, size_t MM) {
 	
-/*	if ( ((n1 < 0) || (n2 < 0)) || 
+
+	/*	
+	if ( ((n1 < 0) || (n2 < 0)) || 
 		 ((m1 < 0) || (m2 < 0)) || 
 		 ((n1 >= NN) || (n2 >= NN)) || 
 		 ((m1 >= MM) || (m2 >= MM)) )
 		return;
-		*/
+	*/
 	
 	size_t val1, val2;
 	two2one(val1, n1, m1, NN, MM);
 	two2one(val2, n2, m2, NN, MM);
+	
+	///*
 	if ((val1 == UINT_MAX) || (val2 == UINT_MAX))
 		return;
+	//*/
 	
 	if (v1->size() > 0) {
 		size_t prev_val1, prev_val2;
@@ -475,8 +480,10 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 		
 	}
 
+	///*
 	delete nns;  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	nns = NULL;
+	//*/
 	
 	if (!grd_line) {
 		grd_line = create_grid_line(grd1, grd2);
@@ -496,10 +503,10 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 		int i;
 		REAL x1, y1, x2, y2;
 		for (i = 0; i < line_size-1; i++) {
-			x1 = *(crv->X_begin+i);
-			x2 = *(crv->X_begin+i+1);
-			y1 = *(crv->Y_begin+i);
-			y2 = *(crv->Y_begin+i+1);
+			x1 = *(crv->X->begin()+i);
+			x2 = *(crv->X->begin()+i+1);
+			y1 = *(crv->Y->begin()+i);
+			y2 = *(crv->Y->begin()+i+1);
 			fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','blue','LineWidth',3);\n",x1,x2,y1,y2);
 			fprintf(ff,"plot(%lf, %lf,'o');\n",x1,y1);
 			fprintf(ff,"plot(%lf, %lf,'o');\n",x2,y2);
@@ -514,7 +521,7 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 		int x, y, pos;
 		char text[10];
 		for (i = 0; i < nns->size()-1; i++) {
-			pos = (*nns)(i);
+			pos = (*nns)[i];
 			x = pos % NNN;
 			y = (pos - x)/NNN;
 			REAL X, Y;
@@ -578,12 +585,12 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 
 	// draw fault line
 	{
-		int fl_size = grd_line->first_end - grd_line->first_begin;
+		int fl_size = grd_line->first->end() - grd_line->first->begin();
 		int i;
 		int J1, J2;
 		for (i = 0; i < fl_size; i++) {
-			J1 = *(grd_line->first_begin + i);
-			J2 = *(grd_line->second_begin + i);
+			J1 = *(grd_line->first->begin() + i);
+			J2 = *(grd_line->second->begin() + i);
 			
 			REAL x, y;
 			int NN = grd->getCountX();
@@ -629,12 +636,12 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 
 	// draw fault line
 	{
-		int fl_size = grd_line->first_end - grd_line->first_begin;
+		int fl_size = grd_line->first->end() - grd_line->first->begin();
 		int i;
-		int J1, J2;
+		size_t J1, J2;
 		for (i = 0; i < fl_size; i++) {
-			J1 = *(grd_line->first_begin + i);
-			J2 = *(grd_line->second_begin + i);
+			J1 = *(grd_line->first->begin() + i);
+			J2 = *(grd_line->second->begin() + i);
 			
 			REAL x, y;
 			int NN = grd->getCountX();
@@ -642,8 +649,8 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 			REAL stepX2 = grd->stepX/REAL(2);
 			REAL stepY2 = grd->stepY/REAL(2);
 			
-			int n = J1 % NN;
-			int m = (J1 - n)/NN;
+			size_t n = J1 % NN;
+			size_t m = (J1 - n)/NN;
 			
 			grd->getCoordNode(n,m,x,y);
 			

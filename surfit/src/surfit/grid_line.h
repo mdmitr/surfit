@@ -80,11 +80,6 @@ public:
 	//! compress :)
 	void compress();
 
-	//! pointer to array of first cell-numbers 
-	std::vector<size_t> * first;
-	//! pointer to array of second cell-numbers 
-	std::vector<size_t> * second;
-	
 	//! pointer to begin of array of sorted first cell-numbers 
 	std::vector<size_t>::iterator * sort_by_first_begin;
 	//! pointer to end of array of sorted first cell-numbers 
@@ -93,6 +88,12 @@ public:
 	std::vector<size_t>::iterator * sort_by_second_begin;
 	//! pointer to end of array of sorted second cell-numbers 
 	std::vector<size_t>::iterator * sort_by_second_end;
+
+	//! pointer to array of first cell-numbers 
+	std::vector<size_t> * first;
+	//! pointer to array of second cell-numbers 
+	std::vector<size_t> * second;
+
 };
 
 SURFIT_EXPORT

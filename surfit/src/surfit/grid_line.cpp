@@ -1227,6 +1227,152 @@ void flood_fill(d_grid * grd,
 	}
 
 	delete flood_points;
+
+	#ifdef DEBUG
+
+	/*
+	FILE * ff = fopen("c:\\qqq.m","w+");
+	fprintf(ff,"hold on\n");
+				
+	// draw grid
+	{
+		int i;
+		REAL x0, y0;
+		grd->getCoordNode(0,0,x0,y0);
+		REAL xN, yM;
+		grd->getCoordNode(grd->getCountX()-1,grd->getCountY()-1,xN,yM);
+		
+		REAL stepX = grd->stepX/REAL(2);
+		REAL stepY = grd->stepY/REAL(2);
+		
+		REAL x_0, x_1;
+		REAL y_0, y_1;
+		
+		y_0 = y0 - stepY;
+		y_1 = yM + stepY;
+		for (i = 0; i < grd->getCountX()+1; i++) {
+			x_0 = grd->getCoordNodeX(i)-stepX;
+			x_1 = x_0;//grd->getCoordNodeX(i+1)+stepX;
+			fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','cyan');\n",x_0,x_1,y_0,y_1);
+		}
+		
+		x_0 = x0 - stepX;
+		x_1 = xN + stepX;
+		for (i = 0; i < grd->getCountY()+1; i++) {
+			y_0 = grd->getCoordNodeY(i)-stepY;
+			y_1 = y_0;//grd->getCoordNodeY(i+1)+stepY;
+			fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','cyan');\n",x_0,x_1,y_0,y_1);
+		}
+		
+		//fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",x0,y0);
+		//fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",x0,yM);
+		//fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",xN,y0);
+		//fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",xN,yM);
+		
+	}
+
+	fflush(ff);
+				
+	// draw fault line
+	if (line)
+	{
+		int fl_size = line->first->end() - line->first->begin();
+		int i;
+		int J1, J2;
+		for (i = 0; i < fl_size; i++) {
+			J1 = *(line->first->begin() + i);
+			J2 = *(line->second->begin() + i);
+			
+			REAL x, y;
+			int NN = grd->getCountX();
+			
+			REAL stepX2 = grd->stepX/REAL(2);
+			REAL stepY2 = grd->stepY/REAL(2);
+			
+			int n = J1 % NN;
+			int m = (J1 - n)/NN;
+			
+			grd->getCoordNode(n,m,x,y);
+			
+			int diff = (J2-J1);
+			
+			// right line
+			if (diff == 1) {
+				fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black');\n", 
+					x+stepX2, x+stepX2, y-stepY2, y+stepY2);
+			}
+			
+			// left line
+			if (diff == -1) {
+				fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black');\n", 
+					x-stepX2, x-stepX2, y-stepY2, y+stepY2);
+			}
+			
+			// up line 
+			if (diff == NN) {
+				fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black');\n", 
+					x-stepX2, x+stepX2, y+stepY2, y+stepY2);
+			}
+			
+			// down line
+			if (diff == -NN) {
+				fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black');\n", 
+					x-stepX2, x+stepX2, y-stepY2, y-stepY2);
+			}
+			
+		}
+	}
+
+	fflush(ff);
+
+
+	int nn = grd->getCountX();
+	size_t pos;
+	size_t max_pos = grd->getCountX()*grd->getCountY();
+	for (pos = 0; pos < max_pos; pos++) {
+		
+		// paint flowed area
+		
+			int n = pos % nn;
+			int m = (pos - n)/nn;
+			
+			REAL x, y;
+			grd->getCoordNode(n,m,x,y);
+			
+			REAL stepX = grd->stepX/REAL(2);
+			REAL stepY = grd->stepY/REAL(2);
+			
+			REAL x_, y_;
+			
+			y_ = y - stepY;
+			x_ = x - stepX;
+
+			int j = (*data)[pos];
+
+			while (j > 7)
+				j-=7;
+	
+			if (j == 1)
+				fprintf(ff,"plot(%lf, %lf,'.','color','green');\n",x,y);
+			if (j == 2)
+				fprintf(ff,"plot(%lf, %lf,'.','color','red');\n",x,y);
+			if (j == 3)
+				fprintf(ff,"plot(%lf, %lf,'.','color','blue');\n",x,y);
+			if (j == 4)
+				fprintf(ff,"plot(%lf, %lf,'.','color','magenta');\n",x,y);
+			if (j == 5)
+				fprintf(ff,"plot(%lf, %lf,'.','color','cyan');\n",x,y);
+			if (j == 6)
+				fprintf(ff,"plot(%lf, %lf,'.','color','black');\n",x,y);
+			if (j == 7)
+				fprintf(ff,"plot(%lf, %lf,'.','color','yellow');\n",x,y);
+				
+	}
+		
+	fclose(ff);
+	*/
+#endif
+
 		
 	return;
 };
@@ -1599,10 +1745,8 @@ std::vector<size_t> * nodes_in_curv(grid_line * line, d_grid * grd, bitvec * mas
 	max_j = MIN(max_j, MM-1);
 
 	// расширяем сознание
-	if (min_i > 0)
-		min_i--;
-	if (min_j > 0)
-		min_j--;
+	min_i--;
+	min_j--;
 	max_i++;
 	max_j++;
 
@@ -2071,7 +2215,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 	res->init_false();
 
 	size_t min_i = UINT_MAX, min_j = UINT_MAX, max_i = 0, max_j = 0;
-
+	
 	size_t i, j; 
 	size_t pos;
 	size_t pos_i, pos_j;
@@ -2101,12 +2245,14 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 	max_j = MIN(max_j, MM-1);
 
 	// расширяем сознание
-	if (min_i > 0)
-		min_i--;
-	if (min_j > 0)
-		min_j--;
+	min_i--;
+	min_j--;
 	max_i++;
 	max_j++;
+
+	// чтоб не выходило за границы сетки
+	max_i = MIN(max_i, NN-1);
+	max_j = MIN(max_j, MM-1);
 
 	size_t nn = max_i-min_i+1;
 	size_t mm = max_j-min_j+1;
@@ -2165,14 +2311,14 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 		}
 	}
 
-	if (!exists_undef)
+	if (!exists_undef) {
 		flood_fill(grd,
 			   line, 
 			   data,
 			   0,
 			   1,
 			   NULL);
-	else {
+	} else {
 		bitvec * local_mask_undefined = create_bitvec(nn*mm);
 		local_mask_undefined->init_false();
 		size_t n, m, mask_pos, pos;
@@ -2326,7 +2472,6 @@ bitvec * nodes_in_area_mask(const d_area * area, d_grid * grd, bitvec * mask_und
 	for (i = 0; i < area->size(); i++) {
 		const d_curv * crv = area->get_curv(i);
 		bool inside = area->get_curv_orient(i);
-
 
 		grid_line * grd_line = NULL;
 		grd_line = curv_to_grid_line(grd_line, crv, grd);

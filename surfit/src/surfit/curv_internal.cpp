@@ -315,14 +315,16 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 
 	size_t NN = grd->getCountX();
 	size_t MM = grd->getCountY();
-	
-	// ?? ????????
-	lt_x = grd->getCoordNodeX(0) - grd->stepX/REAL(2);
-	lt_y = grd->getCoordNodeY(0) - grd->stepY/REAL(2);
-	lb_x = lt_x;
-	lb_y = grd->getCoordNodeY(MM+1) - grd->stepY/REAL(2);
 
-	rt_x = grd->getCoordNodeX(NN+1) - grd->stepX/REAL(2);
+	REAL stepX2 = grd->stepX/REAL(2);
+	REAL stepY2 = grd->stepY/REAL(2);
+	
+	lt_x = grd->getCoordNodeX(0) - stepX2;
+	lt_y = grd->getCoordNodeY(0) - stepY2;
+	lb_x = lt_x;
+	lb_y = grd->getCoordNodeY(MM) - stepY2;
+
+	rt_x = grd->getCoordNodeX(NN) - stepX2;
 	rt_y = lt_y;
 	rb_x = rt_x;
 	rb_y = lb_y;
@@ -340,7 +342,6 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 		pi1_x = (*(crv->X))(i+1);
 		pi1_y = (*(crv->Y))(i+1);
 		
-		// ??? ?????? ????????
 		if( pi_x >= left && pi_x <= right && pi_y >= top && pi_y <= bottom )
 		{ 
 			(*X)(m) = pi_x;
@@ -387,7 +388,6 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 				}
 			}
 		}
-		// ??? ?????????????
 		else
 		{ 
 			if( pi_x <= left && pi_y <= top )
@@ -452,13 +452,10 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 				}
 			}
 			else
-				// ??? ?????????????
 			{ 
 				sec = false;
-				// ??
 				if( pi_x < left && pi1_x > left )
 				{ 
-					// ??
 					if( intersect(lt_x, lt_y, lb_x, lb_y, 
 						      pi_x, pi_y, pi1_x, pi1_y, 
 						      c_x, c_y) )
@@ -487,7 +484,6 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 							continue;
 						}
 					}
-					// ??
 					if( sec || pi_y < top )
 						if( intersect(lt_x, lt_y, rt_x, rt_y, 
 							      pi_x, pi_y, pi1_x, pi1_y, 
@@ -509,7 +505,6 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 								continue;
 							}
 						}
-						// ??
 						if( sec || pi_y > bottom )
 							if( intersect(lb_x, lb_y, rb_x, rb_y, 
 								      pi_x, pi_y, pi1_x, pi1_y, 
@@ -531,7 +526,6 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 									continue;
 								}
 							}
-							// ? ?????
 							if( pi_y >= top && pi_y <= bottom )
 							{ 
 								if( pi1_y <= top )
@@ -587,10 +581,8 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 							}
 							continue;
 				}
-				// ??
 				if( pi_x > right && pi1_x < right )
 				{ 
-					// ??
 					if( intersect(rt_x, rt_y, rb_x, rb_y, 
 						      pi_x, pi_y, pi1_x, pi1_y, 
 						      c_x, c_y) )
@@ -619,7 +611,6 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 							continue;
 						}
 					}
-					// ??
 					if( sec || pi_y < top )
 						if( intersect(lt_x, lt_y, rt_x, rt_y, 
 							      pi_x, pi_y, pi1_x, pi1_y, 
@@ -641,7 +632,6 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 								continue;
 							}
 						}
-						// ??
 						if( sec || pi_y > bottom )
 							if( intersect(lb_x, lb_y, rb_x, rb_y, 
 								      pi_x, pi_y, pi1_x, pi1_y, 
@@ -663,7 +653,6 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 									continue;
 								}
 							}
-							// ? ?????
 							if( pi_y >= top && pi_y <= bottom )
 							{ 
 								if( pi1_y <= top )
@@ -719,10 +708,8 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 							}
 							continue;
 				}
-				// ??
 				if( pi_y < top && pi1_y > top )
 				{ 
-					// ??
 					if( intersect(lt_x, lt_y, rt_x, rt_y, 
 						      pi_x, pi_y, pi1_x, pi1_y, 
 						      c_x, c_y) )
@@ -751,7 +738,6 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 							continue;
 						}
 					}
-					// ??
 					if( sec || pi_x < left )
 						if( intersect(lt_x, lt_y, lb_x, lb_y, 
 							      pi_x, pi_y, pi1_x, pi1_y, 
@@ -773,7 +759,6 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 								continue;
 							}
 						}
-						// ??
 						if( sec || pi_x < right )
 							if( intersect(rt_x, rt_y, rb_x, rb_y, 
 								      pi_x, pi_y, pi1_x, pi1_y, 
@@ -795,7 +780,6 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 									continue;
 								}
 							}
-							// ? ?????
 							if( pi_x >= left && pi_x <= right )
 							{ 
 								if( pi1_x <= left )
@@ -851,10 +835,8 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 							}
 							continue;
 				}
-				// ??
 				if( pi_y > bottom && pi1_y < bottom )
 				{ 
-					// ??
 					if( intersect(lb_x, lb_y, rb_x, rb_y, 
 						      pi_x, pi_y, pi1_x, pi1_y, 
 						      c_x, c_y) )
@@ -883,7 +865,6 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 							continue;
 						}
 					}
-					// ??
 					if( sec || pi_x < left )
 						if( intersect(lt_x, lt_y, lb_x, lb_y, 
 							      pi_x, pi_y, pi1_x, pi1_y, 
@@ -905,7 +886,6 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 								continue;
 							}
 						}
-						// ??
 						if( sec || pi_x < right )
 							if( intersect(rt_x, rt_y, rb_x, rb_y, 
 								      pi_x, pi_y, pi1_x, pi1_y, 
@@ -927,7 +907,6 @@ d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd)
 									continue;
 								}
 							}
-							// ? ?????
 							if( pi_x >= left && pi_x <= right )
 							{ 
 								if( pi1_x <= left )

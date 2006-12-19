@@ -90,10 +90,18 @@ public:
 	void getCoordNode(size_t i, size_t j, REAL & x, REAL & y) const;
 
 	//! returns X-coordinate of (i,j) node
-	REAL getCoordNodeX(size_t i) const { return startX + (i)*stepX; };
+	REAL getCoordNodeX(size_t i) const { 
+		if (i == UINT_MAX)
+			return startX - stepX;
+		return startX + (i)*stepX; 
+	};
 
 	//! returns Y-coordinate of (i,j) node
-	REAL getCoordNodeY(size_t j) const { return startY + (j)*stepY; };
+	REAL getCoordNodeY(size_t j) const { 
+		if (j == UINT_MAX)
+			return startY - stepY;
+		return startY + (j)*stepY; 
+	};
 	
 	//! calculates (i,j) of the cell for point with coords (x,y)
 	void getCoordPoint(REAL x, REAL y, size_t & i, size_t & j) const;

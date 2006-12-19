@@ -110,6 +110,10 @@ bool d_grid::setCountY(size_t countY) {
 void d_grid::getCoordNode(size_t i, size_t j, REAL &x, REAL &y) const {
 	x = startX + (i)*stepX;
 	y = startY + (j)*stepY;
+	if (i == UINT_MAX)
+		x = startX - stepX;
+	if (j == UINT_MAX)
+		y = startY - stepY;
 };
 
 void d_grid::getCoordPoint(REAL x, REAL y, size_t & i, size_t & j) const {

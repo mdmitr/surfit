@@ -936,6 +936,8 @@ bool surf_filter_in_area(const char * surf_pos, const char * area_pos) {
 	if (area == NULL)
 		return false;
 
+	// fast but buggy
+	/*
 	bitvec * area_mask = nodes_in_area_mask(area, surf->grd);
 	if (area_mask == NULL)
 		return false;
@@ -949,6 +951,25 @@ bool surf_filter_in_area(const char * surf_pos, const char * area_pos) {
 		for (j = 0; j < MM; j++) {
 			two2one(pos, i, j, NN, MM);
 			val = area_mask->get(pos);
+			if (val == true) {
+				(*(surf->coeff))( pos ) = surf->undef_value;
+			}
+		}
+	}
+	*/
+
+	REAL x, y;
+	size_t i,j,pos;
+	bool val;
+	size_t NN = surf->getCountX();
+	size_t MM = surf->getCountY();
+
+	for (i = 0; i < NN; i++) {
+		x = surf->getCoordNodeX(i);
+		for (j = 0; j < MM; j++) {
+			y = surf->getCoordNodeY(j);
+			two2one(pos, i, j, NN, MM);
+			val = area->in_region(x,y);
 			if (val == true) {
 				(*(surf->coeff))( pos ) = surf->undef_value;
 			}
@@ -972,6 +993,8 @@ bool surf_filter_out_area(const char * surf_pos, const char * area_pos) {
 	if (area_mask == NULL)
 		return false;
 
+	// fast but buggy
+	/*
 	size_t i,j,pos;
 	bool val;
 	size_t NN = surf->getCountX();
@@ -982,6 +1005,25 @@ bool surf_filter_out_area(const char * surf_pos, const char * area_pos) {
 			two2one(pos, i, j, NN, MM);
 			val = area_mask->get(pos);
 			if (val == false) {
+				(*(surf->coeff))( pos ) = surf->undef_value;
+			}
+		}
+	}
+	*/
+
+	REAL x, y;
+	size_t i,j,pos;
+	bool val;
+	size_t NN = surf->getCountX();
+	size_t MM = surf->getCountY();
+
+	for (i = 0; i < NN; i++) {
+		x = surf->getCoordNodeX(i);
+		for (j = 0; j < MM; j++) {
+			y = surf->getCoordNodeY(j);
+			two2one(pos, i, j, NN, MM);
+			val = area->in_region(x,y);
+			if (val == true) {
 				(*(surf->coeff))( pos ) = surf->undef_value;
 			}
 		}
