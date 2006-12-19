@@ -1599,8 +1599,10 @@ std::vector<size_t> * nodes_in_curv(grid_line * line, d_grid * grd, bitvec * mas
 	max_j = MIN(max_j, MM-1);
 
 	// расширяем сознание
-	min_i--;
-	min_j--;
+	if (min_i > 0)
+		min_i--;
+	if (min_j > 0)
+		min_j--;
 	max_i++;
 	max_j++;
 
