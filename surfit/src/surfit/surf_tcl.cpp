@@ -89,14 +89,16 @@ REAL surf_minz(const char * pos) {
 
 REAL surf_area_minz(const char * area_pos, const char * surf_pos) {
 	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
+	if (srf == NULL)
 		return FLT_MAX;
 
 	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
-	if (!area)
+	if (area == NULL)
 		return FLT_MAX;
 
 	bitvec * mask = nodes_in_area_mask(area, srf->grd);
+	if (mask == NULL)
+		return FLT_MAX;
 
 	REAL minZ, maxZ;
 	srf->getMinMaxZ_mask(minZ, maxZ, mask);
@@ -888,6 +890,143 @@ int surf_cells_in_area(const char * area_pos,  const char * surf_pos) {
 		return false;
 
 	return _surf_cells_in_area(srf, area);
+};
+
+bool surf_filter_by_mask(const char * surf_pos, const char * def_pos) {
+	
+	d_surf * surf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (surf == NULL)
+		return false;
+
+	d_mask * msk = get_element<d_mask>(def_pos, surfit_masks->begin(), surfit_masks->end());
+	if (msk == NULL)
+		return false;
+
+		
+	size_t i,j;
+	REAL x,y;
+	bool val;
+	
+	size_t NN = surf->getCountX();
+	size_t MM = surf->getCountY();
+	size_t pos;
+
+	for (i = 0; i < NN; i++) {
+		x = surf->getCoordNodeX(i);
+		for (j = 0; j < MM; j++) {
+			y = surf->getCoordNodeY(j);
+			val = msk->getValue(x,y);
+			if (val == false) {
+				two2one(pos, i, j, NN, MM);
+				(*(surf->coeff))( pos ) = surf->undef_value;
+			}
+		}
+	}
+	
+	return true;
+};
+
+bool surf_filter_in_area(const char * surf_pos, const char * area_pos) {
+
+	d_surf * surf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (surf == NULL)
+		return false;
+
+	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
+	if (area == NULL)
+		return false;
+
+	bitvec * area_mask = nodes_in_area_mask(area, surf->grd);
+	if (area_mask == NULL)
+		return false;
+
+	size_t i,j,pos;
+	bool val;
+	size_t NN = surf->getCountX();
+	size_t MM = surf->getCountY();
+
+	for (i = 0; i < NN; i++) {
+		for (j = 0; j < MM; j++) {
+			two2one(pos, i, j, NN, MM);
+			val = area_mask->get(pos);
+			if (val == true) {
+				(*(surf->coeff))( pos ) = surf->undef_value;
+			}
+		}
+	}
+	
+	return true;
+};
+
+bool surf_filter_out_area(const char * surf_pos, const char * area_pos) {
+
+	d_surf * surf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (surf == NULL)
+		return false;
+
+	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
+	if (area == NULL)
+		return false;
+
+	bitvec * area_mask = nodes_in_area_mask(area, surf->grd);
+	if (area_mask == NULL)
+		return false;
+
+	size_t i,j,pos;
+	bool val;
+	size_t NN = surf->getCountX();
+	size_t MM = surf->getCountY();
+
+	for (i = 0; i < NN; i++) {
+		for (j = 0; j < MM; j++) {
+			two2one(pos, i, j, NN, MM);
+			val = area_mask->get(pos);
+			if (val == false) {
+				(*(surf->coeff))( pos ) = surf->undef_value;
+			}
+		}
+	}
+	
+	return true;
+};
+
+bool surf_filter_by_surf(REAL eps, const char * surf1_pos, const char * surf2_pos) {
+
+	d_surf * surf1 = get_element<d_surf>(surf1_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (surf1 == NULL)
+		return false;
+
+	d_surf * surf2 = get_element<d_surf>(surf2_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (surf2 == NULL)
+		return false;
+
+	size_t i,j;
+	REAL x,y;
+	REAL val1, val2;
+	
+	size_t NN = surf1->getCountX();
+	size_t MM = surf1->getCountY();
+	size_t pos;
+
+	for (i = 0; i < NN; i++) {
+		x = surf1->getCoordNodeX(i);
+		for (j = 0; j < MM; j++) {
+			y = surf1->getCoordNodeY(j);
+			val1 = surf1->getValueIJ(i,j);
+			if (val1 == surf1->undef_value)
+				continue;
+			val2 = surf2->getValue(x,y);
+			if (val2 == surf2->undef_value)
+				continue;
+			if ( fabs(val2 - val1) < eps ) {
+				two2one(pos, i, j, NN, MM);
+				(*(surf1->coeff))( pos ) = surf1->undef_value;
+			}
+		}
+	}
+	
+	return true;
+
 };
 
 }; // namespace surfit;

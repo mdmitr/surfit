@@ -269,7 +269,7 @@ bool pnts_filter_by_mask(const char * pnts_pos, const char * def_pos) {
 		return false;
 
 	d_mask * msk = get_element<d_mask>(def_pos, surfit_masks->begin(), surfit_masks->end());
-	if (pnts == NULL)
+	if (msk == NULL)
 		return false;
 
 	int cnt = pnts->size();

@@ -24155,6 +24155,637 @@ _wrap_surf_cells_in_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
 
 
 SWIGINTERN int
+_wrap_surf_filter_by_mask__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_filter_by_mask surface_name_or_position mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_filter_by_mask" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "surf_filter_by_mask" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = buf2;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::surf_filter_by_mask((char const *)arg1,(char const *)arg2);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_by_mask__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_filter_by_mask surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_filter_by_mask" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::surf_filter_by_mask((char const *)arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_by_mask__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  bool result;
+  
+  if (SWIG_GetArgs(interp, objc, objv,":surf_filter_by_mask ") == TCL_ERROR) SWIG_fail;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::surf_filter_by_mask();
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_by_mask(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  Tcl_Obj *CONST *argv = objv+1;
+  int argc = objc-1;
+  if (argc == 0) {
+    return _wrap_surf_filter_by_mask__SWIG_2(clientData, interp, objc, argv - 1);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_surf_filter_by_mask__SWIG_1(clientData, interp, objc, argv - 1);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_surf_filter_by_mask__SWIG_0(clientData, interp, objc, argv - 1);
+      }
+    }
+  }
+  
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'surf_filter_by_mask'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_in_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_filter_in_area surface_name_or_position area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_filter_in_area" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "surf_filter_in_area" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = buf2;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::surf_filter_in_area((char const *)arg1,(char const *)arg2);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_in_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_filter_in_area surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_filter_in_area" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::surf_filter_in_area((char const *)arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_in_area__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  bool result;
+  
+  if (SWIG_GetArgs(interp, objc, objv,":surf_filter_in_area ") == TCL_ERROR) SWIG_fail;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::surf_filter_in_area();
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_in_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  Tcl_Obj *CONST *argv = objv+1;
+  int argc = objc-1;
+  if (argc == 0) {
+    return _wrap_surf_filter_in_area__SWIG_2(clientData, interp, objc, argv - 1);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_surf_filter_in_area__SWIG_1(clientData, interp, objc, argv - 1);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_surf_filter_in_area__SWIG_0(clientData, interp, objc, argv - 1);
+      }
+    }
+  }
+  
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'surf_filter_in_area'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_out_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_filter_out_area surface_name_or_position area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_filter_out_area" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "surf_filter_out_area" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = buf2;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::surf_filter_out_area((char const *)arg1,(char const *)arg2);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_out_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_filter_out_area surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_filter_out_area" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::surf_filter_out_area((char const *)arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_out_area__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  bool result;
+  
+  if (SWIG_GetArgs(interp, objc, objv,":surf_filter_out_area ") == TCL_ERROR) SWIG_fail;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::surf_filter_out_area();
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_out_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  Tcl_Obj *CONST *argv = objv+1;
+  int argc = objc-1;
+  if (argc == 0) {
+    return _wrap_surf_filter_out_area__SWIG_2(clientData, interp, objc, argv - 1);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_surf_filter_out_area__SWIG_1(clientData, interp, objc, argv - 1);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_surf_filter_out_area__SWIG_0(clientData, interp, objc, argv - 1);
+      }
+    }
+  }
+  
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'surf_filter_out_area'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_by_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  double arg1 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  bool result;
+  double val1 ;
+  int ecode1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_filter_by_surf eps surface1_name_or_position surface2_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_filter_by_surf" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast<double >(val1);
+  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "surf_filter_by_surf" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = buf2;
+  res3 = SWIG_AsCharPtrAndSize(objv[3], &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "surf_filter_by_surf" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = buf3;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::surf_filter_by_surf(arg1,(char const *)arg2,(char const *)arg3);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return TCL_OK;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_by_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  double arg1 ;
+  char *arg2 = (char *) 0 ;
+  bool result;
+  double val1 ;
+  int ecode1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_filter_by_surf eps surface1_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_filter_by_surf" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast<double >(val1);
+  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "surf_filter_by_surf" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = buf2;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::surf_filter_by_surf(arg1,(char const *)arg2);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_OK;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_by_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  double arg1 ;
+  bool result;
+  double val1 ;
+  int ecode1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_filter_by_surf eps ",(void *)0) == TCL_ERROR) SWIG_fail;
+  ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_filter_by_surf" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast<double >(val1);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::surf_filter_by_surf(arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_filter_by_surf(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  Tcl_Obj *CONST *argv = objv+1;
+  int argc = objc-1;
+  if (argc == 1) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      return _wrap_surf_filter_by_surf__SWIG_2(clientData, interp, objc, argv - 1);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_surf_filter_by_surf__SWIG_1(clientData, interp, objc, argv - 1);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsCharPtrAndSize(argv[2], 0, NULL, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_surf_filter_by_surf__SWIG_0(clientData, interp, objc, argv - 1);
+        }
+      }
+    }
+  }
+  
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'surf_filter_by_surf'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
 _wrap_surf_get_details_level__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   int result;
@@ -39150,6 +39781,10 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "surf_set_value_area", (swig_wrapper_func) _wrap_surf_set_value_area, NULL},
     { SWIG_prefix "surf_sum_area", (swig_wrapper_func) _wrap_surf_sum_area, NULL},
     { SWIG_prefix "surf_cells_in_area", (swig_wrapper_func) _wrap_surf_cells_in_area, NULL},
+    { SWIG_prefix "surf_filter_by_mask", (swig_wrapper_func) _wrap_surf_filter_by_mask, NULL},
+    { SWIG_prefix "surf_filter_in_area", (swig_wrapper_func) _wrap_surf_filter_in_area, NULL},
+    { SWIG_prefix "surf_filter_out_area", (swig_wrapper_func) _wrap_surf_filter_out_area, NULL},
+    { SWIG_prefix "surf_filter_by_surf", (swig_wrapper_func) _wrap_surf_filter_by_surf, NULL},
     { SWIG_prefix "surf_get_details_level", (swig_wrapper_func) _wrap_surf_get_details_level, NULL},
     { SWIG_prefix "surf_decomp", (swig_wrapper_func) _wrap_surf_decomp, NULL},
     { SWIG_prefix "surf_auto_decomp", (swig_wrapper_func) _wrap_surf_auto_decomp, NULL},
