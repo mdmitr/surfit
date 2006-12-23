@@ -1071,5 +1071,45 @@ bool surf_filter_by_surf(REAL eps, const char * surf1_pos, const char * surf2_po
 
 };
 
+bool surf_swapxy(const char * surf_pos)
+{
+	d_surf * surf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
+	if (surf == NULL)
+		return false;
+
+	if (surf->coeff == NULL)
+		return false;
+
+	if (surf->grd == NULL)
+		return false;
+
+	vec * new_coeff = create_vec(surf->coeff->size());
+
+	size_t NN = surf->getCountX();
+	size_t MM = surf->getCountY();
+	size_t pos;
+	REAL val;
+
+	size_t i,j, I, J;
+	for (i = 0; i < NN; i++) {
+		for (j = 0; j < MM; j++) {
+			val = surf->getValueIJ(i,j);
+			J = i;
+			I = j;
+			two2one(pos, I, J, MM, NN);
+			(*new_coeff)( pos ) = val;
+		}
+	}
+
+	surf->coeff->release();
+	surf->coeff = new_coeff;
+
+	std::swap(surf->grd->startX, surf->grd->startY);
+	std::swap(surf->grd->stepX, surf->grd->stepY);
+	std::swap(surf->grd->endX, surf->grd->endY);
+
+	return true;
+};
+
 }; // namespace surfit;
 

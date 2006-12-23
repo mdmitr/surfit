@@ -53,17 +53,21 @@ surfit_io_garbage surfit_io_garb;
 
 void surfit_io_init_variables(Tcl_Interp * iinterp) {
 
-	if (!init_surfit_lib(iinterp)) {
-		return;
+	if (my_surfit_io_manager == NULL) {
+		
+		if (!init_surfit_lib(iinterp)) {
+			return;
+		}
+		
+		my_surfit_io_manager = new surfit_io_manager;
+		add_manager(my_surfit_io_manager);
+		
+		Tcl_printf("surfit_io version %s, Copyright (c) 2006 M.V.Dmitrievsky \n", SURFIT_IO_VERSION);
+		Tcl_printf("surfit_io comes with ABSOLUTELY NO WARRANTY; for details type `show_w'.\n");
+		Tcl_printf("This is free software, and you are welcome to redistribute it\n");
+		Tcl_printf("under certain conditions; type `show_c' for details.\n");
+		
 	}
-	
-	my_surfit_io_manager = new surfit_io_manager;
-	add_manager(my_surfit_io_manager);
-
-	Tcl_printf("surfit_io version %s, Copyright (c) 2006 M.V.Dmitrievsky \n", SURFIT_IO_VERSION);
-	Tcl_printf("surfit_io comes with ABSOLUTELY NO WARRANTY; for details type `show_w'.\n");
-	Tcl_printf("This is free software, and you are welcome to redistribute it\n");
-	Tcl_printf("under certain conditions; type `show_c' for details.\n");
 
 };
 

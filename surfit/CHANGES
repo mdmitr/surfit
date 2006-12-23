@@ -1,13 +1,17 @@
 surfit 2.2 changes:
 
-	* bugfix int pnts_read function. Allows to use various separators
+Bugfixes:
+	* bugfix in pnts_read function. Allows to use various separators
 	* bugfix in functions nodes_in_curv and nodes_in_curv_mask
+	* problem with loading modules more than one time
 
+New:
 	+ added pnts_abs function
 	+ added surf_filter_by_mask
 	+ added surf_filter_in_area
 	+ added surf_filter_out_area
 	+ added surf_filter_by_surf
+	+ added surf_swapxy
 
 surfit 2.1 changes:
 

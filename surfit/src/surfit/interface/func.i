@@ -98,6 +98,7 @@ bool surf_filter_by_mask(const char * surface_name_or_position = "0", const char
 bool surf_filter_in_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
 bool surf_filter_out_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
 bool surf_filter_by_surf(REAL eps, const char * surface1_name_or_position = "0", const char * surface2_name_or_position = "0");
+bool surf_swapxy(const char * surface_name_or_position = "0");
 
 // WAVELETS SECTION
 int surf_get_details_level(const char * surface_name_or_position = "0");
