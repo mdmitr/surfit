@@ -366,7 +366,11 @@ void grid_finish() {
 	if (method_ok) {
 		size_t i;
 		for (i = 0; i < method_mask_undefined->size(); i++) {
-			if (method_mask_undefined->get(i))
+			if (method_mask_undefined->get(i)) {
+				(*method_X)(i) = undef_value;
+				continue;
+			}
+			if (method_mask_solved->get(i) == false)
 				(*method_X)(i) = undef_value;
 		}
 		return;		

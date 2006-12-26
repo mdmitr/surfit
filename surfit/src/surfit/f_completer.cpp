@@ -333,31 +333,39 @@ bool f_completer::minimize() {
 				}
 				
 				//res = minimize_step() && res;
-				minimize_step();
-				
-				for (pos = 0; pos < f_size; pos++) {
-					if ( (*flood_areas)[pos] == color ) {
-						
-						undef = method_mask_undefined->get(pos);
-						if (undef)
-							saved_mask_undefined->set_true(pos);
-						else 
-							saved_mask_undefined->set_false(pos);
-						
-						solved = method_mask_solved->get(pos);	
-						if (solved)
-							saved_mask_solved->set_true(pos);
-						else
-							saved_mask_solved->set_false(pos);
-						
+				res = minimize_step();
+
+				if (res) {
+					for (pos = 0; pos < f_size; pos++) {
+						if ( (*flood_areas)[pos] == color ) {
+							
+							undef = method_mask_undefined->get(pos);
+							if (undef)
+								saved_mask_undefined->set_true(pos);
+							else 
+								saved_mask_undefined->set_false(pos);
+							
+							solved = method_mask_solved->get(pos);	
+							if (solved)
+								saved_mask_solved->set_true(pos);
+							else
+								saved_mask_solved->set_false(pos);
+							
+						}
 					}
-				}
+				} else {
+					for (pos = 0; pos < f_size; pos++) {
+						if ( (*flood_areas)[pos] == color ) {
+							saved_mask_undefined->set_true(pos);
+						}
+					}
+				}	
 				
 			};
 			
 			method_mask_solved->copy(saved_mask_solved);
 			method_mask_undefined->copy(saved_mask_undefined);
-			
+
 			if (saved_mask_solved) {
 				saved_mask_solved->release();
 				saved_mask_solved = NULL;
@@ -370,7 +378,7 @@ bool f_completer::minimize() {
 		}
 
 		delete flood_areas;
-		
+
 		writelog(LOG_MESSAGE,"completer : processing whole area");
 		res = minimize_step() && res;
 

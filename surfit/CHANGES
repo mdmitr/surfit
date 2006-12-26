@@ -5,6 +5,7 @@ Bugfixes:
 	* bugfix in functions nodes_in_curv and nodes_in_curv_mask
 	* problem with loading modules more than one time
 	* bugfix in area_save_bln - rewriting file now tuned off :)
+	* bugfix in completer functional. Now it works correctly with undefined areas
 
 New:
 	+ added pnts_abs function
