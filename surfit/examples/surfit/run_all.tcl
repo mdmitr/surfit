@@ -103,6 +103,9 @@ cd ..
 # others
 #
 cd "others"
+if { [source "aniso.tcl"] == 0 } {
+	return 0
+}
 if { [source "ineq.tcl"] == 0 } {
 	return 0
 }
