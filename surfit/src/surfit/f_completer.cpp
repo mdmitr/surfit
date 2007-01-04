@@ -115,8 +115,7 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	matr * oD1 = NULL;
 	matr * oD2 = NULL;
-	//if (angle == 0 && w == 1) {
-	if (false) {
+	if (angle == 0 && w == 1) {
 		oD1 = new matrD1(matrix_size, NN, 
 				 method_stepX, method_stepY,
 				 method_mask_solved, method_mask_undefined, 
