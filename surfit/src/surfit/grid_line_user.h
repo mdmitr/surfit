@@ -40,13 +40,8 @@ extern SURFIT_EXPORT grid_line * surfit_grid_line;
 SURFIT_EXPORT
 grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * crv, d_grid * grd);
 
-SURFIT_EXPORT
-void debug_print_grid_line(const char * filename,
-			   grid_line * grd_line, 
-			   d_grid * grd,
-			   bitvec * mask_solved, 
-			   bitvec * mask_undefined,
-			   const d_curv * crv = NULL);
+void draw_grid_line_matlab(FILE * ff, const grid_line * line, const d_grid * grd) ;
+void draw_filled_grid(FILE * ff, const d_grid * grd, const std::vector<short int> * data);
 
 }; // namespace surfit;
 

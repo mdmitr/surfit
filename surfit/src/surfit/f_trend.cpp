@@ -136,7 +136,7 @@ bool f_trend::minimize() {
 				int i;
 				for (i = 0; i < size; i++) {
 					
-					if (!check_for_node(gfaults, i)) 
+					if (!gfaults->check_for_node(i)) 
 						method_mask_solved->set_true(i);
 					
 				};

@@ -27,7 +27,6 @@
 #include "functional.h"
 #include "free_elements.h"
 #include "vec.h"
-#include "bitvec.h"
 
 #include <time.h>
 

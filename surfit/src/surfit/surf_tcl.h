@@ -683,7 +683,7 @@ bool surf_filter_in_area(const char * surface_name_or_position = "0", const char
 */
 bool surf_filter_out_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
 
-/*! \ingroup tcl_surf_math
+/*! \ingroup tcl_pnts_math
     \fn bool surf_filter_by_surf(REAL eps, const char * surface1_name_or_position = "0", const char * surface2_name_or_position = "0")
     
     \par Tcl syntax:
@@ -695,16 +695,6 @@ bool surf_filter_out_area(const char * surface_name_or_position = "0", const cha
 */
 bool surf_filter_by_surf(REAL eps, const char * surface1_name_or_position = "0", const char * surface2_name_or_position = "0");
 
-/*! \ingroup tcl_surf_math
-    \fn bool surf_swapxy(const char * surface_name_or_position = "0")
-    
-    \par Tcl syntax:
-    surf_swapxy "surface_name_or_position" 
-
-    \par Description:
-    swaps X and Y coordinates
-*/
-bool surf_swapxy(const char * surface_name_or_position = "0");
 
 //
 // WAVELETS SECTION

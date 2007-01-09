@@ -59,4 +59,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "map_area_completer.dat" "map_area_completer" 
+surf_save "area_completer.dat" "map_area_completer" 

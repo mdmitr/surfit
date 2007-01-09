@@ -50,158 +50,119 @@ struct grid_line_garbage : public binman {
 
 grid_line_garbage grid_line_garb;
 
-
-void debug_print_grid_line(const char * filename,
-			   grid_line * grd_line, 
-			   d_grid * grd,
-			   bitvec * mask_solved, 
-			   bitvec * mask_undefined,
-			   const d_curv * crv) {
-
-	FILE * ff = fopen(filename,"w+");
-	fprintf(ff,"hold on\n");
-				
-	// draw grid
-	if (grd) {
-		size_t NN = grd->getCountX();
-
-		size_t i;
-		REAL x0, y0;
-		grd->getCoordNode(0,0,x0,y0);
-		REAL xN, yM;
-		grd->getCoordNode(grd->getCountX()-1,grd->getCountY()-1,xN,yM);
+void draw_filled_grid(FILE * ff, const d_grid * grd, const std::vector<short int> * data)
+{
+#ifndef DEBUG
+	return;
+#endif
+	
+	size_t nn = grd->getCountX();
+	size_t pos;
+	size_t max_pos = grd->getCountX()*grd->getCountY();
+	for (pos = 0; pos < max_pos; pos++) {
+		
+		// paint flowed area
+		
+		int n = pos % nn;
+		int m = (pos - n)/nn;
+		
+		REAL x, y;
+		grd->getCoordNode(n,m,x,y);
 		
 		REAL stepX = grd->stepX/REAL(2);
 		REAL stepY = grd->stepY/REAL(2);
 		
-		REAL x_0, x_1;
-		REAL y_0, y_1;
+		REAL x_, y_;
 		
-		y_0 = y0 - stepY;
-		y_1 = yM + stepY;
-		for (i = 0; i < grd->getCountX()+1; i++) {
-			x_0 = grd->getCoordNodeX(i)-stepX;
-			x_1 = x_0;//grd->getCoordNodeX(i+1)+stepX;
-			fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','cyan');\n",x_0,x_1,y_0,y_1);
-		}
+		y_ = y - stepY;
+		x_ = x - stepX;
 		
-		x_0 = x0 - stepX;
-		x_1 = xN + stepX;
-		for (i = 0; i < grd->getCountY()+1; i++) {
-			y_0 = grd->getCoordNodeY(i)-stepY;
-			y_1 = y_0;//grd->getCoordNodeY(i+1)+stepY;
-			fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','cyan');\n",x_0,x_1,y_0,y_1);
-		}
+		short int j = (*data)[pos];
 		
-		//char text1[6];
-		//char text2[6];
-		size_t j;
-		size_t J;
-		if (mask_solved && mask_undefined)
-		for (j = 0; j < grd->getCountY(); j++) {
-			for (i = 0; i < grd->getCountX(); i++) {
-				J = i + j*NN;
-				x_0 = grd->getCoordNodeX(i);
-				y_0 = grd->getCoordNodeY(j);
-				if (mask_solved->get(J)) {
-					fprintf(ff,"plot(%lf, %lf, '*', 'color', 'black');\n",x_0,y_0);
-				}
-				if (mask_undefined->get(J)) {
-					fprintf(ff,"plot(%lf, %lf, 'o', 'color', 'black');\n",x_0,y_0);
-				}
-				x_0 -= grd->stepX/REAL(2) - grd->stepX/REAL(12);
-
-				//itoa(i, text1, 10);
-				//itoa(j, text2, 10);
-				//fprintf(ff,"text(%lf, %lf, '%s:%s', 'FontSize', 8);\n",x_0,y_0,text1,text2);
-
-			}
-		}
-		//fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",x0,y0);
-		//fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",x0,yM);
-		//fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",xN,y0);
-		//fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",xN,yM);
+		while (j > 7)
+			j-=7;
+		
+		if (j == 1)
+			fprintf(ff,"plot(%lf, %lf,'.','color','green');\n",x,y);
+		if (j == 2)
+			fprintf(ff,"plot(%lf, %lf,'.','color','red');\n",x,y);
+		if (j == 3)
+			fprintf(ff,"plot(%lf, %lf,'.','color','blue');\n",x,y);
+		if (j == 4)
+			fprintf(ff,"plot(%lf, %lf,'.','color','magenta');\n",x,y);
+		if (j == 5)
+			fprintf(ff,"plot(%lf, %lf,'.','color','cyan');\n",x,y);
+		if (j == 6)
+			fprintf(ff,"plot(%lf, %lf,'.','color','black');\n",x,y);
+		if (j == 7)
+			fprintf(ff,"plot(%lf, %lf,'.','color','yellow');\n",x,y);
 		
 	}
-
-	// draw fault line
-	if (grd && grd_line) {
-		size_t fl_size = grd_line->size();
-		size_t i;
-		size_t J1, J2;
-		for (i = 0; i < fl_size; i++) {
-			J1 = (*(grd_line->first))[i];
-			J2 = (*(grd_line->second))[i];
-			
-			REAL x, y;
-			size_t NN = grd->getCountX();
-			size_t MM = grd->getCountY();
-			
-			REAL stepX2 = grd->stepX/REAL(2);
-			REAL stepY2 = grd->stepY/REAL(2);
-			
-			size_t n1,m1;
-			one2two(J1, n1, m1, NN, MM);
-			grd->getCoordNode(n1,m1,x,y);
-
-			size_t n2,m2;
-			one2two(J2, n2, m2, NN, MM);
-			
-			//int diff = (J2-J1);
-			int diff = 0;
-			if (n2 > n1)
-				diff = 1;
-			if (n2 < n1)
-				diff = -1;
-			if (m2 > m1)
-				diff = NN;
-			if (m2 < m1)
-				diff = -(int)NN;
-			
-			// right line
-			if (diff == 1) {
-				fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black');\n", 
-					x+stepX2, x+stepX2, y-stepY2, y+stepY2);
-			}
-			
-			// left line
-			if (diff == -1) {
-				fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black');\n", 
-					x-stepX2, x-stepX2, y-stepY2, y+stepY2);
-			}
-			
-			// up line 
-			if (diff == NN) {
-				fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black');\n", 
-					x-stepX2, x+stepX2, y+stepY2, y+stepY2);
-			}
-			
-			// down line
-			if (diff == -(int)NN) {
-				fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black');\n", 
-					x-stepX2, x+stepX2, y-stepY2, y-stepY2);
-			}
-			
-		}
-	}
-
-	// draw curv
-	if (crv) {
-		size_t i;
-		REAL x0, y0, x1, y1;
-		for (i = 0; i < crv->size() - 1; i++) {
-			x0 = (*(crv->X))(i);
-			y0 = (*(crv->Y))(i);
-			x1 = (*(crv->X))(i+1);
-			y1 = (*(crv->Y))(i+1);
-
-			fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','blue','LineWidth',3);\n", 
-					x0, x1, y0, y1);
-		}
-	}
-
+	
 	fflush(ff);
-	fclose(ff);
+	
+};
+
+void draw_grid_line_matlab(FILE * ff, const grid_line * line, const d_grid * grd) 
+{
+#ifndef DEBUG
+	return;
+#endif
+
+	if (line == NULL)
+		return;
+	if (grd == NULL)
+		return;
+
+	size_t fl_size = line->size();
+	size_t i;
+	size_t J1, J2;
+	size_t pos_i, pos_j;
+	size_t NN = grd->getCountX();
+	size_t MM = grd->getCountY();
+	for (i = 0; i < fl_size; i++) {
+		J1 = line->get_first_cell(i);
+		J2 = line->get_second_cell(i);
+		
+		one2two(J1, pos_i, pos_j, NN+2, MM+2);
+		pos_i--;
+		pos_j--;
+		
+		REAL x, y;
+		
+		REAL stepX2 = grd->stepX/REAL(2);
+		REAL stepY2 = grd->stepY/REAL(2);
+		grd->getCoordNode(pos_i,pos_j,x,y);
+		
+		int diff = (J2-J1);
+		
+		// right line
+		if (diff == 1) {
+			fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black');\n", 
+				x+stepX2, x+stepX2, y-stepY2, y+stepY2);
+		}
+		
+		// left line
+		if (diff == -1) {
+			fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black');\n", 
+				x-stepX2, x-stepX2, y-stepY2, y+stepY2);
+		}
+		
+		// up line 
+		if (diff == NN+2) {
+			fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black');\n", 
+				x-stepX2, x+stepX2, y+stepY2, y+stepY2);
+		}
+		
+		// down line
+		if (diff == -NN-2) {
+			fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black');\n", 
+				x-stepX2, x+stepX2, y-stepY2, y-stepY2);
+		}
+		
+	}
+	
+	fflush(ff);
 };
 
 
@@ -256,7 +217,6 @@ void add_val_pair(std::vector<size_t> * v1, size_t n1, size_t m1,
 
 grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_grid * grd) {
 
-
 	d_curv * crv = NULL;
 	if (in_crv->is_closed())
 		crv = _curv_intersect_grid(in_crv, grd);
@@ -270,19 +230,30 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	size_t MM = grd->getCountY();
 	std::vector<size_t> * nns = new std::vector<size_t>(); // ?
 
-	REAL old_startX = grd->startX;
-	REAL old_startY = grd->startY;
-	REAL old_endX = grd->endX;
-	REAL old_endY = grd->endY;
+	d_grid * grd2 = create_grid(grd);
+
+	// extend grid
+	grd2->startX -= grd2->stepX;
+	grd2->startY -= grd2->stepY;
+	grd2->endX += grd2->stepX;
+	grd2->endY += grd2->stepY;
+
+	REAL old2_startX = grd2->startX;
+	REAL old2_startY = grd2->startY;
+	REAL old2_endX = grd2->endX;
+	REAL old2_endY = grd2->endY;
+
+	size_t NNN = grd2->getCountX();
+	size_t MMM = grd2->getCountY();
 
 	// transform grid from cell-based to node-based
-	grd->startX -= grd->stepX/REAL(2);
-	grd->startY -= grd->stepY/REAL(2);
-	grd->endX += grd->stepX/REAL(2);
-	grd->endY += grd->stepY/REAL(2);
+	grd2->startX -= grd2->stepX/REAL(2);
+	grd2->startY -= grd2->stepY/REAL(2);
+	grd2->endX += grd2->stepX/REAL(2);
+	grd2->endY += grd2->stepY/REAL(2);
 
-	NN = grd->getCountX();
-	MM = grd->getCountY();
+	NN = grd2->getCountX();
+	MM = grd2->getCountY();
 
 	bool closed = crv->is_closed();
 	
@@ -296,10 +267,10 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 		Y1 = (*(crv->Y))(qq);
 		Y2 = (*(crv->Y))(qq + 1);
 		
-		size_t x1 = grd->get_i(X1);
-		size_t x2 = grd->get_i(X2);
-		size_t y1 = grd->get_j(Y1);
-		size_t y2 = grd->get_j(Y2);
+		size_t x1 = grd2->get_i(X1);
+		size_t x2 = grd2->get_i(X2);
+		size_t y1 = grd2->get_j(Y1);
+		size_t y2 = grd2->get_j(Y2);
 			
 		int dx, dy, i1, i2, i, kx, ky;
 		int d;      // "residual" 
@@ -349,7 +320,7 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 				
 		for ( i = 0; i < dx; i++ ) {
 			
-			grd->getCoordNode(x,y,p_x,p_y);
+			grd2->getCoordNode(x,y,p_x,p_y);
 			add_val(nns, x, y, NN, MM);
 			
 			if (flag) 
@@ -377,21 +348,21 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 					x_0 = x;
 					x_1 = x+kx;
 				}
-				REAL X_0 = grd->getCoordNodeX(x_0);
-				REAL X_1 = grd->getCoordNodeX(x_1);
-				REAL Y_0 = grd->getCoordNodeY(y_0);
-				REAL Y_1 = grd->getCoordNodeY(y_1);
+				REAL X_0 = grd2->getCoordNodeX(x_0);
+				REAL X_1 = grd2->getCoordNodeX(x_1);
+				REAL Y_0 = grd2->getCoordNodeY(y_0);
+				REAL Y_1 = grd2->getCoordNodeY(y_1);
 				
 				if (flag) {
 					
 					if (fabs( DY*(X_0-X1) + DX*(Y1-Y_1) ) - fabs( DY*(X_1-X1) + DX*(Y1-Y_0)) < 0) {
 						x -= kx;
 						y += ky;
-						grd->getCoordNode(x,y,p_x,p_y);
+						grd2->getCoordNode(x,y,p_x,p_y);
 						add_val(nns, x, y, NN, MM);
 						x += kx;
 					} else {
-						grd->getCoordNode(x,y,p_x,p_y);
+						grd2->getCoordNode(x,y,p_x,p_y);
 						add_val(nns, x, y, NN, MM);
 						y += ky; 
 					}
@@ -401,11 +372,11 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 					if (fabs( DX*(Y_0-Y1) + DY*(X1-X_1) ) - fabs( DX*(Y_1-Y1) + DY*(X1-X_0)) < 0) {
 						y -= ky;
 						x += kx;
-						grd->getCoordNode(x,y,p_x,p_y);
+						grd2->getCoordNode(x,y,p_x,p_y);
 						add_val(nns, x, y, NN, MM);
 						y += ky;
 					} else {
-						grd->getCoordNode(x,y,p_x,p_y);
+						grd2->getCoordNode(x,y,p_x,p_y);
 						add_val(nns, x, y, NN, MM);
 						x += kx;
 					}
@@ -415,19 +386,10 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 			}
 		}
 
-		grd->getCoordNode(x,y,p_x,p_y);
+		grd2->getCoordNode(x,y,p_x,p_y);
 		add_val(nns, x, y, NN, MM); // last point
 		
 	}
-
-	grd->startX = old_startX;
-	grd->startY = old_startY;
-	grd->endX = old_endX;
-	grd->endY = old_endY;
-	size_t NNN = NN;
-	size_t MMM = MM;
-	NN = grd->getCountX();
-	MM = grd->getCountY();
 
 	if (nns->size() == 0) {
 		delete nns;
@@ -447,10 +409,10 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	}
 	nns->resize(write_pos+1);
 
-	std::vector<size_t> * grd1 = new std::vector<size_t>();
-	std::vector<size_t> * grd2 = new std::vector<size_t>();
-	grd1->reserve(nns->size());
-	grd2->reserve(nns->size());
+	std::vector<size_t> * cells1 = new std::vector<size_t>();
+	std::vector<size_t> * cells2 = new std::vector<size_t>();
+	cells1->reserve(nns->size());
+	cells2->reserve(nns->size());
 
 	size_t n1, m1, n2, m2, pos1, pos2;
 
@@ -458,24 +420,24 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	for (i = 0; i < nns->size()-1; i++) {
 
 		pos1 = (*nns)[i];
-		n1 = pos1 % NNN;
-		m1 = (pos1 - n1)/NNN;	
+		n1 = pos1 % NN;
+		m1 = (pos1 - n1)/NN;	
 
 		pos2 = (*nns)[i+1];
-		n2 = pos2 % NNN;
-		m2 = (pos2 - n2)/NNN;
+		n2 = pos2 % NN;
+		m2 = (pos2 - n2)/NN;
 
 		size_t max_n = MAX(n1, n2);
 		size_t min_m = MIN(m1, m2);
 		
 		if (n2 != n1) { // horizontal line
-			add_val_pair(grd1, max_n-1, min_m, 
-				grd2, max_n-1, min_m-1,
-				NN,MM);
+			add_val_pair(cells1, max_n-1, min_m, 
+				     cells2, max_n-1, min_m-1,
+				     NNN,MMM);
 		} else { // vertical line
-			add_val_pair(grd1, max_n, min_m, 
-				grd2, max_n-1, min_m,
-				NN,MM);
+			add_val_pair(cells1, max_n, min_m, 
+				     cells2, max_n-1, min_m,
+				     NNN,MMM);
 		}
 		
 	}
@@ -486,18 +448,26 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	//*/
 	
 	if (!grd_line) {
-		grd_line = create_grid_line(grd1, grd2);
+		grd_line = create_grid_line(NNN, MMM, cells1, cells2);
 	} else {
-		grd_line->add(grd1, grd2);
+		grd_line->add(cells1, cells2);
 	}
 
 #ifdef DEBUG
 	/*
 
+	// restore extended grid
+	grd2->startX = old2_startX;
+	grd2->startY = old2_startY;
+	grd2->endX = old2_endX;
+	grd2->endY = old2_endY;
+	NN = grd2->getCountX();
+	MM = grd2->getCountY();
+
 	FILE * ff = fopen("c:\\qqq.m","w+");
 	fprintf(ff,"hold on\n");
 
-		// draw source line
+	// draw source line
 	{
 		int line_size = crv->size();
 		int i;
@@ -514,18 +484,16 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	}
 
 	// draw brez
-	
 	if (nns)
 	{
-		int i;
-		int x, y, pos;
+		size_t i;
+		size_t x, y, pos;
 		char text[10];
 		for (i = 0; i < nns->size()-1; i++) {
 			pos = (*nns)[i];
-			x = pos % NNN;
-			y = (pos - x)/NNN;
+			one2two(pos,x,y,NN+1,MM+1);
 			REAL X, Y;
-			grd->getCoordNode(x,y,X,Y);
+			grd2->getCoordNode(x,y,X,Y);
 			fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",X,Y);
 			//itoa(i , text, 10);
 			//fprintf(ff,"text(%lf, %lf, '%s');\n",X,Y,text);
@@ -535,40 +503,41 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 
 	// draw grid
 	{
+		d_grid * GRD = grd;
 		int i;
 		REAL x0, y0;
-		grd->getCoordNode(0,0,x0,y0);
+		GRD->getCoordNode(0,0,x0,y0);
 		REAL xN, yM;
-		grd->getCoordNode(grd->getCountX()-1,grd->getCountY()-1,xN,yM);
+		GRD->getCoordNode(GRD->getCountX()-1,GRD->getCountY()-1,xN,yM);
 		
-		REAL stepX = grd->stepX/REAL(2);
-		REAL stepY = grd->stepY/REAL(2);
+		REAL stepX = GRD->stepX/REAL(2);
+		REAL stepY = GRD->stepY/REAL(2);
 		
 		REAL x_0, x_1;
 		REAL y_0, y_1;
 		
 		y_0 = y0 - stepY;
 		y_1 = yM + stepY;
-		for (i = 0; i < grd->getCountX()+1; i++) {
-			x_0 = grd->getCoordNodeX(i)-stepX;
-			x_1 = x_0;//grd->getCoordNodeX(i+1)+stepX;
+		for (i = 0; i < GRD->getCountX()+1; i++) {
+			x_0 = GRD->getCoordNodeX(i)-stepX;
+			x_1 = x_0;//GRD->getCoordNodeX(i+1)+stepX;
 			fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','cyan');\n",x_0,x_1,y_0,y_1);
 		}
 		
 		x_0 = x0 - stepX;
 		x_1 = xN + stepX;
-		for (i = 0; i < grd->getCountY()+1; i++) {
-			y_0 = grd->getCoordNodeY(i)-stepY;
-			y_1 = y_0;//grd->getCoordNodeY(i+1)+stepY;
+		for (i = 0; i < GRD->getCountY()+1; i++) {
+			y_0 = GRD->getCoordNodeY(i)-stepY;
+			y_1 = y_0;//GRD->getCoordNodeY(i+1)+stepY;
 			fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','cyan');\n",x_0,x_1,y_0,y_1);
 		}
 		
 		char text[10];
 		int j;
-		for (j = 0; j < grd->getCountY(); j++) {
-			for (i = 0; i < grd->getCountX(); i++) {
-				x_0 = grd->getCoordNodeX(i);
-				y_0 = grd->getCoordNodeY(j);
+		for (j = 0; j < GRD->getCountY(); j++) {
+			for (i = 0; i < GRD->getCountX(); i++) {
+				x_0 = GRD->getCoordNodeX(i);
+				y_0 = GRD->getCoordNodeY(j);
 				itoa(i + j*NN, text, 10);
 				//if ( (j > 40) && (i > 171))
 				//fprintf(ff,"text(%lf, %lf, '%s');\n",x_0,y_0,text);
@@ -581,78 +550,28 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 		//fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",xN,yM);
 		
 	}
-	
 
 	// draw fault line
 	{
-		int fl_size = grd_line->first->end() - grd_line->first->begin();
-		int i;
-		int J1, J2;
-		for (i = 0; i < fl_size; i++) {
-			J1 = *(grd_line->first->begin() + i);
-			J2 = *(grd_line->second->begin() + i);
-			
-			REAL x, y;
-			int NN = grd->getCountX();
-			
-			REAL stepX2 = grd->stepX/REAL(2);
-			REAL stepY2 = grd->stepY/REAL(2);
-			
-			int n = J1 % NN;
-			int m = (J1 - n)/NN;
-			
-			grd->getCoordNode(n,m,x,y);
-			
-			int diff = (J2-J1);
-			
-			// right line
-			if (diff == 1) {
-				fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black','LineWidth',3);\n", 
-					x+stepX2, x+stepX2, y-stepY2, y+stepY2);
-			}
-			
-			// left line
-			if (diff == -1) {
-				fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black','LineWidth',3);\n", 
-					x-stepX2, x-stepX2, y-stepY2, y+stepY2);
-			}
-			
-			// up line 
-			if (diff == NN) {
-				fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black','LineWidth',3);\n", 
-					x-stepX2, x+stepX2, y+stepY2, y+stepY2);
-			}
-			
-			// down line
-			if (diff == -NN) {
-				fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','black','LineWidth',3);\n", 
-					x-stepX2, x+stepX2, y-stepY2, y-stepY2);
-			}
-			
-		}
-	}
-	
-	fflush(ff);
-
-	// draw fault line
-	{
-		int fl_size = grd_line->first->end() - grd_line->first->begin();
+		int fl_size = grd_line->size();
 		int i;
 		size_t J1, J2;
 		for (i = 0; i < fl_size; i++) {
-			J1 = *(grd_line->first->begin() + i);
-			J2 = *(grd_line->second->begin() + i);
+			J1 = grd_line->get_first_cell(i);
+			J2 = grd_line->get_second_cell(i);
+			//J1 = *(grd_line->first->begin() + i);
+			//J2 = *(grd_line->second->begin() + i);
 			
 			REAL x, y;
-			int NN = grd->getCountX();
+			int NN = grd2->getCountX();
 			
-			REAL stepX2 = grd->stepX/REAL(2);
-			REAL stepY2 = grd->stepY/REAL(2);
+			REAL stepX2 = grd2->stepX/REAL(2);
+			REAL stepY2 = grd2->stepY/REAL(2);
 			
 			size_t n = J1 % NN;
 			size_t m = (J1 - n)/NN;
 			
-			grd->getCoordNode(n,m,x,y);
+			grd2->getCoordNode(n,m,x,y);
 			
 			int diff = (J2-J1);
 			
@@ -686,10 +605,12 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	fflush(ff);
 	fclose(ff);
 	*/
+
 #endif
 	
 	if (crv)
 		crv->release();
+	grd2->release();
 	return grd_line;
 
 };

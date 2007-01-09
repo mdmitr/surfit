@@ -39,7 +39,7 @@ namespace surfit {
 
 bool _area_save_bln(const d_area * area, const char * filename) {
 	
-	FILE * file = fopen(filename, "a");
+	FILE * file = fopen(filename, "w");
 	if (!file) {
 		writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
 		return false;

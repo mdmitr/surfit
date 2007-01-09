@@ -96,7 +96,7 @@ d_curv * _grid_line_to_curv(const grid_line * grd_line, const d_grid * grd) {
 
 	if (!grd)
 		return false;
-	
+
 	size_t N = grd_line->size();
 	
 	vec * X = create_vec(2*N);
@@ -110,8 +110,13 @@ d_curv * _grid_line_to_curv(const grid_line * grd_line, const d_grid * grd) {
 	size_t pos = 0;
 	
 	for (i = 0; i < N; i++) {
+
+		J1 = grd_line->get_first_cell(i);
+		J2 = grd_line->get_second_cell(i);
+		/*
 		J1 = *(grd_line->first->begin() + i);
 		J2 = *(grd_line->second->begin() + i);
+		*/
 		
 		REAL x, y;
 		size_t NN = grd->getCountX();
