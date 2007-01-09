@@ -98,6 +98,8 @@ void grid_finish();
 SURFIT_EXPORT 
 void grid_release();
 
+void draw_grid_matlab(FILE * ff, const d_grid * grd) ;
+
 }; // namespace surfit;
 
 #endif

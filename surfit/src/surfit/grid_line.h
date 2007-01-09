@@ -34,25 +34,27 @@ class d_area;
 class d_curv;
 
 SURFIT_EXPORT
-grid_line * create_grid_line(std::vector<size_t> * ifirst, std::vector<size_t> * isecond);
+grid_line * create_grid_line(size_t iNN, size_t iMM, std::vector<size_t> * ifirst, std::vector<size_t> * isecond);
 
 /*! \class grid_line
     \brief \ref grid based line
-    This simple class describes line passing between cells. 
-    Each line described with two cells (first and second).
-    See \ref tcl_grid_line "Tcl commands" for \ref grid_line.
+    This simple class describes lines passing between cells. 
     
-    Loading this class into surfit memory have no effect on functional sequence (see \ref data)
+	Each line described with two cells (first and second). To describe cell it is
+	necessary to give cell number. grid_line uses extended grid.
+
+    
+    
 */
 class SURFIT_EXPORT grid_line : public data {
 protected:
 	/*! constructor
-	    \param ifirst_begin pointer to begin of array of first cell-numbers 
-	    \param ifirst_end pointer to end of array of first cell-numbers 
-	    \param isecond_begin pointer to begin of array of second cell-numbers 
-	    \param isecond_end pointer to end of array of second cell-numbers 
+	    \param iNN number of cells in OX direction
+	    \param iMM number of cells in OY direction
+	    \param ifirst pointer to array of first cell-numbers 
+	    \param isecond pointer to array of second cell-numbers 
 	*/
-	grid_line(std::vector<size_t> * ifirst, std::vector<size_t> * isecond);
+	grid_line(size_t iNN, size_t iMM, std::vector<size_t> * ifirst, std::vector<size_t> * isecond);
 
 	//! destructor
 	~grid_line();
@@ -60,7 +62,8 @@ protected:
 public:
 
 	friend SURFIT_EXPORT
-	grid_line * create_grid_line(std::vector<size_t> * ifirst, std::vector<size_t> * isecond);
+	grid_line * create_grid_line(size_t iNN, size_t iMM, 
+				     std::vector<size_t> * ifirst, std::vector<size_t> * isecond);
 
 	virtual bool bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const;
 
@@ -79,6 +82,43 @@ public:
 	void sort();
 	//! compress :)
 	void compress();
+
+	class cell_finder {
+	public:
+		cell_finder(size_t ipos, const grid_line * grd_line);
+
+		bool find_next(size_t & near_cell);
+
+	private:
+		size_t pos, NN, MM;
+		std::vector<size_t>::iterator * find_from_first;
+		std::vector<size_t>::iterator * find_to_first;
+		std::vector<size_t>::iterator * find_from_second;
+		std::vector<size_t>::iterator * find_to_second;
+		std::vector<size_t>::iterator * ptr;
+		std::vector<size_t>::iterator it;
+		const std::vector<size_t> * first;
+		const std::vector<size_t> * second;
+	};
+
+	friend class cell_finder;
+
+	cell_finder get_cell_finder(size_t pos) const;
+	bool check_for_node(size_t pos) const;
+	bool check_for_pair(size_t pos1, size_t pos2) const;
+	void get_minmax(size_t & min_i, size_t & max_i, 
+			size_t & min_j, size_t & max_j) const;
+	void resize(int move_i, int move_j, size_t newNN, size_t newMM);
+
+	size_t get_first_cell(size_t pos) const;
+	size_t get_second_cell(size_t pos) const;
+	
+protected:
+
+	//! number of cells in OX direction
+	size_t NN;
+	//! number of cells in OY direction
+	size_t MM;
 
 	//! pointer to begin of array of sorted first cell-numbers 
 	std::vector<size_t>::iterator * sort_by_first_begin;
@@ -121,11 +161,14 @@ void fault_points_D2(size_t n, size_t m, size_t NN, size_t MM,
 		     bool & first_y,  bool & second_y,  bool & third_y,
 		     size_t offset_x = 0, size_t offset_y = 0);
 
+/*
 SURFIT_EXPORT
 bool check_for_node(grid_line * fault, size_t nn);
 
+
 SURFIT_EXPORT
 bool check_for_pair(grid_line * fault, size_t nn1, size_t nn2);
+*/
 
 SURFIT_EXPORT
 void flood_fill(d_grid * grd,
@@ -148,9 +191,6 @@ void fill_all_areas(std::vector<short int> *& flood_areas,
 		    grid_line * line, 
 		    int & flood_areas_cnt,
 		    const bitvec * mask_undefined);
-
-SURFIT_EXPORT
-std::vector<size_t> * nodes_in_curv(grid_line * line, d_grid * grd, bitvec * mask_undefined = NULL);
 
 SURFIT_EXPORT
 bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefined = NULL);

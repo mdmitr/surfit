@@ -937,7 +937,6 @@ bool surf_filter_in_area(const char * surf_pos, const char * area_pos) {
 		return false;
 
 	// fast but buggy
-	/*
 	bitvec * area_mask = nodes_in_area_mask(area, surf->grd);
 	if (area_mask == NULL)
 		return false;
@@ -956,8 +955,9 @@ bool surf_filter_in_area(const char * surf_pos, const char * area_pos) {
 			}
 		}
 	}
-	*/
-
+	return true;
+	
+	/*
 	REAL x, y;
 	size_t i,j,pos;
 	bool val;
@@ -977,6 +977,7 @@ bool surf_filter_in_area(const char * surf_pos, const char * area_pos) {
 	}
 	
 	return true;
+	*/
 };
 
 bool surf_filter_out_area(const char * surf_pos, const char * area_pos) {

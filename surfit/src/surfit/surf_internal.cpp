@@ -504,9 +504,8 @@ d_surf * _surf_project(d_surf * srf, d_grid * grd, grid_line * fault_grd_line) {
 					delta_x = x - x0;
 					delta_y = y - y0;
 
-					if ( check_for_pair(fault_grd_line,
-						                I1 + J0*surf_sizeX, 
-						                I1 + J1*surf_sizeX) )
+					if ( fault_grd_line->check_for_pair(I1 + J0*surf_sizeX, 
+									    I1 + J1*surf_sizeX) )
 					{
 						if (delta_y < srf->grd->stepY/REAL(2))
 							z2 = z1;
@@ -514,9 +513,8 @@ d_surf * _surf_project(d_surf * srf, d_grid * grd, grid_line * fault_grd_line) {
 							z1 = z2;
 					}
 
-					if ( check_for_pair(fault_grd_line,
-						                I0 + J0*surf_sizeX, 
-						                I0 + J1*surf_sizeX) )
+					if ( fault_grd_line->check_for_pair(I0 + J0*surf_sizeX, 
+									    I0 + J1*surf_sizeX) )
 					{
 						if (delta_y < srf->grd->stepY/REAL(2))
 							z3 = z0;
@@ -528,14 +526,12 @@ d_surf * _surf_project(d_surf * srf, d_grid * grd, grid_line * fault_grd_line) {
 					REAL z11 = (z2-z1)*delta_y/hY+z1,
 						 z22 = (z3-z0)*delta_y/hY+z0;
 
-					if ( check_for_pair(fault_grd_line,
-						                I0 + J0*surf_sizeX,
-										I1 + J0*surf_sizeX)
+					if ( fault_grd_line->check_for_pair(I0 + J0*surf_sizeX,
+									    I1 + J0*surf_sizeX)
 						 ||
-						 check_for_pair(fault_grd_line,
-						                I0 + J1*surf_sizeX,
+						 fault_grd_line->check_for_pair(I0 + J1*surf_sizeX,
 										I1 + J1*surf_sizeX)
-										) 
+					   ) 
 					{
 						if (delta_x < srf->grd->stepX/REAL(2))
 							(*coeff)(i + j*size_x) = z22;

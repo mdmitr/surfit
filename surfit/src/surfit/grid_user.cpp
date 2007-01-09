@@ -477,5 +477,49 @@ void grid_release() {
 
 };
 
+void draw_grid_matlab(FILE * ff, const d_grid * grd) 
+{
+
+#ifndef DEBUG
+	return;
+#endif
+
+	int i;
+	REAL x0, y0;
+	grd->getCoordNode(0,0,x0,y0);
+	REAL xN, yM;
+	grd->getCoordNode(grd->getCountX()-1,grd->getCountY()-1,xN,yM);
+	
+	REAL stepX = grd->stepX/REAL(2);
+	REAL stepY = grd->stepY/REAL(2);
+	
+	REAL x_0, x_1;
+	REAL y_0, y_1;
+	
+	y_0 = y0 - stepY;
+	y_1 = yM + stepY;
+	for (i = 0; i < grd->getCountX()+1; i++) {
+		x_0 = grd->getCoordNodeX(i)-stepX;
+		x_1 = x_0;//grd->getCoordNodeX(i+1)+stepX;
+		fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','cyan');\n",x_0,x_1,y_0,y_1);
+	}
+	
+	x_0 = x0 - stepX;
+	x_1 = xN + stepX;
+	for (i = 0; i < grd->getCountY()+1; i++) {
+		y_0 = grd->getCoordNodeY(i)-stepY;
+		y_1 = y_0;//grd->getCoordNodeY(i+1)+stepY;
+		fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','cyan');\n",x_0,x_1,y_0,y_1);
+	}
+	
+	//fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",x0,y0);
+	//fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",x0,yM);
+	//fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",xN,y0);
+	//fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",xN,yM);
+	
+	
+	fflush(ff);
+};
+
 }; // namespace surfit;
 
