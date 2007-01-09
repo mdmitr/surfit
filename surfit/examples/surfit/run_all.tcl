@@ -46,6 +46,9 @@ if { [source "curve_surf_ineq.tcl"] == 0 } {
 if { [source "fault.tcl"] == 0 } {
 	return 0
 }
+if { [source "fault_aniso.tcl"] == 0 } {
+	return 0
+}
 if { [source "fault_approx.tcl"] == 0 } {
 	return 0
 }
