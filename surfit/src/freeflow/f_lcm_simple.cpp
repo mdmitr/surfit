@@ -200,7 +200,7 @@ bool f_lcm_simple::minimize() {
 				int i;
 				for (i = 0; i < size; i++) {
 					
-					if (!gfaults->check_for_node(i)) 
+					if (!check_for_node(gfaults, i)) 
 						method_mask_solved->set_true(i);
 					
 				};
@@ -225,7 +225,7 @@ bool f_lcm_simple::minimize() {
 					int i;
 					
 					for (i = 0; i < size; i++) {
-						if (!undef_grd_line->check_for_node(i)) 
+						if (!check_for_node(undef_grd_line, i)) 
 							method_mask_solved->set_true(i);
 					};
 					

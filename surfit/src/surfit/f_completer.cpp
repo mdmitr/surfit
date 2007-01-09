@@ -116,29 +116,24 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	matr * oD1 = NULL;
 	matr * oD2 = NULL;
 	if (angle == 0 && w == 1) {
-	//if (false) {
-		if (D1 > 0)
-			oD1 = new matrD1(matrix_size, NN, 
-					 method_stepX, method_stepY,
-					 method_mask_solved, method_mask_undefined, 
-					 gfaults);
-		if (D2 > 0)
-			oD2 = new matrD2(matrix_size, NN, 
-					 method_stepX, method_stepY,
-					 method_mask_solved, method_mask_undefined, 
-					 gfaults); 
+		oD1 = new matrD1(matrix_size, NN, 
+				 method_stepX, method_stepY,
+				 method_mask_solved, method_mask_undefined, 
+				 gfaults);
+		oD2 = new matrD2(matrix_size, NN, 
+				 method_stepX, method_stepY,
+				 method_mask_solved, method_mask_undefined, 
+				 gfaults); 
 	} else {
-		if (D1 > 0)
-			oD1 = new matrD1_aniso(matrix_size, NN, 
-					       method_stepX, method_stepY,
-					       method_mask_solved, method_mask_undefined, 
-					       gfaults,
-					       angle, w);
-		if (D2 > 0)
-			oD2 = new matrD2(matrix_size, NN,
-					 method_stepX, method_stepY,
-					 method_mask_solved, method_mask_undefined, 
-					 gfaults);
+		oD1 = new matrD1_aniso(matrix_size, NN, 
+				       method_stepX, method_stepY,
+				       method_mask_solved, method_mask_undefined, 
+				       gfaults,
+				       angle, w);
+		oD2 = new matrD2(matrix_size, NN,
+				 method_stepX, method_stepY,
+				 method_mask_solved, method_mask_undefined, 
+				 gfaults);
 	}
 	
 	matr_sum *  T = new matr_sum(D1, oD1, D2, oD2);
@@ -205,8 +200,8 @@ bool f_completer::minimize() {
 		gfaults->release();
 	gfaults = NULL;
 	if (faults->size() > 0) {
-		size_t q;
-		for (q = 0; q < faults->size(); q++) {
+		int q;
+		for (q = 0; q < (int)faults->size(); q++) {
 
 			const d_curv * flt = (*faults)[q];
 
@@ -239,7 +234,7 @@ bool f_completer::minimize() {
 				int i;
 				for (i = 0; i < size; i++) {
 					
-					if (!gfaults->check_for_node(i)) 
+					if (!check_for_node(gfaults, i)) 
 						method_mask_solved->set_true(i);
 					
 				};
@@ -272,7 +267,7 @@ bool f_completer::minimize() {
 					int i;
 					
 					for (i = 0; i < size; i++) {
-						if (!undef_grd_line->check_for_node(i)) 
+						if (!check_for_node(undef_grd_line, i)) 
 							method_mask_solved->set_true(i);
 					};
 					
@@ -337,31 +332,39 @@ bool f_completer::minimize() {
 				}
 				
 				//res = minimize_step() && res;
-				minimize_step();
-				
-				for (pos = 0; pos < f_size; pos++) {
-					if ( (*flood_areas)[pos] == color ) {
-						
-						undef = method_mask_undefined->get(pos);
-						if (undef)
-							saved_mask_undefined->set_true(pos);
-						else 
-							saved_mask_undefined->set_false(pos);
-						
-						solved = method_mask_solved->get(pos);	
-						if (solved)
-							saved_mask_solved->set_true(pos);
-						else
-							saved_mask_solved->set_false(pos);
-						
+				res = minimize_step();
+
+				if (res) {
+					for (pos = 0; pos < f_size; pos++) {
+						if ( (*flood_areas)[pos] == color ) {
+							
+							undef = method_mask_undefined->get(pos);
+							if (undef)
+								saved_mask_undefined->set_true(pos);
+							else 
+								saved_mask_undefined->set_false(pos);
+							
+							solved = method_mask_solved->get(pos);	
+							if (solved)
+								saved_mask_solved->set_true(pos);
+							else
+								saved_mask_solved->set_false(pos);
+							
+						}
 					}
-				}
+				} else {
+					for (pos = 0; pos < f_size; pos++) {
+						if ( (*flood_areas)[pos] == color ) {
+							saved_mask_undefined->set_true(pos);
+						}
+					}
+				}	
 				
 			};
 			
 			method_mask_solved->copy(saved_mask_solved);
 			method_mask_undefined->copy(saved_mask_undefined);
-			
+
 			if (saved_mask_solved) {
 				saved_mask_solved->release();
 				saved_mask_solved = NULL;
@@ -374,7 +377,7 @@ bool f_completer::minimize() {
 		}
 
 		delete flood_areas;
-		
+
 		writelog(LOG_MESSAGE,"completer : processing whole area");
 		res = minimize_step() && res;
 

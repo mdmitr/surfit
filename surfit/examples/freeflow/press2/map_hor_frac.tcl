@@ -2,7 +2,7 @@
 load libfreeflow[info sharedlibextension]
 
 clear_data
-set tol 1e-7
+set tol 5e-7
 
 set map_name "map_hor_frac"
 
