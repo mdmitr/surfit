@@ -106,9 +106,12 @@ public:
 	cell_finder get_cell_finder(size_t pos) const;
 	bool check_for_node(size_t pos) const;
 	bool check_for_pair(size_t pos1, size_t pos2) const;
+	
 	void get_minmax(size_t & min_i, size_t & max_i, 
 			size_t & min_j, size_t & max_j) const;
-	void resize(int move_i, int move_j, size_t newNN, size_t newMM);
+	
+	void resize(size_t move_i, size_t move_j, size_t newNN, size_t newMM, 
+		    bool minus_i, bool minus_j);
 
 	size_t get_first_cell(size_t pos) const;
 	size_t get_second_cell(size_t pos) const;
@@ -161,15 +164,6 @@ void fault_points_D2(size_t n, size_t m, size_t NN, size_t MM,
 		     bool & first_y,  bool & second_y,  bool & third_y,
 		     size_t offset_x = 0, size_t offset_y = 0);
 
-/*
-SURFIT_EXPORT
-bool check_for_node(grid_line * fault, size_t nn);
-
-
-SURFIT_EXPORT
-bool check_for_pair(grid_line * fault, size_t nn1, size_t nn2);
-*/
-
 SURFIT_EXPORT
 void flood_fill(d_grid * grd,
 		grid_line * line, 
@@ -193,7 +187,7 @@ void fill_all_areas(std::vector<short int> *& flood_areas,
 		    const bitvec * mask_undefined);
 
 SURFIT_EXPORT
-bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefined = NULL);
+bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_undefined = NULL);
 
 SURFIT_EXPORT
 bitvec * nodes_in_curv_mask(const d_curv * crv, d_grid * grd, bitvec * mask_undefined = NULL);

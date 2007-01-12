@@ -156,5 +156,18 @@ struct area_garbage : public binman {
 
 area_garbage area_garb;
 
+void draw_area_matlab(FILE * ff, const d_area * area, const char * color, short width)
+{
+#ifndef DEBUG
+	return;
+#endif
+	size_t i;
+	for (i = 0; i < area->curves->size(); i++) {
+		const d_curv * curv = area->get_curv(i);
+		draw_curv_matlab(ff, curv, color, width);
+	}
+	fflush(ff);
+};
+
 }; // namespace surfit;
 

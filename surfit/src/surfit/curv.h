@@ -112,6 +112,8 @@ extern SURFIT_EXPORT std::vector<d_curv *> * surfit_curvs;
 SURFIT_EXPORT
 d_points * discretize_curv(const d_curv * crv, d_grid * grd, REAL value, const char * pnts_name);
 
+void draw_curv_matlab(FILE * ff, const d_curv * crv, const char * color="blue", short width = 3);
+
 
 }; // namespace surfit;
 

@@ -708,22 +708,39 @@ void grid_line::get_minmax(size_t & min_i, size_t & max_i,
 	
 };
 
-void grid_line::resize(int move_i, int move_j, size_t newNN, size_t newMM) {
+void grid_line::resize(size_t move_i, size_t move_j, size_t newNN, size_t newMM, 
+		       bool minus_i, bool minus_j) {
 
 	size_t i, pos, pos_i, pos_j;
 
 	for (i = 0; i < size(); i++) {
 		pos = *(first->begin()+i);
 		one2two(pos, pos_i, pos_j, NN, MM);
-		pos_i -= move_i;
-		pos_j -= move_j;
+		
+		if (minus_i)
+			pos_i -= move_i;
+		else
+			pos_i += move_i;
+		if (minus_j)
+			pos_j -= move_j;
+		else 
+			pos_j += move_j;
+		
 		two2one(pos, pos_i, pos_j, newNN, newMM);
 		*(first->begin()+i) = pos;
 		
 		pos = *(second->begin()+i);
 		one2two(pos, pos_i, pos_j, NN, MM);
-		pos_i -= move_i;
-		pos_j -= move_j;
+		
+		if (minus_i)
+			pos_i -= move_i;
+		else
+			pos_i += move_i;
+		if (minus_j)
+			pos_j -= move_j;
+		else 
+			pos_j += move_j;
+
 		two2one(pos, pos_i, pos_j, newNN, newMM);
 		*(second->begin()+i) = pos;
 	}
@@ -797,6 +814,7 @@ void flood_fill(d_grid * grd,
 				break;
 			
 			left_i--;
+
 			two2one(push_pos, left_i, left_j, NN, MM);
 			two2one(push_pos2, left_i + 1, left_j, NN, MM);
 
@@ -809,11 +827,11 @@ void flood_fill(d_grid * grd,
 			if (line)
 				flood = !line->check_for_pair(push_pos, push_pos2);// check_flood(left_i, left_j, left_i+1, left_j);
 
-			if (mask_undefined && flood && bound) {
+			if (mask_undefined && flood) {
 				flood = flood && !mask_undefined->get(push_pos);
 			}
 			
-			if (flood && bound)
+			if (flood)
 				flood = flood && ( (*data)[push_pos] == 0 );
 			
 			if (!flood)
@@ -840,20 +858,19 @@ void flood_fill(d_grid * grd,
 			if (line)
 				flood = !line->check_for_pair(push_pos, push_pos2);//check_flood(right_i, right_j, right_i-1, right_j);
 			
-			if (mask_undefined && flood && bound) {
+			if (mask_undefined && flood) {
 				flood = flood && !mask_undefined->get(push_pos);
 			}
 							
-			if (flood && bound)
+			if (flood)
 			    	flood = flood && ( (*data)[push_pos] == 0 );
 			
 			if (!flood)
 				break;
 
-			if (bound) {
-				if ( (*data)[push_pos] == 0 )
-					(*data)[push_pos] = fill_val;
-			}
+			if ( (*data)[push_pos] == 0 )
+				(*data)[push_pos] = fill_val;
+			
 			else
 				break;
 
@@ -918,18 +935,18 @@ void flood_fill(d_grid * grd,
 
 	delete flood_points;
 
-	/*
+	///*
 #ifdef DEBUG
-	FILE * ff = fopen("c:\\qqq.m","w+");
+	FILE * ff = fopen("c:\\ffill.m","w+");
 	fprintf(ff,"hold on\n");
 	
 	draw_grid_matlab(ff,grd);
 	draw_grid_line_matlab(ff, line, grd);
-	draw_filled_grid(ff, grd, data);
+	draw_filled_grid_matlab(ff, grd, data);
 	
 	fclose(ff);
 #endif
-	*/
+	//*/
 		
 	return;
 };
@@ -1131,7 +1148,7 @@ void fill_all_areas(std::vector<short int> *& flood_areas,
 
 };
 
-bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefined) {
+bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_undefined) {
 
 	if (!line)
 		return NULL;
@@ -1139,6 +1156,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 	if (line->size() == 0)
 		return NULL;
 
+	
 	size_t NN = grd->getCountX();
 	size_t MM = grd->getCountY();
 
@@ -1150,49 +1168,53 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 	size_t i, j; 
 	size_t pos;
 
+	// in terms of the extended grid
 	line->get_minmax(min_i, max_i, min_j, max_j);
 		
 	min_i = MAX(min_i, 0);
 	min_j = MAX(min_j, 0);
-	max_i = MIN(max_i, NN+1);
-	max_j = MIN(max_j, MM+1);
+	max_i = MIN(max_i, NN+2);
+	max_j = MIN(max_j, MM+2);
 
 	size_t nn = max_i-min_i+1;
 	size_t mm = max_j-min_j+1;
 
-	d_grid * small_grd = create_grid(grd);
+	d_grid * small_grd = create_grid(grd); // small and not extended
 
-	REAL old_startX = grd->startX;
-	REAL old_endX = grd->endX;
-	REAL old_startY = grd->startY;
-	REAL old_endY = grd->endY;
+	small_grd->startX = grd->startX + min_i*grd->stepX - grd->stepX;
+	small_grd->startY = grd->startY + min_j*grd->stepY - grd->stepY;
+	small_grd->endX = small_grd->startX + (nn-1)*grd->stepX;
+	small_grd->endY = small_grd->startY + (mm-1)*grd->stepY;
 
-	grd->startX += grd->stepX*min_i - grd->stepX;
-	grd->startY += grd->stepY*min_j - grd->stepY;
-	grd->endX    = grd->startX + grd->stepX*(nn-1);
-	grd->endY    = grd->startY + grd->stepY*(mm-1);
+	assert(nn == small_grd->getCountX());
+	assert(mm == small_grd->getCountY());
 
-	nn = grd->getCountX();
-	mm = grd->getCountY();
-
-	line->resize(min_i-1, min_j-1, nn+2, mm+2);
-	line->sort();	
-
-	/*
+/*
 #ifdef DEBUG
 	FILE * ff = fopen("c:\\qqq.m","w+");
 	fprintf(ff,"hold on\n");
 	
-	draw_grid_matlab(ff,grd);
-	draw_grid_line_matlab(ff, line, grd);
-	
-	fclose(ff);
+	draw_grid_matlab(ff,grd,"magenta");
+	draw_grid_line_matlab(ff, line, grd, "red", 3);
 #endif
-	*/
+*/
+
+	line->resize( min_i>1?min_i-1:1-min_i, 
+		      min_j>1?min_j-1:1-min_j, 
+		      nn+2, mm+2, 
+		      min_i>1, min_j>1);
+	line->sort();	
+
+/*
+#ifdef DEBUG
+	draw_grid_matlab(ff,small_grd);
+	draw_grid_line_matlab(ff, line, small_grd);
+#endif
+*/
 
 	std::vector<short int> * data = new std::vector<short int>(nn*mm);
 
-	// check for undefined elements in sub_grid!
+	// check for undefined elements in small_grd
 	bool exists_undef = false;
 	if (mask_undefined) {
 		size_t n, m, mask_pos;
@@ -1212,7 +1234,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 	}
 
 	if (!exists_undef) {
-		flood_fill(grd,
+		flood_fill(small_grd,
 			   line, 
 			   data,
 			   0,
@@ -1226,7 +1248,10 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 		for (j = 0; j < mm; j++) {
 			for (i = 0; i < nn; i++) {
 				n = i; m = j;
-				two2two(n, m, grd, small_grd);
+				if ((i == 4) && (j==5))
+					bool qq = true;
+
+				two2two(n, m, small_grd, grd);
 				if ( grid_bound2(n, m, NN, MM) ) {
 					two2one(mask_pos, n, m, NN, MM);
 					if (mask_undefined->get(mask_pos)) {
@@ -1238,7 +1263,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 			}
 		}
 
-		flood_fill(grd,
+		flood_fill(small_grd,
 			   line, 
 			   data,
 			   0,
@@ -1249,33 +1274,43 @@ bitvec * nodes_in_curv_mask(grid_line * line, d_grid * grd, bitvec * mask_undefi
 	}
 
 	int val;
+	size_t pos_i, pos_j;
 	for (j = 0; j < mm; j++) {
 		for (i = 0; i < nn; i++) {
 			pos = i + j*nn;
 			val = (*data)[pos];
 			if ( val == 0) {
-				pos = (i + min_i) + (j + min_j)*NN;
-				if ( (i + min_i >= 0) && (i + min_i < NN) &&
-				     (j + min_j >= 0) && (j + min_j < MM) )
-				{
+				pos_i = i + ( min_i>1?min_i-1:1-min_i );
+				pos_j = j + ( min_j>1?min_j-1:1-min_j );
+				two2one(pos, pos_i, pos_j, NN, MM);
+				if (pos != UINT_MAX)
 					res->set_true(pos);
-				}
 			}
 		}
 	}
 
 	delete data;
 
-	line->resize(-min_i+1, -min_j+1, NN+2, MM+2);
+	line->resize( min_i>1?min_i-1:1-min_i, 
+		      min_j>1?min_j-1:1-min_j, 
+		      NN+2, MM+2, 
+		      min_i<1, min_j<1);
+
+/*
+#ifdef DEBUG
+
+	draw_grid_line_matlab(ff, line, grd, "blue", 3);
+	fclose(ff);
+
+#endif
+*/
+
+
 	line->sort();
 	
-	grd->startX = old_startX;
-	grd->endX = old_endX;
-	grd->startY = old_startY;
-	grd->endY = old_endY;
-
 	if (small_grd)
 		small_grd->release();
+		
 	return res;
 
 };
@@ -1359,6 +1394,13 @@ bitvec * nodes_in_area_mask(const d_area * area, d_grid * grd, bitvec * mask_und
 	bitvec * res = create_bitvec(grd->getCountX()*grd->getCountY());
 	res->init_false();
 
+	/*
+#ifdef DEBUG
+	FILE * ff = fopen("c:\\mask.m","w+");
+	fprintf(ff,"hold on\n");
+#endif
+	*/
+
 	int i;
 	for (i = 0; i < area->size(); i++) {
 		const d_curv * crv = area->get_curv(i);
@@ -1366,6 +1408,12 @@ bitvec * nodes_in_area_mask(const d_area * area, d_grid * grd, bitvec * mask_und
 
 		grid_line * grd_line = NULL;
 		grd_line = curv_to_grid_line(grd_line, crv, grd);
+
+	/*
+#ifdef DEBUG
+		draw_grid_line_matlab(ff, grd_line, grd, "blue",3);
+#endif
+	*/
 
 		if (grd_line == NULL)
 			continue;
@@ -1391,7 +1439,17 @@ bitvec * nodes_in_area_mask(const d_area * area, d_grid * grd, bitvec * mask_und
 
 	if (area->inverted)
 		res->invert();
+
+
+	/*
+#ifdef DEBUG
+	draw_area_matlab(ff, area);
+	draw_grid_matlab(ff,grd);
+	draw_bitvec_matlab(ff, grd, res);
 	
+	fclose(ff);
+#endif
+	*/
 	return res;
 
 };

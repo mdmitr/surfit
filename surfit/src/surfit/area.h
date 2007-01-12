@@ -106,6 +106,7 @@ public:
 */
 extern SURFIT_EXPORT std::vector<d_area *> * surfit_areas;
 
+void draw_area_matlab(FILE * ff, const d_area * area, const char * color = "green", short width = 3);
 
 }; // namespace surfit;
 

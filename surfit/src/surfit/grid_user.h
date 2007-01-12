@@ -71,9 +71,9 @@ SURFIT_EXPORT
 d_grid * create_last_grd();
 
 SURFIT_EXPORT
-size_t one2one(size_t pos, d_grid * from, d_grid * to);
+size_t one2one(size_t pos, const d_grid * from, const d_grid * to);
 SURFIT_EXPORT
-void two2two(size_t & n, size_t & m, d_grid * from, d_grid * to);
+void two2two(size_t & n, size_t & m, const d_grid * from, const d_grid * to);
 SURFIT_EXPORT
 void one2two(size_t pos, size_t & i, size_t & j, size_t NN, size_t MM);
 SURFIT_EXPORT
@@ -98,7 +98,7 @@ void grid_finish();
 SURFIT_EXPORT 
 void grid_release();
 
-void draw_grid_matlab(FILE * ff, const d_grid * grd) ;
+void draw_grid_matlab(FILE * ff, const d_grid * grd, const char * color = "cyan");
 
 }; // namespace surfit;
 

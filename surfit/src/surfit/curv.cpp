@@ -425,5 +425,25 @@ d_points * discretize_curv(const d_curv * crv, d_grid * grd, REAL value, const c
 
 };
 
+void draw_curv_matlab(FILE * ff, const d_curv * crv, const char * color, short width)
+{
+#ifndef DEBUG
+	return;
+#endif
+	int line_size = crv->size();
+	int i;
+	REAL x1, y1, x2, y2;
+	for (i = 0; i < line_size-1; i++) {
+		x1 = *(crv->X->begin()+i);
+		x2 = *(crv->X->begin()+i+1);
+		y1 = *(crv->Y->begin()+i);
+		y2 = *(crv->Y->begin()+i+1);
+		fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','%s','LineWidth',%d);\n",x1,x2,y1,y2,color,width);
+		fprintf(ff,"plot(%lf, %lf,'o');\n",x1,y1);
+		fprintf(ff,"plot(%lf, %lf,'o');\n",x2,y2);
+	}
+	fflush(ff);
+}
+
 }; // namespace surfit;
 

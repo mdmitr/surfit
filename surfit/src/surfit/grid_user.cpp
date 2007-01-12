@@ -86,7 +86,7 @@ bool doubleY;
 //
 /////////////////////////////////////////////////
 
-size_t one2one(size_t pos, d_grid * from, d_grid * to) {
+size_t one2one(size_t pos, const d_grid * from, const d_grid * to) {
 	size_t n, m;
 	one2two(pos, n, m, from->getCountX(), from->getCountY());
 	REAL x, y;
@@ -98,7 +98,7 @@ size_t one2one(size_t pos, d_grid * from, d_grid * to) {
 	return pos;
 };
 
-void two2two(size_t & n, size_t & m, d_grid * from, d_grid * to) {
+void two2two(size_t & n, size_t & m, const d_grid * from, const d_grid * to) {
 	REAL x, y;
 	from->getCoordNode(n, m, x, y);
 	n = to->get_i(x);
@@ -477,7 +477,7 @@ void grid_release() {
 
 };
 
-void draw_grid_matlab(FILE * ff, const d_grid * grd) 
+void draw_grid_matlab(FILE * ff, const d_grid * grd, const char * color) 
 {
 
 #ifndef DEBUG
@@ -501,7 +501,7 @@ void draw_grid_matlab(FILE * ff, const d_grid * grd)
 	for (i = 0; i < grd->getCountX()+1; i++) {
 		x_0 = grd->getCoordNodeX(i)-stepX;
 		x_1 = x_0;//grd->getCoordNodeX(i+1)+stepX;
-		fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','cyan');\n",x_0,x_1,y_0,y_1);
+		fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','%s');\n",x_0,x_1,y_0,y_1,color);
 	}
 	
 	x_0 = x0 - stepX;
@@ -509,7 +509,7 @@ void draw_grid_matlab(FILE * ff, const d_grid * grd)
 	for (i = 0; i < grd->getCountY()+1; i++) {
 		y_0 = grd->getCoordNodeY(i)-stepY;
 		y_1 = y_0;//grd->getCoordNodeY(i+1)+stepY;
-		fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','cyan');\n",x_0,x_1,y_0,y_1);
+		fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','%s');\n",x_0,x_1,y_0,y_1,color);
 	}
 	
 	//fprintf(ff,"plot(%lf, %lf,'*','color','black');\n",x0,y0);
