@@ -113,6 +113,7 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		}
 	}
 
+	matr * T = NULL;
 	matr * oD1 = NULL;
 	matr * oD2 = NULL;
 	if (angle == 0 && w == 1) {
@@ -140,8 +141,14 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, vec *& v) {
 					 method_mask_solved, method_mask_undefined, 
 					 gfaults);
 	}
+
+	if ((oD1 != NULL) && (oD2 == NULL)) 
+		T = oD1;
+	if ((oD2 != NULL) && (oD1 == NULL))
+		T = oD2;
 	
-	matr_sum *  T = new matr_sum(D1, oD1, D2, oD2);
+	if (T == NULL)
+		T = new matr_sum(D1, oD1, D2, oD2);
 
 	v = create_vec(matrix_size);
 

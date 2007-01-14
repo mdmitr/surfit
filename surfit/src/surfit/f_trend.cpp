@@ -242,7 +242,8 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	if (tr_srf == NULL)
 		return false;
 
-	size_t nn = aux_X_to-aux_X_from;
+	size_t nn = aux_X_to-aux_X_from+1;
+	size_t mm = aux_Y_to-aux_Y_from+1;
 	
 	trend_mask_solved = create_bitvec(method_mask_solved);
 	trend_mask_undefined = create_bitvec(method_mask_undefined);
@@ -341,34 +342,85 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 			}
 		}
 	}
-	
-	matrD1_rect * oD1 = new matrD1_rect(matrix_size, NN, 
-		method_stepX, method_stepY,
-		aux_X_from, aux_X_to,
-		aux_Y_from, aux_Y_to,
-		trend_mask_solved, trend_mask_undefined, 
-		gfaults); 
-	
-	matrD2_rect * oD2 = new matrD2_rect(matrix_size, NN, 
-		method_stepX, method_stepY,
-		aux_X_from, aux_X_to,
-		aux_Y_from, aux_Y_to,
-		trend_mask_solved, trend_mask_undefined, 
-		gfaults); 
 
-	matr_rect_sum *  T = new matr_rect_sum(aux_X_from, aux_X_to,
-					       aux_Y_from, aux_Y_to, NN,
-					       D1, oD1, 
-					       D2, oD2);
+	matr * T = NULL;
+	size_t points;
 
-	v = create_vec(matrix_size);
+	if ( (nn == NN)  && (mm == MM) ) {
+		matrD1 * oD1 = NULL;
+		matrD2 * oD2 = NULL;
+		
+		if (D1 > 0)
+			oD1 = new matrD1(matrix_size, NN, 
+					 method_stepX, method_stepY,
+					 trend_mask_solved, trend_mask_undefined, 
+					 gfaults); 
+		
+		if (D2 > 0)
+			oD2 = new matrD2(matrix_size, NN, 
+					 method_stepX, method_stepY,
+					 trend_mask_solved, trend_mask_undefined, 
+					 gfaults); 
 
-	size_t points = calcVecV(matrix_size, method_X, T, v, NN, MM, 
-			      trend_mask_solved,
-			      trend_mask_undefined, 
-			      aux_X_from, aux_X_to,
-			      aux_Y_from, aux_Y_to,
-			      tr_srf);
+		if ((oD1 != NULL) && (oD2 == NULL)) 
+			T = oD1;
+		if ((oD2 != NULL) && (oD1 == NULL))
+			T = oD2;
+		
+		if (T == NULL)
+			T = new matr_sum(D1, oD1, 
+					 D2, oD2);
+
+		v = create_vec(matrix_size);
+
+		points = calcVecV(matrix_size, method_X, T, v, NN, MM, 
+				  trend_mask_solved,
+				  trend_mask_undefined, 
+				  UINT_MAX, UINT_MAX,
+				  UINT_MAX, UINT_MAX,
+				  tr_srf);
+	} else {
+		
+		matrD1_rect * oD1 = NULL;
+		matrD2_rect * oD2 = NULL;
+		
+		if (D1 > 0)
+			oD1 = new matrD1_rect(matrix_size, NN, 
+					      method_stepX, method_stepY,
+					      aux_X_from, aux_X_to,
+					      aux_Y_from, aux_Y_to,
+					      trend_mask_solved, trend_mask_undefined, 
+					      gfaults); 
+		
+		if (D2 > 0)
+			oD2 = new matrD2_rect(matrix_size, NN, 
+					      method_stepX, method_stepY,
+					      aux_X_from, aux_X_to,
+					      aux_Y_from, aux_Y_to,
+					      trend_mask_solved, trend_mask_undefined, 
+					      gfaults); 
+		
+		
+		if ((oD1 != NULL) && (oD2 == NULL)) 
+			T = dynamic_cast<matrD1*>(oD1);
+		if ((oD2 != NULL) && (oD1 == NULL))
+			T = dynamic_cast<matrD2*>(oD2);
+		
+		if (T == NULL)
+			T = new matr_rect_sum(aux_X_from, aux_X_to,
+					      aux_Y_from, aux_Y_to, NN,
+					      D1, oD1, 
+					      D2, oD2);
+
+		v = create_vec(matrix_size);
+
+		points = calcVecV(matrix_size, method_X, T, v, NN, MM, 
+				  trend_mask_solved,
+				  trend_mask_undefined, 
+				  aux_X_from, aux_X_to,
+				  aux_Y_from, aux_Y_to,
+				  tr_srf);
+	}
 
 	trend_mask_solved->release();
 	trend_mask_solved = NULL;

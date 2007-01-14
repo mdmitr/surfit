@@ -232,7 +232,7 @@ REAL matrD1_rect::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) 
 		
 		p = b_begin + J - 1;
 		
-		flag = incr_ptr(p,J,mask_solved_undefined,x_from,x_to,y_from,y_to,NN,1);
+		flag = incr_ptr(p,J,mask_solved_undefined);
 		
 		if (flag) {
 			CHECK_PTR(p)
@@ -241,7 +241,7 @@ REAL matrD1_rect::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) 
 				assert(0);
 		}
 		
-		flag = incr_ptr(p,J+1,mask_solved_undefined,x_from,x_to,y_from,y_to,NN,1);
+		flag = incr_ptr(p,J+1,mask_solved_undefined);
 
 		if (flag) {
 			CHECK_PTR(p)
@@ -257,7 +257,7 @@ REAL matrD1_rect::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) 
 
 		p = b_begin + J - 1 - 1;
 
-		flag = incr_ptr(p,J-1,mask_solved_undefined,x_from,x_to,y_from,y_to,NN,1);
+		flag = incr_ptr(p,J-1,mask_solved_undefined);
 		
 		if (flag) {
 			CHECK_PTR(p)
@@ -266,7 +266,7 @@ REAL matrD1_rect::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) 
 				assert(0);
 		}
 		
-		flag = incr_ptr(p,J,mask_solved_undefined,x_from,x_to,y_from,y_to,NN,1);
+		flag = incr_ptr(p,J,mask_solved_undefined);
 		
 		if (flag) {
 			CHECK_PTR(p)
@@ -282,7 +282,7 @@ REAL matrD1_rect::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) 
 
 		p = b_begin + J - 1;
 
-		flag = incr_ptr(p,J,mask_solved_undefined,x_from,x_to,y_from,y_to,NN,1);
+		flag = incr_ptr(p,J,mask_solved_undefined);
 		
 		if (flag) {
 			CHECK_PTR(p)
@@ -291,7 +291,7 @@ REAL matrD1_rect::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) 
 				assert(0);
 		}
 		
-		flag = incr_ptr(p,J+NN,mask_solved_undefined,x_from,x_to,y_from,y_to,NN,NN);
+		flag = incr_ptr(p,J+NN,mask_solved_undefined,NN);
 		
 		if (flag) {
 			CHECK_PTR(p)
@@ -307,7 +307,7 @@ REAL matrD1_rect::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) 
 		
 		p = b_begin + J - NN - 1;
 
-		flag = incr_ptr(p,J-NN,mask_solved_undefined,x_from,x_to,y_from,y_to,NN,1);
+		flag = incr_ptr(p,J-NN,mask_solved_undefined);
 		
 		if (flag) {
 			CHECK_PTR(p)
@@ -316,7 +316,7 @@ REAL matrD1_rect::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) 
 				assert(0);
 		}
 		
-		flag = incr_ptr(p,J,mask_solved_undefined,x_from,x_to,y_from,y_to,NN,NN);
+		flag = incr_ptr(p,J,mask_solved_undefined,NN);
 		
 		if (flag) {
 			CHECK_PTR(p)
