@@ -21,6 +21,7 @@
 #include <algorithm>
 #include <vector>
 #include <errno.h>
+#include <time.h>
 
 #include "../solvers.h"
 #include "vec.h"
@@ -33,6 +34,11 @@ using namespace std;
 namespace surfit {
 
 vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_value) {
+	writelog2(LOG_MESSAGE,"cg: (%d) ", b->size());
+
+	time_t ltime_begin;
+	time( &ltime_begin );
+
 #ifdef HAVE_THREADS	
 	if (cpu == 1) {
 #endif
@@ -67,10 +73,16 @@ vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_val
 		}
 		error = error/bnrm2;
 		///////////////		
+
+		REAL from = log10(REAL(1)/error);
+		REAL to = log10(REAL(1)/tol);
+		REAL step = (to-from)/REAL(PROGRESS_POINTS+1);
+		short prp = 0;
 		
 		if (( error < tol ) || (stop_execution)) {
 			if (r)
 				r->release();
+			log_printf(" - nothing to do.\n");
 			return x;
 		}
 		
@@ -84,7 +96,7 @@ vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_val
 		error_norm = norm2(x, undef_value);
 		
 		for (iter = 1; iter <= max_it; iter++) {    // begin iteration
-			
+
 			rho_1 = rho;
 			rho = times(r,r); 
 						
@@ -121,6 +133,15 @@ vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_val
 			error = error/error_norm;
 			if (error_norm == 0)
 				error = 0;
+
+			REAL prp_pos = (log10(REAL(1)/error)-from)/step;
+			if (prp_pos > prp ) {
+				short new_prp =MIN(PROGRESS_POINTS,short(prp_pos));
+				short prp_cnt;
+				for (prp_cnt = 0; prp_cnt < new_prp-prp; prp_cnt++)
+					log_printf(".");
+				prp = (short)prp_pos;
+			}
 			
 			if (( error <= tol ) || (stop_execution) )
 				break;
@@ -142,7 +163,17 @@ vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_val
 		if (r)
 			r->release();
 		
-		writelog(LOG_MESSAGE,"cg: (%d)\terror : %12.6G iter : %d", N, error, iter);
+		time_t ltime_end;
+		time( &ltime_end );
+		
+		double sec = difftime(ltime_end,ltime_begin);
+		int minutes = (int)(sec/REAL(60));
+		sec -= minutes*60;
+		
+		if (minutes > 0)
+			log_printf(" iter : %d, error : %12.6G, %d min %G sec\n", iter, error, minutes, sec);
+		else
+			log_printf(" iter : %d, error : %12.6G, %G sec\n", iter, error, sec);
 		
 		return x;
 #ifdef HAVE_THREADS
@@ -177,11 +208,17 @@ vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_val
 			error = MAX(error, fabs((*r)(i)) );
 		}
 		error = error/bnrm2;
-		///////////////		
+		///////////////
+		
+		REAL from = log10(REAL(1)/error);
+		REAL to = log10(REAL(1)/tol);
+		REAL step = (to-from)/REAL(PROGRESS_POINTS+1);
+		short prp = 0;
 		
 		if (( error < tol ) || (stop_execution)) {
 			if (r)
 				r->release();
+			log_printf(" - nothing to do.\n");
 			return x;
 		}
 		
@@ -195,10 +232,10 @@ vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_val
 		error_norm = norm2(x, undef_value);
 		
 		for (iter = 1; iter <= max_it; iter++) {    // begin iteration
-			
+		
 			rho_1 = rho;
-			rho = times(r,r); 
-			//rho = threaded_times(r,r);
+			//rho = times(r,r); 
+			rho = threaded_times(r,r);
 			
 			if ( iter > 1 ) {                        // direction vector
 				beta = rho / rho_1;
@@ -233,6 +270,15 @@ vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_val
 			if (error_norm == 0)
 				error = 0;
 			
+			REAL prp_pos = (log10(REAL(1)/error)-from)/step;
+			if (prp_pos > prp ) {
+				short new_prp =MIN(PROGRESS_POINTS,short(prp_pos));
+				short prp_cnt;
+				for (prp_cnt = 0; prp_cnt < new_prp-prp; prp_cnt++)
+					log_printf(".");
+				prp = (short)prp_pos;
+			}
+			
 			if (( error <= tol ) || (stop_execution) )
 				break;
 			
@@ -251,7 +297,17 @@ vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_val
 		if (r)
 			r->release();
 		
-		writelog(LOG_MESSAGE,"cg: (%d)\terror : %12.6G iter : %d",x->size(), error, iter);
+		time_t ltime_end;
+		time( &ltime_end );
+		
+		double sec = difftime(ltime_end,ltime_begin);
+		int minutes = (int)(sec/REAL(60));
+		sec -= minutes*60;
+
+		if (minutes > 0)
+			log_printf(" iter : %d, error : %12.6G, %d min %G sec\n", iter, error, minutes, sec);
+		else
+			log_printf(" iter : %d, error : %12.6G, %G sec\n", iter, error, sec);
 		
 		return x;
 

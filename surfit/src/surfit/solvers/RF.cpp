@@ -55,6 +55,8 @@ REAL make_iter(matr * A, const vec * B, REAL tau, vec * x_0, vec * x_1, REAL err
 
 vec * RF(matr * A, const vec * b, int max_it, REAL tol, vec * X, REAL undef_value) {
 	
+	writelog2(LOG_MESSAGE,"rf: (%d) ",b->size());
+
 	vec * x_0 = NULL;
 	if (!X) {
 		x_0 = create_vec(b->size());
@@ -79,9 +81,29 @@ vec * RF(matr * A, const vec * b, int max_it, REAL tol, vec * X, REAL undef_valu
 		
 	REAL error_norm = norm2(X, undef_value);
 	REAL err;
+	REAL from, to, step;
+	short prp = 0;
+	
 	for (iter = 1; iter <= max_it; iter++)  {  // begin iteration
 
 		err = make_iter(A,b,tau,x_0,x_1,error_norm);
+		
+		if (iter == 1) {
+			from = log10(REAL(1)/err);
+			to = log10(REAL(1)/tol);
+			step = (to-from)/REAL(PROGRESS_POINTS+1);
+	
+		}
+
+		REAL prp_pos = (log10(REAL(1)/err)-from)/step;
+		if (prp_pos > prp ) {
+			short new_prp =MIN(PROGRESS_POINTS,short(prp_pos));
+			short prp_cnt;
+			for (prp_cnt = 0; prp_cnt < new_prp-prp; prp_cnt++)
+				log_printf(".");
+			prp = (short)prp_pos;
+		}
+
 		if ( (err < tol) || (stop_execution == 1) )
 			break;
 		
@@ -92,7 +114,7 @@ vec * RF(matr * A, const vec * b, int max_it, REAL tol, vec * X, REAL undef_valu
 			x_0->release();
 	}
 	
-	writelog(LOG_MESSAGE,"ri: (%d)\terror : %lf iter : %d",x_1->size(), err, iter);
+	log_printf(" error : %lf iter : %d\n", err, iter);
 
 	return x_1;
 };

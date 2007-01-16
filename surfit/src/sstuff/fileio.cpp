@@ -71,6 +71,35 @@ struct fileio_garbage {
 
 fileio_garbage garb2;
 
+void log_printf(const char *tmplt, ...) {
+	
+	Tcl_Channel out;
+	if (interp) {
+		out = Tcl_GetStdChannel(TCL_STDOUT);
+	}
+
+	va_list ap;
+	va_start (ap, tmplt);
+	// console output
+
+	if (interp) {
+
+		char buf[2048];
+		int written = vsprintf(buf,tmplt, ap);
+		if (written > 2048) 
+			writelog(LOG_WARNING,"Too large error message. ");
+		Tcl_WriteChars(out, buf, written);
+		Tcl_Flush(out);
+	}
+
+	if ( (logfile) && (ferror(logfile) == 0) ) 
+		vfprintf (logfile, tmplt, ap);
+	
+	va_end (ap);
+	if ( (logfile) && (ferror(logfile) == 0) ) fflush(logfile);
+
+};
+
 void writelog (int errlevel, const char *tmplt, ...) {
 	if (errlevel > loglevel) return;
 
@@ -120,6 +149,7 @@ void writelog (int errlevel, const char *tmplt, ...) {
 			writelog(LOG_WARNING,"Too large error message. ");
 		Tcl_WriteChars(out, buf, written);
 		Tcl_WriteChars(out, &enter, 1);
+		Tcl_Flush(out);
 
 	}
 
@@ -147,6 +177,91 @@ void writelog (int errlevel, const char *tmplt, ...) {
 		};
 		vfprintf (logfile, tmplt, ap);
 		fprintf (logfile,"\n");
+	}
+
+	va_end (ap);
+	if ( (logfile) && (ferror(logfile) == 0) ) fflush(logfile);
+
+	if (stop_on_error == 1) {
+		if (errlevel == LOG_ERROR) 
+			throw "Execution stopped";
+	}
+};
+
+void writelog2 (int errlevel, const char *tmplt, ...) {
+	if (errlevel > loglevel) return;
+
+	Tcl_Channel out;
+	if (interp) {
+		out = Tcl_GetStdChannel(TCL_STDOUT);
+	}
+	
+	struct tm * newtime;
+	time_t aclock;
+
+
+	time( &aclock );   // Get time in seconds
+	newtime = localtime( &aclock );   // Convert time to struct tm form 
+
+	/* Print local time as a string */
+	char tmpbuf[128];
+	strftime(tmpbuf, 128, "%d/%m/%y %H:%M:%S : ", newtime);
+	Tcl_printf("%s", tmpbuf);
+	
+	va_list ap;
+	va_start (ap, tmplt);
+	// console output
+
+	if (interp) {
+
+		switch (errlevel) {
+
+		case LOG_MESSAGE:
+			break;
+		case LOG_ERROR: 
+		case LOG_ERROR_TCL:
+			Tcl_WriteChars(out, error, strlen(error));
+			break;
+		case LOG_WARNING:
+				Tcl_WriteChars(out, warning, strlen(warning));
+			break;
+		case LOG_DEBUG:
+				Tcl_WriteChars(out, debug, strlen(debug));
+			break;
+		};
+
+		char buf[2048];
+		int written = vsprintf(buf,tmplt, ap);
+		if (written > 2048) 
+			writelog(LOG_WARNING,"Too large error message. ");
+		Tcl_WriteChars(out, buf, written);
+		Tcl_Flush(out);
+
+	}
+
+	if ( (logfile) && (ferror(logfile) == 0) ) {
+		
+		time_t ltime;
+		time( &ltime );
+		char * stime = ctime( &ltime );
+		char * space = " :  ";
+		
+		fwrite(tmpbuf, 1, strlen(tmpbuf), logfile);
+		switch (errlevel) {
+		case LOG_MESSAGE:
+			break;
+		case LOG_ERROR:
+		case LOG_ERROR_TCL:
+			fprintf(logfile,"%s",error);
+			break;
+		case LOG_WARNING:
+			fprintf(logfile,"%s",warning);
+			break;
+		case LOG_DEBUG:
+			fprintf(logfile,"%s",debug);
+			break;
+		};
+		vfprintf (logfile, tmplt, ap);
 	}
 
 	va_end (ap);

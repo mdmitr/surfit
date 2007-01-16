@@ -56,12 +56,18 @@ vec * SSOR(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_v
 	int i;
 
 	int n = b->size();
+
+	writelog2(LOG_MESSAGE,"ssor: (%d) ",n);
+
 	REAL a_ii;
 
 	vec * x_1 = create_vec(*x);
 	vec * x_12 = create_vec(*x);
 	vec * r = create_vec(x->size(), 0, 0); // don't fill this vector;
-	
+
+	REAL from, to, step;
+	short prp = 0;
+		
 	for (iter = 0; iter < max_it; iter++) {
 
 		*r = *x_1;
@@ -110,6 +116,23 @@ vec * SSOR(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_v
 			error = MAX(error, err);
 		}
 		error /= error_norm;
+
+		if (iter == 0) {
+			from = log10(REAL(1)/error);
+			to = log10(REAL(1)/tol);
+			step = (to-from)/REAL(PROGRESS_POINTS+1);
+	
+		}
+
+		REAL prp_pos = (log10(REAL(1)/error)-from)/step;
+		if (prp_pos > prp ) {
+			short new_prp =MIN(PROGRESS_POINTS,short(prp_pos));
+			short prp_cnt;
+			for (prp_cnt = 0; prp_cnt < new_prp-prp; prp_cnt++)
+				log_printf(".");
+			prp = (short)prp_pos;
+		}
+
 		if ( (error < tol) || (stop_execution == 1) )
 			break;
 		
@@ -124,7 +147,7 @@ vec * SSOR(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_v
 	if (r)
 		r->release();
 	
-	writelog(LOG_MESSAGE,"ssor: (%d)\terror : %12.6G iter : %d",x->size(), error, iter);
+	log_printf(" error : %12.6G iter : %d\n", error, iter);
 
 	return x;
 	

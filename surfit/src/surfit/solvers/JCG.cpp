@@ -40,6 +40,8 @@ vec * JCG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_va
 	int i;
 	int N = b->size();
 	
+	writelog2(LOG_MESSAGE,"jcg: (%d) ",N);
+
 	REAL bnrm2 = norm2( b );
 	if  ( bnrm2 == REAL(0) )
 		bnrm2 = REAL(1); 
@@ -86,7 +88,10 @@ vec * JCG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_va
 	REAL rho_1, rho = REAL(0), beta;
 
 	error_norm = norm2(x, undef_value);
-	
+
+	REAL from, to, step;
+	short prp = 0;
+		
 	for (iter = 1; iter <= max_it; iter++) {    // begin iteration
 
 		// update direction vector
@@ -150,6 +155,22 @@ vec * JCG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_va
 		error = error/error_norm;
 		if (error_norm == 0)
 			error = 0;
+
+		if (iter == 1) {
+			from = log10(REAL(1)/error);
+			to = log10(REAL(1)/tol);
+			step = (to-from)/REAL(PROGRESS_POINTS+1);
+	
+		}
+
+		REAL prp_pos = (log10(REAL(1)/error)-from)/step;
+		if (prp_pos > prp ) {
+			short new_prp =MIN(PROGRESS_POINTS,short(prp_pos));
+			short prp_cnt;
+			for (prp_cnt = 0; prp_cnt < new_prp-prp; prp_cnt++)
+				log_printf(".");
+			prp = (short)prp_pos;
+		}
 		
 		if (( error <= tol ) || (stop_execution) )
 			break;
@@ -182,7 +203,7 @@ vec * JCG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_va
 	if (q)
 		q->release();
 	
-	writelog(LOG_MESSAGE,"jcg: (%d)\terror : %12.6G iter : %d",x->size(), error, iter);
+	log_printf(" error : %12.6G iter : %d\n",error, iter);
 	
 	return x;
 };

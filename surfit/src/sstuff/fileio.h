@@ -24,6 +24,7 @@
 
 namespace surfit {
 
+#define PROGRESS_POINTS 7
 #define LOG_ERROR_TCL 0 
 #define LOG_MESSAGE 1
 #define LOG_ERROR 2
@@ -40,6 +41,23 @@ SSTUFF_EXPORT
     \param tmplt template
 */
 void writelog (int errlevel, const char *tmplt, ...);
+
+SSTUFF_EXPORT
+/*! \ingroup internal
+    \fn void writelog2 (int errlevel, const char *tmplt, ...);
+    \brief logfile's "printf" function. Don't prints "\n" at the end of message
+    \param errlevel errorlevel ( 0 - messages, 1 - errors, 2 - warnings, 3 - debug )
+    \param tmplt template
+*/
+void writelog2 (int errlevel, const char *tmplt, ...);
+
+SSTUFF_EXPORT
+/*! \ingroup internal
+    \fn void log_printf (const char *tmplt, ...);
+    \brief logfile's "printf" function
+    \param tmplt template
+*/
+void log_printf (const char *tmplt, ...);
 
 SSTUFF_EXPORT
 /*! \ingroup internal
@@ -72,7 +90,7 @@ int log_clear();
 
 /*! \ingroup tcl_log
     \fn void putlog(const char * str);
-    \brief writes string to logfile
+    \brief writes LOG_MESSAGE string to logfile 
 */
 SSTUFF_EXPORT
 void putlog(const char * str);

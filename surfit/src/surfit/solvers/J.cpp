@@ -50,6 +50,8 @@ vec * J(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_valu
 		X = NULL;
 	}
 
+	writelog2(LOG_MESSAGE,"jacobi: (%d) ",x->size());
+
 	REAL error = FLT_MAX;
 	REAL error_norm = bnrm2;	
 	REAL sigma = 0;
@@ -99,7 +101,7 @@ vec * J(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_valu
 	if (x_1)
 		x_1->release();
 	
-	writelog(LOG_MESSAGE,"jacobi: (%d)\terror : %12.6G iter : %d",x->size(), error, iter);
+	log_printf("error : %12.6G iter : %d\n", error, iter);
 
 	return x;
 	
