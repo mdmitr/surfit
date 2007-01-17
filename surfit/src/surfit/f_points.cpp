@@ -180,7 +180,6 @@ bool f_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	}
 
 	matr_eye * T = new matr_eye(1, matrix_size, mask, method_mask_solved, method_mask_undefined);
-	mask = NULL;
 	matrix = T;
 
 	bool solvable = (points > 0);

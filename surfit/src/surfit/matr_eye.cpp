@@ -26,17 +26,20 @@
 namespace surfit {
 
 matr_eye::matr_eye(REAL ival, size_t iN,
-		   const bitvec * imask,
+		   bitvec *& imask,
 		   const bitvec * imask_solved,
 		   const bitvec * imask_undefined) {
 	val = ival;
 	N = iN;
 	mask = imask;
+	imask = NULL;
 	mask_solved = imask_solved;
 	mask_undefined = imask_undefined;
 };
 
 matr_eye::~matr_eye() {
+	if (mask)
+		mask->release();
 };
 
 REAL matr_eye::norm() const {

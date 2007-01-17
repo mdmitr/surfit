@@ -935,7 +935,7 @@ void flood_fill(d_grid * grd,
 
 	delete flood_points;
 
-	///*
+	/*
 #ifdef DEBUG
 	FILE * ff = fopen("c:\\ffill.m","w+");
 	fprintf(ff,"hold on\n");
@@ -946,7 +946,7 @@ void flood_fill(d_grid * grd,
 	
 	fclose(ff);
 #endif
-	//*/
+	*/
 		
 	return;
 };

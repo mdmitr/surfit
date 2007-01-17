@@ -212,7 +212,7 @@ void draw_brez_matlab(FILE * ff, const std::vector<size_t> * nns, const d_grid *
 	{
 		size_t i;
 		size_t x, y, pos;
-		char text[10];
+		//char text[10];
 		for (i = 0; i < nns->size()-1; i++) {
 			pos = (*nns)[i];
 			one2two(pos,x,y,NN+1,MM+1);
