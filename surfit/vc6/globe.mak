@@ -25,6 +25,10 @@ NULL=
 NULL=nul
 !ENDIF 
 
+CPP=cl.exe
+MTL=midl.exe
+RSC=rc.exe
+
 !IF  "$(CFG)" == "globe - Win32 Release"
 
 OUTDIR=.\../Release
@@ -85,42 +89,8 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP=cl.exe
-CPP_PROJ=/nologo /MT /W3 /GR /GX /O2 /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../src/surfit" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "GLOBE_EXPORTS" /Fr"$(INTDIR)\\" /Fp"$(INTDIR)\globe.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
-
-.c{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.c{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-MTL=midl.exe
+CPP_PROJ=/nologo /MT /W3 /GR /GX /O2 /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../src/surfit" /I "C:\Tcl\include\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fp"$(INTDIR)\globe.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
-RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\globe.bsc" 
 BSC32_SBRS= \
@@ -145,7 +115,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=tcl83.lib zdll.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libglobe.pdb" /machine:I386 /out:"../bin/libglobe.dll" /implib:"../bin/libglobe.lib" 
+LINK32_FLAGS=tcl83.lib zdll.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libglobe.pdb" /machine:I386 /out:"../bin/libglobe.dll" /implib:"../bin/libglobe.lib" /libpath:"C:\Tcl\lib" /libpath:"..\..\libs\zlib123-dll\lib\\" 
 LINK32_OBJS= \
 	"$(INTDIR)\dem.obj" \
 	"$(INTDIR)\dem_internal.obj" \
@@ -232,8 +202,57 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP=cl.exe
-CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../src/surfit" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "GLOBE_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\globe.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../src/surfit" /I "C:\Tcl\include\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\globe.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
+BSC32=bscmake.exe
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\globe.bsc" 
+BSC32_SBRS= \
+	"$(INTDIR)\dem.sbr" \
+	"$(INTDIR)\dem_internal.sbr" \
+	"$(INTDIR)\dem_tcl.sbr" \
+	"$(INTDIR)\globe_surf_internal.sbr" \
+	"$(INTDIR)\globe_surf_tcl.sbr" \
+	"$(INTDIR)\dems_tcl.sbr" \
+	"$(INTDIR)\f_dem.sbr" \
+	"$(INTDIR)\ioapi.sbr" \
+	"$(INTDIR)\unzip.sbr" \
+	"$(INTDIR)\globe.sbr" \
+	"$(INTDIR)\globe_data_manager.sbr" \
+	"$(INTDIR)\globe_variables.sbr" \
+	"$(INTDIR)\globe_wrap.sbr" \
+	"$(INTDIR)\shortmrf.sbr"
+
+"$(OUTDIR)\globe.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
+    $(BSC32) @<<
+  $(BSC32_FLAGS) $(BSC32_SBRS)
+<<
+
+LINK32=link.exe
+LINK32_FLAGS=tcl83d.lib zdll.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\libglobe.pdb" /debug /machine:I386 /out:"../bin/libglobe.dll" /implib:"../bin/libglobe.lib" /pdbtype:sept /libpath:"..\..\libs\ZLIB123-DLL\LIB" /libpath:"..\..\LIBS\TCL8.3.5\WIN\DEBUG" 
+LINK32_OBJS= \
+	"$(INTDIR)\dem.obj" \
+	"$(INTDIR)\dem_internal.obj" \
+	"$(INTDIR)\dem_tcl.obj" \
+	"$(INTDIR)\globe_surf_internal.obj" \
+	"$(INTDIR)\globe_surf_tcl.obj" \
+	"$(INTDIR)\dems_tcl.obj" \
+	"$(INTDIR)\f_dem.obj" \
+	"$(INTDIR)\ioapi.obj" \
+	"$(INTDIR)\unzip.obj" \
+	"$(INTDIR)\globe.obj" \
+	"$(INTDIR)\globe_data_manager.obj" \
+	"$(INTDIR)\globe_variables.obj" \
+	"$(INTDIR)\globe_wrap.obj" \
+	"$(INTDIR)\shortmrf.obj" \
+	"..\bin\libsurfit.lib" \
+	"..\bin\libsstuff.lib"
+
+"..\bin\libglobe.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ENDIF 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -264,59 +283,6 @@ CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstu
    $(CPP) @<<
    $(CPP_PROJ) $< 
 <<
-
-MTL=midl.exe
-MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
-RSC=rc.exe
-BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\globe.bsc" 
-BSC32_SBRS= \
-	"$(INTDIR)\dem.sbr" \
-	"$(INTDIR)\dem_internal.sbr" \
-	"$(INTDIR)\dem_tcl.sbr" \
-	"$(INTDIR)\globe_surf_internal.sbr" \
-	"$(INTDIR)\globe_surf_tcl.sbr" \
-	"$(INTDIR)\dems_tcl.sbr" \
-	"$(INTDIR)\f_dem.sbr" \
-	"$(INTDIR)\ioapi.sbr" \
-	"$(INTDIR)\unzip.sbr" \
-	"$(INTDIR)\globe.sbr" \
-	"$(INTDIR)\globe_data_manager.sbr" \
-	"$(INTDIR)\globe_variables.sbr" \
-	"$(INTDIR)\globe_wrap.sbr" \
-	"$(INTDIR)\shortmrf.sbr"
-
-"$(OUTDIR)\globe.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
-    $(BSC32) @<<
-  $(BSC32_FLAGS) $(BSC32_SBRS)
-<<
-
-LINK32=link.exe
-LINK32_FLAGS=tcl83d.lib zdll.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\libglobe.pdb" /debug /machine:I386 /out:"../bin/libglobe.dll" /implib:"../bin/libglobe.lib" /pdbtype:sept 
-LINK32_OBJS= \
-	"$(INTDIR)\dem.obj" \
-	"$(INTDIR)\dem_internal.obj" \
-	"$(INTDIR)\dem_tcl.obj" \
-	"$(INTDIR)\globe_surf_internal.obj" \
-	"$(INTDIR)\globe_surf_tcl.obj" \
-	"$(INTDIR)\dems_tcl.obj" \
-	"$(INTDIR)\f_dem.obj" \
-	"$(INTDIR)\ioapi.obj" \
-	"$(INTDIR)\unzip.obj" \
-	"$(INTDIR)\globe.obj" \
-	"$(INTDIR)\globe_data_manager.obj" \
-	"$(INTDIR)\globe_variables.obj" \
-	"$(INTDIR)\globe_wrap.obj" \
-	"$(INTDIR)\shortmrf.obj" \
-	"..\bin\libsurfit.lib" \
-	"..\bin\libsstuff.lib"
-
-"..\bin\libglobe.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
-    $(LINK32) @<<
-  $(LINK32_FLAGS) $(LINK32_OBJS)
-<<
-
-!ENDIF 
 
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
@@ -405,7 +371,7 @@ SOURCE=.\..\src\globe\globe_wrap.cxx
 
 !IF  "$(CFG)" == "globe - Win32 Release"
 
-CPP_SWITCHES=/nologo /MT /W3 /GR /GX /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../src/surfit" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "GLOBE_EXPORTS" /Fr"$(INTDIR)\\" /Fp"$(INTDIR)\globe.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /MT /W3 /GR /GX /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../src/surfit" /I "C:\Tcl\include\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fp"$(INTDIR)\globe.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\globe_wrap.obj"	"$(INTDIR)\globe_wrap.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -415,7 +381,7 @@ CPP_SWITCHES=/nologo /MT /W3 /GR /GX /Ob2 /I "../src/sstuff" /I "../src/sstuff/p
 
 !ELSEIF  "$(CFG)" == "globe - Win32 Debug"
 
-CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../src/surfit" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "GLOBE_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\globe.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../src/surfit" /I "C:\Tcl\include\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\globe.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\globe_wrap.obj"	"$(INTDIR)\globe_wrap.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<

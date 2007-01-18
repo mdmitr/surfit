@@ -1,3 +1,4 @@
+set PATH=%PATH%;..\..\..\libs\swig
 cd ..
 cd src
 cd surfit_io
