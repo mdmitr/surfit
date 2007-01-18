@@ -60,9 +60,9 @@ matrD2_rect::matrD2_rect(size_t iN, size_t iNN,
 	matrMM = y_to - y_from + 1;
 	hx4 = ihx*ihx*ihx*ihx;
 	hy4 = ihy*ihy*ihy*ihy;
-	_hx4 = REAL(1)/hx4;
-	_hy4 = REAL(1)/hy4;
-	_hxy4 = REAL(2)/(ihx*ihx*ihy*ihy);
+	_hx4 = (ihy*ihy)/(ihx*ihx);
+	_hy4 = (ihx*ihx)/(ihy*ihy);
+	_hxy4 = 1;
 	make_mask(imask_solved, imask_undefined);
 };
 

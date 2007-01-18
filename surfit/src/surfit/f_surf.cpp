@@ -156,7 +156,9 @@ bool f_surf::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		}
 	}
 
+	bitvec * mask_copy = create_bitvec(mask);
 	matr_eye * T = new matr_eye(1, NN*MM, mask, method_mask_solved, method_mask_undefined);
+	mask = mask_copy;
 	matrix = T;
 
 	bool solvable = (points > 0);
