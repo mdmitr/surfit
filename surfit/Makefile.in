@@ -66,12 +66,13 @@ host_triplet = @host@
 @HAVE_ZLIB_INSTALLED_TRUE@	src/globe/minizip/ioapi.h \
 @HAVE_ZLIB_INSTALLED_TRUE@	src/globe/minizip/unzip.h
 @HAVE_ZLIB_INSTALLED_TRUE@am__append_9 = -lz
-DIST_COMMON = $(am__configure_deps) $(am__libsstuff_la_HEADERS_DIST) \
-	$(libfreeflow_la_HEADERS) $(libglobe_la_HEADERS) \
-	$(libsurfit_io_la_HEADERS) $(libsurfit_la_HEADERS) \
-	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
-	$(srcdir)/config.h.in $(top_srcdir)/configure COPYING INSTALL \
-	config.guess config.sub depcomp install-sh ltmain.sh missing
+DIST_COMMON = README $(am__configure_deps) \
+	$(am__libsstuff_la_HEADERS_DIST) $(libfreeflow_la_HEADERS) \
+	$(libglobe_la_HEADERS) $(libsurfit_io_la_HEADERS) \
+	$(libsurfit_la_HEADERS) $(srcdir)/Makefile.am \
+	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
+	$(top_srcdir)/configure COPYING INSTALL config.guess \
+	config.sub depcomp install-sh ltmain.sh missing
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.in
