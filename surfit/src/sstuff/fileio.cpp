@@ -399,7 +399,7 @@ int calc_columns(const char * Str, int readed, char * seps) {
 
 char * get_name(const char * filename) {
 
-	char * posLastDot = strrchr(filename, '.');
+	const char * posLastDot = strrchr(filename, '.');
 
 	// check whether this dot occurs at the very beginning of a path component
 	if (posLastDot != NULL) {
@@ -436,7 +436,7 @@ char * get_name(const char * filename) {
 char * get_full_ext(const char * filename) {
 
 	const char * search_from = filename;
-	char * posFirstDot = NULL;
+	const char * posFirstDot = NULL;
 	int len = strlen(filename);
 	
 	while (!posFirstDot) {
@@ -474,7 +474,7 @@ char * get_full_ext(const char * filename) {
 };
 
 char * get_ext(const char * filename) {
-	char * posLastDot = strrchr(filename, '.');
+	const char * posLastDot = strrchr(filename, '.');
 
 	// check whether this dot occurs at the very beginning of a path component
 	if (posLastDot != NULL) {

@@ -162,6 +162,7 @@ bool f_mask::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	if (points > 0) {
 		matr_eye * T = new matr_eye(1, NN*MM, mask, method_mask_solved, method_mask_undefined);
 		matrix = T;
+		mask = NULL;
 	} else {
 		if (v)
 			v->release();
@@ -171,7 +172,8 @@ bool f_mask::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	return true;
 };
 
-void f_mask::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+void f_mask::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
 	
 };
 

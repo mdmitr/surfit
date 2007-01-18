@@ -37,7 +37,7 @@ bool ptr_less(int * it1, int * it2)
 };
 
 inline
-bool ptr_size_t_less(std::vector<size_t>::iterator it1, std::vector<size_t>::iterator it2) 
+bool ptr_size_t_less(size_t * it1, size_t * it2) 
 {
 	return *it1 < *it2;
 };

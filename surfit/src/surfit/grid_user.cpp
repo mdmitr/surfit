@@ -229,8 +229,8 @@ d_grid * create_last_grd() {
 	double log2 = log(double(2));
 	size_t last_basis_cntX = (size_t)ceil(log((REAL)grid_nodesX)/log2);
 	size_t last_basis_cntY = (size_t)ceil(log((REAL)grid_nodesY)/log2);
-	last_basis_cntX = (size_t)pow(2, last_basis_cntX);
-	last_basis_cntY = (size_t)pow(2, last_basis_cntY);
+	last_basis_cntX = (size_t)pow(2., (int)last_basis_cntX);
+	last_basis_cntY = (size_t)pow(2., (int)last_basis_cntY);
 
 	REAL grd_startX = surfit_grid->startX-surfit_grid->stepX/REAL(2);
 	REAL grd_endX = surfit_grid->endX+surfit_grid->stepX/REAL(2);
@@ -484,7 +484,7 @@ void draw_grid_matlab(FILE * ff, const d_grid * grd, const char * color)
 	return;
 #endif
 
-	int i;
+	size_t i;
 	REAL x0, y0;
 	grd->getCoordNode(0,0,x0,y0);
 	REAL xN, yM;

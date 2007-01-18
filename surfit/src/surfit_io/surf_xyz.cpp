@@ -108,7 +108,7 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
 	REAL maxx = -FLT_MAX;
 	REAL miny = FLT_MAX;
 	REAL maxy = -FLT_MAX;
-	int nx = 0, ny = 0;
+	size_t nx = 0, ny = 0;
 	int div;
 	size_t I, J;
 
@@ -250,7 +250,7 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
 		if (stepX != 0)
 			break;
 	}
-	nx = (int)floor( (maxx-minx)/stepX + 0.5 ) + 1;
+	nx = (size_t)floor( (maxx-minx)/stepX + 0.5 ) + 1;
 	stepX = (maxx-minx)/(nx - 1);
 
 	if (nx == 0)
@@ -274,7 +274,7 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
 		if (stepY != 0)
 			break;
 	}
-	ny = (int)floor( (maxy-miny)/stepY + 0.5 ) + 1;
+	ny = (size_t)floor( (maxy-miny)/stepY + 0.5 ) + 1;
 	stepY = (maxy-miny)/(ny - 1);
 		
 	if (ny == 0)

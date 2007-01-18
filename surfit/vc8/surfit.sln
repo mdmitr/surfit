@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freeflow", "freeflow.vcproj", "{57BE380E-197C-4C24-853D-4275FE5BFD5F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2DC68EEB-6F46-449A-BE60-E087D12769BB} = {2DC68EEB-6F46-449A-BE60-E087D12769BB}
+		{485A231B-664E-4CC9-B911-2CED2648CB95} = {485A231B-664E-4CC9-B911-2CED2648CB95}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "globe", "globe.vcproj", "{9DB78328-F316-48CA-88C6-23627F7648FC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2DC68EEB-6F46-449A-BE60-E087D12769BB} = {2DC68EEB-6F46-449A-BE60-E087D12769BB}
+		{485A231B-664E-4CC9-B911-2CED2648CB95} = {485A231B-664E-4CC9-B911-2CED2648CB95}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sstuff", "sstuff.vcproj", "{2DC68EEB-6F46-449A-BE60-E087D12769BB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "surfit", "surfit.vcproj", "{485A231B-664E-4CC9-B911-2CED2648CB95}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2DC68EEB-6F46-449A-BE60-E087D12769BB} = {2DC68EEB-6F46-449A-BE60-E087D12769BB}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "surfit_io", "surfit_io.vcproj", "{6F81A636-64D3-4D66-9201-E5C86CAB342F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{485A231B-664E-4CC9-B911-2CED2648CB95} = {485A231B-664E-4CC9-B911-2CED2648CB95}
+		{2DC68EEB-6F46-449A-BE60-E087D12769BB} = {2DC68EEB-6F46-449A-BE60-E087D12769BB}
+		{9DB78328-F316-48CA-88C6-23627F7648FC} = {9DB78328-F316-48CA-88C6-23627F7648FC}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57BE380E-197C-4C24-853D-4275FE5BFD5F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{57BE380E-197C-4C24-853D-4275FE5BFD5F}.Debug|Win32.Build.0 = Debug|Win32
+		{57BE380E-197C-4C24-853D-4275FE5BFD5F}.Release|Win32.ActiveCfg = Release|Win32
+		{57BE380E-197C-4C24-853D-4275FE5BFD5F}.Release|Win32.Build.0 = Release|Win32
+		{9DB78328-F316-48CA-88C6-23627F7648FC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9DB78328-F316-48CA-88C6-23627F7648FC}.Debug|Win32.Build.0 = Debug|Win32
+		{9DB78328-F316-48CA-88C6-23627F7648FC}.Release|Win32.ActiveCfg = Release|Win32
+		{9DB78328-F316-48CA-88C6-23627F7648FC}.Release|Win32.Build.0 = Release|Win32
+		{2DC68EEB-6F46-449A-BE60-E087D12769BB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2DC68EEB-6F46-449A-BE60-E087D12769BB}.Debug|Win32.Build.0 = Debug|Win32
+		{2DC68EEB-6F46-449A-BE60-E087D12769BB}.Release|Win32.ActiveCfg = Release|Win32
+		{2DC68EEB-6F46-449A-BE60-E087D12769BB}.Release|Win32.Build.0 = Release|Win32
+		{485A231B-664E-4CC9-B911-2CED2648CB95}.Debug|Win32.ActiveCfg = Debug|Win32
+		{485A231B-664E-4CC9-B911-2CED2648CB95}.Debug|Win32.Build.0 = Debug|Win32
+		{485A231B-664E-4CC9-B911-2CED2648CB95}.Release|Win32.ActiveCfg = Release|Win32
+		{485A231B-664E-4CC9-B911-2CED2648CB95}.Release|Win32.Build.0 = Release|Win32
+		{6F81A636-64D3-4D66-9201-E5C86CAB342F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6F81A636-64D3-4D66-9201-E5C86CAB342F}.Debug|Win32.Build.0 = Debug|Win32
+		{6F81A636-64D3-4D66-9201-E5C86CAB342F}.Release|Win32.ActiveCfg = Release|Win32
+		{6F81A636-64D3-4D66-9201-E5C86CAB342F}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

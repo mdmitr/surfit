@@ -91,12 +91,12 @@ public:
 
 	private:
 		size_t pos, NN, MM;
-		std::vector<size_t>::iterator * find_from_first;
-		std::vector<size_t>::iterator * find_to_first;
-		std::vector<size_t>::iterator * find_from_second;
-		std::vector<size_t>::iterator * find_to_second;
-		std::vector<size_t>::iterator * ptr;
-		std::vector<size_t>::iterator it;
+		size_t ** find_from_first;
+		size_t ** find_to_first;
+		size_t ** find_from_second;
+		size_t ** find_to_second;
+		size_t ** ptr;
+		size_t * it;
 		const std::vector<size_t> * first;
 		const std::vector<size_t> * second;
 	};
@@ -124,13 +124,13 @@ protected:
 	size_t MM;
 
 	//! pointer to begin of array of sorted first cell-numbers 
-	std::vector<size_t>::iterator * sort_by_first_begin;
+	size_t ** sort_by_first_begin;
 	//! pointer to end of array of sorted first cell-numbers 
-	std::vector<size_t>::iterator * sort_by_first_end;
+	size_t ** sort_by_first_end;
 	//! pointer to begin of array of sorted second cell-numbers 
-	std::vector<size_t>::iterator * sort_by_second_begin;
+	size_t ** sort_by_second_begin;
 	//! pointer to end of array of sorted second cell-numbers 
-	std::vector<size_t>::iterator * sort_by_second_end;
+	size_t ** sort_by_second_end;
 
 	//! pointer to array of first cell-numbers 
 	std::vector<size_t> * first;

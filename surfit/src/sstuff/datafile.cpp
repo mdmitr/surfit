@@ -73,14 +73,14 @@ datafile::datafile(const char * filename, int imode) {
 
 	file = -1;
 	File = NULL;
-	
+
 	datafile_filename = strdup(filename);
 
 	extern int datafile_mode;
 
 	// write mode
 	if (imode == DF_MODE_WRITE) {
-		
+
 		if (datafile_mode == 0) {
 #if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 			file = open(filename, O_BINARY|O_RDWR);
@@ -88,7 +88,7 @@ datafile::datafile(const char * filename, int imode) {
 			file = open(filename, O_RDWR);
 #endif
 		}
-		
+
 		if (datafile_mode == 1) {
 #if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 			file = open(filename, O_BINARY|O_RDWR|O_TRUNC|O_APPEND);
@@ -96,7 +96,7 @@ datafile::datafile(const char * filename, int imode) {
 			file = open(filename, O_RDWR|O_TRUNC|O_APPEND);
 #endif
 		}
-		
+
 		if (file == -1) {
 #if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 			file = open(filename, O_BINARY|O_CREAT|O_APPEND|O_RDWR, S_IREAD|S_IWRITE);
@@ -104,22 +104,24 @@ datafile::datafile(const char * filename, int imode) {
 			file = open(filename, O_CREAT|O_APPEND|O_RDWR, S_IREAD|S_IWRITE);
 #endif
 		}
-		
+
 		if (file == -1) 
 			writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
+
+
+		if (!checkHeader(filename)) {
+			writelog(LOG_ERROR, "Can't write data to file %s",filename,strerror( errno ));
+			if (file != -1) {
+				close(file);
+				file = -1;
+			}
+			if (File) {
+				fclose(File);
+				File = NULL;
+			}
+		};
+
 	} 
-	
-	if (!checkHeader(filename)) {
-		writelog(LOG_ERROR, "Can't write data to file %s",filename,strerror( errno ));
-		if (file != -1) {
-			close(file);
-			file = -1;
-		}
-		if (File) {
-			fclose(File);
-			File = NULL;
-		}
-	};
 
 	// read mode
 	if (imode == DF_MODE_READ) {

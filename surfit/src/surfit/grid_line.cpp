@@ -84,21 +84,21 @@ void grid_line::sort() {
 	free(sort_by_first_begin);
 	free(sort_by_second_begin);
 	
-	sort_by_first_begin = (std::vector<size_t>::iterator*)malloc(size*sizeof(std::vector<size_t>::iterator *));
+	sort_by_first_begin = (size_t**)malloc(size*sizeof(size_t*));
 	sort_by_first_end = sort_by_first_begin + size;
 
 	std::vector<size_t>::iterator ptr;
-	std::vector<size_t>::iterator * pptr;
+	size_t ** pptr;
 	for (ptr = first->begin(), pptr = sort_by_first_begin; ptr != first->end(); ptr++, pptr++)
-		*pptr = ptr;
+		*pptr = &*ptr;
 	
 	std::sort(sort_by_first_begin, sort_by_first_end, ptr_size_t_less);
 
-	sort_by_second_begin = (std::vector<size_t>::iterator *)malloc(size*sizeof(std::vector<size_t>::iterator *));
+	sort_by_second_begin = (size_t**)malloc(size*sizeof(size_t*));
 	sort_by_second_end = sort_by_second_begin + size;
 
 	for (ptr = second->begin(), pptr = sort_by_second_begin; ptr != second->end(); ptr++, pptr++)
-		*pptr = ptr;
+		*pptr = &*ptr;
 
 	std::sort(sort_by_second_begin, sort_by_second_end, ptr_size_t_less);
 };
@@ -162,7 +162,7 @@ grid_line::cell_finder::cell_finder(size_t ipos, const grid_line * grd_line)
 	find_to_first = grd_line->sort_by_first_end;
 	find_from_second = grd_line->sort_by_second_begin;
 	find_to_second = grd_line->sort_by_second_end;
-	it = std::vector<size_t>::iterator(&pos);
+	it = &pos;
 	ptr = NULL;
 	first = grd_line->first;
 	second = grd_line->second;
@@ -180,7 +180,7 @@ bool grid_line::cell_finder::find_next(size_t & near_cell) {
 		if (ptr != find_to_first) {
 			find_from_first = ptr+1;
 			if ( **ptr == pos ) {
-				near_cell = (*second)[*ptr - first->begin()]; 
+				near_cell = (*second)[*ptr - &*first->begin()]; 
 				size_t pos_i, pos_j;
 				one2two(near_cell, pos_i, pos_j, NN, MM);
 				pos_i--;
@@ -205,7 +205,7 @@ bool grid_line::cell_finder::find_next(size_t & near_cell) {
 		if (ptr != find_to_second) {
 			find_from_second = ptr+1;
 			if ( **ptr == pos ) {
-				near_cell = (*first)[*ptr - second->begin()];
+				near_cell = (*first)[*ptr - &*second->begin()];
 				size_t pos_i, pos_j;
 				one2two(near_cell, pos_i, pos_j, NN, MM);
 				pos_i--;
@@ -232,12 +232,12 @@ bool grid_line::check_for_node(size_t pos) const {
 	pos_j++;
 	two2one(pos, pos_i, pos_j, NN, MM);
 
-	std::vector<size_t>::iterator * ptr;
-	std::vector<size_t>::iterator it(&pos);
+	size_t ** ptr;
+	size_t * it = &pos;
 	ptr = std::lower_bound(sort_by_first_begin, 
-		sort_by_first_end, 
-		it, 
-		ptr_size_t_less);
+			       sort_by_first_end, 
+			       it, 
+			       ptr_size_t_less);
 	
 	if (ptr && (ptr != sort_by_first_end))
 		if (**ptr == pos)
@@ -271,9 +271,9 @@ bool grid_line::check_for_pair(size_t pos1, size_t pos2) const {
 	two2one(pos2, pos_i, pos_j, NN, MM);
 
 	
-	std::vector<size_t>::iterator * ptr;
+	size_t ** ptr;
 
-	std::vector<size_t>::iterator * ptr_from = sort_by_first_begin;
+	size_t ** ptr_from = sort_by_first_begin;
 	size_t pos;
 
 	if (pos1 < pos2) {
@@ -282,8 +282,8 @@ bool grid_line::check_for_pair(size_t pos1, size_t pos2) const {
 		pos1 = temp;
 	}
 
-	std::vector<size_t>::iterator it1(&pos1);
-	std::vector<size_t>::iterator it2(&pos2);
+	size_t * it1 = &pos1;
+	size_t * it2 = &pos2;
 
 first_again_pos1:
 	
@@ -294,7 +294,7 @@ first_again_pos1:
 
 	if (ptr && (ptr != sort_by_first_end)) {
 		if (**ptr == pos1) {
-			pos = *ptr - first->begin();
+			pos = *ptr - &*first->begin();
 			if ( pos2 == *(second->begin() + pos) )
 				return true;
 			ptr_from = ptr+1;
@@ -314,7 +314,7 @@ first_again_pos2:
 
 	if (ptr && (ptr != sort_by_first_end)) {
 		if (**ptr == pos2) {
-			pos = *ptr - first->begin();
+			pos = *ptr - &*first->begin();
 			if ( pos1 == *(second->begin() + pos) )
 				return true;
 			ptr_from = ptr+1;
@@ -333,7 +333,7 @@ second_again_pos1:
 
 	if (ptr && (ptr != sort_by_second_end)) {
 		if (**ptr == pos1) {
-			pos = *ptr - second->begin();
+			pos = *ptr - &*second->begin();
 			if ( pos2 == *(first->begin() + pos) )
 				return true;
 			ptr_from = ptr+1;
@@ -352,7 +352,7 @@ second_again_pos2:
 
 	if (ptr && (ptr != sort_by_second_end)) {
 		if (**ptr == pos2) {
-			pos = *ptr - second->begin();
+			pos = *ptr - &*second->begin();
 			if ( pos1 == *(first->begin() + pos) )
 				return true;
 			ptr_from = ptr+1;
@@ -383,7 +383,7 @@ void fault_points_D1(size_t n, size_t m,
 
 	while (cf.find_next(J2)) {
 		
-		diff = abs(J - J2);
+		diff = abs(int(J - J2));
 		
 		// vertical
 		if (diff == 1) {

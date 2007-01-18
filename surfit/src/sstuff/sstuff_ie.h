@@ -28,7 +28,18 @@
 
 #ifdef _MSC_VER
 #pragma warning(disable : 4786)
+#pragma warning(disable : 4996)
+
+// MS Visual Studio gives warnings when using 
+// fopen. But fopen_s is not going to work well 
+// with most compilers, and fopen_s uses different 
+// syntax than fopen. (i.e., a macro won't work) 
+// So, we'lll use this:
+#ifndef _CRT_SECURE_NO_DEPRECATE
+#define _CRT_SECURE_NO_DEPRECATE
 #endif
+#endif
+
 
 #if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
 #  if defined(_MSC_VER) || defined(__GNUC__)

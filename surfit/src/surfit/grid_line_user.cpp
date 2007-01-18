@@ -193,7 +193,7 @@ void draw_grid_line_matlab(FILE * ff, const grid_line * line, const d_grid * grd
 		}
 		
 		// down line
-		if (diff == -NN-2) {
+		if (-diff == NN+2) { // diff == -NN-2
 			fprintf(ff,"plot([%lf  %lf],[%lf %lf],'color','%s','LineWidth',%d);\n", 
 				x-stepX2, x+stepX2, y-stepY2, y-stepY2, color, thick);
 		}
