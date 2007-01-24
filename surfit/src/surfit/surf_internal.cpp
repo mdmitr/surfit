@@ -572,7 +572,9 @@ bool _surf_resid(const d_surf * srf, const d_points * pnts, const char * filenam
 	if (pnts->size() == 0)
 		return false;
 
-	writelog(LOG_MESSAGE, "Calcualting residuals...");
+	writelog(LOG_MESSAGE, "Calcualting residuals. surface \"%s\", points \"%s\"",
+		srf->getName()?srf->getName():"noname",
+		pnts->getName()?pnts->getName():"noname");
 
 	FILE * f = fopen(filename, "w");
 
@@ -741,6 +743,8 @@ void _add_surfit_surfs(d_surf * srf) {
 };
 
 d_surf * _surf_gradient(const d_surf * srf) {
+
+	writelog(LOG_MESSAGE,"calculating gradient of surface \"%s\"", srf->getName()?srf->getName():"noname");
 	
 	size_t NN = srf->getCountX();
 	size_t MM = srf->getCountY();

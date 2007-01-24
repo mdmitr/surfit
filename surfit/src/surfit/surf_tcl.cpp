@@ -171,11 +171,12 @@ REAL surf_sum(const char * pos) {
 
 bool surf_to_pnts(const char * surf_pos) {
 	
-	writelog(LOG_MESSAGE,"converting surf to points");
-	
 	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (!srf)
 		return false;
+
+	writelog(LOG_MESSAGE,"converting surface \"%s\" to points",
+		srf->getName()?srf->getName():surf_pos);
 	
 	d_points * pnts = _surf_to_pnts(srf);
 
@@ -245,6 +246,10 @@ bool surf_plus(const char * pos1, const char * pos2) {
 		return false;
 	}
 
+	writelog(LOG_MESSAGE,"surf_plus: \"%s\" += \"%s\"",
+		srf1->getName()?srf1->getName():pos1,
+		srf2->getName()?srf2->getName():pos2);
+
 	srf1->plus(srf2);
 
 	return true;
@@ -269,6 +274,11 @@ bool surf_plus_area(const char * pos1, const char * area_pos, const char * pos2)
 		return false;
 	}
 
+	writelog(LOG_MESSAGE,"surf_plus_area : \"%s\" += \"%s\" in area \"%s\"",
+		srf1->getName()?srf1->getName():pos1,
+		srf2->getName()?srf2->getName():pos2,
+		area->getName()?area->getName():area_pos);
+
 	bitvec * mask = nodes_in_area_mask(area, srf1->grd);
 	srf1->plus_mask(srf2, mask);
 	if (mask)
@@ -291,6 +301,10 @@ bool surf_minus(const char * pos1, const char * pos2) {
 		writelog(LOG_ERROR,"surf_minus : different grid");
 		return false;
 	}
+
+	writelog(LOG_MESSAGE,"surf_minus: \"%s\" -= \"%s\"",
+		srf1->getName()?srf1->getName():pos1,
+		srf2->getName()?srf2->getName():pos2);
 
 	srf1->minus(srf2);
 
@@ -316,6 +330,11 @@ bool surf_minus_area(const char * pos1, const char * area_pos, const char * pos2
 		return false;
 	}
 
+	writelog(LOG_MESSAGE,"surf_minus_area : \"%s\" -= \"%s\" in area \"%s\"",
+		srf1->getName()?srf1->getName():pos1,
+		srf2->getName()?srf2->getName():pos2,
+		area->getName()?area->getName():area_pos);
+
 	bitvec * mask = nodes_in_area_mask(area, srf1->grd);
 	srf1->minus_mask(srf2, mask);
 	if (mask)
@@ -338,6 +357,10 @@ bool surf_mult(const char * pos1, const char * pos2) {
 		writelog(LOG_ERROR,"surf_mult : different grid");
 		return false;
 	}
+
+	writelog(LOG_MESSAGE,"surf_mult: \"%s\" *= \"%s\"",
+		srf1->getName()?srf1->getName():pos1,
+		srf2->getName()?srf2->getName():pos2);
 
 	srf1->mult(srf2);
 
@@ -363,6 +386,11 @@ bool surf_mult_area(const char * pos1, const char * area_pos, const char * pos2)
 		return false;
 	}
 
+	writelog(LOG_MESSAGE,"surf_mult_area : \"%s\" *= \"%s\" in area \"%s\"",
+		srf1->getName()?srf1->getName():pos1,
+		srf2->getName()?srf2->getName():pos2,
+		area->getName()?area->getName():area_pos);
+
 	bitvec * mask = nodes_in_area_mask(area, srf1->grd);
 	srf1->mult_mask(srf2, mask);
 	if (mask)
@@ -385,6 +413,10 @@ bool surf_div(const char * pos1, const char * pos2) {
 		writelog(LOG_ERROR,"surf_div : different grid");
 		return false;
 	}
+
+	writelog(LOG_MESSAGE,"surf_div: \"%s\" /= \"%s\"",
+		srf1->getName()?srf1->getName():pos1,
+		srf2->getName()?srf2->getName():pos2);
 
 	srf1->div(srf2);
 
@@ -410,6 +442,11 @@ bool surf_div_area(const char * pos1, const char * area_pos, const char * pos2) 
 		return false;
 	}
 
+	writelog(LOG_MESSAGE,"surf_div_area : \"%s\" /= \"%s\" in area \"%s\"",
+		srf1->getName()?srf1->getName():pos1,
+		srf2->getName()?srf2->getName():pos2,
+		area->getName()?area->getName():area_pos);
+
 	bitvec * mask = nodes_in_area_mask(area, srf1->grd);
 	srf1->div_mask(srf2, mask);
 	if (mask)
@@ -432,6 +469,10 @@ bool surf_set(const char * pos1, const char * pos2) {
 		writelog(LOG_ERROR,"surf_set : different grid");
 		return false;
 	}
+
+	writelog(LOG_MESSAGE,"surf_set: \"%s\" = \"%s\"",
+		srf1->getName()?srf1->getName():pos1,
+		srf2->getName()?srf2->getName():pos2);
 
 	srf1->set(srf2);
 
@@ -457,6 +498,11 @@ bool surf_set_area(const char * pos1, const char * area_pos, const char * pos2) 
 		return false;
 	}
 
+	writelog(LOG_MESSAGE,"surf_set_area : \"%s\" = \"%s\" in area \"%s\"",
+		srf1->getName()?srf1->getName():pos1,
+		srf2->getName()?srf2->getName():pos2,
+		area->getName()?area->getName():area_pos);
+
 	bitvec * mask = nodes_in_area_mask(area, srf1->grd);
 	srf1->set_mask(srf2, mask);
 	if (mask)
@@ -469,6 +515,10 @@ bool surf_plus_value(REAL val, const char * pos) {
 	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (!srf)
 		return false;
+
+	writelog(LOG_MESSAGE,"surf_plus_value: \"%s\" += %g",
+		srf->getName()?srf->getName():pos,val);
+
 	srf->plus(val);
 	return true;
 };
@@ -481,6 +531,10 @@ bool surf_plus_value_area(REAL val, const char * surf_pos, const char * area_pos
 	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
 	if (!area)
 		return false;
+
+	writelog(LOG_MESSAGE,"surf_plus_value_area: \"%s\" += %g in area \"%s\"",
+		srf->getName()?srf->getName():surf_pos,val,
+		area->getName()?area->getName():area_pos);
 
 	bitvec * mask = nodes_in_area_mask(area, srf->grd);
 	if (mask == NULL)
@@ -496,6 +550,10 @@ bool surf_minus_value(REAL val, const char * pos) {
 	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (!srf)
 		return false;
+
+	writelog(LOG_MESSAGE,"surf_minus_value: \"%s\" -= %g",
+		srf->getName()?srf->getName():pos,val);
+
 	srf->minus(val);
 	return true;
 };
@@ -508,6 +566,10 @@ bool surf_minus_value_area(REAL val, const char * area_pos, const char * surf_po
 	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
 	if (!area)
 		return false;
+
+	writelog(LOG_MESSAGE,"surf_minus_value_area: \"%s\" -= %g in area \"%s\"",
+		srf->getName()?srf->getName():surf_pos,val,
+		area->getName()?area->getName():area_pos);
 
 	bitvec * mask = nodes_in_area_mask(area, srf->grd);
 	if (mask == NULL)
@@ -523,6 +585,10 @@ bool surf_mult_value(REAL val, const char * pos) {
 	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (!srf)
 		return false;
+
+	writelog(LOG_MESSAGE,"surf_mult_value: \"%s\" *= %g",
+		srf->getName()?srf->getName():pos,val);
+
 	srf->mult(val);
 	return true;
 };
@@ -535,6 +601,10 @@ bool surf_mult_value_area(REAL val, const char * area_pos, const char * surf_pos
 	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
 	if (!area)
 		return false;
+
+	writelog(LOG_MESSAGE,"surf_mult_value_area: \"%s\" *= %g in area \"%s\"",
+		srf->getName()?srf->getName():surf_pos,val,
+		area->getName()?area->getName():area_pos);
 
 	bitvec * mask = nodes_in_area_mask(area, srf->grd);
 	if (mask == NULL)
@@ -550,6 +620,10 @@ bool surf_div_value(REAL val, const char * pos) {
 	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (!srf)
 		return false;
+
+	writelog(LOG_MESSAGE,"surf_div_value: \"%s\" /= %g",
+		srf->getName()?srf->getName():pos,val);
+
 	srf->div(val);
 	return true;
 };
@@ -562,6 +636,10 @@ bool surf_div_value_area(REAL val, const char * area_pos, const char * surf_pos)
 	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
 	if (!area)
 		return false;
+
+	writelog(LOG_MESSAGE,"surf_div_value_area: \"%s\" /= %g in area \"%s\"",
+		srf->getName()?srf->getName():surf_pos,val,
+		area->getName()?area->getName():area_pos);
 
 	bitvec * mask = nodes_in_area_mask(area, srf->grd);
 	if (mask == NULL)
@@ -577,6 +655,10 @@ bool surf_set_value(REAL val, const char * pos) {
 	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (!srf)
 		return false;
+
+	writelog(LOG_MESSAGE,"surf_set_value: \"%s\" = %g",
+		srf->getName()?srf->getName():pos,val);
+
 	srf->set(val);
 	return true;
 };
@@ -589,6 +671,10 @@ bool surf_set_value_area(const char * Value, const char * area_pos, const char *
 	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
 	if (!area)
 		return false;
+
+	writelog(LOG_MESSAGE,"surf_set_value_area: \"%s\" = %s in area \"%s\"",
+		srf->getName()?srf->getName():surf_pos,Value,
+		area->getName()?area->getName():area_pos);
 
 	bitvec * mask = nodes_in_area_mask(area, srf->grd);
 	if (mask == NULL)
@@ -610,6 +696,9 @@ bool surf_to_mask(REAL true_from, REAL true_to, const char * pos)
 	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (!srf)
 		return false;
+
+	writelog(LOG_MESSAGE,"converting surface \"%s\" to mask",
+		srf->getName()?srf->getName():pos);
 	
 	bitvec * bcoeff = create_bitvec( srf->coeff->size() );
 	size_t i;
@@ -629,13 +718,6 @@ bool surf_to_mask(REAL true_from, REAL true_to, const char * pos)
 	d_mask * msk = create_mask(bcoeff, grd);
 	msk->setName(srf->getName());
 	surfit_masks->push_back(msk);
-
-	/*
-	std::vector<d_surf *>::iterator psurf = get_iterator<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (*psurf)
-		(*psurf)->release();
-	surfit_surfs->erase(psurf);
-	*/
 
 	return true;
 };
@@ -767,6 +849,8 @@ bool surf_setName(const char * new_name, const char * pos) {
 
 bool surf_delall() {
 
+	writelog(LOG_MESSAGE,"removing all surfaces from memory");
+
 	if (surfit_surfs == NULL)
 		return false;
 
@@ -784,6 +868,12 @@ bool surf_del(const char * pos) {
 	std::vector<d_surf *>::iterator srf = get_iterator<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (srf == surfit_surfs->end())
 		return false;
+
+	if (*srf == NULL)
+		return false;
+
+	writelog(LOG_MESSAGE,"removing surface \"%s\" from memory", (*srf)->getName()?(*srf)->getName():pos);
+
 	if (*srf)
 		(*srf)->release();
 	surfit_surfs->erase(srf);
@@ -902,6 +992,9 @@ bool surf_filter_by_mask(const char * surf_pos, const char * def_pos) {
 	if (msk == NULL)
 		return false;
 
+	writelog(LOG_MESSAGE,"filtering surface \"%s\" with mask \"%s\"",
+		surf->getName()?surf->getName():surf_pos,
+		msk->getName()?msk->getName():def_pos);
 		
 	size_t i,j;
 	REAL x,y;
@@ -1005,6 +1098,10 @@ bool surf_filter_by_surf(REAL eps, const char * surf1_pos, const char * surf2_po
 	if (surf2 == NULL)
 		return false;
 
+	writelog(LOG_MESSAGE,"filtering surface \"%s\" values with surface \"%s\" values",
+		surf1->getName()?surf1->getName():surf1_pos,
+		surf2->getName()?surf2->getName():surf2_pos);
+
 	size_t i,j;
 	REAL x,y;
 	REAL val1, val2;
@@ -1039,6 +1136,9 @@ bool surf_swapxy(const char * surf_pos)
 	d_surf * surf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (surf == NULL)
 		return false;
+
+	writelog(LOG_MESSAGE,"changin axis for surface \"%s\"",
+		surf->getName()?surf->getName():surf_pos);
 
 	if (surf->coeff == NULL)
 		return false;

@@ -15,3 +15,5 @@ functionals:
 14  anizo
 
 svn test
+
+mask_save_grd -> surfit_io

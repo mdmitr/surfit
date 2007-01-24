@@ -357,6 +357,10 @@ bool _mask_apply_to_surf(const d_mask * msk, d_surf * srf) {
 		return false;
 	if (!msk)
 		return false;
+
+	writelog(LOG_MESSAGE,"applying mask \"%s\" to surface \"%s\"",
+		msk->getName()?msk->getName():"noname",
+		srf->getName()?srf->getName():"noname");
 	
 	size_t i,j;
 	size_t NN = srf->getCountX();

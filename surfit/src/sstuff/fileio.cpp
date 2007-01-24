@@ -50,7 +50,7 @@ char * debug = "Debug: ";
 
 FILE * logfile = NULL;
 char * logfilename = NULL;
-int loglevel = 0;
+int loglevel = 1;
 int stop_on_error = 1;
 // 0 - General messages
 // 1 - Error messages

@@ -116,14 +116,14 @@ bool mask_save_xyz(const char * filename, const char * pos) {
 	if (!filename)
 		return false;
 
+	writelog(LOG_MESSAGE,"Saving mask %s to file %s (xyz-ASCII)", msk->getName(), filename);
+
 	FILE * f = fopen(filename,"w");
 
 	if (!f) {
 		writelog(LOG_ERROR, "Can't write data to file %s",filename,strerror( errno ));
 		return false;
 	}
-
-	writelog(LOG_MESSAGE,"Saving mask %s to file %s (xyz-ASCII)", msk->getName(), filename);
 
 	int nx = msk->getCountX();
 	int ny = msk->getCountY();
@@ -158,7 +158,10 @@ bool mask_or(const char * pos1, const char * pos2) {
 	if (!def2)
 		return false;
 
-	writelog(LOG_MESSAGE,"mask : OR operation");
+	writelog(LOG_MESSAGE,"mask : %s = %s OR %s", 
+		def1->getName()?def1->getName():pos1, 
+		def1->getName()?def1->getName():pos1, 
+		def2->getName()?def2->getName():pos2);
 	
 	def1->OR(def2);
 	return true;
@@ -174,7 +177,10 @@ bool mask_xor(const char * pos1, const char * pos2) {
 	if (!def2)
 		return false;
 
-	writelog(LOG_MESSAGE,"mask : XOR operation");
+	writelog(LOG_MESSAGE,"mask_xor : \"%s\" = \"%s\" XOR \"%s\"", 
+		def1->getName()?def1->getName():pos1, 
+		def1->getName()?def1->getName():pos1, 
+		def2->getName()?def2->getName():pos2);
 	def1->XOR(def2);
 	return true;
 };
@@ -189,7 +195,10 @@ bool mask_and(const char * pos1, const char * pos2) {
 	if (!def2)
 		return false;
 
-	writelog(LOG_MESSAGE,"mask : AND operation");
+	writelog(LOG_MESSAGE,"mask_and : \"%s\" = \"%s\" AND \"%s\"", 
+		def1->getName()?def1->getName():pos1, 
+		def1->getName()?def1->getName():pos1, 
+		def2->getName()?def2->getName():pos2);
 	def1->AND(def2);
 	return true;
 };
@@ -204,8 +213,10 @@ bool mask_not(const char * pos1, const char * pos2) {
 	if (!def2)
 		return false;
 
-	writelog(LOG_MESSAGE,"mask : NOT operation");
-	
+	writelog(LOG_MESSAGE,"mask_not : \"%s\" = NOT \"%s\"", 
+		def1->getName()?def1->getName():pos1, 
+		def2->getName()?def2->getName():pos2);
+
 	def1->NOT(def2);
 	return true;
 };
@@ -215,6 +226,8 @@ bool mask_by_surf(const char * surf_pos) {
 	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (!srf)
 		return false;
+
+	writelog(LOG_MESSAGE,"creating mask by surface %s", srf->getName()?srf->getName():surf_pos);
 
 	d_mask * msk = _mask_by_surf(srf);
 	if (msk) {
@@ -242,6 +255,10 @@ bool mask_setName(const char * new_name, const char * pos) {
 	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
 	if (!msk)
 		return false;
+
+	writelog(LOG_MESSAGE,"setting name \"%s\" to mask \"%s\"",
+		new_name, msk->getName()?msk->getName():pos);
+
 	msk->setName(new_name);
 	return true;
 };
@@ -266,6 +283,9 @@ bool mask_to_surf(const char * pos) {
 	if (!msk)
 		return false;
 
+	writelog(LOG_MESSAGE,"creating surface by mask \"%s\"",
+		msk->getName()?msk->getName():pos);
+
 	d_surf * srf = create_surf_by_mask(msk);
 	if (msk)
 		msk->release();
@@ -275,13 +295,15 @@ bool mask_to_surf(const char * pos) {
 };
 
 bool mask_delall() {
+
 	size_t i;
+
+	writelog(LOG_MESSAGE,"removing all masks from memory");
 
 	if (surfit_masks == NULL)
 		return false;
 
 	if (surfit_masks->size() == 0) {
-		//writelog(SURFIT_WARNING,"masks_delall : empty surfit_masks");
 		return false;
 	}
 	
@@ -300,6 +322,13 @@ bool mask_del(const char * pos) {
 	std::vector<d_mask *>::iterator msk = get_iterator<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
 	if (msk == surfit_masks->end())
 		return false;
+
+	if (*msk == NULL)
+		return false;
+
+	writelog(LOG_MESSAGE,"removing mask \"%s\" from memory",
+		(*msk)->getName()?(*msk)->getName():pos);
+
 	if (*msk)
 		(*msk)->release();
 	surfit_masks->erase(msk);

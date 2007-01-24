@@ -61,12 +61,8 @@ void globe_init_variables(Tcl_Interp * iinterp) {
 		
 		my_globe_manager = new globe_manager;
 		add_manager(my_globe_manager);
-		
-		Tcl_printf("globe version %s, Copyright (c) 2002-2006 M.V.Dmitrievsky \n", GLOBE_VERSION);
-		Tcl_printf("globe comes with ABSOLUTELY NO WARRANTY; for details type `show_w'.\n");
-		Tcl_printf("This is free software, and you are welcome to redistribute it\n");
-		Tcl_printf("under certain conditions; type `show_c' for details.\n");
-		
+
+		log_printf("loading module globe v%s\n", GLOBE_VERSION);
 	}
 
 };

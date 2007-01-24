@@ -63,12 +63,9 @@ void freeflow_init_variables(Tcl_Interp * iinterp) {
 		
 		flow_manager = new freeflow_manager;
 		add_manager(flow_manager);
-		
-		Tcl_printf("freeflow version %s, Copyright (c) 2002-2006 M.V.Dmitrievsky & V.N.Kutrunov\n", FREEFLOW_VERSION);
-		Tcl_printf("freeflow comes with ABSOLUTELY NO WARRANTY; for details type `show_w'.\n");
-		Tcl_printf("This is free software, and you are welcome to redistribute it\n");
-		Tcl_printf("under certain conditions; type `show_c' for details.\n");
-		
+
+		log_printf("loading module freeflow v%s\n", FREEFLOW_VERSION);
+
 	}
 
 };
