@@ -103,10 +103,8 @@ garbage garb;
 static void
 data_cleanup(ClientData clientData)
 {
-    clear_data();
-#ifdef HAVE_GL_WORKS
-//    cleanup();
-#endif
+	init_interp(NULL);
+	clear_data();
 };
 
 void surfit_init_all() {

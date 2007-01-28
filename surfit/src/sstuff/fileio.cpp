@@ -76,6 +76,8 @@ void log_printf(const char *tmplt, ...) {
 	Tcl_Channel out;
 	if (interp) {
 		out = Tcl_GetStdChannel(TCL_STDOUT);
+		if (out == NULL)
+			return;
 	}
 
 	va_list ap;
@@ -106,6 +108,8 @@ void writelog (int errlevel, const char *tmplt, ...) {
 	Tcl_Channel out;
 	if (interp) {
 		out = Tcl_GetStdChannel(TCL_STDOUT);
+		if (out == NULL)
+			return;
 	}
 	char enter = '\n';
 
@@ -194,6 +198,8 @@ void writelog2 (int errlevel, const char *tmplt, ...) {
 	Tcl_Channel out;
 	if (interp) {
 		out = Tcl_GetStdChannel(TCL_STDOUT);
+		if (out == NULL)
+			return;
 	}
 	
 	struct tm * newtime;
