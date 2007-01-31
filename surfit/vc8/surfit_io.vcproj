@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8,00"
 	Name="surfit_io"
-	ProjectGUID="{6F81A636-64D3-4D66-9201-E5C86CAB342F}"
+	ProjectGUID="{3F881362-4C40-4AFE-A1FF-253BBB0F0722}"
 	RootNamespace="surfit_io"
 	>
 	<Platforms>
@@ -19,7 +19,7 @@
 			OutputDirectory=".\../Release"
 			IntermediateDirectory=".\../Release"
 			ConfigurationType="2"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -52,9 +52,10 @@
 				AdditionalIncludeDirectories="../src/sstuff,../src/sstuff/ptypes,../src/surfit,..\..\libs\jpeg-6b\,C:\Tcl\include\,..\..\libs\NETCDF\LIBSRC"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_DEPRECATE"
 				StringPooling="true"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\../Release/surfit_io.pch"
 				AssemblerListingLocation=".\../Release/"
 				ObjectFile=".\../Release/"
@@ -63,6 +64,7 @@
 				BrowseInformationFile=".\../Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
+				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -81,8 +83,8 @@
 				OutputFile="../bin/libsurfit_io.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="C:\Tcl\lib,..\..\libs\zlib123-dll\lib\,..\..\libs\netcdf\libsrc\"
-				IgnoreDefaultLibraryNames="LIBC"
+				AdditionalLibraryDirectories="..\..\libs\jpeg-6b,..\..\libs\zlib123-dll\lib\,..\..\libs\netcdf\libsrc\,C:\Tcl\lib"
+				IgnoreDefaultLibraryNames="LIBC.lib"
 				ProgramDatabaseFile=".\../Release/libsurfit_io.pdb"
 				ImportLibrary="../bin/libsurfit_io.lib"
 				TargetMachine="1"
@@ -98,8 +100,6 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
-				SuppressStartupBanner="true"
-				OutputFile=".\../Release/surfit_io.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -119,7 +119,7 @@
 			OutputDirectory=".\../Debug"
 			IntermediateDirectory=".\../Debug"
 			ConfigurationType="2"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -150,10 +150,10 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="../src/sstuff,../src/sstuff/ptypes,../src/surfit,..\..\LIBS\JPEG-6B,C:\Tcl\include\,..\..\libs\NETCDF\LIBSRC"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_DEPRECATE"
-				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
+				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\../Debug/surfit_io.pch"
 				AssemblerListingLocation=".\../Debug/"
 				ObjectFile=".\../Debug/"
@@ -162,6 +162,7 @@
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
+				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -178,9 +179,9 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="tcl83d.lib netcdf.lib libjpeg.lib"
 				OutputFile="../bin/libsurfit_io.dll"
-				LinkIncremental="2"
+				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="..\..\libs\NETCDF\LIBSRC,..\..\LIBS\TCL8.3.5\WIN\DEBUG,..\..\libs\jpeg-6b\"
+				AdditionalLibraryDirectories="..\..\libs\jpeg-6b,..\..\libs\NETCDF\LIBSRC,..\..\LIBS\TCL8.3.5\WIN\DEBUG,..\..\libs\jpeg-6b\"
 				IgnoreDefaultLibraryNames="LIBC"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\../Debug/libsurfit_io.pdb"
@@ -198,8 +199,207 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="XXL_Debug|Win32"
+			OutputDirectory=".\../Debug"
+			IntermediateDirectory=".\../Debug"
+			ConfigurationType="2"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
-				OutputFile=".\../Debug/surfit_io.bsc"
+				TargetEnvironment="1"
+				TypeLibraryName=".\../Debug/surfit_io.tlb"
+				HeaderFileName=""
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="-DSORT_OPT_PREFETCHING -DUSE_MALLOC_LOCK -DCOUNT_WAIT_TIME -I../../ -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_RTLDLL -DBOOST_LIB_DIAGNOSTIC -DBOOST_ALL_DYN_LINK -DSTXXL_BOOST_TIMESTAMP -DSTXXL_BOOST_CONFIG -DSTXXL_BOOST_FILESYSTEM -DSTXXL_BOOST_THREADS -DSTXXL_BOOST_RANDOM -Ic:\boost /EHsc /EHs /wd4820 /wd4217 /wd4668 /wd4619 /wd4625 /wd4626 /wd4355 /wd4244 /wd4267 /wd4311 /wd4800 /wd4101 /wd4307 /wd4003 -DSTXXL_VERBOSE_LEVEL=1"
+				Optimization="0"
+				AdditionalIncludeDirectories="../src/sstuff,../src/sstuff/ptypes,../src/surfit,..\..\LIBS\JPEG-6B,C:\Tcl\include\,..\..\libs\NETCDF\LIBSRC;..\..\libs\stxxl;..\..\libs\boost\include\boost-1_33_1"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;XXL;_CRT_SECURE_NO_DEPRECATE"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderFile=".\../Debug/surfit_io.pch"
+				AssemblerListingLocation=".\../Debug/"
+				ObjectFile=".\../Debug/"
+				ProgramDataBaseFileName=".\../Debug/"
+				BrowseInformation="1"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="3"
+				CompileAs="0"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1049"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="tcl83d.lib netcdf.lib libjpeg.lib"
+				OutputFile="../bin/libsurfit_io.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="..\..\libs\jpeg-6b,..\..\libs\NETCDF\LIBSRC,..\..\LIBS\TCL8.3.5\WIN\DEBUG,..\..\libs\jpeg-6b\;..\..\libs\stxxl\lib80_dbg;..\..\libs\boost\lib"
+				IgnoreDefaultLibraryNames="LIBC"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile=".\../Debug/libsurfit_io.pdb"
+				ImportLibrary="../bin/libsurfit_io.lib"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="XXL_Release|Win32"
+			OutputDirectory=".\../Release"
+			IntermediateDirectory=".\../Release"
+			ConfigurationType="2"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\../Release/surfit_io.tlb"
+				HeaderFileName=""
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Gs /Gs  -DSORT_OPT_PREFETCHING -DUSE_MALLOC_LOCK -DCOUNT_WAIT_TIME -I../../ -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_RTLDLL -DBOOST_LIB_DIAGNOSTIC -DBOOST_ALL_DYN_LINK -DSTXXL_BOOST_TIMESTAMP -DSTXXL_BOOST_CONFIG -DSTXXL_BOOST_FILESYSTEM -DSTXXL_BOOST_THREADS -DSTXXL_BOOST_RANDOM -Ic:\boost /EHsc /EHs /wd4820 /wd4217 /wd4668 /wd4619 /wd4625 /wd4626 /wd4355 /wd4244 /wd4267 /wd4311 /wd4800 /wd4101 /wd4307 /wd4003 -DSTXXL_VERBOSE_LEVEL=0"
+				Optimization="2"
+				InlineFunctionExpansion="2"
+				AdditionalIncludeDirectories="../src/sstuff,../src/sstuff/ptypes,../src/surfit,..\..\libs\jpeg-6b\,C:\Tcl\include\,..\..\libs\NETCDF\LIBSRC;..\..\libs\stxxl;..\..\libs\boost\include\boost-1_33_1"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;XXL;_CRT_SECURE_NO_DEPRECATE"
+				StringPooling="true"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderFile=".\../Release/surfit_io.pch"
+				AssemblerListingLocation=".\../Release/"
+				ObjectFile=".\../Release/"
+				ProgramDataBaseFileName=".\../Release/"
+				BrowseInformation="1"
+				BrowseInformationFile=".\../Release/"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				CompileAs="0"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1049"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="tcl83.lib zdll.lib netcdf.lib libjpeg.lib"
+				OutputFile="../bin/libsurfit_io.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="..\..\libs\jpeg-6b,C:\Tcl\lib,..\..\libs\zlib123-dll\lib\,..\..\libs\netcdf\libsrc\;..\..\libs\stxxl\lib80;;..\..\libs\boost\lib"
+				IgnoreDefaultLibraryNames="LIBC"
+				ProgramDatabaseFile=".\../Release/libsurfit_io.pdb"
+				ImportLibrary="../bin/libsurfit_io.lib"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -230,8 +430,9 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="2"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
+						BrowseInformation="1"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -239,8 +440,31 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="XXL_Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="XXL_Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
 					/>
 				</FileConfiguration>
 			</File>
@@ -252,8 +476,9 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="2"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
+						BrowseInformation="1"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -261,8 +486,31 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="XXL_Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="XXL_Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
 					/>
 				</FileConfiguration>
 			</File>
@@ -274,8 +522,9 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="2"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
+						BrowseInformation="1"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -283,8 +532,31 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="XXL_Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="XXL_Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
 					/>
 				</FileConfiguration>
 			</File>
@@ -296,8 +568,9 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="2"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
+						BrowseInformation="1"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -305,8 +578,31 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="XXL_Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="XXL_Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
 					/>
 				</FileConfiguration>
 			</File>
@@ -321,8 +617,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -330,8 +627,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -343,8 +663,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -352,8 +673,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -365,8 +709,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -374,8 +719,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -387,8 +755,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -396,8 +765,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -409,8 +801,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -418,8 +811,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -431,8 +847,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -440,8 +857,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -453,8 +893,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -462,8 +903,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -475,8 +939,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -484,8 +949,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -501,8 +989,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -510,8 +999,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -543,8 +1055,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -552,8 +1065,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -569,8 +1105,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -578,8 +1115,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -595,8 +1155,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -604,8 +1165,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -617,8 +1201,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -626,8 +1211,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -643,8 +1251,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -652,8 +1261,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -665,8 +1297,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -674,8 +1307,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -687,8 +1343,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -696,8 +1353,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -713,8 +1393,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -722,8 +1403,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -735,8 +1439,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -744,8 +1449,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -757,8 +1485,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -766,8 +1495,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -783,8 +1535,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -792,8 +1545,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -805,8 +1581,9 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="2"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -814,8 +1591,31 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							Optimization="0"
 							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							BasicRuntimeChecks="3"
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="XXL_Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
 						/>
 					</FileConfiguration>
 				</File>
@@ -899,6 +1699,24 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="surfit_io_swig.bat&#x0D;&#x0A;"
+						Outputs="../src/surfit_io/surfit_io_wrap.cxx"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="XXL_Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="surfit_io_swig.bat&#x0D;&#x0A;"
+						Outputs="../src/surfit_io/surfit_io_wrap.cxx"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="XXL_Release|Win32"
 					>
 					<Tool
 						Name="VCCustomBuildTool"
