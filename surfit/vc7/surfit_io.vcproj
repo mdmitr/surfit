@@ -256,7 +256,7 @@
 				OutputFile="../bin/libsurfit_io.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\libs\jpeg-6b,C:\Tcl\lib,..\..\libs\zlib123-dll\lib\,..\..\libs\netcdf\libsrc\;..\..\libs\stxxl\lib71"
+				AdditionalLibraryDirectories="..\..\libs\jpeg-6b,C:\Tcl\lib,..\..\libs\zlib123-dll\lib\,..\..\libs\netcdf\libsrc\;..\..\libs\stxxl\lib71;..\..\libs\boost\lib"
 				IgnoreDefaultLibraryNames="LIBC"
 				ProgramDatabaseFile=".\../Release/libsurfit_io.pdb"
 				ImportLibrary="../bin/libsurfit_io.lib"

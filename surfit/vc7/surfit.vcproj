@@ -259,7 +259,7 @@
 				OutputFile="../bin/libsurfit.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="C:\Tcl\lib;..\..\libs\stxxl\lib71"
+				AdditionalLibraryDirectories="C:\Tcl\lib;..\..\libs\stxxl\lib71;..\..\libs\boost\lib"
 				IgnoreDefaultLibraryNames="LIBC"
 				ProgramDatabaseFile=".\../Release/libsurfit.pdb"
 				ImportLibrary="../bin/libsurfit.lib"

@@ -253,7 +253,7 @@
 				OutputFile="../bin/libglobe.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="C:\Tcl\lib,..\..\libs\zlib123-dll\lib\;..\..\libs\stxxl\lib71"
+				AdditionalLibraryDirectories="C:\Tcl\lib,..\..\libs\zlib123-dll\lib\;..\..\libs\stxxl\lib71;..\..\libs\boost\lib"
 				ProgramDatabaseFile=".\../Release/libglobe.pdb"
 				ImportLibrary="../bin/libglobe.lib"
 				TargetMachine="1"/>
