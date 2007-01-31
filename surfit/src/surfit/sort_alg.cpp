@@ -49,7 +49,7 @@ void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up,
 
 	// find first point less than y_down
 	i_sorty_from = std::lower_bound(sorty_begin,sorty_end,&y_down,ptr_vector_less);
-	if (i_sortx_from == sortx_end) return;
+	if (i_sorty_from == sorty_end) return;
 	// Находим первую точку, больше y_up
 	i_sorty_to = std::lower_bound(i_sorty_from,sorty_end,&y_up,ptr_vector_less);
 	
