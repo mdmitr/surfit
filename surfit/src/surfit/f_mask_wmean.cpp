@@ -72,7 +72,7 @@ const data * f_mask_wmean::this_get_data(int pos) const {
 	return NULL;
 };
 
-bool f_mask_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_mask_wmean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	if (mask->getName())
 		writelog(LOG_MESSAGE,"mask_wmean %s value = %g condition", mask->getName(), mean);
@@ -95,7 +95,7 @@ bool f_mask_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	size_t matrix_size = NN*MM;
 	
-	vec * weights = create_vec(matrix_size, 0, false); // don't fill this vector
+	extvec * weights = create_extvec(matrix_size, 0, false); // don't fill this vector
 	bitvec * matr_mask = create_bitvec(matrix_size);
 	matr_mask->init_false();
 
@@ -165,7 +165,7 @@ bool f_mask_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	REAL v_val = mean*denom - sum_values_solved;
 
-	v = create_vec(matrix_size, 0, false);
+	v = create_extvec(matrix_size, 0, false);
 	for (i = 0; i < matrix_size; i++) {
 		
 		if ( matr_mask->get(i) )
@@ -183,7 +183,7 @@ bool f_mask_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 bool f_mask_wmean::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
-					const vec * X)
+					const extvec * X)
 {
 	size_t i;
 	size_t NN = method_basis_cntX;

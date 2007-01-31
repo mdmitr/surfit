@@ -20,10 +20,11 @@
 #ifndef __surfit_grid_user_included__
 #define __surfit_grid_user_included__
 
+#include "vec.h"
+
 namespace surfit {
 
 class d_grid;
-class vec;
 class bitvec;
 
 /*! \ingroup surfit_data_variables
@@ -50,7 +51,7 @@ extern SURFIT_EXPORT d_grid * surfit_grid;
 extern SURFIT_EXPORT d_grid * method_grid;
 extern SURFIT_EXPORT d_grid * method_sub_grid;
 extern SURFIT_EXPORT d_grid * method_prev_grid;
-extern SURFIT_EXPORT vec * method_X;
+extern SURFIT_EXPORT extvec * method_X;
 extern SURFIT_EXPORT bool method_ok;
 extern SURFIT_EXPORT bitvec * method_mask_solved;
 extern SURFIT_EXPORT bitvec * method_mask_undefined;

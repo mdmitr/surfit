@@ -1146,7 +1146,7 @@ bool surf_swapxy(const char * surf_pos)
 	if (surf->grd == NULL)
 		return false;
 
-	vec * new_coeff = create_vec(surf->coeff->size());
+	extvec * new_coeff = create_extvec(surf->coeff->size());
 
 	size_t NN = surf->getCountX();
 	size_t MM = surf->getCountY();

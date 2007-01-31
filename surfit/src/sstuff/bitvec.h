@@ -112,6 +112,9 @@ public:
 	//! returns size of "true" elements
 	size_t true_size() const;
 
+	//! returs true if half of elements are true (need for optimization)
+	bool is_half_solved() const;
+
 	//! writes four values, starting from pos
 	void write4(size_t pos, 
 		    bool b1, bool b2, bool b3, bool b4); 

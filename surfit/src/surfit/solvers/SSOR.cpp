@@ -32,7 +32,7 @@ using namespace std;
 
 namespace surfit {
 
-vec * SSOR(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_value, REAL omega) {
+extvec * SSOR(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value, REAL omega) {
 
 	int flag = 0;                                // initialization
 	int iter = 0;
@@ -41,9 +41,9 @@ vec * SSOR(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_v
 	if  ( bnrm2 == REAL(0) )
 		bnrm2 = REAL(1); 
 
-	vec * x = NULL;
+	extvec * x = NULL;
 	if (!X) 
-		x = create_vec(*b);
+		x = create_extvec(*b);
 	else 
 	{
 		x = X;
@@ -61,9 +61,9 @@ vec * SSOR(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_v
 
 	REAL a_ii;
 
-	vec * x_1 = create_vec(*x);
-	vec * x_12 = create_vec(*x);
-	vec * r = create_vec(x->size(), 0, 0); // don't fill this vector;
+	extvec * x_1 = create_extvec(*x);
+	extvec * x_12 = create_extvec(*x);
+	extvec * r = create_extvec(x->size(), 0, 0); // don't fill this vector;
 
 	REAL from, to, step;
 	short prp = 0;
@@ -81,7 +81,7 @@ vec * SSOR(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_v
 			}
 			
 			(*r)(i) = 0;
-			sigma = A->mult_line(i, r->begin(), r->end());
+			sigma = A->mult_line(i, r->const_begin(), r->const_end());
 			sigma = ( (*b)(i) - sigma )/a_ii;
 			
 			(*x_12)(i) = (1 - omega)*(*x_1)(i) + omega*sigma;
@@ -100,7 +100,7 @@ vec * SSOR(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_v
 			}
 
 			(*r)(i) = 0;
-			sigma = A->mult_line(i, r->begin(), r->end());
+			sigma = A->mult_line(i, r->const_begin(), r->const_end());
 					
 			sigma = ( (*b)(i) - sigma )/a_ii;
 			(*x)(i) = (*x_12)(i) + omega*( sigma - (*x_12)(i) );

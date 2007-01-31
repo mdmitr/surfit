@@ -69,12 +69,12 @@ bool f_area_ineq::minimize() {
 
 };
 
-bool f_area_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_area_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	size_t points = 0;
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
-	v = create_vec(matrix_size);
+	v = create_extvec(matrix_size);
 
 	if (leq) {
 		if (area->getName()) 
@@ -95,7 +95,7 @@ bool f_area_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	bitvec * mask = create_bitvec(matrix_size);
 	mask->init_false();
 
-	vec * diag = create_vec(matrix_size);
+	extvec * diag = create_extvec(matrix_size);
 
 	size_t i;
 	for (i = 0; i < area_mask->size(); i++) {
@@ -173,7 +173,7 @@ void f_area_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 
 bool f_area_ineq::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
-					const vec * X)
+					const extvec * X)
 {
 
 	get_area_mask();

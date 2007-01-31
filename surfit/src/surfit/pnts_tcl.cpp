@@ -60,7 +60,7 @@ bool pnts_add_noise(REAL std, const char * pos) {
 	if (pnts->size() == 0)
 		return false;
 
-	REAL * ptr;
+	vec::iterator ptr;
 	for (ptr = pnts->Z->begin(); ptr != pnts->Z->end(); ptr++) {
 		*ptr += norm_rand(std);
 	}
@@ -140,13 +140,13 @@ bool pnts_filter_by_surf(REAL eps, const char * pnts_pos, const char * surf_pos)
 	if (old_size == 0)
 		return false;
 
-	REAL * old_X_ptr = pnts->X->begin();
-	REAL * old_Y_ptr = pnts->Y->begin();
-	REAL * old_Z_ptr = pnts->Z->begin();
+	vec::iterator old_X_ptr = pnts->X->begin();
+	vec::iterator old_Y_ptr = pnts->Y->begin();
+	vec::iterator old_Z_ptr = pnts->Z->begin();
 
-	REAL * new_X_ptr = pnts->X->begin();
-	REAL * new_Y_ptr = pnts->Y->begin();
-	REAL * new_Z_ptr = pnts->Z->begin();
+	vec::iterator new_X_ptr = pnts->X->begin();
+	vec::iterator new_Y_ptr = pnts->Y->begin();
+	vec::iterator new_Z_ptr = pnts->Z->begin();
 
 	REAL z_value;
 
@@ -186,13 +186,13 @@ bool pnts_filter_out_area(const char * pnts_pos, const char * area_pos) {
 
 	int old_size = pnts->size();
 
-	REAL * old_X_ptr = pnts->X->begin();
-	REAL * old_Y_ptr = pnts->Y->begin();
-	REAL * old_Z_ptr = pnts->Z->begin();
+	vec::iterator old_X_ptr = pnts->X->begin();
+	vec::iterator old_Y_ptr = pnts->Y->begin();
+	vec::iterator old_Z_ptr = pnts->Z->begin();
 
-	REAL * new_X_ptr = pnts->X->begin();
-	REAL * new_Y_ptr = pnts->Y->begin();
-	REAL * new_Z_ptr = pnts->Z->begin();
+	vec::iterator new_X_ptr = pnts->X->begin();
+	vec::iterator new_Y_ptr = pnts->Y->begin();
+	vec::iterator new_Z_ptr = pnts->Z->begin();
 
 	for (;old_X_ptr != pnts->X->end(); old_X_ptr++, old_Y_ptr++, old_Z_ptr++) {
 		
@@ -231,13 +231,13 @@ bool pnts_filter_in_area(const char * pnts_pos, const char * area_pos) {
 
 	int old_size = pnts->size();
 
-	REAL * old_X_ptr = pnts->X->begin();
-	REAL * old_Y_ptr = pnts->Y->begin();
-	REAL * old_Z_ptr = pnts->Z->begin();
+	vec::iterator old_X_ptr = pnts->X->begin();
+	vec::iterator old_Y_ptr = pnts->Y->begin();
+	vec::iterator old_Z_ptr = pnts->Z->begin();
 
-	REAL * new_X_ptr = pnts->X->begin();
-	REAL * new_Y_ptr = pnts->Y->begin();
-	REAL * new_Z_ptr = pnts->Z->begin();
+	vec::iterator new_X_ptr = pnts->X->begin();
+	vec::iterator new_Y_ptr = pnts->Y->begin();
+	vec::iterator new_Z_ptr = pnts->Z->begin();
 
 	for (;old_X_ptr != pnts->X->end(); old_X_ptr++, old_Y_ptr++, old_Z_ptr++) {
 		
@@ -280,9 +280,9 @@ bool pnts_filter_by_mask(const char * pnts_pos, const char * def_pos) {
 	REAL x,y;
 	bool val;
 	j = 0;
-	REAL * x_ptr = pnts->X->begin();
-	REAL * y_ptr = pnts->Y->begin();
-	REAL * z_ptr = pnts->Z->begin();
+	vec::iterator x_ptr = pnts->X->begin();
+	vec::iterator y_ptr = pnts->Y->begin();
+	vec::iterator z_ptr = pnts->Z->begin();
 
 	for (i = 0; i < cnt; i++) {
 		x = *(x_ptr + i);
@@ -415,9 +415,9 @@ bool pnts_plus_surf(const char * pos, const char * surf_pos) {
 
 	int i;
 	REAL x,y,z, Z;
-	REAL * x_ptr = pnts->X->begin();
-	REAL * y_ptr = pnts->Y->begin();
-	REAL * z_ptr = pnts->Z->begin();
+	vec::iterator x_ptr = pnts->X->begin();
+	vec::iterator y_ptr = pnts->Y->begin();
+	vec::iterator z_ptr = pnts->Z->begin();
 	for (i = 0; i < pnts->size(); i++) {
 		x = *(x_ptr + i);
 		y = *(y_ptr + i);
@@ -446,9 +446,9 @@ bool pnts_minus_surf(const char * pos, const char * surf_pos) {
 
 	int i;
 	REAL x,y,z, Z;
-	REAL * x_ptr = pnts->X->begin();
-	REAL * y_ptr = pnts->Y->begin();
-	REAL * z_ptr = pnts->Z->begin();
+	vec::iterator x_ptr = pnts->X->begin();
+	vec::iterator y_ptr = pnts->Y->begin();
+	vec::iterator z_ptr = pnts->Z->begin();
 	for (i = 0; i < pnts->size(); i++) {
 		x = *(x_ptr + i);
 		y = *(y_ptr + i);
@@ -477,9 +477,9 @@ bool pnts_mult_surf(const char * pos, const char * surf_pos) {
 
 	int i;
 	REAL x,y,z, Z;
-	REAL * x_ptr = pnts->X->begin();
-	REAL * y_ptr = pnts->Y->begin();
-	REAL * z_ptr = pnts->Z->begin();
+	vec::iterator x_ptr = pnts->X->begin();
+	vec::iterator y_ptr = pnts->Y->begin();
+	vec::iterator z_ptr = pnts->Z->begin();
 	for (i = 0; i < pnts->size(); i++) {
 		x = *(x_ptr + i);
 		y = *(y_ptr + i);
@@ -508,9 +508,9 @@ bool pnts_div_surf(const char * pos, const char * surf_pos) {
 
 	int i;
 	REAL x,y,z, Z;
-	REAL * x_ptr = pnts->X->begin();
-	REAL * y_ptr = pnts->Y->begin();
-	REAL * z_ptr = pnts->Z->begin();
+	vec::iterator x_ptr = pnts->X->begin();
+	vec::iterator y_ptr = pnts->Y->begin();
+	vec::iterator z_ptr = pnts->Z->begin();
 	for (i = 0; i < pnts->size(); i++) {
 		x = *(x_ptr + i);
 		y = *(y_ptr + i);
@@ -542,9 +542,9 @@ bool pnts_set_surf(const char * pos, const char * surf_pos) {
 
 	int i;
 	REAL x,y,z, Z;
-	REAL * x_ptr = pnts->X->begin();
-	REAL * y_ptr = pnts->Y->begin();
-	REAL * z_ptr = pnts->Z->begin();
+	vec::iterator x_ptr = pnts->X->begin();
+	vec::iterator y_ptr = pnts->Y->begin();
+	vec::iterator z_ptr = pnts->Z->begin();
 	for (i = 0; i < pnts->size(); i++) {
 		x = *(x_ptr + i);
 		y = *(y_ptr + i);
@@ -573,9 +573,9 @@ bool pnts_update_by_surf(const char * pnts_pos, const char * surf_pos) {
 
 	int i;
 	REAL x,y,z;
-	REAL * x_ptr = pnts->X->begin();
-	REAL * y_ptr = pnts->Y->begin();
-	REAL * z_ptr = pnts->Z->begin();
+	vec::iterator x_ptr = pnts->X->begin();
+	vec::iterator y_ptr = pnts->Y->begin();
+	vec::iterator z_ptr = pnts->Z->begin();
 	for (i = 0; i < pnts->size(); i++) {
 		x = *(x_ptr + i);
 		y = *(y_ptr + i);
@@ -732,16 +732,28 @@ bool pnts_concat(const char * pos1, const char * pos2) {
 	pnts1->Y->resize(cnt);
 	pnts1->Z->resize(cnt);
 
-	REAL * ptr = NULL;
+	vec::iterator ptr;
 
 	ptr = pnts1->X->begin() + old_cnt;
+#ifdef XXL
+	std::copy(pnts2->X->const_begin(), pnts2->X->const_end(), ptr);
+#else
 	memcpy(ptr, pnts2->X->begin(), pnts2->size()*sizeof(REAL));
+#endif
 	
 	ptr = pnts1->Y->begin() + old_cnt;
+#ifdef XXL
+	std::copy(pnts2->Y->const_begin(), pnts2->Y->const_end(), ptr);
+#else
 	memcpy(ptr, pnts2->Y->begin(), pnts2->size()*sizeof(REAL));
+#endif
 	
 	ptr = pnts1->Z->begin() + old_cnt;
+#ifdef XXL
+	std::copy(pnts2->Z->const_begin(), pnts2->Z->const_end(), ptr);
+#else
 	memcpy(ptr, pnts2->Z->begin(), pnts2->size()*sizeof(REAL));
+#endif
 	
 	return true;
 };

@@ -39,7 +39,7 @@ public:
 
 	bool minimize();
 	
-	bool make_matrix_and_vector(matr *& matrix, vec *& v);
+	bool make_matrix_and_vector(matr *& matrix, extvec *& v);
 	
 	void mark_solved_and_undefined(bitvec * mask_solved, 
 				       bitvec * mask_undefined,
@@ -47,7 +47,7 @@ public:
 	
 	bool solvable_without_cond(const bitvec * mask_solved, 
 				   const bitvec * mask_undefined,
-				   const vec * X);
+				   const extvec * X);
 
 	void cleanup();
 	

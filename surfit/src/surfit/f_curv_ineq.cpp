@@ -93,7 +93,7 @@ bool f_curv_ineq::minimize() {
 	return f_pnts_ineq->minimize();
 };
 
-bool f_curv_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_curv_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	create_f_points_ineq();
 	return f_pnts_ineq->make_matrix_and_vector(matrix, v);
 };
@@ -105,7 +105,7 @@ void f_curv_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 
 bool f_curv_ineq::solvable_without_cond(const bitvec * mask_solved,
 				  const bitvec * mask_undefined,
-				  const vec * X)
+				  const extvec * X)
 {
 	return true;
 };

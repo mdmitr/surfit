@@ -54,7 +54,7 @@ d_surf * _surf_load_arcgis(const char * filename, const char * surfname) {
 	REAL step = FLT_MAX;
 	d_grid * grd = NULL;
 	d_surf * res = NULL;
-	vec * data = NULL;
+	extvec * data = NULL;
 	REAL surf_undef = FLT_MAX;
 
 	REAL minx, maxx, miny, maxy;
@@ -129,7 +129,7 @@ d_surf * _surf_load_arcgis(const char * filename, const char * surfname) {
 	if (step == FLT_MAX)
 		goto exit;
 	
-	data = create_vec(nx*ny);
+	data = create_extvec(nx*ny);
 	REAL value;
 
 	for(iy=0; iy<ny; iy++) {

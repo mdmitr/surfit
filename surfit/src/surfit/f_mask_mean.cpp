@@ -64,7 +64,7 @@ const data * f_mask_mean::this_get_data(int pos) const {
 	return NULL;
 };
 
-bool f_mask_mean::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_mask_mean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	if (mask->getName())
 		writelog(LOG_MESSAGE,"mask_mean %s value = %g condition", mask->getName(), mean);
@@ -112,7 +112,7 @@ bool f_mask_mean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	REAL v_val = (mean*mult)*N - sum_values_solved;
 
-	v = create_vec(matrix_size, 0, false);
+	v = create_extvec(matrix_size, 0, false);
 	for (i = 0; i < matrix_size; i++) {
 		if ( matr_mask->get(i) ) 
 			(*v)(i) = 0;
@@ -129,7 +129,7 @@ bool f_mask_mean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 bool f_mask_mean::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
-					const vec * X)
+					const extvec * X)
 {
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;

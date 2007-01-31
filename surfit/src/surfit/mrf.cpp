@@ -26,15 +26,16 @@
 #include "mrf.h"
 
 #include <string.h>
+#include <limits.h>
 
 namespace surfit {
 
-void _decomp1d(REAL * X_begin, 
+void _decomp1d(extvec::iterator X_begin, 
 	       size_t N, 
 	       int distance, 
 	       REAL undef_value,
 	       bool flag,
-	       vec * buf)
+	       extvec * buf)
 {
 	size_t i;
 	size_t pos = 0;
@@ -83,8 +84,8 @@ void _decomp1d(REAL * X_begin,
 	
 };
 
-void _decomp2d(vec *& X,
-	       vec *& Xa, vec *& Xd, vec *& Xh, vec *& Xv,
+void _decomp2d(extvec *& X,
+	       extvec *& Xa, extvec *& Xd, extvec *& Xh, extvec *& Xv,
 	       size_t N, size_t M, bool enlarge_cols, bool enlarge_rows,
 	       REAL undef_value,
 	       bool flag)
@@ -103,7 +104,17 @@ void _decomp2d(vec *& X,
 	if (enlarge_cols) {
 		X->resize(newN*M);
 		for (j = M-1; ; j--) {
+
+#ifdef XXL
+			size_t q;
+			size_t pos = j*N + N - 1;
+			for (q = 0; q < N; q++)  {
+				*(X->begin()+pos+j) = *(X->const_begin()+pos);
+				pos--;
+			}
+#else
 			memmove(X->begin() + j*N + j, X->begin() + j*N, N*sizeof(REAL));
+#endif
 			(*X)(j*N + j + N) = (*X)(j*N + j + N - 1);
 			if (j == 0)
 				break;
@@ -111,14 +122,18 @@ void _decomp2d(vec *& X,
 	}
 	if (enlarge_rows) {
 		X->resize(newN*newM);
+#ifdef XXL
+		std::copy(X->const_begin() + (newM-2)*newN, X->const_begin() + (newM-2)*newN + newN, X->begin() + (newM-1)*newN);
+#else
 		memcpy( X->begin() + (newM-1)*newN, X->begin() + (newM-2)*newN, newN*sizeof(REAL) );
+#endif
 		for (i = 0; i < newN; i++)
 			(*X)(i + (newM-1)*newN) = (*X)(i + (newM-2)*newN);
 	}
 
 	// decomp in "OY" direction (column by column)
 
-	vec * buf = create_vec(newM/2, 0, 0, 0); // don't fill this vector
+	extvec * buf = create_extvec(newM/2, 0, 0, 0); // don't fill this vector
 
 	for (i = 0; i < newN; i++) 
 		_decomp1d(X->begin() + i, newM, newN, undef_value, flag, buf);
@@ -127,15 +142,23 @@ void _decomp2d(vec *& X,
 	buf->resize(newN*newM/4);
 	_decomp1d(X->begin(), newN*newM/2, 1, undef_value, flag, buf);
 
-	Xa = create_vec(newN*newM/4, 0, 0, 0); // don't fill this vector
+	Xa = create_extvec(newN*newM/4, 0, 0, 0); // don't fill this vector
+#ifdef XXL
+	std::copy(X->const_begin(), X->const_begin() + newN*newM/4, Xa->begin());
+#else
 	memcpy(Xa->begin(), X->begin(), newN*newM/4*sizeof(REAL));
+#endif
 	Xh = buf;
 
 	buf = X;
 	_decomp1d(X->begin() + newN*newM/2, newN*newM/2, 1, undef_value, flag, buf);
 
-	Xv = create_vec(newN*newM/4, 0, 0, 0);  // don't fill this vector
+	Xv = create_extvec(newN*newM/4, 0, 0, 0);  // don't fill this vector
+#ifdef XXL
+	std::copy(X->const_begin() + newN*newM/2, X->const_begin() + newN*newM/2 + newN*newM/4, Xv->begin());
+#else
 	memcpy(Xv->begin(), X->begin() + newN*newM/2, newN*newM/4*sizeof(REAL));
+#endif
 	Xd = buf;
 	Xd->resize(newN*newM/4);
 
@@ -145,12 +168,12 @@ void _decomp2d(vec *& X,
 };
 
 
-void _recons1d(REAL * X_begin, 
+void _recons1d(extvec::iterator X_begin, 
 	       size_t N, 
 	       int distance, 
 	       REAL undef_value,
 	       bool flag,
-	       vec * buf)
+	       extvec * buf)
 {
 
 	size_t i;
@@ -160,9 +183,13 @@ void _recons1d(REAL * X_begin,
 	REAL a, d;
 
 	// copy approximation coefficients to buf
-	if (distance == 1)
+	if (distance == 1) {
+#ifdef XXL
+		std::copy(X_begin, X_begin + N/2, buf->begin());
+#else
 		memcpy(buf->begin(), X_begin, N/2*sizeof(REAL)); 
-	else {
+#endif
+	} else {
 		for (i = 0; i < N/2; i++) 
 			(*buf)(i) = *(X_begin + i*distance);
 	}
@@ -205,11 +232,11 @@ void _recons1d(REAL * X_begin,
 };
 
 
-void _recons2d(vec *& X,
-	       const vec * a,
-	       const vec * d,
-	       const vec * h,
-	       const vec * v,
+void _recons2d(extvec *& X,
+	       const extvec * a,
+	       const extvec * d,
+	       const extvec * h,
+	       const extvec * v,
 	       size_t N, size_t M,
 	       bool enlarged_cols,
 	       bool enlarged_rows,
@@ -220,14 +247,21 @@ void _recons2d(vec *& X,
 	size_t newN = 2*N;
 	size_t newM = 2*M;
 
-	X = create_vec(newN*newM, 0, 0, 0); // don't fill this vector
+	X = create_extvec(newN*newM, 0, 0, 0); // don't fill this vector
 
-	memcpy(X->begin(), a->begin(), a->size()*sizeof(REAL));
-	memcpy(X->begin() + newN*newM/4, h->begin(), h->size()*sizeof(REAL));
-	memcpy(X->begin() + newN*newM/2, v->begin(), v->size()*sizeof(REAL));
-	memcpy(X->begin() + 3*(newN*newM/4), d->begin(), d->size()*sizeof(REAL));
+#ifdef XXL
+	std::copy(a->const_begin(), a->const_end(), X->begin());
+	std::copy(h->const_begin(), h->const_end(), X->begin() + newN*newM/4);
+	std::copy(v->const_begin(), v->const_end(), X->begin() + newN*newM/2);
+	std::copy(d->const_begin(), d->const_end(), X->begin() + 3*(newN*newM/4));
+#else
+	memcpy(X->begin(), a->const_begin(), a->size()*sizeof(REAL));
+	memcpy(X->begin() + newN*newM/4, h->const_begin(), h->size()*sizeof(REAL));
+	memcpy(X->begin() + newN*newM/2, v->const_begin(), v->size()*sizeof(REAL));
+	memcpy(X->begin() + 3*(newN*newM/4), d->const_begin(), d->size()*sizeof(REAL));
+#endif
 
-	vec * buf = create_vec(newN*newM/4, 0, 0, 0);
+	extvec * buf = create_extvec(newN*newM/4, 0, 0, 0);
 
 	_recons1d(X->begin(), newN*newM/2, 1, undef_value, flag, buf);
  	_recons1d(X->begin() + newN*newM/2, newN*newM/2, 1, undef_value, flag, buf);
@@ -249,8 +283,15 @@ void _recons2d(vec *& X,
 	}
 	if (enlarged_cols) {
 		newN--;
-		for (j = 1; j < newM; j++)
+		for (j = 1; j < newM; j++) {
+#ifdef XXL
+			size_t q;
+			for (q = 0; q < newN; q++)
+				*(X->begin() + j*newN + q) = *(X->const_begin() + j*N + q);
+#else
 			memmove(X->begin() + j*newN, X->begin() + j*N, newN*sizeof(REAL));
+#endif
+		}
 		X->resize(newN*newM);		
 	}
 

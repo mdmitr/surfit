@@ -27,9 +27,13 @@
 #include <assert.h>
 
 #ifdef DEBUG
-#define CHECK_PTR(p) if((p >= b_begin) && (p < b_end))
+	#ifdef XXL
+		#define CHECK_PTR(p) if(true)
+	#else
+		#define CHECK_PTR(p) if((p >= b_begin) && (p < b_end))
+	#endif
 #else
-#define CHECK_PTR(p) if(true)
+	#define CHECK_PTR(p) if(true)
 #endif
 
 #define FIRST_X		b[0]

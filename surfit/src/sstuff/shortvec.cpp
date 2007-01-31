@@ -25,9 +25,13 @@
 #include <string.h>
 #endif
 
+#include <io.h>
+
 #include "shortvec.h"
 
 namespace surfit {
+
+#ifndef XXL
 
 shortvec * create_shortvec(size_t size, short default_value, int fill_default, size_t grow_by) {
 	return new shortvec(size, default_value, fill_default, grow_by);
@@ -174,30 +178,23 @@ void shortvec::swap(size_t i, size_t j) {
 	operator()(j) = temp;
 };
 
-void shortvec::erase(short* del) {
-	short* cur = begin();
-	size_t i = del-cur;
-	erase(i);
-};
-
-void shortvec::erase(size_t index) {
-#ifdef LSS_BOUNDS_CHECK
-	if (index > datasize) 
-		throw "invalid argument";
-#endif
-	short* cur = begin();
-	cur += index;
-	memmove(cur,cur+1,(size()-index-1)*sizeof(short));
-	datasize--;
-	short_datasize--;
-	return;
-};
-
 void shortvec::drop_data() {
 	data = NULL;
 	datasize = 0;
 	short_datasize = 0;
 };
+
+size_t shortvec::write_file(int file, size_t size) const {
+	size_t res = write(file, const_begin(), size*sizeof(short));
+	return res;
+};
+
+size_t shortvec::read_file(int file, size_t size) {
+	size_t res = read( file, begin(), sizeof(short)*size );
+	return res;
+};
+
+#endif
 
 }; // namespace surfit;
 

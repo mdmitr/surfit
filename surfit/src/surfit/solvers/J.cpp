@@ -32,7 +32,7 @@ using namespace std;
 
 namespace surfit {
 
-vec * J(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_value) {
+extvec * J(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value) {
 
 	int flag = 0;                                // initialization
 	int iter = 0;
@@ -41,9 +41,9 @@ vec * J(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_valu
 	if  ( bnrm2 == REAL(0) )
 		bnrm2 = REAL(1); 
 
-	vec * x = NULL;
+	extvec * x = NULL;
 	if (!X) 
-		x = create_vec(*b);
+		x = create_extvec(*b);
 	else 
 	{
 		x = X;
@@ -64,7 +64,7 @@ vec * J(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_valu
 	REAL gamma = REAL(2)/(MM);
 	REAL save_x;
 
-	vec * x_1 = create_vec(*x);
+	extvec * x_1 = create_extvec(*x);
 
 	error_norm = norm2(x, undef_value);
 		
@@ -78,7 +78,7 @@ vec * J(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_valu
 
 			save_x = (*x)(i);
 			(*x)(i) = 0;
-			sigma = A->mult_line(i, x->begin(), x->end());
+			sigma = A->mult_line(i, x->const_begin(), x->const_end());
 			(*x)(i) = save_x;
 
 			(*x_1)(i) = ( ((*b)(i) - sigma )/a_ii -(*x)(i))*gamma + (*x)(i);

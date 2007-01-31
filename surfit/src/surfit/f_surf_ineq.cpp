@@ -62,10 +62,10 @@ bool f_surf_ineq::minimize() {
 
 };
 
-bool f_surf_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
-	v = create_vec(matrix_size);
+	v = create_extvec(matrix_size);
 
 	if (srf->getName()) {
 		writelog(LOG_MESSAGE,"surf inequality: (%s), %d x %d", srf->getName(), srf->getCountX(), srf->getCountY());
@@ -76,7 +76,7 @@ bool f_surf_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	bitvec * mask = create_bitvec(matrix_size);
 	mask->init_false();
 
-	vec * diag = create_vec(matrix_size);
+	extvec * diag = create_extvec(matrix_size);
 
 	size_t from_x, from_y, to_x, to_y;
 	_grid_intersect1(method_grid, srf->grd,
@@ -198,7 +198,7 @@ void f_surf_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 
 bool f_surf_ineq::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
-					const vec * X) 
+					const extvec * X) 
 {
 
 	size_t from_x, from_y, to_x, to_y;

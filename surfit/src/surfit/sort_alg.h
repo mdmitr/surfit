@@ -21,11 +21,18 @@
 #define __surfit_sort_alg__
 
 #include <vector>
+#include "vec.h"
 
 namespace surfit {
 
 inline
 bool ptr_vector_less(REAL * it1, REAL * it2) 
+{
+	return *it1 < *it2;
+};
+
+inline
+bool ptr_const_it_less(vec::const_iterator it1, vec::const_iterator it2) 
 {
 	return *it1 < *it2;
 };
@@ -43,33 +50,11 @@ bool ptr_size_t_less(size_t * it1, size_t * it2)
 };
 
 SURFIT_EXPORT
-void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up, 
-		     REAL ** sortx_begin, REAL ** sortx_end,
-		     REAL ** sorty_begin, REAL ** sorty_end,
-		     REAL * beginx, REAL * beginy,
+void getPointsInRect(const REAL x_left, const REAL x_right, const REAL y_down, const REAL y_up, 
+		     const std::vector<size_t> & sortx,
+		     const std::vector<size_t> & sorty,
+		     const vec * X, const vec * Y,
 		     std::vector<size_t> &nn);
-
-SURFIT_EXPORT
-void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up, 
-		     REAL ** sortx_begin, REAL ** sortx_end,
-		     REAL ** sorty_begin, REAL ** sorty_end,
-		     REAL * beginx, REAL * beginy,
-		     std::vector<size_t> &nn,
-		     REAL **& i_sortx_begin, REAL **& i_sortx_end,
-		     REAL **& i_sorty_begin, REAL **& i_sorty_end);
-
-SURFIT_EXPORT
-void getPointsInSegment(REAL x_left, REAL x_right, 
-			REAL ** sortx_begin, REAL ** sortx_end,
-			REAL * beginx,
-			std::vector<size_t> &nn);
-
-SURFIT_EXPORT
-void getPointsInSegment(REAL x_left, REAL x_right,
-			REAL ** sortx_begin, REAL ** sortx_end,
-			REAL * beginx,
-			std::vector<size_t> &nn,
-			REAL **& i_sort_from, REAL **& i_sort_to);
 
 }; // namespace surfit;
 

@@ -114,7 +114,7 @@ bool f_mask::minimize() {
 	return true;
 };
 
-bool f_mask::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_mask::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	matrix = NULL;
 	v = NULL;
@@ -132,7 +132,7 @@ bool f_mask::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	mask = create_bitvec( NN*MM );
 	mask->init_false();
 
-	v = create_vec( NN*MM );
+	v = create_extvec( NN*MM );
 	
 	size_t i,j, pos;
 	size_t points = 0;
@@ -178,8 +178,8 @@ void f_mask::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undef
 };
 
 bool f_mask::solvable_without_cond(const bitvec * mask_solved,
-				      const bitvec * mask_undefined,
-				      const vec * X)
+				   const bitvec * mask_undefined,
+				   const extvec * X)
 {
 	return true;
 };

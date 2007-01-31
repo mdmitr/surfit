@@ -133,13 +133,13 @@ REAL d_curv::length_xy() const {
 	if (size() == 0)
 		return len;
 	
-	const REAL * x_ptr = X->begin();
-	const REAL * y_ptr = Y->begin();
+	vec::const_iterator x_ptr = X->const_begin();
+	vec::const_iterator y_ptr = Y->const_begin();
 
 	if (size() == 0)
 		return len;
 
-	while (x_ptr != X->end()-1) {
+	while (x_ptr != X->const_end()-1) {
 		len += sqrt( (*x_ptr - *(x_ptr+1))*(*x_ptr - *(x_ptr+1)) + (*y_ptr - *(y_ptr+1))*(*y_ptr - *(y_ptr+1)) );
 		x_ptr++;
 		y_ptr++;
@@ -166,8 +166,8 @@ bool d_curv::in_region(REAL x, REAL y) const {
 	if (y0 != y1)
 		return false;
 
-	REAL * X_begin = X->begin();
-	REAL * Y_begin = Y->begin();
+	vec::const_iterator X_begin = X->const_begin();
+	vec::const_iterator Y_begin = Y->const_begin();
 
 	size_t i;
 	int test=0;

@@ -63,7 +63,7 @@ const data * f_hist::this_get_data(int pos) const {
 	return NULL;
 };
 
-bool f_hist::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	if (hst->getName())
 		writelog(LOG_MESSAGE,"histogramm %s", hst->getName());
@@ -325,7 +325,7 @@ bool f_hist::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 bool f_hist::solvable_without_cond(const bitvec * mask_solved,
 				   const bitvec * mask_undefined,
-				   const vec * X)
+				   const extvec * X)
 {
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 

@@ -69,7 +69,7 @@ bool f_surf::minimize() {
 	} else {
 		
 		matr * A = NULL;
-		vec * b = NULL;
+		extvec * b = NULL;
 		bool solvable = make_matrix_and_vector(A,b);
 		
 		size_t matrix_size = method_basis_cntX*method_basis_cntY;
@@ -100,7 +100,7 @@ bool f_surf::minimize() {
 	return false;
 };
 
-bool f_surf::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	if (srf->getName())
 		writelog(LOG_MESSAGE,"surf : (%s), size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
@@ -110,7 +110,7 @@ bool f_surf::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	size_t NN = method_grid->getCountX();
 	size_t MM = method_grid->getCountY();
 
-	v = create_vec(NN*MM);
+	v = create_extvec(NN*MM);
 	
 	if (mask)
 		mask->release();
@@ -231,7 +231,7 @@ bool f_surf::minimize_only_surf() {
 
 bool f_surf::solvable_without_cond(const bitvec * mask_solved,
 		      const bitvec * mask_undefined,
-		      const vec * X)
+		      const extvec * X)
 {
 	return true;
 };

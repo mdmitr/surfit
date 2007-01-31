@@ -47,7 +47,7 @@ d_surf * _surf_load_bmp(const char * filename, const char * surfname, REAL minz,
 	size_t NN = bmp.TellWidth();
 	size_t MM = bmp.TellHeight();
 
-	vec * coeff = create_vec( NN*MM, 0, 0, 0);
+	extvec * coeff = create_extvec( NN*MM, 0, 0, 0);
 
 	size_t i,j;
 	double gray_color;

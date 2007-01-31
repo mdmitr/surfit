@@ -654,9 +654,23 @@ bool datafile::writeRealArray(const char * name, const vec * data) {
 	r += writeBinaryString(REAL_NAME);
 	r += writeBinaryString(name);
 	r += write(file, (void *)&size, sizeof(int));
-	r += write(file, data->begin(), size*sizeof(REAL));
+	r += data->write_file(file, size);
+	//r += write(file, data->begin(), size*sizeof(REAL));
 	return (r > 0);
 };
+
+#ifdef XXL
+bool datafile::writeRealArray(const char * name, const extvec * data) {
+	int size = data->size();
+	size_t r = writeBinaryString("array");
+	r += writeBinaryString(REAL_NAME);
+	r += writeBinaryString(name);
+	r += write(file, (void *)&size, sizeof(int));
+	r += data->write_file(file, size);
+	//r += write(file, data->begin(), size*sizeof(REAL));
+	return (r > 0);
+};
+#endif
 
 bool datafile::writeBoolArray(const char * name, const boolvec * data) {
 	size_t r = writeBinaryString("array");
@@ -686,7 +700,8 @@ bool datafile::writeShortArray(const char * name, const shortvec * data) {
 	r += writeBinaryString("short");
 	r += writeBinaryString(name);
 	r += write(file, (void *)&size, sizeof(int));
-	r += write(file, data->begin(), size*sizeof(short));
+	r += data->write_file(file, size);
+	//r += write(file, data->begin(), size*sizeof(short));
 	return (r > 0);
 };
 
@@ -798,8 +813,8 @@ bool datafile::readRealArray(vec *& data) {
 			return false;
 		}
 		
-		r = read( file, data->begin(), sizeof(REAL)*size );
-		
+		r = data->read_file(file, size);
+				
 		if ( r == size*sizeof(REAL) )
 			return true;
 		else {
@@ -811,6 +826,33 @@ bool datafile::readRealArray(vec *& data) {
 	
 	return false;
 };
+
+#ifdef XXL
+bool datafile::readRealArray(extvec *& data) {
+	size_t r = 0;
+	size_t size = 0;
+	if (read( file,  &size, sizeof(int)) > 0) {
+		
+		data = create_extvec(size);
+		if (data == NULL) {
+			writelog(LOG_ERROR,"Out of memory");
+			return false;
+		}
+		
+		r = data->read_file(file, size);
+				
+		if ( r == size*sizeof(REAL) )
+			return true;
+		else {
+			data->release();
+			data = NULL;
+			return false;
+		}
+	};
+	
+	return false;
+};
+#endif
 
 bool datafile::readBoolArray(boolvec *& data) {
 	size_t r = 0;
@@ -865,7 +907,8 @@ bool datafile::readShortArray(shortvec *& data) {
 		
 		data = create_shortvec(size);
 		
-		r = read( file, data->begin(), sizeof(short)*size );
+		r = data->read_file(file, size);
+		//r = read( file, data->begin(), sizeof(short)*size );
 		
 		if ( r == size*sizeof(short) )
 			return true;

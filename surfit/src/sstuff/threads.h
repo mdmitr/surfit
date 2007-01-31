@@ -36,12 +36,12 @@ SSTUFF_EXPORT
 void do_jobs();
 
 SSTUFF_EXPORT
-void sstuff_init_threads(int cnt);
+void sstuff_init_threads(size_t cnt);
 
 SSTUFF_EXPORT
-int sstuff_get_threads();
+size_t sstuff_get_threads();
 
-extern SSTUFF_EXPORT int cpu;
+extern SSTUFF_EXPORT size_t cpu;
 
 #include "ptypes.h"
 #include "pasync.h"

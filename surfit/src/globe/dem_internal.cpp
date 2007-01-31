@@ -75,15 +75,21 @@ void mirror_shortvec(shortvec * sv, size_t NN) {
 
 	size_t j;
 	for (j = 0; j < MM/2; j++) {
-		short * src1 = sv->begin() + j*NN;
-		short * src2 = sv->begin() + (MM-j-1)*NN;
+		shortvec::iterator src1 = sv->begin() + j*NN;
+		shortvec::iterator src2 = sv->begin() + (MM-j-1)*NN;
 
 		// swap src1 with src2
 		
 		// reading row in buff
+#ifdef XXL
+		std::copy(src1, src1+NN, buff);
+		std::copy(src2, src2+NN, src1);
+		std::copy(buff, buff+NN, src2);
+#else
 		memcpy(buff, src1, NN*sizeof(short));
 		memcpy(src1, src2, NN*sizeof(short));
 		memcpy(src2, buff, NN*sizeof(short));
+#endif
 	};
 
 	free(buff);
@@ -712,14 +718,26 @@ d_dem * _dem_load_hgt_zip(const char * hgt_zip_file) {
 	size = file_info.uncompressed_size;
 
 	coeff = create_shortvec(size/2);
-	ptr = (void*)coeff->begin();
 
+#ifdef XXL
+	ptr = (short int*)malloc(size/2*sizeof(short int));
 	read_bytes = unzReadCurrentFile(zfile, ptr, size);
 	if (read_bytes != size) {
 		unzCloseCurrentFile(zfile);
 		writelog(LOG_ERROR, "_dem_load_hgt_zip : error while reading file: %s",filename);
 		goto exit;
 	}
+	std::copy((short int*)ptr, (short int*)ptr+size/2, coeff->begin());
+	free(ptr);
+#else
+	ptr = (void*)coeff->begin();
+	read_bytes = unzReadCurrentFile(zfile, ptr, size);
+	if (read_bytes != size) {
+		unzCloseCurrentFile(zfile);
+		writelog(LOG_ERROR, "_dem_load_hgt_zip : error while reading file: %s",filename);
+		goto exit;
+	}
+#endif
 	
 	for (i = 0; i < coeff->size(); i++) {
 		ByteSwap((*coeff)(i));
@@ -851,8 +869,7 @@ d_dem * _dem_load_hgt(const char * hgt_file) {
 	lseek(bin, 0L, SEEK_SET);
 
 	shortvec * coeff = create_shortvec(size/2);
-	void * ptr = (void*)coeff->begin();
-	int read_bytes = read(bin, ptr, size);
+	int read_bytes = coeff->read_file(bin, size/2);
 	if (read_bytes != size) {
 		close(bin);
 		writelog(LOG_ERROR, "_dem_load_hgt : error while reading file: %s",hgt_file);
@@ -936,8 +953,7 @@ d_dem * _dem_load_globe(const char * filename) {
 	}
 
 	shortvec * coeff = create_shortvec(size/2);
-	void * ptr = (void*)coeff->begin();
-	int read_bytes = read(bin, ptr, size);
+	int read_bytes = coeff->read_file(bin, size/2);
 	if (read_bytes != size) {
 		close(bin);
 		writelog(LOG_ERROR, "_dem_load_globe : error while reading file: %s",filename);
@@ -1370,9 +1386,9 @@ d_points * _dem_to_points(const d_dem * srf) {
 	vec * Y = create_vec(srf->coeff->size());
 	vec * Z = create_vec(srf->coeff->size());
 	
-	REAL * X_ptr = X->begin();
-	REAL * Y_ptr = Y->begin();
-	REAL * Z_ptr = Z->begin();
+	vec::iterator X_ptr = X->begin();
+	vec::iterator Y_ptr = Y->begin();
+	vec::iterator Z_ptr = Z->begin();
 
 	size_t i,j;
 	REAL x,y,z;
@@ -1582,7 +1598,7 @@ REAL _dem_D1(const d_dem * srf) {
 	size_t NN = srf->getCountX();
 	size_t MM = srf->getCountY();
 
-	short * ptr = srf->coeff->begin();
+	shortvec::const_iterator ptr = srf->coeff->const_begin();
 
 	REAL v1, v2;
 
@@ -1631,7 +1647,7 @@ REAL _dem_D2(const d_dem * srf) {
 	size_t NN = srf->getCountX();
 	size_t MM = srf->getCountY();
 
-	short * ptr = srf->coeff->begin();
+	shortvec::const_iterator ptr = srf->coeff->const_begin();
 
 	REAL v1, v2, v3, v4;
 
@@ -1823,7 +1839,7 @@ d_mask * _dem_to_mask(const d_dem * srf, short true_from, short true_to) {
 
 d_surf * _dem_to_surf(const d_dem * srf) {
 	
-	vec * coeff = create_vec( srf->coeff->size() );
+	extvec * coeff = create_extvec( srf->coeff->size() );
 	size_t i;
 	short val;
 	for (i = 0; i < srf->coeff->size(); i++) {

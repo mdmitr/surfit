@@ -27,9 +27,13 @@
 #include <assert.h>
 
 #ifdef DEBUG
-#define CHECK_PTR(p) if((p >= b_begin) && (p < b_end))
+	#ifdef XXL
+		#define CHECK_PTR(p) if(true)
+	#else
+		#define CHECK_PTR(p) if((p >= b_begin) && (p < b_end))
+	#endif
 #else
-#define CHECK_PTR(p) if(true)
+	#define CHECK_PTR(p) if(true)
 #endif
 
 #define FIRST_X		b[0]
@@ -698,17 +702,17 @@ REAL matrD2::at_transposed(size_t i, size_t j, size_t * next_j) const {
 	return at(i, j, next_j);
 };
 
-REAL matrD2::mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end) {
+REAL matrD2::mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) {
 	return mult_line(J, b_begin, b_end);
 };
 
-REAL matrD2::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) {
+REAL matrD2::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) {
 
 	if (mask_solved_undefined->get(J))
 		return REAL(0);
 
 	REAL res = REAL(0);
-	const REAL * p;
+	extvec::const_iterator p;
 	bool b[10];
 	
 	bool flag = false;

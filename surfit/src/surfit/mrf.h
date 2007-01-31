@@ -20,24 +20,24 @@
 #ifndef __surfit_mrf_included__
 #define __surfit_mrf_included__
 
+#include "vec.h"
+
 namespace surfit {
 
-class vec;
-
 SURFIT_EXPORT
-void _decomp1d(REAL * X_begin, 
+void _decomp1d(extvec::iterator X_begin, 
 	       size_t N, // amount of elements to process
 	       int distance, // distance between elements
 	       REAL undef_value,
 	       bool flag,
-	       vec * buf); // temporary vector of size N/2
+	       extvec * buf); // temporary vector of size N/2
 
 SURFIT_EXPORT
-void _decomp2d(vec *& X,
-	       vec *& Xa,
-	       vec *& Xd,
-	       vec *& Xh,
-	       vec *& Xv,
+void _decomp2d(extvec *& X,
+	       extvec *& Xa,
+	       extvec *& Xd,
+	       extvec *& Xh,
+	       extvec *& Xv,
 	       size_t N, size_t M,
 	       bool enlarge_X,
 	       bool enlarge_Y,
@@ -46,19 +46,19 @@ void _decomp2d(vec *& X,
 
 
 SURFIT_EXPORT		
-void _recons1d(REAL * X_begin, 
+void _recons1d(extvec::iterator X_begin, 
 	       size_t N, // amount of elements to process
 	       int distance, // distance between elements
 	       REAL undef_value,
 	       bool flag,
-	       vec * buf); // temporary vector of size N/2
+	       extvec * buf); // temporary vector of size N/2
 
 SURFIT_EXPORT
-void _recons2d(vec *& X,
-	       const vec * Xa,
-	       const vec * Xd,
-	       const vec * Xh,
-	       const vec * Xv,
+void _recons2d(extvec *& X,
+	       const extvec * Xa,
+	       const extvec * Xd,
+	       const extvec * Xh,
+	       const extvec * Xv,
 	       size_t N, size_t M,
 	       bool enlarge_X,
 	       bool enlarge_Y,

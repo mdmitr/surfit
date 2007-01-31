@@ -57,8 +57,6 @@ char * solver_name = NULL;
 bool write_mat = false;
 int stop_execution = 0;
 
-size_t cpu = 1;
-
 int reproject_faults = 1;
 int reproject_undef_areas = 0;
 int process_isolated_areas = 1;
@@ -130,7 +128,7 @@ void surfit_init_all() {
 #ifdef WIN32
 	SYSTEM_INFO info;
 	GetSystemInfo(&info);
-	cpu = info.dwNumberOfProcessors;
+	size_t cpu = info.dwNumberOfProcessors;
 #else
 #ifdef _SC_NPROCESSORS_ONLN
 	cpu = sysconf(_SC_NPROCESSORS_ONLN);
@@ -140,6 +138,8 @@ void surfit_init_all() {
 	if (cpu < 1)
 		cpu = 1;
 #endif
+
+	sstuff_init_threads(cpu);
 
 };
 
@@ -158,7 +158,6 @@ void surfit_init_variables(Tcl_Interp * iinterp) {
 	print_license();
 	log_open();
 
-	init_threads(cpu);
 	//init_all();
 };
 

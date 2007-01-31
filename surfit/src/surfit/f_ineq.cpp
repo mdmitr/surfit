@@ -56,13 +56,13 @@ bool f_ineq::minimize() {
 
 };
 
-bool f_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	size_t points = 0;
 	size_t i;
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
-	v = create_vec(matrix_size);
+	v = create_extvec(matrix_size);
 
 	if (leq)
 		writelog(LOG_MESSAGE,"inequality leq %g", value);
@@ -72,7 +72,7 @@ bool f_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	bitvec * mask = create_bitvec(matrix_size);
 	mask->init_false();
 
-	vec * diag = create_vec(matrix_size);
+	extvec * diag = create_extvec(matrix_size);
 
 	for (i = 0; i < matrix_size; i++) {
 		
@@ -131,7 +131,7 @@ void f_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undef
 
 bool f_ineq::solvable_without_cond(const bitvec * mask_solved,
 			           const bitvec * mask_undefined,
-			           const vec * X)
+			           const extvec * X)
 {
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;

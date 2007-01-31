@@ -75,7 +75,7 @@ const data * f_completer::this_get_data(int pos) const {
 	return NULL;
 };
 
-bool f_completer::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_completer::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	size_t NN = method_grid->getCountX();
@@ -150,9 +150,15 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	if (T == NULL)
 		T = new matr_sum(D1, oD1, D2, oD2);
 
-	v = create_vec(matrix_size);
+	v = create_extvec(matrix_size);
 
-	size_t points = calcVecV(matrix_size, method_X, T, v, NN, MM, method_mask_solved, method_mask_undefined);
+	size_t points = calcVecV(matrix_size, 
+				 method_X, 
+				 T, 
+				 v, 
+				 NN, MM, 
+				 method_mask_solved, 
+				 method_mask_undefined);
 
 	matrix = T;
 
@@ -174,7 +180,7 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, vec *& v) {
 bool f_completer::minimize_step() {
 
 	matr * A = NULL;
-	vec * b = NULL;
+	extvec * b = NULL;
 	bool solvable = make_matrix_and_vector(A,b);
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
@@ -246,14 +252,18 @@ bool f_completer::minimize() {
 				int i;
 				for (i = 0; i < size; i++) {
 					
-					if (!gfaults->check_for_node(i)) 
+					if (gfaults->check_for_node(i) == false) 
 						method_mask_solved->set_true(i);
+					else {
+						if (saved_mask_solved->get(i) == true)
+							method_mask_solved->set_true(i);
+					}
 					
 				};
 				
 				// res = minimize_step() && res;
-				minimize_step();
-								
+				res = minimize_step();
+			
 				method_mask_solved->copy(saved_mask_solved);
 				if (saved_mask_solved) {
 					saved_mask_solved->release();
@@ -275,16 +285,15 @@ bool f_completer::minimize() {
 						saved_mask_solved = NULL;
 					}
 					saved_mask_solved = create_bitvec(method_mask_solved);
-					int size = method_mask_solved->size();
-					int i;
+					size_t size = method_mask_solved->size();
+					size_t i;
 					
 					for (i = 0; i < size; i++) {
 						if (!undef_grd_line->check_for_node(i)) 
 							method_mask_solved->set_true(i);
 					};
 					
-					//res = minimize_step() && res;
-					minimize_step();
+					res = minimize_step();
 					
 					undef_grd_line->release();
 					method_mask_solved->copy(saved_mask_solved);
@@ -300,7 +309,7 @@ bool f_completer::minimize() {
 
 		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
-		std::vector<short int> * flood_areas = new std::vector<short int>(matrix_size);
+		shortvec * flood_areas = create_shortvec(matrix_size);
 		int flood_areas_cnt = 0;
 
 		fill_all_areas(flood_areas, method_grid, gfaults, flood_areas_cnt, method_mask_undefined);
@@ -333,11 +342,13 @@ bool f_completer::minimize() {
 
 				writelog(LOG_MESSAGE,"completer : isolated area N%d", color);
 				
-				method_mask_undefined->copy(saved_mask_undefined);
-				method_mask_solved->copy(saved_mask_solved);
+				if (color > 1) {
+					method_mask_undefined->copy(saved_mask_undefined);
+					method_mask_solved->copy(saved_mask_solved);
+				}
 				
 				for (pos = 0; pos < f_size; pos++) {
-					if ( (*flood_areas)[pos] != color ) {
+					if ( (*flood_areas)(pos) != color ) {
 						method_mask_undefined->set_true(pos);
 						method_mask_solved->set_false(pos);
 					}
@@ -348,7 +359,7 @@ bool f_completer::minimize() {
 
 				if (res) {
 					for (pos = 0; pos < f_size; pos++) {
-						if ( (*flood_areas)[pos] == color ) {
+						if ( (*flood_areas)(pos) == color ) {
 							
 							undef = method_mask_undefined->get(pos);
 							if (undef)
@@ -366,11 +377,11 @@ bool f_completer::minimize() {
 					}
 				} else {
 					for (pos = 0; pos < f_size; pos++) {
-						if ( (*flood_areas)[pos] == color ) {
+						if ( (*flood_areas)(pos) == color ) {
 							saved_mask_undefined->set_true(pos);
 						}
 					}
-				}	
+				}
 				
 			};
 			
@@ -388,7 +399,8 @@ bool f_completer::minimize() {
 			
 		}
 
-		delete flood_areas;
+		if (flood_areas)
+			flood_areas->release();
 
 		writelog(LOG_MESSAGE,"completer : processing whole area");
 		res = minimize_step() && res;
@@ -467,7 +479,7 @@ void f_completer::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 
 bool f_completer::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
-					const vec * X)
+					const extvec * X)
 {
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	size_t i, cnt = 0;
@@ -498,20 +510,20 @@ void f_completer::set_mask(const d_mask * imask) {
 };
 
 size_t calcVecV(size_t size, 
-	     vec * X,
-	     matr * T, 
-	     vec *& res,
-	     size_t NN, size_t MM,
-	     const bitvec * mask_solved,
-	     const bitvec * mask_undefined,
-	     size_t x_from, size_t x_to,
-	     size_t y_from, size_t y_to,
-	     d_surf * trend) 
+	        const extvec * X,
+	        matr * T, 
+	        extvec *& res,
+	        size_t NN, size_t MM,
+	        const bitvec * mask_solved,
+	        const bitvec * mask_undefined,
+	        size_t x_from, size_t x_to,
+	        size_t y_from, size_t y_to,
+	        const d_surf * trend) 
 {
 	int points = 0;
 
 	if (!res)
-		res = create_vec(size);
+		res = create_extvec(size);
 
 	size_t i,j;
 	size_t pos, pos_x, pos_y;
@@ -526,63 +538,141 @@ size_t calcVecV(size_t size,
 	pos_x = UINT_MAX;
 	pos_y = UINT_MAX;
 
-	for (pos = 0; pos < mask_solved->size(); pos++) {
+	bool half_solved = mask_solved->is_half_solved();
 
-		size_t local_pos = pos;
+	if (half_solved) {
 
-		if (use_rect) {
+		for (pos = 0; pos < size; pos++) {
 
-			pos_x = pos % NN;
-			pos_y = (pos - pos_x)/NN;
+			if ( (mask_solved->get(pos) == true) || (mask_undefined->get(pos) == true) ) {
+				points++;
+				continue; // assume that res already initialized with zeros
+			}
 
-			if  (!( (pos_x >= x_from) && (pos_x <= x_to) && (pos_y >= y_from) && (pos_y <= y_to) ))
-				continue;
-			local_pos = pos_x-x_from + (pos_y-y_from)*nn;
+			REAL val = 0, trend_val = 0;
+
+			size_t local_pos = pos;
+
+			if (use_rect) {
+
+				one2two(pos, pos_x, pos_y, NN, MM);
+
+				if  (!( (pos_x >= x_from) && (pos_x <= x_to) && (pos_y >= y_from) && (pos_y <= y_to) ))
+					continue; // out of rect
+
+				local_pos = pos_x-x_from + (pos_y-y_from)*nn;
+			}
+
+			if (trend) {
+
+				REAL tval = (*(trend->coeff))(local_pos);
+				if (trend_val != undef_value) {
+					size_t j, prev_j;
+					for (j = 0; j < size;) {
+						prev_j = j;
+						REAL mult = T->element_at(pos,prev_j,&j);
+						if (mult == 0)
+							continue;
+
+						if (use_rect) {
+							one2two(prev_j, pos_x, pos_y, NN, MM);
+							prev_j = pos_x-x_from + (pos_y-y_from)*nn;
+						}
+
+						REAL tval = (*(trend->coeff))(prev_j);
+						if (tval == trend->undef_value)
+							continue;
+						if (tval == 0)
+							continue;
+
+						trend_val += mult*tval;
+					}
+				}
+
+			}
+
+			REAL mult_val = 0;
+
+			size_t j, prev_j;
+			for (j = 0; j < size;) {
+				prev_j = j;
+				mult_val = T->element_at(pos,prev_j,&j);
+				if (mult_val == 0)
+					continue;
+				if (mask_solved->get(prev_j) == true)
+					val += mult_val*(*X)(prev_j);;
+			}
+
+			if (-val + trend_val != 0)
+				(*res)(pos) = -val + trend_val;
 
 		}
 
-		if (trend) {
-			
-			REAL trend_val = (*(trend->coeff))(local_pos);
-			if (trend_val != undef_value) {
-				for (j = 0; j < T->rows();) {
-					size_t prev_j = j;
-					mult = T->element_at(pos,j,&j);
-					if (trend && (mult != 0)) {
-						(*res)(prev_j) += mult*trend_val;
+	} else {
+
+		for (pos = 0; pos < size; pos++) {
+
+			size_t local_pos = pos;
+
+			if (use_rect) {
+
+				pos_x = pos % NN;
+				pos_y = (pos - pos_x)/NN;
+
+				if  (!( (pos_x >= x_from) && (pos_x <= x_to) && (pos_y >= y_from) && (pos_y <= y_to) ))
+					continue;
+				local_pos = pos_x-x_from + (pos_y-y_from)*nn;
+
+			}
+
+			if (trend) {
+
+				REAL trend_val = (*(trend->coeff))(local_pos);
+				if ((trend_val != undef_value) && (trend_val != 0)) {
+					for (j = 0; j < T->rows();) {
+						size_t prev_j = j;
+						mult = T->element_at(pos,j,&j);
+
+						if (trend && (mult != 0)) {
+							(*res)(prev_j) += mult*trend_val;
+						}
 					}
+				}
+
+			}
+
+			if (mask_solved->get(pos) == false) 
+				continue;
+
+			val = (*X)(pos);
+
+			if (val != 0) {
+				for (j = 0; j < T->rows();) {
+					int prev_j = j;
+					mult = T->element_at(pos,j,&j);
+					if (mult == 0)
+						continue;
+					(*res)(prev_j) -= val*mult;
 				}
 			}
 
+
 		}
 
-		if (!mask_solved->get(pos))
-			continue;
-
-		val = (*X)(pos);
-
-		for (j = 0; j < T->rows();) {
-			int prev_j = j;
-			mult = T->element_at(pos,j,&j);
-			(*res)(prev_j) -= val*mult;
+		for (i = 0; i < mask_solved->size(); i++) {
+			if (mask_solved->get(i)) {
+				(*res)(i) = 0;
+				points++;
+			}
 		}
 
-		
-	}
-	
-	for (i = 0; i < mask_solved->size(); i++) {
-		if (mask_solved->get(i)) {
-			(*res)(i) = 0;
-			points++;
-		}
-	}
-
-	if (use_rect) {
-		size_t n,m;
-		for (m = 0; m < MM; m++) {
-			for (n = 0; n < NN; n++) {
-				if  (!( (n >= x_from) && (n <= x_to) && (m >= y_from) && (m <= y_to) ))
-					(*res)(n + m*NN) = 0;
+		if (use_rect) {
+			size_t n,m;
+			for (m = 0; m < MM; m++) {
+				for (n = 0; n < NN; n++) {
+					if  (!( (n >= x_from) && (n <= x_to) && (m >= y_from) && (m <= y_to) ))
+						(*res)(n + m*NN) = 0;
+				}
 			}
 		}
 	}

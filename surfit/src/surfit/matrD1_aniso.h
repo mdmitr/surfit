@@ -61,8 +61,8 @@ public:
 	REAL element_at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
-	REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end);
-	REAL mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end);
+	REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
+	REAL mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 		
 	virtual size_t cols() const;
 	virtual size_t rows() const;

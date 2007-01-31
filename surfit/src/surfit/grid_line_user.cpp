@@ -203,7 +203,7 @@ void draw_grid_line_matlab(FILE * ff, const grid_line * line, const d_grid * grd
 	fflush(ff);
 };
 
-void draw_brez_matlab(FILE * ff, const std::vector<size_t> * nns, const d_grid * grd, size_t NN, size_t MM) 
+void draw_brez_matlab(FILE * ff, const grid_line_vec * nns, const d_grid * grd, size_t NN, size_t MM) 
 {
 #ifndef DEBUG
 	return;
@@ -227,7 +227,7 @@ void draw_brez_matlab(FILE * ff, const std::vector<size_t> * nns, const d_grid *
 };
 
 inline
-void add_val(std::vector<size_t> * v, size_t n, size_t m, size_t NN, size_t MM) {
+void add_val(grid_line_vec * v, size_t n, size_t m, size_t NN, size_t MM) {
 	if ((n < 0) || (n >= NN))
 		return;
 
@@ -239,8 +239,8 @@ void add_val(std::vector<size_t> * v, size_t n, size_t m, size_t NN, size_t MM) 
 };
 
 inline
-void add_val_pair(std::vector<size_t> * v1, size_t n1, size_t m1, 
-		  std::vector<size_t> * v2, size_t n2, size_t m2, 
+void add_val_pair(grid_line_vec * v1, size_t n1, size_t m1, 
+		  grid_line_vec * v2, size_t n2, size_t m2, 
 		  size_t NN, size_t MM) {
 	
 
@@ -288,7 +288,7 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 		
 	size_t NN = grd->getCountX();
 	size_t MM = grd->getCountY();
-	std::vector<size_t> * nns = new std::vector<size_t>(); // ?
+	grid_line_vec * nns = new grid_line_vec(); // ?
 
 	d_grid * grd2 = create_grid(grd);
 
@@ -469,8 +469,8 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	}
 	nns->resize(write_pos+1);
 
-	std::vector<size_t> * cells1 = new std::vector<size_t>();
-	std::vector<size_t> * cells2 = new std::vector<size_t>();
+	grid_line_vec * cells1 = new grid_line_vec();
+	grid_line_vec * cells2 = new grid_line_vec();
 	cells1->reserve(nns->size());
 	cells2->reserve(nns->size());
 

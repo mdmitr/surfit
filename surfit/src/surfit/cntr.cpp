@@ -72,7 +72,7 @@ bool d_cntr::getMinMaxZ(REAL & minz, REAL & maxz) const {
 void d_cntr::plus(REAL value) {
 	if (Z == NULL)
 		return;
-	REAL * ptr = NULL;
+	vec::iterator ptr;
 	for (ptr = Z->begin(); ptr != Z->end(); ptr++) 
 		*ptr += value;
 }; 
@@ -80,7 +80,7 @@ void d_cntr::plus(REAL value) {
 void d_cntr::minus(REAL value) {
 	if (Z == NULL)
 		return;
-	REAL * ptr = NULL;
+	vec::iterator ptr;
 	for (ptr = Z->begin(); ptr != Z->end(); ptr++) 
 		*ptr -= value;
 };
@@ -88,7 +88,7 @@ void d_cntr::minus(REAL value) {
 void d_cntr::mult(REAL value) {
 	if (Z == NULL)
 		return;
-	REAL * ptr = NULL;
+	vec::iterator ptr;
 	for (ptr = Z->begin(); ptr != Z->end(); ptr++) 
 		*ptr *= value;
 };
@@ -96,7 +96,7 @@ void d_cntr::mult(REAL value) {
 void d_cntr::div(REAL value) {
 	if (Z == NULL)
 		return;
-	REAL * ptr = NULL;
+	vec::iterator ptr;
 	for (ptr = Z->begin(); ptr != Z->end(); ptr++) 
 		*ptr /= value;
 };
@@ -199,6 +199,9 @@ bool add_mean_val(d_grid * grd, size_t x, size_t y,
 d_points * discretize_cntr(const d_cntr * crv, d_grid * grd, const char * pnts_name) {
 	
 	if (!crv)
+		return NULL;
+
+	if (crv->size() == 0)
 		return NULL;
 
 	// using modified brezengham algorithm

@@ -77,7 +77,7 @@ const data * f_area_wmean::this_get_data(int pos) const {
 	return NULL;
 };
 
-bool f_area_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_area_wmean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	if (area->getName())
 		writelog(LOG_MESSAGE,"area_wmean %s value = %g condition", area->getName(), mean);
@@ -104,7 +104,7 @@ bool f_area_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	size_t nn = w_srf->getCountX();
 	size_t mm = w_srf->getCountY();
 	
-	vec * weights = create_vec(matrix_size); 
+	extvec * weights = create_extvec(matrix_size); 
 	bitvec * mask = create_bitvec(matrix_size);
 	mask->init_true();
 
@@ -169,7 +169,7 @@ bool f_area_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 	REAL v_val = mean*denom - sum_values_solved;
 
-	v = create_vec(matrix_size, 0, false);
+	v = create_extvec(matrix_size, 0, false);
 	for (i = 0; i < matrix_size; i++) {
 		if ( mask->get(i) ) 
 			(*v)(i) = 0;
@@ -186,7 +186,7 @@ bool f_area_wmean::make_matrix_and_vector(matr *& matrix, vec *& v) {
 
 bool f_area_wmean::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
-					const vec * X)
+					const extvec * X)
 {
 	get_area_mask();
 	if (area_mask == NULL)

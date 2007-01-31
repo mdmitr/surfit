@@ -91,7 +91,7 @@ bool f_curv::minimize() {
 	return f_pnts->minimize();
 };
 
-bool f_curv::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_curv::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	create_f_approx_points();
 	return f_pnts->make_matrix_and_vector(matrix, v);
 };
@@ -103,7 +103,7 @@ void f_curv::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undef
 
 bool f_curv::solvable_without_cond(const bitvec * mask_solved,
 				  const bitvec * mask_undefined,
-				  const vec * X)
+				  const extvec * X)
 {
 	return true;
 };

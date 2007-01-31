@@ -63,14 +63,14 @@ bool f_mask_ineq::minimize() {
 
 };
 
-bool f_mask_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_mask_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	size_t points = 0;
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	size_t NN = method_basis_cntX;
 	size_t MM = method_basis_cntY;
-	v = create_vec(matrix_size);
+	v = create_extvec(matrix_size);
 
 	if (leq) {
 		if (mask->getName()) 
@@ -84,7 +84,7 @@ bool f_mask_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 			writelog(LOG_MESSAGE,"inequality for noname mask geq %g", value);
 	}
 
-	vec * diag = create_vec(matrix_size);
+	extvec * diag = create_extvec(matrix_size);
 
 	bitvec * matr_mask = create_bitvec(matrix_size);
 	matr_mask->init_false();
@@ -176,7 +176,7 @@ void f_mask_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 
 bool f_mask_ineq::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
-					const vec * X)
+					const extvec * X)
 {
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;

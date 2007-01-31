@@ -22,6 +22,7 @@
 
 #include <vector>
 #include "surfit_data.h"
+#include "vec.h"
 
 namespace surfit {
 
@@ -233,10 +234,8 @@ SURFIT_EXPORT
 */
 void _sort_points(const d_points * pnts, 
 		  std::vector<size_t> * nums,
-		  REAL **& sortx_begin, 
-		  REAL **& sortx_end, 
-		  REAL **& sorty_begin, 
-		  REAL **& sorty_end);
+		  std::vector<size_t> & sortx,
+		  std::vector<size_t> & sorty);
 
 SURFIT_EXPORT
 /*! \ingroup internal_points

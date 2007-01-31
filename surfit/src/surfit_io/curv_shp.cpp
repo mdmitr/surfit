@@ -93,9 +93,15 @@ bool _curv_save_shp(const d_curv * contour, const char * filename) {
 		name_field = DBFGetFieldIndex( hDBF, "NAME" );
 	};
 
+	std::vector<REAL> data_x(contour->size());
+	std::vector<REAL> data_y(contour->size());
+	std::copy(contour->X->begin(), contour->X->end(), data_x.begin());
+	std::copy(contour->Y->begin(), contour->Y->end(), data_y.begin());
+
+
 	SHPObject * psObject = SHPCreateObject(SHPT_ARC,
 			-1, 0, NULL, NULL, contour->size(), 
-			contour->X->begin(), contour->Y->begin(), NULL, NULL);
+			&*(data_x.begin()), &*(data_y.begin()), NULL, NULL);
 
 	SHPComputeExtents(psObject);
 		
@@ -110,6 +116,7 @@ bool _curv_save_shp(const d_curv * contour, const char * filename) {
 	DBFClose( hDBF );
 
 	return true;
+
 };
 
 d_curv * _curv_load_shp(const char * filename, const char * curvname) {

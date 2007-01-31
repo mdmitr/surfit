@@ -71,7 +71,7 @@ bool f_dem::minimize() {
 		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 		matr * A = NULL;
-		vec * b = NULL;
+		extvec * b = NULL;
 		bool solvable = make_matrix_and_vector(A,b);
 
 		if (solvable == false) {
@@ -95,7 +95,7 @@ bool f_dem::minimize() {
 	return false;
 };
 
-bool f_dem::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_dem::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	if (dem->getName())
 		writelog(LOG_MESSAGE,"dem : (%s), size=(%d x %d)", dem->getName(), dem->getCountX(), dem->getCountY());
@@ -105,7 +105,7 @@ bool f_dem::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	size_t NN = method_grid->getCountX();
 	size_t MM = method_grid->getCountY();
 
-	v = create_vec(NN*MM);
+	v = create_extvec(NN*MM);
 	
 	if (mask)
 		mask->release();
@@ -227,7 +227,7 @@ bool f_dem::minimize_only_dem() {
 
 bool f_dem::solvable_without_cond(const bitvec * mask_solved,
 				  const bitvec * mask_undefined,
-				  const vec * X)
+				  const extvec * X)
 {
 	return true;
 };

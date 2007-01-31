@@ -21,22 +21,22 @@
 #define __surfit__solvers__
 
 #include <float.h>
+#include "vec.h"
 
 namespace surfit {
 
-class vec;
 class matr;
 class functional;
 
 SURFIT_EXPORT
-void solve(matr * T, const vec * V, vec *& X);
+void solve(matr * T, const extvec * V, extvec *& X);
 
 SURFIT_EXPORT
 bool solve_with_penalties(functional * fnc, 
-			  matr * T, vec * V, vec *& X);
+			  matr * T, extvec * V, extvec *& X);
 
 struct solver {
-	virtual void solve(matr * T, const vec * V, vec *& X) = 0;
+	virtual void solve(matr * T, const extvec * V, extvec *& X) = 0;
 	virtual const char * get_long_name() const = 0;
 	virtual const char * get_short_name() const = 0;
 };
@@ -71,22 +71,22 @@ void solvers_info();
 #ifdef HAVE_THREADS
 // y = ax + y
 SURFIT_EXPORT
-void axpy(REAL a, const vec & x, vec & y);
+void axpy(REAL a, const extvec & x, extvec & y);
 
 // y = x + ay
 SURFIT_EXPORT
-void xpay(REAL a, const vec & x, vec & y);
+void xpay(REAL a, const extvec & x, extvec & y);
 
 SURFIT_EXPORT
-REAL threaded_times(const vec * a, const vec * b);
+REAL threaded_times(const extvec * a, const extvec * b);
 #endif
 
-vec * RF(matr * A, const vec * b, int max_it, REAL tol = 1e-6, vec * X = NULL, REAL undef_value = FLT_MAX);
-vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_value = FLT_MAX);
-vec * J(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_value = FLT_MAX);
-vec * JCG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_value = FLT_MAX);
-vec * SSOR(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_value = FLT_MAX, REAL omega = REAL(1.6));
-vec * SSORCG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_value = FLT_MAX, REAL omega = REAL(1.6));
+extvec *     RF(matr * A, const extvec * b, int max_it, REAL tol = 1e-6, extvec * X = NULL, REAL undef_value = FLT_MAX);
+extvec *     CG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value = FLT_MAX);
+extvec *      J(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value = FLT_MAX);
+extvec *    JCG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value = FLT_MAX);
+extvec *   SSOR(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value = FLT_MAX, REAL omega = REAL(1.6));
+extvec * SSORCG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value = FLT_MAX, REAL omega = REAL(1.6));
 
 };
 

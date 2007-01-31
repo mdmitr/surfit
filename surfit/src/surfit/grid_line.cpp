@@ -38,11 +38,11 @@
 
 namespace surfit {
 
-grid_line * create_grid_line(size_t iNN, size_t iMM, std::vector<size_t> * ifirst, std::vector<size_t> * isecond) {
+grid_line * create_grid_line(size_t iNN, size_t iMM, grid_line_vec * ifirst, grid_line_vec * isecond) {
 	return new grid_line(iNN, iMM, ifirst, isecond);
 };
 
-grid_line::grid_line(size_t iNN, size_t iMM, std::vector<size_t> * ifirst, std::vector<size_t> * isecond) : data("grid_line") {
+grid_line::grid_line(size_t iNN, size_t iMM, grid_line_vec * ifirst, grid_line_vec * isecond) : data("grid_line") {
 
 	NN = iNN;
 	MM = iMM;
@@ -87,7 +87,7 @@ void grid_line::sort() {
 	sort_by_first_begin = (size_t**)malloc(size*sizeof(size_t*));
 	sort_by_first_end = sort_by_first_begin + size;
 
-	std::vector<size_t>::iterator ptr;
+	grid_line_vec::iterator ptr;
 	size_t ** pptr;
 	for (ptr = first->begin(), pptr = sort_by_first_begin; ptr != first->end(); ptr++, pptr++)
 		*pptr = &*ptr;
@@ -103,7 +103,7 @@ void grid_line::sort() {
 	std::sort(sort_by_second_begin, sort_by_second_end, ptr_size_t_less);
 };
 
-void grid_line::add(std::vector<size_t> *& ifirst, std::vector<size_t> *& isecond) 
+void grid_line::add(grid_line_vec *& ifirst, grid_line_vec *& isecond) 
 {
 	if (ifirst == NULL)
 		return;
@@ -761,7 +761,7 @@ size_t grid_line::get_second_cell(size_t pos) const
 
 void flood_fill(d_grid * grd,
 		grid_line * line, 
-		std::vector<short int> * data,
+		shortvec * data,
 		size_t fill_pos,
 		short int fill_val,
 		const bitvec * mask_undefined) {
@@ -782,19 +782,22 @@ void flood_fill(d_grid * grd,
 	size_t fill_i, fill_j;
 	one2two(fill_pos, fill_i, fill_j, NN, MM);
 	 
-	std::vector<size_t> * flood_points = new std::vector<size_t>();
+	grid_line_vec * flood_points = new grid_line_vec();
 	size_t push_pos, push_pos2;
 	flood_points->push_back(fill_pos);
 	
 	size_t max_points = 1;
 	size_t i;
 	for (i = 0; i < max_points; i++) {
-		
+
 		bool flood;
 
 		size_t pos = (*flood_points)[i];
 
-		if ( (*data)[pos] != 0 )
+		if (pos == UINT_MAX)
+			continue;
+
+		if ( (*data)(pos) != 0 )
 			continue;
 
 		one2two(pos, fill_i, fill_j, NN, MM);
@@ -807,8 +810,8 @@ void flood_fill(d_grid * grd,
 			
 			if ((left_i >= 0) && (left_i < max_i) && (left_j >= 0) && (left_j < max_j)) {
 				two2one(push_pos, left_i, left_j, NN, MM);
-				if ( (*data)[push_pos] == 0 )
-					(*data)[push_pos] = fill_val;
+				if ( (*data)(push_pos) == 0 )
+					(*data)(push_pos) = fill_val;
 			}
 			else
 				break;
@@ -832,7 +835,7 @@ void flood_fill(d_grid * grd,
 			}
 			
 			if (flood)
-				flood = flood && ( (*data)[push_pos] == 0 );
+				flood = flood && ( (*data)(push_pos) == 0 );
 			
 			if (!flood)
 				break;
@@ -863,13 +866,13 @@ void flood_fill(d_grid * grd,
 			}
 							
 			if (flood)
-			    	flood = flood && ( (*data)[push_pos] == 0 );
+			    	flood = flood && ( (*data)(push_pos) == 0 );
 			
 			if (!flood)
 				break;
 
-			if ( (*data)[push_pos] == 0 )
-				(*data)[push_pos] = fill_val;
+			if ( (*data)(push_pos) == 0 )
+				(*data)(push_pos) = fill_val;
 			
 			else
 				break;
@@ -885,7 +888,7 @@ void flood_fill(d_grid * grd,
 			two2one(push_pos, i_pos, fill_j+1, NN, MM);
 			two2one(push_pos2, i_pos, fill_j, NN, MM);
 			if (( push_pos >= 0 ) && (push_pos < grid_size)) {
-				if ( (*data)[push_pos] == 0 ) {
+				if ( (*data)(push_pos) == 0 ) {
 					
 					flood = true;
 					
@@ -897,7 +900,7 @@ void flood_fill(d_grid * grd,
 					}
 						
 					if (flood && (fill_j+1 < MM))
-						flood = flood && ( (*data)[push_pos] == 0 );
+						flood = flood && ( (*data)(push_pos) == 0 );
 					
 					if (flood && (fill_j+1 < MM))
 						flood_points->push_back(push_pos);
@@ -908,7 +911,7 @@ void flood_fill(d_grid * grd,
 			two2one(push_pos, i_pos, fill_j-1, NN, MM);
 			two2one(push_pos2, i_pos, fill_j, NN, MM);
 			if (( push_pos >= 0 ) && (push_pos < grid_size)) {
-				if ( (*data)[push_pos] == 0 ) {
+				if ( (*data)(push_pos) == 0 ) {
 					
 					flood = true;
 					
@@ -920,7 +923,7 @@ void flood_fill(d_grid * grd,
 					}
 
 					if (flood && (fill_j-1 > 0))
-						flood = flood && ( (*data)[push_pos] == 0 );
+						flood = flood && ( (*data)(push_pos) == 0 );
 					
 					if (flood && (fill_j-1 > 0))
 						flood_points->push_back(push_pos);
@@ -934,7 +937,7 @@ void flood_fill(d_grid * grd,
 	}
 
 	delete flood_points;
-
+	
 	/*
 #ifdef DEBUG
 	FILE * ff = fopen("c:\\ffill.m","w+");
@@ -969,7 +972,7 @@ void flood_fill_boolvec(d_grid * grd,
 	size_t fill_i = fill_pos % NN;
 	size_t fill_j = (fill_pos - fill_i)/NN;
 
-	std::vector<size_t> * flood_points = new std::vector<size_t>();
+	grid_line_vec * flood_points = new grid_line_vec();
 	flood_points->push_back(fill_i + NN * fill_j);
 
 	size_t max_points = 1;
@@ -1062,10 +1065,9 @@ void flood_fill_boolvec(d_grid * grd,
 	return;
 };
 
-
-std::vector<short int>::iterator 
-find_first(std::vector<short int>::iterator it1, 
-	   std::vector<short int>::iterator it2,
+shortvec::const_iterator 
+find_first(shortvec::const_iterator it1, 
+	   shortvec::const_iterator it2,
 	   short int val) {
 
 	while (it1 != it2) {
@@ -1078,7 +1080,7 @@ find_first(std::vector<short int>::iterator it1,
 
 };
 
-void fill_all_areas(std::vector<short int> *& flood_areas, 
+void fill_all_areas(shortvec *& flood_areas, 
 		    d_grid * grd, 
 		    grid_line * line, 
 		    int & flood_areas_cnt,
@@ -1090,8 +1092,7 @@ void fill_all_areas(std::vector<short int> *& flood_areas,
 	size_t max_pos = grd->getCountX()*grd->getCountY();
 
 	if (!flood_areas)
-		flood_areas = new std::vector<short int>(max_pos);
-	std::vector<short int>::iterator it;
+		flood_areas = create_shortvec( max_pos );
 
 	short int color = 1;
 
@@ -1099,7 +1100,7 @@ void fill_all_areas(std::vector<short int> *& flood_areas,
 	{
 		size_t i;
 		for (i = 0; i < flood_areas->size(); i++) {
-			(*flood_areas)[i] = color;
+			(*flood_areas)(i) = color;
 			flood_areas_cnt = 1;
 		}
 		return;
@@ -1108,17 +1109,18 @@ void fill_all_areas(std::vector<short int> *& flood_areas,
 	if (mask_undefined) {
 		for (pos = 0; pos < max_pos; pos++) {
 			if (mask_undefined->get(pos))
-				(*flood_areas)[pos] = -1;
+				(*flood_areas)(pos) = -1;
 		}
 	}
 
+	shortvec::const_iterator it;
 	pos = 0;
 	while ( pos < max_pos) {
 		
 		flood_fill(grd, line, flood_areas, pos, color, NULL);
 
 		short int val = 0;
-		
+
 		it = find_first(flood_areas->begin()+pos, flood_areas->end(), val);
 
 		if (it == flood_areas->end())
@@ -1212,7 +1214,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 #endif
 */
 
-	std::vector<short int> * data = new std::vector<short int>(nn*mm);
+	shortvec * data = create_shortvec(nn*mm);
 
 	// check for undefined elements in small_grd
 	bool exists_undef = false;
@@ -1278,7 +1280,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 	for (j = 0; j < mm; j++) {
 		for (i = 0; i < nn; i++) {
 			pos = i + j*nn;
-			val = (*data)[pos];
+			val = (*data)(pos);
 			if ( val == 0) {
 				pos_i = i + ( min_i>1?min_i-1:1-min_i );
 				pos_j = j + ( min_j>1?min_j-1:1-min_j );
@@ -1289,8 +1291,9 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 		}
 	}
 
-	delete data;
-
+	if (data)
+		data->release();
+	
 	line->resize( min_i>1?min_i-1:1-min_i, 
 		      min_j>1?min_j-1:1-min_j, 
 		      NN+2, MM+2, 
@@ -1323,8 +1326,8 @@ grid_line * trace_undef_grd_line(const bitvec * mask_undefined, size_t NN) {
 	size_t size = mask_undefined->size();
 	size_t MM = size/NN;
 
-	std::vector<size_t> * first = new std::vector<size_t>();
-	std::vector<size_t> * second = new std::vector<size_t>();
+	grid_line_vec * first = new grid_line_vec();
+	grid_line_vec * second = new grid_line_vec();
 	grid_line * res = NULL;
 	
 	size_t pos, pos1, pos2;

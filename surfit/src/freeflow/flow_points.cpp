@@ -74,7 +74,7 @@ bool f_flow_points::minimize() {
 	return false;
 };
 
-bool f_flow_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_flow_points::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	if (f_sub_tasks == NULL) {
 		prepare_scattered_points(f_task, f_sub_tasks);
@@ -83,7 +83,7 @@ bool f_flow_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	size_t i;
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
-	v = create_vec(matrix_size);
+	v = create_extvec(matrix_size);
 
 	size_t task_size = f_task->size();
 		
@@ -141,7 +141,7 @@ void f_flow_points::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mas
 
 bool f_flow_points::solvable_without_cond(const bitvec * mask_solved,
 					  const bitvec * mask_undefined,
-					  const vec * X)
+					  const extvec * X)
 {
 
 	size_t i;

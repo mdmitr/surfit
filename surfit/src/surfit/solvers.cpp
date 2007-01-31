@@ -125,7 +125,7 @@ void solvers_info() {
 	}
 };
 
-void solve(matr * T, const vec * V, vec *& X) {
+void solve(matr * T, const extvec * V, extvec *& X) {
 
 	if (solver_name == NULL) {
 		writelog(LOG_ERROR,"Solver not found!");
@@ -146,36 +146,20 @@ void solve(matr * T, const vec * V, vec *& X) {
 		writelog(LOG_ERROR,"Solver not found!");
 };
 
-bool solve_with_penalties(functional * fnc, matr * T, vec * V, vec *& X) {
+bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X) {
 		
-	bitvec * test_mask_solved = create_bitvec(method_mask_solved);
+	bitvec * test_mask_solved = create_bitvec(method_mask_solved->size());
 	test_mask_solved->init_false();
-	bitvec * test_mask_undefined = create_bitvec(method_mask_solved);
+	bitvec * test_mask_undefined = create_bitvec(method_mask_solved->size());
 	test_mask_undefined->init_false();
 
 	fnc->cond_mark_solved_and_undefined(test_mask_solved, test_mask_undefined);
 	bool res = fnc->solvable_without_cond(test_mask_solved, test_mask_undefined, X);
-	if (res)
+	if (res == false)
 		fnc->mark_solved_and_undefined(test_mask_solved, test_mask_undefined, false);
 
-	bool res2 = fnc->solvable(test_mask_solved, test_mask_undefined, X) || res;
+	bool res2 = res || fnc->solvable(test_mask_solved, test_mask_undefined, X);
 
-	if (res2 == false) {
-		if (test_mask_solved)
-			test_mask_solved->release();
-		if (test_mask_undefined)
-			test_mask_undefined->release();
-		delete T; 
-		if (V)
-			V->release();
-		return false;
-	}
-	
-	test_mask_solved->copy(method_mask_solved);
-	test_mask_undefined->copy(method_mask_undefined);
-	fnc->mark_solved_and_undefined(test_mask_solved, test_mask_undefined, false);
-	res = fnc->cond_solvable(test_mask_solved, test_mask_undefined, X);
-			
 	if (test_mask_solved)
 		test_mask_solved->release();
 	if (test_mask_undefined)
@@ -187,7 +171,7 @@ bool solve_with_penalties(functional * fnc, matr * T, vec * V, vec *& X) {
 			V->release();
 		return false;
 	}
-	
+					
 	REAL weight = penalty_weight;
 	REAL x_norm = norm2(X, FLT_MAX);
 	int counter = 0;
@@ -199,28 +183,24 @@ bool solve_with_penalties(functional * fnc, matr * T, vec * V, vec *& X) {
 	bool ok = false;
 	while (!ok) {
 
-		matr * P_matrix = NULL;
-		vec * P_vec = NULL;
-		fnc->cond_make_matrix_and_vector(P_matrix, P_vec, parent_mask);
-		
 		if (counter == 0)
 			writelog(LOG_MESSAGE,"processing with penalties...");
-		//else
-		//	writelog(LOG_MESSAGE,"processing with penalties : %d iteration", counter);
 		
+		matr * P_matrix = NULL;
+		extvec * P_vec = NULL;
+		fnc->cond_make_matrix_and_vector(P_matrix, P_vec, parent_mask);
+			
 		size_t matrix_size = X->size();
-		
-		
+			
 		matr_sum * S_matrix = new matr_sum(1, T, weight, P_matrix);
-		S_matrix->set_const();
+		S_matrix->set_const(); // leave matrix T undeleted
 
-		vec * S_vec = create_vec(P_vec->size(),0,0);
+		extvec * S_vec = create_extvec(P_vec->size(),0,0);
 
 		size_t i;
 		for (i = 0; i < matrix_size; i++) {
 			(*S_vec)(i) = (*P_vec)(i)*weight + (*V)(i);
 		};
-		
 		
 		solve(S_matrix, S_vec, X);
 		counter++;
@@ -228,6 +208,10 @@ bool solve_with_penalties(functional * fnc, matr * T, vec * V, vec *& X) {
 		delete S_matrix;
 		if (S_vec)
 			S_vec->release();
+
+		delete P_matrix;
+		if (P_vec)
+			P_vec->release();
 				
 		weight *= penalty_weight_mult;
 		
@@ -239,10 +223,6 @@ bool solve_with_penalties(functional * fnc, matr * T, vec * V, vec *& X) {
 
 		if ((counter > penalty_max_iter) || (stop_execution == 1))
 			ok = true;
-		
-		delete P_matrix;
-		if (P_vec)
-			P_vec->release();
 	
 	}
 
@@ -266,7 +246,7 @@ struct axpy_job : public job
 		from = 0;
 		to = 0;
 	}
-	void set(REAL ia, const vec * ix, vec * iy, size_t ifrom, size_t ito)
+	void set(REAL ia, const extvec * ix, extvec * iy, size_t ifrom, size_t ito)
 	{
 		a = ia;
 		x = ix;
@@ -284,24 +264,24 @@ struct axpy_job : public job
 	}
 
 	REAL a;
-	const vec * x;
-	vec * y;
+	const extvec * x;
+	extvec * y;
 	size_t from, to;
 
 };
 
 axpy_job axpy_jobs[MAX_CPU];
 
-void axpy(REAL a, const vec & x, vec & y)
+void axpy(REAL a, const extvec & x, extvec & y)
 {
 	int m = 1;
 	size_t N = x.size();
-	size_t step = N/(cpu*m);
-	size_t ost = N % (cpu*m);
+	size_t step = N/(sstuff_get_threads()*m);
+	size_t ost = N % (sstuff_get_threads()*m);
 	size_t J_from = 0;
 	size_t J_to = 0;
 	size_t i;
-	for (i = 0; i < (size_t)(cpu*m); i++) {
+	for (i = 0; i < (size_t)(sstuff_get_threads()*m); i++) {
 		J_to = J_from + step;
 		if (i == 0)
 			J_to += ost;
@@ -324,7 +304,7 @@ struct xpay_job : public job
 		from = 0;
 		to = 0;
 	}
-	void set(REAL ia, const vec * ix, vec * iy, size_t ifrom, size_t ito)
+	void set(REAL ia, const extvec * ix, extvec * iy, size_t ifrom, size_t ito)
 	{
 		a = ia;
 		x = ix;
@@ -342,23 +322,23 @@ struct xpay_job : public job
 	}
 
 	REAL a;
-	const vec * x;
-	vec * y;
+	const extvec * x;
+	extvec * y;
 	size_t from, to;
 
 };
 
 xpay_job xpay_jobs[MAX_CPU];
 
-void xpay(REAL a, const vec & x, vec & y)
+void xpay(REAL a, const extvec & x, extvec & y)
 {
 	size_t N = x.size();
-	size_t step = N/(cpu);
-	size_t ost = N % (cpu);
+	size_t step = N/(sstuff_get_threads());
+	size_t ost = N % (sstuff_get_threads());
 	size_t J_from = 0;
 	size_t J_to = 0;
 	size_t i;
-	for (i = 0; i < (size_t)cpu; i++) {
+	for (i = 0; i < (size_t)sstuff_get_threads(); i++) {
 		J_to = J_from + step;
 		if (i == 0)
 			J_to += ost;
@@ -375,13 +355,15 @@ struct times_job : public job
 {
 	times_job()
 	{
+#ifndef XXL
 		a = NULL;
 		b = NULL;
+#endif
 		size = 0;
 		res = 0;
 	}
 
-	void set(const REAL * ia, const REAL * ib, int isize) 
+	void set(extvec::const_iterator ia, extvec::const_iterator ib, int isize) 
 	{
 		a = ia;
 		b = ib;
@@ -395,28 +377,28 @@ struct times_job : public job
 		for (i = 0; i < size; i++) 
 			res += *(a+i) * *(b+i);
 	}
-	const REAL * a;
-	const REAL * b;
+	extvec::const_iterator a;
+	extvec::const_iterator b;
 	size_t size;
 	REAL res;
 };
 
 times_job times_jobs[MAX_CPU];
 
-REAL threaded_times(const vec * a, const vec * b)
+REAL threaded_times(const extvec * a, const extvec * b)
 {
 	size_t N = a->size();
-	size_t step = N/(cpu);
-	size_t ost = N % (cpu);
+	size_t step = N/(sstuff_get_threads());
+	size_t ost = N % (sstuff_get_threads());
 	size_t J_from = 0;
 	size_t J_to = 0;
 	size_t i;
-	for (i = 0; i < (size_t)cpu; i++) {
+	for (i = 0; i < (size_t)sstuff_get_threads(); i++) {
 		J_to = J_from + step;
 		if (i == 0)
 			J_to += ost;
 		times_job & f = times_jobs[i];
-		f.set(a->begin()+J_from, b->begin()+J_from, J_to - J_from);
+		f.set(a->const_begin()+J_from, b->const_begin()+J_from, J_to - J_from);
 		set_job(&f, i);
 		J_from = J_to;
 	}
@@ -424,7 +406,7 @@ REAL threaded_times(const vec * a, const vec * b)
 	do_jobs();
 
 	REAL res = 0;
-	for (i = 0; i < (size_t)cpu; i++) {
+	for (i = 0; i < (size_t)sstuff_get_threads(); i++) {
 		times_job & f = times_jobs[i];
 		res += f.res;
 	}

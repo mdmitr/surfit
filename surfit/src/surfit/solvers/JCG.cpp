@@ -32,7 +32,7 @@ using namespace std;
 
 namespace surfit {
 
-vec * JCG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_value) {
+extvec * JCG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value) {
 	
 	int flag = 0;				     // initialization
 	int iter = 0;
@@ -47,17 +47,17 @@ vec * JCG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_va
 		bnrm2 = REAL(1); 
 		
 	// pseudo-residual vector
-	vec * r = create_vec(N,0,0); // don't fill
+	extvec * r = create_extvec(N,0,0); // don't fill
 	// direction vector
-	vec * p = create_vec(N,0,0); // don't fill
+	extvec * p = create_extvec(N,0,0); // don't fill
 	// temporary vector
-	vec * temp = create_vec(N,0,0); // don't fill
+	extvec * temp = create_extvec(N,0,0); // don't fill
 	// vector for matrix multiplication
-	vec * q = create_vec(N,0,0); // don't fill
+	extvec * q = create_extvec(N,0,0); // don't fill
 	
-	vec * x = NULL;
+	extvec * x = NULL;
 	if (!X) 
-		x = create_vec(*b);
+		x = create_extvec(*b);
 	else 
 	{
 		x = X;
@@ -65,9 +65,9 @@ vec * JCG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_va
 	}
 	
 	// diagonal^-1 from matrix A
-	vec * D = create_vec(N,0,0); // don't fill
+	extvec * D = create_extvec(N,0,0); // don't fill
 	// symmetrization matrix W
-	vec * W = create_vec(N,0,0); // don't fill;
+	extvec * W = create_extvec(N,0,0); // don't fill;
 	// G = D^-1*A
 
 	for (i = 0; i < N; i++) {

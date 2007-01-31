@@ -112,6 +112,24 @@ size_t bitvec::true_size() const {
 	return cnt;
 };
 
+bool bitvec::is_half_solved() const {
+	size_t solved = 0;
+	size_t unsolved = 0;
+	size_t half = datasize/2;
+	size_t i;
+	for (i = 0; i < datasize; i++) {
+		if (get(i))
+			solved++;
+		else
+			unsolved++;
+		if (solved >= half)
+			return true;
+		if (unsolved >= half)
+			return true;
+	}
+	return false;
+};
+
 void bitvec::write4(size_t pos, 
 		    bool b1, bool b2, bool b3, bool b4) 
 {

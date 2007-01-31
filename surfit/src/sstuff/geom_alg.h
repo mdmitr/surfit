@@ -47,10 +47,10 @@ bool get_line_in_rect(REAL rx1, REAL ry1,
 		      REAL & lx1, REAL & ly1,
 		      REAL & lx2, REAL & ly2);
 
-inline
+template<class iter>
 bool rotate(REAL center_x, REAL center_y, REAL angle,
-	    REAL * x_begin, REAL * x_end,
-	    REAL * y_begin, REAL * y_end) 
+	    iter x_begin, iter x_end,
+	    iter y_begin, iter y_end) 
 {
 	REAL cos_alpha = (REAL)cos(angle/REAL(180)*3.1415926);
 	REAL sin_alpha = (REAL)sin(angle/REAL(180)*3.1415926);

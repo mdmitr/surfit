@@ -21,6 +21,7 @@
 #define __surfit_f_completer_included__
 
 #include "functional.h"
+#include "vec.h"
 
 namespace surfit {
 
@@ -30,7 +31,6 @@ class grid_line;
 class d_surf;
 class bitvec;
 class matr;
-class vec;
 
 /*! \class f_completer
     \brief Functional that tells how resulting surface should be in areas 
@@ -48,11 +48,11 @@ public:
 
 	bool minimize();
 
-	bool make_matrix_and_vector(matr *& matrix, vec *& v);
+	bool make_matrix_and_vector(matr *& matrix, extvec *& v);
 	
 	bool solvable_without_cond(const bitvec * mask_solved, 
 				   const bitvec * mask_undefined,
-				   const vec * X);
+				   const extvec * X);
 	
 	void mark_solved_and_undefined(bitvec * mask_solved, 
 				       bitvec * mask_undefined,
@@ -93,15 +93,15 @@ private:
 
 SURFIT_EXPORT
 size_t calcVecV(size_t size, 
-	     vec * X,
-	     matr * T, 
-	     vec *& res,
-	     size_t NN, size_t MM,
-	     const bitvec * mask_solved,
-	     const bitvec * mask_undefined,
-	     size_t use_x_from = UINT_MAX, size_t use_x_to = UINT_MAX,
-	     size_t use_y_from = UINT_MAX, size_t use_y_to = UINT_MAX,
-	     d_surf * trend = NULL);
+	        const extvec * X,
+	        matr * T, 
+	        extvec *& res,
+	        size_t NN, size_t MM,
+	        const bitvec * mask_solved,
+	        const bitvec * mask_undefined,
+	        size_t use_x_from = UINT_MAX, size_t use_x_to = UINT_MAX,
+	        size_t use_y_from = UINT_MAX, size_t use_y_to = UINT_MAX,
+	        const d_surf * trend = NULL);
 
 SURFIT_EXPORT
 bool completer_solvable(int points, REAL D1, REAL D2);

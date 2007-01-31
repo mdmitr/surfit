@@ -75,7 +75,7 @@ bool f_area_surf::minimize() {
 	} else {
 		
 		matr * A = NULL;
-		vec * b = NULL;
+		extvec * b = NULL;
 		bool solvable = make_matrix_and_vector(A,b);
 		
 		size_t matrix_size = method_basis_cntX*method_basis_cntY;
@@ -106,7 +106,7 @@ bool f_area_surf::minimize() {
 	return false;
 };
 
-bool f_area_surf::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_area_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	if (area->getName()) {
 		if (srf->getName())
@@ -125,7 +125,7 @@ bool f_area_surf::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		return false;
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
-	v = create_vec(matrix_size);
+	v = create_extvec(matrix_size);
 
 	size_t i, I, J;
 	size_t points = 0;
@@ -248,7 +248,7 @@ bool f_area_surf::minimize_only_area_surf() {
 
 bool f_area_surf::solvable_without_cond(const bitvec * mask_solved,
 				   const bitvec * mask_undefined,
-				   const vec * X)
+				   const extvec * X)
 {
 	return true;
 };

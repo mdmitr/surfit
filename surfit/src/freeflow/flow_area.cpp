@@ -60,7 +60,7 @@ bool f_flow_area::minimize() {
 	return false;
 };
 
-bool f_flow_area::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_flow_area::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	if (area->getName())
 		writelog(LOG_MESSAGE,"flow area (%s), value = %g", area->getName(), value);
@@ -68,7 +68,7 @@ bool f_flow_area::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		writelog(LOG_MESSAGE,"flow area noname, value = %g", value);
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
-	v = create_vec(matrix_size);
+	v = create_extvec(matrix_size);
 
 	bitvec * mask = NULL;
 	mask = nodes_in_area_mask(area, method_grid, method_mask_undefined);
@@ -113,7 +113,7 @@ void f_flow_area::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 
 bool f_flow_area::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
-					const vec * X)
+					const extvec * X)
 {
 
 	size_t i;

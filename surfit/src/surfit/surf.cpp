@@ -42,7 +42,7 @@
 
 namespace surfit {
 
-d_surf * create_surf(vec *icoeff, d_grid *igrd, const char * surfname) {
+d_surf * create_surf(extvec *icoeff, d_grid *igrd, const char * surfname) {
 	return new d_surf(icoeff, igrd, surfname);
 };
 
@@ -50,16 +50,16 @@ d_surf * create_surf_by_mask(d_mask * msk) {
 	return new d_surf(msk);
 };
 
-d_surf::d_surf(vec *icoeff, d_grid *igrd, 
+d_surf::d_surf(extvec *icoeff, d_grid *igrd, 
 	       const char * newname) : data("surf") {
 	grd = igrd;
 	coeff = icoeff;
 	setName(newname);
 	undef_value = FLT_MAX;
 
-	details_d = new std::vector<vec*>;
-	details_h = new std::vector<vec*>;
-	details_v = new std::vector<vec*>;
+	details_d = new std::vector<extvec*>;
+	details_h = new std::vector<extvec*>;
+	details_v = new std::vector<extvec*>;
 	enlarges_X = new std::vector<bool>;
 	enlarges_Y = new std::vector<bool>;
 	
@@ -67,7 +67,7 @@ d_surf::d_surf(vec *icoeff, d_grid *igrd,
 
 d_surf::d_surf(d_mask * msk) : data("d_surf") {
 	size_t size = msk->coeff->size();
-	coeff = create_vec(size);
+	coeff = create_extvec(size);
 	size_t i;
 	for (i = 0; i < size; i++) {
 		bool val = msk->coeff->get(i);
@@ -80,9 +80,9 @@ d_surf::d_surf(d_mask * msk) : data("d_surf") {
 	setName(msk->getName());
 	undef_value = FLT_MAX;
 
-	details_d = new std::vector<vec*>;
-	details_h = new std::vector<vec*>;
-	details_v = new std::vector<vec*>;
+	details_d = new std::vector<extvec*>;
+	details_h = new std::vector<extvec*>;
+	details_v = new std::vector<extvec*>;
 	enlarges_X = new std::vector<bool>;
 	enlarges_Y = new std::vector<bool>;
 };
@@ -93,7 +93,7 @@ d_surf::~d_surf() {
 	if (coeff)
 		coeff->release();
 	
-	std::vector<vec*>::iterator it;
+	std::vector<extvec*>::iterator it;
 	
 	for (it = details_h->begin(); it != details_h->end(); it++) {
 		if (*it)
@@ -319,6 +319,10 @@ REAL d_surf::getValueIJ(size_t I, size_t J) const {
 	return (*coeff)( I + grd->getCountX()*J );
 };
 
+REAL d_surf::getValue(size_t pos) const {
+	return (*coeff)( pos );
+};
+
 REAL d_surf::getMinX() const {
 	return grd->startX - grd->stepX/REAL(2);
 };
@@ -392,7 +396,7 @@ size_t d_surf::get_j(REAL y) const {
 };
 
 REAL d_surf::mean() const {
-	return mean_value(coeff->begin(), coeff->end(), undef_value);
+	return mean_value(coeff->const_begin(), coeff->const_end(), undef_value);
 };
 
 REAL d_surf::wmean(const d_surf * wsrf) const {
@@ -733,10 +737,10 @@ bool d_surf::decompose() {
 	if (N <= 1)
 		return false;
 
-	vec * xa = NULL; // new approx vector
-	vec * xd = NULL; // diagonal details
-	vec * xh = NULL; // horizontal details
-	vec * xv = NULL; // vertical details
+	extvec * xa = NULL; // new approx vector
+	extvec * xd = NULL; // diagonal details
+	extvec * xh = NULL; // horizontal details
+	extvec * xv = NULL; // vertical details
 
 	_decomp2d(coeff, 
 		  xa,
@@ -834,11 +838,11 @@ bool d_surf::reconstruct() {
 	if (N == 0)
 		return false;
 
-	vec * approx = NULL;
+	extvec * approx = NULL;
 
-	std::vector<vec*>::iterator d_it = details_d->end()-1;
-	std::vector<vec*>::iterator h_it = details_h->end()-1;
-	std::vector<vec*>::iterator v_it = details_v->end()-1;
+	std::vector<extvec*>::iterator d_it = details_d->end()-1;
+	std::vector<extvec*>::iterator h_it = details_h->end()-1;
+	std::vector<extvec*>::iterator v_it = details_v->end()-1;
 	std::vector<bool>::iterator b_itX = enlarges_X->end()-1;
 	std::vector<bool>::iterator b_itY = enlarges_Y->end()-1;
 
@@ -921,7 +925,7 @@ size_t d_surf::defined() const {
 	size_t defined = 0;
 	size_t i;
 	if (coeff) {
-		const REAL * ptr = coeff->begin();
+		extvec::const_iterator ptr = coeff->const_begin();
 		for (i = 0; i < coeff->size(); i++) {
 			if ( *(ptr+i) != undef_value )
 				defined++;

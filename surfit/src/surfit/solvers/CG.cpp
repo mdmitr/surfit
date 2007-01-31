@@ -23,6 +23,7 @@
 #include <errno.h>
 #include <time.h>
 
+#include "threads.h"
 #include "../solvers.h"
 #include "vec.h"
 #include "vec_alg.h"
@@ -33,14 +34,14 @@ using namespace std;
 
 namespace surfit {
 
-vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_value) {
+extvec * CG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value) {
 	writelog2(LOG_MESSAGE,"cg: (%d) ", b->size());
 
 	time_t ltime_begin;
 	time( &ltime_begin );
 
 #ifdef HAVE_THREADS	
-	if (cpu == 1) {
+	if (sstuff_get_threads() == 1) {
 #endif
 		
 		int flag = 0;                                // initialization
@@ -52,11 +53,11 @@ vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_val
 			bnrm2 = REAL(1); 
 		
 		int N = b->size();
-		vec * r = create_vec(N,0,0); // don't fill
+		extvec * r = create_extvec(N,0,0); // don't fill
 		
-		vec * x = NULL;
+		extvec * x = NULL;
 		if (!X) 
-			x = create_vec(*b);
+			x = create_extvec(*b);
 		else 
 		{
 			x = X;
@@ -86,9 +87,9 @@ vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_val
 			return x;
 		}
 		
-		vec * p = create_vec(*r);
+		extvec * p = create_extvec(*r);
 		
-		vec * q = create_vec(N,0,0); // don't fill
+		extvec * q = create_extvec(N,0,0); // don't fill
 		
 		REAL rho_1, rho, beta;
 		rho = REAL(0);
@@ -188,11 +189,11 @@ vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_val
 		if  ( bnrm2 == REAL(0) )
 			bnrm2 = REAL(1); 
 		
-		vec * r = create_vec(N,0,0); // don't fill
+		extvec * r = create_extvec(N,0,0); // don't fill
 		
-		vec * x = NULL;
+		extvec * x = NULL;
 		if (!X) 
-			x = create_vec(*b);
+			x = create_extvec(*b);
 		else 
 		{
 			x = X;
@@ -222,9 +223,9 @@ vec * CG(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_val
 			return x;
 		}
 		
-		vec * p = create_vec(*r);
+		extvec * p = create_extvec(*r);
 		
-		vec * q = create_vec(N,0,0); // don't fill
+		extvec * q = create_extvec(N,0,0); // don't fill
 		
 		REAL rho_1, rho, beta;
 		rho = REAL(0);

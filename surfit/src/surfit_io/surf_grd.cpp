@@ -51,7 +51,7 @@ d_surf * _surf_load_grd(const char * filename, const char * surfname)
 	REAL stepX, stepY;
 	d_grid * grd = NULL;
 	d_surf * res = NULL;
-	vec * data = NULL;
+	extvec * data = NULL;
 
 	char buf[200];
 	
@@ -98,7 +98,7 @@ d_surf * _surf_load_grd(const char * filename, const char * surfname)
 		goto exit;
 	maxz = atof(buf);
 
-	data = create_vec(nx*ny);
+	data = create_extvec(nx*ny);
 	REAL value;
 
 	for(iy=0; iy<ny; iy++) {

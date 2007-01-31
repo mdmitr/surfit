@@ -96,9 +96,16 @@ bool _cntr_save_shp(const d_cntr * contour, const char * filename)
 		name_field = DBFGetFieldIndex( hDBF, "NAME" );
 	};
 
+	std::vector<REAL> data_x(contour->size());
+	std::vector<REAL> data_y(contour->size());
+	std::vector<REAL> data_z(contour->size());
+	std::copy(contour->X->begin(), contour->X->end(), data_x.begin());
+	std::copy(contour->Y->begin(), contour->Y->end(), data_y.begin());
+	std::copy(contour->Z->begin(), contour->Z->end(), data_z.begin());
+
 	SHPObject * psObject = SHPCreateObject(SHPT_POLYGONZ,
 			-1, 0, NULL, NULL, contour->size(), 
-			contour->X->begin(), contour->Y->begin(), contour->Z->begin(), NULL);
+			&*(data_x.begin()), &*(data_y.begin()), &*(data_z.begin()), NULL);
 
 	SHPComputeExtents(psObject);
 		
@@ -113,6 +120,7 @@ bool _cntr_save_shp(const d_cntr * contour, const char * filename)
 	DBFClose( hDBF );
 
 	return true;
+	
 };
 
 d_cntr * _cntr_load_shp(const char * filename, const char * cntrname) {

@@ -23,13 +23,18 @@
 
 namespace surfit {
 
+template <class iter>
 inline
-bool incr_ptr(const REAL *& p, size_t i, 
+bool incr_ptr(iter & p, size_t i, 
               const bitvec * mask_solved,
 	      const bitvec * mask_undefined,
 	      size_t incr = 1) 
 {
+#ifdef XXL
+	p = p + incr;
+#else
 	p += incr;
+#endif
 	
 	if (mask_solved->get(i))
 		return false;
@@ -40,12 +45,17 @@ bool incr_ptr(const REAL *& p, size_t i,
 	return true;
 };
 
+template <class iter>
 inline
-bool incr_ptr(const REAL *& p, size_t i, 
+bool incr_ptr(iter & p, size_t i, 
               const bitvec * mask_solved_undefined,
 	      size_t incr = 1) 
 {
+#ifdef XXL
+	p = p + incr;
+#else
 	p += incr;
+#endif
 	
 	if (mask_solved_undefined->get(i))
 		return false;
@@ -53,14 +63,19 @@ bool incr_ptr(const REAL *& p, size_t i,
 	return true;
 };
 
+template <class iter>
 inline
-bool incr_ptr(const REAL *& p, size_t i, 
+bool incr_ptr(iter & p, size_t i, 
               const bitvec * mask_solved,
 	      const bitvec * mask_undefined,
 	      size_t x_from, size_t x_to, size_t y_from, size_t y_to, size_t NN,
 	      size_t incr = 1)
 {
+#ifdef XXL
+	p = p + incr;
+#else
 	p += incr;
+#endif
 	
 	size_t n = i % NN;
 	size_t m = (i - n)/NN;
@@ -77,13 +92,18 @@ bool incr_ptr(const REAL *& p, size_t i,
 	return true;
 };
 
+template <class iter>
 inline
-bool incr_ptr(const REAL *& p, size_t i, 
+bool incr_ptr(iter & p, size_t i, 
               const bitvec * mask_solved_undefined,
 	      size_t x_from, size_t x_to, size_t y_from, size_t y_to, size_t NN,
 	      size_t incr = 1)
 {
+#ifdef XXL
+	p = p + incr;
+#else
 	p += incr;
+#endif
 	
 	size_t n = i % NN;
 	size_t m = (i - n)/NN;
@@ -97,14 +117,19 @@ bool incr_ptr(const REAL *& p, size_t i,
 	return true;
 };
 
+template <class iter>
 inline
-bool incr_ptr(const REAL *& p, size_t i, 
+bool incr_ptr(iter & p, size_t i, 
               const bitvec * mask_solved,
 	      const bitvec * mask_undefined,
 	      size_t from, size_t to,
 	      size_t incr = 1)
 {
+#ifdef XXL
+	p = p + incr;
+#else
 	p += incr;
+#endif
 	
 	if ( (i < from) || (i > to) )
 		return false;

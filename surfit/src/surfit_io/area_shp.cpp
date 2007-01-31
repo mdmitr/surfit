@@ -107,9 +107,9 @@ bool _area_save_shp(const d_area * area, const char * filename) {
 		size += crv->size();
 	}
 
-	vec * X = create_vec(size, 0, 0);
-	vec * Y = create_vec(size, 0, 0);
-
+	std::vector<REAL> * X = new std::vector<REAL>(size);
+	std::vector<REAL> * Y = new std::vector<REAL>(size);
+	
 	size_t pos = 0;
 	for (i = 0; i < nParts; i++) {
 		*(PartStart+i) = pos;
@@ -122,15 +122,15 @@ bool _area_save_shp(const d_area * area, const char * filename) {
 		
 		size_t j;
 		for (j = 0; j < crv->size(); j++) {
-			(*X)(pos) = (*(crv->X))(j);
-			(*Y)(pos) = (*(crv->Y))(j);
+			(*X)[pos] = (*(crv->X))(j);
+			(*Y)[pos] = (*(crv->Y))(j);
 			pos++;
 		}
 	}
 
 	SHPObject * psObject = SHPCreateObject(SHPT_POLYGON,
 			-1, nParts, PartStart, PartType, X->size(), 
-			X->begin(), Y->begin(), NULL, NULL);
+			&*(X->begin()), &*(Y->begin()), NULL, NULL);
 
 	SHPComputeExtents(psObject);
 		
@@ -141,8 +141,8 @@ bool _area_save_shp(const d_area * area, const char * filename) {
 	free(PartStart);
 	free(PartType);
 
-	X->release();
-	Y->release();
+	delete X;
+	delete Y;
 
 	if (area->getName())
 		DBFWriteStringAttribute(hDBF, pos, name_field, area->getName() );
@@ -324,7 +324,7 @@ bool _areas_load_shp(const char * filename) {
 	SHPClose( hSHP );
 
 	return true;
-
+	
 };
 
 };

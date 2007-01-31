@@ -64,6 +64,8 @@ public:
 	//! calculates surface value at point (x,y) using bilinear interpolation
 	virtual REAL getInterpValue(REAL x, REAL y) const;
 
+	virtual short getValueIJ(size_t i, size_t j) const;
+
 	//! calculates surface mean value for rect
 	virtual REAL getMeanValue(REAL x_from, REAL x_to, REAL y_from, REAL y_to) const;
 

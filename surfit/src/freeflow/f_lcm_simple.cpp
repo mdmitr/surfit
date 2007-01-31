@@ -25,6 +25,7 @@
 #include "free_elements.h"
 #include "matrD1.h"
 #include "vec.h"
+#include "shortvec.h"
 #include "bitvec.h"
 #include "grid.h"
 #include "curv.h"
@@ -71,7 +72,7 @@ void f_lcm_simple::add_flow(functional * fnc) {
 	flows->push_back(fnc);
 };
 
-bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	size_t NN = method_grid->getCountX();
@@ -82,7 +83,7 @@ bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		method_mask_solved, method_mask_undefined, 
 		gfaults); 
 	
-	v = create_vec(matrix_size);
+	v = create_extvec(matrix_size);
 
 	size_t points = calcVecV(matrix_size, method_X, oD1, v, NN, MM, method_mask_solved, method_mask_undefined);
 
@@ -92,7 +93,7 @@ bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, vec *& v) {
 		if (!ff)
 			continue;
 		matr * T = NULL;
-		vec * V = NULL;
+		extvec * V = NULL;
 		if (!ff->make_matrix_and_vector(T, V)) {
 			delete T;
 			if (V)
@@ -130,7 +131,7 @@ bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, vec *& v) {
 bool f_lcm_simple::minimize_step() {
 
 	matr * A = NULL;
-	vec * b = NULL;
+	extvec * b = NULL;
 	bool solvable = make_matrix_and_vector(A,b);
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
@@ -243,7 +244,7 @@ bool f_lcm_simple::minimize() {
 
 		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
-		std::vector<short int> * flood_areas = new std::vector<short int>(matrix_size);
+		shortvec * flood_areas = create_shortvec(matrix_size);
 		int flood_areas_cnt = 0;
 
 		fill_all_areas(flood_areas, method_grid, gfaults, flood_areas_cnt, method_mask_undefined);
@@ -270,7 +271,7 @@ bool f_lcm_simple::minimize() {
 				method_mask_solved->copy(saved_mask_solved);
 				
 				for (pos = 0; pos < f_size; pos++) {
-					if ( (*flood_areas)[pos] != color ) {
+					if ( (*flood_areas)(pos) != color ) {
 						method_mask_undefined->set_true(pos);
 						method_mask_solved->set_false(pos);
 					}
@@ -279,7 +280,7 @@ bool f_lcm_simple::minimize() {
 				res = minimize_step() && res;
 				
 				for (pos = 0; pos < f_size; pos++) {
-					if ( (*flood_areas)[pos] == color ) {
+					if ( (*flood_areas)(pos) == color ) {
 						
 						undef = method_mask_undefined->get(pos);
 						if (undef)
@@ -308,7 +309,8 @@ bool f_lcm_simple::minimize() {
 			
 		}
 
-		delete flood_areas;
+		if (flood_areas)
+			flood_areas->release();
 		
 		writelog(LOG_MESSAGE,"processing whole grid...");
 		res = minimize_step() && res;
@@ -327,7 +329,7 @@ void f_lcm_simple::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask
 
 bool f_lcm_simple::solvable_without_cond(const bitvec * mask_solved,
 					 const bitvec * mask_undefined,
-					 const vec * X)
+					 const extvec * X)
 {
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	size_t i, cnt = 0;

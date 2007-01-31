@@ -92,8 +92,12 @@ short d_dem::getValue(REAL x, REAL y) const {
 	if ((j >= grd->getCountY()) || (j < 0))
 		return undef_value;
 
-    return (*coeff)( i + grd->getCountX()*j );
+	return (*coeff)( i + grd->getCountX()*j );
 			
+};
+
+short d_dem::getValueIJ(size_t i, size_t j) const {
+	return (*coeff)( i + grd->getCountX()*j );
 };
 
 REAL d_dem::getInterpValue(REAL x, REAL y) const {
@@ -409,7 +413,7 @@ size_t d_dem::defined() const {
 	size_t defined = 0;
 	size_t i;
 	if (coeff) {
-		const short * ptr = coeff->begin();
+		shortvec::const_iterator ptr = coeff->const_begin();
 		for (i = 0; i < coeff->size(); i++) {
 			if ( *(ptr+i) != undef_value )
 				defined++;

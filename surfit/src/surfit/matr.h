@@ -21,11 +21,11 @@
 #define __surfit_matr__
 
 #include "matlab.h"
+#include "vec.h"
 #include <vector>
 
 namespace surfit {
 
-class vec;
 class bitvec;
 
 /*! \class matr
@@ -61,13 +61,13 @@ public:
 	    \param b_begin pointer to begin of vector
 	    \param b_end pointer to end of vector
 	*/
-	virtual REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end) = 0;
+	virtual REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) = 0;
 
 	//! special function. Needs to be called after mult()
 	virtual void call_after_mult();
 	
 	//! r = T*b
-	virtual void mult(const vec * b, vec * r);
+	virtual void mult(const extvec * b, extvec * r);
 	
 	//! calculates norm estimation
 	virtual REAL norm() const = 0;
@@ -96,7 +96,7 @@ public:
 	virtual REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
 	virtual REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
 	
-	virtual REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end);
+	virtual REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 	virtual void call_after_mult();
 		    
 	virtual REAL norm() const;
@@ -126,7 +126,7 @@ public:
 	
 	/*! constructor
 	*/
-	matr_sums(vec * iweights, std::vector<matr *> * imatrices);
+	matr_sums(std::vector<REAL> * iweights, std::vector<matr *> * imatrices);
 
 	//! destructor 
 	virtual ~matr_sums();
@@ -134,7 +134,7 @@ public:
 	virtual REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
 	virtual REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
 	
-	virtual REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end);
+	virtual REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 	virtual void call_after_mult();
 	    
 	virtual REAL norm() const;
@@ -142,7 +142,7 @@ public:
 	virtual size_t rows() const;
 
 	//! weights
-	vec * weights;
+	std::vector<REAL> * weights;
 	//! pointer to first matrix
 	std::vector<matr *> * matrices;
    
@@ -164,7 +164,7 @@ public:
 	virtual REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
 	virtual REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
 	
-	virtual REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end);
+	virtual REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 	virtual void call_after_mult();
 	    
 	virtual REAL norm() const;
@@ -189,7 +189,7 @@ public:
 	matr_rect(size_t ix_from, size_t ix_to, size_t iy_from, size_t iy_to, size_t in_grid_cols);
 
 	//! r = T*b
-	void mult(const vec * b, vec * r);
+	void mult(const extvec * b, extvec * r);
 	
 	//! number of cols in grid
 	size_t n_grid_cols;
@@ -225,7 +225,7 @@ public:
 	virtual REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
 	virtual REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
 	
-	virtual REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end);
+	virtual REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 	virtual void call_after_mult();
 		    
 	virtual REAL norm() const;

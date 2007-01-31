@@ -25,7 +25,6 @@
 namespace surfit {
 
 class bitvec;
-class vec;
 
 class SURFIT_EXPORT matr_onesrow : public matr {
 public:
@@ -41,8 +40,8 @@ public:
 	virtual REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
 	virtual REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	
-	virtual REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end);
-	virtual REAL mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end);
+	virtual REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
+	virtual REAL mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 	virtual void call_after_mult();
 	
 	virtual size_t cols() const;
@@ -55,7 +54,7 @@ protected:
 	size_t N;
 	REAL val;
 	bitvec * mask;
-	const REAL * prev_b_begin;
+	extvec::const_iterator * prev_b_begin;
 	REAL prev_val;
 
 };
@@ -65,7 +64,7 @@ public:
 	//! constructor
 	matr_row(size_t iN,
 	         bitvec * imask,
-		 vec * ivalues);
+		 extvec * ivalues);
 
 	//! A destructor
 	virtual ~matr_row();
@@ -75,8 +74,8 @@ public:
 	virtual REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
 	virtual REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	
-	virtual REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end);
-	virtual REAL mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end);
+	virtual REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
+	virtual REAL mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 	virtual void call_after_mult();
 	
 	virtual size_t cols() const;
@@ -87,9 +86,9 @@ public:
 protected:
 
 	size_t N;
-	vec * values;
+	extvec * values;
 	bitvec * mask;
-	const REAL * prev_b_begin;
+	extvec::const_iterator * prev_b_begin;
 	REAL prev_val;
 
 };

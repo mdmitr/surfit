@@ -23,6 +23,23 @@
 #include <string.h>
 #endif
 
+#include <stdarg.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include <float.h>
+
+#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+#include <io.h>
+#endif
+
 #include "vec.h"
 
 namespace surfit {
@@ -35,6 +52,12 @@ vec * create_vec(size_t size, REAL default_value, int fill_default, size_t grow_
 vec * create_vec(const vec &in) {
 	return new vec(in);
 };
+
+#ifdef XXL
+vec * create_vec(const extvec &in) {
+	return new vec(in);
+};
+#endif
 
 vec::vec(const vec &in) {
 	if (this != &in) {
@@ -52,6 +75,23 @@ vec::vec(const vec &in) {
 		grow_by = in.grow_by;
 	}
 };
+
+#ifdef XXL
+vec::vec(const extvec &in) {
+	size_t newsize = in.size();
+	data = (REAL*)malloc(sizeof(REAL)*newsize);
+	if (data) {
+		datasize = newsize;
+		real_datasize = datasize;
+		// init
+		std::copy(in.const_begin(), in.const_end(), data);
+	};
+	if ((data == NULL) && (newsize != 0)) {
+		throw "out of memory";
+	}	
+	grow_by = 250;
+};
+#endif
 
 vec::vec(size_t newsize, REAL default_value, int fill_default, size_t igrow_by) {
 	grow_by = igrow_by;
@@ -172,8 +212,8 @@ void vec::swap(size_t i, size_t j) {
 	operator()(j) = temp;
 };
 
-void vec::erase(REAL* del) {
-	REAL* cur = begin();
+void vec::erase(vec::iterator del) {
+	iterator cur = begin();
 	size_t i = del-cur;
 	erase(i);
 };
@@ -183,7 +223,7 @@ void vec::erase(size_t index) {
 	if (index > datasize) 
 		throw "invalid argument";
 #endif
-	REAL* cur = begin();
+	REAL * cur = data;
 	cur += index;
 	memmove(cur,cur+1,(size()-index-1)*sizeof(REAL));
 	datasize--;
@@ -205,10 +245,20 @@ vec& vec::operator=(const vec & copy) {
 		free(data);
 		data = (REAL *) malloc(copy.size() * sizeof(REAL));
 	}
-	memcpy(data, copy.getPointer(), copy.size()*sizeof(REAL));
+	
+	memcpy(data, &*(copy.const_begin()), copy.size()*sizeof(REAL));
+	
 	datasize = copy.size();
 	return *this;
 };
+
+size_t vec::write_file(int file, size_t size) const {
+	return write(file, data, size*sizeof(REAL));
+};
+
+size_t vec::read_file(int file, size_t size) {
+	return read( file, data, sizeof(REAL)*size );
+}
 
 }; // namespace surfit;
 

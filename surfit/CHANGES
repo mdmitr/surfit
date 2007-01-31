@@ -6,6 +6,7 @@ Bugfixes:
 	* problem with loading modules more than one time
 	* bugfix in area_save_bln - rewriting file now tuned off :)
 	* bugfix in completer functional. Now it works correctly with undefined areas
+	* bugfix in trend functional.
 
 New:
 	+ added pnts_abs function

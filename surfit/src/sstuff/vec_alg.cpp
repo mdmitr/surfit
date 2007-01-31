@@ -18,71 +18,11 @@
  *----------------------------------------------------------------------------*/
 
 #include "sstuff_ie.h"
+
+#include "vec.h"
 #include "vec_alg.h"
 
 namespace surfit {
-
-REAL sum_value(const REAL * begin, const REAL * end, REAL undef) {
-	REAL res = REAL(0);
-	const REAL * ptr;
-	
-	for (ptr = begin; ptr != end; ptr++)  {
-		if (*ptr == undef)
-			continue;
-		res += *ptr;
-	}
-	
-	return res;
-	
-};
-
-REAL mean_value(const REAL * begin, const REAL * end, REAL undef) {
-	REAL res = REAL(0);
-	const REAL * ptr;
-	int total = 0;
-	
-	for (ptr = begin; ptr != end; ptr++)  {
-		if (*ptr == undef)
-			continue;
-		res += *ptr;
-		total++;
-	}
-	
-	return res/REAL(total);
-	
-};
-
-REAL std_value(REAL mean_value, const REAL * begin, const REAL * end, REAL undef) {
-
-	REAL res = REAL(0);
-
-	const REAL * ptr;
-
-	for (ptr = begin; ptr != end; ptr++) {
-		if (*ptr == undef)
-			continue;
-		res += (*ptr - mean_value)*(*ptr - mean_value);
-	}
-
-	res /= REAL(end-begin);
-
-	return REAL(sqrt(res));
-
-};
-
-REAL norm2(const REAL * x_begin, const REAL * x_end, REAL undef) {
-	REAL res = REAL(0);
-	REAL val;
-	int i;
-	int size = x_end-x_begin;
-	for (i = 0; i < size; i++) {
-		val = *(x_begin+i);
-		if (val == undef)
-			continue;
-		res += val*val;
-	};
-	return (REAL)sqrt(res);
-};
 
 }; // namespace surfit
 

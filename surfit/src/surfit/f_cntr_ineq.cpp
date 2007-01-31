@@ -69,11 +69,13 @@ const data * f_cntr_ineq::this_get_data(int pos) const {
 bool f_cntr_ineq::minimize() {
 
 	create_f_points_ineq();
+	if (f_pnts_ineq == NULL)
+		return false;
 	return f_pnts_ineq->minimize();
 
 };
 
-bool f_cntr_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_cntr_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	create_f_points_ineq();
 	return f_pnts_ineq->make_matrix_and_vector(matrix, v);
@@ -83,16 +85,19 @@ bool f_cntr_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 void f_cntr_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 
 	create_f_points_ineq();
-	f_pnts_ineq->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
+	if (f_pnts_ineq)
+		f_pnts_ineq->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
 
 };
 
 bool f_cntr_ineq::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
-					const vec * X)
+					const extvec * X)
 {
 	
 	create_f_points_ineq();
+	if (f_pnts_ineq == NULL)
+		return false;
 	return f_pnts_ineq->solvable_without_cond(mask_solved, mask_undefined, X);
 
 };
@@ -107,6 +112,9 @@ void f_cntr_ineq::create_f_points_ineq() {
 		if (grd)
 			grd->release();
 	}
+
+	if (pnts == NULL)
+		return;
 
 	if (f_pnts_ineq == NULL)
 		f_pnts_ineq = new f_points_ineq(pnts, leq, mult, "contour");

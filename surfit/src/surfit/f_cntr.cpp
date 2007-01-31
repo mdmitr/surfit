@@ -90,7 +90,7 @@ bool f_cntr::minimize() {
 	return f_pnts->minimize();
 };
 
-bool f_cntr::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_cntr::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	create_f_approx_points();
 	return f_pnts->make_matrix_and_vector(matrix, v);
 };
@@ -102,7 +102,7 @@ void f_cntr::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undef
 
 bool f_cntr::solvable_without_cond(const bitvec * mask_solved,
 				   const bitvec * mask_undefined,
-				   const vec * X)
+				   const extvec * X)
 {
 	return true;
 };

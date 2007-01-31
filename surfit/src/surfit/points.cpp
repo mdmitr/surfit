@@ -148,8 +148,8 @@ bool d_points::plus(const d_points * pnts) {
 	if (size() == 0)
 		return true;
 	int i;
-	REAL * ptr1 = Z->begin();
-	REAL * ptr2 = pnts->Z->begin();
+	vec::iterator ptr1 = Z->begin();
+	vec::const_iterator ptr2 = pnts->Z->const_begin();
 	for (i = 0; i < size(); i++)
 		*(ptr1 + i) += *(ptr2 + i);
 	return true;
@@ -163,8 +163,8 @@ bool d_points::minus(const d_points * pnts) {
 	if (size() == 0)
 		return true;
 	int i;
-	REAL * ptr1 = Z->begin();
-	REAL * ptr2 = pnts->Z->begin();
+	vec::iterator ptr1 = Z->begin();
+	vec::const_iterator ptr2 = pnts->Z->const_begin();
 	for (i = 0; i < size(); i++)
 		*(ptr1 + i) -= *(ptr2 + i);
 	return true;
@@ -178,8 +178,8 @@ bool d_points::mult(const d_points * pnts) {
 	if (size() == 0)
 		return true;
 	int i;
-	REAL * ptr1 = Z->begin();
-	REAL * ptr2 = pnts->Z->begin();
+	vec::iterator ptr1 = Z->begin();
+	vec::const_iterator ptr2 = pnts->Z->const_begin();
 	for (i = 0; i < size(); i++)
 		*(ptr1 + i) *= *(ptr2 + i);
 	return true;
@@ -193,8 +193,8 @@ bool d_points::div(const d_points * pnts) {
 	if (size() == 0)
 		return true;
 	int i;
-	REAL * ptr1 = Z->begin();
-	REAL * ptr2 = pnts->Z->begin();
+	vec::iterator ptr1 = Z->begin();
+	vec::const_iterator ptr2 = pnts->Z->const_begin();
 	for (i = 0; i < size(); i++)
 		*(ptr1 + i) /= *(ptr2 + i);
 	return true;
@@ -208,8 +208,8 @@ bool d_points::set(const d_points * pnts) {
 	if (size() == 0)
 		return true;
 	int i;
-	REAL * ptr1 = Z->begin();
-	REAL * ptr2 = pnts->Z->begin();
+	vec::iterator ptr1 = Z->begin();
+	vec::const_iterator ptr2 = pnts->Z->const_begin();
 	for (i = 0; i < size(); i++)
 		*(ptr1 + i) = *(ptr2 + i);
 	return true;
@@ -217,35 +217,35 @@ bool d_points::set(const d_points * pnts) {
 
 void d_points::plus(REAL val) {
 	int i;
-	REAL * ptr = Z->begin();
+	vec::iterator ptr = Z->begin();
 	for (i = 0; i < size(); i++)
 		*(ptr + i) += val;
 };
 
 void d_points::minus(REAL val) {
 	int i;
-	REAL * ptr = Z->begin();
+	vec::iterator ptr = Z->begin();
 	for (i = 0; i < size(); i++)
 		*(ptr + i) -= val;
 };
 
 void d_points::mult(REAL val) {
 	int i;
-	REAL * ptr = Z->begin();
+	vec::iterator ptr = Z->begin();
 	for (i = 0; i < size(); i++)
 		*(ptr + i) *= val;
 };
 
 void d_points::div(REAL val) {
 	int i;
-	REAL * ptr = Z->begin();
+	vec::iterator ptr = Z->begin();
 	for (i = 0; i < size(); i++)
 		*(ptr + i) /= val;
 };
 
 void d_points::set(REAL val) {
 	int i;
-	REAL * ptr = Z->begin();
+	vec::iterator ptr = Z->begin();
 	for (i = 0; i < size(); i++)
 		*(ptr + i) = val;
 };
@@ -253,13 +253,13 @@ void d_points::set(REAL val) {
 
 REAL d_points::mean() const {
 	if (Z)
-		return mean_value(Z->begin(), Z->end(), undef_value);
+		return mean_value(Z->const_begin(), Z->const_end(), undef_value);
 	return FLT_MAX;
 };
 
 REAL d_points::std(REAL mean) const {
 	if (Z)
-		return std_value(mean, Z->begin(), Z->end(), undef_value);
+		return std_value(mean, Z->const_begin(), Z->const_end(), undef_value);
 	return FLT_MAX;
 };
 
@@ -330,7 +330,7 @@ REAL sub_points::value(const d_points * pnts) const {
 	REAL value = REAL(0);
 	REAL temp_value;
 	int cnt = 0;
-	REAL * z_ptr = pnts->Z->begin();
+	vec::const_iterator z_ptr = pnts->Z->const_begin();
 	for (ptr = point_numbers->begin(); ptr != point_numbers->end(); ptr++) {
 		temp_value = *(z_ptr + *ptr);
 		if (temp_value == undef_value)
@@ -347,7 +347,7 @@ REAL sub_points::sum_value(const d_points * pnts) const {
 	
 	REAL value = REAL(0);
 	REAL temp_value;
-	REAL * z_ptr = pnts->Z->begin();
+	vec::const_iterator z_ptr = pnts->Z->const_begin();
 	for (ptr = point_numbers->begin(); ptr != point_numbers->end(); ptr++) {
 		temp_value = *(z_ptr + *ptr);
 		if (temp_value == undef_value)
@@ -378,12 +378,28 @@ void sub_points::bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy, cons
 
 };
 
+struct nums_less_compare
+{
+	nums_less_compare(const vec * idata)
+	{
+		data = idata;
+	}
+
+	bool operator ()( size_t left, size_t right )
+	{
+		return ((*data)(left) < (*data)(right));
+	}
+
+private:
+
+	const vec * data;
+
+};
+
 void _sort_points(const d_points * pnts, 
 		  std::vector<size_t> * nums,
-		  REAL **& sortx_begin, 
-		  REAL **& sortx_end, 
-		  REAL **& sorty_begin, 
-		  REAL **& sorty_end) {
+		  std::vector<size_t> & sortx,
+		  std::vector<size_t> & sorty) {
 
 
 	if (pnts->X == NULL)
@@ -393,38 +409,23 @@ void _sort_points(const d_points * pnts,
 		return;
 
 	int ppnts_size = nums->size();
-	REAL ** ptr;
+	sortx = *nums;
+	sorty = *nums;
 	
-	sortx_begin = (REAL**) malloc( sizeof(REAL*) * ppnts_size );
-	sortx_end = sortx_begin + ppnts_size;
-	int cnt;
-    
-	REAL * x_ptr = pnts->X->begin();
-	for (cnt = 0; cnt < ppnts_size; cnt++) {
-		ptr = sortx_begin + cnt;
-		*ptr = ( x_ptr + *(nums->begin()+cnt) );
-	}
-	
-	std::sort(sortx_begin, sortx_end, ptr_vector_less);
-	
-	sorty_begin = (REAL**) malloc( sizeof(REAL*) * ppnts_size );
-	sorty_end = sorty_begin + ppnts_size;
-	
-	REAL * y_ptr = pnts->Y->begin();
-	for (cnt = 0; cnt < ppnts_size; cnt++) {
-		ptr = sorty_begin + cnt;
-		*ptr = ( y_ptr + *(nums->begin()+cnt) );
-	}
-	
-	std::sort(sorty_begin, sorty_end, ptr_vector_less);
+	nums_less_compare nums_less_x(pnts->X);
+	std::sort(sortx.begin(), sortx.end(), nums_less_x);
+
+	nums_less_compare nums_less_y(pnts->Y);
+	std::sort(sorty.begin(), sorty.end(), nums_less_y);
 
 };
 
 void _points_transform(vec * X, vec * Y, 
 		       REAL shiftX, REAL scaleX, 
-		       REAL shiftY, REAL scaleY) {
-	REAL * ptr_X;
-	REAL * ptr_Y;
+		       REAL shiftY, REAL scaleY) 
+{
+	vec::iterator ptr_X;
+	vec::iterator ptr_Y;
 	for (ptr_X = X->begin(); ptr_X != X->end(); ptr_X++) 
         *ptr_X = ( *ptr_X - shiftX ) * scaleX; 
 	
@@ -442,8 +443,8 @@ void _inverse_points_transform(d_points * pnts,
 	if (pnts->Y == NULL)
 		return;
 
-	REAL * ptr_X;
-	REAL * ptr_Y;
+	vec::iterator ptr_X;
+	vec::iterator ptr_Y;
 	for (ptr_X = pnts->X->begin(); ptr_X != pnts->X->end(); ptr_X++) 
 	        *ptr_X = *ptr_X/scaleX + shiftX;
 	

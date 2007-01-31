@@ -21,10 +21,10 @@
 #define __sstuff__datafile__
 
 #include <stdio.h>
+#include "vec.h"
 
 namespace surfit {
 
-class vec;
 class intvec;
 class shortvec;
 class bitvec;
@@ -99,6 +99,9 @@ public:
 	    \param data \ref vec "array of REAL"
 	*/
 	bool writeRealArray(const char * name, const vec * data);
+#ifdef XXL
+	bool writeRealArray(const char * name, const extvec * data);
+#endif
 
 	/*! writes array of shorts */
 	bool writeShortArray(const char * name, const shortvec * data);
@@ -135,6 +138,9 @@ public:
 
 	/*! reads array of REAL */
 	bool readRealArray(vec *& data);
+#ifdef XXL
+	bool readRealArray(extvec *& data);
+#endif
 
 	/*! reads array of short */
 	bool readShortArray(shortvec *& data);

@@ -26,14 +26,17 @@ void job::release() {
 	delete this; 
 };
 
-int cpu = 1;
+size_t cpu = 1;
 #ifdef HAVE_THREADS
 std::vector<slavethread *> slaves;
 std::vector<job *> jobs;
 #endif
 
-void sstuff_init_threads(int cnt) {
+void sstuff_init_threads(size_t cnt) {
 	cpu = MIN(cnt, MAX_CPU);
+#ifdef XXL
+	cpu = 1;
+#endif
 #ifdef HAVE_THREADS
 	size_t ssize = slaves.size();
 	if (ssize == cpu)
@@ -59,7 +62,7 @@ void sstuff_init_threads(int cnt) {
 #endif //threads
 };
 
-int sstuff_get_threads() {
+size_t sstuff_get_threads() {
 	return cpu;
 };
 

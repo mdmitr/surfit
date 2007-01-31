@@ -28,9 +28,19 @@
 #undef LSS_BOUNDS_CHECK
 #endif
 
+#ifdef XXL
+#include <stxxl>
+#endif
+
 namespace surfit {
 
 class vec;
+#ifdef XXL
+class extvec;
+#else
+typedef vec extvec;
+#endif
+
 
 SSTUFF_EXPORT
 /*! \ingroup internal
@@ -46,15 +56,136 @@ SSTUFF_EXPORT
 */
 vec * create_vec(const vec &in);
 
+SSTUFF_EXPORT
+vec * create_vec(const extvec &in);
+
+SSTUFF_EXPORT
+extvec * create_extvec(size_t size = 0, REAL default_value = REAL(0), int fill_default = 1, size_t grow_by = 250);
+
+SSTUFF_EXPORT
+extvec * create_extvec(const extvec &in);
+
+
 /*! \class vec
     \brief surfit vector of REAL 
 */
-class SSTUFF_EXPORT vec {
+#ifdef XXL
+
+typedef SSTUFF_EXPORT stxxl::VECTOR_GENERATOR<REAL,2,2,256*1024>::result vec_xxl;
+
+class SSTUFF_EXPORT extvec {
+public:
+
+	//! iterator type for vec
+	typedef  vec_xxl::iterator iterator;
+	//! reference type for vec
+	typedef  vec_xxl::reference reference;
+
+	//! const_iterator type for vec
+	typedef  vec_xxl::const_iterator const_iterator;
+	//! const_reference type for vec
+	typedef  vec_xxl::const_reference const_reference;
+
+protected:
+
+	/*! A consturtor
+	    \param size vector size
+            \param default_value initial value for fill vector
+	    \param fill_default use initial value filling
+	    \param grow_by value for resizing vector
+    	*/
+	extvec(size_t size = 0, REAL default_value = REAL(0), int fill_default = 1, size_t grow_by = 250);
+	
+	//! Copy constructor
+	extvec(const extvec &in);
+
+	//! Destructor
+	~extvec();
+
+public:
+
+	friend SSTUFF_EXPORT
+	//! constructor
+	extvec * create_extvec(size_t size, REAL default_value, int fill_default, size_t grow_by);
+
+	friend SSTUFF_EXPORT
+	//! copy constructor
+	extvec * create_extvec(const extvec &in);
+
+public:
+	//! destructor
+	void release();
+
+	//! returns pointer to begin of REAL-array
+	iterator begin();
+
+	//! returns const pointer to begin of REAL-array
+	const_iterator const_begin() const;
+
+	//! returns pointer to end of REAL-array
+	iterator end();
+
+	//! returns const pointer to end of REAL-array
+	const_iterator const_end() const;
+
+	//! removes element by iterator
+	void erase(iterator);
+
+	//! removes element by index
+	void erase(size_t index);
+		
+	//! changes vector size
+	void resize(size_t newsize, REAL default_value = REAL(0), int fill_default = 1);
+
+	//! returns vector size
+	size_t size() const;
+
+	//! returns reference to i'th element
+	reference operator()(size_t i);
+		
+	//! returns const reference to i'th element
+	const_reference operator()(size_t i) const;
+
+	//! copy operator
+	extvec& operator=(const extvec & copy);
+
+	//! adds one element at the end of array
+	void push_back(const REAL&);
+
+	//! sets currently allocated vector size to reserve_size
+	void reserve(size_t reserve_size);
+
+	//! sets vector's grow factor
+	void set_grow(size_t grow_by) {};
+
+	//! exchanges two elements
+	void swap(size_t i, size_t j);
+
+	//! forgets all allocated memory
+	void drop_data();
+
+	size_t write_file(int file, size_t size) const;
+	size_t read_file(int file, size_t size);
+	
+private:
+	
+	vec_xxl * data;
+};
+
+
+#endif
+
+#ifndef XXL
+#define extvec vec
+#define create_extvec create_vec
+#endif
+
+class SSTUFF_EXPORT vec 
+{
 public:
 
 	//! iterator type for vec
 	typedef         REAL*  iterator;
-
 	//! reference type for vec
 	typedef         REAL&  reference;
 
@@ -63,6 +194,7 @@ public:
 
 	//! const_reference type for vec
 	typedef const   REAL&  const_reference;
+
 		
 protected:
 
@@ -72,43 +204,49 @@ protected:
 	    \param fill_default use initial value filling
 	    \param grow_by value for resizing vector
     	*/
-	vec(size_t size = 0, REAL default_value = REAL(0), int fill_default = 1, size_t grow_by = 250);
+	vec (size_t size = 0, REAL default_value = REAL(0), int fill_default = 1, size_t grow_by = 250);
 	
 	//! Copy constructor
 	vec(const vec &in);
-
+#ifdef XXL
+	//! Copy constructor
+	vec(const extvec &in);
+#endif
+	
+	//! Destructor
+	~vec();
 public:
 
 	friend SSTUFF_EXPORT
 	//! constructor
-	vec * create_vec(size_t size, REAL default_value, int fill_default, size_t grow_by);
+	vec * create_vec (size_t size, REAL default_value, int fill_default, size_t grow_by);
 
 	friend SSTUFF_EXPORT
 	//! copy constructor
 	vec * create_vec(const vec &in);
 
-private:
-	//! Destructor
-	~vec();
+	friend SSTUFF_EXPORT
+	//! copy constructor
+	vec * create_vec(const extvec &in);
 
 public:
 	//! destructor
 	void release();
 
 	//! returns pointer to begin of REAL-array
-	REAL* begin() { return data; };
+	iterator begin() { return data; };
 
 	//! returns const pointer to begin of REAL-array
-	const REAL* begin() const { return data; };
+	const_iterator const_begin() const { return data; };
 
 	//! returns pointer to end of REAL-array
-	REAL* end() { return data+datasize; };
+	iterator end() { return data+datasize; };
 
 	//! returns const pointer to end of REAL-array
-	const REAL* end() const { return data+datasize; };
+	const_iterator const_end() const { return data+datasize; };
 
-	//! removes element by pointer
-	void erase(REAL*);
+	//! removes element by iterator
+	void erase(iterator);
 
 	//! removes element by index
 	void erase(size_t index);
@@ -120,7 +258,7 @@ public:
 	size_t size() const { return datasize; };
 
 	//! returns reference to i'th element
-	REAL& operator()(size_t i) {
+	reference operator()(size_t i) {
 #ifdef LSS_BOUNDS_CHECK
 		if ((i < 0) || (i >= size()))
 			throw "invalid argument";
@@ -130,7 +268,7 @@ public:
 	};
 		
 	//! returns const reference to i'th element
-	const REAL& operator()(size_t i) const {
+	const_reference operator()(size_t i) const {
 #ifdef LSS_BOUNDS_CHECK
 		if ((i < 0) || (i >= size()))
 			throw "invalid argument";
@@ -158,9 +296,12 @@ public:
 	void drop_data();
 
 	//! returns void* to begin of vector-array
-	void* getPointer() const { return (void*)data; };
+	//void* getPointer() const { return (void*)data; };
+
+	size_t write_file(int file, size_t size) const;
+	size_t read_file(int file, size_t size);
 	
-protected:
+private:
 	//! pointer to vector-array
 	REAL* data;
 

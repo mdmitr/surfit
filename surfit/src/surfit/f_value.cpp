@@ -66,7 +66,7 @@ bool f_value::minimize() {
 		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 		matr * A = NULL;
-		vec * b = NULL;
+		extvec * b = NULL;
 		bool solvable = make_matrix_and_vector(A,b);
 
 		if ( !cond() ) {
@@ -117,7 +117,7 @@ bool f_value::minimize_alone() {
 	return true;
 };
 
-bool f_value::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_value::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	size_t matrix_size = method_mask_solved->size();
 
@@ -126,7 +126,7 @@ bool f_value::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	mask = create_bitvec(matrix_size);
 	size_t i;
 
-	v = create_vec(matrix_size);
+	v = create_extvec(matrix_size);
 	matrix = NULL;
 
 	size_t points = 0;
@@ -168,8 +168,8 @@ void f_value::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_unde
 };
 
 bool f_value::solvable_without_cond(const bitvec * mask_solved,
-					 const bitvec * mask_undefined,
-					 const vec * X)
+				    const bitvec * mask_undefined,
+				    const extvec * X)
 {
 	return true;
 };

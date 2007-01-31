@@ -47,7 +47,7 @@ struct matr_mult_job : public job
 		J_from = 0;
 		J_to = 0;
 	};
-	void set(matr * im, const vec * ib, vec * ir, size_t iJ_from, size_t iJ_to)
+	void set(matr * im, const extvec * ib, extvec * ir, size_t iJ_from, size_t iJ_to)
 	{
 		m = im;
 		b = ib;
@@ -59,37 +59,37 @@ struct matr_mult_job : public job
 	{
 		size_t J;
 		for (J = J_from; J < J_to; J++) {
-			(*r)(J) = m->mult_line(J, b->begin(), b->end());
+			(*r)(J) = m->mult_line(J, b->const_begin(), b->const_end());
 		}
 	};
 
 	matr * m;
-	const vec * b;
-	vec * r;
+	const extvec * b;
+	extvec * r;
 	size_t J_from, J_to;
 };
 
 matr_mult_job matr_mult_jobs[MAX_CPU];
 #endif
 
-void matr::mult(const vec * b, vec * r) {
+void matr::mult(const extvec * b, extvec * r) {
 #ifdef HAVE_THREADS
-	if (cpu == 1) {
+	if (sstuff_get_threads() == 1) {
 #endif
 		size_t J;
 		for (J = 0; J < rows(); J++) {
-			(*r)(J) = mult_line(J, b->begin(), b->end());
+			(*r)(J) = mult_line(J, b->const_begin(), b->const_end());
 		}
 		call_after_mult();
 #ifdef HAVE_THREADS
 	} else {
 		size_t i;
 		size_t rws = rows();
-		size_t step = rws/(cpu);
-		size_t ost = rws % (cpu);
+		size_t step = rws/(sstuff_get_threads());
+		size_t ost = rws % (sstuff_get_threads());
 		size_t J_from = 0;
 		size_t J_to = 0;
-		for (i = 0; i < cpu; i++) {
+		for (i = 0; i < sstuff_get_threads(); i++) {
 			J_to = J_from + step;
 			if (i == 0)
 				J_to += ost;
@@ -126,7 +126,7 @@ struct matr_rect_mult_job : public job
 		J_from = 0;
 		J_to = 0;
 	};
-	void set(matr_rect * im, const vec * ib, vec * ir, size_t iJ_from, size_t iJ_to)
+	void set(matr_rect * im, const extvec * ib, extvec * ir, size_t iJ_from, size_t iJ_to)
 	{
 		m = im;
 		b = ib;
@@ -141,14 +141,14 @@ struct matr_rect_mult_job : public job
 		for (j = J_from; j < J_to; j++) {
 			for (i = m->x_from; i <= (size_t)m->x_to; i++) {
 				J = i + j*m->n_grid_cols;
-				(*r)(J) = m->mult_line(J, b->begin(), b->end());
+				(*r)(J) = m->mult_line(J, b->const_begin(), b->const_end());
 			}
 		}
 	};
 
 	matr_rect * m;
-	const vec * b;
-	vec * r;
+	const extvec * b;
+	extvec * r;
 	size_t J_from, J_to;
 };
 
@@ -164,19 +164,19 @@ matr_rect::matr_rect(size_t ix_from, size_t ix_to, size_t iy_from, size_t iy_to,
 	n_grid_cols = in_grid_cols;
 };
 
-void matr_rect::mult(const vec * b, vec * r) {
+void matr_rect::mult(const extvec * b, extvec * r) {
 	size_t J;
 	size_t i, j;
 	for (i = 0; i < b->size(); i++)
 		(*r)(i) = 0;
 
 #ifdef HAVE_THREADS
-	if (cpu == 1) {
+	if (sstuff_get_threads() == 1) {
 #endif
 		for (j = y_from; j <= y_to; j++) {
 			for (i = x_from; i <= x_to; i++) {
 				J = i + j*n_grid_cols;
-				(*r)(J) = mult_line(J, b->begin(), b->end());
+				(*r)(J) = mult_line(J, b->const_begin(), b->const_end());
 			}
 		}
 		call_after_mult();
@@ -185,11 +185,11 @@ void matr_rect::mult(const vec * b, vec * r) {
 	} else {
 		size_t i;
 		size_t rws = y_to-y_from+1;
-		size_t step = rws/(cpu);
-		size_t ost = rws % (cpu);
+		size_t step = rws/(sstuff_get_threads());
+		size_t ost = rws % (sstuff_get_threads());
 		size_t J_from = y_from;
 		size_t J_to = 0;
-		for (i = 0; i < cpu; i++) {
+		for (i = 0; i < sstuff_get_threads(); i++) {
 			J_to = J_from + step;
 			if (i == 0)
 				J_to += ost;
@@ -275,7 +275,7 @@ REAL matr_sum::at(size_t i, size_t j, size_t * next_j) const {
 	
 };
 
-REAL matr_sum::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) {
+REAL matr_sum::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) {
 	REAL res = 0;
 	if (T1 && w1)
 		res += w1*T1->mult_line(J, b_begin, b_end);
@@ -344,14 +344,13 @@ size_t matr_sum::rows() const {
 //
 //////////////////
 
-matr_sums::matr_sums(vec * iweights, std::vector<matr *> * imatrices) {
+matr_sums::matr_sums(std::vector<REAL> * iweights, std::vector<matr *> * imatrices) {
 	weights = iweights;
 	matrices = imatrices;
 };
 
 matr_sums::~matr_sums() {
-	if (weights)
-		weights->release();
+	delete weights;
 	free_elements(matrices->begin(), matrices->end());
 	delete matrices;
 };
@@ -364,7 +363,7 @@ REAL matr_sums::element_at(size_t i, size_t j, size_t * next_j) const {
 	size_t q;
 	for (q = 0; q < matrices->size(); q++) {
 		matr * T = (*matrices)[q];
-		REAL w = (*weights)(q);
+		REAL w = (*weights)[q];
 		res += w * T->element_at(i,j,&next_j2);
 		next_j1 = MIN(next_j1, next_j2);
 	}
@@ -386,7 +385,7 @@ REAL matr_sums::at(size_t i, size_t j, size_t * next_j) const {
 		matr * T = (*matrices)[q];
 		if (T == NULL) 
 			continue;
-		REAL w = (*weights)(q);
+		REAL w = (*weights)[q];
 		res += w * T->at(i,j,&next_j2);
 		next_j1 = MIN(next_j1, next_j2);
 	}
@@ -398,7 +397,7 @@ REAL matr_sums::at(size_t i, size_t j, size_t * next_j) const {
 	
 };
 
-REAL matr_sums::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) {
+REAL matr_sums::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) {
 	
 	REAL res = 0;
 	size_t q;
@@ -406,7 +405,7 @@ REAL matr_sums::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) {
 		matr * T = (*matrices)[q];
 		if (!T)
 			continue;
-		REAL w = (*weights)(q);
+		REAL w = (*weights)[q];
 		res += w * T->mult_line(J, b_begin, b_end);
 	}
 	return res;
@@ -428,7 +427,7 @@ REAL matr_sums::norm() const {
 		matr * T = (*matrices)[q];
 		if (T == NULL)
 			continue;
-		REAL w = (*weights)(q);
+		REAL w = (*weights)[q];
 		res += w * T->norm();
 	}
 	return res;
@@ -500,7 +499,7 @@ REAL matr_mask::at(size_t i, size_t j, size_t * next_j) const {
 	
 };
 
-REAL matr_mask::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) {
+REAL matr_mask::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) {
 
 	if (mask)
 	if (mask->get(J) == false) 
@@ -606,7 +605,7 @@ REAL matr_rect_sum::at(size_t i, size_t j, size_t * next_j) const {
 	
 };
 
-REAL matr_rect_sum::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) {
+REAL matr_rect_sum::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) {
 	REAL res = 0;
 	if (T1 && w1)
 		res += w1*T1->mult_line(J, b_begin, b_end);

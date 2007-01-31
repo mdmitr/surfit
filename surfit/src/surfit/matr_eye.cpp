@@ -100,7 +100,7 @@ REAL matr_eye::at_transposed(size_t i, size_t j, size_t * next_j) const
 	return element_at(i,j,next_j);
 };
 
-REAL matr_eye::mult_line(size_t J, const REAL * b_begin, const REAL * b_end) 
+REAL matr_eye::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) 
 {
 	if (mask_solved->get(J))
 		return REAL(0);
@@ -114,7 +114,7 @@ REAL matr_eye::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 	return REAL(0);
 };
 
-REAL matr_eye::mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end)  
+REAL matr_eye::mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end)  
 {
 	return mult_line(J, b_begin, b_end);
 };

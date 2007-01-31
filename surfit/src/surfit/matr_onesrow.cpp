@@ -49,6 +49,8 @@ matr_onesrow::matr_onesrow(REAL ival, size_t iN,
 matr_onesrow::~matr_onesrow() {
 	if (mask)
 		mask->release();
+	if (prev_b_begin)
+		delete prev_b_begin;
 };
 
 REAL matr_onesrow::norm() const {
@@ -68,7 +70,7 @@ REAL matr_onesrow::element_at(size_t i, size_t j, size_t * next_j) const
 	size_t _next_j = UINT_MAX;
 	REAL res = REAL(0);
 
-	if ( !mask->get(i) )
+	if ( mask->get(i) == false )
 		res = val;
 
 	if (next_j) {
@@ -81,7 +83,6 @@ REAL matr_onesrow::element_at(size_t i, size_t j, size_t * next_j) const
 	}
 
 	return res;
-	
 };
 
 REAL matr_onesrow::element_at_transposed(size_t i, size_t j, size_t * next_j) const 
@@ -99,7 +100,7 @@ REAL matr_onesrow::at_transposed(size_t i, size_t j, size_t * next_j) const
 	return element_at(i,j,next_j);
 };
 
-REAL matr_onesrow::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
+REAL matr_onesrow::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end)
 {
 	if (mask->get(J))
 		return REAL(0);
@@ -107,7 +108,8 @@ REAL matr_onesrow::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 #ifdef HAVE_THREADS
 	matr_onesrow_mutex.enter();
 #endif
-	if (prev_b_begin == b_begin) {
+	if (prev_b_begin)
+	if (*prev_b_begin == b_begin) {
 		REAL res = prev_val;
 #ifdef HAVE_THREADS
 		matr_onesrow_mutex.leave();
@@ -124,7 +126,7 @@ REAL matr_onesrow::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 	}
 
 	prev_val = res;
-	prev_b_begin = b_begin;
+	prev_b_begin = new extvec::const_iterator(b_begin);
 
 #ifdef HAVE_THREADS
 	matr_onesrow_mutex.leave();
@@ -133,7 +135,7 @@ REAL matr_onesrow::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 	return res;
 };
 
-REAL matr_onesrow::mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end) 
+REAL matr_onesrow::mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) 
 {
 	return mult_line(J, b_begin, b_end);
 };
@@ -150,7 +152,7 @@ void matr_onesrow::call_after_mult() {
 
 matr_row::matr_row(size_t iN,
 		   bitvec * imask,
-		   vec * ivalues) {
+		   extvec * ivalues) {
 	values = ivalues;
 	N = iN;
 	
@@ -166,6 +168,7 @@ matr_row::~matr_row() {
 		mask->release();
 	if (values)
 		values->release();
+	delete prev_b_begin;
 };
 
 REAL matr_row::norm() const {
@@ -216,12 +219,13 @@ REAL matr_row::at_transposed(size_t i, size_t j, size_t * next_j) const
 	return element_at(i,j,next_j);
 };
 
-REAL matr_row::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
+REAL matr_row::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end)
 {
 	if (mask->get(J))
 		return REAL(0);
 
-	if (prev_b_begin == b_begin)
+	if (prev_b_begin)
+	if (*prev_b_begin == b_begin)
 		return prev_val*(*values)(J);
 	
 	size_t i;
@@ -233,12 +237,12 @@ REAL matr_row::mult_line(size_t J, const REAL * b_begin, const REAL * b_end)
 	}
 
 	prev_val = res;
-	prev_b_begin = b_begin;
+	prev_b_begin = new extvec::const_iterator(b_begin);
 		
 	return res*(*values)(J);
 };
 
-REAL matr_row::mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end) 
+REAL matr_row::mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) 
 {
 	return mult_line(J, b_begin, b_end);
 };

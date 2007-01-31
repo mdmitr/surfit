@@ -95,7 +95,7 @@ bool f_points::minimize() {
 		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 		matr * A = NULL;
-		vec * b = NULL;
+		extvec * b = NULL;
 		bool solvable = make_matrix_and_vector(A,b);
 
 		if ( !cond() ) {
@@ -123,7 +123,7 @@ bool f_points::minimize() {
 	return false;
 };
 
-bool f_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_points::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	if (f_sub_pnts == NULL) {
 		prepare_scattered_points(pnts, f_sub_pnts);
@@ -133,7 +133,7 @@ bool f_points::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	size_t i;
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
-	v = create_vec(matrix_size);
+	v = create_extvec(matrix_size);
 
 	size_t pnts_size = pnts->size();
 		
@@ -295,7 +295,7 @@ void f_points::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_und
 
 bool f_points::solvable_without_cond(const bitvec * mask_solved,
 				     const bitvec * mask_undefined,
-				     const vec * X)
+				     const extvec * X)
 {
 	return true;
 };

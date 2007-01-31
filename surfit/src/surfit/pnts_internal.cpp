@@ -361,13 +361,10 @@ void bind_points_to_grid(d_grid *& old_grid,
 		REAL minx, maxx, miny, maxy;
 		old_sub_points->bounds(minx, maxx, miny, maxy, pnts);
 		
-		REAL ** sortx_begin = NULL;
-		REAL ** sortx_end   = NULL;
-		REAL ** sorty_begin = NULL;
-		REAL ** sorty_end   = NULL;
+		std::vector<size_t> sortx;
+		std::vector<size_t> sorty;
 		
-		_sort_points(pnts, old_sub_points->point_numbers,
-			sortx_begin, sortx_end, sorty_begin, sorty_end);
+		_sort_points(pnts, old_sub_points->point_numbers, sortx, sorty);
 
 		size_t i_from = grd->get_i(minx);
 		size_t i_to   = grd->get_i(maxx);
@@ -407,9 +404,8 @@ void bind_points_to_grid(d_grid *& old_grid,
 					y_to = MAX(y_to, maxy) + grd->stepY/REAL(100.);
 				
 				getPointsInRect(x_from, x_to, y_from, y_to,
-					sortx_begin, sortx_end,
-					sorty_begin, sorty_end,
-					pnts->X->begin(), pnts->Y->begin(),
+						sortx, sorty,
+						pnts->X, pnts->Y,
 					*nums);
 				
 				nums_size = nums->size();
@@ -437,9 +433,6 @@ void bind_points_to_grid(d_grid *& old_grid,
 		if (*it)
 			(*it)->release();
 		*it = NULL;
-		
-		free(sortx_begin);
-		free(sorty_begin);
 		
 	}
 	

@@ -118,16 +118,6 @@ bool f_trend::minimize() {
 
 		if (reproject_faults && gfaults) {
 			if (method_prev_grid != NULL) {
-				size_t NN = method_prev_grid->getCountX();
-				size_t MM = method_prev_grid->getCountY();
-				
-				size_t newNN = NN;
-				size_t newMM = MM;
-				
-				if (doubleX)
-					newNN *= 2;
-				if (doubleY)
-					newMM *= 2;
 				
 				bitvec * saved_mask_solved = create_bitvec(method_mask_solved);
 				method_mask_solved->init_false();
@@ -136,23 +126,57 @@ bool f_trend::minimize() {
 				int i;
 				for (i = 0; i < size; i++) {
 					
-					if (!gfaults->check_for_node(i)) 
+					if (gfaults->check_for_node(i) == false) 
 						method_mask_solved->set_true(i);
+					else {
+						if (saved_mask_solved->get(i) == true)
+							method_mask_solved->set_true(i);
+					}
 					
 				};
 				
+				// res = minimize_step() && res;
 				minimize_step();
 								
 				method_mask_solved->copy(saved_mask_solved);
-				if (saved_mask_solved)
+				if (saved_mask_solved) 
 					saved_mask_solved->release();
 			}
 			
 		}
 
+		if (reproject_undef_areas) {
+			if (method_prev_grid != NULL) {
+				writelog(LOG_MESSAGE,"reprojecting with undef areas...");
+											
+				grid_line * undef_grd_line = trace_undef_grd_line(method_mask_undefined, method_grid->getCountX());
+				if (undef_grd_line) {
+					
+					bitvec * saved_mask_solved = create_bitvec(method_mask_solved);
+					int size = method_mask_solved->size();
+					int i;
+					
+					for (i = 0; i < size; i++) {
+						if (!undef_grd_line->check_for_node(i)) 
+							method_mask_solved->set_true(i);
+					};
+					
+					//res = minimize_step() && res;
+					minimize_step();
+					
+					undef_grd_line->release();
+					method_mask_solved->copy(saved_mask_solved);
+					if (saved_mask_solved) 
+						saved_mask_solved->release();
+					
+				}
+
+			}
+		}
+
 		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
-		std::vector<short int> * flood_areas = new std::vector<short int>(matrix_size);
+		shortvec * flood_areas = create_shortvec(matrix_size);
 		int flood_areas_cnt = 0;
 
 		fill_all_areas(flood_areas, method_grid, gfaults, flood_areas_cnt, method_mask_undefined);
@@ -175,37 +199,47 @@ bool f_trend::minimize() {
 			
 			for (color = 1; color <= flood_areas_cnt; color++) {
 
-				writelog(LOG_MESSAGE, "trend : proccessing trend area N%d",color);
+				writelog(LOG_MESSAGE, "trend : proccessing isolated trend area N%d",color);
 				
-				method_mask_undefined->copy(saved_mask_undefined);
-				method_mask_solved->copy(saved_mask_solved);
+				if (color > 1) {
+					method_mask_undefined->copy(saved_mask_undefined);
+					method_mask_solved->copy(saved_mask_solved);
+				}
 				
 				for (pos = 0; pos < f_size; pos++) {
-					if ( (*flood_areas)[pos] != color ) {
+					if ( (*flood_areas)(pos) != color ) {
 						method_mask_undefined->set_true(pos);
 						method_mask_solved->set_false(pos);
 					}
 				}
 				
-				minimize_step();
+				res = minimize_step();
 				
-				for (pos = 0; pos < f_size; pos++) {
-					if ( (*flood_areas)[pos] == color ) {
-						
-						undef = method_mask_undefined->get(pos);
-						if (undef)
-							saved_mask_undefined->set_true(pos);
-						else 
-							saved_mask_undefined->set_false(pos);
-						
-						solved = method_mask_solved->get(pos);	
-						if (solved)
-							saved_mask_solved->set_true(pos);
-						else
-							saved_mask_solved->set_false(pos);
-						
+				if (res) {
+					for (pos = 0; pos < f_size; pos++) {
+						if ( (*flood_areas)(pos) == color ) {
+							
+							undef = method_mask_undefined->get(pos);
+							if (undef)
+								saved_mask_undefined->set_true(pos);
+							else 
+								saved_mask_undefined->set_false(pos);
+							
+							solved = method_mask_solved->get(pos);	
+							if (solved)
+								saved_mask_solved->set_true(pos);
+							else
+								saved_mask_solved->set_false(pos);
+							
+						}
 					}
-				}
+				} else {
+					for (pos = 0; pos < f_size; pos++) {
+						if ( (*flood_areas)(pos) == color ) {
+							saved_mask_undefined->set_true(pos);
+						}
+					}
+				}	
 				
 			};
 						
@@ -219,7 +253,8 @@ bool f_trend::minimize() {
 			
 		}
 
-		delete flood_areas;
+		if (flood_areas)
+			flood_areas->release();
 
 		writelog(LOG_MESSAGE, "trend : proccessing whole trend area...");
 		
@@ -230,7 +265,7 @@ bool f_trend::minimize() {
 	return true;
 };
 
-bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_trend::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	size_t NN = method_grid->getCountX();
@@ -371,7 +406,7 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 			T = new matr_sum(D1, oD1, 
 					 D2, oD2);
 
-		v = create_vec(matrix_size);
+		v = create_extvec(matrix_size);
 
 		points = calcVecV(matrix_size, method_X, T, v, NN, MM, 
 				  trend_mask_solved,
@@ -412,7 +447,7 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, vec *& v) {
 					      D1, oD1, 
 					      D2, oD2);
 
-		v = create_vec(matrix_size);
+		v = create_extvec(matrix_size);
 
 		points = calcVecV(matrix_size, method_X, T, v, NN, MM, 
 				  trend_mask_solved,
@@ -467,7 +502,7 @@ void f_trend::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_unde
 bool f_trend::minimize_step() {
 	
 	matr * A = NULL;
-	vec * b = NULL;
+	extvec * b = NULL;
 	bool solvable = make_matrix_and_vector(A,b);
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
@@ -497,7 +532,7 @@ bool f_trend::minimize_step() {
 
 bool f_trend::solvable_without_cond(const bitvec * mask_solved,
 				    const bitvec * mask_undefined,
-				    const vec * X)
+				    const extvec * X)
 {
 
 	size_t NN = method_grid->getCountX();

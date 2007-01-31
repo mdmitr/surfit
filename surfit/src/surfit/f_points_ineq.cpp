@@ -84,7 +84,7 @@ bool f_points_ineq::minimize() {
 
 };
 
-bool f_points_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
+bool f_points_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	if (f_sub_pnts == NULL) {
 		prepare_scattered_points(pnts, f_sub_pnts);
@@ -94,7 +94,7 @@ bool f_points_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	size_t i;
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
-	v = create_vec(matrix_size);
+	v = create_extvec(matrix_size);
 
 	size_t pnts_size = pnts->size();
 		
@@ -122,7 +122,7 @@ bool f_points_ineq::make_matrix_and_vector(matr *& matrix, vec *& v) {
 	bitvec * mask = create_bitvec(matrix_size);
 	mask->init_false();
 
-	vec * diag = create_vec(matrix_size);
+	extvec * diag = create_extvec(matrix_size);
 
 	for (i = 0; i < (int)f_sub_pnts->size(); i++) {
 		
@@ -230,7 +230,7 @@ void f_points_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mas
 
 bool f_points_ineq::solvable_without_cond(const bitvec * mask_solved,
 					  const bitvec * mask_undefined,
-					  const vec * X) 
+					  const extvec * X) 
 {
 
 	if (f_sub_pnts == NULL) {

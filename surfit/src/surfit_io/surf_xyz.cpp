@@ -92,7 +92,7 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
 	vec * X = NULL;
 	vec * Y = NULL;
 	vec * Z = NULL;
-	vec * coeff = NULL;
+	extvec * coeff = NULL;
 	size_t i, j;
 	size_t pnt_cnt;
 	REAL x, y, z;
@@ -282,7 +282,7 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
 	if (stepY == 0)
 		goto exit;
 
-	coeff = create_vec( nx*ny, undef_value, 1 );
+	coeff = create_extvec( nx*ny, undef_value, 1 );
 	grd = create_grid(minx, maxx, stepX, miny, maxy, stepY);
 
 	grd->getCoordNode(nx-1, ny-1, maxx, maxy);

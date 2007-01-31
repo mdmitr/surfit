@@ -21,11 +21,11 @@
 #define __surfit_functionals_included__
 
 #include <vector>
+#include "vec.h"
 
 namespace surfit {
 
 class matr;
-class vec;
 class d_curv;
 class grid_line;
 class data;
@@ -57,7 +57,7 @@ public:
 	virtual bool minimize() = 0;
 	
 	//! fills matrix and right-side vector of system of linear equations and returns flag of it solvability 
-	virtual bool make_matrix_and_vector(matr *& matrix, vec *& v) = 0;
+	virtual bool make_matrix_and_vector(matr *& matrix, extvec *& v) = 0;
 	
 	//! makes changes to mask_solved and mask_undefined
 	virtual void mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) = 0;
@@ -65,12 +65,12 @@ public:
 	//! returns true if functional minimization possible (with respect to conditional functionals)
 	virtual bool solvable(const bitvec * mask_solved, 
 			      const bitvec * mask_undefined,
-			      const vec * X);
+			      const extvec * X);
 
 	//! returns true if functional minimization possible (with no respect to conditional functionals)
 	virtual bool solvable_without_cond(const bitvec * mask_solved, 
 					   const bitvec * mask_undefined,
-					   const vec * X) = 0;
+					   const extvec * X) = 0;
 	
 	//! sets functional name to newname 
 	void setName(const char * newname);
@@ -111,7 +111,7 @@ public:
 	void cond_mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined);
 	
 	//! makes one matrix and one right-side vector for all functionals in \ref functionals_cond array
-	bool cond_make_matrix_and_vector(matr *& matrix, vec *& v, bitvec * mask);
+	bool cond_make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask);
 
 	//! adds functional to \ref functionals_cond array
 	void cond_add(functional * icond);
@@ -131,7 +131,7 @@ public:
 	//! returns true in case of all functional in \ref functionals_cond are solvable
 	bool cond_solvable(const bitvec * mask_solved, 
 			   const bitvec * mask_undefined,
-			   const vec * X);
+			   const extvec * X);
 
 	//! removes functional from \ref functionals_cond array
 	void cond_erase(int pos);
@@ -152,7 +152,7 @@ protected:
 	const data * get_add_data(int pos) const;
 
 	//! modifies system of linear equations with respect to functionals from \ref functionals_add and \ref weights
-	bool wrap_sums(matr *& matrix, vec *& v);
+	bool wrap_sums(matr *& matrix, extvec *& v);
 	//! calls \ref mark_solved_and_undefined for each functional in \ref functionals_add array
 	void mark_sums(bitvec * mask_solved, bitvec * mask_undefined);
 	
@@ -163,7 +163,7 @@ protected:
 	std::vector<functional *> * functionals_add;
 	
 	//! weights for \ref functionals_add
-	vec * weights;
+	std::vector<REAL> * weights;
 
 	//! array of conditions for functional minimization
 	std::vector<functional *> * functionals_cond;

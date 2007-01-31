@@ -37,7 +37,7 @@ struct solver_rf : public solver {
 	~solver_rf() {
 		remove_solver(this);
 	}
-	virtual void solve(matr * T, const vec * V, vec *& X) { 
+	virtual void solve(matr * T, const extvec * V, extvec *& X) { 
 		X = RF(T,V,V->size()*SOLVER_MAX_ITER,tol,X);
 	};
 	virtual const char * get_short_name() const { return "rf"; };
@@ -53,7 +53,7 @@ struct solver_cg : public solver {
 	~solver_cg() {
 		remove_solver(this);
 	}
-	virtual void solve(matr * T, const vec * V, vec *& X) { 
+	virtual void solve(matr * T, const extvec * V, extvec *& X) { 
 		X = CG(T,V,V->size()*SOLVER_MAX_ITER,tol,X,FLT_MAX);
 	};
 	virtual const char * get_short_name() const { return "cg"; };
@@ -67,7 +67,7 @@ struct solver_jacobi : public solver {
 	~solver_jacobi() {
 		remove_solver(this);
 	}
-	virtual void solve(matr * T, const vec * V, vec *& X) { 
+	virtual void solve(matr * T, const extvec * V, extvec *& X) { 
 		X = J(T,V,V->size()*SOLVER_MAX_ITER,tol,X);
 	};
 	virtual const char * get_short_name() const { return "jacobi"; };
@@ -81,7 +81,7 @@ struct solver_jcg : public solver {
 	~solver_jcg() {
 		remove_solver(this);
 	}
-	virtual void solve(matr * T, const vec * V, vec *& X) { 
+	virtual void solve(matr * T, const extvec * V, extvec *& X) { 
 		X = JCG(T,V,V->size()*SOLVER_MAX_ITER,tol,X,FLT_MAX);
 	};
 	virtual const char * get_short_name() const { return "jcg"; };
@@ -95,7 +95,7 @@ struct solver_ssor : public solver {
 	~solver_ssor() {
 		remove_solver(this);
 	}
-	virtual void solve(matr * T, const vec * V, vec *& X) { 
+	virtual void solve(matr * T, const extvec * V, extvec *& X) { 
 		X = SSOR(T,V,V->size()*SOLVER_MAX_ITER,tol,X);
 	};
 	virtual const char * get_short_name() const { return "ssor"; };

@@ -184,7 +184,7 @@ d_surf * _surf_load_gmt(const char * filename, const char * surfname)
 	d_surf * res = NULL;
 
 	float *tmp;
-	vec * data = NULL;
+	extvec * data = NULL;
 
 	// Open file and get info
 	if (check_nc_status (nc_open (filename, NC_NOWRITE, &cdfid)) == false)
@@ -269,7 +269,7 @@ d_surf * _surf_load_gmt(const char * filename, const char * surfname)
 	tmp = (float *) malloc ( (size_t)header.nx * sizeof (float));
 	edge[0] = header.nx;
 
-	data = create_vec( header.nx*header.ny, 0, 0); // don't fill this vector
+	data = create_extvec( header.nx*header.ny, 0, 0); // don't fill this vector
 
 	z_min = header.z_min;
 	z_max = header.z_max;

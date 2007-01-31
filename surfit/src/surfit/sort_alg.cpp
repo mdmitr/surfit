@@ -28,93 +28,71 @@
 
 namespace surfit {
 
-void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up, 
-		     REAL ** sortx_begin, REAL ** sortx_end,
-		     REAL ** sorty_begin, REAL ** sorty_end,
-		     REAL * beginx, REAL * beginy,
+struct search_points {
+
+	search_points(const vec * iV, const REAL isearch_val)
+	{
+		V = iV;
+		search_val = isearch_val;
+	}
+
+	bool operator ()( size_t left, size_t right )
+	{
+		if (left == UINT_MAX)
+			return (search_val < (*V)(right));
+		if (right == UINT_MAX)
+			return ((*V)(left) < search_val);
+		return ((*V)(left) < (*V)(right));
+	}
+
+private:
+	const vec * V;
+	REAL search_val;
+};
+
+void getPointsInRect(const REAL x_left, const REAL x_right, const REAL y_down, const REAL y_up, 
+		     const std::vector<size_t> & sortx,
+		     const std::vector<size_t> & sorty,
+		     const vec * X, const vec * Y,
 		     std::vector<size_t> &nn) {
 
 	if (x_left > x_right) return;
 	if (y_down > y_up) return;
 
-	typedef REAL **  i_psVec;
-	i_psVec i_sortx_from, i_sortx_to, ix;
-	i_psVec i_sorty_from, i_sorty_to, iy;
+	std::vector<size_t>::const_iterator i_sortx_from, i_sortx_to, ix;
+	std::vector<size_t>::const_iterator i_sorty_from, i_sorty_to, iy;
 	
 	// find first point less than x_left
-	i_sortx_from = std::lower_bound(sortx_begin,sortx_end,&x_left,ptr_vector_less);
-	if (i_sortx_from == sortx_end) return;
+	{
+		search_points search_x_left(X, x_left);
+		i_sortx_from = std::lower_bound(sortx.begin(),sortx.end(),UINT_MAX,search_x_left);
+		if (i_sortx_from == sortx.end()) return;
+	}
+	
 	// find first point greater than x_right
-	i_sortx_to = std::lower_bound(i_sortx_from,sortx_end,&x_right,ptr_vector_less);
+	{
+		search_points search_x_right(X, x_right);
+		i_sortx_to = std::lower_bound(i_sortx_from,sortx.end(),UINT_MAX,search_x_right);
+	}
 
 	// find first point less than y_down
-	i_sorty_from = std::lower_bound(sorty_begin,sorty_end,&y_down,ptr_vector_less);
-	if (i_sorty_from == sorty_end) return;
-	// Находим первую точку, больше y_up
-	i_sorty_to = std::lower_bound(i_sorty_from,sorty_end,&y_up,ptr_vector_less);
-	
-	typedef std::vector<size_t> vecInt;
-
-	vecInt nx(i_sortx_to-i_sortx_from);
-	size_t pos = 0;
-	for (ix = i_sortx_from; ix != i_sortx_to; ++ix) {
-		nx[pos] = (*ix-beginx);
-		pos++;
+	{
+		search_points search_y_down(Y, y_down);
+		i_sorty_from = std::lower_bound(sorty.begin(),sorty.end(),UINT_MAX,search_y_down);
+		if (i_sorty_from == sorty.end()) return;
 	}
-	std::stable_sort(nx.begin(),nx.end());
-
-	vecInt ny(i_sorty_to-i_sorty_from);
-	pos = 0;
-	for (iy = i_sorty_from; iy != i_sorty_to; ++iy) {
-		ny[pos] = (*iy-beginy);
-		if ( *iy-beginy == 0 ) {
-			if (pos == 13497) {
-				bool br = true;
-			}
-		}
-		pos++;
-	}
-	std::stable_sort(ny.begin(),ny.end());
-	
-	std::set_intersection(nx.begin(),nx.end(),
-                          ny.begin(),ny.end(), 
-                          std::back_inserter(nn) );
-
-};
-
-void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up, 
-		     REAL ** sortx_begin, REAL ** sortx_end,
-		     REAL ** sorty_begin, REAL ** sorty_end,
-		     REAL * beginx, REAL * beginy,
-		     std::vector<size_t> &nn,
-		     REAL **& i_sortx_from, REAL **& i_sortx_to,
-		     REAL **& i_sorty_from, REAL **& i_sorty_to) {
-
-	if (x_left > x_right) return;
-	if (y_down > y_up) return;
-
-	typedef REAL **  i_psVec;
-	i_psVec ix;
-	i_psVec iy;
-	
-	// find first point less than x_left
-	i_sortx_from = std::lower_bound(sortx_begin,sortx_end,&x_left,ptr_vector_less);
-	if (i_sortx_from == sortx_end) return;
-	// find first point greater than x_right
-	i_sortx_to = std::lower_bound(i_sortx_from,sortx_end,&x_right,ptr_vector_less);
-
-	// find first point less than y_down
-	i_sorty_from = std::lower_bound(sorty_begin,sorty_end,&y_down,ptr_vector_less);
-	if (i_sortx_from == sortx_end) return;
 	// find first point greater than y_up
-	i_sorty_to = std::lower_bound(i_sorty_from,sorty_end,&y_up,ptr_vector_less);
+	{
+		search_points search_y_up(Y, y_up);
+		i_sorty_to = std::lower_bound(i_sorty_from,sorty.end(),UINT_MAX,search_y_up);
+	}
 	
 	typedef std::vector<size_t> vecInt;
 
 	vecInt nx(i_sortx_to-i_sortx_from);
 	size_t pos = 0;
 	for (ix = i_sortx_from; ix != i_sortx_to; ++ix) {
-		nx[pos] = (*ix-beginx);
+		nx[pos] = *ix;;
 		pos++;
 	}
 	std::stable_sort(nx.begin(),nx.end());
@@ -122,69 +100,17 @@ void getPointsInRect(REAL x_left, REAL x_right, REAL y_down, REAL y_up,
 	vecInt ny(i_sorty_to-i_sorty_from);
 	pos = 0;
 	for (iy = i_sorty_from; iy != i_sorty_to; ++iy) {
-		ny[pos] = (*iy-beginy);
+		ny[pos] = *iy;
 		pos++;
 	}
 	std::stable_sort(ny.begin(),ny.end());
 	
 	std::set_intersection(nx.begin(),nx.end(),
-                          ny.begin(),ny.end(), 
-                          std::back_inserter(nn) );
+                              ny.begin(),ny.end(), 
+                              std::back_inserter(nn) );
 
 };
 
-void getPointsInSegment(REAL x_left, REAL x_right,
-			REAL ** sortx_begin, REAL ** sortx_end,
-			REAL * beginx,
-			std::vector<size_t> &nn) {
-
-	if (x_left > x_right) return;
-	
-	typedef REAL **  i_psVec;
-	i_psVec i_sortx_from, i_sortx_to, ix;
-		
-	// find first point less than x_left
-	i_sortx_from = std::lower_bound(sortx_begin,sortx_end,&x_left,ptr_vector_less);
-	if (i_sortx_from == sortx_end) return;
-	// find first point greater than x_right
-	i_sortx_to = std::lower_bound(i_sortx_from,sortx_end,&x_right,ptr_vector_less);
-
-	nn.resize(i_sortx_to-i_sortx_from);
-	size_t pos = 0;
-	for (ix = i_sortx_from; ix != i_sortx_to; ++ix) {
-		nn[pos] = (*ix-beginx);
-		pos++;
-	}
-	std::stable_sort(nn.begin(),nn.end());
-
-};
-
-void getPointsInSegment(REAL x_left, REAL x_right,
-			REAL ** sort_begin, REAL ** sort_end,
-			REAL * beginx,
-			std::vector<size_t> &nn,
-			REAL **& i_sort_from, REAL **& i_sort_to) {
-
-	if (x_left > x_right) return;
-	
-	typedef REAL **  i_psVec;
-	i_psVec ix;
-		
-	// find first point less than x_left
-	i_sort_from = std::lower_bound(sort_begin,sort_end,&x_left,ptr_vector_less);
-	if (i_sort_from == sort_end) return;
-	// find first point greater than x_right
-	i_sort_to = std::lower_bound(i_sort_from,sort_end,&x_right,ptr_vector_less);
-
-	nn.resize(i_sort_to-i_sort_from);
-	size_t pos = 0;
-	for (ix = i_sort_from; ix != i_sort_to; ++ix) {
-		nn[pos] = (*ix-beginx);
-		pos++;
-	}
-	std::stable_sort(nn.begin(),nn.end());
-
-};
 
 /*
 template <class T>

@@ -21,6 +21,7 @@
 #define __surfit_grd_line_included__
 
 #include "surfit_data.h"
+#include "shortvec.h"
 
 #include <vector> // for floodfill
 
@@ -33,8 +34,16 @@ class grid_line;
 class d_area;
 class d_curv;
 
+#ifdef XXL
+//#include <stxxl>
+//typedef stxxl::VECTOR_GENERATOR<size_t,2,2,128*1024>::result grid_line_vec;
+typedef std::vector<size_t> grid_line_vec;
+#else
+typedef std::vector<size_t> grid_line_vec;
+#endif
+
 SURFIT_EXPORT
-grid_line * create_grid_line(size_t iNN, size_t iMM, std::vector<size_t> * ifirst, std::vector<size_t> * isecond);
+grid_line * create_grid_line(size_t iNN, size_t iMM, grid_line_vec * ifirst, grid_line_vec * isecond);
 
 /*! \class grid_line
     \brief \ref grid based line
@@ -54,7 +63,7 @@ protected:
 	    \param ifirst pointer to array of first cell-numbers 
 	    \param isecond pointer to array of second cell-numbers 
 	*/
-	grid_line(size_t iNN, size_t iMM, std::vector<size_t> * ifirst, std::vector<size_t> * isecond);
+	grid_line(size_t iNN, size_t iMM, grid_line_vec * ifirst, grid_line_vec * isecond);
 
 	//! destructor
 	~grid_line();
@@ -63,7 +72,7 @@ public:
 
 	friend SURFIT_EXPORT
 	grid_line * create_grid_line(size_t iNN, size_t iMM, 
-				     std::vector<size_t> * ifirst, std::vector<size_t> * isecond);
+				     grid_line_vec * ifirst, grid_line_vec * isecond);
 
 	virtual bool bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const;
 
@@ -71,7 +80,7 @@ public:
 	size_t size() const;
 
 	//! adds another grid_line
-	void add(std::vector<size_t> *& ifirst, std::vector<size_t> *& isecond);
+	void add(grid_line_vec *& ifirst, grid_line_vec *& isecond);
 	
 	//! adds another grid_line
 	void add(grid_line * line);
@@ -97,8 +106,8 @@ public:
 		size_t ** find_to_second;
 		size_t ** ptr;
 		size_t * it;
-		const std::vector<size_t> * first;
-		const std::vector<size_t> * second;
+		const grid_line_vec * first;
+		const grid_line_vec * second;
 	};
 
 	friend class cell_finder;
@@ -133,9 +142,9 @@ protected:
 	size_t ** sort_by_second_end;
 
 	//! pointer to array of first cell-numbers 
-	std::vector<size_t> * first;
+	grid_line_vec * first;
 	//! pointer to array of second cell-numbers 
-	std::vector<size_t> * second;
+	grid_line_vec * second;
 
 };
 
@@ -167,7 +176,7 @@ void fault_points_D2(size_t n, size_t m, size_t NN, size_t MM,
 SURFIT_EXPORT
 void flood_fill(d_grid * grd,
 		grid_line * line, 
-		std::vector<short int> * data,
+		shortvec * data,
 		size_t fill_pos,
 		short int fill_val,
 		const bitvec * mask_undefined);
@@ -180,7 +189,7 @@ void flood_fill_boolvec(d_grid * grd,
 			const bitvec * mask_undefined);
 
 SURFIT_EXPORT
-void fill_all_areas(std::vector<short int> *& flood_areas, 
+void fill_all_areas(shortvec *& flood_areas, 
 		    d_grid * grd, 
 		    grid_line * line, 
 		    int & flood_areas_cnt,

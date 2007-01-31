@@ -41,15 +41,14 @@ functional::functional(const char * newname, int itype) {
 	name = NULL;
 	setName(newname);
 	functionals_add = new std::vector<functional *>;
-	weights = create_vec();
+	weights = new std::vector<REAL>();
 	functionals_cond = new std::vector<functional *>;
 	type = itype;
 };
 
 functional::~functional() {
 	free(name);
-	if (weights)
-		weights->release();
+	delete weights;
 	release_elements(functionals_add->begin(), functionals_add->end());
 	delete functionals_add;
 	delete functionals_cond;
@@ -92,7 +91,7 @@ void functional::add_functional(functional * isum, REAL iweights) {
 	weights->push_back(iweights);
 };
 
-bool functional::wrap_sums(matr *& matrix, vec *& v) {
+bool functional::wrap_sums(matr *& matrix, extvec *& v) {
 	if (functionals_add->size() == 0)
 		return false;
 
@@ -105,12 +104,12 @@ bool functional::wrap_sums(matr *& matrix, vec *& v) {
 	for (q = 0; q < size; q++) {
 		functional * f = (*functionals_add)[q];
 		matr * sum_T = NULL;
-		vec * sum_vector = NULL;
+		extvec * sum_vector = NULL;
 		solvable = f->make_matrix_and_vector(sum_T, sum_vector) || solvable;
 
 		(*matrs)[q] = sum_T;
 
-		REAL w = (*weights)(q);
+		REAL w = (*weights)[q];
 		if (sum_vector) {
 			for (i = 0; i < v->size(); i++) 
 				(*v)(i) += w * (*sum_vector)(i);
@@ -122,7 +121,7 @@ bool functional::wrap_sums(matr *& matrix, vec *& v) {
 
 	(*matrs)[size] = matrix;
 	
-	vec * my_weights = create_vec(*weights);
+	std::vector<REAL> * my_weights = new std::vector<REAL>(*weights);
 	my_weights->push_back(1);
 
 	matr_sums * sums = new matr_sums(my_weights, matrs);
@@ -147,7 +146,7 @@ void functional::info() {
 		int q;
 		for (q = 0; q < (int)functionals_add->size(); q++) {
 			functional * f = (*functionals_add)[q];
-			REAL weight = (*weights)(q);
+			REAL weight = (*weights)[q];
 			writelog(LOG_MESSAGE, "\t + %g %s", weight, f->getName());
 		};
 	};
@@ -193,7 +192,7 @@ void functional::cond_mark_solved_and_undefined(bitvec * mask_solved, bitvec * m
 	}
 };
 
-bool functional::cond_make_matrix_and_vector(matr *& matrix, vec *& v, bitvec * parent_mask) {
+bool functional::cond_make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * parent_mask) {
 	matrix = NULL;
 	v = NULL;
 	if ( !cond() ) 
@@ -203,21 +202,24 @@ bool functional::cond_make_matrix_and_vector(matr *& matrix, vec *& v, bitvec * 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 	std::vector<matr *> * matrices = new std::vector<matr*>;
-	vec * weights = create_vec();
-	v = create_vec(matrix_size);
+	std::vector<REAL> * weights = new std::vector<REAL>();
+	v = create_extvec(matrix_size);
 
 	size_t i,j;
 	for (i = 0; i < functionals_cond->size(); i++) {
 		functional * cond = (*functionals_cond)[i];
 		matr * P_matr = NULL;
-		vec * P_v = NULL;
+		extvec * P_v = NULL;
 		res = cond->make_matrix_and_vector(P_matr,P_v) && res;
+
+		if (P_matr == NULL)
+			continue;
 
 		matrices->push_back(P_matr);
 		weights->push_back(1);
 
 		if (P_v) {
-			for (j = 0; j < v->size(); j++) {
+			for (j = 0; j < matrix_size; j++) {
 				if (parent_mask) {
 					if (parent_mask->get(j) == true)
 						(*v)(j) += (*P_v)(j);
@@ -242,7 +244,7 @@ bool functional::cond_make_matrix_and_vector(matr *& matrix, vec *& v, bitvec * 
 
 bool functional::cond_solvable(const bitvec * mask_solved, 
 			       const bitvec * mask_undefined, 
-			       const vec * X) {
+			       const extvec * X) {
 
 	if (functionals_cond->size() == 0)
 		return true;
@@ -300,7 +302,7 @@ const data * functional::get_data(int pos) const {
 
 bool functional::solvable(const bitvec * mask_solved,
 			  const bitvec * mask_undefined,
-			  const vec * X) 
+			  const extvec * X) 
 {
 
 	bool res = solvable_without_cond(mask_solved, mask_undefined, X);

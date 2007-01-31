@@ -60,12 +60,11 @@ d_points * _surf_to_pnts(const d_surf * srf) {
 	}
 
 	vec * Z = create_vec(*(srf->coeff));
-
 	vec * X = create_vec(srf->coeff->size());
 	vec * Y = create_vec(srf->coeff->size());
 	
-	REAL * X_ptr = X->begin();
-	REAL * Y_ptr = Y->begin();
+	vec::iterator X_ptr = X->begin();
+	vec::iterator Y_ptr = Y->begin();
 
 	size_t i,j;
 	for (j = 0; j < srf->getCountY(); j++) {
@@ -133,7 +132,7 @@ struct surf_project_job : public job
 	};
 	void set(size_t iJ_from, size_t iJ_to, 
 		 const d_surf * isrf, const d_grid * igrd,
-		 vec * icoeff)
+		 extvec * icoeff)
 	{
 		J_from = iJ_from;
 		J_to = iJ_to;
@@ -244,7 +243,7 @@ struct surf_project_job : public job
 	size_t J_from, J_to;
 	const d_surf * srf;
 	const d_grid * grd;
-	vec * coeff;
+	extvec * coeff;
 };
 
 surf_project_job surf_project_jobs[MAX_CPU];
@@ -255,7 +254,7 @@ d_surf * _surf_project(const d_surf * srf, d_grid * grd) {
 	size_t size_x = grd->getCountX();
 	size_t size_y = grd->getCountY();
 
-	vec * coeff = create_vec(size_x*size_y,0,0);  // do not fill this vector
+	extvec * coeff = create_extvec(size_x*size_y,0,0);  // do not fill this vector
 	
 	size_t surf_size = srf->coeff->size();
 	size_t surf_sizeX = srf->getCountX();
@@ -278,7 +277,7 @@ d_surf * _surf_project(const d_surf * srf, d_grid * grd) {
 		REAL hX = srf->grd->stepX;
 		REAL hY = srf->grd->stepY;
 #ifdef HAVE_THREADS
-		if (cpu == 1) {
+		if (sstuff_get_threads() == 1) {
 #endif
 		d_grid * g = srf->grd;
 		for (j = 0; j < size_y; j++) {
@@ -366,12 +365,12 @@ d_surf * _surf_project(const d_surf * srf, d_grid * grd) {
 		}
 #ifdef HAVE_THREADS
 		} else {
-			size_t step = size_y / (cpu);
-			size_t ost = size_y % (cpu);
+			size_t step = size_y / (sstuff_get_threads());
+			size_t ost = size_y % (sstuff_get_threads());
 			size_t J_from = 0;
 			size_t J_to = 0;
 			size_t work;
-			for (work = 0; work < cpu; work++) {
+			for (work = 0; work < sstuff_get_threads(); work++) {
 				J_to = J_from + step;
 				if (work == 0)
 					J_to += ost;
@@ -401,7 +400,7 @@ d_surf * _surf_project(d_surf * srf, d_grid * grd, grid_line * fault_grd_line) {
 	size_t size_x = grd->getCountX();
 	size_t size_y = grd->getCountY();
 
-	vec * coeff = create_vec(size_x*size_y,0,0);  // do not fill this vector
+	extvec * coeff = create_extvec(size_x*size_y,0,0);  // do not fill this vector
 	
 	size_t surf_size = srf->coeff->size();
 	size_t surf_sizeX = srf->getCountX();
@@ -590,9 +589,9 @@ bool _surf_resid(const d_surf * srf, const d_points * pnts, const char * filenam
 
 	REAL maxres = -FLT_MAX;
 
-	REAL * x_ptr = pnts->X->begin();
-	REAL * y_ptr = pnts->Y->begin();
-	REAL * z_ptr = pnts->Z->begin();
+	vec::iterator x_ptr = pnts->X->begin();
+	vec::iterator y_ptr = pnts->Y->begin();
+	vec::iterator z_ptr = pnts->Z->begin();
 
 	for (cnt = 0; cnt < pnts_size; cnt++) {
 		x = *(x_ptr + cnt);
@@ -616,7 +615,7 @@ REAL _surf_D1(const d_surf * srf) {
 	size_t NN = srf->getCountX();
 	size_t MM = srf->getCountY();
 
-	REAL * ptr = srf->coeff->begin();
+	extvec::const_iterator ptr = srf->coeff->const_begin();
 
 	REAL v1, v2;
 
@@ -665,7 +664,7 @@ REAL _surf_D2(const d_surf * srf) {
 	size_t NN = srf->getCountX();
 	size_t MM = srf->getCountY();
 
-	REAL * ptr = srf->coeff->begin();
+	extvec::const_iterator ptr = srf->coeff->const_begin();
 
 	REAL v1, v2, v3, v4;
 
@@ -752,7 +751,7 @@ d_surf * _surf_gradient(const d_surf * srf) {
 	bool first_x, second_x;
 	bool first_y, second_y;
 
-	vec * coeff = create_vec(NN*MM);
+	extvec * coeff = create_extvec(NN*MM);
 
 	size_t i, j, pos, pos1;
 	REAL val;
@@ -1139,12 +1138,12 @@ d_surf * _surf_load_df(datafile * df, const char * surfname) {
 
 	bool err = false;
 	d_surf * srf = NULL;
-	vec * icoeff = NULL;
+	extvec * icoeff = NULL;
 	d_grid * grd = NULL;
 	char * name = NULL;
 	REAL undef_value = FLT_MAX;
 
-	vec * coeff = NULL;
+	extvec * coeff = NULL;
 	
 	bool loaded = false;
 	

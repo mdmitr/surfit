@@ -23,10 +23,10 @@
 #include <vector>
 
 #include "surfit_data.h"
+#include "vec.h"
 
 namespace surfit {
 
-class vec;
 class datafile;
 class d_grid;
 class d_mask;
@@ -34,7 +34,7 @@ class d_surf;
 class bitvec;
 
 SURFIT_EXPORT
-d_surf * create_surf(vec *icoeff, d_grid *igrd, const char * surfname = 0);
+d_surf * create_surf(extvec *icoeff, d_grid *igrd, const char * surfname = 0);
 SURFIT_EXPORT
 d_surf * create_surf_by_mask(d_mask * msk);
 
@@ -49,7 +49,7 @@ protected:
 	    \param icoeff coefficients a_i
 	    \param surfname name
 	*/
-	d_surf(vec *icoeff, d_grid *igrd,
+	d_surf(extvec *icoeff, d_grid *igrd,
 	       const char * surfname = 0);
 
 	//! constructor
@@ -62,7 +62,7 @@ public:
 
 	//! constructor
 	friend SURFIT_EXPORT
-	d_surf * create_surf(vec *icoeff, d_grid *igrd, const char * surfname);
+	d_surf * create_surf(extvec *icoeff, d_grid *igrd, const char * surfname);
 
 	//! constructor
 	friend SURFIT_EXPORT
@@ -79,6 +79,9 @@ public:
 
 	//! returns surface value at node (i,j)
 	virtual REAL getValueIJ(size_t i, size_t j) const;
+
+	//! return surface value at node
+	virtual REAL getValue(size_t pos) const;
 
 	//! returns minimum X-coordinate for the surface
 	virtual REAL getMinX() const;
@@ -230,19 +233,19 @@ public:
 	d_grid * grd;
 
 	//! coefficients for each basis surface
-	vec * coeff;
+	extvec * coeff;
 	
 	//! all values in coeff equal to undef_value interprets as undefined
 	REAL undef_value;
 
 	//! horizontal details
-	std::vector<vec *> * details_h;
+	std::vector<extvec *> * details_h;
  
 	//! vertical details
-	std::vector<vec *> * details_v; 
+	std::vector<extvec *> * details_v; 
 
 	//! diagonal details
-	std::vector<vec *> * details_d; 
+	std::vector<extvec *> * details_d; 
 
 	//! X-direction enlarges
 	std::vector<bool>  * enlarges_X; 

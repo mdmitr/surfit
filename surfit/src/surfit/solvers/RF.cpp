@@ -30,7 +30,7 @@ using namespace std;
 
 namespace surfit {
 
-REAL make_iter(matr * A, const vec * B, REAL tau, vec * x_0, vec * x_1, REAL error_norm) {
+REAL make_iter(matr * A, const extvec * B, REAL tau, extvec * x_0, extvec * x_1, REAL error_norm) {
 
 	A->mult(x_0,x_1);
 	
@@ -53,13 +53,13 @@ REAL make_iter(matr * A, const vec * B, REAL tau, vec * x_0, vec * x_1, REAL err
 	return err;
 };
 
-vec * RF(matr * A, const vec * b, int max_it, REAL tol, vec * X, REAL undef_value) {
+extvec * RF(matr * A, const extvec * b, int max_it, REAL tol, extvec * X, REAL undef_value) {
 	
 	writelog2(LOG_MESSAGE,"rf: (%d) ",b->size());
 
-	vec * x_0 = NULL;
+	extvec * x_0 = NULL;
 	if (!X) {
-		x_0 = create_vec(b->size());
+		x_0 = create_extvec(b->size());
 		size_t cnt;
 		for (cnt = 0; cnt < b->size(); cnt++) {
 			(*x_0)(cnt) = (*b)(cnt);
@@ -71,7 +71,7 @@ vec * RF(matr * A, const vec * b, int max_it, REAL tol, vec * X, REAL undef_valu
 	REAL M = A->norm();
 	REAL tau = REAL(2)/M;
 		
-	vec * x_1 = create_vec(x_0->size());
+	extvec * x_1 = create_extvec(x_0->size());
 	
 	int iter;
 

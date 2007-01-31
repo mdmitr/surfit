@@ -127,7 +127,7 @@ d_surf * _surf_load_jpg(const char * filename, const char * surfname, REAL minz,
 	buffer = (*cinfo.mem->alloc_sarray)
 		((j_common_ptr) &cinfo, JPOOL_IMAGE, row_stride, 1);
 
-	vec * coeff = create_vec( cinfo.output_height * cinfo.output_width, 0, 0);
+	extvec * coeff = create_extvec( cinfo.output_height * cinfo.output_width, 0, 0);
 		
 	// Here we use the library's state variable cinfo.output_scanline as the
 	// loop counter, so that we don't have to keep track ourselves.

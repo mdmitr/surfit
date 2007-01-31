@@ -188,10 +188,10 @@ bool two_columns_write(const char * filename, const char * mask,
 		fclose(file);
 		return false;
 	}
-	const REAL * col1_begin = vcol1->begin();
-	const REAL * col1_end = vcol1->end();
-	const REAL * col2_begin = vcol2->begin();
-	const REAL * col2_end = vcol2->end();
+	vec::const_iterator col1_begin = vcol1->const_begin();
+	vec::const_iterator col1_end = vcol1->const_end();
+	vec::const_iterator col2_begin = vcol2->const_begin();
+	vec::const_iterator col2_end = vcol2->const_end();
 	while (col1_begin != col1_end) {
 		fprintf(file, mask, *col1_begin, *col2_begin);
 		col1_begin++;
@@ -523,12 +523,12 @@ bool three_columns_write(const char * filename, const char * mask,
 		return false;
 	}
 
-	const REAL * col1_begin = vcol1->begin();
-	const REAL * col1_end = vcol1->end();
-	const REAL * col2_begin = vcol2->begin();
-	const REAL * col2_end = vcol2->end();
-	const REAL * col3_begin = vcol3->begin();
-	const REAL * col3_end = vcol3->end();
+	vec::const_iterator col1_begin = vcol1->const_begin();
+	vec::const_iterator col1_end = vcol1->const_end();
+	vec::const_iterator col2_begin = vcol2->const_begin();
+	vec::const_iterator col2_end = vcol2->const_end();
+	vec::const_iterator col3_begin = vcol3->const_begin();
+	vec::const_iterator col3_end = vcol3->const_end();
 
 	while (col1_begin != col1_end) {
 		fprintf(file, mask, *col1_begin, *col2_begin, *col3_begin);
@@ -569,8 +569,8 @@ bool four_columns_read(const char * filename,
 	vcol4->set_grow(grow_by);
 
 	vec *arr = create_vec(columns);
-	REAL *begin = arr->begin();
-	REAL *end = arr->end();
+	vec::iterator begin = arr->begin();
+	vec::iterator end = arr->end();
 	
 	int counter = 0;
 	int scan_res = 0;
@@ -680,14 +680,14 @@ bool four_columns_write(const char * filename, const char * mask,
 		return false;
 	}
 
-	const REAL * col1_begin = vcol1->begin();
-	const REAL * col1_end = vcol1->end();
-	const REAL * col2_begin = vcol2->begin();
-	const REAL * col2_end = vcol2->end();
-	const REAL * col3_begin = vcol3->begin();
-	const REAL * col3_end = vcol3->end();
-	const REAL * col4_begin = vcol4->begin();
-	const REAL * col4_end = vcol4->end();
+	vec::const_iterator col1_begin = vcol1->const_begin();
+	vec::const_iterator col1_end = vcol1->const_end();
+	vec::const_iterator col2_begin = vcol2->const_begin();
+	vec::const_iterator col2_end = vcol2->const_end();
+	vec::const_iterator col3_begin = vcol3->const_begin();
+	vec::const_iterator col3_end = vcol3->const_end();
+	vec::const_iterator col4_begin = vcol4->const_begin();
+	vec::const_iterator col4_end = vcol4->const_end();
 
 	while (col1_begin != col1_end) {
 		fprintf(file, mask, *col1_begin, *col2_begin, *col3_begin, *col4_begin);
