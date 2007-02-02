@@ -406,7 +406,7 @@ void bind_points_to_grid(d_grid *& old_grid,
 				getPointsInRect(x_from, x_to, y_from, y_to,
 						sortx, sorty,
 						pnts->X, pnts->Y,
-					*nums);
+						*nums);
 				
 				nums_size = nums->size();
 				total_size += nums_size;

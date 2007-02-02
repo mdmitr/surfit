@@ -182,7 +182,7 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="..\..\libs\jpeg-6b,..\..\libs\NETCDF\LIBSRC,..\..\LIBS\TCL8.3.5\WIN\DEBUG,..\..\libs\jpeg-6b\"
-				IgnoreDefaultLibraryNames="LIBC"
+				IgnoreDefaultLibraryNames="LIBC,MSVCRT"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\../Debug/libsurfit_io.pdb"
 				ImportLibrary="../bin/libsurfit_io.lib"

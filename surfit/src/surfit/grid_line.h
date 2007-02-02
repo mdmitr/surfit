@@ -22,6 +22,7 @@
 
 #include "surfit_data.h"
 #include "shortvec.h"
+#include "sizetvec.h"
 
 #include <vector> // for floodfill
 
@@ -34,16 +35,25 @@ class grid_line;
 class d_area;
 class d_curv;
 
-#ifdef XXL
-//#include <stxxl>
-//typedef stxxl::VECTOR_GENERATOR<size_t,2,2,128*1024>::result grid_line_vec;
-typedef std::vector<size_t> grid_line_vec;
-#else
-typedef std::vector<size_t> grid_line_vec;
-#endif
+struct nums_less_compare
+{
+	nums_less_compare(const sizetvec * idata)
+	{
+		data = idata;
+	}
+
+	bool operator ()( size_t left, size_t right )
+	{
+		return ((*data)(left) < (*data)(right));
+	}
+
+private:
+
+	const sizetvec * data;
+};
 
 SURFIT_EXPORT
-grid_line * create_grid_line(size_t iNN, size_t iMM, grid_line_vec * ifirst, grid_line_vec * isecond);
+grid_line * create_grid_line(size_t iNN, size_t iMM, sizetvec * ifirst, sizetvec * isecond);
 
 /*! \class grid_line
     \brief \ref grid based line
@@ -63,7 +73,7 @@ protected:
 	    \param ifirst pointer to array of first cell-numbers 
 	    \param isecond pointer to array of second cell-numbers 
 	*/
-	grid_line(size_t iNN, size_t iMM, grid_line_vec * ifirst, grid_line_vec * isecond);
+	grid_line(size_t iNN, size_t iMM, sizetvec * ifirst, sizetvec * isecond);
 
 	//! destructor
 	~grid_line();
@@ -72,7 +82,7 @@ public:
 
 	friend SURFIT_EXPORT
 	grid_line * create_grid_line(size_t iNN, size_t iMM, 
-				     grid_line_vec * ifirst, grid_line_vec * isecond);
+				     sizetvec * ifirst, sizetvec * isecond);
 
 	virtual bool bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const;
 
@@ -80,7 +90,7 @@ public:
 	size_t size() const;
 
 	//! adds another grid_line
-	void add(grid_line_vec *& ifirst, grid_line_vec *& isecond);
+	void add(sizetvec *& ifirst, sizetvec *& isecond);
 	
 	//! adds another grid_line
 	void add(grid_line * line);
@@ -93,21 +103,22 @@ public:
 	void compress();
 
 	class cell_finder {
+
 	public:
 		cell_finder(size_t ipos, const grid_line * grd_line);
-
 		bool find_next(size_t & near_cell);
 
 	private:
 		size_t pos, NN, MM;
-		size_t ** find_from_first;
-		size_t ** find_to_first;
-		size_t ** find_from_second;
-		size_t ** find_to_second;
-		size_t ** ptr;
-		size_t * it;
-		const grid_line_vec * first;
-		const grid_line_vec * second;
+		const sizetvec * sorted_first;
+		const sizetvec * sorted_second;
+		
+		const sizetvec * first;
+		const sizetvec * second;
+
+		sizetvec::const_iterator ptr;
+		sizetvec::const_iterator last_first;
+		sizetvec::const_iterator last_second;
 	};
 
 	friend class cell_finder;
@@ -132,19 +143,15 @@ protected:
 	//! number of cells in OY direction
 	size_t MM;
 
-	//! pointer to begin of array of sorted first cell-numbers 
-	size_t ** sort_by_first_begin;
-	//! pointer to end of array of sorted first cell-numbers 
-	size_t ** sort_by_first_end;
-	//! pointer to begin of array of sorted second cell-numbers 
-	size_t ** sort_by_second_begin;
-	//! pointer to end of array of sorted second cell-numbers 
-	size_t ** sort_by_second_end;
-
 	//! pointer to array of first cell-numbers 
-	grid_line_vec * first;
+	sizetvec * first;
 	//! pointer to array of second cell-numbers 
-	grid_line_vec * second;
+	sizetvec * second;
+
+	//! pointer to array of sorted first cells
+	sizetvec * sorted_first;
+	//! pointer to array of sorted second cells
+	sizetvec * sorted_second;
 
 };
 

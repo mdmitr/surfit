@@ -79,6 +79,8 @@ CLEAN :
 	-@erase "$(INTDIR)\rnd.sbr"
 	-@erase "$(INTDIR)\shortvec.obj"
 	-@erase "$(INTDIR)\shortvec.sbr"
+	-@erase "$(INTDIR)\sizetvec.obj"
+	-@erase "$(INTDIR)\sizetvec.sbr"
 	-@erase "$(INTDIR)\sstuff.obj"
 	-@erase "$(INTDIR)\sstuff.sbr"
 	-@erase "$(INTDIR)\stepFunc.obj"
@@ -165,7 +167,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\rnd.sbr" \
 	"$(INTDIR)\sstuff.sbr" \
 	"$(INTDIR)\stepFunc.sbr" \
-	"$(INTDIR)\threads.sbr"
+	"$(INTDIR)\threads.sbr" \
+	"$(INTDIR)\sizetvec.sbr"
 
 "$(OUTDIR)\sstuff.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -201,7 +204,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\rnd.obj" \
 	"$(INTDIR)\sstuff.obj" \
 	"$(INTDIR)\stepFunc.obj" \
-	"$(INTDIR)\threads.obj"
+	"$(INTDIR)\threads.obj" \
+	"$(INTDIR)\sizetvec.obj"
 
 "..\bin\libsstuff.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -262,6 +266,8 @@ CLEAN :
 	-@erase "$(INTDIR)\rnd.sbr"
 	-@erase "$(INTDIR)\shortvec.obj"
 	-@erase "$(INTDIR)\shortvec.sbr"
+	-@erase "$(INTDIR)\sizetvec.obj"
+	-@erase "$(INTDIR)\sizetvec.sbr"
 	-@erase "$(INTDIR)\sstuff.obj"
 	-@erase "$(INTDIR)\sstuff.sbr"
 	-@erase "$(INTDIR)\stepFunc.obj"
@@ -350,7 +356,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\rnd.sbr" \
 	"$(INTDIR)\sstuff.sbr" \
 	"$(INTDIR)\stepFunc.sbr" \
-	"$(INTDIR)\threads.sbr"
+	"$(INTDIR)\threads.sbr" \
+	"$(INTDIR)\sizetvec.sbr"
 
 "$(OUTDIR)\sstuff.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -386,7 +393,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\rnd.obj" \
 	"$(INTDIR)\sstuff.obj" \
 	"$(INTDIR)\stepFunc.obj" \
-	"$(INTDIR)\threads.obj"
+	"$(INTDIR)\threads.obj" \
+	"$(INTDIR)\sizetvec.obj"
 
 "..\bin\libsstuff.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -427,6 +435,12 @@ SOURCE=..\src\sstuff\intvec.cpp
 SOURCE=..\src\sstuff\shortvec.cpp
 
 "$(INTDIR)\shortvec.obj"	"$(INTDIR)\shortvec.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\sstuff\sizetvec.cpp
+
+"$(INTDIR)\sizetvec.obj"	"$(INTDIR)\sizetvec.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

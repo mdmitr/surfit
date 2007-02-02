@@ -23,6 +23,10 @@
 #include <stdio.h>
 #include "vec.h"
 
+#ifdef XXL
+#include "../../src_xxl/sstuff/shortvec_xxl.h"
+#endif
+
 namespace surfit {
 
 class shortvec;
@@ -37,104 +41,7 @@ shortvec * create_shortvec(const shortvec &in);
     \brief surfit vector class for shortegers
 */
 
-#ifdef XXL
-
-typedef SSTUFF_EXPORT stxxl::VECTOR_GENERATOR<short int,2,2,128*1024>::result shortvec_xxl;
-
-class SSTUFF_EXPORT shortvec {
-public:
-
-	//! iterator type for shortvec
-	typedef  shortvec_xxl::iterator iterator;
-	//! reference type for shortvec
-	typedef  shortvec_xxl::reference reference;
-
-	//! const_iterator type for vec
-	typedef  shortvec_xxl::const_iterator const_iterator;
-	//! const_reference type for vec
-	typedef  shortvec_xxl::const_reference const_reference;
-
-protected:
-
-	/*! A consturtor
-	    \param size vector size
-            \param default_value initial value for fill vector
-	    \param fill_default use initial value filling
-	    \param grow_by value for resizing vector
-    	*/
-	shortvec(size_t size = 0, short int default_value = short int(0), int fill_default = 1, size_t grow_by = 250);
-	
-	//! Copy constructor
-	shortvec(const shortvec &in);
-
-	//! Destructor
-	~shortvec();
-
-public:
-
-	friend SSTUFF_EXPORT
-	//! constructor
-	shortvec * create_shortvec(size_t size, short int default_value, int fill_default, size_t grow_by);
-
-	friend SSTUFF_EXPORT
-	//! copy constructor
-	shortvec * create_shortvec(const shortvec &in);
-
-public:
-	//! destructor
-	virtual void release();
-
-	//! returns pointer to begin of short int-array
-	iterator begin();
-
-	//! returns const pointer to begin of short int-array
-	const_iterator const_begin() const;
-
-	//! returns pointer to end of short int-array
-	iterator end();
-
-	//! returns const pointer to end of short int-array
-	const_iterator const_end() const;
-
-	//! changes vector size
-	void resize(size_t newsize, short int default_value = short int(0), int fill_default = 1);
-
-	//! returns vector size
-	size_t size() const;
-
-	//! returns reference to i'th element
-	reference operator()(size_t i);
-		
-	//! returns const reference to i'th element
-	const_reference operator()(size_t i) const;
-
-	//! copy operator
-	shortvec& operator=(const shortvec & copy);
-
-	//! adds one element at the end of array
-	void push_back(const short int&);
-
-	//! sets currently allocated vector size to reserve_size
-	void reserve(size_t reserve_size);
-
-	//! sets vector's grow factor
-	void set_grow(size_t grow_by) {};
-
-	//! exchanges two elements
-	void swap(size_t i, size_t j);
-
-	//! forgets all allocated memory
-	void drop_data();
-
-	size_t write_file(int file, size_t size) const;
-	size_t read_file(int file, size_t size);
-	
-private:
-	
-	shortvec_xxl * data;
-};
-
-#else
+#ifndef XXL
 
 class SSTUFF_EXPORT shortvec {
 public:

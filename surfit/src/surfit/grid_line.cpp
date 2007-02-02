@@ -38,31 +38,53 @@
 
 namespace surfit {
 
-grid_line * create_grid_line(size_t iNN, size_t iMM, grid_line_vec * ifirst, grid_line_vec * isecond) {
+struct search_cells {
+	
+	search_cells(const sizetvec * iV, const size_t isearch_val)
+	{
+		V = iV;
+		search_val = isearch_val;
+	}
+	
+	bool operator ()( size_t left, size_t right )
+	{
+		if (left == UINT_MAX)
+			return (search_val < (*V)(right));
+		if (right == UINT_MAX)
+			return ((*V)(left) < search_val);
+		return ((*V)(left) < (*V)(right));
+	}
+	
+private:
+	const sizetvec * V;
+	size_t search_val;
+};
+
+grid_line * create_grid_line(size_t iNN, size_t iMM, sizetvec * ifirst, sizetvec * isecond) {
 	return new grid_line(iNN, iMM, ifirst, isecond);
 };
 
-grid_line::grid_line(size_t iNN, size_t iMM, grid_line_vec * ifirst, grid_line_vec * isecond) : data("grid_line") {
+grid_line::grid_line(size_t iNN, size_t iMM, sizetvec * ifirst, sizetvec * isecond) : data("grid_line") {
 
 	NN = iNN;
 	MM = iMM;
 	first = ifirst;
 	second = isecond;
-	
-	sort_by_first_begin = NULL;
-	sort_by_first_end = NULL;
-	sort_by_second_begin = NULL;
-	sort_by_second_end = NULL;
-
+	sorted_first = NULL;
+	sorted_second = NULL;
 	sort();
 	
 };
 
 grid_line::~grid_line() {
-	delete first;
-	delete second;
-	free(sort_by_first_begin);
-	free(sort_by_second_begin);
+	if (first)
+		first->release();
+	if (second)
+		second->release();
+	if (sorted_first)
+		sorted_first->release();
+	if (sorted_second)
+		sorted_second->release();
 };
 
 bool grid_line::bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const {
@@ -79,31 +101,31 @@ void grid_line::sort() {
 	if (first == NULL)
 		return;
 	// sorting
-	int size = first->size();;
+	size_t size = first->size();;
 
-	free(sort_by_first_begin);
-	free(sort_by_second_begin);
+	if (sorted_first)
+		sorted_first->release();
+	if (sorted_second)
+		sorted_second->release();
 	
-	sort_by_first_begin = (size_t**)malloc(size*sizeof(size_t*));
-	sort_by_first_end = sort_by_first_begin + size;
-
-	grid_line_vec::iterator ptr;
-	size_t ** pptr;
-	for (ptr = first->begin(), pptr = sort_by_first_begin; ptr != first->end(); ptr++, pptr++)
-		*pptr = &*ptr;
+	sorted_first = create_sizetvec(size);
 	
-	std::sort(sort_by_first_begin, sort_by_first_end, ptr_size_t_less);
+	size_t pos;
+	for (pos = 0; pos < size; pos++)
+		(*sorted_first)(pos) = pos;
+	
+	nums_less_compare nums_less_first(first);
+	std::sort(sorted_first->begin(), sorted_first->end(), nums_less_first);
 
-	sort_by_second_begin = (size_t**)malloc(size*sizeof(size_t*));
-	sort_by_second_end = sort_by_second_begin + size;
+	sorted_second = create_sizetvec(size);
+	for (pos = 0; pos < size; pos++)
+		(*sorted_second)(pos) = pos;
 
-	for (ptr = second->begin(), pptr = sort_by_second_begin; ptr != second->end(); ptr++, pptr++)
-		*pptr = &*ptr;
-
-	std::sort(sort_by_second_begin, sort_by_second_end, ptr_size_t_less);
+	nums_less_compare nums_less_second(second);
+	std::sort(sorted_second->begin(), sorted_second->end(), nums_less_second);
 };
 
-void grid_line::add(grid_line_vec *& ifirst, grid_line_vec *& isecond) 
+void grid_line::add(sizetvec *& ifirst, sizetvec *& isecond) 
 {
 	if (ifirst == NULL)
 		return;
@@ -118,13 +140,15 @@ void grid_line::add(grid_line_vec *& ifirst, grid_line_vec *& isecond)
 	first->resize(old_size+add_size);
 	std::copy(ifirst->begin(), ifirst->begin() + add_size, first->begin() + old_size);
 	//memcpy(first->begin() + old_size, ifirst->begin(), add_size*sizeof(int));
-	delete ifirst;
+	if (ifirst)
+		ifirst->release();
 	ifirst = NULL;
 	
 	second->resize(old_size+add_size);
 	std::copy(isecond->begin(), isecond->begin() + add_size, second->begin() + old_size);
 	//memcpy(second->begin() + old_size, isecond->begin(), add_size*sizeof(int));
-	delete isecond;
+	if (isecond)
+		isecond->release();
 	isecond = NULL;
 	
 	sort();
@@ -158,29 +182,30 @@ grid_line::cell_finder::cell_finder(size_t ipos, const grid_line * grd_line)
 	pos_j++;
 	two2one(pos, pos_i, pos_j, NN, MM);
 
-	find_from_first = grd_line->sort_by_first_begin;
-	find_to_first = grd_line->sort_by_first_end;
-	find_from_second = grd_line->sort_by_second_begin;
-	find_to_second = grd_line->sort_by_second_end;
-	it = &pos;
-	ptr = NULL;
+	sorted_first = grd_line->sorted_first;
+	sorted_second = grd_line->sorted_second;
+	last_first = sorted_first->const_begin();
+	last_second = sorted_second->const_begin();
+	
 	first = grd_line->first;
 	second = grd_line->second;
 };
 
 bool grid_line::cell_finder::find_next(size_t & near_cell) {
 
-	if (find_from_first != find_to_first) {
 
-		ptr = std::lower_bound(find_from_first, 
-				       find_to_first, 
-				       it, 
-				       ptr_size_t_less);
+	if (last_first != sorted_first->const_end()) {
 
-		if (ptr != find_to_first) {
-			find_from_first = ptr+1;
-			if ( **ptr == pos ) {
-				near_cell = (*second)[*ptr - &*first->begin()]; 
+		search_cells search_pos(first, pos);
+		ptr = std::lower_bound(last_first, 
+				       sorted_first->const_end(), 
+				       UINT_MAX,
+				       search_pos);
+
+		if (ptr != sorted_first->const_end()) {
+			last_first = ptr+1;
+			if ( (*first)(*ptr) == pos ) {
+				near_cell = (*second)(*ptr); 
 				size_t pos_i, pos_j;
 				one2two(near_cell, pos_i, pos_j, NN, MM);
 				pos_i--;
@@ -188,24 +213,25 @@ bool grid_line::cell_finder::find_next(size_t & near_cell) {
 				two2one(near_cell, pos_i, pos_j, NN-2, MM-2);
 				return true;
 			} else {
-				find_from_first = find_to_first;
+				last_first = sorted_first->const_end();
 			}
 		} else
-			find_from_first = find_to_first;
+			last_first = sorted_first->const_end();
 
 	}
 
-	if ( (find_from_first == find_to_first) && (find_from_second != find_to_second) ) {
+	if ( (last_first == sorted_first->const_end()) && (last_second != sorted_second->const_end()) ) {
 		
-		ptr = std::lower_bound(find_from_second, 
-							   find_to_second, 
-							   it, 
-							   ptr_size_t_less);
+		search_cells search_pos(second, pos);
+		ptr = std::lower_bound(last_second, 
+				       sorted_second->const_end(), 
+				       UINT_MAX,
+				       search_pos);
 
-		if (ptr != find_to_second) {
-			find_from_second = ptr+1;
-			if ( **ptr == pos ) {
-				near_cell = (*first)[*ptr - &*second->begin()];
+		if (ptr != sorted_second->const_end()) {
+			last_second = ptr+1;
+			if ( (*second)(*ptr) == pos ) {
+				near_cell = (*first)(*ptr);
 				size_t pos_i, pos_j;
 				one2two(near_cell, pos_i, pos_j, NN, MM);
 				pos_i--;
@@ -213,10 +239,10 @@ bool grid_line::cell_finder::find_next(size_t & near_cell) {
 				two2one(near_cell, pos_i, pos_j, NN-2, MM-2);
 				return true;
 			} else {
-				find_from_second = find_to_second;
+				last_second = sorted_second->const_end();
 			}
 		} else
-			find_from_second = find_to_second;
+			last_second = sorted_second->const_end();
 
 	}
 
@@ -225,31 +251,34 @@ bool grid_line::cell_finder::find_next(size_t & near_cell) {
 };
 
 bool grid_line::check_for_node(size_t pos) const {
-	
+
 	size_t pos_i, pos_j;
 	one2two(pos, pos_i, pos_j, NN-2, MM-2);
 	pos_i++;
 	pos_j++;
 	two2one(pos, pos_i, pos_j, NN, MM);
 
-	size_t ** ptr;
-	size_t * it = &pos;
-	ptr = std::lower_bound(sort_by_first_begin, 
-			       sort_by_first_end, 
-			       it, 
-			       ptr_size_t_less);
+	search_cells search_pos1(first, pos);
+
+	sizetvec::const_iterator ptr;
+	ptr = std::lower_bound(sorted_first->const_begin(), 
+			       sorted_first->const_end(), 
+			       UINT_MAX,
+			       search_pos1);
 	
-	if (ptr && (ptr != sort_by_first_end))
-		if (**ptr == pos)
+	if (ptr != sorted_first->const_end())
+		if (*ptr == pos)
 			return true;
 		
-	ptr = std::lower_bound(sort_by_second_begin, 
-			       sort_by_second_end, 
-	                       it, 
-			       ptr_size_t_less);
+	search_cells search_pos2(second, pos);
+
+	ptr = std::lower_bound(sorted_second->const_begin(), 
+			       sorted_second->const_end(), 
+	                       UINT_MAX,
+			       search_pos2);
 		
-	if (ptr && (ptr != sort_by_second_end))
-		if (**ptr == pos)
+	if (ptr != sorted_second->const_end())
+		if (*ptr == pos)
 			return true;
 			
 	return false;
@@ -264,38 +293,33 @@ bool grid_line::check_for_pair(size_t pos1, size_t pos2) const {
 	pos_j++;
 	two2one(pos1, pos_i, pos_j, NN, MM);
 
-
 	one2two(pos2, pos_i, pos_j, NN-2, MM-2);
 	pos_i++;
 	pos_j++;
 	two2one(pos2, pos_i, pos_j, NN, MM);
 
-	
-	size_t ** ptr;
-
-	size_t ** ptr_from = sort_by_first_begin;
-	size_t pos;
-
-	if (pos1 < pos2) {
+	if (pos1 > pos2) {
 		size_t temp = pos2;
 		pos2 = pos1;
 		pos1 = temp;
 	}
 
-	size_t * it1 = &pos1;
-	size_t * it2 = &pos2;
+	sizetvec::const_iterator ptr;
 
+	sizetvec::const_iterator ptr_from = sorted_first->const_begin();
+	
 first_again_pos1:
 	
-	ptr = std::lower_bound(ptr_from, 
-			       sort_by_first_end, 
-	                       it1, 
-			       ptr_size_t_less);
+	search_cells search_pos11(first, pos1);
 
-	if (ptr && (ptr != sort_by_first_end)) {
-		if (**ptr == pos1) {
-			pos = *ptr - &*first->begin();
-			if ( pos2 == *(second->begin() + pos) )
+	ptr = std::lower_bound(ptr_from, 
+			       sorted_first->const_end(), 
+	                       UINT_MAX,
+			       search_pos11);
+
+	if (ptr != sorted_first->const_end()) {
+		if ((*first)(*ptr) == pos1) {
+			if ( pos2 == (*second)(*ptr) )
 				return true;
 			ptr_from = ptr+1;
 			goto first_again_pos1;
@@ -306,35 +330,40 @@ first_again_pos1:
 
 first_again_pos2:
 	
-	
-	ptr = std::lower_bound(ptr_from, 
-			       sort_by_first_end, 
-	                       it2, 
-			       ptr_size_t_less);
 
-	if (ptr && (ptr != sort_by_first_end)) {
-		if (**ptr == pos2) {
-			pos = *ptr - &*first->begin();
-			if ( pos1 == *(second->begin() + pos) )
-				return true;
-			ptr_from = ptr+1;
-			goto first_again_pos2;
+	if (ptr_from != sorted_first->const_end()) {
+
+		search_cells search_pos12(first, pos2);
+
+		ptr = std::lower_bound(ptr_from, 
+				       sorted_first->const_end(), 
+	                               UINT_MAX,
+				       search_pos12);
+		
+		if (ptr != sorted_first->const_end()) {
+			if ( (*first)(*ptr) == pos2) {
+				if ( pos1 == (*second)(*ptr) )
+					return true;
+				ptr_from = ptr+1;
+				goto first_again_pos2;
+			}
 		}
 	}
 
-	ptr_from = sort_by_second_begin;
+	ptr_from = sorted_second->const_begin();
 
 second_again_pos1:
 
-	ptr = std::lower_bound(ptr_from, 
-			       sort_by_second_end, 
-	                       it1, 
-			       ptr_size_t_less);
+	search_cells search_pos21(second, pos1);
 
-	if (ptr && (ptr != sort_by_second_end)) {
-		if (**ptr == pos1) {
-			pos = *ptr - &*second->begin();
-			if ( pos2 == *(first->begin() + pos) )
+	ptr = std::lower_bound(ptr_from, 
+			       sorted_second->const_end(), 
+	                       UINT_MAX,
+			       search_pos21);
+
+	if (ptr != sorted_second->const_end()) {
+		if ( (*second)(*ptr) == pos1) {
+			if ( pos2 == (*first)(*ptr) )
 				return true;
 			ptr_from = ptr+1;
 			goto second_again_pos1;
@@ -345,18 +374,22 @@ second_again_pos1:
 
 second_again_pos2:
 
-	ptr = std::lower_bound(ptr_from, 
-			       sort_by_second_end, 
-	                       it2, 
-			       ptr_size_t_less);
+	if (ptr_from != sorted_second->const_end()) {
 
-	if (ptr && (ptr != sort_by_second_end)) {
-		if (**ptr == pos2) {
-			pos = *ptr - &*second->begin();
-			if ( pos1 == *(first->begin() + pos) )
-				return true;
-			ptr_from = ptr+1;
-			goto second_again_pos2;
+		search_cells search_pos22(second, pos2);
+
+		ptr = std::lower_bound(ptr_from, 
+				       sorted_second->const_end(), 
+				       UINT_MAX,
+				       search_pos22);
+		
+		if ( ptr != sorted_second->const_end()) {
+			if ( (*second)(*ptr) == pos2) {
+				if ( pos1 == (*first)(*ptr) )
+					return true;
+				ptr_from = ptr+1;
+				goto second_again_pos2;
+			}
 		}
 	}
 
@@ -751,12 +784,12 @@ void grid_line::resize(size_t move_i, size_t move_j, size_t newNN, size_t newMM,
 
 size_t grid_line::get_first_cell(size_t pos) const
 {
-	return (*first)[pos];
+	return (*first)(pos);
 };
 
 size_t grid_line::get_second_cell(size_t pos) const
 {
-	return (*second)[pos];
+	return (*second)(pos);
 };
 
 void flood_fill(d_grid * grd,
@@ -782,7 +815,7 @@ void flood_fill(d_grid * grd,
 	size_t fill_i, fill_j;
 	one2two(fill_pos, fill_i, fill_j, NN, MM);
 	 
-	grid_line_vec * flood_points = new grid_line_vec();
+	sizetvec * flood_points = create_sizetvec();
 	size_t push_pos, push_pos2;
 	flood_points->push_back(fill_pos);
 	
@@ -792,7 +825,7 @@ void flood_fill(d_grid * grd,
 
 		bool flood;
 
-		size_t pos = (*flood_points)[i];
+		size_t pos = (*flood_points)(i);
 
 		if (pos == UINT_MAX)
 			continue;
@@ -936,7 +969,8 @@ void flood_fill(d_grid * grd,
 				
 	}
 
-	delete flood_points;
+	if (flood_points)
+		flood_points->release();
 	
 	/*
 #ifdef DEBUG
@@ -972,7 +1006,7 @@ void flood_fill_boolvec(d_grid * grd,
 	size_t fill_i = fill_pos % NN;
 	size_t fill_j = (fill_pos - fill_i)/NN;
 
-	grid_line_vec * flood_points = new grid_line_vec();
+	sizetvec * flood_points = create_sizetvec();
 	flood_points->push_back(fill_i + NN * fill_j);
 
 	size_t max_points = 1;
@@ -981,7 +1015,7 @@ void flood_fill_boolvec(d_grid * grd,
 		
 		bool flood;
 
-		size_t pos = (*flood_points)[i];
+		size_t pos = (*flood_points)(i);
 
 		if ( (*data)(pos) != false )
 			continue;
@@ -1060,7 +1094,8 @@ void flood_fill_boolvec(d_grid * grd,
 				
 	}
 
-	delete flood_points;
+	if (flood_points)
+		flood_points->release();
 		
 	return;
 };
@@ -1199,7 +1234,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 	draw_grid_matlab(ff,grd,"magenta");
 	draw_grid_line_matlab(ff, line, grd, "red", 3);
 #endif
-*/
+//*/
 
 	line->resize( min_i>1?min_i-1:1-min_i, 
 		      min_j>1?min_j-1:1-min_j, 
@@ -1212,7 +1247,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 	draw_grid_matlab(ff,small_grd);
 	draw_grid_line_matlab(ff, line, small_grd);
 #endif
-*/
+//*/
 
 	shortvec * data = create_shortvec(nn*mm);
 
@@ -1306,8 +1341,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 	fclose(ff);
 
 #endif
-*/
-
+//*/
 
 	line->sort();
 	
@@ -1326,8 +1360,8 @@ grid_line * trace_undef_grd_line(const bitvec * mask_undefined, size_t NN) {
 	size_t size = mask_undefined->size();
 	size_t MM = size/NN;
 
-	grid_line_vec * first = new grid_line_vec();
-	grid_line_vec * second = new grid_line_vec();
+	sizetvec * first = create_sizetvec();
+	sizetvec * second = create_sizetvec();
 	grid_line * res = NULL;
 	
 	size_t pos, pos1, pos2;
@@ -1372,8 +1406,10 @@ grid_line * trace_undef_grd_line(const bitvec * mask_undefined, size_t NN) {
 		second = NULL;
 	}
 	
-	delete first;
-	delete second;
+	if (first)
+		first->release();
+	if (second)
+		second->release();
 	
 	return res;
 };
@@ -1397,12 +1433,12 @@ bitvec * nodes_in_area_mask(const d_area * area, d_grid * grd, bitvec * mask_und
 	bitvec * res = create_bitvec(grd->getCountX()*grd->getCountY());
 	res->init_false();
 
-	/*
+/*
 #ifdef DEBUG
 	FILE * ff = fopen("c:\\mask.m","w+");
 	fprintf(ff,"hold on\n");
 #endif
-	*/
+//*/
 
 	int i;
 	for (i = 0; i < area->size(); i++) {
@@ -1412,11 +1448,11 @@ bitvec * nodes_in_area_mask(const d_area * area, d_grid * grd, bitvec * mask_und
 		grid_line * grd_line = NULL;
 		grd_line = curv_to_grid_line(grd_line, crv, grd);
 
-	/*
+/*
 #ifdef DEBUG
 		draw_grid_line_matlab(ff, grd_line, grd, "blue",3);
 #endif
-	*/
+//*/
 
 		if (grd_line == NULL)
 			continue;
@@ -1444,7 +1480,7 @@ bitvec * nodes_in_area_mask(const d_area * area, d_grid * grd, bitvec * mask_und
 		res->invert();
 
 
-	/*
+/*
 #ifdef DEBUG
 	draw_area_matlab(ff, area);
 	draw_grid_matlab(ff,grd);
@@ -1452,7 +1488,7 @@ bitvec * nodes_in_area_mask(const d_area * area, d_grid * grd, bitvec * mask_und
 	
 	fclose(ff);
 #endif
-	*/
+//*/
 	return res;
 
 };

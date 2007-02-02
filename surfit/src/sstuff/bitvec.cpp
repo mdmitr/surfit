@@ -20,6 +20,8 @@
 #include "sstuff_ie.h"
 #include "bitvec.h"
 
+#ifndef XXL
+
 namespace surfit {
 
 static int bits_per_byte = 32;
@@ -115,7 +117,7 @@ size_t bitvec::true_size() const {
 bool bitvec::is_half_solved() const {
 	size_t solved = 0;
 	size_t unsolved = 0;
-	size_t half = datasize/2;
+	size_t half = size()/2;
 	size_t i;
 	for (i = 0; i < datasize; i++) {
 		if (get(i))
@@ -125,7 +127,7 @@ bool bitvec::is_half_solved() const {
 		if (solved >= half)
 			return true;
 		if (unsolved >= half)
-			return true;
+			return false;
 	}
 	return false;
 };
@@ -337,13 +339,13 @@ void bitvec::get10(size_t pos, bool * b)
 void bitvec::AND(const bitvec * b) {
 	size_t i;
 	for (i = 0; i < byte_size; i++) 
-		*(data + i) &= *(b->begin()+i);
+		*(data + i) &= *(b->const_begin()+i);
 };
 
 void bitvec::OR(const bitvec * b) {
 	size_t i;
 	for (i = 0; i < byte_size; i++) 
-		*(data + i) |= *(b->begin()+i);
+		*(data + i) |= *(b->const_begin()+i);
 };
 
 void bitvec::XOR(const bitvec * b) {
@@ -357,7 +359,6 @@ void bitvec::XOR(const bitvec * b) {
 	}
 };
 
-
 void bitvec::NOT() {
 	size_t i;
 	for (i = 0; i < size(); i++) {
@@ -370,4 +371,6 @@ void bitvec::NOT() {
 };
 
 }; // namespace surfit;
+
+#endif
 

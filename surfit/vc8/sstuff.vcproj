@@ -1041,6 +1041,10 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath="..\src\sstuff\sizetvec.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\sstuff\strvec.cpp"
 					>
 					<FileConfiguration
@@ -1716,10 +1720,50 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="xxl"
+				Name="xxl_cpp"
 				>
 				<File
+					RelativePath="..\src_xxl\sstuff\bitvec_xxl.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath="..\src_xxl\sstuff\shortvec_xxl.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src_xxl\sstuff\sizetvec_xxl.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
@@ -1836,6 +1880,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\sstuff\sizetvec.h"
+					>
+				</File>
+				<File
 					RelativePath="..\src\sstuff\strvec.h"
 					>
 				</File>
@@ -1845,6 +1893,26 @@
 				</File>
 				<File
 					RelativePath="..\src\sstuff\vec_alg.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="xxl_h"
+				>
+				<File
+					RelativePath="..\src_xxl\sstuff\bitvec_xxl.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src_xxl\sstuff\shortvec_xxl.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src_xxl\sstuff\sizetvec_xxl.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src_xxl\sstuff\vec_xxl.h"
 					>
 				</File>
 			</Filter>

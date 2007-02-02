@@ -112,6 +112,10 @@ SOURCE=..\src\sstuff\shortvec.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\sstuff\sizetvec.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\sstuff\strvec.cpp
 # End Source File
 # Begin Source File
@@ -245,6 +249,10 @@ SOURCE=..\src\sstuff\intvec.h
 # Begin Source File
 
 SOURCE=..\src\sstuff\shortvec.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\sizetvec.h
 # End Source File
 # Begin Source File
 

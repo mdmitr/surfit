@@ -203,7 +203,7 @@ void draw_grid_line_matlab(FILE * ff, const grid_line * line, const d_grid * grd
 	fflush(ff);
 };
 
-void draw_brez_matlab(FILE * ff, const grid_line_vec * nns, const d_grid * grd, size_t NN, size_t MM) 
+void draw_brez_matlab(FILE * ff, const sizetvec * nns, const d_grid * grd, size_t NN, size_t MM) 
 {
 #ifndef DEBUG
 	return;
@@ -214,7 +214,7 @@ void draw_brez_matlab(FILE * ff, const grid_line_vec * nns, const d_grid * grd, 
 		size_t x, y, pos;
 		//char text[10];
 		for (i = 0; i < nns->size()-1; i++) {
-			pos = (*nns)[i];
+			pos = (*nns)(i);
 			one2two(pos,x,y,NN+1,MM+1);
 			REAL X, Y;
 			grd->getCoordNode(x,y,X,Y);
@@ -227,20 +227,20 @@ void draw_brez_matlab(FILE * ff, const grid_line_vec * nns, const d_grid * grd, 
 };
 
 inline
-void add_val(grid_line_vec * v, size_t n, size_t m, size_t NN, size_t MM) {
+void add_val(sizetvec * v, size_t n, size_t m, size_t NN, size_t MM) {
 	if ((n < 0) || (n >= NN))
 		return;
 
 	if ((m < 0) || (m >= MM+1))
 		return;
 
-	int val = n + m*NN;
+	size_t val = n + m*NN;
 	v->push_back(val);
 };
 
 inline
-void add_val_pair(grid_line_vec * v1, size_t n1, size_t m1, 
-		  grid_line_vec * v2, size_t n2, size_t m2, 
+void add_val_pair(sizetvec * v1, size_t n1, size_t m1, 
+		  sizetvec * v2, size_t n2, size_t m2, 
 		  size_t NN, size_t MM) {
 	
 
@@ -288,7 +288,7 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 		
 	size_t NN = grd->getCountX();
 	size_t MM = grd->getCountY();
-	grid_line_vec * nns = new grid_line_vec(); // ?
+	sizetvec * nns = create_sizetvec(); // ?
 
 	d_grid * grd2 = create_grid(grd);
 
@@ -452,7 +452,7 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	}
 
 	if (nns->size() == 0) {
-		delete nns;
+		nns->release();
 		if (crv)
 			crv->release();
 		return grd_line;
@@ -462,15 +462,15 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	size_t old_size = nns->size();
 	size_t write_pos = 0;
 	for (qq = 1; qq < nns->size(); qq++) {
-		if ( (*nns)[write_pos] != (*nns)[qq] ) {
+		if ( (*nns)(write_pos) != (*nns)(qq) ) {
 			write_pos++;
-			(*nns)[write_pos] = (*nns)[qq];
+			(*nns)(write_pos) = (*nns)(qq);
 		}
 	}
 	nns->resize(write_pos+1);
 
-	grid_line_vec * cells1 = new grid_line_vec();
-	grid_line_vec * cells2 = new grid_line_vec();
+	sizetvec * cells1 = create_sizetvec();
+	sizetvec * cells2 = create_sizetvec();
 	cells1->reserve(nns->size());
 	cells2->reserve(nns->size());
 
@@ -479,10 +479,10 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	size_t i;
 	for (i = 0; i < nns->size()-1; i++) {
 
-		pos1 = (*nns)[i];
+		pos1 = (*nns)(i);
 		one2two(pos1, n1, m1, NN, MM);
 	
-		pos2 = (*nns)[i+1];
+		pos2 = (*nns)(i+1);
 		one2two(pos2, n2, m2, NN, MM);
 		
 		size_t max_n = MAX(n1, n2);
@@ -501,7 +501,7 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	}
 
 	///*
-	delete nns;  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	nns->release();  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	nns = NULL;
 	//*/
 	

@@ -378,9 +378,9 @@ void sub_points::bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy, cons
 
 };
 
-struct nums_less_compare
+struct vec_less_compare
 {
-	nums_less_compare(const vec * idata)
+	vec_less_compare(const vec * idata)
 	{
 		data = idata;
 	}
@@ -412,11 +412,11 @@ void _sort_points(const d_points * pnts,
 	sortx = *nums;
 	sorty = *nums;
 	
-	nums_less_compare nums_less_x(pnts->X);
-	std::sort(sortx.begin(), sortx.end(), nums_less_x);
+	vec_less_compare vec_less_x(pnts->X);
+	std::sort(sortx.begin(), sortx.end(), vec_less_x);
 
-	nums_less_compare nums_less_y(pnts->Y);
-	std::sort(sorty.begin(), sorty.end(), nums_less_y);
+	vec_less_compare vec_less_y(pnts->Y);
+	std::sort(sorty.begin(), sorty.end(), vec_less_y);
 
 };
 

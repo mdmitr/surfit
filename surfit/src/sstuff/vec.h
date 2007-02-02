@@ -1,22 +1,4 @@
 
-/*------------------------------------------------------------------------------
- *	$Id$
- *
- *	Copyright (c) 2002-2006 by M. V. Dmitrievsky and V. N. Kutrunov
- *	See COPYING file for copying and redistribution conditions.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; version 2 of the License.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	Contact info: surfit.sourceforge.net
- *----------------------------------------------------------------------------*/
-
 #ifndef __surfit__vec__
 #define __surfit__vec__
 
@@ -29,18 +11,15 @@
 #endif
 
 #ifdef XXL
-#include <stxxl>
+#include "../../src_xxl/sstuff/vec_xxl.h"
 #endif
 
 namespace surfit {
 
 class vec;
-#ifdef XXL
-class extvec;
-#else
+#ifndef XXL
 typedef vec extvec;
 #endif
-
 
 SSTUFF_EXPORT
 /*! \ingroup internal
@@ -70,109 +49,7 @@ extvec * create_extvec(const extvec &in);
     \brief surfit vector of REAL 
 */
 #ifdef XXL
-
-typedef SSTUFF_EXPORT stxxl::VECTOR_GENERATOR<REAL,2,2,256*1024>::result vec_xxl;
-
-class SSTUFF_EXPORT extvec {
-public:
-
-	//! iterator type for vec
-	typedef  vec_xxl::iterator iterator;
-	//! reference type for vec
-	typedef  vec_xxl::reference reference;
-
-	//! const_iterator type for vec
-	typedef  vec_xxl::const_iterator const_iterator;
-	//! const_reference type for vec
-	typedef  vec_xxl::const_reference const_reference;
-
-protected:
-
-	/*! A consturtor
-	    \param size vector size
-            \param default_value initial value for fill vector
-	    \param fill_default use initial value filling
-	    \param grow_by value for resizing vector
-    	*/
-	extvec(size_t size = 0, REAL default_value = REAL(0), int fill_default = 1, size_t grow_by = 250);
-	
-	//! Copy constructor
-	extvec(const extvec &in);
-
-	//! Destructor
-	~extvec();
-
-public:
-
-	friend SSTUFF_EXPORT
-	//! constructor
-	extvec * create_extvec(size_t size, REAL default_value, int fill_default, size_t grow_by);
-
-	friend SSTUFF_EXPORT
-	//! copy constructor
-	extvec * create_extvec(const extvec &in);
-
-public:
-	//! destructor
-	void release();
-
-	//! returns pointer to begin of REAL-array
-	iterator begin();
-
-	//! returns const pointer to begin of REAL-array
-	const_iterator const_begin() const;
-
-	//! returns pointer to end of REAL-array
-	iterator end();
-
-	//! returns const pointer to end of REAL-array
-	const_iterator const_end() const;
-
-	//! removes element by iterator
-	void erase(iterator);
-
-	//! removes element by index
-	void erase(size_t index);
-		
-	//! changes vector size
-	void resize(size_t newsize, REAL default_value = REAL(0), int fill_default = 1);
-
-	//! returns vector size
-	size_t size() const;
-
-	//! returns reference to i'th element
-	reference operator()(size_t i);
-		
-	//! returns const reference to i'th element
-	const_reference operator()(size_t i) const;
-
-	//! copy operator
-	extvec& operator=(const extvec & copy);
-
-	//! adds one element at the end of array
-	void push_back(const REAL&);
-
-	//! sets currently allocated vector size to reserve_size
-	void reserve(size_t reserve_size);
-
-	//! sets vector's grow factor
-	void set_grow(size_t grow_by) {};
-
-	//! exchanges two elements
-	void swap(size_t i, size_t j);
-
-	//! forgets all allocated memory
-	void drop_data();
-
-	size_t write_file(int file, size_t size) const;
-	size_t read_file(int file, size_t size);
-	
-private:
-	
-	vec_xxl * data;
-};
-
-
+#include "../../src_xxl/sstuff/vec_xxl.h"
 #endif
 
 #ifndef XXL

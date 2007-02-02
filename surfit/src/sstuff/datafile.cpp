@@ -690,7 +690,8 @@ bool datafile::writeBitArray(const char * name, const bitvec * data) {
 	r += writeBinaryString(name);
 	r += write(file, &size, sizeof(int));
 	r += write(file, (void *)&int_size, sizeof(int));
-	r += write(file, data->begin(), (int_size)*sizeof(surfit_int32));
+	r += data->write_file(file);
+	//r += write(file, data->const_begin(), (int_size)*sizeof(surfit_int32));
 	return (r > 0);
 };
 
@@ -885,7 +886,7 @@ bool datafile::readBitArray(bitvec *& data) {
 		
 		data = create_bitvec(size);
 		
-		r = read( file, data->begin(), sizeof(surfit_int32)*(elements) );
+		r = data->read_file(file, elements);
 		
 		if ( r == elements*sizeof(surfit_int32) )
 			return true;

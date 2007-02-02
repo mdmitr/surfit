@@ -20,17 +20,21 @@
 #ifndef __surfit_bitvec_included__
 #define __surfit_bitvec_included__
 
-#include <math.h>
-#include <memory.h>
-#include <assert.h>
-
-namespace surfit {
-
 #if (defined(_WIN32) || defined(__WIN32__) || defined(WIN32)) && !defined(__CYGWIN__)
 #define surfit_int32 __int32
 #else
 #define surfit_int32 int32_t
 #endif
+
+#ifdef XXL
+#include "../../src_xxl/sstuff/bitvec_xxl.h"
+#else
+
+#include <math.h>
+#include <memory.h>
+#include <assert.h>
+
+namespace surfit {
 
 class bitvec;
 
@@ -70,7 +74,7 @@ private:
 
 public:
 	//! destructor
-	void release();
+	virtual void release();
 
 	//! returns value at a specified location
 	bool get(size_t pos) const {
@@ -143,8 +147,11 @@ public:
 	void XOR(const bitvec * b);
 	void NOT();
 
-	const surfit_int32 * begin() const { return data; };
+	const surfit_int32 * const_begin() const { return data; };
 	surfit_int32 * begin() { return data; };
+
+	size_t write_file(int file) const;
+	size_t read_file(int file, size_t size);
 
 protected:
 
@@ -159,6 +166,8 @@ protected:
 };
 
 }; // namespace surfit;
+
+#endif
 
 #endif
 
