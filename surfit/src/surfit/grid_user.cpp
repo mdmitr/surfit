@@ -145,7 +145,7 @@ bool grid_bound2(size_t n, size_t m, size_t NN, size_t MM) {
 	return ( (n >= 0) && (n < NN) && (m >= 0) && (m < MM) );
 };
 
-template<class VEC>
+template<class VEC, class iter>
 void project_vector(VEC * A, size_t NN, size_t MM,
 		    bool doubleX, bool doubleY) {
 
@@ -155,10 +155,10 @@ void project_vector(VEC * A, size_t NN, size_t MM,
 	if (doubleY) {
 		size_t size = A->size();
 		A->resize(size*2);
-		VEC::iterator A_it = A->begin() + size - 1;
-		VEC::iterator new_A_it = A->begin() + size*2 - 1;
-		VEC::iterator temp_it;
-		VEC::iterator A_beg = A->begin();
+		iter A_it = A->begin() + size - 1;
+		iter new_A_it = A->begin() + size*2 - 1;
+		iter temp_it;
+		iter A_beg = A->begin();
 		while ( new_A_it != A->begin() - 1 ) {
 			size_t i;
 			temp_it = A_it;
@@ -180,9 +180,9 @@ void project_vector(VEC * A, size_t NN, size_t MM,
 		NN *= 2;
 		size_t size = A->size();
 		A->resize(size*2);
-		VEC::iterator A_it = A->begin() + size - 1;
-		VEC::iterator new_A_it = A->begin() + size*2 - 1;
-		VEC::iterator A_beg = A->begin();
+		iter A_it = A->begin() + size - 1;
+		iter new_A_it = A->begin() + size*2 - 1;
+		iter A_beg = A->begin();
 		while ( new_A_it != A->begin() - 1 ) {
 			*new_A_it = *A_it;
 			new_A_it--;
@@ -412,7 +412,7 @@ void grid_finish() {
 	
 	// updating sigma's coeff
 	if (use_fast_project)
-		project_vector(method_X, method_grid->getCountX(), method_grid->getCountY(), doubleX, doubleY);
+		project_vector<extvec,extvec::iterator>(method_X, method_grid->getCountX(), method_grid->getCountY(), doubleX, doubleY);
 	else {
 		d_surf * current_surf = create_surf(method_X, method_grid, map_name);
 		d_surf * projected_surf = NULL;

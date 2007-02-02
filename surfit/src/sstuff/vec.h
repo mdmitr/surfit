@@ -102,9 +102,11 @@ public:
 	//! copy constructor
 	vec * create_vec(const vec &in);
 
+#ifdef XXL
 	friend SSTUFF_EXPORT
 	//! copy constructor
 	vec * create_vec(const extvec &in);
+#endif
 
 public:
 	//! destructor

@@ -25,7 +25,13 @@
 #include <string.h>
 #endif
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32) 
 #include <io.h>
+#endif
 
 #include "shortvec.h"
 
