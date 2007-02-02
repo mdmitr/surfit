@@ -20,6 +20,14 @@
 #include "sstuff_ie.h"
 #include "bitvec.h"
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32) 
+#include <io.h>
+#endif
+
 #ifndef XXL
 
 namespace surfit {
@@ -369,6 +377,14 @@ void bitvec::NOT() {
 			set_false(i);
 	}
 };
+
+size_t bitvec::write_file(int file) const {
+	return write(file, data, datasize*sizeof(surfit_int32));
+};
+
+size_t bitvec::read_file(int file, size_t size) {
+	return read( file, data, sizeof(surfit_int32)*size );
+}
 
 }; // namespace surfit;
 

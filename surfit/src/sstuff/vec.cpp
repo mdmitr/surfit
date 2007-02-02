@@ -258,7 +258,7 @@ size_t vec::write_file(int file, size_t size) const {
 
 size_t vec::read_file(int file, size_t size) {
 	return read( file, data, sizeof(REAL)*size );
-}
+};
 
 }; // namespace surfit;
 
