@@ -24,6 +24,7 @@
 #include "intvec.h"
 #include "fileio.h"
 #include "vec_alg.h"
+#include "threads.h"
 
 #include <acml.h>
 
@@ -63,7 +64,7 @@ vec * cg_with_acml_threaded(matr * A, const vec * b, int max_it, REAL tol, vec *
 	mult = -1;
 	threaded_DSCAL(&N, &mult, r->begin(), &odin);
 	mult = 1;
-	threaded_DAXPY(&N, &mult, const_cast<double*>(b->begin()), &odin, r->begin(), &odin);
+	threaded_DAXPY(&N, &mult, const_cast<double*>(b->const_begin()), &odin, r->begin(), &odin);
 	int max_pos = idamax(N, r->begin(), odin) - 1;
 	error = fabs((*r)(max_pos));
 	error = error/bnrm2;
@@ -152,7 +153,7 @@ vec * cg_with_acml_threaded(matr * A, const vec * b, int max_it, REAL tol, vec *
 
 vec * cg_with_acml(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL undef_value) 
 {
-	if (cpu > 1) {
+	if (sstuff_get_threads() > 1) {
 		return cg_with_acml_threaded(A, b, max_it, tol, X, undef_value);
 	} 
 	int flag = 0;                                // initialization
@@ -185,7 +186,7 @@ vec * cg_with_acml(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL
 	mult = -1;
 	dscal(N, mult, r->begin(), odin);
 	mult = 1;
-	daxpy(N, mult, const_cast<double*>(b->begin()), odin, r->begin(), odin);
+	daxpy(N, mult, const_cast<double*>(b->const_begin()), odin, r->begin(), odin);
 	int max_pos = idamax(N, r->begin(), odin) - 1;
 	error = fabs((*r)(max_pos));
 	error = error/bnrm2;

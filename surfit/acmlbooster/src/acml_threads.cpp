@@ -66,11 +66,11 @@ DAXPY_job DAXPY_jobs[MAX_CPU];
 void threaded_DAXPY(int *n,double *alpha,double *x,int *incx,double *y,int *incy)
 {
 	size_t i;
-	unsigned int step = *n/(cpu);
-	unsigned int ost = *n % (cpu);
+	unsigned int step = *n/(sstuff_get_threads());
+	unsigned int ost = *n % (sstuff_get_threads());
 	unsigned int J_from = 0;
 	unsigned int J_to = 0;
-	for (i = 0; i < cpu; i++) {
+	for (i = 0; i < sstuff_get_threads(); i++) {
 		J_to = J_from + step;
 		if (i == 0)
 			J_to += ost;
@@ -123,11 +123,11 @@ DDOT_job DDOT_jobs[MAX_CPU];
 double threaded_DDOT(int *n,double *x,int *incx,double *y,int *incy)
 {
 	size_t i;
-	unsigned int step = *n/(cpu);
-	unsigned int ost = *n % (cpu);
+	unsigned int step = *n/(sstuff_get_threads());
+	unsigned int ost = *n % (sstuff_get_threads());
 	unsigned int J_from = 0;
 	unsigned int J_to = 0;
-	for (i = 0; i < cpu; i++) {
+	for (i = 0; i < sstuff_get_threads(); i++) {
 		J_to = J_from + step;
 		if (i == 0)
 			J_to += ost;
@@ -141,7 +141,7 @@ double threaded_DDOT(int *n,double *x,int *incx,double *y,int *incy)
 	do_jobs();
 	
 	double res = 0;
-	for (i = 0; i < cpu; i++) {
+	for (i = 0; i < sstuff_get_threads(); i++) {
 		DDOT_job & f = DDOT_jobs[i];
 		res += f.res;
 	}
@@ -182,11 +182,11 @@ DSCAL_job DSCAL_jobs[MAX_CPU];
 void threaded_DSCAL(int *n,double *alpha,double *x,int *incx)
 {
 	size_t i;
-	unsigned int step = *n/(cpu);
-	unsigned int ost = *n % (cpu);
+	unsigned int step = *n/(sstuff_get_threads());
+	unsigned int ost = *n % (sstuff_get_threads());
 	unsigned int J_from = 0;
 	unsigned int J_to = 0;
-	for (i = 0; i < cpu; i++) {
+	for (i = 0; i < sstuff_get_threads(); i++) {
 		J_to = J_from + step;
 		if (i == 0)
 			J_to += ost;
