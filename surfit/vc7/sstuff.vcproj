@@ -816,6 +816,9 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath="..\src\sstuff\sizetvec.cpp">
+				</File>
+				<File
 					RelativePath="..\src\sstuff\strvec.cpp">
 					<FileConfiguration
 						Name="Debug|Win32">
@@ -1496,6 +1499,9 @@
 				</File>
 				<File
 					RelativePath="..\src\sstuff\shortvec.h">
+				</File>
+				<File
+					RelativePath="..\src\sstuff\sizetvec.h">
 				</File>
 				<File
 					RelativePath="..\src\sstuff\strvec.h">
