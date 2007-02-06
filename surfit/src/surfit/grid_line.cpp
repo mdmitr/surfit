@@ -400,7 +400,7 @@ second_again_pos2:
 
 void fault_points_D1(size_t n, size_t m, 
 		     size_t NN, size_t MM, 
-		     grid_line * fault,
+		     const grid_line * fault,
 		     bool & first_x, bool & second_x, 
 		     bool & first_y, bool & second_y,
 		     size_t offset_x, size_t offset_y) 
@@ -445,7 +445,7 @@ void fault_points_D1(size_t n, size_t m,
 
 void fault_points_D1_aniso(size_t n, size_t m, 
 			   size_t NN, size_t MM, 
-			   grid_line * fault,
+			   const grid_line * fault,
 			   bool & first_x, bool & second_x, 
 			   bool & first_y, bool & second_y,
 			   bool & first_xy, bool & first_yx,
@@ -558,7 +558,7 @@ void fault_points_D1_aniso(size_t n, size_t m,
 };
 
 void fault_points_D2(size_t n, size_t m, size_t NN, size_t MM, 
-		     grid_line * fault,
+		     const grid_line * fault,
 		     bool & first_x,  bool & second_x,  bool & third_x, 
 		     bool & first_xx, bool & second_xx,
 		     bool & first_yy, bool & second_yy,
@@ -793,7 +793,7 @@ size_t grid_line::get_second_cell(size_t pos) const
 };
 
 void flood_fill(d_grid * grd,
-		grid_line * line, 
+		const grid_line * line, 
 		shortvec * data,
 		size_t fill_pos,
 		short int fill_val,

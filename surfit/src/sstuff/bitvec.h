@@ -124,7 +124,7 @@ public:
 		    bool b1, bool b2, bool b3, bool b4); 
 	
 	//! reads four values, starting from pos
-	void get4(size_t pos, bool * b);
+	void get4(size_t pos, bool * b) const;
 
 	//! writes six values, starting from pos
 	void write8(size_t pos, 
@@ -132,7 +132,7 @@ public:
 		    bool b5, bool b6, bool b7, bool b8); 
 
 	//! reads six values, starting from pos
-	void get8(size_t pos, bool * b);
+	void get8(size_t pos, bool * b) const;
 
 	//! writes 10 values, starting from pos
 	void write10(size_t pos, 
@@ -140,7 +140,7 @@ public:
 		     bool b6, bool b7, bool b8, bool b9, bool b10);
 	
 	//! reads 10 values, starting from pos
-	void get10(size_t pos, bool * b);
+	void get10(size_t pos, bool * b) const;
 
 	void AND(const bitvec * b);
 	void OR(const bitvec * b);

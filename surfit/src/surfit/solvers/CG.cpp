@@ -30,6 +30,10 @@
 #include "../matr.h"
 #include "../variables_tcl.h"
 
+#ifdef XXL
+#include "../../src_xxl/sstuff/solvers_xxl.h"
+#endif
+
 using namespace std;
 
 namespace surfit {
@@ -99,19 +103,31 @@ extvec * CG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL 
 		for (iter = 1; iter <= max_it; iter++) {    // begin iteration
 
 			rho_1 = rho;
+#ifdef XXL
+			rho = times_xxl(*r,*r);
+#else
 			rho = times(r,r); 
+#endif
 						
 			if ( iter > 1 ) {                        // direction vector
 				beta = rho / rho_1;
 				// p = beta*p;
+#ifdef XXL
+				xpay_xxl(beta, *r, *p);
+#else
 				for (i = 0 ; i < N; i++) 
 					(*p)(i) = (*r)(i) + (*p)(i)*beta;
+#endif
 				//////////////
 			}
 			
 			A->mult(p,q);
 			
+#ifdef XXL
+			REAL times_pq = times_xxl(*p,*q);
+#else
 			REAL times_pq = times(p,q);
+#endif
 			REAL alpha = 0;
 			if (fabs(times_pq) > MIN(1e-4,tol))
 				alpha = rho / times_pq;
@@ -123,11 +139,18 @@ extvec * CG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL 
 			error = 0;
 			
 			// x = x + alpha * p;                    // update approximation vector
+#ifdef XXL
+			axpy_xxl(alpha, *p, *x);
+			for (i = 0; i < N; i++)
+				error = MAX(error, fabs( (*p)(i) ));
+			error *= fabs(alpha);
+#else
 			for (i = 0; i < N ; i++) {
 				(*x)(i) += alpha * (*p)(i);
 				error = MAX(error, fabs( (*p)(i) ));
 			}
 			error *= fabs(alpha);
+#endif
 			/////////////////////
 			
 			// REAL Error = norm2( r ) / bnrm2;      // check convergence
@@ -148,9 +171,13 @@ extvec * CG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL 
 				break;
 			
 			// r = r - alpha * q;                    // compute residual
+#ifdef XXL
+			axpy_xxl(-alpha,*q,*r);
+#else
 			for (i = 0; i < N; i++) {
 				(*r)(i) -= alpha * (*q)(i);
 			}
+#endif
 			//////////////////////
 		}
 		

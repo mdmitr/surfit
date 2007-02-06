@@ -236,8 +236,9 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Gs /Gs  -DSORT_OPT_PREFETCHING -DUSE_MALLOC_LOCK -DCOUNT_WAIT_TIME -I../../ -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_RTLDLL -DBOOST_LIB_DIAGNOSTIC -DBOOST_ALL_DYN_LINK -DSTXXL_BOOST_TIMESTAMP -DSTXXL_BOOST_CONFIG -DSTXXL_BOOST_FILESYSTEM -DSTXXL_BOOST_THREADS -DSTXXL_BOOST_RANDOM -Ic:\boost /EHsc /EHs /wd4820 /wd4217 /wd4668 /wd4619 /wd4625 /wd4626 /wd4355 /wd4244 /wd4267 /wd4311 /wd4800 /wd4101 /wd4307 /wd4003 -DSTXXL_VERBOSE_LEVEL=0"
+				AdditionalOptions="/Gs /Gs  -DSORT_OPT_PREFETCHING -DUSE_MALLOC_LOCK -DCOUNT_WAIT_TIME -Id:\develop\libs\stxxl/ -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE /MD /O2 -D_RTLDLL -DBOOST_LIB_DIAGNOSTIC -DSTXXL_BOOST_TIMESTAMP -DSTXXL_BOOST_CONFIG -DSTXXL_BOOST_FILESYSTEM -DSTXXL_BOOST_THREADS -DSTXXL_BOOST_RANDOM -Id:\develop\libs\boost /EHsc /EHs /wd4820 /wd4217 /wd4668 /wd4619 /wd4625 /wd4626 /wd4355 /wd4244 /wd4996 /wd4800 /wd4290 /wd4101 -D_SCL_SECURE_NO_DEPRECATE  -DSTXXL_VERBOSE_LEVEL=0"
 				Optimization="2"
+				GlobalOptimizations="TRUE"
 				InlineFunctionExpansion="2"
 				ImproveFloatingPointConsistency="TRUE"
 				AdditionalIncludeDirectories="../sstuff/src,../src/sstuff/ptypes,C:\Tcl\include\;..\..\libs\stxxl;..\..\libs\boost\include\boost-1_33_1"
@@ -254,6 +255,7 @@
 				BrowseInformationFile=".\../Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="0"
 				CompileAs="0"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
@@ -266,6 +268,7 @@
 				AdditionalLibraryDirectories="c:\Tcl\lib;..\..\libs\stxxl\lib71;..\..\libs\boost\lib"
 				IgnoreAllDefaultLibraries="FALSE"
 				IgnoreDefaultLibraryNames=""
+				GenerateDebugInformation="FALSE"
 				ProgramDatabaseFile=".\../Release/libsstuff.pdb"
 				ImportLibrary="../bin/libsstuff.lib"
 				TargetMachine="1"/>
@@ -1427,6 +1430,21 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath="..\src_xxl\sstuff\solvers_xxl.cpp">
+					<FileConfiguration
+						Name="Debug|Win32"
+						ExcludedFromBuild="TRUE">
+						<Tool
+							Name="VCCLCompilerTool"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="TRUE">
+						<Tool
+							Name="VCCLCompilerTool"/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath="..\src_xxl\sstuff\vec_xxl.cpp">
 					<FileConfiguration
 						Name="Debug|Win32"
@@ -1524,6 +1542,9 @@
 				</File>
 				<File
 					RelativePath="..\src_xxl\sstuff\sizetvec_xxl.h">
+				</File>
+				<File
+					RelativePath="..\src_xxl\sstuff\solvers_xxl.h">
 				</File>
 				<File
 					RelativePath="..\src_xxl\sstuff\vec_xxl.h">

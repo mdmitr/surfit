@@ -90,8 +90,11 @@ void bitvec::init_false() {
 //! fills vector with true values
 void bitvec::init_true() {
 	size_t i;
-	for (i = 0; i < size(); i++) 
-		set_true(i);
+	surfit_int32 * ptr = data;
+	for (i = 0; i < byte_size; i++) {
+		*ptr = -1;
+		ptr++;
+	}
 };
 
 void bitvec::invert() {
@@ -169,7 +172,7 @@ void bitvec::write4(size_t pos,
 		set_false(real_pos);
 };
 
-void bitvec::get4(size_t pos, bool * b) 
+void bitvec::get4(size_t pos, bool * b) const
 {
 	size_t real_pos = pos*4;
 	size_t d = real_pos & 31;
@@ -239,7 +242,7 @@ void bitvec::write8(size_t pos,
 
 };
 
-void bitvec::get8(size_t pos, bool * b) 
+void bitvec::get8(size_t pos, bool * b) const
 {
 	size_t real_pos = pos*8;
 	size_t d = real_pos & 31;
@@ -324,7 +327,7 @@ void bitvec::write10(size_t pos,
 	
 };
 
-void bitvec::get10(size_t pos, bool * b) 
+void bitvec::get10(size_t pos, bool * b) const
 {
 	size_t real_pos = pos*10;
 	size_t d = real_pos & 31;

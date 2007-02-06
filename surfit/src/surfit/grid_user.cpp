@@ -154,7 +154,7 @@ void project_vector(VEC * A, size_t NN, size_t MM,
 
 	if (doubleY) {
 		size_t size = A->size();
-		A->resize(size*2);
+		A->resize(size*2,0,0);
 		iter A_it = A->begin() + size - 1;
 		iter new_A_it = A->begin() + size*2 - 1;
 		iter temp_it;
@@ -179,7 +179,7 @@ void project_vector(VEC * A, size_t NN, size_t MM,
 	if (doubleX) {
 		NN *= 2;
 		size_t size = A->size();
-		A->resize(size*2);
+		A->resize(size*2,0,0);
 		iter A_it = A->begin() + size - 1;
 		iter new_A_it = A->begin() + size*2 - 1;
 		iter A_beg = A->begin();
