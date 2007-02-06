@@ -22,8 +22,6 @@
 
 namespace surfit {
 
-	extern SURFIT_EXPORT size_t cpu;
-
 	extern SURFIT_EXPORT int stop_execution;
 
 	/*! \ingroup surfit_variables
