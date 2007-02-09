@@ -22,18 +22,17 @@ namespace surfit {
 class d_cntr;
 
 SURFIT_IO_EXPORT
-/*! \ingroup internal_cntr
-    \fn d_cntr * _cntr_load_shp(const char * filename, const char * cntrname);
-    \brief loads \ref cntr from ERSI shape file
-*/
-d_cntr * _cntr_load_shp(const char * filename, const char * cntrname);
+d_cntr * _cntr_load_bln(FILE * file, int & orient);
 
 SURFIT_IO_EXPORT
 /*! \ingroup internal_cntr
-    \fn d_cntr * _cntr_load_shp(const char * filename);
-    \brief loads all \ref cntr "contours" from ERSI shape file
+    \fn d_cntr * _cntr_load_shp(const char * filename, const char * zfield = NULL);
+    \brief loads \ref cntr "contours" from ERSI shape file
 */
-bool _cntrs_load_shp(const char * filename);
+bool _cntr_load_shp(const char * filename, const char * cntrname, const char * zfield = NULL);
+
+SURFIT_IO_EXPORT
+bool _cntr_save_bln(const d_cntr * crv, FILE * file, int orient);
 
 SURFIT_IO_EXPORT
 /*! \ingroup internal_cntr

@@ -20,18 +20,19 @@
 namespace surfit {
 
 /*! \ingroup tcl_curv_save_load
-    \fn bool curv_load_bln(const char * filename);
+    \fn bool curv_load_bln(const char * filename, const char * curvname = NULL);
     
     \par Tcl syntax:
     curv_load_bln "filename"
 
     \par Description:
-    loads \ref d_curv "curve" from BLN file
+    loads \ref d_curv "curve" named "curvname" from BLN file. Loads all curves
+    if no curvname specified.
 
     \par Implemented in library:
     libsurfit_io
 */
-bool curv_load_bln(const char * filename);
+bool curv_load_bln(const char * filename, const char * curvname = NULL);
 
 /*! \ingroup tcl_curv_save_load
     \fn bool curv_load_shp(const char * filename, const char * curvname = NULL);
@@ -40,26 +41,13 @@ bool curv_load_bln(const char * filename);
     curv_load_shp "filename" "curvname"
 
     \par Description:
-    loads \ref d_curv "curve" named "curvname" from ERSI shape file
+    loads \ref d_curv "curve" named "curvname" from ERSI shape file. Loads all
+    curves if no name specified
 
     \par Implemented in library:
     libsurfit_io
 */
 bool curv_load_shp(const char * filename, const char * curvname = NULL);
-
-/*! \ingroup tcl_curv_save_load
-    \fn bool curvs_load_shp(const char * filename);
-    
-    \par Tcl syntax:
-    curvs_load_shp "filename" "curvname"
-
-    \par Description:
-    loads all \ref d_curv "curves" from ERSI shape file
-
-    \par Implemented in library:
-    libsurfit_io
-*/
-bool curvs_load_shp(const char * filename);
 
 /*! \ingroup tcl_curv_save_load
     \fn bool curv_save_bln(const char * filename, const char * curv_name_or_position = "0", int orient=1)

@@ -26,17 +26,10 @@ d_curv * _curv_load_bln(FILE * file, int & orient);
 
 SURFIT_IO_EXPORT
 /*! \ingroup internal_curv
-    \fn d_curv * _curv_load_shp(const char * filename, const char * curvname);
-    \brief loads \ref curv from ERSI shape file
+    \fn bool _curvs_load_shp(const char * filename, const char * curvname = NULL);
+    \brief load curves from ESRI shape file
 */
-d_curv * _curv_load_shp(const char * filename, const char * curvname);
-
-SURFIT_IO_EXPORT
-/*! \ingroup internal_curv
-    \fn bool _curvs_load_shp(const char * filename);
-    \brief loads all curves from ESRI shape file
-*/
-bool _curvs_load_shp(const char * filename);
+bool _curv_load_shp(const char * filename, const char * curvname = NULL);
 
 SURFIT_IO_EXPORT
 bool _curv_save_bln(const d_curv * crv, FILE * file, int orient);

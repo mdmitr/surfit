@@ -64,21 +64,20 @@ namespace surfit {
 bool pnts_load_shp(const char * filename, const char * pntsname=NULL, const char * param = "VALUE");
 bool pnts_save_shp(const char * filename, const char * points_name_or_position = "0");
 
-bool curv_load_bln(const char * filename);
+bool curv_load_bln(const char * filename, const char * curvname = NULL);
 bool curv_load_shp(const char * filename, const char * curvname = NULL);
-bool curvs_load_shp(const char * filename);
 bool curv_save_bln(const char * filename, const char * curv_name_or_position = "0", int orient = 1);
 bool curv_save_shp(const char * filename, const char * curv_name_or_position = "0");
 
 bool area_load_bln(const char * filename, const char * areaname = NULL);
 bool area_load_shp(const char * filename, const char * areaname = NULL);
-bool areas_load_shp(const char * filename);
 bool area_save_bln(const char * filename, const char * area_name_or_position = "0", int orient = 1);
 bool area_save_shp(const char * filename, const char * area_name_or_position = "0");
 
-bool cntr_load_shp(const char * filename, const char * cntrname = NULL);
-bool cntrs_load_shp(const char * filename);
+bool cntr_load_bln(const char * filename, const char * cntrname = NULL);
+bool cntr_load_shp(const char * filename, const char * cntrname = NULL, const char * zfield = NULL);
 bool cntr_save_shp(const char * filename, const char * cntr_name_or_position = "0");
+bool cntr_save_bln(const char * filename, const char * cntr_name_or_position = "0", int orient = 1);
 
 bool surf_load_grd(const char * filename, const char * surfname = 0);
 bool surf_load_gmt(const char * filename, const char * surfname = 0);

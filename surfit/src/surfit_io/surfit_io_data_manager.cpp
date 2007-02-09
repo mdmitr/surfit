@@ -54,11 +54,11 @@ bool load_ESRI_shape(const char * filename, const char * name) {
 	case SHPT_POINT:
 		return pnts_load_shp(filename, name);
 	case SHPT_ARC:
-		return curvs_load_shp(filename);
+		return curv_load_shp(filename);
 	case SHPT_POLYGON:
-		return areas_load_shp(filename);
+		return area_load_shp(filename);
 	case SHPT_POLYGONZ:
-		return cntrs_load_shp(filename);
+		return cntr_load_shp(filename);
 	default:
 		return false;
 	}
@@ -85,6 +85,12 @@ bool surfit_io_manager::auto_load(const char * filename, const char * first1024,
 
 	if (ext != NULL) {
 		if (strcmp( uext, ".BLN" ) == 0) {
+			res = cntr_load_bln(filename);
+			if (res)
+				goto exit;
+			res = curv_load_bln(filename);
+			if (res)
+				goto exit;
 			res = area_load_bln(filename, name);
 			goto exit;
 		}

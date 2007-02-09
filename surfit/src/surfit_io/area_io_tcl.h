@@ -26,7 +26,8 @@ namespace surfit {
     area_load_bln "filename" "area_name" 
 
     \par Description:
-    loads \ref d_area "area" from Surfer BLN files and sets its name to "areaname"
+    loads \ref d_area "area" from Surfer BLN files and sets its name to "areaname".
+    Loads all areas from file if no areaname specified.
 
     \par Example
     area_load_bln "C:\\area.bln" area_from_bln
@@ -44,7 +45,8 @@ bool area_load_bln(const char * filename, const char * areaname = NULL);
     area_load_shp "filename" "area_name"
 
     \par Description:
-    loads \ref d_area "area" named "area_name" from ERSI shape file.
+    loads \ref d_area "area" named "area_name" from ERSI shape file. 
+    Loads all areas if no area_name specified.
 
     \param filename ERSI shape file name
     \param area_name \ref d_area "area" name for load
@@ -58,25 +60,6 @@ bool area_load_bln(const char * filename, const char * areaname = NULL);
 bool area_load_shp(const char * filename, const char * area_name = NULL);
 
 /*! \ingroup tcl_area_save_load
-    \fn bool areas_load_shp(const char * filename);
-    
-    \par Tcl syntax:
-    areas_load_shp "filename" 
-
-    \par Description:
-    loads all \ref d_area "areas" from ERSI shape file.
-
-    \param filename ERSI shape file name
-    
-    \par Example
-    areas_load_shp "C:\\area.shp" 
-
-    \par Implemented in library:
-    libsurfit_io
-*/
-bool areas_load_shp(const char * filename);
-
-/*! \ingroup tcl_area_save_load
     \fn bool area_save_bln(const char * filename, const char * area_name_or_position = "0", int orient = 1);
     
     \par Tcl syntax:
@@ -86,7 +69,7 @@ bool areas_load_shp(const char * filename);
     saves \ref d_area "area" to Surfer BLN file
 
     \param filename name for BLN file
-    \param area_name_or_position area name, or area position number
+    \param area_name_or_position area name, or area position number. If area_name_or_position = "*" then saves all areas
     \param orient This value is equal to 1 if the region is inside area and equal to 0 if the region is outside area 
     
     \par Example

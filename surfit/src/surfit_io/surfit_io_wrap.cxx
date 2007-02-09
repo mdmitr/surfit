@@ -1998,7 +1998,52 @@ _wrap_pnts_save_shp(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
 
 
 SWIGINTERN int
-_wrap_curv_load_bln(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_curv_load_bln__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oo:curv_load_bln filename curvname ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curv_load_bln" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "curv_load_bln" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = buf2;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::curv_load_bln((char const *)arg1,(char const *)arg2);
+        
+      }
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_curv_load_bln__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   bool result;
   int res1 ;
@@ -2027,6 +2072,36 @@ _wrap_curv_load_bln(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   return TCL_OK;
 fail:
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_curv_load_bln(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  Tcl_Obj *CONST *argv = objv+1;
+  int argc = objc-1;
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_curv_load_bln__SWIG_1(clientData, interp, objc, argv - 1);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_curv_load_bln__SWIG_0(clientData, interp, objc, argv - 1);
+      }
+    }
+  }
+  
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'curv_load_bln'", TCL_STATIC);
   return TCL_ERROR;
 }
 
@@ -2136,40 +2211,6 @@ _wrap_curv_load_shp(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   }
   
   Tcl_SetResult(interp,(char *) "No matching function for overloaded 'curv_load_shp'", TCL_STATIC);
-  return TCL_ERROR;
-}
-
-
-SWIGINTERN int
-_wrap_curvs_load_shp(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  char *arg1 = (char *) 0 ;
-  bool result;
-  int res1 ;
-  char *buf1 = 0 ;
-  int alloc1 = 0 ;
-  
-  if (SWIG_GetArgs(interp, objc, objv,"o:curvs_load_shp filename ",(void *)0) == TCL_ERROR) SWIG_fail;
-  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curvs_load_shp" "', argument " "1"" of type '" "char const *""'");
-  }
-  arg1 = buf1;
-  {
-    try {
-      if (surfit::stop_execution == 0) {
-        result = (bool)surfit::curvs_load_shp((char const *)arg1);
-        
-      }
-    }
-    catch(...) {
-      return TCL_ERROR;
-    }
-  }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
-  return TCL_OK;
-fail:
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_ERROR;
 }
 
@@ -2682,40 +2723,6 @@ _wrap_area_load_shp(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
 
 
 SWIGINTERN int
-_wrap_areas_load_shp(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  char *arg1 = (char *) 0 ;
-  bool result;
-  int res1 ;
-  char *buf1 = 0 ;
-  int alloc1 = 0 ;
-  
-  if (SWIG_GetArgs(interp, objc, objv,"o:areas_load_shp filename ",(void *)0) == TCL_ERROR) SWIG_fail;
-  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "areas_load_shp" "', argument " "1"" of type '" "char const *""'");
-  }
-  arg1 = buf1;
-  {
-    try {
-      if (surfit::stop_execution == 0) {
-        result = (bool)surfit::areas_load_shp((char const *)arg1);
-        
-      }
-    }
-    catch(...) {
-      return TCL_ERROR;
-    }
-  }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
-  return TCL_OK;
-fail:
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
-  return TCL_ERROR;
-}
-
-
-SWIGINTERN int
 _wrap_area_save_bln__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -3005,7 +3012,172 @@ _wrap_area_save_shp(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
 
 
 SWIGINTERN int
+_wrap_cntr_load_bln__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_load_bln filename cntrname ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cntr_load_bln" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "cntr_load_bln" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = buf2;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::cntr_load_bln((char const *)arg1,(char const *)arg2);
+        
+      }
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_cntr_load_bln__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:cntr_load_bln filename ",(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cntr_load_bln" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::cntr_load_bln((char const *)arg1);
+        
+      }
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_cntr_load_bln(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  Tcl_Obj *CONST *argv = objv+1;
+  int argc = objc-1;
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_cntr_load_bln__SWIG_1(clientData, interp, objc, argv - 1);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_cntr_load_bln__SWIG_0(clientData, interp, objc, argv - 1);
+      }
+    }
+  }
+  
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'cntr_load_bln'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
 _wrap_cntr_load_shp__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:cntr_load_shp filename cntrname zfield ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cntr_load_shp" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "cntr_load_shp" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = buf2;
+  res3 = SWIG_AsCharPtrAndSize(objv[3], &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "cntr_load_shp" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = buf3;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::cntr_load_shp((char const *)arg1,(char const *)arg2,(char const *)arg3);
+        
+      }
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_cntr_load_shp__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
   bool result;
@@ -3050,7 +3222,7 @@ fail:
 
 
 SWIGINTERN int
-_wrap_cntr_load_shp__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_cntr_load_shp__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   bool result;
   int res1 ;
@@ -3092,7 +3264,7 @@ _wrap_cntr_load_shp(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
     int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_cntr_load_shp__SWIG_1(clientData, interp, objc, argv - 1);
+      return _wrap_cntr_load_shp__SWIG_2(clientData, interp, objc, argv - 1);
     }
   }
   if (argc == 2) {
@@ -3103,46 +3275,28 @@ _wrap_cntr_load_shp(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
       int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_cntr_load_shp__SWIG_0(clientData, interp, objc, argv - 1);
+        return _wrap_cntr_load_shp__SWIG_1(clientData, interp, objc, argv - 1);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsCharPtrAndSize(argv[2], 0, NULL, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_cntr_load_shp__SWIG_0(clientData, interp, objc, argv - 1);
+        }
       }
     }
   }
   
   Tcl_SetResult(interp,(char *) "No matching function for overloaded 'cntr_load_shp'", TCL_STATIC);
-  return TCL_ERROR;
-}
-
-
-SWIGINTERN int
-_wrap_cntrs_load_shp(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  char *arg1 = (char *) 0 ;
-  bool result;
-  int res1 ;
-  char *buf1 = 0 ;
-  int alloc1 = 0 ;
-  
-  if (SWIG_GetArgs(interp, objc, objv,"o:cntrs_load_shp filename ",(void *)0) == TCL_ERROR) SWIG_fail;
-  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cntrs_load_shp" "', argument " "1"" of type '" "char const *""'");
-  }
-  arg1 = buf1;
-  {
-    try {
-      if (surfit::stop_execution == 0) {
-        result = (bool)surfit::cntrs_load_shp((char const *)arg1);
-        
-      }
-    }
-    catch(...) {
-      return TCL_ERROR;
-    }
-  }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
-  return TCL_OK;
-fail:
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_ERROR;
 }
 
@@ -3252,6 +3406,186 @@ _wrap_cntr_save_shp(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   }
   
   Tcl_SetResult(interp,(char *) "No matching function for overloaded 'cntr_save_shp'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_cntr_save_bln__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int arg3 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:cntr_save_bln filename cntr_name_or_position orient ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cntr_save_bln" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "cntr_save_bln" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = buf2;
+  ecode3 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[3], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "cntr_save_bln" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = static_cast<int >(val3);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::cntr_save_bln((char const *)arg1,(char const *)arg2,arg3);
+        
+      }
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_cntr_save_bln__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_save_bln filename cntr_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cntr_save_bln" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "cntr_save_bln" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = buf2;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::cntr_save_bln((char const *)arg1,(char const *)arg2);
+        
+      }
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_cntr_save_bln__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  bool result;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:cntr_save_bln filename ",(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cntr_save_bln" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::cntr_save_bln((char const *)arg1);
+        
+      }
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_cntr_save_bln(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  Tcl_Obj *CONST *argv = objv+1;
+  int argc = objc-1;
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_cntr_save_bln__SWIG_2(clientData, interp, objc, argv - 1);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_cntr_save_bln__SWIG_1(clientData, interp, objc, argv - 1);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_cntr_save_bln__SWIG_0(clientData, interp, objc, argv - 1);
+        }
+      }
+    }
+  }
+  
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'cntr_save_bln'", TCL_STATIC);
   return TCL_ERROR;
 }
 
@@ -6131,17 +6465,16 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "pnts_save_shp", (swig_wrapper_func) _wrap_pnts_save_shp, NULL},
     { SWIG_prefix "curv_load_bln", (swig_wrapper_func) _wrap_curv_load_bln, NULL},
     { SWIG_prefix "curv_load_shp", (swig_wrapper_func) _wrap_curv_load_shp, NULL},
-    { SWIG_prefix "curvs_load_shp", (swig_wrapper_func) _wrap_curvs_load_shp, NULL},
     { SWIG_prefix "curv_save_bln", (swig_wrapper_func) _wrap_curv_save_bln, NULL},
     { SWIG_prefix "curv_save_shp", (swig_wrapper_func) _wrap_curv_save_shp, NULL},
     { SWIG_prefix "area_load_bln", (swig_wrapper_func) _wrap_area_load_bln, NULL},
     { SWIG_prefix "area_load_shp", (swig_wrapper_func) _wrap_area_load_shp, NULL},
-    { SWIG_prefix "areas_load_shp", (swig_wrapper_func) _wrap_areas_load_shp, NULL},
     { SWIG_prefix "area_save_bln", (swig_wrapper_func) _wrap_area_save_bln, NULL},
     { SWIG_prefix "area_save_shp", (swig_wrapper_func) _wrap_area_save_shp, NULL},
+    { SWIG_prefix "cntr_load_bln", (swig_wrapper_func) _wrap_cntr_load_bln, NULL},
     { SWIG_prefix "cntr_load_shp", (swig_wrapper_func) _wrap_cntr_load_shp, NULL},
-    { SWIG_prefix "cntrs_load_shp", (swig_wrapper_func) _wrap_cntrs_load_shp, NULL},
     { SWIG_prefix "cntr_save_shp", (swig_wrapper_func) _wrap_cntr_save_shp, NULL},
+    { SWIG_prefix "cntr_save_bln", (swig_wrapper_func) _wrap_cntr_save_bln, NULL},
     { SWIG_prefix "surf_load_grd", (swig_wrapper_func) _wrap_surf_load_grd, NULL},
     { SWIG_prefix "surf_load_gmt", (swig_wrapper_func) _wrap_surf_load_gmt, NULL},
     { SWIG_prefix "surf_load_grass", (swig_wrapper_func) _wrap_surf_load_grass, NULL},

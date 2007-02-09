@@ -22,11 +22,54 @@
 #include "curv.h"
 #include "curv_io.h"
 
+#include "interp.h"
+#include <tcl.h>
+#include <algorithm>
+
 #include <errno.h>
 
 namespace surfit {
 
-bool curv_load_bln(const char * filename) {
+bool curv_load_bln(const char * filename, const char * curvname) {
+
+	if (curvname != NULL) {
+		FILE * file = fopen(filename, "r");
+		if (!file) {
+			writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
+			return false;
+		}
+		if (ferror(file) != 0) {
+			writelog(LOG_ERROR, "loading from BLN: file error.");
+			fclose(file);
+			return false;
+		}
+		
+		bool res = false;
+		
+		int orient = 1;
+		d_curv * crv = _curv_load_bln(file, orient);
+		while (crv != NULL) {
+			if (crv->getName() == NULL) {
+				crv->release();
+				crv = _curv_load_bln(file, orient);
+				continue;
+			}
+			if ( RegExpMatch(curvname, crv->getName()) == false ) {
+				crv->release();
+				crv = _curv_load_bln(file, orient);
+				continue;
+			}
+			writelog(LOG_MESSAGE,"loading curve \"%s\" from Surfer BLN file %s", crv->getName(), filename);
+			surfit_curvs->push_back(crv);
+			crv = _curv_load_bln(file, orient);
+			res = true;
+			continue;
+		}
+		
+		fclose(file);
+		return res;
+	}
+	
 	FILE * file = fopen(filename, "r");
 	if (!file) {
 		writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
@@ -37,9 +80,9 @@ bool curv_load_bln(const char * filename) {
 		fclose(file);
 		return false;
 	}
-
+	
 	bool res = false;
-
+	
 	int orient = 1;
 	d_curv * crv = _curv_load_bln(file, orient);
 	while (crv != NULL) {
@@ -47,33 +90,55 @@ bool curv_load_bln(const char * filename) {
 		surfit_curvs->push_back(crv);
 		crv = _curv_load_bln(file, orient);
 	}
-
+	
 	fclose(file);
 	return res;
 };
 
 bool curv_load_shp(const char * filename, const char * curvname) {
-	d_curv * curve = _curv_load_shp(filename, curvname);
-	if (curve) {
-		surfit_curvs->push_back(curve);
-		return false;
+	return _curv_load_shp(filename, curvname);
+};
+
+struct regexp_curv_save_bln
+{
+	regexp_curv_save_bln(const char * ifilename, const char * icurv_pos, int iorient, FILE * ifile)
+	{
+		filename = ifilename;
+		curv_pos = icurv_pos;
+		orient = iorient;
+		res = true;
+		file = ifile;
 	}
-	return true;
+
+	void operator()(d_curv * crv)
+	{
+		if (res == false)
+			return;
+
+		if (crv->getName() == NULL)
+			return;
+
+		if ( RegExpMatch(curv_pos, crv->getName()) )
+		{
+			writelog(LOG_MESSAGE,"saving curve \"%s\" to Surfer BLN file %s",
+				 crv->getName()?crv->getName():"noname", filename);
+			res = _curv_save_bln(crv, file, orient);
+		}
+	};
+
+	const char * filename;
+	const char * curv_pos;
+	int orient;
+	bool res;
+	FILE * file;
 };
 
-bool curvs_load_shp(const char * filename) {
-	return _curvs_load_shp(filename);
-};
-
-bool curv_save_bln(const char * filename, const char * curv_pos, int orient) {
-	d_curv * crv = get_element<d_curv>(curv_pos, surfit_curvs->begin(), surfit_curvs->end());
-	if (crv == NULL)
-		return false;
-
+bool curv_save_bln(const char * filename, const char * curv_pos, int orient) 
+{
 	FILE * file = fopen(filename, "a");
 	if (!file) {
 		writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
-		return false;
+		return false;;
 	}
 	if (ferror(file) != 0) {
 		writelog(LOG_ERROR, "saving BLN: file error.");
@@ -81,20 +146,46 @@ bool curv_save_bln(const char * filename, const char * curv_pos, int orient) {
 		return false;
 	}
 
-	bool res = _curv_save_bln(crv, file, orient);
-	fclose(file);
+	regexp_curv_save_bln saver(filename, curv_pos, orient, file);
+	saver = std::for_each(surfit_curvs->begin(), surfit_curvs->end(), saver);
 
-	return res;
+	fclose(file);
+	return saver.res;
 };
 
-bool curv_save_shp(const char * filename, const char * pos) {
-	d_curv * curve = get_element<d_curv>(pos, surfit_curvs->begin(), surfit_curvs->end());
-	if (curve == NULL)
-		return false;
+struct regexp_curv_save_shp
+{
+	regexp_curv_save_shp(const char * ifilename, const char * icurv_pos)
+	{
+		filename = ifilename;
+		curv_pos = icurv_pos;
+		res = true;
+	}
 
-	writelog(LOG_MESSAGE,"Saving curv to ERSI shp file %s", filename);
+	void operator()(d_curv * crv)
+	{
+		if (res == false)
+			return;
 
-	return _curv_save_shp(curve, filename);
+		if (crv->getName() == NULL)
+			return;
+
+		if ( RegExpMatch(curv_pos, crv->getName()) )
+		{
+			res = _curv_save_shp(crv, filename);
+		}
+	};
+
+	const char * filename;
+	const char * curv_pos;
+	bool res;
+};
+
+
+bool curv_save_shp(const char * filename, const char * curv_pos) {
+	regexp_curv_save_shp saver(filename, curv_pos);
+	saver = std::for_each(surfit_curvs->begin(), surfit_curvs->end(), saver);
+	return saver.res;
 };
 
 

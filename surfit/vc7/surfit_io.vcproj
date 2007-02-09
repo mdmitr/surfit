@@ -1237,6 +1237,9 @@
 				Name="cntr_cpp"
 				Filter="">
 				<File
+					RelativePath="..\src\surfit_io\cntr_bln.cpp">
+				</File>
+				<File
 					RelativePath="..\src\surfit_io\cntr_io_tcl.cpp">
 					<FileConfiguration
 						Name="Release|Win32">

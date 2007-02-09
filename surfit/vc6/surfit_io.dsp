@@ -217,6 +217,10 @@ SOURCE=..\src\surfit_io\area_shp.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
+SOURCE=..\src\surfit_io\cntr_bln.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\surfit_io\cntr_io_tcl.cpp
 # End Source File
 # Begin Source File

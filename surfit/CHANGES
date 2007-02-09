@@ -15,6 +15,12 @@ New:
 	+ added surf_filter_out_area
 	+ added surf_filter_by_surf
 	+ added surf_swapxy
+	- removed curvs_load_shp, use curv_load_shp instead
+	- removed areas_load_shp, use area_load_shp instead
+	- removed cntrs_load_shp, use cntr_load_shp instead
+	+ cntr_load_shp syntax extended. Now you can load contours with constant Z value
+	  from shapefiles of SHPYT_ARC type.
+	
 
 surfit 2.1 changes:
 

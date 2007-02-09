@@ -31,6 +31,9 @@ extern SSTUFF_EXPORT Tcl_Interp * interp;
 SSTUFF_EXPORT
 void init_interp(Tcl_Interp * iinterp);
 
+SSTUFF_EXPORT
+bool RegExpMatch(const char * regexp, const char * str);
+
 #endif
 
 

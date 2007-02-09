@@ -20,6 +20,8 @@
 #include "surfit_io_ie.h"
 #include "surf_io.h"
 
+#include "interp.h"
+
 // sstuff includes
 #include "sstuff.h"
 
@@ -74,7 +76,7 @@ bool _curv_save_shp(const d_curv * contour, const char * filename) {
 	SHPGetInfo(hSHP, NULL, &shpType, NULL, NULL);
 
 	if (shpType != SHPT_ARC) {
-		writelog(LOG_ERROR, "%s : Wrong shape type!", filename);
+		writelog(LOG_ERROR, "%s : Wrong shape type! Should be SHPT_ARC.", filename);
 		SHPClose( hSHP );
 		DBFClose( hDBF );
 		return false;
@@ -119,91 +121,7 @@ bool _curv_save_shp(const d_curv * contour, const char * filename) {
 
 };
 
-d_curv * _curv_load_shp(const char * filename, const char * curvname) {
-
-	SHPHandle hSHP;
-	DBFHandle hDBF;
-	
-	hSHP = SHPOpen(filename, "rb");
-	if( hSHP == NULL ) {
-		writelog(LOG_ERROR, "Unable to open:%s", filename );
-		return NULL;
-	}
-
-	int shpType;
-	int Entities;
-	SHPGetInfo(hSHP, &Entities, &shpType, NULL, NULL);
-
-	if (shpType != SHPT_ARC) {
-		SHPClose( hSHP );
-		writelog(LOG_ERROR, "%s : Wrong shape type!", filename);
-		return NULL;
-	}
-
-	hDBF = DBFOpen(filename, "rb");
-	if( hDBF == NULL ) {
-		SHPClose(hSHP);
-		writelog(LOG_ERROR, "Unable to open DBF for %s", filename );
-		return NULL;
-	}
-
-	int name_field = DBFGetFieldIndex( hDBF, "NAME" );
-	
-	if (name_field == -1) {
-		SHPClose( hSHP );
-		DBFClose( hDBF );
-		writelog(LOG_ERROR, "Cannot find parameter \"%s\" in DBF file", "NAME");
-		return NULL;
-	};
-
-	int dbf_records = DBFGetRecordCount( hDBF );
-
-	Entities = MIN(dbf_records, Entities);
-
-	int i;
-	for (i = 0; i < Entities; i++) {
-		const char * name = DBFReadStringAttribute( hDBF, i, name_field );
-		if (strcmp(curvname, name) == 0)
-			break;
-	}
-
-	if (i == Entities) {
-		SHPClose( hSHP );
-		DBFClose( hDBF );
-		writelog(LOG_ERROR, "Cannot find curve named \"%s\"", curvname);
-		return NULL;
-	}
-
-	SHPObject * shpObject = SHPReadObject( hSHP, i );
-
-	if (shpObject->nParts != -1) {
-		SHPDestroyObject(shpObject);
-		DBFClose( hDBF );
-		SHPClose( hSHP );
-		writelog(LOG_ERROR, "surfit supports only curves with mParts == 1");
-		return NULL;
-	}
-
-	vec * X = create_vec(shpObject->nVertices,0,0);
-	vec * Y = create_vec(shpObject->nVertices,0,0);
-
-	for (i = 0; i < shpObject->nVertices; i++) {
-		(*X)(i) = *(shpObject->padfX + i);
-		(*Y)(i) = *(shpObject->padfY + i);
-	}
-	
-	SHPDestroyObject(shpObject);
-
-	DBFClose( hDBF );
-	SHPClose( hSHP );
-
-	d_curv * res = create_curv(X, Y, curvname);
-	
-	return res;
-
-};
-
-bool _curvs_load_shp(const char * filename) {
+bool _curv_load_shp(const char * filename, const char * curvname) {
 
 	SHPHandle hSHP;
 	DBFHandle hDBF;
@@ -220,7 +138,7 @@ bool _curvs_load_shp(const char * filename) {
 
 	if (shpType != SHPT_ARC) {
 		SHPClose( hSHP );
-		writelog(LOG_ERROR, "%s : Wrong shape type!", filename);
+		writelog(LOG_ERROR, "%s : Wrong shape type! Should be SHTP_ARC.", filename);
 		return false;
 	}
 
@@ -245,12 +163,20 @@ bool _curvs_load_shp(const char * filename) {
 			continue;
 		}
 			
-		vec * X = create_vec(shpObject->nVertices,0,0);
-		vec * Y = create_vec(shpObject->nVertices,0,0);
-
 		const char * name = NULL;
 		if (name_field != -1)
 			name = DBFReadStringAttribute( hDBF, i, name_field );
+
+		if (curvname != NULL) {
+			if ( RegExpMatch(curvname, name) == false )
+				continue;
+		}
+
+		writelog(LOG_MESSAGE,"loading curve \"%s\" from ESRI shape file %s",
+			name?name:"noname",filename);
+
+		vec * X = create_vec(shpObject->nVertices,0,0);
+		vec * Y = create_vec(shpObject->nVertices,0,0);
 		
 		for (j = 0; j < shpObject->nVertices; j++) {
 			(*X)(j) = *(shpObject->padfX + j);

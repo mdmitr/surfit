@@ -20,6 +20,9 @@
 #include "sstuff_ie.h"
 #include "interp.h"
 #include <tcl.h>
+#include "fileio.h"
+
+#include <string.h>
 
 Tcl_Interp * interp = NULL;
 
@@ -27,3 +30,14 @@ void init_interp(Tcl_Interp * iinterp) {
 	interp = iinterp;
 };
 
+bool RegExpMatch(const char * regexp, const char * str)
+{
+	char * reg = strdup(regexp);
+	char * s = strdup(str);
+	int res = Tcl_RegExpMatch(interp, s, reg);
+	free(reg);
+	free(s);
+	if (res == -1) 
+		surfit::writelog(LOG_ERROR,"Wrong regexp : \"%s\"",regexp);
+	return (res == 1);
+};

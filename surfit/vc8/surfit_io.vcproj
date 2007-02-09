@@ -1528,6 +1528,10 @@
 				Name="cntr_cpp"
 				>
 				<File
+					RelativePath="..\src\surfit_io\cntr_bln.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\surfit_io\cntr_io_tcl.cpp"
 					>
 					<FileConfiguration
