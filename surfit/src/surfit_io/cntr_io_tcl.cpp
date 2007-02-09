@@ -25,6 +25,7 @@
 #include "interp.h"
 #include <tcl.h>
 #include <algorithm>
+#include <errno.h>
 
 namespace surfit {
 

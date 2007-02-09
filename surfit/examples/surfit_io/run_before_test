@@ -1,0 +1,12 @@
+#!/bin/sh
+
+cd bln
+rm -f *.bln
+cd ..
+cd shp
+rm -f *.shp
+rm -f *.dbf
+rm -f *.shx
+cd ..
+
+

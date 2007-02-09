@@ -180,9 +180,9 @@ libsurfit_io_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) libsstuff.la libsurfit.la \
 	$(am__DEPENDENCIES_1)
 am_libsurfit_io_la_OBJECTS = area_bln.lo area_io_tcl.lo area_shp.lo \
-	cntr_io_tcl.lo cntr_shp.lo curv_bln.lo curv_io_tcl.lo \
-	curv_shp.lo pnts_io_tcl.lo pnts_shp.lo surfit_io.lo \
-	surfit_io_data_manager.lo surfit_io_variables.lo \
+	cntr_io_tcl.lo cntr_bln.lo cntr_shp.lo curv_bln.lo \
+	curv_io_tcl.lo curv_shp.lo pnts_io_tcl.lo pnts_shp.lo \
+	surfit_io.lo surfit_io_data_manager.lo surfit_io_variables.lo \
 	surf_arcgis.lo surf_bmp.lo surf_gmt.lo surf_grass.lo \
 	surf_grd.lo surf_io_tcl.lo surf_jpg.lo surf_xyz.lo \
 	surfit_io_wrap.lo dbfopen.lo shpopen.lo EasyBMP.lo
@@ -495,10 +495,11 @@ libsurfit_io_ladir = $(prefix)/include/surfit_io
 # EasyBmp
 libsurfit_io_la_SOURCES = src/surfit_io/area_bln.cpp \
 	src/surfit_io/area_io_tcl.cpp src/surfit_io/area_shp.cpp \
-	src/surfit_io/cntr_io_tcl.cpp src/surfit_io/cntr_shp.cpp \
-	src/surfit_io/curv_bln.cpp src/surfit_io/curv_io_tcl.cpp \
-	src/surfit_io/curv_shp.cpp src/surfit_io/pnts_io_tcl.cpp \
-	src/surfit_io/pnts_shp.cpp src/surfit_io/surfit_io.cpp \
+	src/surfit_io/cntr_io_tcl.cpp src/surfit_io/cntr_bln.cpp \
+	src/surfit_io/cntr_shp.cpp src/surfit_io/curv_bln.cpp \
+	src/surfit_io/curv_io_tcl.cpp src/surfit_io/curv_shp.cpp \
+	src/surfit_io/pnts_io_tcl.cpp src/surfit_io/pnts_shp.cpp \
+	src/surfit_io/surfit_io.cpp \
 	src/surfit_io/surfit_io_data_manager.cpp \
 	src/surfit_io/surfit_io_variables.cpp \
 	src/surfit_io/surf_arcgis.cpp src/surfit_io/surf_bmp.cpp \
@@ -677,6 +678,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/boolvec.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmofs.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cntr.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cntr_bln.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cntr_internal.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cntr_io_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cntr_shp.Plo@am__quote@
@@ -1922,6 +1924,13 @@ cntr_io_tcl.lo: src/surfit_io/cntr_io_tcl.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/cntr_io_tcl.cpp' object='cntr_io_tcl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cntr_io_tcl.lo `test -f 'src/surfit_io/cntr_io_tcl.cpp' || echo '$(srcdir)/'`src/surfit_io/cntr_io_tcl.cpp
+
+cntr_bln.lo: src/surfit_io/cntr_bln.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cntr_bln.lo -MD -MP -MF "$(DEPDIR)/cntr_bln.Tpo" -c -o cntr_bln.lo `test -f 'src/surfit_io/cntr_bln.cpp' || echo '$(srcdir)/'`src/surfit_io/cntr_bln.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cntr_bln.Tpo" "$(DEPDIR)/cntr_bln.Plo"; else rm -f "$(DEPDIR)/cntr_bln.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/cntr_bln.cpp' object='cntr_bln.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cntr_bln.lo `test -f 'src/surfit_io/cntr_bln.cpp' || echo '$(srcdir)/'`src/surfit_io/cntr_bln.cpp
 
 cntr_shp.lo: src/surfit_io/cntr_shp.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cntr_shp.lo -MD -MP -MF "$(DEPDIR)/cntr_shp.Tpo" -c -o cntr_shp.lo `test -f 'src/surfit_io/cntr_shp.cpp' || echo '$(srcdir)/'`src/surfit_io/cntr_shp.cpp; \
