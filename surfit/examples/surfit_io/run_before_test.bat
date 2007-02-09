@@ -1,0 +1,10 @@
+cd bln
+del *.bln
+del surfit.log
+cd ..
+cd shp
+del *.dbf
+del *.shp
+del *.shx
+del surfit.log
+cd ..
