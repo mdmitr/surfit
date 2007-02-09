@@ -40,6 +40,9 @@
 #include "f_curv_surf_ineq.h"
 #include "f_completer.h"
 #include "variables_tcl.h"
+#include "interp.h"
+
+#include <algorithm>
 
 namespace surfit {
 
@@ -344,14 +347,48 @@ bool area_completer_add(REAL weight, const char * area_pos, REAL D1, REAL D2, RE
 	return true;
 };
 
+struct regexp_contour
+{
+	regexp_contour(const char * ipos) : pos(ipos) {};
+	void operator()(d_cntr * contour) 
+	{
+		if (contour->getName() == NULL)
+			return;
+		if ( RegExpMatch(pos, contour->getName()) )
+		{
+			writelog(LOG_MESSAGE,"creating gridding rule contour(\"%s\")", 
+				 contour->getName()?contour->getName():"noname");
+			f_cntr * f = new f_cntr(contour);
+			functionals->push_back(f);
+		}
+	}
+	const char * pos;
+};
+
 bool contour(const char * pos) {
-	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	if (contour == NULL)
-		return false;
-	
-	f_cntr * f = new f_cntr(contour);
-	functionals->push_back(f);
+	std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), regexp_contour(pos));
 	return true;
+};
+
+struct regexp_contour_add
+{
+	regexp_contour_add(const char * ipos, functional * isrf, REAL iweight) : 
+			   pos(ipos), srf(isrf), weight(iweight) {};
+	void operator()(d_cntr * contour)
+	{
+		if (contour->getName() == NULL)
+			return;
+		if ( RegExpMatch(pos, contour->getName()) )
+		{
+			writelog(LOG_MESSAGE,"creating gridding rule contour_add(\"%s\")", 
+				 contour->getName()?contour->getName():"noname");
+			f_cntr * srf2 = new f_cntr(contour);
+			srf->add_functional(srf2, weight);
+		}
+	}
+	const char * pos;
+	functional * srf;
+	REAL weight;
 };
 
 bool contour_add(REAL weight, const char * pos) {
@@ -359,13 +396,8 @@ bool contour_add(REAL weight, const char * pos) {
 	functional * srf = get_modifiable_functional();
 	if (srf == NULL)
 		return false;
-	
-	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	if (contour == NULL)
-		return false;
-	
-	f_cntr * srf2 = new f_cntr(contour);
-	srf->add_functional(srf2, weight);
+
+	std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), regexp_contour_add(pos, srf, weight));
 	return true;
 };
 

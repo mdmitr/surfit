@@ -26,12 +26,6 @@ set tol 1e-005
 cntr_read "cntr_small_circle.xyz" "cntr_small_circle"  
  
 # load contour from text file 
-cntr_read "cntr1.xyz" "cntr1"  
- 
-# load contour from text file 
-cntr_read "cntr2.xyz" "cntr2"  
- 
-# load contour from text file 
 cntr_read "cntr_big_circle.xyz" "cntr_big_circle"  
  
 # load contour from text file 

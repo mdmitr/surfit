@@ -308,6 +308,7 @@ libsurfit_io_la_SOURCES =  src/surfit_io/area_bln.cpp
 libsurfit_io_la_SOURCES += src/surfit_io/area_io_tcl.cpp           
 libsurfit_io_la_SOURCES += src/surfit_io/area_shp.cpp              
 libsurfit_io_la_SOURCES += src/surfit_io/cntr_io_tcl.cpp           
+libsurfit_io_la_SOURCES += src/surfit_io/cntr_bln.cpp              
 libsurfit_io_la_SOURCES += src/surfit_io/cntr_shp.cpp              
 libsurfit_io_la_SOURCES += src/surfit_io/curv_bln.cpp              
 libsurfit_io_la_SOURCES += src/surfit_io/curv_io_tcl.cpp           
