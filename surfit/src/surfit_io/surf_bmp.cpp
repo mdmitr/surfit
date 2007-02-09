@@ -107,7 +107,7 @@ bool _surf_save_bmp(const d_surf * srf, const char * filename) {
 	
 	BMP res;
 	res.SetSize(NN,MM);
-	res.SetBitDepth(32);
+	res.SetBitDepth(24);
 	REAL minz, maxz;
 	srf->getMinMaxZ(minz, maxz);
 

@@ -127,18 +127,14 @@ bool geq(REAL value, REAL mult = 1);
 bool hist(const char * pos = "0", REAL mult = 1e-2);
 
 // hist
-bool hist_read(const char * filename, const char * histname=NULL, int col1=1, int col2=2, int col3 = 3, const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
-bool hist_write(const char * filename, const char * delimiter = "\t", const char * pos = "0");
-bool hist_save(const char * filename, const char * pos = "0");
-bool hist_load(const char * filename, const char * histname = NULL);
 bool hist_from_surf(const char * histname, const char * surf_pos = "0", size_t intervs = 10);
-bool hist_update_surf(const char * hist_pos = "0", const char * surf_pos = "0");
 const char * hist_getName(const char * pos = "0");
 bool hist_setName(const char * new_name, const char * pos = "0");
 bool hist_delall();
 bool hist_del(const char * pos = "0");
 int hist_size();
 void hists_info();
+bool surf_histeq(const char * surf_name = "0");
 
 
 // license stuff

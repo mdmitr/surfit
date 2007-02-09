@@ -24,29 +24,8 @@ namespace surfit {
 
 class d_hist;
 class datafile;
+class d_surf;
 
-class d_hist;
-class datafile;
-
-SURFIT_EXPORT
-d_hist * _hist_read(const char * filename, const char * histname,
-		    int col1, int col2, int col3, int skip_lines,
-		    int grow_by, const char * mask);
-
-SURFIT_EXPORT
-bool _hist_write(const d_hist * hst, const char * filename, const char * mask);
-
-SURFIT_EXPORT
-bool _hist_save(const d_hist * hst, const char * filename);
-
-SURFIT_EXPORT
-bool _hist_save_df(const d_hist * hst, datafile * df);
-
-SURFIT_EXPORT
-d_hist * _hist_load(const char * filename, const char * histname);
-
-SURFIT_EXPORT
-d_hist * _hist_load_df(datafile * df, const char * histname);
 
 SURFIT_EXPORT
 void _hist_info(const d_hist * hst);
@@ -54,6 +33,8 @@ void _hist_info(const d_hist * hst);
 SURFIT_EXPORT
 void _add_surfit_hists(d_hist * hst);
 
+SURFIT_EXPORT
+bool _surf_histeq(d_surf * srf);
 
 }; // namespace surfit;
 

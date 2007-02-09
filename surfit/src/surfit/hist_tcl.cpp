@@ -37,56 +37,6 @@
 
 namespace surfit {
 
-bool hist_read(const char * filename, const char * histname,
-	       int col1, int col2, int col3,
-	       const char* delimiter, int skip_lines, int grow_by)
-{
-	d_hist * hst = _hist_read(filename, histname,
-				  col1, col2, col3, skip_lines,
-				  grow_by, delimiter);
-
-	if (hst != NULL) {
-		surfit_hists->push_back(hst);
-		return true;
-	}
-	return false;
-
-};
-
-bool hist_write(const char * filename, const char * delimiter, const char * pos) 
-{
-	d_hist * hst = get_element<d_hist>(pos, surfit_hists->begin(), surfit_hists->end());
-	if (hst == NULL)
-		return false;
-
-	char buf[80];
-	strcpy( buf, "%lf" );
-	strcat( buf, delimiter );
-	strcat( buf, "%lf" );
-	strcat( buf, delimiter );
-	strcat( buf, "%lf\n" );
-	return _hist_write(hst, filename, buf);
-};
-
-bool hist_save(const char * filename, const char * pos) {
-	d_hist * hst = get_element<d_hist>(pos, surfit_hists->begin(), surfit_hists->end());
-	if (hst == NULL)
-		return false;
-
-	writelog(LOG_MESSAGE,"Saving hist to file %s", filename);
-
-	return _hist_save(hst, filename);
-};
-
-bool hist_load(const char * filename, const char * histname) {
-	d_hist * hst = _hist_load(filename, histname);
-	if (hst) {
-		surfit_hists->push_back(hst);
-		return false;
-	}
-	return true;
-};
-
 bool hist_setName(const char * new_name, const char * pos) {
 	d_hist * hst = get_element<d_hist>(pos, surfit_hists->begin(), surfit_hists->end());
 	if (hst == NULL)
@@ -136,6 +86,7 @@ void hists_info() {
 };
 
 bool hist_from_surf(const char * histname, const char * surf_pos, size_t intervs) {
+	
 	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (srf == NULL)
 		return false;
@@ -148,21 +99,11 @@ bool hist_from_surf(const char * histname, const char * surf_pos, size_t intervs
 	maxz = floor(maxz/step+1)*step;
 	intervs++;
 
-	vec * X1 = create_vec(intervs);
-	vec * X2 = create_vec(intervs);
-	size_t i;
-	for (i = 0; i < intervs; i++) {
-		(*X1)(i) = minz + i*step;
-		(*X2)(i) = minz + (i+1)*step;
-	}
-
 	vec * Z = create_vec(intervs);
 	
-	for (i = 0; i < intervs; i++) 
-		(*Z)(i) = 0;
+	size_t srf_size = 0;
 
-	int srf_size = 0;
-
+	size_t i;
 	for (i = 0; i < srf->coeff->size(); i++) {
 		REAL z = (*(srf->coeff))(i);
 		if (z == srf->undef_value)
@@ -175,49 +116,19 @@ bool hist_from_surf(const char * histname, const char * surf_pos, size_t intervs
 	for (i = 0; i < intervs; i++) 
 		(*Z)(i) /= (REAL)(srf_size);
 
-	d_hist * hst = create_hist(X1, X2, Z, histname);
+	d_hist * hst = create_hist(minz, maxz, step, Z, histname);
 	surfit_hists->push_back(hst);
 
 	return true;
 };
 
-bool hist_update_surf(const char * hist_pos, const char * surf_pos) {
-
-	d_hist * hst = get_element<d_hist>(hist_pos, surfit_hists->begin(), surfit_hists->end());
-	if (hst == NULL)
-		return false;
-
+bool surf_histeq(const char * surf_pos)
+{
 	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (srf == NULL)
 		return false;
 
-	size_t hist_size = hst->size();
-	size_t srf_size = 0;
-	size_t i, j;
-	
-	for (i = 0; i < hist_size - 1; i++) 
-		(*(hst->Z))(i) = 0;
-
-	REAL from, to, z;
-	
-	for (j = 0; j < srf->coeff->size(); j++) {
-		z = (*(srf->coeff))(j);
-		if (z == srf->undef_value)
-			continue;
-		srf_size ++;
-		for (i = 0; i < hist_size - 1; i++) {
-			from = (*(hst->X1))(i);
-			to   = (*(hst->X2))(i);
-			if ((z >= from) && (z < to))
-				(*(hst->Z))(i) += 1;
-		}
-	}
-
-	for (i = 0; i < hist_size; i++) 
-		(*(hst->Z))(i) /= (REAL)(srf_size);
-	
-	return true;
-
+	return _surf_histeq(srf);
 };
 
 }; // namespace surfit;

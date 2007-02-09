@@ -145,37 +145,6 @@ bool surfit_io_manager::auto_load(const char * filename, const char * first1024,
 		}
 		goto exit;
 	}
-	/*
-
-	if (ext != NULL) {
-		if (strcmp( uext, ".HDR" ) == 0) {
-			res = dem_load_dtm(filename, strdup(name));
-			goto exit;
-		}
-		if (strcmp( uext, ".HGT" ) == 0) {
-			res = dem_load_hgt(filename, strdup(name));
-			goto exit;
-		}
-		if (strcmp( uext, ".ZIP" ) == 0) {
-			sstuff_free_char(ext);
-			ext = get_full_ext(filename);				
-			if (strcmp(ext, ".hgt.zip") == 0) {
-				char * name2 = get_name(name);
-				res = dem_load_hgt_zip(filename, strdup(name2));
-				sstuff_free_char(name2);
-				goto exit;
-			}
-		}
-	}
-	if (name != NULL) {
-		if (strlen(name) == 4) {
-			if (strcmp( uname+1, "10G") == 0) {
-				res = dem_load_surfit_io(filename);
-				goto exit;
-			}
-		}
-	}
-	*/
 
 exit:
 	free(uext);

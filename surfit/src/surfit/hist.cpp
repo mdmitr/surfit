@@ -27,85 +27,55 @@
 
 namespace surfit {
 
-d_hist * create_hist(vec * iX1, vec * iX2, vec * iZ,
-		     const char * hist_name)
-{
-	return new d_hist(iX1, iX2, iZ, hist_name);
-};
-
-d_hist * create_hist2(REAL ifrom, REAL ito, REAL istep,
+d_hist * create_hist(REAL ifrom, REAL ito, REAL istep,
 		      vec * iZ,
 		      const char * hist_name)
 {
 	return new d_hist(ifrom, ito, istep, iZ, hist_name);
 };
 
-d_hist::d_hist(vec * iX1, vec * iX2, vec * iZ, 
-	       const char * iname) : data("d_hist")
-{
-	X1 = iX1;
-	X2 = iX2;
-	Z = iZ;
-	setName(iname);
-	normalize();
-};
-
 d_hist::d_hist(REAL from, REAL to, REAL step,
 	       vec * iZ, 
 	       const char * iname) : data("d_hist")
 {
-	int cnt = int((to-from)/step - 1);
-	X1 = create_vec(cnt);
-	X2 = create_vec(cnt);
-	int i;
-	for (i = 0; i < cnt; i++) {
-		(*X1)(i) = from + i*step;
-		(*X2)(i) = from + (i+1)*step;
-	}	
+	z_from = from;
+	z_to = to;
+	z_step = step;
 
-	Z = iZ;
-	Z = iZ;
+	cnt = size_t((to-from)/step - 1);
+
+	if (iZ != NULL)
+		hst = iZ;
+	else {
+		hst = create_vec(cnt, REAL(1));
+	}
 	setName(iname);
-	normalize();
 };
 
 d_hist::~d_hist() {
-	if (X1)
-		X1->release();
-	if (X2)
-		X2->release();
-	if (Z)
-		Z->release();
+	if (hst)
+		hst->release();
 };
 
-void d_hist::normalize() {
-	if (size() == 0)
-		return;
-
-	REAL sum = sum_value(Z->begin(), Z->end(), FLT_MAX);	
-
-	REAL mult = 100./sum;
-	if (mult == 1)
-		return;
-
-	int i;
-	for (i = 0; i < size(); i++) 
-		(*Z)(i) *= mult;
-};
-
-bool d_hist::get_interv(REAL value, int & pos) const 
+bool d_hist::get_interv_number(REAL value, size_t & pos) const 
 {
-	int i;
-	REAL from, to;
-	for (i = 0; i < size(); i++) {
-		from = (*X1)(i);
-		to = (*X2)(i);
-		if ( (from <= value) && (value < to) ) {
-			pos = i;
-			return true;
-		}
-	}
-	return false;
+	if (value < z_from)
+		return false;
+	if (value > z_to)
+		return false;
+
+	pos = (value-z_from)/z_step;
+	return true;
+};
+
+bool d_hist::get_interv(size_t pos, REAL & value_from, REAL & value_to, REAL & hst_value) const
+{
+	if (pos > size())
+		return false;
+	value_from = z_from + pos*z_step;
+	value_to = value_from + z_step;
+	hst_value = (*hst)(pos);
+	return true;
 };
 
 bool d_hist::bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const 
@@ -119,9 +89,7 @@ bool d_hist::getMinMaxZ(REAL & minz, REAL & maxz) const
 };
 
 int d_hist::size() const {
-	if (Z == NULL)
-		return 0;
-	return Z->size();
+	return cnt;
 };
 
 std::vector<d_hist *>     * surfit_hists     = NULL;
