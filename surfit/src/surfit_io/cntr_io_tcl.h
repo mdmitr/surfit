@@ -23,7 +23,7 @@ namespace surfit {
     \fn bool cntr_load_shp(const char * filename, const char * cntrname = NULL);
     
     \par Tcl syntax:
-    cntr_load_shp "filename" "cntrname"
+    cntr_load_shp "filename" \ref regexp "cntrname"
 
     \par Description:
     reads \ref d_cntr "countour" named 'cntrname' from ERSI shape file. Loads
@@ -41,7 +41,7 @@ bool cntr_load_shp(const char * filename, const char * cntrname = NULL, const ch
     \fn bool cntr_load_bln(const char * filename, const char * cntrname = NULL, const char * zfield);
     
     \par Tcl syntax:
-    cntr_load_bln "filename" "cntrname" "fieldtouseforzvalue"
+    cntr_load_bln "filename" \ref regexp "cntrname" "fieldtouseforzvalue"
 
     \par Description:
     loads \ref d_cntr "contour" named "cntrname" from BLN file. Loads
@@ -56,7 +56,7 @@ bool cntr_load_bln(const char * filename, const char * cntrname = NULL);
     \fn bool cntr_save_shp(const char * filename, const char * cntr_name_or_position = "0");
     
     \par Tcl syntax:
-    cntr_save_shp "filename" "cntr_name_or_position" 
+    cntr_save_shp "filename" \ref regexp "cntr_name_or_position" 
 
     \par Description:
     saves \ref d_cntr "contour" to ESRI shape file
@@ -73,7 +73,7 @@ bool cntr_save_shp(const char * filename, const char * cntr_name_or_position = "
     \fn bool cntr_save_bln(const char * filename, const char * cntr_name_or_position = "0", int orient=1)
     
     \par Tcl syntax:
-    cntr_save_bln "filename" "cntr_name_or_position" orient
+    cntr_save_bln "filename" \ref regexp "cntr_name_or_position" orient
 
     \par Description:
     saves \ref d_cntr "cntre" to BLN file

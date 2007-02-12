@@ -555,7 +555,7 @@ bool area_completer_add(REAL weight = 1, const char * area_name_or_position = "0
     \fn bool contour(const char * cntr_name_or_position = "0");
     
     \par Tcl syntax:
-    contour "cntr_name_or_position"
+    contour \ref regexp "cntr_name_or_position"
 
     \par Description:
     Using this rule the resulting surface approximates contour values.
@@ -576,7 +576,7 @@ bool contour(const char * cntr_name_or_position = "0");
     \fn bool contour_add(REAL weight, const char * cntr_name_or_position = "0");
     
     \par Tcl syntax:
-    contour_add weight "cntr_name_or_position"
+    contour_add weight \ref regexp "cntr_name_or_position"
 
     \par Description:
     This rule modifies a previous (modifiable) rule by adding the \ref contour rule with some weight. 

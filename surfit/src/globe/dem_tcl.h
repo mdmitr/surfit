@@ -385,7 +385,7 @@ int dem_get_details_level(const char * dem_name_or_position = "0");
     \fn bool dem_decomp(const char * dem_name_or_position = "0");
 
     \par Tcl syntax:
-    dem_decomp "dem_name_or_position"
+    dem_decomp \ref regexp "dem_name_or_position"
 
     \par Description:
     makes one wavelet-decomposition for dem
@@ -408,7 +408,7 @@ bool dem_auto_decomp(REAL eps, const char * dem_name_or_position = "0");
     \fn bool dem_recons(const char * dem_name_or_position = "0");
 
     \par Tcl syntax:
-    dem_recons "dem_name_or_position"
+    dem_recons \ref regexp "dem_name_or_position"
 
     \par Description:
     makes one wavelet-reconstruction for dem

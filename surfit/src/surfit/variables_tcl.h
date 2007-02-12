@@ -22,7 +22,7 @@
 
 namespace surfit {
 
-	extern SURFIT_EXPORT int stop_execution;
+	extern SURFIT_EXPORT bool stop_execution;
 
 	/*! \ingroup surfit_variables
 	    \var undef_value

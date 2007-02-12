@@ -23,7 +23,7 @@ namespace surfit {
     \fn bool dem(const char * dem_name_or_position = "0");
 
     \par Tcl syntax:
-    dem "dem_name_or_position"
+    dem \ref regexp "dem_name_or_position"
 
     \par Description:
     Using this rule the resulting surface approximates \ref d_dem "DEM" in least squares meaning.
@@ -43,7 +43,7 @@ bool dem(const char * dem_name_or_position = "0");
     \fn bool dem_add(REAL weight, const char * dem_name_or_position = "0");
 
     \par Tcl syntax:
-    dem_add weight "dem_name_or_position"
+    dem_add weight \ref regexp "dem_name_or_position"
 
     \par Description:
     This function modifies previous (modifiable) rule by adding the \ref dem rule with some weight.

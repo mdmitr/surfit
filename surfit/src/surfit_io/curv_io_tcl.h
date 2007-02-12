@@ -20,10 +20,10 @@
 namespace surfit {
 
 /*! \ingroup tcl_curv_save_load
-    \fn bool curv_load_bln(const char * filename, const char * curvname = NULL);
+    \fn bool curv_load_bln(const char * filename, const char * curv_name_or_position = NULL);
     
     \par Tcl syntax:
-    curv_load_bln "filename"
+    curv_load_bln "filename" \ref regexp "curv_name_or_position"
 
     \par Description:
     loads \ref d_curv "curve" named "curvname" from BLN file. Loads all curves
@@ -32,13 +32,13 @@ namespace surfit {
     \par Implemented in library:
     libsurfit_io
 */
-bool curv_load_bln(const char * filename, const char * curvname = NULL);
+bool curv_load_bln(const char * filename, const char * curv_name_or_position = NULL);
 
 /*! \ingroup tcl_curv_save_load
-    \fn bool curv_load_shp(const char * filename, const char * curvname = NULL);
+    \fn bool curv_load_shp(const char * filename, const char * curv_name_or_position = NULL);
     
     \par Tcl syntax:
-    curv_load_shp "filename" "curvname"
+    curv_load_shp "filename" \ref regexp "curv_name_or_position"
 
     \par Description:
     loads \ref d_curv "curve" named "curvname" from ERSI shape file. Loads all
@@ -53,7 +53,7 @@ bool curv_load_shp(const char * filename, const char * curvname = NULL);
     \fn bool curv_save_bln(const char * filename, const char * curv_name_or_position = "0", int orient=1)
     
     \par Tcl syntax:
-    curv_save_bln "filename" "curv_name_or_position" orient
+    curv_save_bln "filename" \ref regexp "curv_name_or_position" orient
 
     \par Description:
     saves \ref d_curv "curve" to BLN file
@@ -74,7 +74,7 @@ bool curv_save_bln(const char * filename, const char * curv_name_or_position = "
     \fn bool curv_save_shp(const char * filename, const char * curv_name_or_position = "0");
     
     \par Tcl syntax:
-    curv_save_shp "filename" "curv_name_or_position"
+    curv_save_shp "filename" \ref regexp "curv_name_or_position"
 
     \par Description:
     saves \ref d_curv "curve" to ERSI shape file

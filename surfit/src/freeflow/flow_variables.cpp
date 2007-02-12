@@ -64,7 +64,11 @@ void freeflow_init_variables(Tcl_Interp * iinterp) {
 		flow_manager = new freeflow_manager;
 		add_manager(flow_manager);
 
+#ifdef XXL
+		log_printf("loading module freeflow v%s (XXL build)\n", FREEFLOW_VERSION);
+#else
 		log_printf("loading module freeflow v%s\n", FREEFLOW_VERSION);
+#endif
 
 	}
 

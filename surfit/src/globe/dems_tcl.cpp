@@ -22,31 +22,63 @@
 #include "dem.h"
 #include "f_dem.h"
 #include "variables.h"
+#include "interp.h"
+
+#include <algorithm>
 
 namespace surfit {
 
+struct regexp_dem
+{
+	regexp_dem(const char * ipos) : pos(ipos) {};
+	void operator()(d_dem * dem) 
+	{
+		if (dem->getName() == NULL)
+			return;
+		if ( RegExpMatch(pos, dem->getName()) )
+		{
+			writelog(LOG_MESSAGE,"creating gridding rule dem(\"%s\")", 
+				 dem->getName()?dem->getName():"noname");
+			f_dem * f = new f_dem(dem);
+			functionals_push_back(f);
+		}
+	}
+	const char * pos;
+};
+
 bool dem(const char * pos) {
-	d_dem * fnc = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
-	if (fnc == NULL)
-		return false;
-	
-	f_dem * f = new f_dem(fnc);
-	functionals_push_back(f);
+	std::for_each(globe_dems->begin(), globe_dems->end(), regexp_dem(pos));
 	return true;
 };
 
-bool dem_add(REAL weight, const char * pos) {
-		
-	functional * f = get_modifiable_functional();
-	if (f == NULL)
+struct regexp_dem_add
+{
+	regexp_dem_add(const char * ipos, functional * isrf, REAL iweight) : 
+			   pos(ipos), srf(isrf), weight(iweight) {};
+	void operator()(d_dem * dem)
+	{
+		if (dem->getName() == NULL)
+			return;
+		if ( RegExpMatch(pos, dem->getName()) )
+		{
+			writelog(LOG_MESSAGE,"creating gridding rule dem_add(\"%s\")", 
+				 dem->getName()?dem->getName():"noname");
+			f_dem * srf2 = new f_dem(dem);
+			srf->add_functional(srf2, weight);
+		}
+	}
+	const char * pos;
+	functional * srf;
+	REAL weight;
+};
+
+bool dem_add(REAL weight, const char * pos) 
+{
+	functional * srf = get_modifiable_functional();
+	if (srf == NULL)
 		return false;
 
-	d_dem * fnc = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
-	if (fnc == NULL)
-		return false;
-
-	f_dem * fnc2 = new f_dem(fnc);
-	f->add_functional(fnc2, weight);
+	std::for_each(globe_dems->begin(), globe_dems->end(), regexp_dem_add(pos, srf, weight));
 	return true;
 };
 

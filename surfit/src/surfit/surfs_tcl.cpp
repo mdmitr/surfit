@@ -42,7 +42,7 @@ bool surface(const char * pos) {
 		return false;
 	
 	f_surf * f = new f_surf(srf);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -66,7 +66,7 @@ bool surface_leq(const char * pos, REAL mult) {
 	if (srf == NULL)
 		return false;
 	f_surf_ineq * f = new f_surf_ineq(srf, true, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -75,7 +75,7 @@ bool surface_geq(const char * pos, REAL mult) {
 	if (srf == NULL)
 		return false;
 	f_surf_ineq * f = new f_surf_ineq(srf, false, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -85,7 +85,7 @@ bool trend(REAL D1, REAL D2, const char * pos) {
 		return false;
 	
 	f_trend * f = new f_trend(D1, D2, srf);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -116,7 +116,7 @@ bool mask(const char * Value, const char * pos) {
 		return false;
 	
 	f_mask * f = new f_mask(msk, value);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -140,7 +140,7 @@ bool mask_leq(REAL value, const char * mask_pos, REAL mult) {
 		return false;
 
 	f_mask_ineq * f = new f_mask_ineq(value, mask, true, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -150,7 +150,7 @@ bool mask_geq(REAL value, const char * mask_pos, REAL mult) {
 		return false;
 
 	f_mask_ineq * f = new f_mask_ineq(value, mask, false, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -165,7 +165,7 @@ bool mask_surf(const char * surf_pos, const char * mask_pos) {
 		return false;
 
 	f_mask_surf * f = new f_mask_surf(surf, mask);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -199,7 +199,7 @@ bool mask_surf_leq(const char * surf_pos, const char * mask_pos, REAL mult) {
 		return false;
 
 	f_mask_surf_ineq * f = new f_mask_surf_ineq(surf, mask, true, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -214,7 +214,7 @@ bool mask_surf_geq(const char * surf_pos, const char * mask_pos, REAL mult) {
 		return false;
 
 	f_mask_surf_ineq * f = new f_mask_surf_ineq(surf, mask, false, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -224,7 +224,7 @@ bool mask_mean(REAL mean, const char * pos, REAL mult) {
 		return false;
 
 	f_mask_mean * f = new f_mask_mean(mean, mask, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -238,7 +238,7 @@ bool mask_wmean(REAL mean, const char * mask_pos, const char * surf_pos, REAL mu
 		return false;
 
 	f_mask_wmean * f = new f_mask_wmean(mean, srf, mask, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -249,7 +249,7 @@ bool mask_completer(const char * mask_pos, REAL D1, REAL D2, REAL alpha, REAL w)
 
 	f_completer * f = new f_completer(D1, D2, alpha, w);
 	f->set_mask(mask);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 

@@ -86,7 +86,7 @@ namespace surfit {
 
 %include "../../src/sstuff/real.h"
 
-extern int stop_execution;
+extern bool stop_execution;
 
 extern float tol; 
 extern REAL undef_value;

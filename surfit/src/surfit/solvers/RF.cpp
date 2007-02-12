@@ -104,7 +104,7 @@ extvec * RF(matr * A, const extvec * b, int max_it, REAL tol, extvec * X, REAL u
 			prp = (short)prp_pos;
 		}
 
-		if ( (err < tol) || (stop_execution == 1) )
+		if ( (err < tol) || (stop_execution) )
 			break;
 		
 	}

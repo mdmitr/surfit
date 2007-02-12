@@ -221,7 +221,7 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X) {
 		else
 			x_norm = new_norm;
 
-		if ((counter > penalty_max_iter) || (stop_execution == 1))
+		if ((counter > penalty_max_iter) || (stop_execution == true))
 			ok = true;
 	
 	}

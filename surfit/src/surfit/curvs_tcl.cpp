@@ -78,7 +78,7 @@ bool curve(REAL value, const char * pos) {
 		return false;
 	
 	f_curv * f = new f_curv(value, crv);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -103,7 +103,7 @@ bool curve_leq(REAL value, const char * curve_pos, REAL mult) {
 		return false;
 
 	f_curv_ineq * f = new f_curv_ineq(value, curve, true, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -113,7 +113,7 @@ bool curve_geq(REAL value, const char * curve_pos, REAL mult) {
 		return false;
 
 	f_curv_ineq * f = new f_curv_ineq(value, curve, false, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -127,7 +127,7 @@ bool curve_surf(const char * surf_pos, const char * curv_pos) {
 		return false;
 
 	f_curv_surf * f = new f_curv_surf(srf, curve);
-	functionals->push_back(f);
+	functionals_push_back(f);
 
 	return true;
 };
@@ -162,7 +162,7 @@ bool curve_surf_leq(const char * surf_pos, const char * curv_pos, REAL mult) {
 		return false;
 
 	f_curv_surf_ineq * f = new f_curv_surf_ineq(surf, curve, true, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -177,7 +177,7 @@ bool curve_surf_geq(const char * surf_pos, const char * curv_pos, REAL mult) {
 		return false;
 
 	f_curv_surf_ineq * f = new f_curv_surf_ineq(surf, curve, false, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -193,7 +193,7 @@ bool area(const char * Value, const char * pos, int inside) {
 		return false;
 	
 	f_area * f = new f_area(value, area, (inside == 1) );
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -218,7 +218,7 @@ bool area_leq(REAL value, const char * area_pos, REAL mult, int inside) {
 		return false;
 
 	f_area_ineq * f = new f_area_ineq(value, area, true, mult, (inside == 1) );
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -228,7 +228,7 @@ bool area_geq(REAL value, const char * area_pos, REAL mult, int inside) {
 		return false;
 
 	f_area_ineq * f = new f_area_ineq(value, area, false, mult, (inside == 1) );
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -243,7 +243,7 @@ bool area_surf(const char * surf_pos, const char * area_pos, int inside) {
 		return false;
 
 	f_area_surf * f = new f_area_surf(surf, area, (inside == 1));
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -277,7 +277,7 @@ bool area_surf_leq(const char * surf_pos, const char * area_pos, REAL mult, int 
 		return false;
 
 	f_area_surf_ineq * f = new f_area_surf_ineq(surf, area, true, mult, (inside == 1) );
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -292,7 +292,7 @@ bool area_surf_geq(const char * surf_pos, const char * area_pos, REAL mult, int 
 		return false;
 
 	f_area_surf_ineq * f = new f_area_surf_ineq(surf, area, false, mult, (inside == 1) );
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -302,7 +302,7 @@ bool area_mean(REAL mean, const char * pos, REAL mult, int inside) {
 		return false;
 
 	f_area_mean * f = new f_area_mean(mean, area, mult, (inside == 1) );
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -316,7 +316,7 @@ bool area_wmean(REAL mean, const char * area_pos, const char * surf_pos, REAL mu
 		return false;
 
 	f_area_wmean * f = new f_area_wmean(mean, srf, area, mult, (inside == 1) );
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -327,7 +327,7 @@ bool area_completer(const char * area_pos, REAL D1, REAL D2, REAL alpha, REAL w,
 
 	f_completer * f = new f_completer(D1, D2, alpha, w);
 	f->set_area(area, (inside == 1));
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -359,7 +359,7 @@ struct regexp_contour
 			writelog(LOG_MESSAGE,"creating gridding rule contour(\"%s\")", 
 				 contour->getName()?contour->getName():"noname");
 			f_cntr * f = new f_cntr(contour);
-			functionals->push_back(f);
+			functionals_push_back(f);
 		}
 	}
 	const char * pos;
@@ -391,8 +391,8 @@ struct regexp_contour_add
 	REAL weight;
 };
 
-bool contour_add(REAL weight, const char * pos) {
-
+bool contour_add(REAL weight, const char * pos) 
+{
 	functional * srf = get_modifiable_functional();
 	if (srf == NULL)
 		return false;
@@ -407,7 +407,7 @@ bool contour_leq(const char * cntr_pos, REAL mult) {
 		return false;
 
 	f_cntr_ineq * f = new f_cntr_ineq(contour, true, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -417,7 +417,7 @@ bool contour_geq(const char * cntr_pos, REAL mult) {
 		return false;
 
 	f_cntr_ineq * f = new f_cntr_ineq(contour, false, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 

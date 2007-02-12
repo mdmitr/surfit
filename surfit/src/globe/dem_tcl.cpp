@@ -22,6 +22,7 @@
 #include "datafile.h"
 #include "fileio.h"
 #include "findfile.h"
+#include "interp.h"
 
 #include "dem.h"
 #include "dem_internal.h"
@@ -35,12 +36,14 @@
 #include "grid_internal.h"
 #include "grid_line.h"
 #include "variables_internal.h"
+#include "variables_tcl.h"
 #include "free_elements.h"
 #include "surf.h"
 
 #include "grid_user.h"
 
 #include <float.h>
+#include <algorithm>
 
 namespace surfit {
 
@@ -85,6 +88,9 @@ bool dem_load_hgt_zip(const char * hgt_zip_filename, const char * dem_name) {
 			return false;
 
 		fname = find_next();
+
+		if (stop_execution)
+			break;
 		
 	}
 
@@ -517,11 +523,28 @@ void dems_info() {
 // wavelets section
 //
 //
+
+struct regexp_dem_decomp
+{
+	regexp_dem_decomp(const char * ipos) : pos(ipos), res(true) {};
+	void operator()(d_dem * dem) 
+	{
+		if ( RegExpMatch(pos, dem->getName()) )
+		{
+			if (res == false)
+				return;
+			res = _dem_decomp(dem);
+		}
+	}
+	const char * pos;
+	bool res;
+};
+
 bool dem_decomp(const char * pos) {
-	d_dem * srf = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
-	if (!srf)
-		return false;
-	return _dem_decomp(srf);
+
+	regexp_dem_decomp q(pos);
+	q = std::for_each(globe_dems->begin(), globe_dems->end(), q);
+	return q.res;
 };
 
 bool dem_auto_decomp(REAL eps, const char * pos) {
@@ -531,11 +554,26 @@ bool dem_auto_decomp(REAL eps, const char * pos) {
 	return _dem_auto_decomp(srf,eps);
 };
 
+struct regexp_dem_recons
+{
+	regexp_dem_recons(const char * ipos) : pos(ipos), res(true) {};
+	void operator()(d_dem * dem) 
+	{
+		if ( RegExpMatch(pos, dem->getName()) )
+		{
+			if (res == false)
+				return;
+			res = _dem_recons(dem);
+		}
+	}
+	const char * pos;
+	bool res;
+};
+
 bool dem_recons(const char * pos) {
-	d_dem * srf = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
-	if (!srf)
-		return false;
-	return _dem_recons(srf);
+	regexp_dem_recons q(pos);
+	q = std::for_each(globe_dems->begin(), globe_dems->end(), q);
+	return q.res;
 };
 
 bool dem_full_recons(const char * pos) {

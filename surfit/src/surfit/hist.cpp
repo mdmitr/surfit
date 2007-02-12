@@ -88,7 +88,7 @@ bool d_hist::getMinMaxZ(REAL & minz, REAL & maxz) const
 	return false;
 };
 
-int d_hist::size() const {
+size_t d_hist::size() const {
 	return cnt;
 };
 

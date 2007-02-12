@@ -62,7 +62,11 @@ void surfit_io_init_variables(Tcl_Interp * iinterp) {
 		my_surfit_io_manager = new surfit_io_manager;
 		add_manager(my_surfit_io_manager);
 
+#ifdef XXL
+		log_printf("loading module surfit_io v%s (XXL build)\n", SURFIT_IO_VERSION);
+#else
 		log_printf("loading module surfit_io v%s\n", SURFIT_IO_VERSION);
+#endif
 
 	}
 

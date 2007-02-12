@@ -22,9 +22,13 @@ New:
 	  from shapefiles of SHPYT_ARC type.
 
 	+ regexp support for commands:
-	  gridding rules: contour, contour_add
+	  libsurfit: 
+		  gridding rules: contour, contour_add
 	  libsurfit_io: cntr_save_bln, cntr_load_bln, cntr_save_shp, cntr_load_shp
 		        curv_save_bln, curv_load_bln, curv_save_shp, curv_load_shp
+	  libglobe: 
+		  commands: dem_decomp, dem_recons
+		  gridding rules: dem, dem_add
 	
 
 surfit 2.1 changes:

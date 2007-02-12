@@ -54,7 +54,7 @@ public:
 	bool get_interv_number(REAL value, size_t & pos) const;
 	bool get_interv(size_t pos, REAL & value_from, REAL & value_to, REAL & hst_value) const;
 
-	int size() const;
+	size_t size() const;
 
 private:
 	double z_from;

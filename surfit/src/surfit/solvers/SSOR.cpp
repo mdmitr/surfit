@@ -133,7 +133,7 @@ extvec * SSOR(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REA
 			prp = (short)prp_pos;
 		}
 
-		if ( (error < tol) || (stop_execution == 1) )
+		if ( (error < tol) || (stop_execution) )
 			break;
 		
 		*x_1 = *x;

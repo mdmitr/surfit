@@ -62,7 +62,11 @@ void globe_init_variables(Tcl_Interp * iinterp) {
 		my_globe_manager = new globe_manager;
 		add_manager(my_globe_manager);
 
+#ifdef XXL
+		log_printf("loading module globe v%s (XXL build)\n", GLOBE_VERSION);
+#else
 		log_printf("loading module globe v%s\n", GLOBE_VERSION);
+#endif
 	}
 
 };

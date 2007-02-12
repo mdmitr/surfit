@@ -35,7 +35,7 @@ namespace surfit {
 
 bool completer(REAL D1, REAL D2, REAL alpha, REAL w) {
 	f_completer * f_cmpltr = new f_completer(D1, D2, alpha, w);
-	functionals->push_back(f_cmpltr);
+	functionals_push_back(f_cmpltr);
 	return true;
 };
 
@@ -51,7 +51,7 @@ bool completer_add(REAL weight, REAL D1, REAL D2, REAL alpha, REAL w) {
 
 bool value(REAL value) {
 	f_value * f = new f_value(value);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -66,7 +66,7 @@ bool value_add(REAL weight, REAL value) {
 
 bool mean(REAL value, REAL mult) {
 	f_mean * f = new f_mean(value, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -76,19 +76,19 @@ bool wmean(REAL value, const char * surf_pos, REAL mult) {
 		return false;
 
 	f_wmean * f = new f_wmean(value, srf, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
 bool leq(REAL value, REAL mult) {
 	f_ineq * f = new f_ineq(value, true, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
 bool geq(REAL value, REAL mult) {
 	f_ineq * f = new f_ineq(value, false, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 
@@ -98,7 +98,7 @@ bool hist(const char * pos, REAL mult) {
 		return false;
 
 	f_hist * f = new f_hist(hst, mult);
-	functionals->push_back(f);
+	functionals_push_back(f);
 	return true;
 };
 

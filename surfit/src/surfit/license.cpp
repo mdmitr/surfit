@@ -24,8 +24,13 @@
 namespace surfit {
 
 void print_license() {
+#ifdef XXL
+	log_printf("loading surfit v%s (XXL build)\n", VERSION);
+	Tcl_printf("surfit version %s (XXL build), Copyright (c) 2002-2007 M.V.Dmitrievsky & V.N.Kutrunov\n", VERSION);
+#else
 	log_printf("loading surfit v%s\n", VERSION);
 	Tcl_printf("surfit version %s, Copyright (c) 2002-2007 M.V.Dmitrievsky & V.N.Kutrunov\n", VERSION);
+#endif
 	Tcl_printf("surfit comes with ABSOLUTELY NO WARRANTY; for details type `show_w'.\n");
 	Tcl_printf("This is free software, and you are welcome to redistribute it\n");
 	Tcl_printf("under certain conditions; type `show_c' for details.\n");

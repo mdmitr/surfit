@@ -1670,49 +1670,18 @@ SWIG_FromCharPtr(const char *cptr)
 }
 
 
-SWIGINTERNINLINE Tcl_Obj* 
-SWIG_From_long  (long value)
-{
-  if (((long) INT_MIN <= value) && (value <= (long) INT_MAX)) {
-    return Tcl_NewIntObj(static_cast<int >(value));
-  } else {
-    return Tcl_NewLongObj(value);
-  }
-}
-
-
-SWIGINTERNINLINE Tcl_Obj *
-SWIG_From_int  (int value)
-{    
-  return SWIG_From_long  (value);
-}
+  #define SWIG_From_bool   Tcl_NewBooleanObj 
 
 
 SWIGINTERN int
-SWIG_AsVal_long SWIG_TCL_DECL_ARGS_2(Tcl_Obj *obj, long* val)
+SWIG_AsVal_bool SWIG_TCL_DECL_ARGS_2(Tcl_Obj *obj, bool *val)
 {
-  long v;
-  if (Tcl_GetLongFromObj(0,obj, &v) == TCL_OK) {
-    if (val) *val = (long) v;
+  int v;
+  if (Tcl_GetBooleanFromObj(0, obj, &v) == TCL_OK) {
+    if (val) *val = v ? true : false;
     return SWIG_OK;
   }
   return SWIG_TypeError;
-}
-
-
-SWIGINTERN int
-SWIG_AsVal_int SWIG_TCL_DECL_ARGS_2(Tcl_Obj * obj, int *val)
-{
-  long v;
-  int res = SWIG_AsVal_long SWIG_TCL_CALL_ARGS_2(obj, &v);
-  if (SWIG_IsOK(res)) {
-    if ((v < INT_MIN || v > INT_MAX)) {
-      return SWIG_OverflowError;
-    } else {
-      if (val) *val = static_cast<int >(v);
-    }
-  }  
-  return res;
 }
 
 
@@ -1772,10 +1741,53 @@ SWIG_AsCharPtrAndSize(Tcl_Obj *obj, char** cptr, size_t* psize, int *alloc)
 }
 
 
+SWIGINTERNINLINE Tcl_Obj* 
+SWIG_From_long  (long value)
+{
+  if (((long) INT_MIN <= value) && (value <= (long) INT_MAX)) {
+    return Tcl_NewIntObj(static_cast<int >(value));
+  } else {
+    return Tcl_NewLongObj(value);
+  }
+}
+
+
+SWIGINTERNINLINE Tcl_Obj *
+SWIG_From_int  (int value)
+{    
+  return SWIG_From_long  (value);
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_long SWIG_TCL_DECL_ARGS_2(Tcl_Obj *obj, long* val)
+{
+  long v;
+  if (Tcl_GetLongFromObj(0,obj, &v) == TCL_OK) {
+    if (val) *val = (long) v;
+    return SWIG_OK;
+  }
+  return SWIG_TypeError;
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_int SWIG_TCL_DECL_ARGS_2(Tcl_Obj * obj, int *val)
+{
+  long v;
+  int res = SWIG_AsVal_long SWIG_TCL_CALL_ARGS_2(obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v < INT_MIN || v > INT_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = static_cast<int >(v);
+    }
+  }  
+  return res;
+}
 
 
 
-  #define SWIG_From_bool   Tcl_NewBooleanObj 
 
 
 SWIGINTERN int
@@ -1853,7 +1865,7 @@ extern "C" {
 SWIGINTERN char *stop_execution_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, char *name1, char *name2, int flags) {
   Tcl_Obj *value = 0;
   
-  value = SWIG_From_int(static_cast<int >(surfit::stop_execution));
+  value = SWIG_From_bool(static_cast<bool >(surfit::stop_execution));
   if (value) {
     Tcl_SetVar2(interp,name1,name2,Tcl_GetStringFromObj(value,NULL), flags);
     Tcl_DecrRefCount(value);
@@ -1871,12 +1883,12 @@ SWIGINTERN char *stop_execution_set(ClientData clientData SWIGUNUSED, Tcl_Interp
   Tcl_DecrRefCount(name1o);
   if (!value) SWIG_fail;
   {
-    int val;
-    int res = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(value, &val);
+    bool val;
+    int res = SWIG_AsVal_bool SWIG_TCL_CALL_ARGS_2(value, &val);
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""surfit::stop_execution""' of type '""int""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""surfit::stop_execution""' of type '""bool""'");
     }
-    surfit::stop_execution = static_cast<int >(val);
+    surfit::stop_execution = static_cast<bool >(val);
   }
   return NULL;
 fail:

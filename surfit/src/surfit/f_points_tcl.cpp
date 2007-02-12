@@ -33,7 +33,7 @@ bool points(const char * pos) {
 	if (pnts == NULL)
 		return false;
 	f_points * fnc = new f_points(pnts);
-	functionals->push_back(fnc);
+	functionals_push_back(fnc);
 	return true;
 };
 
@@ -57,7 +57,7 @@ bool points_leq(const char * pos, REAL mult) {
 	if (pnts == NULL)
 		return false;
 	f_points_ineq * inpnts = new f_points_ineq(pnts, true, mult);
-	functionals->push_back(inpnts);
+	functionals_push_back(inpnts);
 	return true;
 };
 
@@ -66,7 +66,7 @@ bool points_geq(const char * pos, REAL mult) {
 	if (pnts == NULL)
 		return false;
 	f_points_ineq * inpnts = new f_points_ineq(pnts, false, mult);
-	functionals->push_back(inpnts);
+	functionals_push_back(inpnts);
 	return true;
 };
 
