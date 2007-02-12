@@ -45,6 +45,8 @@ CLEAN :
 	-@erase "$(INTDIR)\datafile.sbr"
 	-@erase "$(INTDIR)\fileio.obj"
 	-@erase "$(INTDIR)\fileio.sbr"
+	-@erase "$(INTDIR)\findfile.obj"
+	-@erase "$(INTDIR)\findfile.sbr"
 	-@erase "$(INTDIR)\geom_alg.obj"
 	-@erase "$(INTDIR)\geom_alg.sbr"
 	-@erase "$(INTDIR)\interp.obj"
@@ -145,6 +147,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\boolvec.sbr" \
 	"$(INTDIR)\intvec.sbr" \
 	"$(INTDIR)\shortvec.sbr" \
+	"$(INTDIR)\sizetvec.sbr" \
 	"$(INTDIR)\strvec.sbr" \
 	"$(INTDIR)\vec.sbr" \
 	"$(INTDIR)\vec_alg.sbr" \
@@ -168,7 +171,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\sstuff.sbr" \
 	"$(INTDIR)\stepFunc.sbr" \
 	"$(INTDIR)\threads.sbr" \
-	"$(INTDIR)\sizetvec.sbr"
+	"$(INTDIR)\findfile.sbr"
 
 "$(OUTDIR)\sstuff.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -182,6 +185,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\boolvec.obj" \
 	"$(INTDIR)\intvec.obj" \
 	"$(INTDIR)\shortvec.obj" \
+	"$(INTDIR)\sizetvec.obj" \
 	"$(INTDIR)\strvec.obj" \
 	"$(INTDIR)\vec.obj" \
 	"$(INTDIR)\vec_alg.obj" \
@@ -205,7 +209,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\sstuff.obj" \
 	"$(INTDIR)\stepFunc.obj" \
 	"$(INTDIR)\threads.obj" \
-	"$(INTDIR)\sizetvec.obj"
+	"$(INTDIR)\findfile.obj"
 
 "..\bin\libsstuff.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -232,6 +236,8 @@ CLEAN :
 	-@erase "$(INTDIR)\datafile.sbr"
 	-@erase "$(INTDIR)\fileio.obj"
 	-@erase "$(INTDIR)\fileio.sbr"
+	-@erase "$(INTDIR)\findfile.obj"
+	-@erase "$(INTDIR)\findfile.sbr"
 	-@erase "$(INTDIR)\geom_alg.obj"
 	-@erase "$(INTDIR)\geom_alg.sbr"
 	-@erase "$(INTDIR)\interp.obj"
@@ -334,6 +340,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\boolvec.sbr" \
 	"$(INTDIR)\intvec.sbr" \
 	"$(INTDIR)\shortvec.sbr" \
+	"$(INTDIR)\sizetvec.sbr" \
 	"$(INTDIR)\strvec.sbr" \
 	"$(INTDIR)\vec.sbr" \
 	"$(INTDIR)\vec_alg.sbr" \
@@ -357,7 +364,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\sstuff.sbr" \
 	"$(INTDIR)\stepFunc.sbr" \
 	"$(INTDIR)\threads.sbr" \
-	"$(INTDIR)\sizetvec.sbr"
+	"$(INTDIR)\findfile.sbr"
 
 "$(OUTDIR)\sstuff.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -371,6 +378,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\boolvec.obj" \
 	"$(INTDIR)\intvec.obj" \
 	"$(INTDIR)\shortvec.obj" \
+	"$(INTDIR)\sizetvec.obj" \
 	"$(INTDIR)\strvec.obj" \
 	"$(INTDIR)\vec.obj" \
 	"$(INTDIR)\vec_alg.obj" \
@@ -394,7 +402,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\sstuff.obj" \
 	"$(INTDIR)\stepFunc.obj" \
 	"$(INTDIR)\threads.obj" \
-	"$(INTDIR)\sizetvec.obj"
+	"$(INTDIR)\findfile.obj"
 
 "..\bin\libsstuff.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -537,6 +545,12 @@ SOURCE=..\src\sstuff\datafile.cpp
 SOURCE=..\src\sstuff\fileio.cpp
 
 "$(INTDIR)\fileio.obj"	"$(INTDIR)\fileio.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\sstuff\findfile.cpp
+
+"$(INTDIR)\findfile.obj"	"$(INTDIR)\findfile.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

@@ -524,6 +524,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\src\sstuff\findfile.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\sstuff\geom_alg.cpp"
 				>
 				<FileConfiguration
@@ -1821,6 +1825,10 @@
 			</File>
 			<File
 				RelativePath="..\src\sstuff\fileio.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sstuff\findfile.h"
 				>
 			</File>
 			<File

@@ -54,6 +54,8 @@ CLEAN :
 	-@erase "$(INTDIR)\area_io_tcl.sbr"
 	-@erase "$(INTDIR)\area_shp.obj"
 	-@erase "$(INTDIR)\area_shp.sbr"
+	-@erase "$(INTDIR)\cntr_bln.obj"
+	-@erase "$(INTDIR)\cntr_bln.sbr"
 	-@erase "$(INTDIR)\cntr_io_tcl.obj"
 	-@erase "$(INTDIR)\cntr_io_tcl.sbr"
 	-@erase "$(INTDIR)\cntr_shp.obj"
@@ -165,6 +167,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\area_bln.sbr" \
 	"$(INTDIR)\area_io_tcl.sbr" \
 	"$(INTDIR)\area_shp.sbr" \
+	"$(INTDIR)\cntr_bln.sbr" \
 	"$(INTDIR)\cntr_io_tcl.sbr" \
 	"$(INTDIR)\cntr_shp.sbr" \
 	"$(INTDIR)\surfit_io.sbr" \
@@ -199,6 +202,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\area_bln.obj" \
 	"$(INTDIR)\area_io_tcl.obj" \
 	"$(INTDIR)\area_shp.obj" \
+	"$(INTDIR)\cntr_bln.obj" \
 	"$(INTDIR)\cntr_io_tcl.obj" \
 	"$(INTDIR)\cntr_shp.obj" \
 	"$(INTDIR)\surfit_io.obj" \
@@ -243,6 +247,8 @@ CLEAN :
 	-@erase "$(INTDIR)\area_io_tcl.sbr"
 	-@erase "$(INTDIR)\area_shp.obj"
 	-@erase "$(INTDIR)\area_shp.sbr"
+	-@erase "$(INTDIR)\cntr_bln.obj"
+	-@erase "$(INTDIR)\cntr_bln.sbr"
 	-@erase "$(INTDIR)\cntr_io_tcl.obj"
 	-@erase "$(INTDIR)\cntr_io_tcl.sbr"
 	-@erase "$(INTDIR)\cntr_shp.obj"
@@ -357,6 +363,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\area_bln.sbr" \
 	"$(INTDIR)\area_io_tcl.sbr" \
 	"$(INTDIR)\area_shp.sbr" \
+	"$(INTDIR)\cntr_bln.sbr" \
 	"$(INTDIR)\cntr_io_tcl.sbr" \
 	"$(INTDIR)\cntr_shp.sbr" \
 	"$(INTDIR)\surfit_io.sbr" \
@@ -370,7 +377,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=tcl83d.lib netcdf.lib libjpeg.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\libsurfit_io.pdb" /debug /machine:I386 /nodefaultlib:"LIBC" /out:"../bin/libsurfit_io.dll" /implib:"../bin/libsurfit_io.lib" /pdbtype:sept /libpath:"..\..\libs\jpeg-6b" /libpath:"..\..\libs\NETCDF\LIBSRC" /libpath:"..\..\LIBS\TCL8.3.5\WIN\DEBUG" /libpath:"..\..\libs\jpeg-6b\\" 
+LINK32_FLAGS=tcl83d.lib netcdf.lib libjpeg.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\libsurfit_io.pdb" /debug /machine:I386 /nodefaultlib:"MSVCRT" /out:"../bin/libsurfit_io.dll" /implib:"../bin/libsurfit_io.lib" /pdbtype:sept /libpath:"..\..\libs\jpeg-6b" /libpath:"..\..\libs\NETCDF\LIBSRC" /libpath:"..\..\LIBS\TCL8.3.5\WIN\DEBUG" /libpath:"..\..\libs\jpeg-6b\\" 
 LINK32_OBJS= \
 	"$(INTDIR)\surf_arcgis.obj" \
 	"$(INTDIR)\surf_bmp.obj" \
@@ -391,6 +398,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\area_bln.obj" \
 	"$(INTDIR)\area_io_tcl.obj" \
 	"$(INTDIR)\area_shp.obj" \
+	"$(INTDIR)\cntr_bln.obj" \
 	"$(INTDIR)\cntr_io_tcl.obj" \
 	"$(INTDIR)\cntr_shp.obj" \
 	"$(INTDIR)\surfit_io.obj" \
@@ -530,6 +538,12 @@ SOURCE=..\src\surfit_io\area_io_tcl.cpp
 SOURCE=..\src\surfit_io\area_shp.cpp
 
 "$(INTDIR)\area_shp.obj"	"$(INTDIR)\area_shp.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit_io\cntr_bln.cpp
+
+"$(INTDIR)\cntr_bln.obj"	"$(INTDIR)\cntr_bln.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

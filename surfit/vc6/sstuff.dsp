@@ -197,6 +197,10 @@ SOURCE=..\src\sstuff\fileio.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\sstuff\findfile.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\sstuff\geom_alg.cpp
 # End Source File
 # Begin Source File
@@ -278,6 +282,10 @@ SOURCE=..\src\sstuff\datafile.h
 # Begin Source File
 
 SOURCE=..\src\sstuff\fileio.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\sstuff\findfile.h
 # End Source File
 # Begin Source File
 

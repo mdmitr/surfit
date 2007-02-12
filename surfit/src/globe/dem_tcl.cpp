@@ -21,6 +21,7 @@
 
 #include "datafile.h"
 #include "fileio.h"
+#include "findfile.h"
 
 #include "dem.h"
 #include "dem_internal.h"
@@ -70,14 +71,26 @@ bool dem_load_dtm(const char * hdr_filename, const char * name, const char * bin
 };
 
 bool dem_load_hgt_zip(const char * hgt_zip_filename, const char * dem_name) {
-	d_dem * d = _dem_load_hgt_zip(hgt_zip_filename);
-	if (d) {
-		if (dem_name)
-			d->setName(dem_name);
-		globe_dems->push_back(d);
-		return true;
+
+	const char * fname = find_first(hgt_zip_filename);
+
+	while (fname != NULL) {
+		
+		d_dem * d = _dem_load_hgt_zip(fname);
+		if (d) {
+			if (dem_name)
+				d->setName(dem_name);
+			globe_dems->push_back(d);
+		} else
+			return false;
+
+		fname = find_next();
+		
 	}
-	return false;
+
+	find_close();
+	return true;
+		
 };
 
 bool dem_load_hgt(const char * hgt_filename, const char * dem_name) {
