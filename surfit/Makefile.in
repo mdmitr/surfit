@@ -130,28 +130,29 @@ libsstuff_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
 am__libsstuff_la_SOURCES_DIST = src/sstuff/bitvec.cpp \
 	src/sstuff/boolvec.cpp src/sstuff/datafile.cpp \
-	src/sstuff/fileio.cpp src/sstuff/geom_alg.cpp \
-	src/sstuff/interp.cpp src/sstuff/intvec.cpp \
-	src/sstuff/read_txt.cpp src/sstuff/rnd.cpp \
-	src/sstuff/shortvec.cpp src/sstuff/sizetvec.cpp \
-	src/sstuff/strvec.cpp src/sstuff/sstuff.cpp \
-	src/sstuff/stepFunc.cpp src/sstuff/vec.cpp \
-	src/sstuff/vec_alg.cpp src/sstuff/threads.cpp \
-	src/sstuff/ptypes/pasync.cxx src/sstuff/ptypes/patomic.cxx \
-	src/sstuff/ptypes/pexcept.cxx src/sstuff/ptypes/pfatal.cxx \
-	src/sstuff/ptypes/pmem.cxx src/sstuff/ptypes/pmsgq.cxx \
-	src/sstuff/ptypes/psemaphore.cxx src/sstuff/ptypes/pstring.cxx \
-	src/sstuff/ptypes/pthread.cxx src/sstuff/ptypes/ptimedsem.cxx \
-	src/sstuff/ptypes/punknown.cxx src/sstuff/sstuff_ie.h
+	src/sstuff/fileio.cpp src/sstuff/findfile.cpp \
+	src/sstuff/geom_alg.cpp src/sstuff/interp.cpp \
+	src/sstuff/intvec.cpp src/sstuff/read_txt.cpp \
+	src/sstuff/rnd.cpp src/sstuff/shortvec.cpp \
+	src/sstuff/sizetvec.cpp src/sstuff/strvec.cpp \
+	src/sstuff/sstuff.cpp src/sstuff/stepFunc.cpp \
+	src/sstuff/vec.cpp src/sstuff/vec_alg.cpp \
+	src/sstuff/threads.cpp src/sstuff/ptypes/pasync.cxx \
+	src/sstuff/ptypes/patomic.cxx src/sstuff/ptypes/pexcept.cxx \
+	src/sstuff/ptypes/pfatal.cxx src/sstuff/ptypes/pmem.cxx \
+	src/sstuff/ptypes/pmsgq.cxx src/sstuff/ptypes/psemaphore.cxx \
+	src/sstuff/ptypes/pstring.cxx src/sstuff/ptypes/pthread.cxx \
+	src/sstuff/ptypes/ptimedsem.cxx src/sstuff/ptypes/punknown.cxx \
+	src/sstuff/sstuff_ie.h
 @HAVE_PTHREAD_INSTALLED_TRUE@am__objects_2 = pasync.lo patomic.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	pexcept.lo pfatal.lo pmem.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	pmsgq.lo psemaphore.lo pstring.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	pthread.lo ptimedsem.lo \
 @HAVE_PTHREAD_INSTALLED_TRUE@	punknown.lo
 am_libsstuff_la_OBJECTS = bitvec.lo boolvec.lo datafile.lo fileio.lo \
-	geom_alg.lo interp.lo intvec.lo read_txt.lo rnd.lo shortvec.lo \
-	sizetvec.lo strvec.lo sstuff.lo stepFunc.lo vec.lo vec_alg.lo \
-	threads.lo $(am__objects_2)
+	findfile.lo geom_alg.lo interp.lo intvec.lo read_txt.lo rnd.lo \
+	shortvec.lo sizetvec.lo strvec.lo sstuff.lo stepFunc.lo vec.lo \
+	vec_alg.lo threads.lo $(am__objects_2)
 libsstuff_la_OBJECTS = $(am_libsstuff_la_OBJECTS)
 libsurfit_la_DEPENDENCIES = $(am__DEPENDENCIES_1) libsstuff.la
 am_libsurfit_la_OBJECTS = area.lo area_internal.lo area_tcl.lo \
@@ -220,13 +221,13 @@ am__libsstuff_la_HEADERS_DIST = src/sstuff/bitvec.h \
 	src/sstuff/bitvec_alg.h src/sstuff/boolvec.h \
 	src/sstuff/byteswap_alg.h src/sstuff/config.h \
 	src/sstuff/datafile.h src/sstuff/fileio.h \
-	src/sstuff/geom_alg.h src/sstuff/interp.h src/sstuff/intvec.h \
-	src/sstuff/read_txt.h src/sstuff/real.h src/sstuff/rnd.h \
-	src/sstuff/shortvec.h src/sstuff/sizetvec.h \
-	src/sstuff/strvec.h src/sstuff/sstuff.h src/sstuff/stepFunc.h \
-	src/sstuff/vec.h src/sstuff/vec_alg.h src/sstuff/threads.h \
-	src/sstuff/ptypes/pasync.h src/sstuff/ptypes/pport.h \
-	src/sstuff/ptypes/ptypes.h
+	src/sstuff/findfile.h src/sstuff/geom_alg.h \
+	src/sstuff/interp.h src/sstuff/intvec.h src/sstuff/read_txt.h \
+	src/sstuff/real.h src/sstuff/rnd.h src/sstuff/shortvec.h \
+	src/sstuff/sizetvec.h src/sstuff/strvec.h src/sstuff/sstuff.h \
+	src/sstuff/stepFunc.h src/sstuff/vec.h src/sstuff/vec_alg.h \
+	src/sstuff/threads.h src/sstuff/ptypes/pasync.h \
+	src/sstuff/ptypes/pport.h src/sstuff/ptypes/ptypes.h
 libsstuff_laHEADERS_INSTALL = $(INSTALL_HEADER)
 libsurfit_io_laHEADERS_INSTALL = $(INSTALL_HEADER)
 libsurfit_laHEADERS_INSTALL = $(INSTALL_HEADER)
@@ -379,22 +380,23 @@ lib_LTLIBRARIES = libsstuff.la libsurfit.la $(am__append_1) \
 libsstuff_ladir = $(prefix)/include/sstuff
 libsstuff_la_SOURCES = src/sstuff/bitvec.cpp src/sstuff/boolvec.cpp \
 	src/sstuff/datafile.cpp src/sstuff/fileio.cpp \
-	src/sstuff/geom_alg.cpp src/sstuff/interp.cpp \
-	src/sstuff/intvec.cpp src/sstuff/read_txt.cpp \
-	src/sstuff/rnd.cpp src/sstuff/shortvec.cpp \
-	src/sstuff/sizetvec.cpp src/sstuff/strvec.cpp \
-	src/sstuff/sstuff.cpp src/sstuff/stepFunc.cpp \
-	src/sstuff/vec.cpp src/sstuff/vec_alg.cpp \
-	src/sstuff/threads.cpp $(am__append_4) src/sstuff/sstuff_ie.h
+	src/sstuff/findfile.cpp src/sstuff/geom_alg.cpp \
+	src/sstuff/interp.cpp src/sstuff/intvec.cpp \
+	src/sstuff/read_txt.cpp src/sstuff/rnd.cpp \
+	src/sstuff/shortvec.cpp src/sstuff/sizetvec.cpp \
+	src/sstuff/strvec.cpp src/sstuff/sstuff.cpp \
+	src/sstuff/stepFunc.cpp src/sstuff/vec.cpp \
+	src/sstuff/vec_alg.cpp src/sstuff/threads.cpp $(am__append_4) \
+	src/sstuff/sstuff_ie.h
 libsstuff_la_HEADERS = src/sstuff/bitvec.h src/sstuff/bitvec_alg.h \
 	src/sstuff/boolvec.h src/sstuff/byteswap_alg.h \
 	src/sstuff/config.h src/sstuff/datafile.h src/sstuff/fileio.h \
-	src/sstuff/geom_alg.h src/sstuff/interp.h src/sstuff/intvec.h \
-	src/sstuff/read_txt.h src/sstuff/real.h src/sstuff/rnd.h \
-	src/sstuff/shortvec.h src/sstuff/sizetvec.h \
-	src/sstuff/strvec.h src/sstuff/sstuff.h src/sstuff/stepFunc.h \
-	src/sstuff/vec.h src/sstuff/vec_alg.h src/sstuff/threads.h \
-	$(am__append_5)
+	src/sstuff/findfile.h src/sstuff/geom_alg.h \
+	src/sstuff/interp.h src/sstuff/intvec.h src/sstuff/read_txt.h \
+	src/sstuff/real.h src/sstuff/rnd.h src/sstuff/shortvec.h \
+	src/sstuff/sizetvec.h src/sstuff/strvec.h src/sstuff/sstuff.h \
+	src/sstuff/stepFunc.h src/sstuff/vec.h src/sstuff/vec_alg.h \
+	src/sstuff/threads.h $(am__append_5)
 libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(am__append_6)
 libsstuff_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsstuff.dll
 libsurfit_ladir = $(prefix)/include/surfit
@@ -732,6 +734,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_value.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_wmean.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fileio.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/findfile.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flow_area.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flow_cntr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flow_curv.Plo@am__quote@
@@ -1105,6 +1108,13 @@ fileio.lo: src/sstuff/fileio.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/fileio.cpp' object='fileio.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o fileio.lo `test -f 'src/sstuff/fileio.cpp' || echo '$(srcdir)/'`src/sstuff/fileio.cpp
+
+findfile.lo: src/sstuff/findfile.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT findfile.lo -MD -MP -MF "$(DEPDIR)/findfile.Tpo" -c -o findfile.lo `test -f 'src/sstuff/findfile.cpp' || echo '$(srcdir)/'`src/sstuff/findfile.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/findfile.Tpo" "$(DEPDIR)/findfile.Plo"; else rm -f "$(DEPDIR)/findfile.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/sstuff/findfile.cpp' object='findfile.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o findfile.lo `test -f 'src/sstuff/findfile.cpp' || echo '$(srcdir)/'`src/sstuff/findfile.cpp
 
 geom_alg.lo: src/sstuff/geom_alg.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT geom_alg.lo -MD -MP -MF "$(DEPDIR)/geom_alg.Tpo" -c -o geom_alg.lo `test -f 'src/sstuff/geom_alg.cpp' || echo '$(srcdir)/'`src/sstuff/geom_alg.cpp; \

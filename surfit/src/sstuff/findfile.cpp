@@ -66,7 +66,7 @@ void find_close()
 
 #else
 
-int wildcmp(const char *wild, const char *string) {
+bool wildcmp(const char *wild, const char *string) {
 	// Written by Jack Handy - jakkhandy@hotmail.com
 	const char *cp = NULL, *mp = NULL;
 	
@@ -102,11 +102,17 @@ int wildcmp(const char *wild, const char *string) {
 
 DIR *dp = NULL;
 struct dirent *entry = NULL;
+char * find_pattern = NULL;
 
 const char * find_first(const char * pattern)
 {
+	find_pattern = strdup(pattern);
 	if((dp = opendir(".")) == NULL)
+	{
+		free(find_pattern);
+		find_pattern = NULL;
 		return NULL;
+	}
 
 	return find_next();
 };
@@ -116,13 +122,19 @@ const char * find_next()
 	entry = readdir(dp);
 	if (entry == NULL)
 		return NULL;
-	else
-		return entry->d_name;
+	else {
+		if ( wildcmp(find_pattern, entry->d_name) ) {
+			return entry->d_name;
+		} else
+			return find_next();
+	}
 };
 
 void find_close() 
 {
 	closedir(dp);
+	free(find_pattern);
+	find_pattern = NULL;
 };
 
 #endif
