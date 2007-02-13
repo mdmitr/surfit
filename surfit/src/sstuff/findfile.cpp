@@ -32,10 +32,6 @@
 
 namespace surfit {
 
-#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
-
-static _finddata_t ff;
-long file_handle = -1;
 char * find_pattern = NULL;
 char find_res[_MAX_PATH];
 int path_pos = 0;
@@ -45,7 +41,12 @@ const char * make_find_res(const char * str)
 	strncpy(find_res+path_pos, str, strlen(str));
 	find_res[path_pos + strlen(str)] = '\0';
 	return find_res;
-}
+};
+
+#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+
+static _finddata_t ff;
+long file_handle = -1;
 
 const char * find_first(const char * pattern)
 {
@@ -55,14 +56,14 @@ const char * find_first(const char * pattern)
 		return NULL;
 	}
 	find_pattern = strdup(pattern);
-	
-	int path_pos1 = 0;
-	while ( strchr(find_pattern+path_pos1, '/') )
-		path_pos1 = strchr(find_pattern+path_pos1, '/') - find_pattern + 1;
 
+	int path_pos1 = 0;
+	if ( strrchr(find_pattern+path_pos1, '/') != NULL )
+		path_pos1 = strrchr(find_pattern+path_pos1, '/') - find_pattern + 1;
+	
 	int path_pos2 = 0;
-	while ( strchr(find_pattern+path_pos2, '\\') )
-		path_pos2 = strchr(find_pattern+path_pos2, '\\') - find_pattern + 1;
+	if ( strrchr(find_pattern+path_pos2, '\\') != NULL )
+		path_pos2 = strrchr(find_pattern+path_pos2, '\\') - find_pattern + 1;
 
 	path_pos = MAX(path_pos1, path_pos2);
 	strncpy(find_res, find_pattern, path_pos);
@@ -127,17 +128,28 @@ bool wildcmp(const char *wild, const char *string) {
 
 DIR *dp = NULL;
 struct dirent *entry = NULL;
-char * find_pattern = NULL;
 
 const char * find_first(const char * pattern)
 {
-	find_pattern = strdup(pattern);
 	if((dp = opendir(".")) == NULL)
 	{
 		free(find_pattern);
 		find_pattern = NULL;
 		return NULL;
 	}
+
+	find_pattern = strdup(pattern);
+
+	int path_pos1 = 0;
+	if ( strrchr(find_pattern+path_pos1, '/') != NULL )
+		path_pos1 = strrchr(find_pattern+path_pos1, '/') - find_pattern + 1;
+	
+	int path_pos2 = 0;
+	if ( strrchr(find_pattern+path_pos2, '\\') != NULL )
+		path_pos2 = strrchr(find_pattern+path_pos2, '\\') - find_pattern + 1;
+
+	path_pos = MAX(path_pos1, path_pos2);
+	strncpy(find_res, find_pattern, path_pos);
 
 	return find_next();
 };
@@ -149,7 +161,7 @@ const char * find_next()
 		return NULL;
 	else {
 		if ( wildcmp(find_pattern, entry->d_name) ) {
-			return entry->d_name;
+			return make_find_res(entry->d_name);
 		} else
 			return find_next();
 	}
