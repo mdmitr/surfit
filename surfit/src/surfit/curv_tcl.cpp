@@ -21,6 +21,8 @@
 
 #include "datafile.h"
 #include "fileio.h"
+#include "findfile.h"
+#include "sstuff.h"
 
 #include "curv.h"
 #include "curv_tcl.h"
@@ -36,15 +38,34 @@ bool curv_read(const char * filename, const char * curvname,
 	       int col1, int col2,
 	       const char* delimiter, int skip_lines, int grow_by)
 {
-	d_curv * curve = _curv_read(filename, curvname,
-				    col1, col2, skip_lines,
-				    grow_by, delimiter);
 
-	if (curve != NULL) {
-		surfit_curvs->push_back(curve);
-		return true;
+	const char * fname = find_first(filename);
+	
+	while (fname) {
+		
+		d_curv * curve = _curv_read(fname, curvname,
+					    col1, col2, skip_lines,
+					    grow_by, delimiter);
+		
+		if (curve != NULL) {
+			if (curvname == NULL) 
+			{
+				char * name = get_name(fname);
+				curve->setName( name );
+				sstuff_free_char(name);
+			}
+			surfit_curvs->push_back(curve);
+		} else {
+			find_close();
+			return false;
+		}
+
+		fname = find_next();
+		
 	}
-	return false;
+
+	find_close();
+	return true;
 
 };
 

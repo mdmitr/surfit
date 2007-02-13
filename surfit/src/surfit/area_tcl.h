@@ -31,7 +31,7 @@ namespace surfit {
 	       const char * delimiters=" ", int skip_lines = 0, int grow_by=250);
     
     \par Tcl syntax:
-    area_read "filename" "area_name" first_column_position second_column_position "delimiters" skip_lines
+    area_read \ref wildcard "filename" "area_name" first_column_position second_column_position "delimiters" skip_lines
 
     \par Description:
     reads \ref d_area "area" from formatted text file and sets its name to "areaname"
@@ -49,7 +49,7 @@ namespace surfit {
 */
 bool area_read(const char * filename, const char * areaname=NULL	, 
 	       int col1=1, int col2=2,
-	       const char * delimiter=" ", int skip_lines = 0, int grow_by=250);
+	       const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
 
 /*! \ingroup tcl_area_save_load
     \fn bool area_load(const char * filename, const char * area_name = NULL);

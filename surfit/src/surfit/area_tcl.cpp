@@ -21,6 +21,8 @@
 
 #include "datafile.h"
 #include "fileio.h"
+#include "findfile.h"
+#include "sstuff.h"
 
 #include "area.h"
 #include "area_tcl.h"
@@ -34,15 +36,36 @@ bool area_read(const char * filename, const char * areaname,
                int col1, int col2,
                const char* delimiter, int skip_lines, int grow_by)
 {
-	d_area * area = _area_read(filename, areaname,
-				   col1, col2, skip_lines, 
-				   grow_by, delimiter);
 
-	if (area != NULL) {
-		surfit_areas->push_back(area);
-		return true;
+	const char * fname = find_first(filename);
+
+	while (fname != NULL) {
+
+		d_area * area = _area_read(fname, areaname,
+					   col1, col2, skip_lines, 
+					   grow_by, delimiter);
+
+		if (area != NULL) 
+			surfit_areas->push_back(area);
+		else {
+			find_close();
+			writelog(LOG_ERROR,"failed to read area from file %s", fname);
+			return false;
+		}
+
+		if (areaname == NULL)
+		{
+			char * name = get_name(fname);
+			area->setName( name );
+			sstuff_free_char(name);
+		}
+		
+		fname = find_next();
+		
 	}
-	return false;
+
+	find_close();
+	return true;
 
 };
 

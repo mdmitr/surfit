@@ -662,26 +662,26 @@ bool surf_set_value_area(const char * val, const char * area_name_or_position = 
 bool surf_filter_by_mask(const char * surface_name_or_position = "0", const char * mask_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_filter_in_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
+    \fn void surf_filter_in_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
     
     \par Tcl syntax:
-    surf_filter_in_area "surface_name_or_position" "area_name_or_position"
+    surf_filter_in_area \ref regexp "surface_name_or_position" \ref regexp "area_name_or_position"
 
     \par Description:
     makes all cells values undefined which are inside of \ref d_area
 */
-bool surf_filter_in_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
+void surf_filter_in_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_filter_out_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
+    \fn void surf_filter_out_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
     
     \par Tcl syntax:
-    surf_filter_out_area "surface_name_or_position" "area_name_or_position"
+    surf_filter_out_area \ref regexp "surface_name_or_position" \ref regexp "area_name_or_position"
 
     \par Description:
     makes all cells values undefined which are outside of \ref d_area
 */
-bool surf_filter_out_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
+void surf_filter_out_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_filter_by_surf(REAL eps, const char * surface1_name_or_position = "0", const char * surface2_name_or_position = "0")

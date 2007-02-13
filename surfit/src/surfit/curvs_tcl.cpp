@@ -46,6 +46,24 @@
 
 namespace surfit {
 
+struct regexp_fault
+{
+	regexp_fault(const char * ipos, faultable * _f) : pos(ipos), f(_f) {};
+	void operator()(d_curv * fault) 
+	{
+		if (fault->getName() == NULL)
+			return;
+		if ( RegExpMatch(pos, fault->getName()) )
+		{
+			writelog(LOG_MESSAGE,"creating gridding rule fault(\"%s\")", 
+				 fault->getName()?fault->getName():"noname");
+			f->add_fault(fault);
+		}
+	}
+	const char * pos;
+	faultable * f;
+};
+
 bool fault(const char * pos) {
 	if (functionals->size() == 0) {
 		writelog(LOG_ERROR,"No gridding rule modifiable with \"fault\" rule present!");
@@ -64,11 +82,7 @@ bool fault(const char * pos) {
 		return false;
 	}
 
-	d_curv * crv = get_element<d_curv>(pos, surfit_curvs->begin(), surfit_curvs->end());
-	if (crv == NULL) 
-		return false;
-
-	f->add_fault(crv);
+	std::for_each( surfit_curvs->begin(), surfit_curvs->end(), regexp_fault(pos, f) );
 	return true;
 };
 

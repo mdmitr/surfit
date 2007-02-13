@@ -21,9 +21,11 @@ New:
 	+ cntr_load_shp syntax extended. Now you can load contours with constant Z value
 	  from shapefiles of SHPYT_ARC type.
 
-	+ regexp support for commands:
+	+ regexp and wildcards support for commands:
 	  libsurfit: 
-		  gridding rules: contour, contour_add
+		  commands: curv_read, area_read, 
+			    surf_filter_in_area, surf_filter_out_area
+		  gridding rules: contour, contour_add, fault
 	  libsurfit_io: cntr_save_bln, cntr_load_bln, cntr_save_shp, cntr_load_shp
 		        curv_save_bln, curv_load_bln, curv_save_shp, curv_load_shp
 	  libglobe: 

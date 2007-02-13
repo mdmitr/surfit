@@ -95,8 +95,8 @@ bool surf_set_value_area(const char * val, const char * area_name_or_position = 
 REAL surf_sum_area(const char * curv_pos = "0",  const char * surface_name_or_position = "0");
 int surf_cells_in_area(const char * curv_pos = "0",  const char * surface_name_or_position = "0");
 bool surf_filter_by_mask(const char * surface_name_or_position = "0", const char * mask_name_or_position = "0");
-bool surf_filter_in_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
-bool surf_filter_out_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
+void surf_filter_in_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
+void surf_filter_out_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
 bool surf_filter_by_surf(REAL eps, const char * surface1_name_or_position = "0", const char * surface2_name_or_position = "0");
 bool surf_swapxy(const char * surface_name_or_position = "0");
 

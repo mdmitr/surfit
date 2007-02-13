@@ -1234,7 +1234,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 	draw_grid_matlab(ff,grd,"magenta");
 	draw_grid_line_matlab(ff, line, grd, "red", 3);
 #endif
-//*/
+*/
 
 	line->resize( min_i>1?min_i-1:1-min_i, 
 		      min_j>1?min_j-1:1-min_j, 
@@ -1247,7 +1247,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 	draw_grid_matlab(ff,small_grd);
 	draw_grid_line_matlab(ff, line, small_grd);
 #endif
-//*/
+*/
 
 	shortvec * data = create_shortvec(nn*mm);
 
@@ -1285,9 +1285,6 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 		for (j = 0; j < mm; j++) {
 			for (i = 0; i < nn; i++) {
 				n = i; m = j;
-				if ((i == 4) && (j==5))
-					bool qq = true;
-
 				two2two(n, m, small_grd, grd);
 				if ( grid_bound2(n, m, NN, MM) ) {
 					two2one(mask_pos, n, m, NN, MM);
@@ -1317,8 +1314,8 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 			pos = i + j*nn;
 			val = (*data)(pos);
 			if ( val == 0) {
-				pos_i = i + ( min_i>1?min_i-1:1-min_i );
-				pos_j = j + ( min_j>1?min_j-1:1-min_j );
+				pos_i = i + ( min_i>1?min_i-1:-1 );
+				pos_j = j + ( min_j>1?min_j-1:-1 );
 				two2one(pos, pos_i, pos_j, NN, MM);
 				if (pos != UINT_MAX)
 					res->set_true(pos);
@@ -1341,7 +1338,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 	fclose(ff);
 
 #endif
-//*/
+*/
 
 	line->sort();
 	

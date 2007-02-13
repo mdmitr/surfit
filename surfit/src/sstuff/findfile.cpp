@@ -28,6 +28,7 @@
 #endif
 
 #include <string.h>
+#include <stdlib.h>
 
 namespace surfit {
 
@@ -35,6 +36,16 @@ namespace surfit {
 
 static _finddata_t ff;
 long file_handle = -1;
+char * find_pattern = NULL;
+char find_res[_MAX_PATH];
+int path_pos = 0;
+
+const char * make_find_res(const char * str) 
+{
+	strncpy(find_res+path_pos, str, strlen(str));
+	find_res[path_pos + strlen(str)] = '\0';
+	return find_res;
+}
 
 const char * find_first(const char * pattern)
 {
@@ -43,9 +54,22 @@ const char * find_first(const char * pattern)
 		writelog(LOG_ERROR,"%s",strerror(errno));
 		return NULL;
 	}
+	find_pattern = strdup(pattern);
+	
+	int path_pos1 = 0;
+	while ( strchr(find_pattern+path_pos1, '/') )
+		path_pos1 = strchr(find_pattern+path_pos1, '/') - find_pattern + 1;
+
+	int path_pos2 = 0;
+	while ( strchr(find_pattern+path_pos2, '\\') )
+		path_pos2 = strchr(find_pattern+path_pos2, '\\') - find_pattern + 1;
+
+	path_pos = MAX(path_pos1, path_pos2);
+	strncpy(find_res, find_pattern, path_pos);
+
 	if (ff.attrib &= _A_SUBDIR)
 		return find_next();
-	return ff.name;
+	return make_find_res(ff.name);
 };
 
 const char * find_next()
@@ -54,13 +78,14 @@ const char * find_next()
 	if (res == 0) {
 		if (ff.attrib &= _A_SUBDIR)
 			return find_next();
-		return ff.name;
+		return make_find_res(ff.name);
 	}
 	return NULL;
 };
 
 void find_close()
 {
+	free(find_pattern);
 	_findclose(file_handle);
 };
 

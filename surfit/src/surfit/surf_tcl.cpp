@@ -22,6 +22,7 @@
 #include "real.h"
 #include "datafile.h"
 #include "fileio.h"
+#include "interp.h"
 
 
 #include "surf.h"
@@ -45,6 +46,7 @@
 #include "grid_user.h"
 
 #include <float.h>
+#include <algorithm>
 
 namespace surfit {
 
@@ -1019,73 +1021,69 @@ bool surf_filter_by_mask(const char * surf_pos, const char * def_pos) {
 	return true;
 };
 
-bool surf_filter_in_area(const char * surf_pos, const char * area_pos) {
-
-	d_surf * surf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (surf == NULL)
-		return false;
-
-	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
-	if (area == NULL)
-		return false;
-
-	writelog(LOG_MESSAGE,"filtering surface \"%s\" inside area \"%s\"", surf->getName()?surf->getName():"noname", area->getName()?area->getName():"noname");
-
-	bitvec * area_mask = nodes_in_area_mask(area, surf->grd);
-	if (area_mask == NULL)
-		return false;
-
-	size_t i,j,pos;
-	bool val;
-	size_t NN = surf->getCountX();
-	size_t MM = surf->getCountY();
-
-	for (i = 0; i < NN; i++) {
-		for (j = 0; j < MM; j++) {
-			two2one(pos, i, j, NN, MM);
-			val = area_mask->get(pos);
-			if (val == true) {
-				(*(surf->coeff))( pos ) = surf->undef_value;
-			}
-		}
-	}
-	return true;
+struct regexp_sfa_by_area
+{
+	regexp_sfa_by_area(const char * iarea_pos, d_surf * isrf, bool iin_area) : area_pos(iarea_pos), srf(isrf), in_area(iin_area) {};
 	
+	void operator()(d_area * area)
+	{
+		if ( RegExpMatch(area_pos, area->getName()) )
+		{
+			writelog(LOG_MESSAGE,"filtering surface \"%s\" inside area \"%s\"", srf->getName()?srf->getName():"noname", area->getName()?area->getName():"noname");
+			
+			bitvec * area_mask = nodes_in_area_mask(area, srf->grd);
+			if (area_mask == NULL)
+				return;
+			
+			size_t i,j,pos;
+			bool val;
+			size_t NN = srf->getCountX();
+			size_t MM = srf->getCountY();
+			
+			for (i = 0; i < NN; i++) {
+				for (j = 0; j < MM; j++) {
+					two2one(pos, i, j, NN, MM);
+					val = area_mask->get(pos);
+					if (val == in_area) {
+						(*(srf->coeff))( pos ) = srf->undef_value;
+					}
+				}
+			}	
+		}
+	};
+
+	const char * area_pos;
+	d_surf * srf;
+	bool in_area;
 };
 
-bool surf_filter_out_area(const char * surf_pos, const char * area_pos) {
 
-	d_surf * surf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (surf == NULL)
-		return false;
-
-	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
-	if (area == NULL)
-		return false;
-
-	writelog(LOG_MESSAGE,"filtering surface \"%s\" outside area \"%s\"", surf->getName()?surf->getName():"noname", area->getName()?area->getName():"noname");
-
-	bitvec * area_mask = nodes_in_area_mask(area, surf->grd);
-	if (area_mask == NULL)
-		return false;
-
-	// fast but buggy
-	size_t i,j,pos;
-	bool val;
-	size_t NN = surf->getCountX();
-	size_t MM = surf->getCountY();
-
-	for (i = 0; i < NN; i++) {
-		for (j = 0; j < MM; j++) {
-			two2one(pos, i, j, NN, MM);
-			val = area_mask->get(pos);
-			if (val == false) {
-				(*(surf->coeff))( pos ) = surf->undef_value;
-			}
+struct regexp_sfa_by_surf
+{
+	regexp_sfa_by_surf(const char * isurf_pos, const char * iarea_pos, bool iin_area) : surf_pos(isurf_pos), area_pos(iarea_pos), in_area(iin_area) {};
+	
+	void operator()(d_surf * srf)
+	{
+		if ( RegExpMatch(surf_pos, srf->getName()) )
+		{
+			std::for_each( surfit_areas->begin(), surfit_areas->end(), regexp_sfa_by_area(area_pos, srf, in_area));		
 		}
-	}
+	};
 
-	return true;
+	const char * surf_pos;
+	const char * area_pos;
+	bool in_area;
+};
+
+
+void surf_filter_in_area(const char * surf_pos, const char * area_pos) 
+{
+	std::for_each( surfit_surfs->begin(), surfit_surfs->end(), regexp_sfa_by_surf(surf_pos, area_pos, true) );
+};
+
+void surf_filter_out_area(const char * surf_pos, const char * area_pos) 
+{
+	std::for_each( surfit_surfs->begin(), surfit_surfs->end(), regexp_sfa_by_surf(surf_pos, area_pos, false) );
 };
 
 bool surf_filter_by_surf(REAL eps, const char * surf1_pos, const char * surf2_pos) {
