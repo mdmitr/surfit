@@ -322,7 +322,7 @@ variables_saved_for_relink="PATH  LD_RUN_PATH GCC_EXEC_PREFIX COMPILER_PATH LIBR
 link_all_deplibs=unknown
 
 # Compile-time system search path for libraries
-sys_lib_search_path_spec=" /usr/lib/gcc/i386-redhat-linux/4.0.0/ /usr/lib/gcc/i386-redhat-linux/4.0.0/ /usr/lib/gcc/i386-redhat-linux/4.0.0/../../../../i386-redhat-linux/lib/i386-redhat-linux/4.0.0/ /usr/lib/gcc/i386-redhat-linux/4.0.0/../../../../i386-redhat-linux/lib/ /usr/lib/gcc/i386-redhat-linux/4.0.0/../../../i386-redhat-linux/4.0.0/ /usr/lib/gcc/i386-redhat-linux/4.0.0/../../../ /lib/i386-redhat-linux/4.0.0/ /lib/ /usr/lib/i386-redhat-linux/4.0.0/ /usr/lib/"
+sys_lib_search_path_spec=" /home/mvd/install/lib/gcc/i686-pc-linux-gnu/4.1.1/ /usr/lib/gcc/i686-pc-linux-gnu/4.1.1/ /home/mvd/install/lib/gcc/i686-pc-linux-gnu/4.1.1/../../../../i686-pc-linux-gnu/lib/i686-pc-linux-gnu/4.1.1/ /home/mvd/install/lib/gcc/i686-pc-linux-gnu/4.1.1/../../../../i686-pc-linux-gnu/lib/ /home/mvd/install/lib/gcc/i686-pc-linux-gnu/4.1.1/../../../i686-pc-linux-gnu/4.1.1/ /home/mvd/install/lib/gcc/i686-pc-linux-gnu/4.1.1/../../../ /lib/i686-pc-linux-gnu/4.1.1/ /lib/ /usr/lib/i686-pc-linux-gnu/4.1.1/ /usr/lib/"
 
 # Run-time system search path for libraries
 sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/lib/qt-3.3/lib /usr/X11R6/lib "
@@ -7024,11 +7024,11 @@ striplib="strip --strip-unneeded"
 
 # Dependencies to place before the objects being linked to create a
 # shared library.
-predep_objects="/usr/lib/gcc/i386-redhat-linux/4.0.0/../../../crti.o /usr/lib/gcc/i386-redhat-linux/4.0.0/crtbeginS.o"
+predep_objects="/usr/lib/crti.o /home/mvd/install/lib/gcc/i686-pc-linux-gnu/4.1.1/crtbeginS.o"
 
 # Dependencies to place after the objects being linked to create a
 # shared library.
-postdep_objects="/usr/lib/gcc/i386-redhat-linux/4.0.0/crtendS.o /usr/lib/gcc/i386-redhat-linux/4.0.0/../../../crtn.o"
+postdep_objects="/home/mvd/install/lib/gcc/i686-pc-linux-gnu/4.1.1/crtendS.o /usr/lib/crtn.o"
 
 # Dependencies to place before the objects being linked to create a
 # shared library.
@@ -7040,7 +7040,7 @@ postdeps="-lstdc++ -lm -lgcc_s -lc -lgcc_s"
 
 # The library search path used internally by the compiler when linking
 # a shared library.
-compiler_lib_search_path="-L/usr/lib/gcc/i386-redhat-linux/4.0.0 -L/usr/lib/gcc/i386-redhat-linux/4.0.0 -L/usr/lib/gcc/i386-redhat-linux/4.0.0/../../.."
+compiler_lib_search_path="-L/home/mvd/install/lib/gcc/i686-pc-linux-gnu/4.1.1 -L/home/mvd/install/lib/gcc/i686-pc-linux-gnu/4.1.1/../../.."
 
 # Method to check whether dependent libraries are shared objects.
 deplibs_check_method="pass_all"
@@ -7120,7 +7120,7 @@ variables_saved_for_relink="PATH LD_LIBRARY_PATH LD_RUN_PATH GCC_EXEC_PREFIX COM
 link_all_deplibs=unknown
 
 # Compile-time system search path for libraries
-sys_lib_search_path_spec=" /usr/lib/gcc/i386-redhat-linux/4.0.0/ /usr/lib/gcc/i386-redhat-linux/4.0.0/ /usr/lib/gcc/i386-redhat-linux/4.0.0/../../../../i386-redhat-linux/lib/i386-redhat-linux/4.0.0/ /usr/lib/gcc/i386-redhat-linux/4.0.0/../../../../i386-redhat-linux/lib/ /usr/lib/gcc/i386-redhat-linux/4.0.0/../../../i386-redhat-linux/4.0.0/ /usr/lib/gcc/i386-redhat-linux/4.0.0/../../../ /lib/i386-redhat-linux/4.0.0/ /lib/ /usr/lib/i386-redhat-linux/4.0.0/ /usr/lib/"
+sys_lib_search_path_spec=" /home/mvd/install/lib/gcc/i686-pc-linux-gnu/4.1.1/ /usr/lib/gcc/i686-pc-linux-gnu/4.1.1/ /home/mvd/install/lib/gcc/i686-pc-linux-gnu/4.1.1/../../../../i686-pc-linux-gnu/lib/i686-pc-linux-gnu/4.1.1/ /home/mvd/install/lib/gcc/i686-pc-linux-gnu/4.1.1/../../../../i686-pc-linux-gnu/lib/ /home/mvd/install/lib/gcc/i686-pc-linux-gnu/4.1.1/../../../i686-pc-linux-gnu/4.1.1/ /home/mvd/install/lib/gcc/i686-pc-linux-gnu/4.1.1/../../../ /lib/i686-pc-linux-gnu/4.1.1/ /lib/ /usr/lib/i686-pc-linux-gnu/4.1.1/ /usr/lib/"
 
 # Run-time system search path for libraries
 sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/lib/qt-3.3/lib /usr/X11R6/lib "

@@ -33,7 +33,11 @@
 namespace surfit {
 
 char * find_pattern = NULL;
+#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 char find_res[_MAX_PATH];
+#else
+char find_res[512];
+#endif
 int path_pos = 0;
 
 const char * make_find_res(const char * str) 
@@ -131,13 +135,6 @@ struct dirent *entry = NULL;
 
 const char * find_first(const char * pattern)
 {
-	if((dp = opendir(".")) == NULL)
-	{
-		free(find_pattern);
-		find_pattern = NULL;
-		return NULL;
-	}
-
 	find_pattern = strdup(pattern);
 
 	int path_pos1 = 0;
@@ -149,7 +146,19 @@ const char * find_first(const char * pattern)
 		path_pos2 = strrchr(find_pattern+path_pos2, '\\') - find_pattern + 1;
 
 	path_pos = MAX(path_pos1, path_pos2);
-	strncpy(find_res, find_pattern, path_pos);
+	if (path_pos != 0)
+		strncpy(find_res, find_pattern, path_pos);
+	else {
+		find_res[0]='.';
+		find_res[1]='\0';
+	}
+
+	if ((dp = opendir(find_res)) == NULL)
+	{
+		free(find_pattern);
+		find_pattern = NULL;
+		return NULL;
+	}
 
 	return find_next();
 };
@@ -160,8 +169,9 @@ const char * find_next()
 	if (entry == NULL)
 		return NULL;
 	else {
-		if ( wildcmp(find_pattern, entry->d_name) ) {
-			return make_find_res(entry->d_name);
+		const char * name = make_find_res(entry->d_name);
+		if ( wildcmp(find_pattern, name) ) {
+			return name;
 		} else
 			return find_next();
 	}
