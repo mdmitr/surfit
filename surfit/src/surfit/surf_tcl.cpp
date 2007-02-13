@@ -1135,7 +1135,7 @@ bool surf_swapxy(const char * surf_pos)
 	if (surf == NULL)
 		return false;
 
-	writelog(LOG_MESSAGE,"changin axis for surface \"%s\"",
+	writelog(LOG_MESSAGE,"changing axes for surface \"%s\"",
 		surf->getName()?surf->getName():surf_pos);
 
 	if (surf->coeff == NULL)
