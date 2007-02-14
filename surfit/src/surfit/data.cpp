@@ -82,20 +82,22 @@ const char * data::getType() const {
 void data::release() {
 
 	int i, j;
-	for (i = functionals->size()-1; i >= 0; i--) {
-		functional * f = (*functionals)[i];
-		if (f == NULL)
-			continue;
-		int max_data = f->get_data_count();
-		for (j = 0; j < max_data; j++) {
-			const data * d = f->get_data(j);
-			if (d == this) {
-				if (f->getName())
-					writelog(LOG_WARNING,"Removing functional %s from memory", f->getName());
-				std::vector<functional *>::iterator it = functionals->begin()+i;
-				functionals->erase(it);
-				f->release();
-				break;
+	if (functionals) {
+		for (i = functionals->size()-1; i >= 0; i--) {
+			functional * f = (*functionals)[i];
+			if (f == NULL)
+				continue;
+			int max_data = f->get_data_count();
+			for (j = 0; j < max_data; j++) {
+				const data * d = f->get_data(j);
+				if (d == this) {
+					if (f->getName())
+						writelog(LOG_WARNING,"Removing functional %s from memory", f->getName());
+					std::vector<functional *>::iterator it = functionals->begin()+i;
+					functionals->erase(it);
+					f->release();
+					break;
+				}
 			}
 		}
 	}

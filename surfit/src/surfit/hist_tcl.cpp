@@ -85,22 +85,25 @@ void hists_info() {
 	}
 };
 
-bool hist_from_surf(const char * histname, const char * surf_pos, size_t intervs) {
-	
+bool hist_from_surf(const char * surf_pos, size_t intervs, const char * histname) {
+
 	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (srf == NULL)
 		return false;
 
+	writelog(LOG_MESSAGE,"calculating histogram from surface \"%s\"",
+		srf->getName()?srf->getName():"noname");
+
 	REAL minz, maxz;
 	srf->getMinMaxZ(minz, maxz);
 	maxz += (maxz-minz)*1e-3;
-	REAL step = stepFunc(minz, maxz, intervs);
-	minz = floor(minz/step)*step;
-	maxz = floor(maxz/step+1)*step;
-	intervs++;
-
-	vec * Z = create_vec(intervs);
 	
+	vec * Z = create_vec(intervs);
+
+	d_hist * hst = create_hist(minz, maxz, Z, histname?histname:srf->getName());
+	
+	REAL step = hst->get_step();
+
 	size_t srf_size = 0;
 
 	size_t i;
@@ -109,26 +112,52 @@ bool hist_from_surf(const char * histname, const char * surf_pos, size_t intervs
 		if (z == srf->undef_value)
 			continue;
 		srf_size += 1;
-		int pos = (int)floor((z-minz)/step + 0.5);
+		size_t pos = (*hst)(z);
+		if ( (pos >= intervs) || (pos == UINT_MAX) ) {
+			bool stop = true;
+		}
 		(*Z)(pos) += 1;
 	}
 
 	for (i = 0; i < intervs; i++) 
 		(*Z)(i) /= (REAL)(srf_size);
-
-	d_hist * hst = create_hist(minz, maxz, step, Z, histname);
+	
 	surfit_hists->push_back(hst);
 
 	return true;
 };
 
-bool surf_histeq(const char * surf_pos)
+bool surf_histeq(const char * surf_pos, const char * hist_pos)
 {
 	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (srf == NULL)
 		return false;
 
-	return _surf_histeq(srf);
+	d_hist * hist = get_element<d_hist>(hist_pos, surfit_hists->begin(), surfit_hists->end());
+	if (hist == NULL)
+		return false;
+
+	return _surf_histeq(srf, hist);
+};
+
+bool hist_read(const char * filename, REAL minz, REAL maxz, const char * histname, 
+	       int col1, const char * delimiter, int skip_lines, int grow_by)
+{
+	d_hist * hist = _hist_read(filename, minz, maxz, histname, col1, delimiter, skip_lines, grow_by);
+	if (hist) {
+		surfit_hists->push_back(hist);
+		return true;
+	}
+	return false;
+};
+
+bool hist_write(const char * filename, const char * pos)
+{
+	d_hist * hist = get_element<d_hist>(pos, surfit_hists->begin(), surfit_hists->end());
+	if (hist == NULL)
+		return false;
+
+	return _hist_write(hist, filename);
 };
 
 }; // namespace surfit;

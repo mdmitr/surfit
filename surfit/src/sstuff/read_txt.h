@@ -26,6 +26,16 @@ class vec;
 class strvec;
 
 SSTUFF_EXPORT
+bool one_columns_read(const char * filename, 
+                      int col1, int skip_lines,
+                      const char * mask, int grow_by,
+                      vec *& vcol1, int read_lines = -1);
+
+SSTUFF_EXPORT
+bool one_columns_write(const char * filename, const char * mask,
+		       const vec * vcol1);
+
+SSTUFF_EXPORT
 bool two_columns_read(const char * filename, 
                         int col1, int col2, int skip_lines,
                         const char * mask, int grow_by,

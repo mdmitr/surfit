@@ -27,28 +27,24 @@
 
 namespace surfit {
 
-d_hist * create_hist(REAL ifrom, REAL ito, REAL istep,
-		      vec * iZ,
-		      const char * hist_name)
+d_hist * create_hist(REAL ifrom, REAL ito,
+		     vec * iZ,
+		     const char * hist_name)
 {
-	return new d_hist(ifrom, ito, istep, iZ, hist_name);
+	return new d_hist(ifrom, ito, iZ, hist_name);
 };
 
-d_hist::d_hist(REAL from, REAL to, REAL step,
+d_hist::d_hist(REAL from, REAL to,
 	       vec * iZ, 
 	       const char * iname) : data("d_hist")
 {
 	z_from = from;
 	z_to = to;
-	z_step = step;
+	cnt = iZ->size();
+	z_step = (z_to-z_from)/REAL(cnt);
+	
+	hst = iZ;
 
-	cnt = size_t((to-from)/step - 1);
-
-	if (iZ != NULL)
-		hst = iZ;
-	else {
-		hst = create_vec(cnt, REAL(1));
-	}
 	setName(iname);
 };
 
@@ -57,15 +53,20 @@ d_hist::~d_hist() {
 		hst->release();
 };
 
-bool d_hist::get_interv_number(REAL value, size_t & pos) const 
+size_t d_hist::operator()(REAL value) const 
 {
 	if (value < z_from)
-		return false;
+		return UINT_MAX;
 	if (value > z_to)
-		return false;
+		return UINT_MAX;
 
-	pos = (value-z_from)/z_step;
-	return true;
+	size_t pos = (value-z_from)/z_step;
+	return pos;
+};
+
+REAL d_hist::operator ()(size_t pos) const
+{
+	return (*hst)(pos);
 };
 
 bool d_hist::get_interv(size_t pos, REAL & value_from, REAL & value_to, REAL & hst_value) const
@@ -90,6 +91,10 @@ bool d_hist::getMinMaxZ(REAL & minz, REAL & maxz) const
 
 size_t d_hist::size() const {
 	return cnt;
+};
+
+REAL d_hist::get_step() const {
+	return z_step;
 };
 
 std::vector<d_hist *>     * surfit_hists     = NULL;

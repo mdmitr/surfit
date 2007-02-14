@@ -95,7 +95,7 @@ bool pnts_save(const char * filename, const char * points_name_or_position = "0"
     \fn bool pnts_write(const char * filename, const char * points_name_or_position = "0", const char * delimiter = "\t");
     
     \par Tcl syntax:
-    pnts_write "filename" "delimiter" "points_name_or_position"
+    pnts_write "filename" "points_name_or_position" "delimiter" 
 
     \par Description:
     saves \ref d_points "points" to formatted text file

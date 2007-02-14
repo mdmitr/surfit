@@ -233,6 +233,7 @@ exit:
 };
 
 bool _pnts_write(const d_points * pnts, const char * filename, const char * mask) {
+
 	if (!pnts) {
 		writelog(LOG_WARNING, "NULL pointer to points.");
 		return false;
@@ -241,6 +242,10 @@ bool _pnts_write(const d_points * pnts, const char * filename, const char * mask
 		writelog(LOG_WARNING, "No points to save.");
 		return false;
 	}
+
+	writelog(LOG_MESSAGE,"writing points \"%s\" to file %s",
+		pnts->getName()?pnts->getName():"noname", filename);
+
 	return three_columns_write(filename, mask,
 		                   pnts->X, pnts->Y, pnts->Z);
 };

@@ -26,15 +26,41 @@ class d_hist;
 class datafile;
 class d_surf;
 
+SURFIT_EXPORT
+/*! \ingroup internal
+     \fn d_hist * _hist_read(const char * filename, REAL minz, REAL maxz, const char * histname, 
+			     int col1, const char * mask, int skip_lines, int grow_by);
+    \brief reads points from formatted text file
+    \return pointer to \ref d_points class
+    \param filename filename
+    \param minz minimum value for X axis
+    \param maxz maximum value for X axis
+    \param histname histogram name 
+    \param col1 column number in text file for histogram values
+    \param mask mask for scanf
+    \param grow_by vector's grow factor
+    \param skip_lines number of lines to skip header
+*/
+d_hist * _hist_read(const char * filename, REAL minz, REAL maxz, const char * histname, 
+		    int col1, const char * mask, int skip_lines, int grow_by);
 
 SURFIT_EXPORT
-void _hist_info(const d_hist * hst);
+/*! \ingroup internal
+    \fn bool _hist_write(const d_hist * hist, const char * filename);
+    \brief saves \ref d_hist to formatted text file
+    \param hist pointer to \ref d_hist
+    \param filename filename
+*/
+bool _hist_write(const d_hist * hist, const char * filename);
 
 SURFIT_EXPORT
-void _add_surfit_hists(d_hist * hst);
+void _hist_info(const d_hist * hist);
 
 SURFIT_EXPORT
-bool _surf_histeq(d_surf * srf);
+void _add_surfit_hists(d_hist * hist);
+
+SURFIT_EXPORT
+bool _surf_histeq(d_surf * srf, const d_hist * hist);
 
 }; // namespace surfit;
 

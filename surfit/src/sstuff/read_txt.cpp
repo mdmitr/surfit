@@ -46,6 +46,140 @@ REAL ator(char * text) {
 	return REAL(atof(text));
 };
 
+bool one_columns_read(const char * filename, 
+                      int col1, 
+		      int skip_lines,
+		      const char * delimiter, int grow_by,
+		      vec *& vcol1,
+		      int read_lines)
+{
+	FILE * file = fopen(filename, "rb");
+	if (!file) {
+		writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
+		return false;
+	}
+	if (ferror(file) != 0) {
+		writelog(LOG_ERROR, "Loading from one-column file: file error.");
+		fclose(file);
+		return false;
+	}
+
+	char string_buf[MY_READ_BUF_SIZE];
+
+	int i;
+	for (i = 0; i < skip_lines; i++) {
+		if (!fgets(string_buf,MY_READ_BUF_SIZE,file)) 
+		{
+			fclose(file);
+			return false;
+		}
+		if (feof(file)) {
+			fclose(file);
+			return false;
+		}
+	};
+
+	vcol1 = create_vec();
+	vcol1->set_grow(grow_by);
+	char * seps = strdup(delimiter);
+	char * token = NULL;
+	int columns = 0;
+	int lines_readed = 0;
+	int current_column = 0;
+	int size = 0;
+
+	// calculate number of columns!
+	fpos_t pos;
+	if (fgetpos(file, &pos) != 0)
+		goto one_columns_read_failed;
+
+	if (!fgets(string_buf,MY_READ_BUF_SIZE,file)) 
+		goto one_columns_read_failed;
+
+	if (fsetpos(file, &pos) != 0)
+		goto one_columns_read_failed;
+
+	columns = calc_columns(string_buf, MY_READ_BUF_SIZE, seps);
+
+	if (col1 > columns)
+		goto one_columns_read_failed;
+	
+	while (!feof(file) ) {
+		if (!fgets(string_buf,MY_READ_BUF_SIZE,file)) {
+			if (feof(file))
+				break;
+			goto one_columns_read_failed;
+		}
+		
+		if (read_lines > 0) {
+			lines_readed++;
+			if (lines_readed > read_lines)
+				break;
+		}
+
+		current_column = 0;
+		token = strtok(string_buf, seps);
+		REAL val1 = FLT_MAX, val2 = FLT_MAX;
+		while (token != NULL) {
+			if (current_column+1 == col1) {
+				if (strlen(token) > 0)
+					val1 = (REAL)ator(token);
+				
+			}
+				
+			current_column++;
+			token = strtok( NULL, seps );
+		}
+
+		if (
+			((val1 != FLT_MAX) || (col1 == 0)) 
+		   ) 
+		{
+			vcol1->push_back(val1);
+		}
+		val1 = FLT_MAX;
+		
+	}
+
+	free(seps);
+	fclose(file);
+		
+	return true;
+
+one_columns_read_failed:
+
+	fclose(file);
+	free(seps);
+	if (vcol1)
+		vcol1->release();
+	vcol1 = NULL;
+	return false;
+};
+
+bool one_columns_write(const char * filename, const char * mask,
+		       const vec * vcol1) 
+{
+	FILE * file = fopen(filename, "w");
+	if (!file) {
+		writelog(LOG_WARNING, "writing one-columns file: NULL pointer to file.");
+		return false;
+	}
+	if (ferror(file) != 0) {
+		writelog(LOG_ERROR, "writing one-columns file: file error.");
+		fclose(file);
+		return false;
+	}
+	vec::const_iterator col1_begin = vcol1->const_begin();
+	vec::const_iterator col1_end = vcol1->const_end();
+	while (col1_begin != col1_end) {
+		fprintf(file, mask, *col1_begin);
+		col1_begin++;
+	}
+	fflush(file);
+	fclose(file);
+	return true;
+};
+
 bool two_columns_read(const char * filename, 
                       int col1, int col2, 
 		      int skip_lines,

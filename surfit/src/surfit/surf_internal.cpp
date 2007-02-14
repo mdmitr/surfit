@@ -1126,9 +1126,9 @@ void _surfit_surf_add(d_surf * srf) {
 d_surf * _surf_load_df(datafile * df, const char * surfname) {
 
 	if (!surfname) 
-		writelog(LOG_MESSAGE,"loading surf with no name from file %s",df->get_filename());
+		writelog(LOG_MESSAGE,"loading first surface from file %s",df->get_filename());
 	else 
-		writelog(LOG_MESSAGE,"loading surf \"%s\" from file %s",surfname,df->get_filename());
+		writelog(LOG_MESSAGE,"loading surface \"%s\" from file %s",surfname,df->get_filename());
 
 	if (!df->condition()) {
 		return NULL;

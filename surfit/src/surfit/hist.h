@@ -28,14 +28,14 @@ class d_hist;
 class vec;
 
 SURFIT_EXPORT
-d_hist * create_hist(REAL ifrom, REAL ito, REAL istep,
+d_hist * create_hist(REAL ifrom, REAL ito,
 		     vec * iZ = NULL,
 		     const char * hist_name = NULL);
 
 class SURFIT_EXPORT d_hist : public data {
 protected:
 	
-	d_hist(REAL ifrom, REAL ito, REAL istep,
+	d_hist(REAL ifrom, REAL ito,
 	       vec * iZ = NULL,
 	       const char * hist_name = NULL);
        
@@ -44,17 +44,24 @@ protected:
 public:
 
 	friend SURFIT_EXPORT
-	d_hist * create_hist(REAL ifrom, REAL ito, REAL istep,
+	d_hist * create_hist(REAL ifrom, REAL ito,
 		             vec * iZ,
 			     const char * hist_name);
 
 	virtual bool bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const;
 	virtual bool getMinMaxZ(REAL & minz, REAL & maxz) const;
 
-	bool get_interv_number(REAL value, size_t & pos) const;
-	bool get_interv(size_t pos, REAL & value_from, REAL & value_to, REAL & hst_value) const;
-
+	size_t operator()(REAL value) const;
+	
+	REAL operator()(size_t pos) const;
+	
+	bool get_interv(size_t pos, REAL & from, REAL & to, REAL & value) const;
 	size_t size() const;
+
+	REAL get_step() const;
+
+	//! normalize histogram
+	void norm();
 
 private:
 	double z_from;
@@ -63,6 +70,7 @@ private:
 
 	size_t cnt;
 
+public:
 	vec * hst;
 	
 };
