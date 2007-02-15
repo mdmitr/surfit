@@ -79,7 +79,7 @@ int hist_size();
 
 void hists_info();
 
-bool surf_histeq(const char * surface_name_or_positioin = "0", const char * histogram_name_or_position = "0");
+bool surf_histeq(const char * surface_name_or_positioin = "0", const char * histogram_name_or_position = NULL);
 
 
 }; // namespace surfit;

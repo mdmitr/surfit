@@ -323,6 +323,10 @@ REAL d_surf::getValue(size_t pos) const {
 	return (*coeff)( pos );
 };
 
+void d_surf::setValue(size_t pos, REAL val) {
+	(*coeff)( pos ) = val;
+}
+
 REAL d_surf::getMinX() const {
 	return grd->startX - grd->stepX/REAL(2);
 };

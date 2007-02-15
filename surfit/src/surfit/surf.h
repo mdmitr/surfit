@@ -80,8 +80,11 @@ public:
 	//! returns surface value at node (i,j)
 	virtual REAL getValueIJ(size_t i, size_t j) const;
 
-	//! return surface value at node
+	//! returns surface value at node
 	virtual REAL getValue(size_t pos) const;
+
+	//! sets surface value at node
+	virtual void setValue(size_t pos, REAL val);
 
 	//! returns minimum X-coordinate for the surface
 	virtual REAL getMinX() const;

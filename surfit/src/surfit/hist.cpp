@@ -34,6 +34,11 @@ d_hist * create_hist(REAL ifrom, REAL ito,
 	return new d_hist(ifrom, ito, iZ, hist_name);
 };
 
+d_hist * create_hist(const d_hist * ihist)
+{
+	return new d_hist(ihist);
+};
+
 d_hist::d_hist(REAL from, REAL to,
 	       vec * iZ, 
 	       const char * iname) : data("d_hist")
@@ -46,6 +51,18 @@ d_hist::d_hist(REAL from, REAL to,
 	hst = iZ;
 
 	setName(iname);
+};
+
+d_hist::d_hist(const d_hist * ihist) : data("d_hist")
+{
+	z_from = ihist->from();
+	z_to = ihist->to();
+	cnt = ihist->hst->size();
+	z_step = ihist->get_step();
+
+	hst = create_vec(*(ihist->hst));
+
+	setName(ihist->getName());
 };
 
 d_hist::~d_hist() {
@@ -95,6 +112,28 @@ size_t d_hist::size() const {
 
 REAL d_hist::get_step() const {
 	return z_step;
+};
+
+REAL d_hist::from() const {
+	return z_from;
+};
+
+REAL d_hist::to() const {
+	return z_to;
+};
+
+void d_hist::normalize()
+{
+	REAL sum = 0;
+	size_t i;
+	for (i = 0; i < hst->size(); i++) 
+		sum += (*hst)(i);
+
+	if (sum == 1)
+		return;
+
+	for (i = 0; i < hst->size(); i++) 
+		(*hst)(i) /= sum;
 };
 
 std::vector<d_hist *>     * surfit_hists     = NULL;

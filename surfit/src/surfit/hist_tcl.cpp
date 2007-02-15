@@ -91,37 +91,10 @@ bool hist_from_surf(const char * surf_pos, size_t intervs, const char * histname
 	if (srf == NULL)
 		return false;
 
-	writelog(LOG_MESSAGE,"calculating histogram from surface \"%s\"",
-		srf->getName()?srf->getName():"noname");
+	d_hist * hst = _hist_from_surf(srf, intervs);
 
-	REAL minz, maxz;
-	srf->getMinMaxZ(minz, maxz);
-	maxz += (maxz-minz)*1e-3;
-	
-	vec * Z = create_vec(intervs);
+	hst->setName(histname?histname:srf->getName());
 
-	d_hist * hst = create_hist(minz, maxz, Z, histname?histname:srf->getName());
-	
-	REAL step = hst->get_step();
-
-	size_t srf_size = 0;
-
-	size_t i;
-	for (i = 0; i < srf->coeff->size(); i++) {
-		REAL z = (*(srf->coeff))(i);
-		if (z == srf->undef_value)
-			continue;
-		srf_size += 1;
-		size_t pos = (*hst)(z);
-		if ( (pos >= intervs) || (pos == UINT_MAX) ) {
-			bool stop = true;
-		}
-		(*Z)(pos) += 1;
-	}
-
-	for (i = 0; i < intervs; i++) 
-		(*Z)(i) /= (REAL)(srf_size);
-	
 	surfit_hists->push_back(hst);
 
 	return true;
@@ -133,9 +106,12 @@ bool surf_histeq(const char * surf_pos, const char * hist_pos)
 	if (srf == NULL)
 		return false;
 
-	d_hist * hist = get_element<d_hist>(hist_pos, surfit_hists->begin(), surfit_hists->end());
-	if (hist == NULL)
-		return false;
+	d_hist * hist = NULL;
+	if (hist_pos) {
+		hist = get_element<d_hist>(hist_pos, surfit_hists->begin(), surfit_hists->end());
+		if (hist == NULL)
+			return false;
+	}
 
 	return _surf_histeq(srf, hist);
 };

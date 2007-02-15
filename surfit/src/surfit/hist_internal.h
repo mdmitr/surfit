@@ -62,6 +62,9 @@ void _add_surfit_hists(d_hist * hist);
 SURFIT_EXPORT
 bool _surf_histeq(d_surf * srf, const d_hist * hist);
 
+SURFIT_EXPORT
+d_hist * _hist_from_surf(d_surf * srf, size_t intervs);
+
 }; // namespace surfit;
 
 #endif

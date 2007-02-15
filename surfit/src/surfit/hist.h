@@ -32,12 +32,17 @@ d_hist * create_hist(REAL ifrom, REAL ito,
 		     vec * iZ = NULL,
 		     const char * hist_name = NULL);
 
+SURFIT_EXPORT
+d_hist * create_hist(const d_hist * ihist);
+
 class SURFIT_EXPORT d_hist : public data {
 protected:
 	
 	d_hist(REAL ifrom, REAL ito,
 	       vec * iZ = NULL,
 	       const char * hist_name = NULL);
+
+	d_hist(const d_hist * ihist);
        
 	~d_hist();
 
@@ -47,6 +52,9 @@ public:
 	d_hist * create_hist(REAL ifrom, REAL ito,
 		             vec * iZ,
 			     const char * hist_name);
+
+	friend SURFIT_EXPORT
+	d_hist * create_hist(const d_hist * ihist);
 
 	virtual bool bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const;
 	virtual bool getMinMaxZ(REAL & minz, REAL & maxz) const;
@@ -59,14 +67,16 @@ public:
 	size_t size() const;
 
 	REAL get_step() const;
+	REAL from() const;
+	REAL to() const;
 
 	//! normalize histogram
-	void norm();
+	void normalize();
 
 private:
-	double z_from;
-	double z_to;
-	double z_step;
+	REAL z_from;
+	REAL z_to;
+	REAL z_step;
 
 	size_t cnt;
 

@@ -131,14 +131,14 @@ bool hist_read(const char * filename, REAL minz, REAL maxz, const char * histnam
 	       int col1 = 1, const char * delimiter = " \t", int skip_lines = 0, int grow_by = 250);
 bool hist_write(const char * filename, const char * hist_name_or_position = "0");
 
-bool hist_from_surf(const char * surf_pos = "0", size_t intervs = 64, const char * histname = NULL);
+bool hist_from_surf(const char * surf_pos = "0", size_t intervs = 512, const char * histname = NULL);
 const char * hist_getName(const char * pos = "0");
 bool hist_setName(const char * new_name, const char * pos = "0");
 bool hist_delall();
 bool hist_del(const char * pos = "0");
 int hist_size();
 void hists_info();
-bool surf_histeq(const char * surf_name = "0", const char * hist_name = "0");
+bool surf_histeq(const char * surf_name = "0", const char * hist_name = NULL);
 
 
 // license stuff
