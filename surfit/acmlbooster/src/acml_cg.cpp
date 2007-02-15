@@ -107,10 +107,6 @@ vec * cg_with_acml_threaded(matr * A, const vec * b, int max_it, REAL tol, vec *
 		if (fabs(times_pq) > MIN(1e-4,tol))
 			alpha = rho / times_pq;
 
-		if (alpha == 0) {
-			bool stop = true;
-		}
-
 		error = 0;
 				
 		// x = x + alpha * p;                    // update approximation vector
@@ -228,10 +224,6 @@ vec * cg_with_acml(matr * A, const vec * b, int max_it, REAL tol, vec *& X, REAL
 		REAL alpha = 0;
 		if (fabs(times_pq) > MIN(1e-4,tol))
 			alpha = rho / times_pq;
-
-		if (alpha == 0) {
-			bool stop = true;
-		}
 
 		error = 0;
 				

@@ -132,10 +132,6 @@ extvec * CG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL 
 			if (fabs(times_pq) > MIN(1e-4,tol))
 				alpha = rho / times_pq;
 			
-			if (alpha == 0) {
-				bool stop = true;
-			}
-			
 			error = 0;
 			
 			// x = x + alpha * p;                    // update approximation vector
@@ -279,10 +275,6 @@ extvec * CG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL 
 			REAL alpha = 0;
 			if (fabs(times_pq) > MIN(1e-4,tol))
 				alpha = rho / times_pq;
-			
-			if (alpha == 0) {
-				bool stop = true;
-			}
 			
 			error = 0;
 			
