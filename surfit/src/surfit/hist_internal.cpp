@@ -157,13 +157,13 @@ bool _surf_histeq(d_surf * srf, const d_hist * ihist)
 
 			vec::const_iterator it = std::lower_bound(Z->const_begin(), Z->const_end(), s);
 
-			pos2 = it-Z->const_begin();
+			pos2 = MIN(Z_size-1,it-Z->const_begin());
+
 			if (pos2 == 0)
 				pos1 = pos2;
 			else
 				pos1 = pos2 - 1;
-			
-			
+
 			REAL s1 = (*Z)(pos1);
 			REAL s2 = (*Z)(pos2);
 
@@ -173,12 +173,8 @@ bool _surf_histeq(d_surf * srf, const d_hist * ihist)
 			pos = pos2*perc1 + pos1*perc2;
 
 			val = dest_hist->from() + (dest_hist->to()-dest_hist->from())*pos/REAL(Z_size);
-			if (val > 1)
-				bool stop = true;
-
+			
 			srf->setValue(i, val);
-
-			bool stop = true;
 		}
 	}
 	
