@@ -58,7 +58,7 @@ protected:
 
 private:
 
-	const d_hist * hst;
+	const d_hist * hist;
 	REAL mult;
 	bitvec * mask;
 };

@@ -20,11 +20,14 @@
 #ifndef __surfit_hist_internal_included__
 #define __surfit_hist_internal_included__
 
+#include <float.h>
+
 namespace surfit {
 
 class d_hist;
 class datafile;
 class d_surf;
+class bitvec;
 
 SURFIT_EXPORT
 /*! \ingroup internal
@@ -63,7 +66,20 @@ SURFIT_EXPORT
 bool _surf_histeq(d_surf * srf, const d_hist * hist);
 
 SURFIT_EXPORT
-d_hist * _hist_from_surf(d_surf * srf, size_t intervs);
+d_hist * _hist_from_vec(const vec * data, REAL minz, REAL maxz, size_t intervs,
+			REAL undef_value = FLT_MAX, const bitvec * mask = NULL);
+
+SURFIT_EXPORT
+d_hist * _hist_from_extvec(const extvec * data, REAL minz, REAL maxz, size_t intervs,
+			   REAL undef_value = FLT_MAX, const bitvec * mask = NULL);
+
+SURFIT_EXPORT
+d_hist * _hist_from_surf(const d_surf * srf, size_t intervs);
+
+SURFIT_EXPORT
+REAL get_eq_value(const vec * T, const vec * Z, REAL val,
+		  REAL surf_minz, REAL surf_maxz,
+		  REAL dest_minz, REAL dest_maxz);
 
 }; // namespace surfit;
 

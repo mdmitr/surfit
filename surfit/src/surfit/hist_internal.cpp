@@ -24,6 +24,7 @@
 #include "vec.h"
 #include "read_txt.h"
 #include "sstuff.h"
+#include "bitvec.h"
 
 #include "hist.h"
 #include "hist_internal.h"
@@ -53,6 +54,65 @@ void _add_surfit_hists(d_hist * hst) {
 	surfit_hists->push_back(hst);
 };
 
+REAL get_eq_value(const vec * T, const vec * Z, REAL val,
+		  REAL surf_minz, REAL surf_maxz,
+		  REAL dest_minz, REAL dest_maxz)
+{
+	val = (val - surf_minz)/(surf_maxz-surf_minz);
+
+	size_t T_size = T->size();
+	
+	REAL pos = (T_size-1)*val;
+	size_t pos2 = floor(pos + 0.5);
+	REAL diff = pos-pos2;
+	
+	size_t pos1 = diff < 0?pos2 - 1:pos2 + 1;
+	if (diff == 0)
+		pos1 = pos2;
+	
+	REAL s;
+	
+	if (diff < 0)
+		s = (*T)(pos2)*(diff+1) + (*T)(pos1)*-diff;
+	else
+		s = (*T)(pos1)*diff + (*T)(pos2)*(1-diff);
+
+	REAL s1 = (*T)(MIN(pos1,pos2));
+	REAL s2 = (*T)(MAX(pos1,pos2));
+	
+	if (Z == NULL) {
+		val = val * (surf_maxz - surf_minz) + surf_minz;
+		return val;
+	}
+	
+	size_t Z_size = Z->size();
+
+	vec::const_iterator it = std::lower_bound(Z->const_begin(), Z->const_end(), s);
+	
+	pos2 = MIN(Z_size-1,it-Z->const_begin());
+	
+	if (pos2 == 0)
+		pos1 = pos2;
+	else
+		pos1 = pos2 - 1;
+	
+	s1 = (*Z)(pos1);
+	s2 = (*Z)(pos2);
+	
+	REAL perc1;
+	if (s1 == s2)
+		perc1 = 0;
+	else
+		perc1 = (s-s1)/(s2-s1);
+	REAL perc2 = 1-perc1;
+	
+	pos = pos2*perc1 + pos1*perc2;
+	
+	val = dest_minz + (dest_maxz-dest_minz)*pos/REAL(Z_size);
+
+	return val;
+};
+
 bool _surf_histeq(d_surf * srf, const d_hist * ihist)
 {
 
@@ -63,35 +123,13 @@ bool _surf_histeq(d_surf * srf, const d_hist * ihist)
 		hist = _hist_from_surf(srf, 100);
 	hist->normalize();
 
-	// create cummulative histogram
-	vec * T = create_vec(hist->size()+1,0,0); // don't fill
-
-	REAL surf_maxz = -FLT_MAX;
-	REAL surf_minz = FLT_MAX;
-
-	size_t surf_size = srf->getCountX()*srf->getCountY();
-
 	size_t i;
-	size_t surf_cnt = 0;
-	for (i = 0; i < surf_size; i++) {
-		REAL val = srf->getValue(i);
-		if (val == srf->undef_value)
-			continue;
-		surf_cnt++;
-		surf_maxz = MAX(val, surf_maxz);
-		surf_minz = MIN(val, surf_minz);
-	}
+	REAL surf_minz, surf_maxz;
+	size_t surf_size = srf->getCountX()*srf->getCountY();
+	srf->getMinMaxZ(surf_minz, surf_maxz);
 
-	REAL surf_dist = surf_maxz-surf_minz;
-
-	REAL sum = 0;
-	size_t T_size = T->size();
-	(*T)(0) = 0;
-	for (i = 1; i < T_size; i++) {
-		sum += (*(hist))(i-1);
-		(*T)(i) = sum;
-	}
-
+	vec * T = hist->get_cumulative_hist();
+	
 	// transfort to equal histogram
 	if (ihist == NULL) 
 	{
@@ -99,21 +137,11 @@ bool _surf_histeq(d_surf * srf, const d_hist * ihist)
 			REAL val = srf->getValue(i);
 			if (val == srf->undef_value)
 				continue;
-			val = (val - surf_minz)/(surf_dist);
-			REAL pos = (T_size-1)*val;
-			size_t pos2 = floor(pos + 0.5);
-			REAL diff = pos-pos2;
 
-			size_t pos1 = diff < 0?pos2 - 1:pos2 + 1;
-			if (diff == 0)
-				pos1 = pos2;
-
-			if (diff < 0)
-				val = (*T)(pos2)*(diff+1) + (*T)(pos1)*-diff;
-			else
-				val = (*T)(pos1)*diff + (*T)(pos2)*(1-diff);
-
-			val = (val * surf_dist) + surf_minz;
+			val = get_eq_value(T, NULL, val,
+					   surf_minz, surf_maxz,
+					   FLT_MAX, FLT_MAX);
+			
 			srf->setValue(i, val);
 		}
 		T->release();
@@ -124,14 +152,7 @@ bool _surf_histeq(d_surf * srf, const d_hist * ihist)
 	d_hist * dest_hist = create_hist(ihist);
 	dest_hist->normalize();
 	
-	vec * Z = create_vec(dest_hist->size()+1,0,0); // don't fill
-	sum = 0;
-	size_t Z_size = Z->size();
-	(*Z)(0) = 0;
-	for (i = 1; i < Z_size; i++) {
-		sum += (*(dest_hist))(i-1);
-		(*Z)(i) = sum;
-	}
+	vec * Z = dest_hist->get_cumulative_hist();
 
 	// transform to destination histogram
 	{
@@ -139,40 +160,10 @@ bool _surf_histeq(d_surf * srf, const d_hist * ihist)
 			REAL val = srf->getValue(i);
 			if (val == srf->undef_value)
 				continue;
-			val = (val - surf_minz)/(surf_dist);
-			REAL pos = (T_size-1)*val;
-			size_t pos2 = floor(pos + 0.5);
-			REAL diff = pos-pos2;
-
-			size_t pos1 = diff < 0?pos2 - 1:pos2 + 1;
-			if (diff == 0)
-				pos1 = pos2;
-
-			REAL s;
-
-			if (diff < 0)
-				s = (*T)(pos2)*(diff+1) + (*T)(pos1)*-diff;
-			else
-				s = (*T)(pos1)*diff + (*T)(pos2)*(1-diff);
-
-			vec::const_iterator it = std::lower_bound(Z->const_begin(), Z->const_end(), s);
-
-			pos2 = MIN(Z_size-1,it-Z->const_begin());
-
-			if (pos2 == 0)
-				pos1 = pos2;
-			else
-				pos1 = pos2 - 1;
-
-			REAL s1 = (*Z)(pos1);
-			REAL s2 = (*Z)(pos2);
-
-			REAL perc1 = (s-s1)/(s2-s1);
-			REAL perc2 = 1-perc1;
 			
-			pos = pos2*perc1 + pos1*perc2;
-
-			val = dest_hist->from() + (dest_hist->to()-dest_hist->from())*pos/REAL(Z_size);
+			val = get_eq_value(T, Z, val,
+					   surf_minz, surf_maxz,
+					   dest_hist->from(), dest_hist->to());
 			
 			srf->setValue(i, val);
 		}
@@ -226,37 +217,81 @@ d_hist * _hist_read(const char * filename, REAL minz, REAL maxz, const char * hi
 	return res;
 };
 
-d_hist * _hist_from_surf(d_surf * srf, size_t intervs)
+d_hist * _hist_from_vec(const vec * data, REAL minz, REAL maxz, size_t intervs,
+			REAL undef_value, const bitvec * mask)
+{
+	vec * Z = create_vec(intervs);
+
+	maxz += (maxz-minz)*1e-3;
+
+	d_hist * hst = create_hist(minz, maxz, Z);
+	
+	REAL step = hst->get_step();
+
+	size_t cnt = 0;
+
+	size_t i;
+	for (i = 0; i < data->size(); i++) {
+		if (mask) {
+			if (mask->get(i) == true)
+				continue;
+		}
+		REAL z = (*data)(i);
+		if (z == undef_value)
+			continue;
+		cnt += 1;
+		size_t pos = (*hst)(z);
+		(*Z)(pos) += 1;
+	}
+
+	for (i = 0; i < intervs; i++) 
+		(*Z)(i) /= (REAL)(cnt);
+
+	return hst;
+};
+
+d_hist * _hist_from_extvec(const extvec * data, REAL minz, REAL maxz, size_t intervs,
+			REAL undef_value, const bitvec * mask)
+{
+	vec * Z = create_vec(intervs);
+
+	maxz += (maxz-minz)*1e-3;
+
+	d_hist * hst = create_hist(minz, maxz, Z);
+	
+	REAL step = hst->get_step();
+
+	size_t cnt = 0;
+
+	size_t i;
+	for (i = 0; i < data->size(); i++) {
+		if (mask) {
+			if (mask->get(i) == true)
+				continue;
+		}
+		REAL z = (*data)(i);
+		if (z == undef_value)
+			continue;
+		cnt += 1;
+		size_t pos = (*hst)(z);
+		(*Z)(pos) += 1;
+	}
+
+	for (i = 0; i < intervs; i++) 
+		(*Z)(i) /= (REAL)(cnt);
+
+	return hst;
+};
+
+d_hist * _hist_from_surf(const d_surf * srf, size_t intervs)
 {
 	writelog(LOG_MESSAGE,"calculating histogram from surface \"%s\"",
 		srf->getName()?srf->getName():"noname");
 
 	REAL minz, maxz;
 	srf->getMinMaxZ(minz, maxz);
-	maxz += (maxz-minz)*1e-3;
-	
-	vec * Z = create_vec(intervs);
 
-	d_hist * hst = create_hist(minz, maxz, Z);
-	
-	REAL step = hst->get_step();
-
-	size_t srf_size = 0;
-
-	size_t i;
-	for (i = 0; i < srf->coeff->size(); i++) {
-		REAL z = (*(srf->coeff))(i);
-		if (z == srf->undef_value)
-			continue;
-		srf_size += 1;
-		size_t pos = (*hst)(z);
-		(*Z)(pos) += 1;
-	}
-
-	for (i = 0; i < intervs; i++) 
-		(*Z)(i) /= (REAL)(srf_size);
-
-	return hst;
+	return _hist_from_extvec( srf->coeff, minz, maxz, intervs, srf->undef_value );
 }
 
 }; // namespace surfit;

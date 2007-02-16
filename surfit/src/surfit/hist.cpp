@@ -25,6 +25,8 @@
 #include "hist.h"
 #include "free_elements.h"
 
+#include <assert.h>
+
 namespace surfit {
 
 d_hist * create_hist(REAL ifrom, REAL ito,
@@ -72,16 +74,25 @@ d_hist::~d_hist() {
 
 size_t d_hist::operator()(REAL value) const 
 {
-	if (value < z_from)
+	if (value < z_from) {
+		assert(0);
 		return UINT_MAX;
-	if (value > z_to)
+	}
+	if (value > z_to) {
+		assert(0);
 		return UINT_MAX;
+	}
 
 	size_t pos = (value-z_from)/z_step;
-	return pos;
+	return MIN(size()-1,pos);
 };
 
-REAL d_hist::operator ()(size_t pos) const
+const REAL d_hist::operator ()(size_t pos) const
+{
+	return (*hst)(pos);
+};
+
+REAL & d_hist::operator ()(size_t pos) 
 {
 	return (*hst)(pos);
 };
@@ -134,6 +145,19 @@ void d_hist::normalize()
 
 	for (i = 0; i < hst->size(); i++) 
 		(*hst)(i) /= sum;
+};
+
+vec * d_hist::get_cumulative_hist()
+{
+	vec * res = create_vec(size()+1,0,0); // don't fill
+	REAL sum = 0;
+	size_t res_size = res->size(), i;
+	(*res)(0) = 0;
+	for (i = 1; i < res_size; i++) {
+		sum += (*hst)(i-1);
+		(*res)(i) = sum;
+	}
+	return res;
 };
 
 std::vector<d_hist *>     * surfit_hists     = NULL;

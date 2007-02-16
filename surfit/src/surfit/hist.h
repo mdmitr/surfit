@@ -61,7 +61,9 @@ public:
 
 	size_t operator()(REAL value) const;
 	
-	REAL operator()(size_t pos) const;
+	const REAL operator()(size_t pos) const;
+
+	REAL & operator()(size_t pos);
 	
 	bool get_interv(size_t pos, REAL & from, REAL & to, REAL & value) const;
 	size_t size() const;
@@ -69,6 +71,8 @@ public:
 	REAL get_step() const;
 	REAL from() const;
 	REAL to() const;
+
+	vec * get_cumulative_hist();
 
 	//! normalize histogram
 	void normalize();
