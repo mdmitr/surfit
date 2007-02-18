@@ -168,7 +168,7 @@ bool f_wmean::solvable_without_cond(const bitvec * mask_solved,
 	size_t matrix_size = X->size();
 	size_t i;
 	for (i = 0; i < matrix_size; i++) {
-		if ( (!mask_solved->get(i)) || (!mask_undefined->get(i)) )
+		if ( (!mask_solved->get(i)) && (!mask_undefined->get(i)) )
 			return false;
 	}
 	return true;

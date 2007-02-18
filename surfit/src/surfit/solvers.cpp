@@ -160,6 +160,13 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X) {
 
 	bool res2 = res || fnc->solvable(test_mask_solved, test_mask_undefined, X);
 
+	if (res2) {
+		test_mask_solved->copy(method_mask_solved);
+		test_mask_undefined->copy(method_mask_undefined);
+		fnc->mark_solved_and_undefined(test_mask_solved, test_mask_undefined, false);
+		res2 = fnc->cond_solvable(test_mask_solved, test_mask_undefined, X);
+	}
+
 	if (test_mask_solved)
 		test_mask_solved->release();
 	if (test_mask_undefined)
