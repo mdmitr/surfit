@@ -27,6 +27,7 @@ namespace surfit {
 class d_hist;
 class datafile;
 class d_surf;
+class d_points;
 class bitvec;
 
 SURFIT_EXPORT
@@ -49,12 +50,12 @@ d_hist * _hist_read(const char * filename, REAL minz, REAL maxz, const char * hi
 
 SURFIT_EXPORT
 /*! \ingroup internal
-    \fn bool _hist_write(const d_hist * hist, const char * filename);
+    \fn bool _hist_write(const d_hist * hist, const char * filename, bool three_columns = false);
     \brief saves \ref d_hist to formatted text file
     \param hist pointer to \ref d_hist
     \param filename filename
 */
-bool _hist_write(const d_hist * hist, const char * filename);
+bool _hist_write(const d_hist * hist, const char * filename, bool three_columns = false);
 
 SURFIT_EXPORT
 void _hist_info(const d_hist * hist);
@@ -74,7 +75,10 @@ d_hist * _hist_from_extvec(const extvec * data, REAL minz, REAL maxz, size_t int
 			   REAL undef_value = FLT_MAX, const bitvec * mask = NULL);
 
 SURFIT_EXPORT
-d_hist * _hist_from_surf(const d_surf * srf, size_t intervs);
+d_hist * _hist_from_surf(const d_surf * srf, size_t intervs, REAL from = FLT_MAX, REAL to = FLT_MAX);
+
+SURFIT_EXPORT
+d_hist * _hist_from_points(const d_points * pnts, size_t intervs, REAL from = FLT_MAX, REAL to = FLT_MAX);
 
 SURFIT_EXPORT
 REAL get_eq_value(const vec * T, const vec * Z, REAL val,

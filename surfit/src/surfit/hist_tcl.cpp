@@ -31,6 +31,7 @@
 #include "variables_internal.h"
 #include "free_elements.h"
 #include "surf.h"
+#include "points.h"
 
 #include <math.h>
 #include <float.h>
@@ -85,15 +86,30 @@ void hists_info() {
 	}
 };
 
-bool hist_from_surf(const char * surf_pos, size_t intervs, const char * histname) {
+bool hist_from_surf(const char * surf_pos, size_t intervs, const char * histname, REAL from, REAL to) {
 
 	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (srf == NULL)
 		return false;
 
-	d_hist * hst = _hist_from_surf(srf, intervs);
+	d_hist * hst = _hist_from_surf(srf, intervs, from, to);
 
 	hst->setName(histname?histname:srf->getName());
+
+	surfit_hists->push_back(hst);
+
+	return true;
+};
+
+bool hist_from_pnts(const char * pnts_pos, size_t intervs, const char * histname, REAL from, REAL to) {
+
+	d_points * pnts = get_element<d_points>(pnts_pos, surfit_pnts->begin(), surfit_pnts->end());
+	if (pnts == NULL)
+		return false;
+
+	d_hist * hst = _hist_from_points(pnts, intervs, from, to);
+
+	hst->setName(histname?histname:pnts->getName());
 
 	surfit_hists->push_back(hst);
 
@@ -127,13 +143,13 @@ bool hist_read(const char * filename, REAL minz, REAL maxz, const char * histnam
 	return false;
 };
 
-bool hist_write(const char * filename, const char * pos)
+bool hist_write(const char * filename, const char * pos, bool three_columns)
 {
 	d_hist * hist = get_element<d_hist>(pos, surfit_hists->begin(), surfit_hists->end());
 	if (hist == NULL)
 		return false;
 
-	return _hist_write(hist, filename);
+	return _hist_write(hist, filename, three_columns);
 };
 
 }; // namespace surfit;

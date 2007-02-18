@@ -124,14 +124,16 @@ bool mean(REAL value, REAL mult = 0.001);
 bool wmean(REAL value, const char * surface_name_or_position = "0", REAL mult = 0.001);
 bool leq(REAL value, REAL mult = 1);
 bool geq(REAL value, REAL mult = 1);
-bool hist(const char * pos = "0", REAL mult = 1e-2);
+bool hist(const char * pos = "0", REAL mult = 0.001);
 
 // hist
 bool hist_read(const char * filename, REAL minz, REAL maxz, const char * histname = NULL, 
 	       int col1 = 1, const char * delimiter = " \t", int skip_lines = 0, int grow_by = 250);
-bool hist_write(const char * filename, const char * hist_name_or_position = "0");
+bool hist_write(const char * filename, const char * hist_name_or_position = "0", bool three_columns = true);
 
-bool hist_from_surf(const char * surf_pos = "0", size_t intervs = 512, const char * histname = NULL);
+bool hist_from_surf(const char * surf_pos = "0", size_t intervs = 64, const char * histname = NULL, REAL from = FLT_MAX, REAL to = FLT_MAX);
+bool hist_from_pnts(const char * pnts_pos = "0", size_t intervs = 64, const char * histname = NULL, REAL from = FLT_MAX, REAL to = FLT_MAX);
+
 const char * hist_getName(const char * pos = "0");
 bool hist_setName(const char * new_name, const char * pos = "0");
 bool hist_delall();

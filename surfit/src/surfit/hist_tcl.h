@@ -20,6 +20,8 @@
 #ifndef __surfit_hist_tcl_included__
 #define __surfit_hist_tcl_included__
 
+#include <float.h>
+
 namespace surfit {
 
 //////////////
@@ -52,20 +54,22 @@ bool hist_read(const char * filename, REAL minz, REAL maxz, const char * histnam
 	       int col1 = 1, const char * delimiter = " \t", int skip_lines = 0, int grow_by = 250);
 
 /*! \ingroup tcl_hist_save_load
-    \fn bool hist_write(const char * filename, const char * hist_name_or_position = "0");
+    \fn bool hist_write(const char * filename, const char * hist_name_or_position = "0", bool three_columns = true);
     
     \par Tcl syntax:
-    hist_write "filename" "hist_name_or_position" 
+    hist_write "filename" "hist_name_or_position" value
 
     \par Description:
-    saves \ref d_hist "histogram" to formatted text file
+    saves \ref d_hist "histogram" to formatted text file. Writes histogram interval bounds if three_columns is 1
 */
-bool hist_write(const char * filename, const char * hist_name_or_position = "0");
+bool hist_write(const char * filename, const char * hist_name_or_position = "0", bool three_columns = true);
 
 //////////////
 // other
 
-bool hist_from_surf(const char * surface_name_or_positioin = "0", size_t intervs = 64, const char * histname = NULL);
+bool hist_from_surf(const char * surface_name_or_positioin = "0", size_t intervs = 64, const char * histname = NULL, REAL from = FLT_MAX, REAL to = FLT_MAX);
+
+bool hist_from_pnts(const char * points_name_or_position = "0", size_t intervs = 64, const char * histname = NULL, REAL from = FLT_MAX, REAL to = FLT_MAX);
 
 const char * hist_getName(const char * pos = "0");
 

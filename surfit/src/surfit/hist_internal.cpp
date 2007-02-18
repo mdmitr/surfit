@@ -29,6 +29,7 @@
 #include "hist.h"
 #include "hist_internal.h"
 #include "surf.h"
+#include "points.h"
 
 #include <float.h>
 #include <algorithm>
@@ -103,12 +104,12 @@ REAL get_eq_value(const vec * T, const vec * Z, REAL val,
 	if (s1 == s2)
 		perc1 = 0;
 	else
-		perc1 = (s-s1)/(s2-s1);
+		perc1 = MAX(0,MIN(1,(s-s1)/(s2-s1)));
 	REAL perc2 = 1-perc1;
 	
 	pos = pos2*perc1 + pos1*perc2;
 	
-	val = dest_minz + (dest_maxz-dest_minz)*pos/REAL(Z_size);
+	val = dest_minz + (dest_maxz-dest_minz)*pos/REAL(Z_size-1);
 
 	return val;
 };
@@ -176,7 +177,7 @@ bool _surf_histeq(d_surf * srf, const d_hist * ihist)
 	return true;
 };
 
-bool _hist_write(const d_hist * hist, const char * filename) {
+bool _hist_write(const d_hist * hist, const char * filename, bool three_columns) {
 	if (!hist) {
 		writelog(LOG_WARNING, "NULL pointer to hist.");
 		return false;
@@ -189,7 +190,20 @@ bool _hist_write(const d_hist * hist, const char * filename) {
 	writelog(LOG_MESSAGE,"writing histogram \"%s\" to file %s",
 		hist->getName()?hist->getName():"noname", filename);
 
-	return one_columns_write(filename, "%g\n", hist->hst);
+	if (three_columns) {
+		vec * Z_from = create_vec(hist->size(),0,0); // don't fill
+		vec * Z_to = create_vec(hist->size(),0,0); // don't fill
+		size_t i;
+		for (i = 0; i < hist->size(); i++) {
+			(*Z_from)(i) = hist->from() + i*hist->get_step();
+			(*Z_to)(i) = hist->from() + (i+1)*hist->get_step();
+		}
+		bool res = three_columns_write(filename,"%g\t%g\t%g\n", hist->hst, Z_from, Z_to);
+		Z_from->release();
+		Z_to->release();
+		return res;
+	} else
+		return one_columns_write(filename, "%g\n", hist->hst);
 };
 
 d_hist * _hist_read(const char * filename, REAL minz, REAL maxz, const char * histname, int col1, const char * delimiter, int skip_lines, int grow_by) {
@@ -283,7 +297,7 @@ d_hist * _hist_from_extvec(const extvec * data, REAL minz, REAL maxz, size_t int
 	return hst;
 };
 
-d_hist * _hist_from_surf(const d_surf * srf, size_t intervs)
+d_hist * _hist_from_surf(const d_surf * srf, size_t intervs, REAL from, REAL to)
 {
 	writelog(LOG_MESSAGE,"calculating histogram from surface \"%s\"",
 		srf->getName()?srf->getName():"noname");
@@ -291,8 +305,29 @@ d_hist * _hist_from_surf(const d_surf * srf, size_t intervs)
 	REAL minz, maxz;
 	srf->getMinMaxZ(minz, maxz);
 
-	return _hist_from_extvec( srf->coeff, minz, maxz, intervs, srf->undef_value );
-}
+	if (from == FLT_MAX)
+		from = minz;
+	if (to == FLT_MAX)
+		to = maxz;
+
+	return _hist_from_extvec( srf->coeff, from, to, intervs, srf->undef_value );
+};
+
+d_hist * _hist_from_points(const d_points * pnts, size_t intervs, REAL from, REAL to)
+{
+	writelog(LOG_MESSAGE,"calculating histogram from points \"%s\"",
+		pnts->getName()?pnts->getName():"noname");
+
+	REAL minz, maxz;
+	pnts->getMinMaxZ(minz, maxz);
+
+	if (from == FLT_MAX)
+		from = minz;
+	if (to == FLT_MAX)
+		to = maxz;
+
+	return _hist_from_vec( pnts->Z, from, to, intervs );
+};
 
 }; // namespace surfit;
 

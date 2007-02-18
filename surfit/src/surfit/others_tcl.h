@@ -227,7 +227,7 @@ bool leq(REAL value, REAL mult = 0.001);
 */
 bool geq(REAL value, REAL mult = 0.001);
 
-bool hist(const char * pos = "0", REAL mult = 0.0005);
+bool hist(const char * pos = "0", REAL mult = 0.001);
 
 }; // namespace surfit;
 
