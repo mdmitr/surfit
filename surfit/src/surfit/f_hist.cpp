@@ -132,7 +132,7 @@ bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 		size_t pos = (*dest_hist)(val);
 		
-		(*dest_hist)(pos) = MAX(0, (*dest_hist)(pos)-elem);
+		(*dest_hist)[pos] = MAX(0, (*dest_hist)(pos)-elem);
 	}
 
 	dest_hist->normalize();

@@ -92,7 +92,7 @@ const REAL d_hist::operator ()(size_t pos) const
 	return (*hst)(pos);
 };
 
-REAL & d_hist::operator ()(size_t pos) 
+REAL & d_hist::operator [](size_t pos) 
 {
 	return (*hst)(pos);
 };

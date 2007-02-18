@@ -63,7 +63,7 @@ public:
 	
 	const REAL operator()(size_t pos) const;
 
-	REAL & operator()(size_t pos);
+	REAL & operator[](size_t pos);
 	
 	bool get_interv(size_t pos, REAL & from, REAL & to, REAL & value) const;
 	size_t size() const;
