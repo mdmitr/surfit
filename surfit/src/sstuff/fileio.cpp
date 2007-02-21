@@ -88,6 +88,8 @@ void log_printf(const char *tmplt, ...) {
 
 		char buf[2048];
 		int written = vsprintf(buf,tmplt, ap);
+		va_end(ap);
+		va_start(ap,tmplt);
 		if (written > 2048) 
 			writelog(LOG_WARNING,"Too large error message. ");
 		Tcl_WriteChars(out, buf, written);
@@ -149,6 +151,8 @@ void writelog (int errlevel, const char *tmplt, ...) {
 
 		char buf[2048];
 		int written = vsprintf(buf,tmplt, ap);
+		va_end(ap);
+		va_start (ap, tmplt);
 		if (written > 2048) 
 			writelog(LOG_WARNING,"Too large error message. ");
 		Tcl_WriteChars(out, buf, written);
@@ -180,10 +184,10 @@ void writelog (int errlevel, const char *tmplt, ...) {
 			break;
 		};
 		vfprintf (logfile, tmplt, ap);
+		va_end(ap);
 		fprintf (logfile,"\n");
 	}
 
-	va_end (ap);
 	if ( (logfile) && (ferror(logfile) == 0) ) fflush(logfile);
 
 	if (stop_on_error == 1) {
@@ -238,6 +242,8 @@ void writelog2 (int errlevel, const char *tmplt, ...) {
 
 		char buf[2048];
 		int written = vsprintf(buf,tmplt, ap);
+		va_end(ap);
+		va_start(ap, tmplt);
 		if (written > 2048) 
 			writelog(LOG_WARNING,"Too large error message. ");
 		Tcl_WriteChars(out, buf, written);
