@@ -124,7 +124,7 @@ void surfit_init_all() {
 	add_manager(new surfit_manager);
 
 	Tcl_CreateThreadExitHandler(data_cleanup, NULL);
-
+#ifdef HAVE_THREADS
 #ifdef WIN32
 	SYSTEM_INFO info;
 	GetSystemInfo(&info);
@@ -138,8 +138,6 @@ void surfit_init_all() {
 	if (cpu < 1)
 		cpu = 1;
 #endif
-
-#ifdef HAVE_THREADS
 	sstuff_init_threads(cpu);
 #endif
 
