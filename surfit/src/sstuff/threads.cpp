@@ -22,22 +22,27 @@
 
 #include <vector>
 
+#ifdef HAVE_THREADS
+
 void job::release() { 
 	delete this; 
 };
 
 size_t cpu = 1;
-#ifdef HAVE_THREADS
+
 std::vector<slavethread *> slaves;
 std::vector<job *> jobs;
 #endif
 
 void sstuff_init_threads(size_t cnt) {
+#ifdef HAVE_THREADS
+
 	cpu = MIN(cnt, MAX_CPU);
+
 #ifdef XXL
 	cpu = 1;
 #endif
-#ifdef HAVE_THREADS
+
 	size_t ssize = slaves.size();
 	if (ssize == cpu)
 		return;
@@ -63,7 +68,11 @@ void sstuff_init_threads(size_t cnt) {
 };
 
 size_t sstuff_get_threads() {
+#ifdef HAVE_THREADS
 	return cpu;
+#else
+	return 1;
+#endif
 };
 
 /*

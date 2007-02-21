@@ -139,16 +139,25 @@ void surfit_init_all() {
 		cpu = 1;
 #endif
 
+#ifdef HAVE_THREADS
 	sstuff_init_threads(cpu);
+#endif
 
 };
 
 void init_threads(int cnt) {
+#ifdef HAVE_THREADS
 	sstuff_init_threads(cnt);
+#endif
 };
 
 int get_threads() {
+#ifdef HAVE_THREADS
 	return sstuff_get_threads();
+#else
+	return 1;
+#endif
+
 };
 
 void surfit_init_variables(Tcl_Interp * iinterp) {
