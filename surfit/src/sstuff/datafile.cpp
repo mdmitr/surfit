@@ -409,9 +409,9 @@ bool datafile::skipByteArray(bool skip_name) {
 	if (skip_name)
 		if ( !readWord() ) return false;
 		
-	size_t size = 0;
+	surfit_int32 size = 0;
 	int f = file;
-	if ( read(f, &size, sizeof(int)) > 0 )
+	if ( read(f, &size, sizeof(surfit_int32)) > 0 )
 		return skipBytes(size*sizeof(char));
 	return false;
 };
@@ -422,8 +422,8 @@ bool datafile::skipBoolArray(bool skip_name) {
 		if ( !readWord() ) 
 			return false;
 
-	size_t size = 0;
-	if ( read( file, &size, sizeof(int)) > 0 )
+	surfit_int32 size = 0;
+	if ( read( file, &size, sizeof(surfit_int32)) > 0 )
 		return skipBytes(size*sizeof(char));
 	return false;
 };
@@ -433,8 +433,8 @@ bool datafile::skipBitArray(bool skip_name) {
 	if (skip_name)
 		if ( !readWord() ) return false;
 
-	size_t size = 0;
-	if ( read( file, &size, sizeof(int)) > 0 )
+	surfit_int32 size = 0;
+	if ( read( file, &size, sizeof(surfit_int32)) > 0 )
 		return skipBytes(size*sizeof(char));
 	return false;
 };
@@ -445,8 +445,8 @@ bool datafile::skipIntArray(bool skip_name) {
 		if ( !readWord() ) 
 			return false;
 
-	size_t size = 0;
-	if ( read( file, &size, sizeof(int)) > 0 )
+	surfit_int32 size = 0;
+	if ( read( file, &size, sizeof(surfit_int32)) > 0 )
 		return skipBytes(size*sizeof(int));
 		
 	return false;
@@ -458,8 +458,8 @@ bool datafile::skipShortArray(bool skip_name) {
 		if ( !readWord() ) 
 			return false;
 
-	size_t size = 0;
-	if ( read( file, &size, sizeof(int)) > 0 )
+	surfit_int32 size = 0;
+	if ( read( file, &size, sizeof(surfit_int32)) > 0 )
 		return skipBytes(size*sizeof(short));
 	return false;
 };
@@ -469,8 +469,8 @@ bool datafile::skipStringArray(bool skip_name) {
 	if (skip_name) 
 		if ( !readWord() ) return false;
 	
-	size_t size = 0;
-	if ( read( file, &size, sizeof(int)) > 0 ) {
+	surfit_int32 size = 0;
+	if ( read( file, &size, sizeof(surfit_int32)) > 0 ) {
 		size_t i;
 		for (i = 0; i < size; i++)
 			if (!readWord())
@@ -484,8 +484,8 @@ bool datafile::skipRealArray(bool skip_name) {
 	if (skip_name) 
 		if ( !readWord() ) return false;
 	
-	size_t size = 0;
-	if ( read( file, &size, sizeof(int)) > 0 ) {
+	surfit_int32 size = 0;
+	if ( read( file, &size, sizeof(surfit_int32)) > 0 ) {
 		return skipBytes(size*sizeof(REAL));
 	}
 	return false;
@@ -657,11 +657,11 @@ bool datafile::writeChar(const char * name, const char * c) {
 };
 
 bool datafile::writeStringArray(const char * name, const strvec * data) {
-	size_t size = data->size();
+	surfit_int32 size =(surfit_int32) data->size();
 	size_t r = writeBinaryString("array");
 	r += writeBinaryString("string");
 	r += writeBinaryString(name);
-	r += write(file, (void *)&size, sizeof(size_t));
+	r += write(file, (void *)&size, sizeof(surfit_int32));
 	int i;
 	for (i = 0; i < data->size(); i++)
 		r += writeBinaryString( (*data)(i) );
@@ -669,11 +669,11 @@ bool datafile::writeStringArray(const char * name, const strvec * data) {
 };
 
 bool datafile::writeRealArray(const char * name, const vec * data) {
-	size_t size = data->size();
+	surfit_int32 size = (surfit_int32)data->size();
 	size_t r = writeBinaryString("array");
 	r += writeBinaryString(REAL_NAME);
 	r += writeBinaryString(name);
-	r += write(file, (void *)&size, sizeof(size_t));
+	r += write(file, (void *)&size, sizeof(surfit_int32));
 	r += data->write_file(file, size);
 	//r += write(file, data->begin(), size*sizeof(REAL));
 	return (r > 0);
@@ -681,11 +681,11 @@ bool datafile::writeRealArray(const char * name, const vec * data) {
 
 #ifdef XXL
 bool datafile::writeRealArray(const char * name, const extvec * data) {
-	size_t size = data->size();
+	surfit_int32 size = (surfit_int32)data->size();
 	size_t r = writeBinaryString("array");
 	r += writeBinaryString(REAL_NAME);
 	r += writeBinaryString(name);
-	r += write(file, (void *)&size, sizeof(size_t));
+	r += write(file, (void *)&size, sizeof(surfit_int32));
 	r += data->write_file(file, size);
 	//r += write(file, data->begin(), size*sizeof(REAL));
 	return (r > 0);
@@ -694,22 +694,22 @@ bool datafile::writeRealArray(const char * name, const extvec * data) {
 
 bool datafile::writeBoolArray(const char * name, const boolvec * data) {
 	size_t r = writeBinaryString("array");
-	size_t size = data->size();
+	surfit_int32 size = (surfit_int32)data->size();
 	r += writeBinaryString("bool");
 	r += writeBinaryString(name);
-	r += write(file, (void *)&size, sizeof(size_t));
+	r += write(file, (void *)&size, sizeof(surfit_int32));
 	r += write(file, data->begin(), size*sizeof(bool));
 	return (r > 0);
 };
 
 bool datafile::writeBitArray(const char * name, const bitvec * data) {
 	size_t r = writeBinaryString("array");
-	size_t int_size = data->int_size() + 1;
-	size_t size = data->size();
+	surfit_int32 int_size =(surfit_int32)( data->int_size() + 1 );
+	surfit_int32 size = (surfit_int32)data->size();
 	r += writeBinaryString("bit");
 	r += writeBinaryString(name);
-	r += write(file, &size, sizeof(size_t));
-	r += write(file, (void *)&int_size, sizeof(size_t));
+	r += write(file, &size, sizeof(surfit_int32));
+	r += write(file, (void *)&int_size, sizeof(surfit_int32));
 	r += data->write_file(file);
 	//r += write(file, data->const_begin(), (int_size)*sizeof(surfit_int32));
 	return (r > 0);
@@ -717,10 +717,10 @@ bool datafile::writeBitArray(const char * name, const bitvec * data) {
 
 bool datafile::writeShortArray(const char * name, const shortvec * data) {
 	size_t r = writeBinaryString("array");
-	size_t size = data->size();
+	surfit_int32 size = (surfit_int32)data->size();
 	r += writeBinaryString("short");
 	r += writeBinaryString(name);
-	r += write(file, (void *)&size, sizeof(size_t));
+	r += write(file, (void *)&size, sizeof(surfit_int32));
 	r += data->write_file(file, size);
 	//r += write(file, data->begin(), size*sizeof(short));
 	return (r > 0);
@@ -728,10 +728,10 @@ bool datafile::writeShortArray(const char * name, const shortvec * data) {
 
 bool datafile::writeIntArray(const char * name, const intvec * data) {
 	size_t r = writeBinaryString("array");
-	size_t size = data->size();
+	surfit_int32 size = (surfit_int32)data->size();
 	r += writeBinaryString("int");
 	r += writeBinaryString(name);
-	r += write(file, (void *)&size, sizeof(size_t));
+	r += write(file, (void *)&size, sizeof(surfit_int32));
 	r += write(file, data->begin(), size*sizeof(int));
 	return (r > 0);
 };
@@ -822,8 +822,8 @@ bool datafile::readReal(REAL & d) {
 
 bool datafile::readStringArray(strvec *& data) {
 	size_t r = 0;
-	size_t size = 0;
-	if (read( file,  &size, sizeof(size_t)) > 0) {
+	surfit_int32 size = 0;
+	if (read( file, &size, sizeof(surfit_int32)) > 0) {
 		
 		data = create_strvec(size);
 		if (data == NULL) {
@@ -832,7 +832,7 @@ bool datafile::readStringArray(strvec *& data) {
 		}
 		
 		size_t i;
-		for (i = 0; i < size; i++) {
+		for (i = 0; i < (size_t)size; i++) {
 			if (readWord() == false)
 				return false;
 			(*data)(i) = strdup(word);
@@ -845,8 +845,8 @@ bool datafile::readStringArray(strvec *& data) {
 
 bool datafile::readRealArray(vec *& data) {
 	size_t r = 0;
-	size_t size = 0;
-	if (read( file,  &size, sizeof(size_t)) > 0) {
+	surfit_int32 size = 0;
+	if (read( file, &size, sizeof(surfit_int32)) > 0) {
 		
 		data = create_vec(size,0,0); // don't fill
 		if (data == NULL) {
@@ -871,8 +871,8 @@ bool datafile::readRealArray(vec *& data) {
 #ifdef XXL
 bool datafile::readRealArray(extvec *& data) {
 	size_t r = 0;
-	size_t size = 0;
-	if (read( file,  &size, sizeof(size_t)) > 0) {
+	surfit_int32 size = 0;
+	if (read( file,  &size, sizeof(surfit_int32)) > 0) {
 		
 		data = create_extvec(size,0,0); // don't fill
 		if (data == NULL) {
@@ -897,8 +897,8 @@ bool datafile::readRealArray(extvec *& data) {
 
 bool datafile::readBoolArray(boolvec *& data) {
 	size_t r = 0;
-	size_t size = 0;
-	if (read( file,  &size, sizeof(size_t)) > 0) {
+	surfit_int32 size = 0;
+	if (read( file,  &size, sizeof(surfit_int32)) > 0) {
 		
 		data = create_boolvec(size,0,0); // don't fill
 		
@@ -918,11 +918,11 @@ bool datafile::readBoolArray(boolvec *& data) {
 
 bool datafile::readBitArray(bitvec *& data) {
 	size_t r = 0;
-	size_t size = 0;
-	if (read( file,  &size, sizeof(size_t)) > 0) {
+	surfit_int32 size = 0;
+	if (read( file,  &size, sizeof(surfit_int32)) > 0) {
 		
 		size_t elements = 0;
-		r = read( file, &elements, sizeof(size_t)*1 );
+		r = read( file, &elements, sizeof(surfit_int32) );
 		
 		data = create_bitvec(size);
 		
@@ -943,8 +943,8 @@ bool datafile::readBitArray(bitvec *& data) {
 
 bool datafile::readShortArray(shortvec *& data) {
 	size_t r = 0;
-	size_t size = 0;
-	if (read( file,  &size, sizeof(size_t)) > 0) {
+	surfit_int32 size = 0;
+	if (read( file, &size, sizeof(surfit_int32)) > 0) {
 		
 		data = create_shortvec(size,0,0); // don't fill
 		
@@ -965,8 +965,8 @@ bool datafile::readShortArray(shortvec *& data) {
 
 bool datafile::readIntArray(intvec *& data) {
 	size_t r = 0;
-	size_t size = 0;
-	if (read( file,  &size, sizeof(size_t)) > 0) {
+	surfit_int32 size = 0;
+	if (read( file,  &size, sizeof(surfit_int32)) > 0) {
 		
 		data = create_intvec(size,0,0); // don't fill
 		
