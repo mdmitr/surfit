@@ -520,7 +520,7 @@ size_t calcVecV(size_t size,
 	        size_t y_from, size_t y_to,
 	        const d_surf * trend) 
 {
-	int points = 0;
+	size_t points = 0;
 
 	if (!res)
 		res = create_extvec(size);
@@ -648,7 +648,7 @@ size_t calcVecV(size_t size,
 
 			if (val != 0) {
 				for (j = 0; j < T->rows();) {
-					int prev_j = j;
+					size_t prev_j = j;
 					mult = T->element_at(pos,j,&j);
 					if (mult == 0)
 						continue;

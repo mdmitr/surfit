@@ -177,13 +177,13 @@ void bitvec::get4(size_t pos, bool * b) const
 	size_t real_pos = pos*4;
 	size_t d = real_pos & 31;
 	size_t q = real_pos>>5;
-	size_t t = ((size_t)data[q]) >> d;
+	unsigned surfit_int32 t = ((unsigned surfit_int32)data[q]) >> d;
 	if (d > 32-5) 
 		t |= data[q+1] << (32-d);
-	(char&)b[0] = 1 & (t >> 0);
-	(char&)b[1] = 1 & (t >> 1);
-	(char&)b[2] = 1 & (t >> 2);
-	(char&)b[3] = 1 & (t >> 3);
+	(char&)b[0] = (char)(1 & (t >> 0));
+	(char&)b[1] = (char)(1 & (t >> 1));
+	(char&)b[2] = (char)(1 & (t >> 2));
+	(char&)b[3] = (char)(1 & (t >> 3));
 };
 
 void bitvec::write8(size_t pos, 
@@ -247,17 +247,17 @@ void bitvec::get8(size_t pos, bool * b) const
 	size_t real_pos = pos*8;
 	size_t d = real_pos & 31;
 	size_t q = real_pos>>5;
-	size_t t = ((size_t)data[q]) >> d;
+	unsigned surfit_int32 t = ((unsigned surfit_int32)data[q]) >> d;
 	if (d > 32-5) 
 		t |= data[q+1] << (32-d);
-	(char&)b[0] = 1 & (t >> 0);
-	(char&)b[1] = 1 & (t >> 1);
-	(char&)b[2] = 1 & (t >> 2);
-	(char&)b[3] = 1 & (t >> 3);
-	(char&)b[4] = 1 & (t >> 4);
-	(char&)b[5] = 1 & (t >> 5);
-	(char&)b[6] = 1 & (t >> 6);
-	(char&)b[7] = 1 & (t >> 7);
+	(char&)b[0] = (char)(1 & (t >> 0));
+	(char&)b[1] = (char)(1 & (t >> 1));
+	(char&)b[2] = (char)(1 & (t >> 2));
+	(char&)b[3] = (char)(1 & (t >> 3));
+	(char&)b[4] = (char)(1 & (t >> 4));
+	(char&)b[5] = (char)(1 & (t >> 5));
+	(char&)b[6] = (char)(1 & (t >> 6));
+	(char&)b[7] = (char)(1 & (t >> 7));
 };
 
 void bitvec::write10(size_t pos, 
@@ -332,19 +332,19 @@ void bitvec::get10(size_t pos, bool * b) const
 	size_t real_pos = pos*10;
 	size_t d = real_pos & 31;
 	size_t q = real_pos>>5;
-	size_t t = ((size_t)data[q]) >> d;
+	unsigned surfit_int32 t = ((unsigned surfit_int32)data[q]) >> d;
 	if (d > 32-10)
 		t |= data[q+1] << (32-d);
-	(char&)b[0] = 1 & (t >> 0);
-	(char&)b[1] = 1 & (t >> 1);
-	(char&)b[2] = 1 & (t >> 2);
-	(char&)b[3] = 1 & (t >> 3);
-	(char&)b[4] = 1 & (t >> 4);
-	(char&)b[5] = 1 & (t >> 5);
-	(char&)b[6] = 1 & (t >> 6);
-	(char&)b[7] = 1 & (t >> 7);
-	(char&)b[8] = 1 & (t >> 8);
-	(char&)b[9] = 1 & (t >> 9);
+	(char&)b[0] = (char)(1 & (t >> 0));
+	(char&)b[1] = (char)(1 & (t >> 1));
+	(char&)b[2] = (char)(1 & (t >> 2));
+	(char&)b[3] = (char)(1 & (t >> 3));
+	(char&)b[4] = (char)(1 & (t >> 4));
+	(char&)b[5] = (char)(1 & (t >> 5));
+	(char&)b[6] = (char)(1 & (t >> 6));
+	(char&)b[7] = (char)(1 & (t >> 7));
+	(char&)b[8] = (char)(1 & (t >> 8));
+	(char&)b[9] = (char)(1 & (t >> 9));
 };
 
 void bitvec::AND(const bitvec * b) {
