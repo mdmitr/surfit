@@ -21,9 +21,9 @@
 #define __surfit_bitvec_included__
 
 #if (defined(_WIN32) || defined(__WIN32__) || defined(WIN32)) && !defined(__CYGWIN__)
-#define surfit_int32 __int32
+#define surfit_int32 unsigned __int32
 #else
-#define surfit_int32 int32_t
+#define surfit_int32 uint32_t
 #endif
 
 #ifdef XXL

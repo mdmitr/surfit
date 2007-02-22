@@ -177,7 +177,7 @@ void bitvec::get4(size_t pos, bool * b) const
 	size_t real_pos = pos*4;
 	size_t d = real_pos & 31;
 	size_t q = real_pos>>5;
-	unsigned surfit_int32 t = ((unsigned surfit_int32)data[q]) >> d;
+	surfit_int32 t = ((surfit_int32)data[q]) >> d;
 	if (d > 32-5) 
 		t |= data[q+1] << (32-d);
 	(char&)b[0] = (char)(1 & (t >> 0));
@@ -247,7 +247,7 @@ void bitvec::get8(size_t pos, bool * b) const
 	size_t real_pos = pos*8;
 	size_t d = real_pos & 31;
 	size_t q = real_pos>>5;
-	unsigned surfit_int32 t = ((unsigned surfit_int32)data[q]) >> d;
+	surfit_int32 t = ((surfit_int32)data[q]) >> d;
 	if (d > 32-5) 
 		t |= data[q+1] << (32-d);
 	(char&)b[0] = (char)(1 & (t >> 0));
@@ -332,7 +332,7 @@ void bitvec::get10(size_t pos, bool * b) const
 	size_t real_pos = pos*10;
 	size_t d = real_pos & 31;
 	size_t q = real_pos>>5;
-	unsigned surfit_int32 t = ((unsigned surfit_int32)data[q]) >> d;
+	surfit_int32 t = ((surfit_int32)data[q]) >> d;
 	if (d > 32-10)
 		t |= data[q+1] << (32-d);
 	(char&)b[0] = (char)(1 & (t >> 0));
