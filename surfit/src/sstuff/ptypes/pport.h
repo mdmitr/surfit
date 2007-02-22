@@ -72,7 +72,7 @@ PTYPES_BEGIN
 // useful typedefs
 //
 
-typedef unsigned int    uint;
+typedef size_t    uint;
 typedef unsigned long   ulong;
 typedef unsigned short  ushort;
 typedef unsigned char   uchar;
