@@ -28,6 +28,8 @@
 #include <io.h>
 #endif
 
+#include <limits.h>
+
 #ifndef XXL
 
 namespace surfit {
@@ -92,7 +94,7 @@ void bitvec::init_true() {
 	size_t i;
 	surfit_int32 * ptr = data;
 	for (i = 0; i < byte_size; i++) {
-		*ptr = -1;
+		*ptr = UINT_MAX;
 		ptr++;
 	}
 };

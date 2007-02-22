@@ -23,6 +23,7 @@
 #if (defined(_WIN32) || defined(__WIN32__) || defined(WIN32)) && !defined(__CYGWIN__)
 #define surfit_int32 unsigned __int32
 #else
+#include <stdint.h>
 #define surfit_int32 uint32_t
 #endif
 
