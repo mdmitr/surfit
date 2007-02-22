@@ -160,10 +160,10 @@ am_libsurfit_la_OBJECTS = area.lo area_internal.lo area_tcl.lo \
 	curvs_tcl.lo curv_internal.lo curv_tcl.lo data.lo \
 	data_manager.lo free_elements.lo functional.lo f_area.lo \
 	f_area_surf.lo f_area_surf_ineq.lo f_area_ineq.lo \
-	f_area_mean.lo f_area_wmean.lo f_cntr.lo f_cntr_ineq.lo \
-	f_completer.lo f_curv.lo f_curv_ineq.lo f_curv_surf.lo \
-	f_curv_surf_ineq.lo f_surf.lo f_surf_ineq.lo f_hist.lo \
-	f_ineq.lo f_mask.lo f_mask_ineq.lo f_mask_surf.lo \
+	f_area_mean.lo f_area_wmean.lo f_area_hist.lo f_cntr.lo \
+	f_cntr_ineq.lo f_completer.lo f_curv.lo f_curv_ineq.lo \
+	f_curv_surf.lo f_curv_surf_ineq.lo f_surf.lo f_surf_ineq.lo \
+	f_hist.lo f_ineq.lo f_mask.lo f_mask_ineq.lo f_mask_surf.lo \
 	f_mask_surf_ineq.lo f_mask_mean.lo f_mask_wmean.lo f_mean.lo \
 	f_points.lo f_points_ineq.lo f_points_tcl.lo f_trend.lo \
 	f_value.lo f_wmean.lo grid.lo grid_internal.lo grid_line.lo \
@@ -412,48 +412,48 @@ libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/f_area.cpp src/surfit/f_area_surf.cpp \
 	src/surfit/f_area_surf_ineq.cpp src/surfit/f_area_ineq.cpp \
 	src/surfit/f_area_mean.cpp src/surfit/f_area_wmean.cpp \
-	src/surfit/f_cntr.cpp src/surfit/f_cntr_ineq.cpp \
-	src/surfit/f_completer.cpp src/surfit/f_curv.cpp \
-	src/surfit/f_curv_ineq.cpp src/surfit/f_curv_surf.cpp \
-	src/surfit/f_curv_surf_ineq.cpp src/surfit/f_surf.cpp \
-	src/surfit/f_surf_ineq.cpp src/surfit/f_hist.cpp \
-	src/surfit/f_ineq.cpp src/surfit/f_mask.cpp \
-	src/surfit/f_mask_ineq.cpp src/surfit/f_mask_surf.cpp \
-	src/surfit/f_mask_surf_ineq.cpp src/surfit/f_mask_mean.cpp \
-	src/surfit/f_mask_wmean.cpp src/surfit/f_mean.cpp \
-	src/surfit/f_points.cpp src/surfit/f_points_ineq.cpp \
-	src/surfit/f_points_tcl.cpp src/surfit/f_trend.cpp \
-	src/surfit/f_value.cpp src/surfit/f_wmean.cpp \
-	src/surfit/grid.cpp src/surfit/grid_internal.cpp \
-	src/surfit/grid_line.cpp src/surfit/grid_line_internal.cpp \
-	src/surfit/grid_line_tcl.cpp src/surfit/grid_line_user.cpp \
-	src/surfit/grid_tcl.cpp src/surfit/grid_user.cpp \
-	src/surfit/hist.cpp src/surfit/hist_internal.cpp \
-	src/surfit/hist_tcl.cpp src/surfit/license.cpp \
-	src/surfit/mask.cpp src/surfit/mask_internal.cpp \
-	src/surfit/mask_tcl.cpp src/surfit/matlab.cpp \
-	src/surfit/matr.cpp src/surfit/matrD1.cpp \
-	src/surfit/matrD1_aniso.cpp src/surfit/matrD1_rect.cpp \
-	src/surfit/matrD2.cpp src/surfit/matrD2_rect.cpp \
-	src/surfit/matr_diag.cpp src/surfit/matr_eye.cpp \
-	src/surfit/matr_onesrow.cpp src/surfit/mrf.cpp \
-	src/surfit/others_tcl.cpp src/surfit/pnts_internal.cpp \
-	src/surfit/pnts_tcl.cpp src/surfit/points.cpp \
-	src/surfit/solvers.cpp src/surfit/sort_alg.cpp \
-	src/surfit/surf.cpp src/surfit/surfs_tcl.cpp \
-	src/surfit/surf_internal.cpp src/surfit/surf_tcl.cpp \
-	src/surfit/surfit.cpp src/surfit/surfit_wrap.cxx \
-	src/surfit/variables.cpp src/surfit/solvers/CG.cpp \
-	src/surfit/solvers/J.cpp src/surfit/solvers/JCG.cpp \
-	src/surfit/solvers/RF.cpp src/surfit/solvers/SSOR.cpp \
-	src/surfit/area_tcl.h src/surfit/cntr_tcl.h \
-	src/surfit/curvs_tcl.h src/surfit/curv_tcl.h \
-	src/surfit/f_points_tcl.h src/surfit/grid_line_tcl.h \
-	src/surfit/grid_tcl.h src/surfit/hist_tcl.h \
-	src/surfit/mask_tcl.h src/surfit/other_tcl.h \
-	src/surfit/others_tcl.h src/surfit/pnts_tcl.h \
-	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h \
-	src/surfit/surfit_ie.h
+	src/surfit/f_area_hist.cpp src/surfit/f_cntr.cpp \
+	src/surfit/f_cntr_ineq.cpp src/surfit/f_completer.cpp \
+	src/surfit/f_curv.cpp src/surfit/f_curv_ineq.cpp \
+	src/surfit/f_curv_surf.cpp src/surfit/f_curv_surf_ineq.cpp \
+	src/surfit/f_surf.cpp src/surfit/f_surf_ineq.cpp \
+	src/surfit/f_hist.cpp src/surfit/f_ineq.cpp \
+	src/surfit/f_mask.cpp src/surfit/f_mask_ineq.cpp \
+	src/surfit/f_mask_surf.cpp src/surfit/f_mask_surf_ineq.cpp \
+	src/surfit/f_mask_mean.cpp src/surfit/f_mask_wmean.cpp \
+	src/surfit/f_mean.cpp src/surfit/f_points.cpp \
+	src/surfit/f_points_ineq.cpp src/surfit/f_points_tcl.cpp \
+	src/surfit/f_trend.cpp src/surfit/f_value.cpp \
+	src/surfit/f_wmean.cpp src/surfit/grid.cpp \
+	src/surfit/grid_internal.cpp src/surfit/grid_line.cpp \
+	src/surfit/grid_line_internal.cpp src/surfit/grid_line_tcl.cpp \
+	src/surfit/grid_line_user.cpp src/surfit/grid_tcl.cpp \
+	src/surfit/grid_user.cpp src/surfit/hist.cpp \
+	src/surfit/hist_internal.cpp src/surfit/hist_tcl.cpp \
+	src/surfit/license.cpp src/surfit/mask.cpp \
+	src/surfit/mask_internal.cpp src/surfit/mask_tcl.cpp \
+	src/surfit/matlab.cpp src/surfit/matr.cpp \
+	src/surfit/matrD1.cpp src/surfit/matrD1_aniso.cpp \
+	src/surfit/matrD1_rect.cpp src/surfit/matrD2.cpp \
+	src/surfit/matrD2_rect.cpp src/surfit/matr_diag.cpp \
+	src/surfit/matr_eye.cpp src/surfit/matr_onesrow.cpp \
+	src/surfit/mrf.cpp src/surfit/others_tcl.cpp \
+	src/surfit/pnts_internal.cpp src/surfit/pnts_tcl.cpp \
+	src/surfit/points.cpp src/surfit/solvers.cpp \
+	src/surfit/sort_alg.cpp src/surfit/surf.cpp \
+	src/surfit/surfs_tcl.cpp src/surfit/surf_internal.cpp \
+	src/surfit/surf_tcl.cpp src/surfit/surfit.cpp \
+	src/surfit/surfit_wrap.cxx src/surfit/variables.cpp \
+	src/surfit/solvers/CG.cpp src/surfit/solvers/J.cpp \
+	src/surfit/solvers/JCG.cpp src/surfit/solvers/RF.cpp \
+	src/surfit/solvers/SSOR.cpp src/surfit/area_tcl.h \
+	src/surfit/cntr_tcl.h src/surfit/curvs_tcl.h \
+	src/surfit/curv_tcl.h src/surfit/f_points_tcl.h \
+	src/surfit/grid_line_tcl.h src/surfit/grid_tcl.h \
+	src/surfit/hist_tcl.h src/surfit/mask_tcl.h \
+	src/surfit/other_tcl.h src/surfit/others_tcl.h \
+	src/surfit/pnts_tcl.h src/surfit/surfs_tcl.h \
+	src/surfit/surf_tcl.h src/surfit/surfit_ie.h
 #libsurfit_la_HEADERS += src/surfit/matrD2_aniso.h
 libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/cmofs.h src/surfit/cntr.h \
@@ -463,12 +463,13 @@ libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/functional.h src/surfit/f_area.h \
 	src/surfit/f_area_surf.h src/surfit/f_area_surf_ineq.h \
 	src/surfit/f_area_ineq.h src/surfit/f_area_mean.h \
-	src/surfit/f_area_wmean.h src/surfit/f_cntr.h \
-	src/surfit/f_cntr_ineq.h src/surfit/f_curv.h \
-	src/surfit/f_curv_ineq.h src/surfit/f_completer.h \
-	src/surfit/f_curv_surf.h src/surfit/f_curv_surf_ineq.h \
-	src/surfit/f_surf.h src/surfit/f_surf_ineq.h \
-	src/surfit/f_hist.h src/surfit/f_ineq.h src/surfit/f_mask.h \
+	src/surfit/f_area_wmean.h src/surfit/f_area_hist.h \
+	src/surfit/f_cntr.h src/surfit/f_cntr_ineq.h \
+	src/surfit/f_curv.h src/surfit/f_curv_ineq.h \
+	src/surfit/f_completer.h src/surfit/f_curv_surf.h \
+	src/surfit/f_curv_surf_ineq.h src/surfit/f_surf.h \
+	src/surfit/f_surf_ineq.h src/surfit/f_hist.h \
+	src/surfit/f_ineq.h src/surfit/f_mask.h \
 	src/surfit/f_mask_ineq.h src/surfit/f_mask_surf.h \
 	src/surfit/f_mask_surf_ineq.h src/surfit/f_mask_mean.h \
 	src/surfit/f_mask_wmean.h src/surfit/f_mean.h \
@@ -701,6 +702,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dem_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dems_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_area.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_area_hist.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_area_ineq.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_area_mean.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_area_surf.Plo@am__quote@
@@ -1430,6 +1432,13 @@ f_area_wmean.lo: src/surfit/f_area_wmean.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/f_area_wmean.cpp' object='f_area_wmean.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o f_area_wmean.lo `test -f 'src/surfit/f_area_wmean.cpp' || echo '$(srcdir)/'`src/surfit/f_area_wmean.cpp
+
+f_area_hist.lo: src/surfit/f_area_hist.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT f_area_hist.lo -MD -MP -MF "$(DEPDIR)/f_area_hist.Tpo" -c -o f_area_hist.lo `test -f 'src/surfit/f_area_hist.cpp' || echo '$(srcdir)/'`src/surfit/f_area_hist.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/f_area_hist.Tpo" "$(DEPDIR)/f_area_hist.Plo"; else rm -f "$(DEPDIR)/f_area_hist.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/f_area_hist.cpp' object='f_area_hist.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o f_area_hist.lo `test -f 'src/surfit/f_area_hist.cpp' || echo '$(srcdir)/'`src/surfit/f_area_hist.cpp
 
 f_cntr.lo: src/surfit/f_cntr.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT f_cntr.lo -MD -MP -MF "$(DEPDIR)/f_cntr.Tpo" -c -o f_cntr.lo `test -f 'src/surfit/f_cntr.cpp' || echo '$(srcdir)/'`src/surfit/f_cntr.cpp; \
