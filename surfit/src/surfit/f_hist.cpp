@@ -225,5 +225,11 @@ bool f_hist::minimize() {
 	return false;
 };
 
+void f_hist::drop_private_data() {
+	if (mask)
+		mask->release();
+	mask = NULL;
+};
+
 }; // namespace surfit;
 

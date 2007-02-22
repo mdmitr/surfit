@@ -227,7 +227,30 @@ bool leq(REAL value, REAL mult = 0.001);
 */
 bool geq(REAL value, REAL mult = 0.001);
 
-bool hist(const char * pos = "0", REAL mult = 0.001);
+/*! \ingroup tcl_rules_other
+    \fn bool hist(const char * histogram_name_or_position = "0", REAL mult = 0.001);
+
+    \par Tcl syntax:
+    hist "histogram_name_or_position" mult
+
+    \par Description:
+    This rule adds the surface condition - "the resulting surface histogram should be equal to given histogram".
+    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
+    your conditions and if they are correct, try to change "mult" parameter.
+
+    \param histogram_name_or_position desired \ref d_hist "histogram"
+    \param mult multiplier parameter for \ref penalty algorithm
+
+    \par Math:
+    This command adds the condition:
+    \f[
+	u_{i,j} = histeq( u_{i,j} ),
+    \f]
+    where histeq is the histogram equalization algorithm described in the book
+    R. Gonzalez and R. Woods Digital Image Processing, Addison-Wesley Publishing Company, 1992, Chap. 4.
+    
+*/
+bool hist(const char * histogram_name_or_position = "0", REAL mult = 0.001);
 
 }; // namespace surfit;
 

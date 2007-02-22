@@ -24,6 +24,7 @@
 #include "area.h"
 #include "cntr.h"
 #include "surf.h"
+#include "hist.h"
 #include "curv_internal.h"
 #include "functional.h"
 #include "f_area.h"
@@ -32,6 +33,7 @@
 #include "f_area_surf_ineq.h"
 #include "f_area_mean.h"
 #include "f_area_wmean.h"
+#include "f_area_hist.h"
 #include "f_cntr.h"
 #include "f_cntr_ineq.h"
 #include "f_curv.h"
@@ -358,6 +360,20 @@ bool area_completer_add(REAL weight, const char * area_pos, REAL D1, REAL D2, RE
 	f_completer * f = new f_completer(D1, D2, alpha, w);
 	f->set_area(area, (inside == 1));
 	srf->add_functional(f, weight);
+	return true;
+};
+
+bool area_hist(const char * area_pos, const char * hist_pos, REAL mult, int inside) {
+	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
+	if (area == NULL)
+		return false;
+
+	d_hist * hist = get_element<d_hist>(hist_pos, surfit_hists->begin(), surfit_hists->end());
+	if (hist == NULL)
+		return false;
+
+	f_area_hist * f = new f_area_hist(area, hist, mult, (inside==1));
+	functionals_push_back(f);
 	return true;
 };
 

@@ -54,8 +54,13 @@ const char * hist_getName(const char * pos) {
 };
 
 bool hist_delall() {
+
+	writelog(LOG_MESSAGE,"removing all histograms from memory");
+
+	if (surfit_hists == NULL)
+		return false;
+
 	if (surfit_hists->size() == 0) {
-		//writelog(SURFIT_WARNING,"hists_delall : empty surfit_hists");
 		return false;
 	}
 

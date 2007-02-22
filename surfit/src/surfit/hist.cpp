@@ -175,6 +175,7 @@ struct hist_garbage : public binman {
 		if (surfit_hists) {
 			release_elements(surfit_hists->begin(), surfit_hists->end());
 			delete surfit_hists;
+			surfit_hists = NULL;
 		}
 	}
 

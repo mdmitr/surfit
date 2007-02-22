@@ -50,6 +50,8 @@ public:
 				       bool i_am_cond);
 
 	void cleanup();
+
+	void drop_private_data();
 	
 protected:
 

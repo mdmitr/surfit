@@ -545,6 +545,8 @@ bool area_completer(const char * area_name_or_position = "0", REAL D1 = 1, REAL 
 */
 bool area_completer_add(REAL weight = 1, const char * area_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
 
+bool area_hist(const char * area_name_or_position = "0", const char * histogram_name_or_position = "0", REAL mult = 0.001, int inside = 1);
+
 //////////////
 //
 // contour

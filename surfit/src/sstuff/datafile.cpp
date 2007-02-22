@@ -222,7 +222,11 @@ void datafile::skipHeader(const char * filename) {
 			return;
 		}
 		
+#ifdef XXL
+		__int64 file_pos = _lseeki64(file, 0, SEEK_CUR);
+#else
 		long file_pos = lseek(file, 0, SEEK_CUR);
+#endif
 		
 		if (!byteswaptest()) {
 			writelog(LOG_ERROR,"%s : byteswap test failed", filename);
@@ -232,7 +236,11 @@ void datafile::skipHeader(const char * filename) {
 		}
 		
 		if (condition())
+#ifdef XXL
+			_lseeki64(file,file_pos, SEEK_SET);
+#else
 			lseek(file,file_pos, SEEK_SET);
+#endif
 		
 	}
 };
@@ -309,7 +317,11 @@ bool datafile::skip(bool print_name, char * name, bool print_name_inside_tag) {
 					return skipArray();
 	if ( isWord("tag") ) {
 		
+#ifdef XXL
+		if ( _lseeki64(file, _lseeki64(file, 0, SEEK_CUR)-4,SEEK_SET) != -1L ) 
+#else
 		if ( lseek(file, lseek(file, 0, SEEK_CUR)-4,SEEK_SET) != -1L ) 
+#endif
 			return skipTag(print_name_inside_tag, name, print_name_inside_tag);
 		return false;
 		
@@ -397,7 +409,7 @@ bool datafile::skipByteArray(bool skip_name) {
 	if (skip_name)
 		if ( !readWord() ) return false;
 		
-	int size = 0;
+	size_t size = 0;
 	int f = file;
 	if ( read(f, &size, sizeof(int)) > 0 )
 		return skipBytes(size*sizeof(char));
@@ -410,7 +422,7 @@ bool datafile::skipBoolArray(bool skip_name) {
 		if ( !readWord() ) 
 			return false;
 
-	int size = 0;
+	size_t size = 0;
 	if ( read( file, &size, sizeof(int)) > 0 )
 		return skipBytes(size*sizeof(char));
 	return false;
@@ -421,7 +433,7 @@ bool datafile::skipBitArray(bool skip_name) {
 	if (skip_name)
 		if ( !readWord() ) return false;
 
-	int size = 0;
+	size_t size = 0;
 	if ( read( file, &size, sizeof(int)) > 0 )
 		return skipBytes(size*sizeof(char));
 	return false;
@@ -433,7 +445,7 @@ bool datafile::skipIntArray(bool skip_name) {
 		if ( !readWord() ) 
 			return false;
 
-	int size = 0;
+	size_t size = 0;
 	if ( read( file, &size, sizeof(int)) > 0 )
 		return skipBytes(size*sizeof(int));
 		
@@ -446,7 +458,7 @@ bool datafile::skipShortArray(bool skip_name) {
 		if ( !readWord() ) 
 			return false;
 
-	int size = 0;
+	size_t size = 0;
 	if ( read( file, &size, sizeof(int)) > 0 )
 		return skipBytes(size*sizeof(short));
 	return false;
@@ -457,9 +469,9 @@ bool datafile::skipStringArray(bool skip_name) {
 	if (skip_name) 
 		if ( !readWord() ) return false;
 	
-	int size = 0;
+	size_t size = 0;
 	if ( read( file, &size, sizeof(int)) > 0 ) {
-		int i;
+		size_t i;
 		for (i = 0; i < size; i++)
 			if (!readWord())
 				return false;
@@ -472,7 +484,7 @@ bool datafile::skipRealArray(bool skip_name) {
 	if (skip_name) 
 		if ( !readWord() ) return false;
 	
-	int size = 0;
+	size_t size = 0;
 	if ( read( file, &size, sizeof(int)) > 0 ) {
 		return skipBytes(size*sizeof(REAL));
 	}
@@ -480,14 +492,22 @@ bool datafile::skipRealArray(bool skip_name) {
 };
 
 bool datafile::skipTagName() {
-	int file_pos = lseek(file, 0, SEEK_CUR);
+#ifdef XXL
+	__int64 file_pos = _lseeki64(file, 0, SEEK_CUR);
+#else
+	long file_pos = lseek(file, 0, SEEK_CUR);
+#endif
 	
 	char t[4];
 	
 	size_t r = read( file, t, 4);
 	r += read(file, word, TAG_WORD_SIZE);
 	
+#ifdef XXL
+	_lseeki64(file, file_pos+4+strlen(word)+1, SEEK_SET);
+#else
 	lseek(file, file_pos+4+strlen(word)+1, SEEK_SET);
+#endif
 	
 	return (r > 0);
 };
@@ -637,11 +657,11 @@ bool datafile::writeChar(const char * name, const char * c) {
 };
 
 bool datafile::writeStringArray(const char * name, const strvec * data) {
-	int size = data->size();
+	size_t size = data->size();
 	size_t r = writeBinaryString("array");
 	r += writeBinaryString("string");
 	r += writeBinaryString(name);
-	r += write(file, (void *)&size, sizeof(int));
+	r += write(file, (void *)&size, sizeof(size_t));
 	int i;
 	for (i = 0; i < data->size(); i++)
 		r += writeBinaryString( (*data)(i) );
@@ -649,11 +669,11 @@ bool datafile::writeStringArray(const char * name, const strvec * data) {
 };
 
 bool datafile::writeRealArray(const char * name, const vec * data) {
-	int size = data->size();
+	size_t size = data->size();
 	size_t r = writeBinaryString("array");
 	r += writeBinaryString(REAL_NAME);
 	r += writeBinaryString(name);
-	r += write(file, (void *)&size, sizeof(int));
+	r += write(file, (void *)&size, sizeof(size_t));
 	r += data->write_file(file, size);
 	//r += write(file, data->begin(), size*sizeof(REAL));
 	return (r > 0);
@@ -661,11 +681,11 @@ bool datafile::writeRealArray(const char * name, const vec * data) {
 
 #ifdef XXL
 bool datafile::writeRealArray(const char * name, const extvec * data) {
-	int size = data->size();
+	size_t size = data->size();
 	size_t r = writeBinaryString("array");
 	r += writeBinaryString(REAL_NAME);
 	r += writeBinaryString(name);
-	r += write(file, (void *)&size, sizeof(int));
+	r += write(file, (void *)&size, sizeof(size_t));
 	r += data->write_file(file, size);
 	//r += write(file, data->begin(), size*sizeof(REAL));
 	return (r > 0);
@@ -674,22 +694,22 @@ bool datafile::writeRealArray(const char * name, const extvec * data) {
 
 bool datafile::writeBoolArray(const char * name, const boolvec * data) {
 	size_t r = writeBinaryString("array");
-	int size = data->size();
+	size_t size = data->size();
 	r += writeBinaryString("bool");
 	r += writeBinaryString(name);
-	r += write(file, (void *)&size, sizeof(int));
+	r += write(file, (void *)&size, sizeof(size_t));
 	r += write(file, data->begin(), size*sizeof(bool));
 	return (r > 0);
 };
 
 bool datafile::writeBitArray(const char * name, const bitvec * data) {
 	size_t r = writeBinaryString("array");
-	int int_size = data->int_size() + 1;
-	int size = data->size();
+	size_t int_size = data->int_size() + 1;
+	size_t size = data->size();
 	r += writeBinaryString("bit");
 	r += writeBinaryString(name);
-	r += write(file, &size, sizeof(int));
-	r += write(file, (void *)&int_size, sizeof(int));
+	r += write(file, &size, sizeof(size_t));
+	r += write(file, (void *)&int_size, sizeof(size_t));
 	r += data->write_file(file);
 	//r += write(file, data->const_begin(), (int_size)*sizeof(surfit_int32));
 	return (r > 0);
@@ -697,10 +717,10 @@ bool datafile::writeBitArray(const char * name, const bitvec * data) {
 
 bool datafile::writeShortArray(const char * name, const shortvec * data) {
 	size_t r = writeBinaryString("array");
-	int size = data->size();
+	size_t size = data->size();
 	r += writeBinaryString("short");
 	r += writeBinaryString(name);
-	r += write(file, (void *)&size, sizeof(int));
+	r += write(file, (void *)&size, sizeof(size_t));
 	r += data->write_file(file, size);
 	//r += write(file, data->begin(), size*sizeof(short));
 	return (r > 0);
@@ -708,10 +728,10 @@ bool datafile::writeShortArray(const char * name, const shortvec * data) {
 
 bool datafile::writeIntArray(const char * name, const intvec * data) {
 	size_t r = writeBinaryString("array");
-	int size = data->size();
+	size_t size = data->size();
 	r += writeBinaryString("int");
 	r += writeBinaryString(name);
-	r += write(file, (void *)&size, sizeof(int));
+	r += write(file, (void *)&size, sizeof(size_t));
 	r += write(file, data->begin(), size*sizeof(int));
 	return (r > 0);
 };
@@ -734,24 +754,44 @@ bool datafile::ungetString(const char * string) {
 };
 
 bool datafile::readTagName(char * tagname) {
-	int file_pos = lseek(file, 0, SEEK_CUR);
+#ifdef XXL
+	__int64 file_pos = _lseeki64(file, 0, SEEK_CUR);
+#else
+	long file_pos = lseek(file, 0, SEEK_CUR);
+#endif
 	char t[4];
 	size_t r = read( file, t, 4);
 	r += read( file, tagname, TAG_WORD_SIZE);
+#ifdef XXL
+	_lseeki64(file, file_pos, SEEK_SET);
+#else
 	lseek(file, file_pos, SEEK_SET);
+#endif
 	return (r > 0);
 };
 
 bool datafile::readWord() {
-	int file_pos = lseek(file, 0, SEEK_CUR);
+#ifdef XXL
+	__int64 file_pos = _lseeki64(file, 0, SEEK_CUR);
+	size_t r = read(file, word, TAG_WORD_SIZE);
+	if (_lseeki64(file, file_pos + strlen(word)+1, SEEK_SET) == -1L)
+		return false;
+	return (r > 0);
+#else
+	long file_pos = lseek(file, 0, SEEK_CUR);
 	size_t r = read(file, word, TAG_WORD_SIZE);
 	if (lseek(file, file_pos + strlen(word)+1, SEEK_SET) == -1L)
 		return false;
 	return (r > 0);
+#endif
 };
 
 bool datafile::skipBytes(long how_much) {
-	int res = lseek(file, how_much, SEEK_CUR);
+#ifdef XXL
+	__int64 res = _lseeki64(file, how_much, SEEK_CUR);
+#else
+	long res = lseek(file, how_much, SEEK_CUR);
+#endif
 	return ( res != -1L );
 };
 
@@ -783,7 +823,7 @@ bool datafile::readReal(REAL & d) {
 bool datafile::readStringArray(strvec *& data) {
 	size_t r = 0;
 	size_t size = 0;
-	if (read( file,  &size, sizeof(int)) > 0) {
+	if (read( file,  &size, sizeof(size_t)) > 0) {
 		
 		data = create_strvec(size);
 		if (data == NULL) {
@@ -806,9 +846,9 @@ bool datafile::readStringArray(strvec *& data) {
 bool datafile::readRealArray(vec *& data) {
 	size_t r = 0;
 	size_t size = 0;
-	if (read( file,  &size, sizeof(int)) > 0) {
+	if (read( file,  &size, sizeof(size_t)) > 0) {
 		
-		data = create_vec(size);
+		data = create_vec(size,0,0); // don't fill
 		if (data == NULL) {
 			writelog(LOG_ERROR,"Out of memory");
 			return false;
@@ -832,9 +872,9 @@ bool datafile::readRealArray(vec *& data) {
 bool datafile::readRealArray(extvec *& data) {
 	size_t r = 0;
 	size_t size = 0;
-	if (read( file,  &size, sizeof(int)) > 0) {
+	if (read( file,  &size, sizeof(size_t)) > 0) {
 		
-		data = create_extvec(size);
+		data = create_extvec(size,0,0); // don't fill
 		if (data == NULL) {
 			writelog(LOG_ERROR,"Out of memory");
 			return false;
@@ -858,9 +898,9 @@ bool datafile::readRealArray(extvec *& data) {
 bool datafile::readBoolArray(boolvec *& data) {
 	size_t r = 0;
 	size_t size = 0;
-	if (read( file,  &size, sizeof(int)) > 0) {
+	if (read( file,  &size, sizeof(size_t)) > 0) {
 		
-		data = create_boolvec(size);
+		data = create_boolvec(size,0,0); // don't fill
 		
 		r = read( file, data->begin(), sizeof(bool)*size );
 		
@@ -879,10 +919,10 @@ bool datafile::readBoolArray(boolvec *& data) {
 bool datafile::readBitArray(bitvec *& data) {
 	size_t r = 0;
 	size_t size = 0;
-	if (read( file,  &size, sizeof(int)) > 0) {
+	if (read( file,  &size, sizeof(size_t)) > 0) {
 		
-		int elements = 0;
-		r = read( file, &elements, sizeof(int)*1 );
+		size_t elements = 0;
+		r = read( file, &elements, sizeof(size_t)*1 );
 		
 		data = create_bitvec(size);
 		
@@ -904,9 +944,9 @@ bool datafile::readBitArray(bitvec *& data) {
 bool datafile::readShortArray(shortvec *& data) {
 	size_t r = 0;
 	size_t size = 0;
-	if (read( file,  &size, sizeof(int)) > 0) {
+	if (read( file,  &size, sizeof(size_t)) > 0) {
 		
-		data = create_shortvec(size);
+		data = create_shortvec(size,0,0); // don't fill
 		
 		r = data->read_file(file, size);
 		//r = read( file, data->begin(), sizeof(short)*size );
@@ -926,9 +966,9 @@ bool datafile::readShortArray(shortvec *& data) {
 bool datafile::readIntArray(intvec *& data) {
 	size_t r = 0;
 	size_t size = 0;
-	if (read( file,  &size, sizeof(int)) > 0) {
+	if (read( file,  &size, sizeof(size_t)) > 0) {
 		
-		data = create_intvec(size);
+		data = create_intvec(size,0,0); // don't fill
 		
 		r = read( file, data->begin(), sizeof(int)*size );
 		

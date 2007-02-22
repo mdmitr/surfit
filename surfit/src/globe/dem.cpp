@@ -473,7 +473,7 @@ bool d_dem::decompose() {
 
 	if (store_pos == coeffs_store->size()) {
 		
-		writelog(LOG_MESSAGE,"dem (%s): make decomposition",
+		writelog(LOG_MESSAGE,"dem (%s): making decomposition",
 			getName()?getName():"noname");
 		bool enlarge_X = false;
 		bool enlarge_Y = false;
@@ -584,7 +584,7 @@ bool d_dem::reconstruct() {
 	if (N == 0)
 		return false;
 
-	writelog(LOG_MESSAGE,"dem (%s): make reconstruction",
+	writelog(LOG_MESSAGE,"dem (%s): making reconstruction",
 			      getName()?getName():"noname");
 
 	store_pos--;
