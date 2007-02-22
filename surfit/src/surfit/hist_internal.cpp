@@ -64,7 +64,7 @@ REAL get_eq_value(const vec * T, const vec * Z, REAL val,
 	size_t T_size = T->size();
 	
 	REAL pos = (T_size-1)*val;
-	size_t pos2 = floor(pos + 0.5);
+	size_t pos2 = size_t(floor(pos + 0.5));
 	REAL diff = pos-pos2;
 	
 	size_t pos1 = diff < 0?pos2 - 1:pos2 + 1;

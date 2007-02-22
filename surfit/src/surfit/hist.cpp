@@ -83,7 +83,7 @@ size_t d_hist::operator()(REAL value) const
 		return UINT_MAX;
 	}
 
-	size_t pos = (value-z_from)/z_step;
+	size_t pos = (size_t)((value-z_from)/z_step);
 	return MIN(size()-1,pos);
 };
 
