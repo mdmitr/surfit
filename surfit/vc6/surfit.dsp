@@ -421,6 +421,10 @@ SOURCE=..\src\surfit\f_area.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\surfit\f_area_hist.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\surfit\f_area_ineq.cpp
 # End Source File
 # Begin Source File
@@ -853,6 +857,10 @@ SOURCE=..\src\surfit\curvs_tcl.h
 # Begin Source File
 
 SOURCE=..\src\surfit\f_area.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_area_hist.h
 # End Source File
 # Begin Source File
 

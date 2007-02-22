@@ -164,14 +164,14 @@ BSC32_SBRS= \
 	"$(INTDIR)\punknown.sbr" \
 	"$(INTDIR)\datafile.sbr" \
 	"$(INTDIR)\fileio.sbr" \
+	"$(INTDIR)\findfile.sbr" \
 	"$(INTDIR)\geom_alg.sbr" \
 	"$(INTDIR)\interp.sbr" \
 	"$(INTDIR)\read_txt.sbr" \
 	"$(INTDIR)\rnd.sbr" \
 	"$(INTDIR)\sstuff.sbr" \
 	"$(INTDIR)\stepFunc.sbr" \
-	"$(INTDIR)\threads.sbr" \
-	"$(INTDIR)\findfile.sbr"
+	"$(INTDIR)\threads.sbr"
 
 "$(OUTDIR)\sstuff.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -202,14 +202,14 @@ LINK32_OBJS= \
 	"$(INTDIR)\punknown.obj" \
 	"$(INTDIR)\datafile.obj" \
 	"$(INTDIR)\fileio.obj" \
+	"$(INTDIR)\findfile.obj" \
 	"$(INTDIR)\geom_alg.obj" \
 	"$(INTDIR)\interp.obj" \
 	"$(INTDIR)\read_txt.obj" \
 	"$(INTDIR)\rnd.obj" \
 	"$(INTDIR)\sstuff.obj" \
 	"$(INTDIR)\stepFunc.obj" \
-	"$(INTDIR)\threads.obj" \
-	"$(INTDIR)\findfile.obj"
+	"$(INTDIR)\threads.obj"
 
 "..\bin\libsstuff.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -357,14 +357,14 @@ BSC32_SBRS= \
 	"$(INTDIR)\punknown.sbr" \
 	"$(INTDIR)\datafile.sbr" \
 	"$(INTDIR)\fileio.sbr" \
+	"$(INTDIR)\findfile.sbr" \
 	"$(INTDIR)\geom_alg.sbr" \
 	"$(INTDIR)\interp.sbr" \
 	"$(INTDIR)\read_txt.sbr" \
 	"$(INTDIR)\rnd.sbr" \
 	"$(INTDIR)\sstuff.sbr" \
 	"$(INTDIR)\stepFunc.sbr" \
-	"$(INTDIR)\threads.sbr" \
-	"$(INTDIR)\findfile.sbr"
+	"$(INTDIR)\threads.sbr"
 
 "$(OUTDIR)\sstuff.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -395,14 +395,14 @@ LINK32_OBJS= \
 	"$(INTDIR)\punknown.obj" \
 	"$(INTDIR)\datafile.obj" \
 	"$(INTDIR)\fileio.obj" \
+	"$(INTDIR)\findfile.obj" \
 	"$(INTDIR)\geom_alg.obj" \
 	"$(INTDIR)\interp.obj" \
 	"$(INTDIR)\read_txt.obj" \
 	"$(INTDIR)\rnd.obj" \
 	"$(INTDIR)\sstuff.obj" \
 	"$(INTDIR)\stepFunc.obj" \
-	"$(INTDIR)\threads.obj" \
-	"$(INTDIR)\findfile.obj"
+	"$(INTDIR)\threads.obj"
 
 "..\bin\libsstuff.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<

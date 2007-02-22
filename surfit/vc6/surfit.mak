@@ -78,6 +78,8 @@ CLEAN :
 	-@erase "$(INTDIR)\data_manager.sbr"
 	-@erase "$(INTDIR)\f_area.obj"
 	-@erase "$(INTDIR)\f_area.sbr"
+	-@erase "$(INTDIR)\f_area_hist.obj"
+	-@erase "$(INTDIR)\f_area_hist.sbr"
 	-@erase "$(INTDIR)\f_area_ineq.obj"
 	-@erase "$(INTDIR)\f_area_ineq.sbr"
 	-@erase "$(INTDIR)\f_area_mean.obj"
@@ -362,7 +364,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\sort_alg.sbr" \
 	"$(INTDIR)\surfit.sbr" \
 	"$(INTDIR)\surfit_wrap.sbr" \
-	"$(INTDIR)\variables.sbr"
+	"$(INTDIR)\variables.sbr" \
+	"$(INTDIR)\f_area_hist.sbr"
 
 "$(OUTDIR)\surfit.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -461,6 +464,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\surfit.obj" \
 	"$(INTDIR)\surfit_wrap.obj" \
 	"$(INTDIR)\variables.obj" \
+	"$(INTDIR)\f_area_hist.obj" \
 	"..\bin\libsstuff.lib"
 
 "..\bin\libsurfit.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -521,6 +525,8 @@ CLEAN :
 	-@erase "$(INTDIR)\data_manager.sbr"
 	-@erase "$(INTDIR)\f_area.obj"
 	-@erase "$(INTDIR)\f_area.sbr"
+	-@erase "$(INTDIR)\f_area_hist.obj"
+	-@erase "$(INTDIR)\f_area_hist.sbr"
 	-@erase "$(INTDIR)\f_area_ineq.obj"
 	-@erase "$(INTDIR)\f_area_ineq.sbr"
 	-@erase "$(INTDIR)\f_area_mean.obj"
@@ -807,7 +813,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\sort_alg.sbr" \
 	"$(INTDIR)\surfit.sbr" \
 	"$(INTDIR)\surfit_wrap.sbr" \
-	"$(INTDIR)\variables.sbr"
+	"$(INTDIR)\variables.sbr" \
+	"$(INTDIR)\f_area_hist.sbr"
 
 "$(OUTDIR)\surfit.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -906,6 +913,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\surfit.obj" \
 	"$(INTDIR)\surfit_wrap.obj" \
 	"$(INTDIR)\variables.obj" \
+	"$(INTDIR)\f_area_hist.obj" \
 	"..\bin\libsstuff.lib"
 
 "..\bin\libsurfit.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -1308,6 +1316,12 @@ SOURCE=..\src\surfit\curvs_tcl.cpp
 SOURCE=..\src\surfit\f_area.cpp
 
 "$(INTDIR)\f_area.obj"	"$(INTDIR)\f_area.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\f_area_hist.cpp
+
+"$(INTDIR)\f_area_hist.obj"	"$(INTDIR)\f_area_hist.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

@@ -3679,6 +3679,10 @@
 						</FileConfiguration>
 					</File>
 					<File
+						RelativePath="..\src\surfit\f_area_hist.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\src\surfit\f_area_ineq.cpp"
 						>
 						<FileConfiguration
@@ -4971,6 +4975,10 @@
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_area.h"
+						>
+					</File>
+					<File
+						RelativePath="..\src\surfit\f_area_hist.h"
 						>
 					</File>
 					<File
