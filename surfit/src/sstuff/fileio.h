@@ -102,6 +102,9 @@ SSTUFF_EXPORT
 int calc_columns(const char * Str, int readed, char * seps);
 
 SSTUFF_EXPORT
+int calc_rows(const char * Str, int readed);
+
+SSTUFF_EXPORT
 char * get_name(const char * filename);
 
 SSTUFF_EXPORT

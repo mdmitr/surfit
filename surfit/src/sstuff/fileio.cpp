@@ -409,6 +409,23 @@ int calc_columns(const char * Str, int readed, char * seps) {
 	return columns;
 };
 
+int calc_rows(const char * Str, int readed) {
+
+	char * str = strdup(Str);
+	char seps[] = "\n";
+
+	int rows = 0;
+
+	char * token = strtok( str, seps );
+	while (token != NULL) {
+		rows++;
+		token = strtok( NULL, seps );
+	}
+
+	free(str);
+	return rows;
+};
+
 char * get_name(const char * filename) {
 
 	const char * posLastDot = strrchr(filename, '.');

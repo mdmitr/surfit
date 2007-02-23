@@ -84,6 +84,7 @@ bool one_columns_read(const char * filename,
 	char * seps = strdup(delimiter);
 	char * token = NULL;
 	int columns = 0;
+	int rows = 0;
 	int lines_readed = 0;
 	int current_column = 0;
 	int size = 0;
@@ -100,6 +101,7 @@ bool one_columns_read(const char * filename,
 		goto one_columns_read_failed;
 
 	columns = calc_columns(string_buf, MY_READ_BUF_SIZE, seps);
+	rows = calc_rows(string_buf, MY_READ_BUF_SIZE);
 
 	if (col1 > columns)
 		goto one_columns_read_failed;
@@ -121,10 +123,16 @@ bool one_columns_read(const char * filename,
 		token = strtok(string_buf, seps);
 		REAL val1 = FLT_MAX, val2 = FLT_MAX;
 		while (token != NULL) {
-			if (current_column+1 == col1) {
+			if ((current_column+1 == col1) || (rows == 1)) {
 				if (strlen(token) > 0)
 					val1 = (REAL)ator(token);
 				
+			}
+
+			if ((rows == 1) && (val1 != FLT_MAX))
+			{
+				vcol1->push_back(val1);
+				val1 = FLT_MAX;
 			}
 				
 			current_column++;
@@ -132,7 +140,7 @@ bool one_columns_read(const char * filename,
 		}
 
 		if (
-			((val1 != FLT_MAX) || (col1 == 0)) 
+			(((val1 != FLT_MAX) || (col1 == 0))  && (rows != 1))
 		   ) 
 		{
 			vcol1->push_back(val1);
