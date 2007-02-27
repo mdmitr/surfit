@@ -197,19 +197,34 @@ bool curve_surf_geq(const char * surf_pos, const char * curv_pos, REAL mult) {
 	return true;
 };
 
-bool area(const char * Value, const char * pos, int inside) {
+struct regexp_area
+{
+	regexp_area(const char * ipos, REAL ivalue, int iinside) : pos(ipos), value(ivalue), inside(iinside) {};
+	void operator()(d_area * area) 
+	{
+		if (area->getName() == NULL)
+			return;
+		if ( RegExpMatch(pos, area->getName()) )
+		{
+			writelog(LOG_MESSAGE,"creating gridding rule area(\"%s\")", 
+				 area->getName()?area->getName():"noname");
+			f_area * f = new f_area(value, area, (inside == 1));
+			functionals_push_back(f);
+		}
+	}
+	const char * pos;
+	REAL value;
+	int inside;
+};
 
+bool area(const char * Value, const char * pos, int inside) 
+{
 	REAL value = undef_value;
 	if (strcmp(Value,"undef") != 0) {
 		value = atof(Value);
 	}
 
-	d_area * area = get_element<d_area>(pos, surfit_areas->begin(), surfit_areas->end());
-	if (area == NULL)
-		return false;
-	
-	f_area * f = new f_area(value, area, (inside == 1) );
-	functionals_push_back(f);
+	std::for_each(surfit_areas->begin(), surfit_areas->end(), regexp_area(pos, value, inside));
 	return true;
 };
 
