@@ -97,12 +97,19 @@ bool one_columns_read(const char * filename,
 	if (!fgets(string_buf,MY_READ_BUF_SIZE,file)) 
 		goto one_columns_read_failed;
 
-	if (fsetpos(file, &pos) != 0)
-		goto one_columns_read_failed;
+	
 
 	columns = calc_columns(string_buf, MY_READ_BUF_SIZE, seps);
+
+	fread(string_buf, MY_READ_BUF_SIZE, sizeof(char), file);
+	if (ferror(file) != 0)
+		goto one_columns_read_failed;
+
 	rows = calc_rows(string_buf, MY_READ_BUF_SIZE);
 
+	if (fsetpos(file, &pos) != 0)
+		goto one_columns_read_failed;
+	
 	if (col1 > columns)
 		goto one_columns_read_failed;
 	
