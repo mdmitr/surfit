@@ -9,6 +9,7 @@ Bugfixes:
 	* bugfix in trend functional.
 
 New:
+	+ 64-bit platform support
 	+ added pnts_abs function
 	+ added surf_filter_by_mask
 	+ added surf_filter_in_area
@@ -21,17 +22,7 @@ New:
 	+ cntr_load_shp syntax extended. Now you can load contours with constant Z value
 	  from shapefiles of SHPYT_ARC type.
 
-	+ regexp and wildcards support for commands:
-	  libsurfit: 
-		  commands: curv_read, area_read, 
-			    surf_filter_in_area, surf_filter_out_area
-		  gridding rules: contour, contour_add, fault
-	  libsurfit_io: cntr_save_bln, cntr_load_bln, cntr_save_shp, cntr_load_shp
-		        curv_save_bln, curv_load_bln, curv_save_shp, curv_load_shp
-	  libglobe: 
-		  commands: dem_decomp, dem_recons
-		  gridding rules: dem, dem_add
-	
+	+ regexp and wildcards support for commands and gridding rules
 
 surfit 2.1 changes:
 
