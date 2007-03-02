@@ -10,7 +10,7 @@ load libsurfit[info sharedlibextension]
 clear_data 
 
 # set name of surface
-set map_name "map_area" 
+set map_name "map_area_hist" 
 
 # set tolerance for cg solver
 set tol 1e-006
@@ -37,6 +37,7 @@ area_read "area5.txt" "area5"
 # load area from text file 
 area_read "area6.txt" "area6"  
 
+# load histogram from text file
 hist_read "eq.txt" 35 60
  
 ##
@@ -57,6 +58,7 @@ area 30 "area3"
 # resulting surface in area = value... 
 area undef "area5"  
 
+# resulting surface histogram in area = histogram
 area_hist "area6" "eq"
 
 # resulting surface should tend to be constant or plane 
@@ -81,4 +83,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "area.dat" "map_area" 
+surf_save "area_hist.dat" "map_area_hist" 
