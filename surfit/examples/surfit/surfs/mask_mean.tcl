@@ -60,3 +60,5 @@ grid_unload
 
 # save surface to surfit datafile 
 surf_save "mask_mean.dat" "map_mask_mean" 
+
+puts [concat "Surface mean value with mask : " [surf_mask_mean "test_mask" "map_mask_mean"]]
