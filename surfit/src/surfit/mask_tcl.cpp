@@ -31,22 +31,35 @@
 #include "grid.h"
 #include "bitvec.h"
 #include "variables_internal.h"
+#include "findfile.h"
 
 #include <errno.h>
 #include <float.h>
 
+#include <algorithm>
+
 namespace surfit {
 
-bool mask_load(const char * filename, const char * defname) {
-	d_mask * msk = _mask_load(filename, defname);
-	if (msk) {
-		surfit_masks->push_back(msk);
-		return true;
+bool mask_load(const char * filename, const char * defname) 
+{
+	const char * fname = find_first(filename);
+	bool res = false;
+
+	while (fname != NULL) {
+		d_mask * msk = _mask_load(fname, defname);
+		if (msk) {
+			surfit_masks->push_back(msk);
+			res = true;
+		}
+		find_next();
 	}
-	return false;
+
+	find_close();
+	return res;
 };
 
-bool mask_save(const char * filename, const char * pos) {
+bool mask_save(const char * filename, const char * pos) 
+{
 	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
 	if (!msk)
 		return false;
@@ -54,8 +67,8 @@ bool mask_save(const char * filename, const char * pos) {
 	return _mask_save(msk, filename);
 };
 
-bool mask_save_grd(const char * filename, const char * pos) {
-
+bool mask_save_grd(const char * filename, const char * pos) 
+{
 	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
 	if (!msk)
 		return false;
@@ -107,7 +120,8 @@ bool mask_save_grd(const char * filename, const char * pos) {
 	return true;
 };
 
-bool mask_save_xyz(const char * filename, const char * pos) {
+bool mask_save_xyz(const char * filename, const char * pos) 
+{
 
 	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
 	if (!msk)
@@ -148,8 +162,8 @@ bool mask_save_xyz(const char * filename, const char * pos) {
 	return true;
 };
 
-bool mask_or(const char * pos1, const char * pos2) {
-
+bool mask_or(const char * pos1, const char * pos2) 
+{
 	d_mask * def1 = get_element<d_mask>(pos1, surfit_masks->begin(), surfit_masks->end());
 	if (!def1)
 		return false;
@@ -159,16 +173,14 @@ bool mask_or(const char * pos1, const char * pos2) {
 		return false;
 
 	writelog(LOG_MESSAGE,"mask : %s = %s OR %s", 
-		def1->getName()?def1->getName():pos1, 
-		def1->getName()?def1->getName():pos1, 
-		def2->getName()?def2->getName():pos2);
+		def1->getName(), def1->getName(), def2->getName());
 	
 	def1->OR(def2);
 	return true;
 };
 
-bool mask_xor(const char * pos1, const char * pos2) {
-
+bool mask_xor(const char * pos1, const char * pos2) 
+{
 	d_mask * def1 = get_element<d_mask>(pos1, surfit_masks->begin(), surfit_masks->end());
 	if (!def1)
 		return false;
@@ -178,15 +190,13 @@ bool mask_xor(const char * pos1, const char * pos2) {
 		return false;
 
 	writelog(LOG_MESSAGE,"mask_xor : \"%s\" = \"%s\" XOR \"%s\"", 
-		def1->getName()?def1->getName():pos1, 
-		def1->getName()?def1->getName():pos1, 
-		def2->getName()?def2->getName():pos2);
+		def1->getName(), def1->getName(), def2->getName());
 	def1->XOR(def2);
 	return true;
 };
 
-bool mask_and(const char * pos1, const char * pos2) {
-
+bool mask_and(const char * pos1, const char * pos2) 
+{
 	d_mask * def1 = get_element<d_mask>(pos1, surfit_masks->begin(), surfit_masks->end());
 	if (!def1)
 		return false;
@@ -196,15 +206,13 @@ bool mask_and(const char * pos1, const char * pos2) {
 		return false;
 
 	writelog(LOG_MESSAGE,"mask_and : \"%s\" = \"%s\" AND \"%s\"", 
-		def1->getName()?def1->getName():pos1, 
-		def1->getName()?def1->getName():pos1, 
-		def2->getName()?def2->getName():pos2);
+		def1->getName(), def1->getName(), def2->getName());
 	def1->AND(def2);
 	return true;
 };
 
-bool mask_not(const char * pos1, const char * pos2) {
-
+bool mask_not(const char * pos1, const char * pos2) 
+{
 	d_mask * def1 = get_element<d_mask>(pos1, surfit_masks->begin(), surfit_masks->end());
 	if (!def1)
 		return false;
@@ -214,31 +222,41 @@ bool mask_not(const char * pos1, const char * pos2) {
 		return false;
 
 	writelog(LOG_MESSAGE,"mask_not : \"%s\" = NOT \"%s\"", 
-		def1->getName()?def1->getName():pos1, 
-		def2->getName()?def2->getName():pos2);
+		def1->getName(), def2->getName());
 
 	def1->NOT(def2);
 	return true;
 };
 
-bool mask_by_surf(const char * surf_pos) {
-	
-	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-
-	writelog(LOG_MESSAGE,"creating mask by surface %s", srf->getName()?srf->getName():surf_pos);
-
-	d_mask * msk = _mask_by_surf(srf);
-	if (msk) {
-		surfit_masks->push_back(msk);
-		return true;
-	}
-	return false;
+struct match_mask_by_surf
+{
+	match_mask_by_surf(const char * isurf_pos) : surf_pos(isurf_pos), res(false) {};
+	void operator()(d_surf * surf) 
+	{
+		if ( StringMatch( surf_pos, surf->getName() ) )
+		{
+			writelog(LOG_MESSAGE,"creating mask by surface %s", surf->getName());
+			d_mask * msk = _mask_by_surf(surf);
+			if (msk) {
+				surfit_masks->push_back(msk);
+				res = true;
+			}
+		}
+			
+	};
+	const char * surf_pos;
+	bool res;
 };
 
-bool mask_apply_to_surf(const char * def_pos, const char * surf_pos) {
+bool mask_by_surf(const char * surf_pos) 
+{
+	match_mask_by_surf mm(surf_pos);
+	mm = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), mm);
+	return mm.res;
+};
 
+bool mask_apply_to_surf(const char * def_pos, const char * surf_pos) 
+{
 	d_mask * msk = get_element<d_mask>(def_pos, surfit_masks->begin(), surfit_masks->end());
 	if (!msk)
 		return false;
@@ -250,27 +268,29 @@ bool mask_apply_to_surf(const char * def_pos, const char * surf_pos) {
 	return _mask_apply_to_surf(msk, srf);
 };
 
-bool mask_setName(const char * new_name, const char * pos) {
-
+bool mask_setName(const char * new_name, const char * pos) 
+{
 	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
 	if (!msk)
 		return false;
 
 	writelog(LOG_MESSAGE,"setting name \"%s\" to mask \"%s\"",
-		new_name, msk->getName()?msk->getName():pos);
+		new_name, msk->getName());
 
 	msk->setName(new_name);
 	return true;
 };
 
-const char * mask_getName(const char * pos) {
+const char * mask_getName(const char * pos) 
+{
 	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
 	if (!msk)
 		return false;
 	return msk->getName();
 };
 
-bool mask_getValue(REAL x, REAL y, const char * pos) {
+bool mask_getValue(REAL x, REAL y, const char * pos) 
+{
 	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
 	if (!msk)
 		return false;
@@ -284,7 +304,7 @@ bool mask_to_surf(const char * pos) {
 		return false;
 
 	writelog(LOG_MESSAGE,"creating surface by mask \"%s\"",
-		msk->getName()?msk->getName():pos);
+		msk->getName());
 
 	d_surf * srf = create_surf_by_mask(msk);
 	if (msk)
@@ -327,7 +347,7 @@ bool mask_del(const char * pos) {
 		return false;
 
 	writelog(LOG_MESSAGE,"removing mask \"%s\" from memory",
-		(*msk)->getName()?(*msk)->getName():pos);
+		(*msk)->getName());
 
 	if (*msk)
 		(*msk)->release();

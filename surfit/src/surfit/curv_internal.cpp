@@ -282,11 +282,7 @@ void _curv_info(const d_curv * curvline) {
 		writelog(LOG_WARNING, "_curv_info : NULL pointer given");
 		return;
 	}
-	if (curvline->getName()) {
-		writelog(LOG_MESSAGE,"curv (%s)",curvline->getName());
-	} else {
-		writelog(LOG_MESSAGE,"curv noname");	
-	}
+	writelog(LOG_MESSAGE,"curv (%s)",curvline->getName());
 };
 
 void _add_surfit_curvs(d_curv * contour) {

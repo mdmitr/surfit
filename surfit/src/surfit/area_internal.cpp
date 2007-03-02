@@ -239,11 +239,7 @@ void _area_info(const d_area * arealine) {
 		writelog(LOG_WARNING, "_area_info : NULL pointer given");
 		return;
 	}
-	if (arealine->getName()) {
-		writelog(LOG_MESSAGE,"area (%s)",arealine->getName());
-	} else {
-		writelog(LOG_MESSAGE,"area noname");	
-	}
+	writelog(LOG_MESSAGE,"area (%s)",arealine->getName());
 };
 
 

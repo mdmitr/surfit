@@ -665,7 +665,7 @@ bool surf_filter_by_mask(const char * surface_name_or_position = "0", const char
     \fn void surf_filter_in_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
     
     \par Tcl syntax:
-    surf_filter_in_area \ref regexp "surface_name_or_position" \ref regexp "area_name_or_position"
+    surf_filter_in_area \ref match "surface_name_or_position" \ref match "area_name_or_position"
 
     \par Description:
     makes all cells values undefined which are inside of \ref d_area
@@ -676,7 +676,7 @@ void surf_filter_in_area(const char * surface_name_or_position = "0", const char
     \fn void surf_filter_out_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
     
     \par Tcl syntax:
-    surf_filter_out_area \ref regexp "surface_name_or_position" \ref regexp "area_name_or_position"
+    surf_filter_out_area \ref match "surface_name_or_position" \ref match "area_name_or_position"
 
     \par Description:
     makes all cells values undefined which are outside of \ref d_area

@@ -21,6 +21,7 @@
 #define __surfit_data_included__
 
 #include "fileio.h"
+#include "interp.h"
 
 #include <string.h>
 #include <vector>
@@ -173,7 +174,7 @@ T * get_element(const char * pos, iter begin_T, iter end_T) {
 	for (it = begin_T; it != end_T; it++) {
 		if (*it) {
 			if ( (*it)->getName() ) {
-				if ( strcmp( (*it)->getName(), pos) == 0 ) 
+				if ( StringMatch( pos, (*it)->getName() ) == 0 ) 
 					return *it;
 			}
 		}
@@ -276,7 +277,7 @@ iter get_iterator(const char * pos, iter begin_T, iter end_T) {
 	for (it = begin_T; it != end_T; it++) {
 		if (*it) {
 			if ( (*it)->getName() ) {
-				if ( strcmp( (*it)->getName(), pos) == 0 ) 
+				if ( StringMatch( pos, (*it)->getName() )  )
 					return it;
 			}
 		}

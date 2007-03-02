@@ -67,8 +67,7 @@ const data * f_hist::this_get_data(int pos) const {
 
 bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
-	writelog(LOG_MESSAGE,"histogram \"%s\"", 
-		hist->getName()?hist->getName():"noname");
+	writelog(LOG_MESSAGE,"histogram \"%s\"", hist->getName());
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 

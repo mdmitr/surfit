@@ -244,7 +244,7 @@ bool _pnts_write(const d_points * pnts, const char * filename, const char * mask
 	}
 
 	writelog(LOG_MESSAGE,"writing points \"%s\" to file %s",
-		pnts->getName()?pnts->getName():"noname", filename);
+		pnts->getName(), filename);
 
 	return three_columns_write(filename, mask,
 		                   pnts->X, pnts->Y, pnts->Z);
@@ -303,10 +303,7 @@ void _pnts_info(const d_points * pnts) {
 		writelog(LOG_WARNING, "_pnts_info : NULL pointer given");
 		return;
 	}
-	if (pnts->getName())
-		writelog(LOG_MESSAGE,"points (%s) : %d data points.",pnts->getName(), pnts->size());
-	else
-		writelog(LOG_MESSAGE,"points noname : %d data points",pnts->size());
+	writelog(LOG_MESSAGE,"points (%s) : %d data points.",pnts->getName(), pnts->size());
 };
 
 bool ptr_sub_points_less(sub_points * it1, sub_points * it2) {

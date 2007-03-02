@@ -72,7 +72,7 @@ void data::setType(const char * newtype) {
 };
 
 const char * data::getName() const {
-	return name;
+	return name?name:"noname";
 };
 
 const char * data::getType() const {

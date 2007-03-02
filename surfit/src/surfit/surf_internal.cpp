@@ -556,10 +556,7 @@ d_surf * _surf_project(d_surf * srf, d_grid * grd, grid_line * fault_grd_line) {
 void _surf_info(const d_surf * srf) {
 	if (!srf)
 		return;
-	if (srf->getName()) 
-		writelog(LOG_MESSAGE,"surf (%s) : size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
-	else 
-		writelog(LOG_MESSAGE,"surf noname : size=(%d x %d)", srf->getCountX(), srf->getCountY());
+	writelog(LOG_MESSAGE,"surf (%s) : size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
 };
 
 bool _surf_resid(const d_surf * srf, const d_points * pnts, const char * filename) {
@@ -572,8 +569,7 @@ bool _surf_resid(const d_surf * srf, const d_points * pnts, const char * filenam
 		return false;
 
 	writelog(LOG_MESSAGE, "Calcualting residuals. surface \"%s\", points \"%s\"",
-		srf->getName()?srf->getName():"noname",
-		pnts->getName()?pnts->getName():"noname");
+		srf->getName(),pnts->getName());
 
 	FILE * f = fopen(filename, "w");
 
@@ -743,7 +739,7 @@ void _add_surfit_surfs(d_surf * srf) {
 
 d_surf * _surf_gradient(const d_surf * srf) {
 
-	writelog(LOG_MESSAGE,"calculating gradient of surface \"%s\"", srf->getName()?srf->getName():"noname");
+	writelog(LOG_MESSAGE,"calculating gradient of surface \"%s\"", srf->getName());
 	
 	size_t NN = srf->getCountX();
 	size_t MM = srf->getCountY();

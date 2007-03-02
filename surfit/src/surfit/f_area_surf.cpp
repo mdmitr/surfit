@@ -108,17 +108,10 @@ bool f_area_surf::minimize() {
 
 bool f_area_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
-	if (area->getName()) {
-		if (srf->getName())
-			writelog(LOG_MESSAGE,"area_surf (%s+%s)", area->getName(), srf->getName());
-		else
-			writelog(LOG_MESSAGE,"area_surf (%s)", area->getName());
-	} else {
-		if (srf->getName())
-			writelog(LOG_MESSAGE,"area_surf (noname+%s)", srf->getName());
-		else
-			writelog(LOG_MESSAGE,"area_surf (noname+noname)");
-	}
+	if (srf->getName())
+		writelog(LOG_MESSAGE,"area_surf (%s+%s)", area->getName(), srf->getName());
+	else
+		writelog(LOG_MESSAGE,"area_surf (%s)", area->getName());
 
 	get_area_mask();
 	if (area_mask == NULL)
@@ -202,17 +195,10 @@ void f_area_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 
 bool f_area_surf::minimize_only_area_surf() {
 	
-	if (area->getName()) {
-		if (srf->getName())
-			writelog(LOG_MESSAGE,"area_surf (%s+%s)", area->getName(), srf->getName());
-		else
-			writelog(LOG_MESSAGE,"area_surf (%s)", area->getName());
-	} else {
-		if (srf->getName())
-			writelog(LOG_MESSAGE,"area_surf (noname+%s)", srf->getName());
-		else
-			writelog(LOG_MESSAGE,"area_surf (noname+noname)");
-	}
+	if (srf->getName())
+		writelog(LOG_MESSAGE,"area_surf (%s+%s)", area->getName(), srf->getName());
+	else
+		writelog(LOG_MESSAGE,"area_surf (%s)", area->getName());
 
 	get_area_mask();
 	if (area_mask == NULL)

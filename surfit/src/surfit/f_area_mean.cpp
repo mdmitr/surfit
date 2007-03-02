@@ -71,10 +71,7 @@ const data * f_area_mean::this_get_data(int pos) const {
 
 bool f_area_mean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
-	if (area->getName())
-		writelog(LOG_MESSAGE,"area_mean %s value = %g condition", area->getName(), mean);
-	else
-		writelog(LOG_MESSAGE,"noname area_mean value = %g condition", mean);
+	writelog(LOG_MESSAGE,"area_mean %s value = %g condition", area->getName(), mean);
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 

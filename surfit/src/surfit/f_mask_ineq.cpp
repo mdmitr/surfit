@@ -72,18 +72,11 @@ bool f_mask_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	size_t MM = method_basis_cntY;
 	v = create_extvec(matrix_size);
 
-	if (leq) {
-		if (mask->getName()) 
-			writelog(LOG_MESSAGE,"inequality for mask (%s) leq %g", mask->getName(), value);
-		else
-			writelog(LOG_MESSAGE,"inequality for noname mask leq %g", value);
-	} else {
-		if (mask->getName())
-			writelog(LOG_MESSAGE,"inequality for mask (%s) geq %g", mask->getName(), value);
-		else
-			writelog(LOG_MESSAGE,"inequality for noname mask geq %g", value);
-	}
-
+	if (leq) 
+		writelog(LOG_MESSAGE,"inequality for mask (%s) leq %g", mask->getName(), value);
+	else 
+		writelog(LOG_MESSAGE,"inequality for mask (%s) geq %g", mask->getName(), value);
+	
 	extvec * diag = create_extvec(matrix_size);
 
 	bitvec * matr_mask = create_bitvec(matrix_size);

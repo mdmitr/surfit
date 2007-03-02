@@ -359,8 +359,7 @@ bool _mask_apply_to_surf(const d_mask * msk, d_surf * srf) {
 		return false;
 
 	writelog(LOG_MESSAGE,"applying mask \"%s\" to surface \"%s\"",
-		msk->getName()?msk->getName():"noname",
-		srf->getName()?srf->getName():"noname");
+		msk->getName(),srf->getName());
 	
 	size_t i,j;
 	size_t NN = srf->getCountX();
@@ -385,10 +384,7 @@ bool _mask_apply_to_surf(const d_mask * msk, d_surf * srf) {
 void _mask_info(const d_mask * msk) {
 	if (!msk)
 		return;
-	if (msk->getName()) 
-		writelog(LOG_MESSAGE,"mask (%s) : size=(%d x %d)", msk->getName(), msk->getCountX(), msk->getCountY());
-	else 
-		writelog(LOG_MESSAGE,"mask noname : size=(%d x %d)", msk->getCountX(), msk->getCountY());
+	writelog(LOG_MESSAGE,"mask (%s) : size=(%d x %d)", msk->getName(), msk->getCountX(), msk->getCountY());
 };
 
 void _surfit_mask_add(d_mask * msk) {

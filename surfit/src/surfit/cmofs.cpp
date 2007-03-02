@@ -55,7 +55,7 @@ void surfit() {
 	grid_prepare();
 
 	if (surfit_grid == NULL) {
-		writelog(LOG_ERROR,"grid not found : exiting cmofs");
+		writelog(LOG_ERROR,"grid not found : aborting");
 		return;
 	}
 		

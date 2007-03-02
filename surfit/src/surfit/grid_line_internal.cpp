@@ -76,10 +76,7 @@ void _grid_line_info(const grid_line * contour) {
 		writelog(LOG_WARNING, "_grid_line_info : NULL pointer given");
 		return;
 	}
-	if (contour->getName())
-		writelog(LOG_MESSAGE,"grid_line (%s)",contour->getName());
-	else
-		writelog(LOG_MESSAGE,"grid_line noname");	
+	writelog(LOG_MESSAGE,"grid_line (%s)",contour->getName());
 };
 
 grid_line * _get_surfit_grid_line() {

@@ -102,10 +102,7 @@ bool f_surf::minimize() {
 
 bool f_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
-	if (srf->getName())
-		writelog(LOG_MESSAGE,"surf : (%s), size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
-	else 
-		writelog(LOG_MESSAGE,"surf : noname, size=(%d x %d)", srf->getCountX(), srf->getCountY());
+	writelog(LOG_MESSAGE,"surf : (%s), size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
 
 	size_t NN = method_grid->getCountX();
 	size_t MM = method_grid->getCountY();
@@ -184,10 +181,7 @@ void f_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undef
 
 bool f_surf::minimize_only_surf() {
 
-	if (srf->getName())
-		writelog(LOG_MESSAGE,"surf : (%s), size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
-	else 
-		writelog(LOG_MESSAGE,"surf : noname, size=(%d x %d)", srf->getCountX(), srf->getCountY());
+	writelog(LOG_MESSAGE,"surf : (%s), size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
 
 	size_t from_x, from_y, to_x, to_y;
 	_grid_intersect1(method_grid, srf->grd,

@@ -65,10 +65,7 @@ const data * f_mask::this_get_data(int pos) const {
 
 bool f_mask::minimize() {
 
-	if (msk->getName())
-		writelog(LOG_MESSAGE,"mask : (%s), size=(%d x %d)", msk->getName(), msk->getCountX(), msk->getCountY());
-	else 
-		writelog(LOG_MESSAGE,"mask : noname, size=(%d x %d)", msk->getCountX(), msk->getCountY());
+	writelog(LOG_MESSAGE,"mask : (%s), size=(%d x %d)", msk->getName(), msk->getCountX(), msk->getCountY());
 
 	size_t NN = method_grid->getCountX();
 	size_t MM = method_grid->getCountY();

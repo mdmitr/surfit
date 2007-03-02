@@ -251,11 +251,7 @@ void _cntr_info(const d_cntr * cntrline) {
 		writelog(LOG_WARNING, "_cntr_info : NULL pointer given");
 		return;
 	}
-	if (cntrline->getName()) {
-		writelog(LOG_MESSAGE,"cntr (%s)",cntrline->getName());
-	} else {
-		writelog(LOG_MESSAGE,"cntr noname");	
-	}
+	writelog(LOG_MESSAGE,"cntr (%s)",cntrline->getName());
 };
 
 void _add_surfit_cntrs(d_cntr * contour) {

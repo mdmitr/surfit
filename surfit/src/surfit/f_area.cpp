@@ -106,18 +106,11 @@ bool f_area::minimize() {
 
 bool f_area::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
-	if (area->getName()) {
-		if (value != undef_value)
-			writelog(LOG_MESSAGE,"area (%s), value = %lf", area->getName(), value);
-		else 
-			writelog(LOG_MESSAGE,"area (%s), value = \"undef\"", area->getName());
-	} else {
-		if (value != undef_value)
-			writelog(LOG_MESSAGE,"area noname, value = %lf", value);
-		else 
-			writelog(LOG_MESSAGE,"area noname, value = \"undef\"");
-	}
-
+	if (value != undef_value)
+		writelog(LOG_MESSAGE,"area (%s), value = %lf", area->getName(), value);
+	else 
+		writelog(LOG_MESSAGE,"area (%s), value = \"undef\"", area->getName());
+	
 	if (value == undef_value) {
 		writelog(LOG_WARNING,"area with \"undef_val\" can't be minimized conditionally or as a summator");
 		return false;
@@ -204,18 +197,11 @@ void f_area::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undef
 
 bool f_area::minimize_only_area() {
 	
-	if (area->getName()) {
-		if (value != undef_value)
-			writelog(LOG_MESSAGE,"area (%s), value = %lf", area->getName(), value);
-		else 
-			writelog(LOG_MESSAGE,"area (%s), value = \"undef\"", area->getName());
-	} else {
-		if (value != undef_value)
-			writelog(LOG_MESSAGE,"area noname, value = %lf", value);
-		else 
-			writelog(LOG_MESSAGE,"area noname, value = \"undef\"");
-	}
-
+	if (value != undef_value)
+		writelog(LOG_MESSAGE,"area (%s), value = %lf", area->getName(), value);
+	else 
+		writelog(LOG_MESSAGE,"area (%s), value = \"undef\"", area->getName());
+	
 	get_area_mask();
 	if (area_mask == NULL)
 		return false;

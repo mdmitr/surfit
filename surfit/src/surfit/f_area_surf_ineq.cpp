@@ -81,17 +81,11 @@ bool f_area_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_extvec(matrix_size);
 
-	if (leq) {
-		if (area->getName()) 
-			writelog(LOG_MESSAGE,"inequality for area (%s) leq surface", area->getName());
-		else
-			writelog(LOG_MESSAGE,"inequality for noname area leq surface");
-	} else {
-		if (area->getName())
-			writelog(LOG_MESSAGE,"inequality for area (%s) geq surface", area->getName());
-		else
-			writelog(LOG_MESSAGE,"inequality for noname area geq surface");
-	}
+	if (leq) 
+		writelog(LOG_MESSAGE,"inequality for area (%s) leq surface", area->getName());
+	else 
+		writelog(LOG_MESSAGE,"inequality for area (%s) geq surface", area->getName());
+	
 
 	get_area_mask();
 	if (area_mask == NULL)

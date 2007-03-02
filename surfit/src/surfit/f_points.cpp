@@ -137,11 +137,7 @@ bool f_points::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	size_t pnts_size = pnts->size();
 		
-	if (pnts->getName()) {
-		writelog(LOG_MESSAGE,"%s : (%s)", print_name, pnts->getName());
-	} else {
-		writelog(LOG_MESSAGE,"%s : noname dataset", print_name);
-	}
+	writelog(LOG_MESSAGE,"%s : (%s)", print_name, pnts->getName());
 		
 	// avoiding two-times bind_points_to_grid calling for the same grid
 	if (binded_grid) {
@@ -197,11 +193,8 @@ bool f_points::minimize_only_points() {
 
 	int pnts_size = pnts->size();
 	if (pnts_size > 0) {
-		if (pnts->getName()) {
-			writelog(LOG_MESSAGE,"%s : (%s)", print_name, pnts->getName());
-		} else {
-			writelog(LOG_MESSAGE,"%s : noname dataset", print_name);
-		}
+
+		writelog(LOG_MESSAGE,"%s : (%s)", print_name, pnts->getName());
 		
 		// avoiding two-times bind_points_to_grid calling for the same grid
 		if (binded_grid) {

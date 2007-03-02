@@ -1021,15 +1021,15 @@ bool surf_filter_by_mask(const char * surf_pos, const char * def_pos) {
 	return true;
 };
 
-struct regexp_sfa_by_area
+struct match_sfa_by_area
 {
-	regexp_sfa_by_area(const char * iarea_pos, d_surf * isrf, bool iin_area) : area_pos(iarea_pos), srf(isrf), in_area(iin_area) {};
+	match_sfa_by_area(const char * iarea_pos, d_surf * isrf, bool iin_area) : area_pos(iarea_pos), srf(isrf), in_area(iin_area) {};
 	
 	void operator()(d_area * area)
 	{
-		if ( RegExpMatch(area_pos, area->getName()) )
+		if ( StringMatch(area_pos, area->getName()) )
 		{
-			writelog(LOG_MESSAGE,"filtering surface \"%s\" inside area \"%s\"", srf->getName()?srf->getName():"noname", area->getName()?area->getName():"noname");
+			writelog(LOG_MESSAGE,"filtering surface \"%s\" inside area \"%s\"", srf->getName()?srf->getName():"noname", area->getName());
 			
 			bitvec * area_mask = nodes_in_area_mask(area, srf->grd);
 			if (area_mask == NULL)
@@ -1058,15 +1058,15 @@ struct regexp_sfa_by_area
 };
 
 
-struct regexp_sfa_by_surf
+struct match_sfa_by_surf
 {
-	regexp_sfa_by_surf(const char * isurf_pos, const char * iarea_pos, bool iin_area) : surf_pos(isurf_pos), area_pos(iarea_pos), in_area(iin_area) {};
+	match_sfa_by_surf(const char * isurf_pos, const char * iarea_pos, bool iin_area) : surf_pos(isurf_pos), area_pos(iarea_pos), in_area(iin_area) {};
 	
 	void operator()(d_surf * srf)
 	{
-		if ( RegExpMatch(surf_pos, srf->getName()) )
+		if ( StringMatch(surf_pos, srf->getName()) )
 		{
-			std::for_each( surfit_areas->begin(), surfit_areas->end(), regexp_sfa_by_area(area_pos, srf, in_area));		
+			std::for_each( surfit_areas->begin(), surfit_areas->end(), match_sfa_by_area(area_pos, srf, in_area));		
 		}
 	};
 
@@ -1078,12 +1078,12 @@ struct regexp_sfa_by_surf
 
 void surf_filter_in_area(const char * surf_pos, const char * area_pos) 
 {
-	std::for_each( surfit_surfs->begin(), surfit_surfs->end(), regexp_sfa_by_surf(surf_pos, area_pos, true) );
+	std::for_each( surfit_surfs->begin(), surfit_surfs->end(), match_sfa_by_surf(surf_pos, area_pos, true) );
 };
 
 void surf_filter_out_area(const char * surf_pos, const char * area_pos) 
 {
-	std::for_each( surfit_surfs->begin(), surfit_surfs->end(), regexp_sfa_by_surf(surf_pos, area_pos, false) );
+	std::for_each( surfit_surfs->begin(), surfit_surfs->end(), match_sfa_by_surf(surf_pos, area_pos, false) );
 };
 
 bool surf_filter_by_surf(REAL eps, const char * surf1_pos, const char * surf2_pos) {

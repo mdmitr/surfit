@@ -955,10 +955,10 @@ void flood_fill(d_grid * grd,
 						flood = flood && !mask_undefined->get(push_pos);
 					}
 
-					if (flood && (fill_j-1 > 0))
+					if (flood && (fill_j-1 >= 0))
 						flood = flood && ( (*data)(push_pos) == 0 );
 					
-					if (flood && (fill_j-1 > 0))
+					if (flood && (fill_j-1 >= 0))
 						flood_points->push_back(push_pos);
 				}
 			}
@@ -974,7 +974,7 @@ void flood_fill(d_grid * grd,
 	
 	/*
 #ifdef DEBUG
-	FILE * ff = fopen("c:\\ffill.m","w+");
+	FILE * ff = fopen("c:\\ffill.m","w");
 	fprintf(ff,"hold on\n");
 	
 	draw_grid_matlab(ff,grd);
@@ -983,7 +983,7 @@ void flood_fill(d_grid * grd,
 	
 	fclose(ff);
 #endif
-	*/
+	//*/
 		
 	return;
 };
@@ -1207,7 +1207,15 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 
 	// in terms of the extended grid
 	line->get_minmax(min_i, max_i, min_j, max_j);
-		
+
+	// for some cases
+	if (min_i > 0)
+		min_i--;
+	max_i++;
+	if (min_j > 0)
+		min_j--;
+	max_j++;
+
 	min_i = MAX(min_i, 0);
 	min_j = MAX(min_j, 0);
 	max_i = MIN(max_i, NN+2);
@@ -1234,7 +1242,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 	draw_grid_matlab(ff,grd,"magenta");
 	draw_grid_line_matlab(ff, line, grd, "red", 3);
 #endif
-*/
+//*/
 
 	line->resize( min_i>1?min_i-1:1-min_i, 
 		      min_j>1?min_j-1:1-min_j, 
@@ -1247,7 +1255,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 	draw_grid_matlab(ff,small_grd);
 	draw_grid_line_matlab(ff, line, small_grd);
 #endif
-*/
+//*/
 
 	shortvec * data = create_shortvec(nn*mm);
 
@@ -1338,7 +1346,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 	fclose(ff);
 
 #endif
-*/
+//*/
 
 	line->sort();
 	

@@ -76,18 +76,11 @@ bool f_mask_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_extvec(matrix_size);
 
-	if (leq) {
-		if (mask->getName()) 
-			writelog(LOG_MESSAGE,"inequality for mask (%s) leq surface", mask->getName());
-		else
-			writelog(LOG_MESSAGE,"inequality for noname mask leq surface");
-	} else {
-		if (mask->getName())
-			writelog(LOG_MESSAGE,"inequality for mask (%s) geq surface", mask->getName());
-		else
-			writelog(LOG_MESSAGE,"inequality for noname mask geq surface");
-	}
-
+	if (leq) 
+		writelog(LOG_MESSAGE,"inequality for mask (%s) leq surface", mask->getName());
+	else 
+		writelog(LOG_MESSAGE,"inequality for mask (%s) geq surface", mask->getName());
+	
 	bitvec * matr_mask = create_bitvec(matrix_size);
 	matr_mask->init_false();
 

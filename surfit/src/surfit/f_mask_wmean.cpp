@@ -74,10 +74,7 @@ const data * f_mask_wmean::this_get_data(int pos) const {
 
 bool f_mask_wmean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
-	if (mask->getName())
-		writelog(LOG_MESSAGE,"mask_wmean %s value = %g condition", mask->getName(), mean);
-	else
-		writelog(LOG_MESSAGE,"noname mask_wmean value = %g condition", mean);
+	writelog(LOG_MESSAGE,"mask_wmean %s value = %g condition", mask->getName(), mean);
 	
 	size_t aux_X_from, aux_X_to;
 	size_t aux_Y_from, aux_Y_to;

@@ -443,7 +443,12 @@ void draw_curv_matlab(FILE * ff, const d_curv * crv, const char * color, short w
 		fprintf(ff,"plot(%lf, %lf,'o');\n",x2,y2);
 	}
 	fflush(ff);
-}
+};
+
+void surfit_curvs_push_back(d_curv * curve)
+{
+	surfit_curvs->push_back(curve);
+};
 
 }; // namespace surfit;
 

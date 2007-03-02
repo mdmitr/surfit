@@ -79,8 +79,7 @@ const data * f_area_hist::this_get_data(int pos) const {
 bool f_area_hist::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	writelog(LOG_MESSAGE,"histogram \"%s\" in area \"%s\"", 
-		hist->getName()?hist->getName():"noname",
-		area->getName()?area->getName():"noname");
+		hist->getName(),area->getName());
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 

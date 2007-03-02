@@ -67,11 +67,7 @@ bool f_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_extvec(matrix_size);
 
-	if (srf->getName()) {
-		writelog(LOG_MESSAGE,"surf inequality: (%s), %d x %d", srf->getName(), srf->getCountX(), srf->getCountY());
-	} else {
-		writelog(LOG_MESSAGE,"surf inequality : noname dataset, %d x %d", srf->getCountX(), srf->getCountY());
-	}
+	writelog(LOG_MESSAGE,"surf inequality: (%s), %d x %d", srf->getName(), srf->getCountX(), srf->getCountY());
 
 	bitvec * mask = create_bitvec(matrix_size);
 	mask->init_false();

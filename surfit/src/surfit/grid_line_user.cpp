@@ -88,7 +88,7 @@ void draw_bitvec_matlab(FILE * ff, const d_grid * grd, const bitvec * data, cons
 	fflush(ff);
 };
 
-void draw_filled_grid_matlab(FILE * ff, const d_grid * grd, const std::vector<short int> * data)
+void draw_filled_grid_matlab(FILE * ff, const d_grid * grd, const shortvec * data)
 {
 #ifndef DEBUG
 	return;
@@ -115,7 +115,7 @@ void draw_filled_grid_matlab(FILE * ff, const d_grid * grd, const std::vector<sh
 		y_ = y - stepY;
 		x_ = x - stepX;
 		
-		short int j = (*data)[pos];
+		short int j = (*data)(pos);
 		
 		while (j > 7)
 			j-=7;
@@ -243,23 +243,12 @@ void add_val_pair(sizetvec * v1, size_t n1, size_t m1,
 		  sizetvec * v2, size_t n2, size_t m2, 
 		  size_t NN, size_t MM) {
 	
-
-	/*	
-	if ( ((n1 < 0) || (n2 < 0)) || 
-		 ((m1 < 0) || (m2 < 0)) || 
-		 ((n1 >= NN) || (n2 >= NN)) || 
-		 ((m1 >= MM) || (m2 >= MM)) )
-		return;
-	*/
-	
 	size_t val1, val2;
 	two2one(val1, n1, m1, NN, MM);
 	two2one(val2, n2, m2, NN, MM);
 	
-	///*
 	if ((val1 == UINT_MAX) || (val2 == UINT_MAX))
 		return;
-	//*/
 	
 	if (v1->size() > 0) {
 		size_t prev_val1, prev_val2;
@@ -533,7 +522,7 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	
 	fclose(ff);
 #endif
-	*/
+	//*/
 
 	if (crv)
 		crv->release();

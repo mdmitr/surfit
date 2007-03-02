@@ -723,7 +723,7 @@ size_t d_surf::details_size() const {
 
 bool d_surf::decompose() {
 
-	writelog(LOG_MESSAGE,"decomposing surface \"%s\"",getName()?getName():"noname");
+	writelog(LOG_MESSAGE,"decomposing surface \"%s\"",getName());
 	bool enlarge_X = false;
 	bool enlarge_Y = false;
 
@@ -835,7 +835,7 @@ REAL d_surf::calc_approx_norm(int norm_type) const {
 
 bool d_surf::reconstruct() {
 	
-	writelog(LOG_MESSAGE,"reconstructing surface \"%s\"",getName()?getName():"noname");
+	writelog(LOG_MESSAGE,"reconstructing surface \"%s\"",getName());
 
 	size_t N = details_d->size();
 
@@ -901,7 +901,7 @@ bool d_surf::reconstruct() {
 
 bool d_surf::full_reconstruct() {
 
-	writelog(LOG_MESSAGE,"making full surface \"%s\" reconstruction", getName()?getName():"noname");
+	writelog(LOG_MESSAGE,"making full surface \"%s\" reconstruction", getName());
 	
 	size_t N = details_d->size();
 	bool res = true;
@@ -916,7 +916,7 @@ bool d_surf::full_reconstruct() {
 };
 
 bool d_surf::add_noise(REAL std) {
-	writelog(LOG_MESSAGE,"adding noise to surface \"%s\"", getName()?getName():"noname");
+	writelog(LOG_MESSAGE,"adding noise to surface \"%s\"", getName());
 	size_t size = coeff->size();
 	size_t i;
 	for (i = 0; i < size; i++) {

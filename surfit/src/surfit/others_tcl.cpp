@@ -30,75 +30,124 @@
 #include "curv_internal.h"
 #include "surf.h"
 #include "hist.h"
+#include "interp.h"
+
+#include <algorithm>
 
 namespace surfit {
 
-bool completer(REAL D1, REAL D2, REAL alpha, REAL w) {
+bool completer(REAL D1, REAL D2, REAL alpha, REAL w) 
+{
+	writelog(LOG_MESSAGE,"creating gridding rule completer(%g,%g,%g,%g)",
+		D1, D2, alpha, w);
 	f_completer * f_cmpltr = new f_completer(D1, D2, alpha, w);
 	functionals_push_back(f_cmpltr);
 	return true;
 };
 
-bool completer_add(REAL weight, REAL D1, REAL D2, REAL alpha, REAL w) {
+bool completer_add(REAL weight, REAL D1, REAL D2, REAL alpha, REAL w) 
+{
 	functional * srf = get_modifiable_functional();
 	if (srf == NULL)
 		return false;
+
+	writelog(LOG_MESSAGE,"creating gridding rule completer_add(%g,%g,%g,%g,%g)",
+		weight, D1, D2, alpha, w);
 	
 	f_completer * f_cmpltr = new f_completer(D1, D2, alpha, w);
 	srf->add_functional(f_cmpltr, weight);
 	return true;
 };
 
-bool value(REAL value) {
+bool value(REAL value) 
+{
+	writelog(LOG_MESSAGE,"creating gridding rule value(%g)",value);
 	f_value * f = new f_value(value);
 	functionals_push_back(f);
 	return true;
 };
 
-bool value_add(REAL weight, REAL value) {
+bool value_add(REAL weight, REAL value) 
+{
 	functional * srf = get_modifiable_functional();
 	if (srf == NULL)
 		return false;
+
+	writelog(LOG_MESSAGE,"creating gridding rule value_add(%g,%g)",weight, value);
+
 	f_value * f = new f_value(value);
 	srf->add_functional(f, weight);
 	return true;
 };
 
-bool mean(REAL value, REAL mult) {
+bool mean(REAL value, REAL mult) 
+{
+	writelog(LOG_MESSAGE,"creating gridding rule mean(%g,%g)",value,mult);
 	f_mean * f = new f_mean(value, mult);
 	functionals_push_back(f);
 	return true;
 };
 
-bool wmean(REAL value, const char * surf_pos, REAL mult) {
-	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (srf == NULL)
-		return false;
+struct match_wmean
+{
+	match_wmean(REAL ivalue, const char * isurf_pos, REAL imult) : value(ivalue), surf_pos(isurf_pos), mult(imult) {};
+	void operator()(d_surf * surf) 
+	{
+		if ( StringMatch( surf_pos, surf->getName() ) )
+		{
+			writelog(LOG_MESSAGE,"creating gridding rule wmean(%g,\"%s\",%g)",
+				value, surf->getName(), mult);
+			f_wmean * f = new f_wmean(value, surf, mult);
+			functionals_push_back(f);
+		}
+	}
+	REAL value;
+	const char * surf_pos;
+	REAL mult;
+};
 
-	f_wmean * f = new f_wmean(value, srf, mult);
-	functionals_push_back(f);
+bool wmean(REAL value, const char * surf_pos, REAL mult) 
+{
+	std::for_each(surfit_surfs->begin(), surfit_surfs->end(), match_wmean(value, surf_pos, mult));
 	return true;
 };
 
-bool leq(REAL value, REAL mult) {
+bool leq(REAL value, REAL mult) 
+{
+	writelog(LOG_MESSAGE,"creating gridding rule leq(%g,%g)",value,mult);
 	f_ineq * f = new f_ineq(value, true, mult);
 	functionals_push_back(f);
 	return true;
 };
 
-bool geq(REAL value, REAL mult) {
+bool geq(REAL value, REAL mult) 
+{
+	writelog(LOG_MESSAGE,"creating gridding rule geq(%g,%g)",value,mult);
 	f_ineq * f = new f_ineq(value, false, mult);
 	functionals_push_back(f);
 	return true;
 };
 
-bool hist(const char * pos, REAL mult) {
-	d_hist * hst = get_element<d_hist>(pos, surfit_hists->begin(), surfit_hists->end());
-	if (hst == NULL)
-		return false;
+struct match_hist 
+{
+	match_hist(const char * ipos, REAL imult) : pos(ipos), mult(imult) {};
+	void operator()(d_hist * hist) 
+	{
+		if ( StringMatch( pos, hist->getName() ) ) 
+		{
+			writelog(LOG_MESSAGE, "creating gridding rule hist(\"%s\",%g)",
+				hist->getName(), mult);
+			f_hist * f = new f_hist(hist, mult);
+			functionals_push_back(f);
+		}
+	}
+	const char * pos;
+	REAL mult;
+};
 
-	f_hist * f = new f_hist(hst, mult);
-	functionals_push_back(f);
+bool hist(const char * pos, REAL mult) 
+{
+	std::for_each(surfit_hists->begin(), surfit_hists->end(), match_hist(pos, mult));
 	return true;
 };
 

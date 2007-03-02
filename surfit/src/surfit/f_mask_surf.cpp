@@ -103,17 +103,7 @@ bool f_mask_surf::minimize() {
 
 bool f_mask_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
-	if (mask->getName()) {
-		if (srf->getName())
-			writelog(LOG_MESSAGE,"mask_surf (%s+%s)", mask->getName(), srf->getName());
-		else
-			writelog(LOG_MESSAGE,"mask_surf (%s)", mask->getName());
-	} else {
-		if (srf->getName())
-			writelog(LOG_MESSAGE,"mask_surf (noname+%s)", srf->getName());
-		else
-			writelog(LOG_MESSAGE,"mask_surf (noname+noname)");
-	}
+	writelog(LOG_MESSAGE,"mask_surf (%s+%s)", mask->getName(), srf->getName());
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_extvec(matrix_size);
@@ -195,17 +185,7 @@ void f_mask_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 
 bool f_mask_surf::minimize_only_mask_surf() {
 	
-	if (mask->getName()) {
-		if (srf->getName())
-			writelog(LOG_MESSAGE,"mask_surf (%s+%s)", mask->getName(), srf->getName());
-		else
-			writelog(LOG_MESSAGE,"mask_surf (%s)", mask->getName());
-	} else {
-		if (srf->getName())
-			writelog(LOG_MESSAGE,"mask_surf (noname+%s)", srf->getName());
-		else
-			writelog(LOG_MESSAGE,"mask_surf (noname+noname)");
-	}
+	writelog(LOG_MESSAGE,"mask_surf (%s+%s)", mask->getName(), srf->getName());
 
 	size_t i;
 	size_t I, J;

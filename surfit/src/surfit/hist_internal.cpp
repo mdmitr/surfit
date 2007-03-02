@@ -42,11 +42,7 @@ void _hist_info(const d_hist * histline) {
 		writelog(LOG_WARNING, "_hist_info : NULL pointer given");
 		return;
 	}
-	if (histline->getName()) {
-		writelog(LOG_MESSAGE,"hist (%s)",histline->getName());
-	} else {
-		writelog(LOG_MESSAGE,"hist noname");	
-	}
+	writelog(LOG_MESSAGE,"hist (%s)",histline->getName());
 };
 
 void _add_surfit_hists(d_hist * hst) {
@@ -188,7 +184,7 @@ bool _hist_write(const d_hist * hist, const char * filename, bool three_columns)
 	}
 
 	writelog(LOG_MESSAGE,"writing histogram \"%s\" to file %s",
-		hist->getName()?hist->getName():"noname", filename);
+		hist->getName(), filename);
 
 	if (three_columns) {
 		vec * Z_from = create_vec(hist->size(),0,0); // don't fill
@@ -299,8 +295,7 @@ d_hist * _hist_from_extvec(const extvec * data, REAL minz, REAL maxz, size_t int
 
 d_hist * _hist_from_surf(const d_surf * srf, size_t intervs, REAL from, REAL to)
 {
-	writelog(LOG_MESSAGE,"calculating histogram from surface \"%s\"",
-		srf->getName()?srf->getName():"noname");
+	writelog(LOG_MESSAGE,"calculating histogram from surface \"%s\"",srf->getName());
 
 	REAL minz, maxz;
 	srf->getMinMaxZ(minz, maxz);
@@ -315,8 +310,7 @@ d_hist * _hist_from_surf(const d_surf * srf, size_t intervs, REAL from, REAL to)
 
 d_hist * _hist_from_points(const d_points * pnts, size_t intervs, REAL from, REAL to)
 {
-	writelog(LOG_MESSAGE,"calculating histogram from points \"%s\"",
-		pnts->getName()?pnts->getName():"noname");
+	writelog(LOG_MESSAGE,"calculating histogram from points \"%s\"",pnts->getName());
 
 	REAL minz, maxz;
 	pnts->getMinMaxZ(minz, maxz);

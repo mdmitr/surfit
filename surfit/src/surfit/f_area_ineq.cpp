@@ -76,18 +76,11 @@ bool f_area_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_extvec(matrix_size);
 
-	if (leq) {
-		if (area->getName()) 
-			writelog(LOG_MESSAGE,"inequality for area (%s) leq %g", area->getName(), value);
-		else
-			writelog(LOG_MESSAGE,"inequality for noname area leq %g", value);
-	} else {
-		if (area->getName())
-			writelog(LOG_MESSAGE,"inequality for area (%s) geq %g", area->getName(), value);
-		else
-			writelog(LOG_MESSAGE,"inequality for noname area geq %g", value);
-	}
-
+	if (leq) 
+		writelog(LOG_MESSAGE,"inequality for area (%s) leq %g", area->getName(), value);
+	else 
+		writelog(LOG_MESSAGE,"inequality for area (%s) geq %g", area->getName(), value);
+	
 	get_area_mask();
 	if (area_mask == NULL)
 		return false;

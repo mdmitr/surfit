@@ -66,10 +66,7 @@ const data * f_mask_mean::this_get_data(int pos) const {
 
 bool f_mask_mean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
-	if (mask->getName())
-		writelog(LOG_MESSAGE,"mask_mean %s value = %g condition", mask->getName(), mean);
-	else
-		writelog(LOG_MESSAGE,"noname mask_mean value = %g condition", mean);
+	writelog(LOG_MESSAGE,"mask_mean %s value = %g condition", mask->getName(), mean);
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
