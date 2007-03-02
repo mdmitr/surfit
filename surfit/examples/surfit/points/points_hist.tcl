@@ -13,7 +13,7 @@ clear_data
 set map_name "map_points_hist" 
 
 # set tolerance for cg solver
-set tol 1.99526e-006 
+set tol 1e-007
 
 ##
 ## load initial data 
@@ -22,9 +22,9 @@ set tol 1.99526e-006
 # load points from text file 
 pnts_read "points.txt" "points"  
 
-hist_from_pnts "points" 10
-hist_write "sou_hist.txt"
-hist_del
+#hist_from_pnts "points" 10
+#hist_write "sou_hist.txt"
+#hist_delall
 hist_read "hist.txt" 1548.97 1749.34
  
 ##
@@ -39,7 +39,7 @@ grid  150 150
 # resulting surface at points = points values
 points "points" 
 
-hist
+hist "hist"
 
 # resulting surface should tend to be constant or plane 
 completer 1 20  
