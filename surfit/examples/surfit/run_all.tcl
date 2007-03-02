@@ -25,6 +25,9 @@ if { [source "area_wmean.tcl"] == 0 } {
 if { [source "area_completer.tcl"] == 0 } {
 	return 0
 }
+if { [source "area_hist.tcl"] == 0 } {
+	return 0
+}
 if { [source "contour.tcl"] == 0 } {
 	return 0
 }
