@@ -25,48 +25,101 @@
 #include "surfit_data.h"
 #include "points.h"
 #include "f_points_ineq.h"
+#include "interp.h"
+
+#include <algorithm>
 
 namespace surfit {
 
-bool points(const char * pos) {
-	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (pnts == NULL)
-		return false;
-	f_points * fnc = new f_points(pnts);
-	functionals_push_back(fnc);
+struct match_points
+{
+	match_points(const char * ipos) : pos(ipos) {};
+	void operator()(d_points * pnts) 
+	{
+		if ( StringMatch( pos, pnts->getName() ) )
+		{
+			writelog(LOG_MESSAGE,"creating gridding rule points(\"%s\")", pnts->getName());
+			f_points * fnc = new f_points(pnts);
+			functionals_push_back(fnc);
+		}
+	}
+	const char * pos;
+};
+
+bool points(const char * pos) 
+{
+	std::for_each(surfit_pnts->begin(), surfit_pnts->end(), match_points(pos));
 	return true;
 };
 
-bool points_add(REAL weight, const char * pos) {
-	
+struct match_points_add
+{
+	match_points_add(const char * ipos, REAL iweight, functional * iff) : pos(ipos), weight(iweight), ff(iff) {};
+	void operator()(d_points * pnts) 
+	{
+		if ( StringMatch( pos, pnts->getName() ) )
+		{
+			writelog(LOG_MESSAGE,"creating gridding rule points_add(%g,\"%s\")", weight, pnts->getName());
+			f_points * fnc2 = new f_points(pnts);
+			ff->add_functional(fnc2, weight);
+		}
+	}
+	const char * pos;
+	REAL weight;
+	functional * ff;
+};
+
+bool points_add(REAL weight, const char * pos) 
+{
 	functional * fnc = get_modifiable_functional();
 	if (fnc == NULL)
 		return false;
 
-	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (pnts == NULL)
-		return false;
-
-	f_points * fnc2 = new f_points(pnts);
-	fnc->add_functional(fnc2, weight);
+	std::for_each(surfit_pnts->begin(), surfit_pnts->end(), match_points_add(pos, weight, fnc));
 	return true;
 };
 
-bool points_leq(const char * pos, REAL mult) {
-	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (pnts == NULL)
-		return false;
-	f_points_ineq * inpnts = new f_points_ineq(pnts, true, mult);
-	functionals_push_back(inpnts);
+struct match_points_leq
+{
+	match_points_leq(const char * ipos, REAL imult) : pos(ipos), mult(imult) {};
+	void operator()(d_points * pnts) 
+	{
+		if ( StringMatch( pos, pnts->getName() ) )
+		{
+			writelog(LOG_MESSAGE,"creating gridding rule points_leq(\"%s\",%g)", pnts->getName(), mult);
+			f_points_ineq * inpnts = new f_points_ineq(pnts, true, mult);
+			functionals_push_back(inpnts);
+		}
+	}
+	const char * pos;
+	REAL mult;
+};
+
+bool points_leq(const char * pos, REAL mult) 
+{
+	std::for_each(surfit_pnts->begin(), surfit_pnts->end(), match_points_leq(pos, mult));
 	return true;
 };
 
-bool points_geq(const char * pos, REAL mult) {
-	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (pnts == NULL)
-		return false;
-	f_points_ineq * inpnts = new f_points_ineq(pnts, false, mult);
-	functionals_push_back(inpnts);
+struct match_points_geq
+{
+	match_points_geq(const char * ipos, REAL imult) : pos(ipos), mult(imult) {};
+	void operator()(d_points * pnts) 
+	{
+		if ( StringMatch( pos, pnts->getName() ) )
+		{
+			writelog(LOG_MESSAGE,"creating gridding rule points_geq(\"%s\",%g)", pnts->getName(), mult);
+			f_points_ineq * inpnts = new f_points_ineq(pnts, true, mult);
+			functionals_push_back(inpnts);
+		}
+	}
+	const char * pos;
+	REAL mult;
+};
+
+bool points_geq(const char * pos, REAL mult) 
+{
+	std::for_each(surfit_pnts->begin(), surfit_pnts->end(), match_points_geq(pos, mult));
 	return true;
 };
 
