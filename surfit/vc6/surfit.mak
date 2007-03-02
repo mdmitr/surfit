@@ -337,6 +337,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\others_tcl.sbr" \
 	"$(INTDIR)\curvs_tcl.sbr" \
 	"$(INTDIR)\f_area.sbr" \
+	"$(INTDIR)\f_area_hist.sbr" \
 	"$(INTDIR)\f_area_ineq.sbr" \
 	"$(INTDIR)\f_area_mean.sbr" \
 	"$(INTDIR)\f_area_surf.sbr" \
@@ -364,8 +365,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\sort_alg.sbr" \
 	"$(INTDIR)\surfit.sbr" \
 	"$(INTDIR)\surfit_wrap.sbr" \
-	"$(INTDIR)\variables.sbr" \
-	"$(INTDIR)\f_area_hist.sbr"
+	"$(INTDIR)\variables.sbr"
 
 "$(OUTDIR)\surfit.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -436,6 +436,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\others_tcl.obj" \
 	"$(INTDIR)\curvs_tcl.obj" \
 	"$(INTDIR)\f_area.obj" \
+	"$(INTDIR)\f_area_hist.obj" \
 	"$(INTDIR)\f_area_ineq.obj" \
 	"$(INTDIR)\f_area_mean.obj" \
 	"$(INTDIR)\f_area_surf.obj" \
@@ -464,7 +465,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\surfit.obj" \
 	"$(INTDIR)\surfit_wrap.obj" \
 	"$(INTDIR)\variables.obj" \
-	"$(INTDIR)\f_area_hist.obj" \
 	"..\bin\libsstuff.lib"
 
 "..\bin\libsurfit.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -786,6 +786,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\others_tcl.sbr" \
 	"$(INTDIR)\curvs_tcl.sbr" \
 	"$(INTDIR)\f_area.sbr" \
+	"$(INTDIR)\f_area_hist.sbr" \
 	"$(INTDIR)\f_area_ineq.sbr" \
 	"$(INTDIR)\f_area_mean.sbr" \
 	"$(INTDIR)\f_area_surf.sbr" \
@@ -813,8 +814,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\sort_alg.sbr" \
 	"$(INTDIR)\surfit.sbr" \
 	"$(INTDIR)\surfit_wrap.sbr" \
-	"$(INTDIR)\variables.sbr" \
-	"$(INTDIR)\f_area_hist.sbr"
+	"$(INTDIR)\variables.sbr"
 
 "$(OUTDIR)\surfit.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -885,6 +885,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\others_tcl.obj" \
 	"$(INTDIR)\curvs_tcl.obj" \
 	"$(INTDIR)\f_area.obj" \
+	"$(INTDIR)\f_area_hist.obj" \
 	"$(INTDIR)\f_area_ineq.obj" \
 	"$(INTDIR)\f_area_mean.obj" \
 	"$(INTDIR)\f_area_surf.obj" \
@@ -913,7 +914,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\surfit.obj" \
 	"$(INTDIR)\surfit_wrap.obj" \
 	"$(INTDIR)\variables.obj" \
-	"$(INTDIR)\f_area_hist.obj" \
 	"..\bin\libsstuff.lib"
 
 "..\bin\libsurfit.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)

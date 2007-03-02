@@ -24,7 +24,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "surfit_io", "surfit_io.vcpr
 	ProjectSection(ProjectDependencies) = postProject
 		{CA14BC28-D3E2-4102-BA5B-4225A700BD00} = {CA14BC28-D3E2-4102-BA5B-4225A700BD00}
 		{184FB556-39CF-45CB-8F76-D50096C46D0D} = {184FB556-39CF-45CB-8F76-D50096C46D0D}
-		{77A9E578-DE0D-4BA3-B965-2076305B5ED4} = {77A9E578-DE0D-4BA3-B965-2076305B5ED4}
 	EndProjectSection
 EndProject
 Global
@@ -36,6 +35,8 @@ Global
 		Release = Release
 		XXL_Debug = XXL_Debug
 		XXL_Release = XXL_Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
 	EndGlobalSection
 	GlobalSection(ProjectConfiguration) = postSolution
 		{53931E63-92C9-4BD7-865D-63622572F172}.Debug.ActiveCfg = Debug|Win32

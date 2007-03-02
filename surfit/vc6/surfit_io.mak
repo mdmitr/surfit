@@ -39,12 +39,12 @@ ALL : "..\bin\libsurfit_io.dll" "$(OUTDIR)\surfit_io.bsc"
 
 !ELSE 
 
-ALL : "surfit - Win32 Release" "sstuff - Win32 Release" "globe - Win32 Release" "..\bin\libsurfit_io.dll" "$(OUTDIR)\surfit_io.bsc"
+ALL : "surfit - Win32 Release" "sstuff - Win32 Release" "..\bin\libsurfit_io.dll" "$(OUTDIR)\surfit_io.bsc"
 
 !ENDIF 
 
 !IF "$(RECURSE)" == "1" 
-CLEAN :"globe - Win32 ReleaseCLEAN" "sstuff - Win32 ReleaseCLEAN" "surfit - Win32 ReleaseCLEAN" 
+CLEAN :"sstuff - Win32 ReleaseCLEAN" "surfit - Win32 ReleaseCLEAN" 
 !ELSE 
 CLEAN :
 !ENDIF 
@@ -209,7 +209,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\surfit_io_data_manager.obj" \
 	"$(INTDIR)\surfit_io_variables.obj" \
 	"$(INTDIR)\surfit_io_wrap.obj" \
-	"..\bin\libglobe.lib" \
 	"..\bin\libsstuff.lib" \
 	"..\bin\libsurfit.lib"
 
@@ -232,12 +231,12 @@ ALL : "..\bin\libsurfit_io.dll" "$(OUTDIR)\surfit_io.bsc"
 
 !ELSE 
 
-ALL : "surfit - Win32 Debug" "sstuff - Win32 Debug" "globe - Win32 Debug" "..\bin\libsurfit_io.dll" "$(OUTDIR)\surfit_io.bsc"
+ALL : "surfit - Win32 Debug" "sstuff - Win32 Debug" "..\bin\libsurfit_io.dll" "$(OUTDIR)\surfit_io.bsc"
 
 !ENDIF 
 
 !IF "$(RECURSE)" == "1" 
-CLEAN :"globe - Win32 DebugCLEAN" "sstuff - Win32 DebugCLEAN" "surfit - Win32 DebugCLEAN" 
+CLEAN :"sstuff - Win32 DebugCLEAN" "surfit - Win32 DebugCLEAN" 
 !ELSE 
 CLEAN :
 !ENDIF 
@@ -405,7 +404,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\surfit_io_data_manager.obj" \
 	"$(INTDIR)\surfit_io_variables.obj" \
 	"$(INTDIR)\surfit_io_wrap.obj" \
-	"..\bin\libglobe.lib" \
 	"..\bin\libsstuff.lib" \
 	"..\bin\libsurfit.lib"
 
@@ -606,32 +604,6 @@ InputPath=.\..\src\surfit_io\interface\surfit_io.i
 	surfit_io_swig.bat
 << 
 	
-
-!ENDIF 
-
-!IF  "$(CFG)" == "surfit_io - Win32 Release"
-
-"globe - Win32 Release" : 
-   cd "."
-   $(MAKE) /$(MAKEFLAGS) /F .\globe.mak CFG="globe - Win32 Release" 
-   cd "."
-
-"globe - Win32 ReleaseCLEAN" : 
-   cd "."
-   $(MAKE) /$(MAKEFLAGS) /F .\globe.mak CFG="globe - Win32 Release" RECURSE=1 CLEAN 
-   cd "."
-
-!ELSEIF  "$(CFG)" == "surfit_io - Win32 Debug"
-
-"globe - Win32 Debug" : 
-   cd "."
-   $(MAKE) /$(MAKEFLAGS) /F .\globe.mak CFG="globe - Win32 Debug" 
-   cd "."
-
-"globe - Win32 DebugCLEAN" : 
-   cd "."
-   $(MAKE) /$(MAKEFLAGS) /F .\globe.mak CFG="globe - Win32 Debug" RECURSE=1 CLEAN 
-   cd "."
 
 !ENDIF 
 
