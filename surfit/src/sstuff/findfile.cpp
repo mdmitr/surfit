@@ -20,6 +20,7 @@
 #include "sstuff_ie.h"
 #include "findfile.h"
 #include "fileio.h"
+#include "interp.h"
 
 #if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 #include <io.h>
@@ -97,6 +98,8 @@ void find_close()
 #else
 
 bool wildcmp(const char *wild, const char *string) {
+	return StringMatch( wild, string);
+	/*
 	// Written by Jack Handy - jakkhandy@hotmail.com
 	const char *cp = NULL, *mp = NULL;
 	
@@ -128,6 +131,7 @@ bool wildcmp(const char *wild, const char *string) {
 		wild++;
 	}
 	return !*wild;
+	*/
 };
 
 DIR *dp = NULL;

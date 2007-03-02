@@ -30,14 +30,14 @@ void init_interp(Tcl_Interp * iinterp) {
 	interp = iinterp;
 };
 
-bool RegExpMatch(const char * regexp, const char * str)
+bool StringMatch(const char * match, const char * str)
 {
-	char * reg = strdup(regexp);
+	char * reg = strdup(match);
 	char * s = strdup(str);
-	int res = Tcl_RegExpMatch(interp, s, reg);
+	int res = Tcl_StringMatch(s, reg);
 	free(reg);
 	free(s);
 	if (res == -1) 
-		surfit::writelog(LOG_ERROR,"Wrong regexp : \"%s\"",regexp);
+		surfit::writelog(LOG_ERROR,"Wrong match : \"%s\"",match);
 	return (res == 1);
 };
