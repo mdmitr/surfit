@@ -97,10 +97,7 @@ bool f_dem::minimize() {
 
 bool f_dem::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
-	if (dem->getName())
-		writelog(LOG_MESSAGE,"dem : (%s), size=(%d x %d)", dem->getName(), dem->getCountX(), dem->getCountY());
-	else 
-		writelog(LOG_MESSAGE,"dem : noname, size=(%d x %d)", dem->getCountX(), dem->getCountY());
+	writelog(LOG_MESSAGE,"dem : (%s), size=(%d x %d)", dem->getName(), dem->getCountX(), dem->getCountY());
 
 	size_t NN = method_grid->getCountX();
 	size_t MM = method_grid->getCountY();
@@ -177,10 +174,7 @@ void f_dem::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefi
 
 bool f_dem::minimize_only_dem() {
 
-	if (dem->getName())
-		writelog(LOG_MESSAGE,"dem : (%s), size=(%d x %d)", dem->getName(), dem->getCountX(), dem->getCountY());
-	else 
-		writelog(LOG_MESSAGE,"dem : noname, size=(%d x %d)", dem->getCountX(), dem->getCountY());
+	writelog(LOG_MESSAGE,"dem : (%s), size=(%d x %d)", dem->getName(), dem->getCountX(), dem->getCountY());
 
 	size_t NN = method_grid->getCountX();
 	size_t MM = method_grid->getCountY();

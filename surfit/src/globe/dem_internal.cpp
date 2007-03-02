@@ -101,10 +101,7 @@ size_t calc_ptr(size_t i, size_t j, size_t N);
 bool _dem_unload(d_dem *& srf) {
 	if (!srf)
 		return false;
-	if (srf->getName())
-		writelog(LOG_MESSAGE,"unloading dem \"%s\"", srf->getName());
-	else 
-		writelog(LOG_MESSAGE,"unloading noname dem");
+	writelog(LOG_MESSAGE,"unloading dem \"%s\"", srf->getName());
 	
 	if (srf)
 		srf->release();
@@ -1280,11 +1277,8 @@ bool _dem_save_grd(const d_dem * srf, const char * filename) {
 		return false;
 	}
 
-	if (srf->getName())
-		writelog(LOG_MESSAGE,"Saving dem %s to file %s (grd-ASCII)", srf->getName(), filename);
-	else 
-		writelog(LOG_MESSAGE,"Saving dem (noname) to file %s (grd-ASCII)", filename);
-
+	writelog(LOG_MESSAGE,"Saving dem %s to file %s (grd-ASCII)", srf->getName(), filename);
+	
 	fprintf(f,"DSAA\n");
 	int nx = srf->getCountX();
 	int ny = srf->getCountY();
@@ -1341,10 +1335,7 @@ bool _dem_save_xyz(const d_dem * srf, const char * filename) {
 		return false;
 	}
 
-	if (srf->getName())
-		writelog(LOG_MESSAGE,"Saving dem %s to file %s (xyz-ASCII)", srf->getName(), filename);
-	else 
-		writelog(LOG_MESSAGE,"Saving dem (noname) to file %s (xyz-ASCII)", filename);
+	writelog(LOG_MESSAGE,"Saving dem %s to file %s (xyz-ASCII)", srf->getName(), filename);
 
 	int nx = srf->getCountX();
 	int ny = srf->getCountY();
@@ -1548,10 +1539,7 @@ d_dem * _dem_project(const d_dem * srf, const d_grid * grd) {
 void _dem_info(const d_dem * srf) {
 	if (!srf)
 		return;
-	if (srf->getName()) 
-		writelog(LOG_MESSAGE,"dem (%s) : size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
-	else 
-		writelog(LOG_MESSAGE,"dem noname : size=(%d x %d)", srf->getCountX(), srf->getCountY());
+	writelog(LOG_MESSAGE,"dem (%s) : size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
 };
 
 bool _dem_resid(const d_dem * srf, const d_points * tsk, const char * filename) {

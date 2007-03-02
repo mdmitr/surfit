@@ -524,12 +524,12 @@ void dems_info() {
 //
 //
 
-struct regexp_dem_decomp
+struct match_dem_decomp
 {
-	regexp_dem_decomp(const char * ipos) : pos(ipos), res(true) {};
+	match_dem_decomp(const char * ipos) : pos(ipos), res(true) {};
 	void operator()(d_dem * dem) 
 	{
-		if ( RegExpMatch(pos, dem->getName()) )
+		if ( StringMatch(pos, dem->getName()) )
 		{
 			if (res == false)
 				return;
@@ -542,7 +542,7 @@ struct regexp_dem_decomp
 
 bool dem_decomp(const char * pos) {
 
-	regexp_dem_decomp q(pos);
+	match_dem_decomp q(pos);
 	q = std::for_each(globe_dems->begin(), globe_dems->end(), q);
 	return q.res;
 };
@@ -554,12 +554,12 @@ bool dem_auto_decomp(REAL eps, const char * pos) {
 	return _dem_auto_decomp(srf,eps);
 };
 
-struct regexp_dem_recons
+struct match_dem_recons
 {
-	regexp_dem_recons(const char * ipos) : pos(ipos), res(true) {};
+	match_dem_recons(const char * ipos) : pos(ipos), res(true) {};
 	void operator()(d_dem * dem) 
 	{
-		if ( RegExpMatch(pos, dem->getName()) )
+		if ( StringMatch(pos, dem->getName()) )
 		{
 			if (res == false)
 				return;
@@ -571,7 +571,7 @@ struct regexp_dem_recons
 };
 
 bool dem_recons(const char * pos) {
-	regexp_dem_recons q(pos);
+	match_dem_recons q(pos);
 	q = std::for_each(globe_dems->begin(), globe_dems->end(), q);
 	return q.res;
 };

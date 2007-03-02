@@ -28,17 +28,14 @@
 
 namespace surfit {
 
-struct regexp_dem
+struct match_dem
 {
-	regexp_dem(const char * ipos) : pos(ipos) {};
+	match_dem(const char * ipos) : pos(ipos) {};
 	void operator()(d_dem * dem) 
 	{
-		if (dem->getName() == NULL)
-			return;
-		if ( RegExpMatch(pos, dem->getName()) )
+		if ( StringMatch(pos, dem->getName()) )
 		{
-			writelog(LOG_MESSAGE,"creating gridding rule dem(\"%s\")", 
-				 dem->getName()?dem->getName():"noname");
+			writelog(LOG_MESSAGE,"creating gridding rule dem(\"%s\")", dem->getName());
 			f_dem * f = new f_dem(dem);
 			functionals_push_back(f);
 		}
@@ -47,22 +44,19 @@ struct regexp_dem
 };
 
 bool dem(const char * pos) {
-	std::for_each(globe_dems->begin(), globe_dems->end(), regexp_dem(pos));
+	std::for_each(globe_dems->begin(), globe_dems->end(), match_dem(pos));
 	return true;
 };
 
-struct regexp_dem_add
+struct match_dem_add
 {
-	regexp_dem_add(const char * ipos, functional * isrf, REAL iweight) : 
+	match_dem_add(const char * ipos, functional * isrf, REAL iweight) : 
 			   pos(ipos), srf(isrf), weight(iweight) {};
 	void operator()(d_dem * dem)
 	{
-		if (dem->getName() == NULL)
-			return;
-		if ( RegExpMatch(pos, dem->getName()) )
+		if ( StringMatch(pos, dem->getName()) )
 		{
-			writelog(LOG_MESSAGE,"creating gridding rule dem_add(\"%s\")", 
-				 dem->getName()?dem->getName():"noname");
+			writelog(LOG_MESSAGE,"creating gridding rule dem_add(\"%s\")",dem->getName());
 			f_dem * srf2 = new f_dem(dem);
 			srf->add_functional(srf2, weight);
 		}
@@ -78,7 +72,7 @@ bool dem_add(REAL weight, const char * pos)
 	if (srf == NULL)
 		return false;
 
-	std::for_each(globe_dems->begin(), globe_dems->end(), regexp_dem_add(pos, srf, weight));
+	std::for_each(globe_dems->begin(), globe_dems->end(), match_dem_add(pos, srf, weight));
 	return true;
 };
 
