@@ -13,7 +13,7 @@ clear_data
 set map_name "map_area_ineq" 
 
 # set tolerance for cg solver
-set tol 1e-005 
+set tol 1e-006 
 
 ##
 ## load initial data 
@@ -51,6 +51,9 @@ area 30 "area3"
 
 # resulting surface in area <= value... 
 area_leq 20 "area6"
+
+# resulting surface in area >= value... 
+area_geq 15 "area6"
 
 # resulting surface in area = value... 
 area 10 "area1"  
