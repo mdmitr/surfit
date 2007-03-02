@@ -174,12 +174,7 @@ bool f_lcm_simple::minimize() {
 		for (q = 0; q < (int)faults->size(); q++) {
 
 			const d_curv * flt = (*faults)[q];
-
-			if (flt->getName())
-				writelog(LOG_MESSAGE,"           : fault %s", flt->getName());
-			else
-				writelog(LOG_MESSAGE,"           : fault (noname)");
-		
+			writelog(LOG_MESSAGE,"           : fault %s", flt->getName());
 			gfaults = curv_to_grid_line(gfaults, flt, method_grid);
 		};
 	};

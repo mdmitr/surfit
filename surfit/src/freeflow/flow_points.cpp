@@ -87,11 +87,7 @@ bool f_flow_points::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	size_t task_size = f_task->size();
 		
-	if (f_task->getName()) {
-		writelog(LOG_MESSAGE,"flow points : (%s), %d points", f_task->getName(), f_task->size());
-	} else {
-		writelog(LOG_MESSAGE,"flow points : noname dataset, %d points", f_task->size());
-	}
+	writelog(LOG_MESSAGE,"flow points : (%s), %d points", f_task->getName(), f_task->size());
 	
 	// avoiding two-times bind_points_to_grid calling for the same grid
 	if (binded_grid) {

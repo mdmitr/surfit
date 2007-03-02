@@ -62,10 +62,7 @@ bool f_flow_area::minimize() {
 
 bool f_flow_area::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
-	if (area->getName())
-		writelog(LOG_MESSAGE,"flow area (%s), value = %g", area->getName(), value);
-	else 
-		writelog(LOG_MESSAGE,"flow area noname, value = %g", value);
+	writelog(LOG_MESSAGE,"flow area (%s), value = %g", area->getName(), value);
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_extvec(matrix_size);
