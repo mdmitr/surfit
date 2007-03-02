@@ -365,10 +365,13 @@ d_surf * _surf_load_grd_bin7(const char * filename, const char * surfname)
 	if ( read( file, &version, sizeof(long) ) != sizeof(long) )
 		goto exit;
 
-	while (!eof(file)) {
+	while (true) {
 		
 		// read tag id
-		if ( read( file, &id, sizeof(long) ) != sizeof(long) )
+		size_t readed = read( file, &id, sizeof(long) );
+		if (readed == 0)
+			break;
+		if ( readed != sizeof(long) )
 			goto exit;
 		// read tag size
 		if ( read( file, &size, sizeof(long) ) != sizeof(long) )
@@ -523,6 +526,9 @@ d_surf * _surf_load_grd_bin7(const char * filename, const char * surfname)
 			}
 		}
 	}
+
+	if ((data ==NULL) || (grd == NULL))
+		goto exit;
 
 	res = create_surf(data, grd);
 

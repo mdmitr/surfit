@@ -174,7 +174,7 @@ T * get_element(const char * pos, iter begin_T, iter end_T) {
 	for (it = begin_T; it != end_T; it++) {
 		if (*it) {
 			if ( (*it)->getName() ) {
-				if ( StringMatch( pos, (*it)->getName() ) == 0 ) 
+				if ( StringMatch( pos, (*it)->getName() ) ) 
 					return *it;
 			}
 		}
