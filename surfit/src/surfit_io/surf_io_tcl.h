@@ -139,21 +139,22 @@ bool surf_load_bmp(const char * filename, const char * surfname = 0,
 //
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_grd(const char * filename, const char * surface_name_or_position = "0");
+    \fn bool surf_save_grd(const char * filename, const char * surface_name_or_position = "0", int format);
 
     \par Tcl syntax:
-    surf_save_grd "filename" "surface_name_or_position"
+    surf_save_grd "filename" "surface_name_or_position" format
 
     \par Description:
-    saves surface to SURFER grd file (ASCII format)
+    saves surface to SURFER grd file
 
-    \param filename SURFER grd file (ASCII format)
+    \param filename SURFER grd file 
     \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
+    \param format 0 - ascii, 1 - binary, 2 - Surfer7 binary
 
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_save_grd(const char * filename, const char * surface_name_or_position = "0");
+bool surf_save_grd(const char * filename, const char * surface_name_or_position = "0", int format = 0);
 
 /*! \ingroup tcl_surf_save_load
     \fn bool surf_save_gmt(const char * filename, const char * surface_name_or_position = "0");

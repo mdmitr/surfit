@@ -97,10 +97,7 @@ bool _surf_save_bmp(const d_surf * srf, const char * filename) {
 		return false;
 	}
 
-	if (srf->getName())
-		writelog(LOG_MESSAGE,"Saving surf %s to file %s (BMP)", srf->getName(), filename);
-	else 
-		writelog(LOG_MESSAGE,"Saving surf (noname) to file %s (BMP)", filename);
+	writelog(LOG_MESSAGE,"Saving surf %s to file %s (BMP)", srf->getName(), filename);
 
 	size_t NN = srf->getCountX();
 	size_t MM = srf->getCountY();

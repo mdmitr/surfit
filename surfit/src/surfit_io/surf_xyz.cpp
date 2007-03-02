@@ -47,10 +47,7 @@ bool _surf_save_xyz(const d_surf * srf, const char * filename) {
 		return false;
 	}
 
-	if (srf->getName())
-		writelog(LOG_MESSAGE,"Saving surf %s to file %s (xyz-ASCII)", srf->getName(), filename);
-	else 
-		writelog(LOG_MESSAGE,"Saving surf (noname) to file %s (xyz-ASCII)", filename);
+	writelog(LOG_MESSAGE,"Saving surf %s to file %s (xyz-ASCII)", srf->getName(), filename);
 
 	FILE * f = fopen(filename,"w");
 

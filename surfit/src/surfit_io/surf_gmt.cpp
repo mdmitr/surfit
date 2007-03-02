@@ -347,10 +347,7 @@ bool _surf_save_gmt(const d_surf * srf, const char * filename) {
 		return false;
 	}
 
-	if (srf->getName())
-		writelog(LOG_MESSAGE,"Saving surf %s to GMT grd file %s (CDF format)", srf->getName(), filename);
-	else 
-		writelog(LOG_MESSAGE,"Saving surf (noname) to GMT grd file %s (CDF format)", filename);
+	writelog(LOG_MESSAGE,"Saving surf %s to GMT grd file %s (CDF format)", srf->getName(), filename);
 
 #ifndef HAVE_NETCDF
 	writelog(LOG_ERROR, "this function is not implemented because netCDF library wasn't found");

@@ -30,6 +30,20 @@ d_surf * _surf_load_grd(const char * filename, const char * surfname);
 
 SURFIT_IO_EXPORT
 /*! \ingroup internal_surf
+    \fn bool _surf_load_grd_bin(const char * filename, const char * surfname)
+    \brief loads surf from SURFER grd file (BINARY format)
+*/
+d_surf * _surf_load_grd_bin(const char * filename, const char * surfname); 
+
+SURFIT_IO_EXPORT
+/*! \ingroup internal_surf
+    \fn bool _surf_load_grd_bin7(const char * filename, const char * surfname)
+    \brief loads surf from SURFER grd file (Surfer7 BINARY format)
+*/
+d_surf * _surf_load_grd_bin7(const char * filename, const char * surfname); 
+
+SURFIT_IO_EXPORT
+/*! \ingroup internal_surf
     \fn bool _surf_load_gmt(const char * filename, const char * surfname)
     \brief loads surf from Generic Mapping Tools grd file (CDF format)
 */
@@ -74,13 +88,26 @@ d_surf * _surf_load_bmp(const char * filename, const char * surfname,
 			REAL minz = 0, REAL maxz = 0, 
 			REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1); 
 
-
 SURFIT_IO_EXPORT
 /*! \ingroup internal_surf
     \fn bool _surf_save_grd(const d_surf * srf, const char * filename); 
     \brief saves surf to SURFER grd file (ASCII format)
 */
 bool _surf_save_grd(const d_surf * srf, const char * filename); 
+
+SURFIT_IO_EXPORT
+/*! \ingroup internal_surf
+    \fn bool _surf_save_grd_bin(const d_surf * srf, const char * filename); 
+    \brief saves surf to SURFER grd file (BINARY format)
+*/
+bool _surf_save_grd_bin(const d_surf * srf, const char * filename); 
+
+SURFIT_IO_EXPORT
+/*! \ingroup internal_surf
+    \fn bool _surf_save_grd_bin7(const d_surf * srf, const char * filename); 
+    \brief saves surf to SURFER grd file (Surfer7 BINARY format)
+*/
+bool _surf_save_grd_bin7(const d_surf * srf, const char * filename); 
 
 SURFIT_IO_EXPORT
 /*! \ingroup internal_surf

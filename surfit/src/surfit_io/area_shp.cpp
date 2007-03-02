@@ -208,7 +208,7 @@ d_area * shape2area(SHPObject * shpObject, const char * areaname) {
 d_area * _area_load_shp(const char * filename, const char * areaname) {
 
 	writelog(LOG_MESSAGE,"loading area \"%s\" from ESRI shape file %s",
-		areaname?areaname:"noname", filename);
+		areaname, filename);
 
 	SHPHandle hSHP;
 	DBFHandle hDBF;

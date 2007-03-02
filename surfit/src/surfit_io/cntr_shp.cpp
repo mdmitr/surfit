@@ -197,7 +197,7 @@ bool _cntr_load_shp(const char * filename, const char * cntrname, const char * z
 		
 
 		if (cntrname != NULL) {
-			if ( RegExpMatch(cntrname, name) == false )
+			if ( StringMatch(cntrname, name) == false )
 				continue;
 		}
 

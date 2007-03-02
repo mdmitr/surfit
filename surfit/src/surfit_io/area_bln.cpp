@@ -50,10 +50,7 @@ bool _area_save_bln(const d_area * area, const char * filename) {
 		return false;
 	}
 
-	if (area->getName())
-		writelog(LOG_MESSAGE,"writing area (%s) to bln file %s", area->getName(), filename);
-	else 
-		writelog(LOG_MESSAGE,"writing noname area to bln file %s", filename);
+	writelog(LOG_MESSAGE,"writing area (%s) to bln file %s", area->getName(), filename);
 
 	bool res = true;
 

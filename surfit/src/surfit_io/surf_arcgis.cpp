@@ -212,10 +212,7 @@ bool _surf_save_arcgis(const d_surf * srf, const char * filename) {
 		return false;
 	}
 
-	if (srf->getName())
-		writelog(LOG_MESSAGE,"Saving surf %s to ArcGIS ASCII file %s", srf->getName(), filename);
-	else 
-		writelog(LOG_MESSAGE,"Saving surf (noname) to ArcGIS ASCII file %s", filename);
+	writelog(LOG_MESSAGE,"Saving surf %s to ArcGIS ASCII file %s", srf->getName(), filename);
 
 	FILE * f = fopen(filename,"w");
 

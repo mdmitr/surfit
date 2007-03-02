@@ -92,7 +92,7 @@ bool surf_load_bmp(const char * filename, const char * surfname = 0,
 		   REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1);
 
 
-bool surf_save_grd(const char * filename, const char * surface_name_or_position = "0");
+bool surf_save_grd(const char * filename, const char * surface_name_or_position = "0", int format = 0);
 bool surf_save_gmt(const char * filename, const char * surface_name_or_position = "0");
 bool surf_save_grass(const char * filename, const char * surface_name_or_position = "0");
 bool surf_save_arcgis(const char * filename, const char * surface_name_or_position = "0");

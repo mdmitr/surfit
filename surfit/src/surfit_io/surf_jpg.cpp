@@ -181,10 +181,7 @@ bool _surf_save_jpg(const d_surf * srf, const char * filename, int quality) {
 		return false;
 	}
 
-	if (srf->getName())
-		writelog(LOG_MESSAGE,"Saving surf %s to file %s (JPEG)", srf->getName(), filename);
-	else 
-		writelog(LOG_MESSAGE,"Saving surf (noname) to file %s (JPEG)", filename);
+	writelog(LOG_MESSAGE,"Saving surf %s to file %s (JPEG)", srf->getName(), filename);
 
 #ifndef HAVE_LIBJPEG
 	writelog(LOG_ERROR, "this function is not implemented because libjpeg library wasn't found");

@@ -126,7 +126,12 @@ bool surfit_io_manager::auto_load(const char * filename, const char * first1024,
 		goto exit;
 	}
 	
-	if ( strncmp(first1024,"DSAA",4) == 0 ) {
+	if (
+		( strncmp(first1024,"DSAA",4) == 0 ) ||
+		( strncmp(first1024,"DSBB",4) == 0 ) ||
+		( strncmp(first1024,"DSRB",4) == 0 ) 
+	   )
+	{
 		try {
 			res = surf_load_grd(filename);
 		} catch (...) {

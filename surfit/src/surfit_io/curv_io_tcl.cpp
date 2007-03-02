@@ -49,12 +49,8 @@ bool curv_load_bln(const char * filename, const char * curvname) {
 		int orient = 1;
 		d_curv * crv = _curv_load_bln(file, orient);
 		while (crv != NULL) {
-			if (crv->getName() == NULL) {
-				crv->release();
-				crv = _curv_load_bln(file, orient);
-				continue;
-			}
-			if ( RegExpMatch(curvname, crv->getName()) == false ) {
+			
+			if ( StringMatch(curvname, crv->getName()) == false ) {
 				crv->release();
 				crv = _curv_load_bln(file, orient);
 				continue;
@@ -115,13 +111,10 @@ struct regexp_curv_save_bln
 		if (res == false)
 			return;
 
-		if (crv->getName() == NULL)
-			return;
-
-		if ( RegExpMatch(curv_pos, crv->getName()) )
+		if ( StringMatch(curv_pos, crv->getName()) )
 		{
 			writelog(LOG_MESSAGE,"saving curve \"%s\" to Surfer BLN file %s",
-				 crv->getName()?crv->getName():"noname", filename);
+				 crv->getName(), filename);
 			res = _curv_save_bln(crv, file, orient);
 		}
 	};
@@ -167,10 +160,7 @@ struct regexp_curv_save_shp
 		if (res == false)
 			return;
 
-		if (crv->getName() == NULL)
-			return;
-
-		if ( RegExpMatch(curv_pos, crv->getName()) )
+		if ( StringMatch(curv_pos, crv->getName()) )
 		{
 			res = _curv_save_shp(crv, filename);
 		}

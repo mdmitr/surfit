@@ -21,6 +21,7 @@
 
 #include "surf.h"
 #include "surf_io.h"
+#include "surf_io_tcl.h"
 
 namespace surfit {
 
@@ -91,11 +92,23 @@ bool surf_load_bmp(const char * filename, const char * surfname,
 	return false;
 };
 
-bool surf_save_grd(const char * filename, const char * pos) {
+bool surf_save_grd(const char * filename, const char * pos, int format) {
 	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
 	if (!srf)
 		return false;
-	return _surf_save_grd(srf, filename);
+	bool res = false;
+	switch (format) {
+	case 0:
+		res = _surf_save_grd(srf, filename);
+		break;
+	case 1:
+		res = _surf_save_grd_bin(srf, filename);
+		break;
+	case 2:
+		res = _surf_save_grd_bin7(srf, filename);
+		break;
+	};
+	return res;
 };
 
 bool surf_save_gmt(const char * filename, const char * pos) {

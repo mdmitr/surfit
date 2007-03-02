@@ -168,7 +168,7 @@ bool _curv_load_shp(const char * filename, const char * curvname) {
 			name = DBFReadStringAttribute( hDBF, i, name_field );
 
 		if (curvname != NULL) {
-			if ( RegExpMatch(curvname, name) == false )
+			if ( StringMatch(curvname, name) == false )
 				continue;
 		}
 

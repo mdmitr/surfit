@@ -48,12 +48,8 @@ bool cntr_load_bln(const char * filename, const char * cntrname) {
 		int orient = 1;
 		d_cntr * crv = _cntr_load_bln(file, orient);
 		while (crv != NULL) {
-			if (crv->getName() == NULL) {
-				crv->release();
-				crv = _cntr_load_bln(file, orient);
-				continue;
-			}
-			if ( RegExpMatch(cntrname, crv->getName()) == false ) {
+			
+			if ( StringMatch(cntrname, crv->getName()) == false ) {
 				crv->release();
 				crv = _cntr_load_bln(file, orient);
 				continue;
@@ -102,9 +98,9 @@ bool cntr_load_shp(const char * filename, const char * cntrname, const char * zf
 	return _cntr_load_shp(filename, cntrname, zfield);
 };
 
-struct regexp_cntr_save_shp
+struct match_cntr_save_shp
 {
-	regexp_cntr_save_shp(const char * ifilename, const char * icntr_pos)
+	match_cntr_save_shp(const char * ifilename, const char * icntr_pos)
 	{
 		filename = ifilename;
 		cntr_pos = icntr_pos;
@@ -116,13 +112,10 @@ struct regexp_cntr_save_shp
 		if (res == false)
 			return;
 
-		if (crv->getName() == NULL)
-			return;
-
-		if ( RegExpMatch(cntr_pos, crv->getName()) )
+		if ( StringMatch(cntr_pos, crv->getName()) )
 		{
 			writelog(LOG_MESSAGE,"saving contour \"%s\" to ESRI shape file %s",
-				 crv->getName()?crv->getName():"noname", filename);
+				 crv->getName(), filename);
 			res = _cntr_save_shp(crv, filename);
 		}
 	};
@@ -133,14 +126,14 @@ struct regexp_cntr_save_shp
 };
 
 bool cntr_save_shp(const char * filename, const char * cntr_pos) {
-	regexp_cntr_save_shp saver(filename, cntr_pos);
+	match_cntr_save_shp saver(filename, cntr_pos);
 	saver = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), saver);
 	return saver.res;
 };
 
-struct regexp_cntr_save_bln
+struct match_cntr_save_bln
 {
-	regexp_cntr_save_bln(const char * ifilename, const char * icntr_pos, int iorient, FILE * ifile)
+	match_cntr_save_bln(const char * ifilename, const char * icntr_pos, int iorient, FILE * ifile)
 	{
 		filename = ifilename;
 		cntr_pos = icntr_pos;
@@ -154,13 +147,10 @@ struct regexp_cntr_save_bln
 		if (res == false)
 			return;
 
-		if (crv->getName() == NULL)
-			return;
-
-		if ( RegExpMatch(cntr_pos, crv->getName()) )
+		if ( StringMatch(cntr_pos, crv->getName()) )
 		{
 			writelog(LOG_MESSAGE,"saving contour \"%s\" to Surfer BLN file %s",
-				 crv->getName()?crv->getName():"noname", filename);
+				 crv->getName(), filename);
 			res = _cntr_save_bln(crv, file, orient);
 		}
 	};
@@ -185,7 +175,7 @@ bool cntr_save_bln(const char * filename, const char * cntr_pos, int orient)
 		return false;
 	}
 
-	regexp_cntr_save_bln saver(filename, cntr_pos, orient, file);
+	match_cntr_save_bln saver(filename, cntr_pos, orient, file);
 	saver = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), saver);
 
 	fclose(file);
