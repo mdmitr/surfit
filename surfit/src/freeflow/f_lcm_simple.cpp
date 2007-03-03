@@ -308,7 +308,7 @@ bool f_lcm_simple::minimize() {
 			flood_areas->release();
 		
 		writelog(LOG_MESSAGE,"processing whole grid...");
-		res = minimize_step() && res;
+		res = minimize_step(); // && res;
 
 	}
 

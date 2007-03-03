@@ -255,7 +255,7 @@ bool f_trend::minimize() {
 
 		writelog(LOG_MESSAGE, "trend : proccessing whole trend area...");
 		
-		res = minimize_step() && res;
+		res = minimize_step(); // && res;
 
 	}
 

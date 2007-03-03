@@ -400,7 +400,7 @@ bool f_completer::minimize() {
 			flood_areas->release();
 
 		writelog(LOG_MESSAGE,"completer : processing whole area");
-		res = minimize_step() && res;
+		res = minimize_step();// && res;
 
 	}
 
