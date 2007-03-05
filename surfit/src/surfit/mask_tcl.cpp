@@ -51,7 +51,7 @@ bool mask_load(const char * filename, const char * defname)
 			surfit_masks->push_back(msk);
 			res = true;
 		}
-		find_next();
+		fname = find_next();
 	}
 
 	find_close();
