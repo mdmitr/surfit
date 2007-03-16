@@ -128,7 +128,7 @@ void surfs_info();
 //
 
 //save and load
-bool mask_load(const char * filename, const char * maskname = 0);
+bool mask_load(const char * filename, const char * maskname = "*");
 bool mask_save(const char * filename, const char * mask_name_or_position = "0");
 bool mask_save_grd(const char * filename, const char * mask_name_or_position = "0");
 bool mask_save_xyz(const char * filename, const char * mask_name_or_position = "0");
@@ -136,10 +136,10 @@ bool mask_save_xyz(const char * filename, const char * mask_name_or_position = "
 // math
 //
 bool mask_getValue(REAL x, REAL y, const char * mask_name_or_position = "0");
-bool mask_and(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
-bool mask_not(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
-bool  mask_or(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
-bool mask_xor(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+void mask_and(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+void mask_not(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+void mask_or(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+void mask_xor(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
 // CONVERTING
 bool mask_to_surf(const char * mask_name_or_position = "0");
 // OTHER

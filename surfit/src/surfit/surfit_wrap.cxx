@@ -27383,7 +27383,6 @@ SWIGINTERN int
 _wrap_mask_and__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
-  bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -27405,7 +27404,7 @@ _wrap_mask_and__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_and((char const *)arg1,(char const *)arg2);
+        surfit::mask_and((char const *)arg1,(char const *)arg2);
         
       }
     }
@@ -27417,7 +27416,7 @@ _wrap_mask_and__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return TCL_OK;
@@ -27431,7 +27430,6 @@ fail:
 SWIGINTERN int
 _wrap_mask_and__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -27445,7 +27443,7 @@ _wrap_mask_and__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_and((char const *)arg1);
+        surfit::mask_and((char const *)arg1);
         
       }
     }
@@ -27457,7 +27455,7 @@ _wrap_mask_and__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
@@ -27468,13 +27466,11 @@ fail:
 
 SWIGINTERN int
 _wrap_mask_and__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  bool result;
-  
   if (SWIG_GetArgs(interp, objc, objv,":mask_and ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_and();
+        surfit::mask_and();
         
       }
     }
@@ -27486,7 +27482,7 @@ _wrap_mask_and__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   return TCL_OK;
 fail:
   return TCL_ERROR;
@@ -27530,7 +27526,6 @@ SWIGINTERN int
 _wrap_mask_not__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
-  bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -27552,7 +27547,7 @@ _wrap_mask_not__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_not((char const *)arg1,(char const *)arg2);
+        surfit::mask_not((char const *)arg1,(char const *)arg2);
         
       }
     }
@@ -27564,7 +27559,7 @@ _wrap_mask_not__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return TCL_OK;
@@ -27578,7 +27573,6 @@ fail:
 SWIGINTERN int
 _wrap_mask_not__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -27592,7 +27586,7 @@ _wrap_mask_not__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_not((char const *)arg1);
+        surfit::mask_not((char const *)arg1);
         
       }
     }
@@ -27604,7 +27598,7 @@ _wrap_mask_not__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
@@ -27615,13 +27609,11 @@ fail:
 
 SWIGINTERN int
 _wrap_mask_not__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  bool result;
-  
   if (SWIG_GetArgs(interp, objc, objv,":mask_not ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_not();
+        surfit::mask_not();
         
       }
     }
@@ -27633,7 +27625,7 @@ _wrap_mask_not__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   return TCL_OK;
 fail:
   return TCL_ERROR;
@@ -27677,7 +27669,6 @@ SWIGINTERN int
 _wrap_mask_or__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
-  bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -27699,7 +27690,7 @@ _wrap_mask_or__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_or((char const *)arg1,(char const *)arg2);
+        surfit::mask_or((char const *)arg1,(char const *)arg2);
         
       }
     }
@@ -27711,7 +27702,7 @@ _wrap_mask_or__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return TCL_OK;
@@ -27725,7 +27716,6 @@ fail:
 SWIGINTERN int
 _wrap_mask_or__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -27739,7 +27729,7 @@ _wrap_mask_or__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_or((char const *)arg1);
+        surfit::mask_or((char const *)arg1);
         
       }
     }
@@ -27751,7 +27741,7 @@ _wrap_mask_or__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
@@ -27762,13 +27752,11 @@ fail:
 
 SWIGINTERN int
 _wrap_mask_or__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  bool result;
-  
   if (SWIG_GetArgs(interp, objc, objv,":mask_or ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_or();
+        surfit::mask_or();
         
       }
     }
@@ -27780,7 +27768,7 @@ _wrap_mask_or__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   return TCL_OK;
 fail:
   return TCL_ERROR;
@@ -27824,7 +27812,6 @@ SWIGINTERN int
 _wrap_mask_xor__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
-  bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -27846,7 +27833,7 @@ _wrap_mask_xor__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_xor((char const *)arg1,(char const *)arg2);
+        surfit::mask_xor((char const *)arg1,(char const *)arg2);
         
       }
     }
@@ -27858,7 +27845,7 @@ _wrap_mask_xor__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return TCL_OK;
@@ -27872,7 +27859,6 @@ fail:
 SWIGINTERN int
 _wrap_mask_xor__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -27886,7 +27872,7 @@ _wrap_mask_xor__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_xor((char const *)arg1);
+        surfit::mask_xor((char const *)arg1);
         
       }
     }
@@ -27898,7 +27884,7 @@ _wrap_mask_xor__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
@@ -27909,13 +27895,11 @@ fail:
 
 SWIGINTERN int
 _wrap_mask_xor__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  bool result;
-  
   if (SWIG_GetArgs(interp, objc, objv,":mask_xor ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_xor();
+        surfit::mask_xor();
         
       }
     }
@@ -27927,7 +27911,7 @@ _wrap_mask_xor__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   return TCL_OK;
 fail:
   return TCL_ERROR;

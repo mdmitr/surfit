@@ -244,8 +244,8 @@ void add_val_pair(sizetvec * v1, size_t n1, size_t m1,
 		  size_t NN, size_t MM) {
 	
 	size_t val1, val2;
-	two2one(val1, n1, m1, NN, MM);
-	two2one(val2, n2, m2, NN, MM);
+	val1 = two2one(n1, m1, NN, MM);
+	val2 = two2one(n2, m2, NN, MM);
 	
 	if ((val1 == UINT_MAX) || (val2 == UINT_MAX))
 		return;

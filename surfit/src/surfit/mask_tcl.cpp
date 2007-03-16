@@ -122,7 +122,6 @@ bool mask_save_grd(const char * filename, const char * pos)
 
 bool mask_save_xyz(const char * filename, const char * pos) 
 {
-
 	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
 	if (!msk)
 		return false;
@@ -153,7 +152,6 @@ bool mask_save_xyz(const char * filename, const char * pos)
 			msk->getCoordNode(ix, iy, x_coord, y_coord);
 			val = msk->coeff->get( ix + nx*iy );
 			fprintf(f,"%lf %lf %lf \n", x_coord, y_coord, val);
-			
 		}
 	}
 
@@ -162,70 +160,95 @@ bool mask_save_xyz(const char * filename, const char * pos)
 	return true;
 };
 
-bool mask_or(const char * pos1, const char * pos2) 
+struct mask_oper
 {
-	d_mask * def1 = get_element<d_mask>(pos1, surfit_masks->begin(), surfit_masks->end());
-	if (!def1)
-		return false;
-
-	d_mask * def2 = get_element<d_mask>(pos2, surfit_masks->begin(), surfit_masks->end());
-	if (!def2)
-		return false;
-
-	writelog(LOG_MESSAGE,"mask : %s = %s OR %s", 
-		def1->getName(), def1->getName(), def2->getName());
-	
-	def1->OR(def2);
-	return true;
+	virtual void do_oper(d_mask * mask1, d_mask * mask2) = 0;
 };
 
-bool mask_xor(const char * pos1, const char * pos2) 
+struct match_mask_oper2
 {
-	d_mask * def1 = get_element<d_mask>(pos1, surfit_masks->begin(), surfit_masks->end());
-	if (!def1)
-		return false;
-
-	d_mask * def2 = get_element<d_mask>(pos2, surfit_masks->begin(), surfit_masks->end());
-	if (!def2)
-		return false;
-
-	writelog(LOG_MESSAGE,"mask_xor : \"%s\" = \"%s\" XOR \"%s\"", 
-		def1->getName(), def1->getName(), def2->getName());
-	def1->XOR(def2);
-	return true;
+	match_mask_oper2(const char * ipos2, d_mask * imask1, mask_oper * ioper) : mask1(imask1), pos2(ipos2), oper(ioper) {};
+	void operator()(d_mask * mask) 
+	{
+		if ( StringMatch( pos2, mask->getName() ) )
+		{
+			oper->do_oper(mask1, mask);
+		}
+	};
+	const char * pos2;
+	d_mask * mask1;
+	mask_oper * oper;
 };
 
-bool mask_and(const char * pos1, const char * pos2) 
+struct match_mask_oper
 {
-	d_mask * def1 = get_element<d_mask>(pos1, surfit_masks->begin(), surfit_masks->end());
-	if (!def1)
-		return false;
-
-	d_mask * def2 = get_element<d_mask>(pos2, surfit_masks->begin(), surfit_masks->end());
-	if (!def2)
-		return false;
-
-	writelog(LOG_MESSAGE,"mask_and : \"%s\" = \"%s\" AND \"%s\"", 
-		def1->getName(), def1->getName(), def2->getName());
-	def1->AND(def2);
-	return true;
+	match_mask_oper(const char * ipos1, const char * ipos2, mask_oper * ioper) : pos1(ipos1), pos2(ipos2), oper(ioper) {};
+	void operator()(d_mask * mask) 
+	{
+		if ( StringMatch( pos1, mask->getName() ) )
+		{
+			std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_oper2(pos2, mask, oper));
+		}
+	}
+	const char * pos1;
+	const char * pos2;
+	mask_oper * oper;
 };
 
-bool mask_not(const char * pos1, const char * pos2) 
+struct mask_or_oper : public mask_oper
 {
-	d_mask * def1 = get_element<d_mask>(pos1, surfit_masks->begin(), surfit_masks->end());
-	if (!def1)
-		return false;
+	void do_oper(d_mask * mask1, d_mask * mask2) {
+		writelog(LOG_MESSAGE,"mask : %s = %s OR %s", mask1->getName(), mask1->getName(), mask2->getName());
+		mask1->OR(mask2);
+	}
+};
 
-	d_mask * def2 = get_element<d_mask>(pos2, surfit_masks->begin(), surfit_masks->end());
-	if (!def2)
-		return false;
+void mask_or(const char * pos1, const char * pos2) 
+{
+	mask_or_oper or_oper;
+	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_oper(pos1, pos2, &or_oper));	
+};
 
-	writelog(LOG_MESSAGE,"mask_not : \"%s\" = NOT \"%s\"", 
-		def1->getName(), def2->getName());
+struct mask_xor_oper : public mask_oper
+{
+	void do_oper(d_mask * mask1, d_mask * mask2) {
+		writelog(LOG_MESSAGE,"mask : %s = %s XOR %s", mask1->getName(), mask1->getName(), mask2->getName());
+		mask1->XOR(mask2);
+	}
+};
 
-	def1->NOT(def2);
-	return true;
+void mask_xor(const char * pos1, const char * pos2) 
+{
+	mask_xor_oper xor_oper;
+	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_oper(pos1, pos2, &xor_oper));	
+};
+
+struct mask_and_oper : public mask_oper
+{
+	void do_oper(d_mask * mask1, d_mask * mask2) {
+		writelog(LOG_MESSAGE,"mask : %s = %s AND %s", mask1->getName(), mask1->getName(), mask2->getName());
+		mask1->AND(mask2);
+	}
+};
+
+void mask_and(const char * pos1, const char * pos2) 
+{
+	mask_and_oper and_oper;
+	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_oper(pos1, pos2, &and_oper));	
+};
+
+struct mask_not_oper : public mask_oper
+{
+	void do_oper(d_mask * mask1, d_mask * mask2) {
+		writelog(LOG_MESSAGE,"mask : %s = %s NOT %s", mask1->getName(), mask1->getName(), mask2->getName());
+		mask1->NOT(mask2);
+	}
+};
+
+void mask_not(const char * pos1, const char * pos2) 
+{
+	mask_not_oper not_oper;
+	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_oper(pos1, pos2, &not_oper));	
 };
 
 struct match_mask_by_surf
@@ -255,17 +278,41 @@ bool mask_by_surf(const char * surf_pos)
 	return mm.res;
 };
 
+struct match_mask_apply_to_surf2
+{
+	match_mask_apply_to_surf2(d_mask * imask, const char * isurf_pos) : mask(imask), surf_pos(isurf_pos), res(false) {};
+	void operator()(d_surf * surf) {
+		if ( StringMatch( surf_pos, surf->getName() ) )
+		{
+			res = _mask_apply_to_surf(mask, surf);		
+		}
+	};
+	d_mask * mask;
+	const char * surf_pos;
+	bool res;
+};
+
+struct match_mask_apply_to_surf
+{
+	match_mask_apply_to_surf(const char * idef_pos, const char * isurf_pos) : def_pos(idef_pos), surf_pos(isurf_pos), res(false) {};
+	void operator()(d_mask * mask) {
+		if ( StringMatch( def_pos, mask->getName() ) )
+		{
+			match_mask_apply_to_surf2 ss(mask, surf_pos);
+			ss = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), ss);
+			res = ss.res;
+		}
+	};
+	const char * def_pos;
+	const char * surf_pos;
+	bool res;
+};
+
 bool mask_apply_to_surf(const char * def_pos, const char * surf_pos) 
 {
-	d_mask * msk = get_element<d_mask>(def_pos, surfit_masks->begin(), surfit_masks->end());
-	if (!msk)
-		return false;
-
-	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-
-	return _mask_apply_to_surf(msk, srf);
+	match_mask_apply_to_surf ss(def_pos, surf_pos);
+	ss = std::for_each(surfit_masks->begin(), surfit_masks->end(), ss);
+	return ss.res;
 };
 
 bool mask_setName(const char * new_name, const char * pos) 
@@ -297,21 +344,28 @@ bool mask_getValue(REAL x, REAL y, const char * pos)
 	return msk->getValue(x,y);
 };
 
-bool mask_to_surf(const char * pos) {
-	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
-	std::vector<d_mask *>::iterator pdef = get_iterator<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
-	if (!msk)
-		return false;
+struct match_mask_to_surf
+{
+	match_mask_to_surf(const char * ipos) : pos(ipos), res(false) {};
+	void operator()(d_mask * mask)
+	{
+		if ( StringMatch( pos, mask->getName() ) )
+		{
+			writelog(LOG_MESSAGE,"converting mask \"%s\" to surface", mask->getName());
+			d_surf * srf = create_surf_by_mask(mask);
+			surfit_surfs->push_back(srf);
+			res = true;
+		}
+	}
+	const char * pos;
+	bool res;
+};
 
-	writelog(LOG_MESSAGE,"creating surface by mask \"%s\"",
-		msk->getName());
-
-	d_surf * srf = create_surf_by_mask(msk);
-	if (msk)
-		msk->release();
-	surfit_masks->erase(pdef);
-	surfit_surfs->push_back(srf);
-	return true;
+bool mask_to_surf(const char * pos) 
+{
+	match_mask_to_surf mms(pos);
+	mms = std::for_each(surfit_masks->begin(), surfit_masks->end(), mms);
+	return mms.res;
 };
 
 bool mask_delall() {
@@ -338,21 +392,31 @@ bool mask_delall() {
 	return true;
 };
 
-bool mask_del(const char * pos) {
-	std::vector<d_mask *>::iterator msk = get_iterator<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
-	if (msk == surfit_masks->end())
-		return false;
+struct match_mask_del
+{
+	match_mask_del(const char * ipos) : pos(ipos), res(false) {};
+	void operator()(d_mask * mask)
+	{
+		if ( StringMatch( pos, mask->getName() ) )
+		{
+			std::vector<d_mask *>::iterator it = std::find(surfit_masks->begin(), surfit_masks->end(), mask);
+			if (it != surfit_masks->end())
+			{
+				writelog(LOG_MESSAGE,"removing mask \"%s\" from memory", mask->getName());
+				surfit_masks->erase(it);	
+				res = true;
+			}
+		}
+	};
+	const char * pos;
+	bool res;
+};
 
-	if (*msk == NULL)
-		return false;
-
-	writelog(LOG_MESSAGE,"removing mask \"%s\" from memory",
-		(*msk)->getName());
-
-	if (*msk)
-		(*msk)->release();
-	surfit_masks->erase(msk);
-	return true;
+bool mask_del(const char * pos) 
+{
+	match_mask_del mmd(pos);
+	mmd = std::for_each(surfit_masks->begin(), surfit_masks->end(), mmd);
+	return mmd.res;
 };
 
 void masks_info() {

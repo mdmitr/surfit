@@ -32,10 +32,10 @@ class d_mask;
 //
 
 /*! \ingroup tcl_mask_save_load
-    \fn bool mask_load(const char * filename, const char * maskname = 0);
+    \fn bool mask_load(const char * filename, const char * maskname = "*");
     
     \par Tcl syntax:
-    mask_load "filename" "maskname"
+    mask_load \ref file "filename" \ref str "maskname"
 
     \par Description:
     loads \ref d_mask "mask" from surfit datafile. If no maskname specified, then first mask will be loaded.
@@ -93,7 +93,7 @@ bool mask_save_xyz(const char * filename, const char * mask_name_or_position = "
 bool mask_getValue(REAL x, REAL y, const char * mask_name_or_position = "0");
 
 /*! \ingroup tcl_mask_math
-    \fn bool mask_and(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+    \fn void mask_and(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
 
     \par Tcl syntax:
     mask_and "mask1_name_or_position" "mask2_name_or_position"
@@ -102,10 +102,10 @@ bool mask_getValue(REAL x, REAL y, const char * mask_name_or_position = "0");
     makes AND operation:
     mask1 = mask1 AND mask2
 */
-bool mask_and(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+void mask_and(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
 
 /*! \ingroup tcl_mask_math
-    \fn bool mask_not(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+    \fn void mask_not(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
 
     \par Tcl syntax:
     mask_not "mask1_name_or_position" "mask2_name_or_position"
@@ -115,10 +115,10 @@ bool mask_and(const char * mask1_name_or_position = "0", const char * mask2_name
     makes NOT operation:
     mask1 = NOT mask2
 */
-bool mask_not(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+void mask_not(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
 
 /*! \ingroup tcl_mask_math
-    \fn bool mask_or(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+    \fn void mask_or(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
 
     \par Tcl syntax:
     mask_or "mask1_name_or_position" "mask2_name_or_position"
@@ -127,10 +127,10 @@ bool mask_not(const char * mask1_name_or_position = "0", const char * mask2_name
     makes OR operation:
     mask1 = mask1 OR mask2
 */
-bool mask_or(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+void mask_or(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
 
 /*! \ingroup tcl_mask_math
-    \fn bool mask_xor(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+    \fn void mask_xor(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
     
     \par Tcl syntax:
     mask_xor "mask1_name_or_position" "mask2_name_or_position"
@@ -139,7 +139,7 @@ bool mask_or(const char * mask1_name_or_position = "0", const char * mask2_name_
     makes XOR operation:
     mask1 = mask1 XOR mask2
 */
-bool mask_xor(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+void mask_xor(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
 
 //
 // CONVERTING

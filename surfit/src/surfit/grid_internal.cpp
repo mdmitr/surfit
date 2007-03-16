@@ -335,6 +335,8 @@ cont:
 			  startY, endY, stepY,
 			  name);
 	
+	if (geom)
+		geom->release();
 	geom = res;
 	
 	return true;

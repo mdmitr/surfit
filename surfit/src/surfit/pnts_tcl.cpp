@@ -24,8 +24,10 @@
 #include "vec.h"
 #include "rnd.h"
 #include "geom_alg.h"
+#include "findfile.h"
 
 #include <math.h>
+#include <algorithm>
 
 #include "points.h"
 #include "pnts_internal.h"
@@ -42,33 +44,53 @@
 
 namespace surfit {
 
-bool pnts_load(const char * filename, const char * pntsname) {
-	d_points * pnts = _pnts_load(filename, pntsname);
-	if (pnts) {
-		surfit_pnts->push_back(pnts);
-		return true;
+bool pnts_load(const char * filename, const char * pntsname) 
+{
+	const char * fname = find_first(filename);
+	bool res = false;
+
+	while (fname != NULL) {
+		d_points * pnts = _pnts_load(fname, pntsname);
+		if (pnts != NULL) {
+			surfit_pnts->push_back(pnts);
+			res = true;
+		}
+		fname = find_next();
 	}
-	return false;
+	find_close();
+	return res;
 };
 
-bool pnts_add_noise(REAL std, const char * pos) {
-	
-	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (pnts == NULL)
-		return false;
-
-	if (pnts->size() == 0)
-		return false;
-
-	vec::iterator ptr;
-	for (ptr = pnts->Z->begin(); ptr != pnts->Z->end(); ptr++) {
-		*ptr += norm_rand(std);
+struct match_add_noise
+{
+	match_add_noise(REAL istd, const char * ipos) : pos(ipos), std(istd), res(false) {};
+	void operator()(d_points * pnts)
+	{
+		if ( StringMatch(pos, pnts->getName()) )
+		{
+			writelog(LOG_MESSAGE,"adding noise N(0,%g) to points \"%s\"", std, pnts->getName());	
+			
+			vec::iterator ptr;
+			for (ptr = pnts->Z->begin(); ptr != pnts->Z->end(); ptr++) {
+				*ptr += norm_rand(std);
+			}
+			res = true;
+		}
 	}
-
-	return true;
+	REAL std;
+	const char * pos;
+	bool res;
 };
 
-REAL pnts_mean(const char * pos) {
+bool pnts_add_noise(REAL std, const char * pos) 
+{
+	match_add_noise qq(std, pos);
+	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+	return qq.res;
+};
+
+REAL pnts_mean(const char * pos) 
+{
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return FLT_MAX;
@@ -76,15 +98,16 @@ REAL pnts_mean(const char * pos) {
 	return pnts->mean();
 };
 
-REAL pnts_std(REAL mean, const char * pos) {
+REAL pnts_std(REAL mean, const char * pos) 
+{
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;
 	return pnts->std(mean);
 };
 
-bool pnts_save(const char * filename, const char * pos) {
-	
+bool pnts_save(const char * filename, const char * pos) 
+{
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;
@@ -94,23 +117,34 @@ bool pnts_save(const char * filename, const char * pos) {
 	return _pnts_save(pnts, filename);
 };
 
-int pnts_getCount(const char * pos) {
+int pnts_getCount(const char * pos) 
+{
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return -1;
 	return pnts->size();
 };
 
-bool pnts_read(const char * filename, const char * pntsname, int col1, int col2, int col3, int col4, const char * delimiter, int skip_lines, int grow_by) {
-	d_points * pnts = _pnts_read(filename, pntsname, col1, col2, col3, col4, delimiter, skip_lines, grow_by);
-	if (pnts) {
-		surfit_pnts->push_back(pnts);
-		return true;
+bool pnts_read(const char * filename, const char * pntsname, int col1, int col2, int col3, int col4, const char * delimiter, int skip_lines, int grow_by) 
+{
+	const char * fname = find_first(filename);
+	bool res = false;
+
+	while (fname != NULL)
+	{
+		d_points * pnts = _pnts_read(fname, pntsname, col1, col2, col3, col4, delimiter, skip_lines, grow_by);
+		if (pnts) {
+			surfit_pnts->push_back(pnts);
+			res = true;
+		}
+		fname = find_next();
 	}
-	return false;
+	find_close();
+	return res;
 };
 
-bool pnts_write(const char * filename, const char * pos, const char * delimiter) {
+bool pnts_write(const char * filename, const char * pos, const char * delimiter) 
+{
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;
@@ -126,184 +160,289 @@ bool pnts_write(const char * filename, const char * pos, const char * delimiter)
 	return _pnts_write(pnts, filename, buf);
 };
 
-bool pnts_filter_by_surf(REAL eps, const char * pnts_pos, const char * surf_pos) {
+struct match_pfbs2
+{
+	match_pfbs2(REAL ieps, d_points * ipnts, const char * isurf_pos)  :  eps(ieps), pnts(ipnts), surf_pos(isurf_pos), res(false) {};
+	void operator()(d_surf * srf)
+	{
+		if ( StringMatch(surf_pos, srf->getName()) )
+		{
+			size_t old_size = pnts->size();
+			if (old_size == 0)
+				return;
+			
+			vec::iterator old_X_ptr = pnts->X->begin();
+			vec::iterator old_Y_ptr = pnts->Y->begin();
+			vec::iterator old_Z_ptr = pnts->Z->begin();
+			
+			vec::iterator new_X_ptr = pnts->X->begin();
+			vec::iterator new_Y_ptr = pnts->Y->begin();
+			vec::iterator new_Z_ptr = pnts->Z->begin();
+			
+			REAL z_value;
+			
+			for (;old_X_ptr != pnts->X->end(); old_X_ptr++, old_Y_ptr++, old_Z_ptr++) {
+				z_value = srf->getValue(*old_X_ptr, *old_Y_ptr);
+				if ( fabs(z_value - *old_Z_ptr) < eps ) {
+					*new_X_ptr = *old_X_ptr;
+					*new_Y_ptr = *old_Y_ptr;
+					*new_Z_ptr = *old_Z_ptr;
+					new_X_ptr++;
+					new_Y_ptr++;
+					new_Z_ptr++;
+				}
+			}
+			
+			size_t new_size = new_X_ptr - pnts->X->begin();
+			
+			pnts->X->resize(new_size);
+			pnts->Y->resize(new_size);
+			pnts->Z->resize(new_size);
+			res = true;
+		};
+	}
+	REAL eps;
+	d_points * pnts;
+	const char * surf_pos;
+	bool res;
+};
 
-	d_points * pnts = get_element<d_points>(pnts_pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (pnts == NULL)
-		return false;
-
-	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (pnts == NULL)
-		return false;
-
-	int old_size = pnts->size();
-	if (old_size == 0)
-		return false;
-
-	vec::iterator old_X_ptr = pnts->X->begin();
-	vec::iterator old_Y_ptr = pnts->Y->begin();
-	vec::iterator old_Z_ptr = pnts->Z->begin();
-
-	vec::iterator new_X_ptr = pnts->X->begin();
-	vec::iterator new_Y_ptr = pnts->Y->begin();
-	vec::iterator new_Z_ptr = pnts->Z->begin();
-
-	REAL z_value;
-
-	for (;old_X_ptr != pnts->X->end(); old_X_ptr++, old_Y_ptr++, old_Z_ptr++) {
-		z_value = srf->getValue(*old_X_ptr, *old_Y_ptr);
-		if ( fabs(z_value - *old_Z_ptr) < eps ) {
-			*new_X_ptr = *old_X_ptr;
-			*new_Y_ptr = *old_Y_ptr;
-			*new_Z_ptr = *old_Z_ptr;
-			new_X_ptr++;
-			new_Y_ptr++;
-			new_Z_ptr++;
+struct match_pfbs
+{
+	match_pfbs(REAL ieps, const char * ipnts_pos, const char * isurf_pos)  :  eps(ieps), pnts_pos(ipnts_pos), surf_pos(isurf_pos), res(false) {};
+	void operator()(d_points * pnts)
+	{
+		if ( StringMatch( pnts_pos, pnts->getName() ) )
+		{
+			match_pfbs2 qq(eps, pnts, surf_pos);
+			qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+			res = qq.res;
 		}
 	}
-
-	int new_size = new_X_ptr - pnts->X->begin();
-
-	pnts->X->resize(new_size);
-	pnts->Y->resize(new_size);
-	pnts->Z->resize(new_size);
-	
-	return true;
+	REAL eps;
+	const char * pnts_pos;
+	const char * surf_pos;
+	bool res;
 
 };
 
-bool pnts_filter_out_area(const char * pnts_pos, const char * area_pos) {
-
-	d_points * pnts = get_element<d_points>(pnts_pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (pnts == NULL)
-		return false;
-
-	d_area * crv = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
-	if (crv == NULL)
-		return false;
-	
-	writelog(LOG_MESSAGE,"removing points outside area");
-
-	int old_size = pnts->size();
-
-	vec::iterator old_X_ptr = pnts->X->begin();
-	vec::iterator old_Y_ptr = pnts->Y->begin();
-	vec::iterator old_Z_ptr = pnts->Z->begin();
-
-	vec::iterator new_X_ptr = pnts->X->begin();
-	vec::iterator new_Y_ptr = pnts->Y->begin();
-	vec::iterator new_Z_ptr = pnts->Z->begin();
-
-	for (;old_X_ptr != pnts->X->end(); old_X_ptr++, old_Y_ptr++, old_Z_ptr++) {
-		
-		bool in_reg = crv->in_region(*old_X_ptr, *old_Y_ptr);
-		if ( in_reg ) {
-			*new_X_ptr = *old_X_ptr;
-			*new_Y_ptr = *old_Y_ptr;
-			*new_Z_ptr = *old_Z_ptr;
-			new_X_ptr++;
-			new_Y_ptr++;
-			new_Z_ptr++;
-		}
-	}
-
-	int new_size = new_X_ptr - pnts->X->begin();
-
-	pnts->X->resize(new_size);
-	pnts->Y->resize(new_size);
-	pnts->Z->resize(new_size);
-	
-	return true;
-
+bool pnts_filter_by_surf(REAL eps, const char * pnts_pos, const char * surf_pos) 
+{
+	match_pfbs qq(eps, pnts_pos, surf_pos);
+	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+	return qq.res;
 };
 
-bool pnts_filter_in_area(const char * pnts_pos, const char * area_pos) {
+struct match_fpfoa2
+{
+	match_fpfoa2(d_points * ipnts, const char * iarea_pos) : pnts(ipnts), area_pos(iarea_pos), res(false) {};
+	void operator()(d_area * area)
+	{
+		if ( StringMatch(area_pos, area->getName()) )
+		{
+			writelog(LOG_MESSAGE,"removing points \"%s\" outside area \"%s\"",pnts->getName(), area->getName());
+			
+			size_t old_size = pnts->size();
+			
+			vec::iterator old_X_ptr = pnts->X->begin();
+			vec::iterator old_Y_ptr = pnts->Y->begin();
+			vec::iterator old_Z_ptr = pnts->Z->begin();
+			
+			vec::iterator new_X_ptr = pnts->X->begin();
+			vec::iterator new_Y_ptr = pnts->Y->begin();
+			vec::iterator new_Z_ptr = pnts->Z->begin();
+			
+			for (;old_X_ptr != pnts->X->end(); old_X_ptr++, old_Y_ptr++, old_Z_ptr++) {
+				
+				bool in_reg = area->in_region(*old_X_ptr, *old_Y_ptr);
+				if ( in_reg ) {
+					*new_X_ptr = *old_X_ptr;
+					*new_Y_ptr = *old_Y_ptr;
+					*new_Z_ptr = *old_Z_ptr;
+					new_X_ptr++;
+					new_Y_ptr++;
+					new_Z_ptr++;
+				}
+			}
+			
+			size_t new_size = new_X_ptr - pnts->X->begin();
+			
+			pnts->X->resize(new_size);
+			pnts->Y->resize(new_size);
+			pnts->Z->resize(new_size);
 
-	d_points * pnts = get_element<d_points>(pnts_pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (pnts == NULL)
-		return false;
-
-	d_area * crv = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
-	if (crv == NULL)
-		return false;
-
-	writelog(LOG_MESSAGE,"removing points inside area");
-
-	int old_size = pnts->size();
-
-	vec::iterator old_X_ptr = pnts->X->begin();
-	vec::iterator old_Y_ptr = pnts->Y->begin();
-	vec::iterator old_Z_ptr = pnts->Z->begin();
-
-	vec::iterator new_X_ptr = pnts->X->begin();
-	vec::iterator new_Y_ptr = pnts->Y->begin();
-	vec::iterator new_Z_ptr = pnts->Z->begin();
-
-	for (;old_X_ptr != pnts->X->end(); old_X_ptr++, old_Y_ptr++, old_Z_ptr++) {
-		
-		bool in_reg = crv->in_region(*old_X_ptr, *old_Y_ptr);
-		if ( !in_reg ) {
-			*new_X_ptr = *old_X_ptr;
-			*new_Y_ptr = *old_Y_ptr;
-			*new_Z_ptr = *old_Z_ptr;
-			new_X_ptr++;
-			new_Y_ptr++;
-			new_Z_ptr++;
+			res = true;
 		}
 	}
-
-	int new_size = new_X_ptr - pnts->X->begin();
-
-	pnts->X->resize(new_size);
-	pnts->Y->resize(new_size);
-	pnts->Z->resize(new_size);
-
-	return true;
-
+	d_points * pnts;
+	const char * area_pos;
+	bool res;
 };
 
-bool pnts_filter_by_mask(const char * pnts_pos, const char * def_pos) {
-	
-	d_points * pnts = get_element<d_points>(pnts_pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (pnts == NULL)
-		return false;
-
-	d_mask * msk = get_element<d_mask>(def_pos, surfit_masks->begin(), surfit_masks->end());
-	if (msk == NULL)
-		return false;
-
-	int cnt = pnts->size();
-	if (cnt == 0)
-		return false;
-		
-	int i,j;
-	REAL x,y;
-	bool val;
-	j = 0;
-	vec::iterator x_ptr = pnts->X->begin();
-	vec::iterator y_ptr = pnts->Y->begin();
-	vec::iterator z_ptr = pnts->Z->begin();
-
-	for (i = 0; i < cnt; i++) {
-		x = *(x_ptr + i);
-		y = *(y_ptr + i);
-		val = msk->getValue(x,y);
-		if (val) {
-			*(x_ptr + j) = x;
-			*(y_ptr + j) = y;
-			*(z_ptr + j) = *(z_ptr + i);
-			j++;
+struct match_fpfoa
+{
+	match_fpfoa(const char * ipnts_pos, const char * iarea_pos) : pnts_pos(ipnts_pos), area_pos(iarea_pos), res(false) {};
+	void operator()(d_points * pnts)
+	{
+		if ( StringMatch(pnts_pos, pnts->getName()) )
+		{
+			match_fpfoa2 qq(pnts, area_pos);
+			qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
+			res = qq.res;
 		}
 	}
-
-	pnts->X->resize(j);
-	pnts->Y->resize(j);
-	pnts->Z->resize(j);
-	
-	return true;
+	const char * pnts_pos;
+	const char * area_pos;
+	bool res;
 };
 
-bool pnts_plus(const char * pos1, const char * pos2) {
+bool pnts_filter_out_area(const char * pnts_pos, const char * area_pos) 
+{
+	match_fpfoa qq(pnts_pos, area_pos);
+	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+	return qq.res;
+};
+
+struct match_fpfia2
+{
+	match_fpfia2(d_points * ipnts, const char * iarea_pos) : pnts(ipnts), area_pos(iarea_pos), res(false) {};
+	void operator()(d_area * area)
+	{
+		if ( StringMatch(area_pos, area->getName()) )
+		{
+			writelog(LOG_MESSAGE,"removing points \"%s\" inside area \"%s\"",pnts->getName(), area->getName());
+			
+			size_t old_size = pnts->size();
+			
+			vec::iterator old_X_ptr = pnts->X->begin();
+			vec::iterator old_Y_ptr = pnts->Y->begin();
+			vec::iterator old_Z_ptr = pnts->Z->begin();
+			
+			vec::iterator new_X_ptr = pnts->X->begin();
+			vec::iterator new_Y_ptr = pnts->Y->begin();
+			vec::iterator new_Z_ptr = pnts->Z->begin();
+			
+			for (;old_X_ptr != pnts->X->end(); old_X_ptr++, old_Y_ptr++, old_Z_ptr++) {
+				
+				bool in_reg = area->in_region(*old_X_ptr, *old_Y_ptr);
+				if ( !in_reg ) {
+					*new_X_ptr = *old_X_ptr;
+					*new_Y_ptr = *old_Y_ptr;
+					*new_Z_ptr = *old_Z_ptr;
+					new_X_ptr++;
+					new_Y_ptr++;
+					new_Z_ptr++;
+				}
+			}
+			
+			size_t new_size = new_X_ptr - pnts->X->begin();
+			
+			pnts->X->resize(new_size);
+			pnts->Y->resize(new_size);
+			pnts->Z->resize(new_size);
+			
+			res = true;
+		}
+	}
+	d_points * pnts;
+	const char * area_pos;
+	bool res;
+};
+
+struct match_fpfia
+{
+	match_fpfia(const char * ipnts_pos, const char * iarea_pos) : pnts_pos(ipnts_pos), area_pos(iarea_pos), res(false) {};
+	void operator()(d_points * pnts)
+	{
+		if ( StringMatch(pnts_pos, pnts->getName()) )
+		{
+			match_fpfia2 qq(pnts, area_pos);
+			qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
+			res = qq.res;
+		}
+	}
+	const char * pnts_pos;
+	const char * area_pos;
+	bool res;
+};
+
+bool pnts_filter_in_area(const char * pnts_pos, const char * area_pos) 
+{
+	match_fpfia qq(pnts_pos, area_pos);
+	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+	return qq.res;
+};
+
+struct match_fbm2
+{
+	match_fbm2(d_points * ipnts, const char * idef_pos) : pnts(ipnts), def_pos(idef_pos), res(false) {};
+	void operator()(d_mask * mask)
+	{
+		if ( StringMatch(def_pos, mask->getName()) )
+		{
+			writelog(LOG_MESSAGE,"filtering points \"%s\" with mask \"%s\"", pnts->getName(), mask->getName());
+
+			size_t cnt = pnts->size();
+			if (cnt == 0)
+				return;
+
+			size_t i,j;
+			REAL x,y;
+			bool val;
+			j = 0;
+			vec::iterator x_ptr = pnts->X->begin();
+			vec::iterator y_ptr = pnts->Y->begin();
+			vec::iterator z_ptr = pnts->Z->begin();
+			
+			for (i = 0; i < cnt; i++) {
+				x = *(x_ptr + i);
+				y = *(y_ptr + i);
+				val = mask->getValue(x,y);
+				if (val) {
+					*(x_ptr + j) = x;
+					*(y_ptr + j) = y;
+					*(z_ptr + j) = *(z_ptr + i);
+					j++;
+				}
+			}
+			
+			pnts->X->resize(j);
+			pnts->Y->resize(j);
+			pnts->Z->resize(j);
+			res = true;
+		}
+	}
+	d_points * pnts;
+	const char * def_pos;
+	bool res;
+};
+
+struct match_fbm
+{
+	match_fbm(const char * ipnts_pos, const char * idef_pos) : pnts_pos(ipnts_pos), def_pos(idef_pos), res(false) {};
+	void operator()(d_points * pnts)
+	{
+		if ( StringMatch(pnts_pos, pnts->getName()) )
+		{
+			match_fbm2 qq(pnts, def_pos);
+			qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+			res = qq.res;
+		}
+	}
+	const char * pnts_pos;
+	const char * def_pos;
+	bool res;
+};
+
+bool pnts_filter_by_mask(const char * pnts_pos, const char * def_pos) 
+{
+	match_fbm qq(pnts_pos, def_pos);
+	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+	return qq.res;
+};
+
+bool pnts_plus(const char * pos1, const char * pos2) 
+{
 	d_points * pnts1 = get_element<d_points>(pos1, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts1 == NULL)
 		return false;
@@ -315,7 +454,8 @@ bool pnts_plus(const char * pos1, const char * pos2) {
 	return pnts1->plus(pnts2);
 };
 
-bool pnts_minus(const char * pos1, const char * pos2) {
+bool pnts_minus(const char * pos1, const char * pos2) 
+{
 	d_points * pnts1 = get_element<d_points>(pos1, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts1 == NULL)
 		return false;
@@ -326,7 +466,8 @@ bool pnts_minus(const char * pos1, const char * pos2) {
 	return pnts1->minus(pnts2);
 };
 
-bool pnts_mult(const char * pos1, const char * pos2) {
+bool pnts_mult(const char * pos1, const char * pos2) 
+{
 	d_points * pnts1 = get_element<d_points>(pos1, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts1 == NULL)
 		return false;
@@ -337,7 +478,8 @@ bool pnts_mult(const char * pos1, const char * pos2) {
 	return pnts1->mult(pnts2);
 };
 
-bool pnts_div(const char * pos1, const char * pos2) {
+bool pnts_div(const char * pos1, const char * pos2) 
+{
 	d_points * pnts1 = get_element<d_points>(pos1, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts1 == NULL)
 		return false;
@@ -348,7 +490,8 @@ bool pnts_div(const char * pos1, const char * pos2) {
 	return pnts1->div(pnts2);
 };
 
-bool pnts_set(const char * pos1, const char * pos2) {
+bool pnts_set(const char * pos1, const char * pos2) 
+{
 	d_points * pnts1 = get_element<d_points>(pos1, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts1 == NULL)
 		return false;
@@ -359,7 +502,8 @@ bool pnts_set(const char * pos1, const char * pos2) {
 	return pnts1->set(pnts2);
 };
 
-bool pnts_plus_real(REAL val, const char * pos) {
+bool pnts_plus_real(REAL val, const char * pos) 
+{
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;
@@ -368,7 +512,8 @@ bool pnts_plus_real(REAL val, const char * pos) {
 	return true;
 };
 
-bool pnts_minus_real(REAL val, const char * pos) {
+bool pnts_minus_real(REAL val, const char * pos) 
+{
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;
@@ -376,7 +521,8 @@ bool pnts_minus_real(REAL val, const char * pos) {
 	return true;
 };
 
-bool pnts_mult_real(REAL val, const char * pos) {
+bool pnts_mult_real(REAL val, const char * pos) 
+{
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;
@@ -384,7 +530,8 @@ bool pnts_mult_real(REAL val, const char * pos) {
 	return true;
 };
 
-bool pnts_div_real(REAL val, const char * pos) {
+bool pnts_div_real(REAL val, const char * pos) 
+{
 	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
 	if (pnts == NULL)
 		return false;

@@ -93,7 +93,7 @@ size_t one2one(size_t pos, const d_grid * from, const d_grid * to) {
 	from->getCoordNode(n, m, x, y);
 	n = to->get_i(x);
 	m = to->get_j(y);
-	two2one(pos, n, m, to->getCountX(), to->getCountY());
+	pos = two2one(n, m, to->getCountX(), to->getCountY());
 	to->getCoordNode(n,m, x, y);
 	return pos;
 };
@@ -118,20 +118,18 @@ void one2two(size_t pos, size_t & i, size_t & j, size_t NN, size_t MM) {
 
 };
 
-void two2one(size_t & pos, size_t i, size_t j, size_t NN, size_t MM) {
-	
+size_t two2one(size_t i, size_t j, size_t NN, size_t MM) 
+{
 	if ((i >= 0) && (i < NN) && (j >= 0) && (j < MM)) {
-		pos = i + j*NN;
-		return;
+		return i + j*NN;
 	}
 
 	if ((i < -1) || (i > NN+1) || (j < -1) || (j > MM+1)) {
-		pos = UINT_MAX;
-		return;
+		return UINT_MAX;
 	}
 	
 	assert(0);
-	pos = UINT_MAX;
+	return UINT_MAX;
 		
 };
 

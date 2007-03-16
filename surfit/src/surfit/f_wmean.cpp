@@ -91,7 +91,7 @@ bool f_wmean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	for (i = 0; i < NN; i++) {
 		for (j = 0; j < MM; j++) {
 			
-			two2one(pos, i, j, NN, MM);
+			pos = two2one(i, j, NN, MM);
 
 			if (method_mask_undefined->get(pos)) {
 				(*weights)(pos) = 0;

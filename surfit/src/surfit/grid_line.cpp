@@ -180,7 +180,7 @@ grid_line::cell_finder::cell_finder(size_t ipos, const grid_line * grd_line)
 	one2two(ipos, pos_i, pos_j, NN-2, MM-2);
 	pos_i++;
 	pos_j++;
-	two2one(pos, pos_i, pos_j, NN, MM);
+	pos = two2one(pos_i, pos_j, NN, MM);
 
 	sorted_first = grd_line->sorted_first;
 	sorted_second = grd_line->sorted_second;
@@ -210,7 +210,7 @@ bool grid_line::cell_finder::find_next(size_t & near_cell) {
 				one2two(near_cell, pos_i, pos_j, NN, MM);
 				pos_i--;
 				pos_j--;
-				two2one(near_cell, pos_i, pos_j, NN-2, MM-2);
+				near_cell = two2one(pos_i, pos_j, NN-2, MM-2);
 				return true;
 			} else {
 				last_first = sorted_first->const_end();
@@ -236,7 +236,7 @@ bool grid_line::cell_finder::find_next(size_t & near_cell) {
 				one2two(near_cell, pos_i, pos_j, NN, MM);
 				pos_i--;
 				pos_j--;
-				two2one(near_cell, pos_i, pos_j, NN-2, MM-2);
+				near_cell = two2one(pos_i, pos_j, NN-2, MM-2);
 				return true;
 			} else {
 				last_second = sorted_second->const_end();
@@ -256,7 +256,7 @@ bool grid_line::check_for_node(size_t pos) const {
 	one2two(pos, pos_i, pos_j, NN-2, MM-2);
 	pos_i++;
 	pos_j++;
-	two2one(pos, pos_i, pos_j, NN, MM);
+	pos = two2one(pos_i, pos_j, NN, MM);
 
 	search_cells search_pos1(first, pos);
 
@@ -291,12 +291,12 @@ bool grid_line::check_for_pair(size_t pos1, size_t pos2) const {
 	one2two(pos1, pos_i, pos_j, NN-2, MM-2);
 	pos_i++;
 	pos_j++;
-	two2one(pos1, pos_i, pos_j, NN, MM);
+	pos1 = two2one(pos_i, pos_j, NN, MM);
 
 	one2two(pos2, pos_i, pos_j, NN-2, MM-2);
 	pos_i++;
 	pos_j++;
-	two2one(pos2, pos_i, pos_j, NN, MM);
+	pos2 = two2one(pos_i, pos_j, NN, MM);
 
 	if (pos1 > pos2) {
 		size_t temp = pos2;
@@ -759,7 +759,7 @@ void grid_line::resize(size_t move_i, size_t move_j, size_t newNN, size_t newMM,
 		else 
 			pos_j += move_j;
 		
-		two2one(pos, pos_i, pos_j, newNN, newMM);
+		pos = two2one(pos_i, pos_j, newNN, newMM);
 		*(first->begin()+i) = pos;
 		
 		pos = *(second->begin()+i);
@@ -774,7 +774,7 @@ void grid_line::resize(size_t move_i, size_t move_j, size_t newNN, size_t newMM,
 		else 
 			pos_j += move_j;
 
-		two2one(pos, pos_i, pos_j, newNN, newMM);
+		pos = two2one(pos_i, pos_j, newNN, newMM);
 		*(second->begin()+i) = pos;
 	}
 
@@ -842,7 +842,7 @@ void flood_fill(d_grid * grd,
 		while (true) {
 			
 			if ((left_i >= 0) && (left_i < max_i) && (left_j >= 0) && (left_j < max_j)) {
-				two2one(push_pos, left_i, left_j, NN, MM);
+				push_pos = two2one(left_i, left_j, NN, MM);
 				if ( (*data)(push_pos) == 0 )
 					(*data)(push_pos) = fill_val;
 			}
@@ -851,8 +851,8 @@ void flood_fill(d_grid * grd,
 			
 			left_i--;
 
-			two2one(push_pos, left_i, left_j, NN, MM);
-			two2one(push_pos2, left_i + 1, left_j, NN, MM);
+			push_pos = two2one(left_i, left_j, NN, MM);
+			push_pos2 = two2one(left_i + 1, left_j, NN, MM);
 
 			bool bound = ((left_i >= 0) && (left_i < max_i) && (left_j >= 0) && (left_j < max_j));
 			if (!bound)
@@ -883,8 +883,8 @@ void flood_fill(d_grid * grd,
 		while (true) {
 			
 			right_i++;
-			two2one(push_pos, right_i, right_j, NN, MM);
-			two2one(push_pos2, right_i - 1, right_j, NN, MM);
+			push_pos = two2one(right_i, right_j, NN, MM);
+			push_pos2 = two2one(right_i - 1, right_j, NN, MM);
 			
 			flood = true;
 			bool bound = ((right_i >= 0) && (right_i < max_i) && (right_j >= 0) && (right_j < max_j));
@@ -918,8 +918,8 @@ void flood_fill(d_grid * grd,
 		for (i_pos = left_i; i_pos <= right_i; i_pos++) {
 
 			// upwards
-			two2one(push_pos, i_pos, fill_j+1, NN, MM);
-			two2one(push_pos2, i_pos, fill_j, NN, MM);
+			push_pos = two2one(i_pos, fill_j+1, NN, MM);
+			push_pos2 = two2one(i_pos, fill_j, NN, MM);
 			if (( push_pos >= 0 ) && (push_pos < grid_size)) {
 				if ( (*data)(push_pos) == 0 ) {
 					
@@ -941,8 +941,8 @@ void flood_fill(d_grid * grd,
 			}
 			
 			// downwards
-			two2one(push_pos, i_pos, fill_j-1, NN, MM);
-			two2one(push_pos2, i_pos, fill_j, NN, MM);
+			push_pos = two2one(i_pos, fill_j-1, NN, MM);
+			push_pos2 = two2one(i_pos, fill_j, NN, MM);
 			if (( push_pos >= 0 ) && (push_pos < grid_size)) {
 				if ( (*data)(push_pos) == 0 ) {
 					
@@ -1268,7 +1268,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 				n = i; m = j;
 				two2two(n, m, grd, small_grd);
 				if ( grid_bound2(n, m, NN, MM) ) {
-					two2one(mask_pos, n, m, NN, MM);
+					mask_pos = two2one(n, m, NN, MM);
 					if (mask_undefined->get(mask_pos)) {
 						exists_undef = true;
 						break;
@@ -1295,7 +1295,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 				n = i; m = j;
 				two2two(n, m, small_grd, grd);
 				if ( grid_bound2(n, m, NN, MM) ) {
-					two2one(mask_pos, n, m, NN, MM);
+					mask_pos = two2one(n, m, NN, MM);
 					if (mask_undefined->get(mask_pos)) {
 						pos = i + j*nn;
 						local_mask_undefined->set_true(pos);
@@ -1324,7 +1324,7 @@ bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_
 			if ( val == 0) {
 				pos_i = i + ( min_i>1?min_i-1:-1 );
 				pos_j = j + ( min_j>1?min_j-1:-1 );
-				two2one(pos, pos_i, pos_j, NN, MM);
+				pos = two2one(pos_i, pos_j, NN, MM);
 				if (pos != UINT_MAX)
 					res->set_true(pos);
 			}
@@ -1378,9 +1378,9 @@ grid_line * trace_undef_grd_line(const bitvec * mask_undefined, size_t NN) {
 			pos1 = i+1+j*NN;
 			pos2 = i+(j+1)*NN;
 
-			two2one(gl_pos, i+1, j+1, NN+2, MM+2);
-			two2one(gl_pos1, i+2, j+1, NN+2, MM+2);
-			two2one(gl_pos2, i+1, j+2, NN+2, MM+2);
+			gl_pos = two2one(i+1, j+1, NN+2, MM+2);
+			gl_pos1 = two2one(i+2, j+1, NN+2, MM+2);
+			gl_pos2 = two2one(i+1, j+2, NN+2, MM+2);
 
 			if (mask_undefined->get(pos)) {
 				if (!mask_undefined->get(pos1)) {

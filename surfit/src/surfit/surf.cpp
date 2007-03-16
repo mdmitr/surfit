@@ -65,7 +65,7 @@ d_surf::d_surf(extvec *icoeff, d_grid *igrd,
 	
 };
 
-d_surf::d_surf(d_mask * msk) : data("d_surf") {
+d_surf::d_surf(d_mask * msk) : data("surf") {
 	size_t size = msk->coeff->size();
 	coeff = create_extvec(size);
 	size_t i;
@@ -428,7 +428,7 @@ REAL d_surf::wmean(const d_surf * wsrf) const {
 	for (i = 0; i < NN; i++) {
 		for (j = 0; j < MM; j++) {
 			
-			two2one(pos, i, j, NN, MM);
+			pos = two2one(i, j, NN, MM);
 
 			REAL value = (*coeff)(pos);
 			if (value == this->undef_value)
