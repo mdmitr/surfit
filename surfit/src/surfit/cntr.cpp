@@ -177,6 +177,8 @@ bool add_mean_val(d_grid * grd, size_t x, size_t y,
 	REAL dz = Z2-Z1;
 
 	REAL max_dist = sqrt((X2-X1)*(X2-X1) + (Y2-Y1)*(Y2-Y1));
+	if (max_dist == 0)
+		return false;
 
 	REAL dist1 = sqrt((X1-lx1)*(X1-lx1) + (Y1-ly1)*(Y1-ly1));
 	lz1 = Z1 + dz*dist1/max_dist;
