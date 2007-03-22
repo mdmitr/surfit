@@ -254,7 +254,7 @@ d_surf * _surf_load_grd_bin(const char * filename, const char * surfname)
 	fclose(file);
 
 	data = create_extvec(nx*ny);
-	for (i = 0; i < nx*ny; i++) {
+	for (i = 0; i < (size_t)(nx*ny); i++) {
 		value = REAL(*(fdata + i));
 		if ((value < minz) || (value > maxz))
 			value = undef_value;
@@ -432,7 +432,7 @@ d_surf * _surf_load_grd_bin7(const char * filename, const char * surfname)
 				if ( read( file, dbuf, nx*ny*sizeof(double) ) != nx*ny*sizeof(double) )
 					goto exit;
 
-				for (i = 0; i < nx*ny; i++) {
+				for (i = 0; i < (size_t)(nx*ny); i++) {
 					value = *(dbuf+i);
 					if ((value < minz) || (value > maxz) || (value >= blank))
 						(*data)(i) = undef_value;
@@ -466,7 +466,7 @@ d_surf * _surf_load_grd_bin7(const char * filename, const char * surfname)
 
 				char buf[512];
 
-				for (i = 0; i < nTraces; i++) {
+				for (i = 0; i < (size_t)nTraces; i++) {
 					long iFirst;
 					long nPnts;
 
@@ -490,7 +490,7 @@ d_surf * _surf_load_grd_bin7(const char * filename, const char * surfname)
 				XX = create_vec(nVertices, 0, 0); // don't fill
 				YY = create_vec(nVertices, 0, 0); // don't fill
 
-				for (i = 0; i < nVertices; i++) {
+				for (i = 0; i < (size_t)nVertices; i++) {
 					double x, y;
 					if ( read( file, &x, sizeof(double) ) != sizeof(double) )
 						goto exit;
@@ -501,7 +501,7 @@ d_surf * _surf_load_grd_bin7(const char * filename, const char * surfname)
 					(*YY)(i) = y;
 				}
 
-				for (i = 0; i < nTraces; i++) {
+				for (i = 0; i < (size_t)nTraces; i++) {
 					d_curv * curve = faults[i];
 					long iFirst = iFirsts[i];
 					long nPos = nPoints[i];
@@ -704,7 +704,7 @@ bool _surf_save_grd_bin(const d_surf * srf, const char * filename)
 	
 	for (i = 0; i < NN*MM; i++)
 	{
-		*(fdata+i) = srf->getValue(i);
+		*(fdata+i) = (float)srf->getValue(i);
 	}
 
 	if ( fwrite( fdata, sizeof(float), nx*ny, f ) != nx*ny )

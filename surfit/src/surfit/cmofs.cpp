@@ -126,7 +126,7 @@ void surfit() {
 
 	};
 
-	int f_size = functionals->size();
+	size_t f_size = functionals->size();
 
 	for (i = 0; i < f_size; i++) {
 		functional * f = (*functionals)[i];

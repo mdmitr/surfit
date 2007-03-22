@@ -86,7 +86,7 @@ REAL get_eq_value(const vec * T, const vec * Z, REAL val,
 
 	vec::const_iterator it = std::lower_bound(Z->const_begin(), Z->const_end(), s);
 	
-	pos2 = MIN(Z_size-1,it-Z->const_begin());
+	pos2 = MIN(Z_size-1,(size_t)(it-Z->const_begin()));
 	
 	if (pos2 == 0)
 		pos1 = pos2;
