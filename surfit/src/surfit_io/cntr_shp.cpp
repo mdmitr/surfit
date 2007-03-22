@@ -51,6 +51,11 @@ bool _cntr_save_shp(const d_cntr * contour, const char * filename)
 		return false;
 	};
 
+	REAL minz, maxz;
+	contour->getMinMaxZ(minz, maxz);
+
+	bool use_arcz = (maxz != minz);
+
 	DBFHandle hDBF;
 	SHPHandle hSHP;
 	
@@ -65,7 +70,10 @@ bool _cntr_save_shp(const d_cntr * contour, const char * filename)
 			DBFClose( hDBF );
 
 
-		hSHP = SHPCreate( filename, SHPT_ARCZ );
+		if (use_arcz)
+			hSHP = SHPCreate( filename, SHPT_ARCZ );
+		else
+			hSHP = SHPCreate( filename, SHPT_ARC );
 		
 		if( hSHP == NULL ) {
 			writelog(LOG_ERROR, "Unable to create:%s", filename );
@@ -77,15 +85,27 @@ bool _cntr_save_shp(const d_cntr * contour, const char * filename)
 
 	int shpType;
 	SHPGetInfo(hSHP, NULL, &shpType, NULL, NULL);
-
-	if (shpType != SHPT_ARCZ) {
-		writelog(LOG_ERROR, "%s : Wrong shape type!", filename);
-		SHPClose( hSHP );
-		DBFClose( hDBF );
-		return false;
+	
+	if (use_arcz) {
+		if (shpType != SHPT_ARCZ) {
+			writelog(LOG_ERROR, "%s : Wrong shape type!", filename);
+			SHPClose( hSHP );
+			DBFClose( hDBF );
+			return false;
+		} 
+	} else {
+		if (shpType != SHPT_ARC) {
+			writelog(LOG_ERROR, "%s : Wrong shape type!", filename);
+			SHPClose( hSHP );
+			DBFClose( hDBF );
+			return false;
+		}
 	}
 
 	int name_field = DBFGetFieldIndex( hDBF, "NAME" );
+	int z_field = INT_MAX;
+	if (use_arcz == false)
+		z_field = DBFGetFieldIndex( hDBF, "Z" );
 
 	if (name_field == -1) {
 		if( DBFAddField( hDBF, "NAME", FTString, 50, 0 ) == -1 )
@@ -98,6 +118,17 @@ bool _cntr_save_shp(const d_cntr * contour, const char * filename)
 		name_field = DBFGetFieldIndex( hDBF, "NAME" );
 	};
 
+	if (z_field == -1) {
+		if( DBFAddField( hDBF, "Z", FTDouble, 25, 5 ) == -1 )
+		{
+			writelog(LOG_ERROR, "DBFAddField(%s,FTDouble) failed.", "Z");
+			SHPClose( hSHP );
+			DBFClose( hDBF );
+			return false;
+		}
+		z_field = DBFGetFieldIndex( hDBF, "Z" );
+	};
+
 	std::vector<REAL> data_x(contour->size());
 	std::vector<REAL> data_y(contour->size());
 	std::vector<REAL> data_z(contour->size());
@@ -105,9 +136,16 @@ bool _cntr_save_shp(const d_cntr * contour, const char * filename)
 	std::copy(contour->Y->begin(), contour->Y->end(), data_y.begin());
 	std::copy(contour->Z->begin(), contour->Z->end(), data_z.begin());
 
-	SHPObject * psObject = SHPCreateObject(SHPT_ARCZ,
-			-1, 0, NULL, NULL, contour->size(), 
-			&*(data_x.begin()), &*(data_y.begin()), &*(data_z.begin()), NULL);
+	SHPObject * psObject = NULL;
+	if (use_arcz) {
+		psObject = SHPCreateObject(SHPT_ARCZ,
+					   -1, 0, NULL, NULL, contour->size(), 
+					   &*(data_x.begin()), &*(data_y.begin()), &*(data_z.begin()), NULL);
+	} else {
+		psObject = SHPCreateObject(SHPT_ARC,
+					   -1, 0, NULL, NULL, contour->size(), 
+					   &*(data_x.begin()), &*(data_y.begin()), NULL, NULL);
+	}
 
 	SHPComputeExtents(psObject);
 		
@@ -117,6 +155,8 @@ bool _cntr_save_shp(const d_cntr * contour, const char * filename)
 
 	if (contour->getName())
 		DBFWriteStringAttribute(hDBF, pos, name_field, contour->getName() );
+	if (use_arcz == false)
+		DBFWriteDoubleAttribute(hDBF, pos, z_field, minz);
 
 	SHPClose( hSHP );
 	DBFClose( hDBF );
