@@ -26,6 +26,7 @@ namespace surfit {
 
 class d_grid;
 class bitvec;
+class projector;
 
 /*! \ingroup surfit_data_variables
     \var surfit_grid
@@ -94,7 +95,7 @@ SURFIT_EXPORT
 void grid_begin();
 
 SURFIT_EXPORT 
-void grid_finish();
+void grid_finish(const std::vector<projector *> * projectors);
 
 SURFIT_EXPORT 
 void grid_release();

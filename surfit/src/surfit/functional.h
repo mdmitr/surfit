@@ -31,6 +31,8 @@ class grid_line;
 class data;
 class bitvec;
 class intvec;
+class extvec;
+class d_grid;
 
 #define F_USUAL	0x00000001
 #define F_FAULT	0x00000010
@@ -193,6 +195,16 @@ protected:
 	std::vector<const d_curv *> * faults;
 	//! fault lines projected on \ref d_grid
 	grid_line * gfaults;
+};
+
+/* \class projector
+   \brief functionals of that type can help to make project operation
+ */
+class SURFIT_EXPORT projector
+{
+public:
+	//! modifies projected solution
+	virtual void modify(extvec * coeff, d_grid * grid) = 0;
 };
 
 }; // namespace surfit;

@@ -32,6 +32,13 @@
 #include "variables.h"
 
 #include "grid_user.h"
+#include "functional.h"
+
+// temp
+#include "curv.h"
+#include "grid_line.h"
+#include "grid_line_user.h"
+#include <float.h>
 
 namespace surfit {
 
@@ -354,7 +361,7 @@ void grid_begin() {
 
 };
 
-void grid_finish() {
+void grid_finish(const std::vector<projector *> * projectors) {
 
 	if (
 		(method_grid->getCountX() >= surfit_grid->getCountX()) &&
@@ -410,8 +417,20 @@ void grid_finish() {
 	
 	// updating sigma's coeff
 	if (use_fast_project)
+	{
 		project_vector<extvec,extvec::iterator>(method_X, method_grid->getCountX(), method_grid->getCountY(), doubleX, doubleY);
-	else {
+
+		if (projectors->size() > 0) {
+			d_grid * new_grid = create_calc_grd(method_basis_cntX, method_basis_cntY);
+			size_t i;
+			for (i = 0; i < projectors->size(); i++) {
+				projector * proj = (*projectors)[i];
+				proj->modify(method_X, new_grid);
+			}
+			new_grid->release();
+		}
+
+	} else {
 		d_surf * current_surf = create_surf(method_X, method_grid, map_name);
 		d_surf * projected_surf = NULL;
 		if (doubleX && doubleY)

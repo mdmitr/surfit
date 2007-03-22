@@ -59,14 +59,22 @@ void surfit() {
 		return;
 	}
 		
-	int i;
+	size_t i;
+
+	std::vector<projector *> projectors;
+	for (i = 0; i < functionals->size(); i++) {
+		projector * proj = dynamic_cast<projector *>( (*functionals)[i] );
+		if (proj)
+			projectors.push_back(proj);
+	}
+
 	
 	while( !method_ok ) {
 
 		grid_begin();
 
 		std::vector<functional *> * Functionals = new std::vector<functional *>(*functionals);
-		int f_size = Functionals->size();
+		size_t f_size = Functionals->size();
 
 		for (i = 0; i < f_size; i++) {
 
@@ -112,7 +120,7 @@ void surfit() {
 		delete Functionals;
 		
 		if (stop_execution != 1)
-			grid_finish();
+			grid_finish(&projectors);
 		else
 			break;
 

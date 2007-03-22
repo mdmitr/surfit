@@ -506,6 +506,117 @@ void f_completer::set_mask(const d_mask * imask) {
 	mask = imask;
 };
 
+void f_completer::modify(extvec * coeff, d_grid * grid)
+{
+	if (faults == NULL)
+		return;
+	if (faults->size() == 0)
+		return;
+
+	writelog(LOG_MESSAGE,"completer : helping to project...");
+
+	grid_line * g_faults = NULL;
+	
+	size_t t;
+	for (t = 0; t < faults->size(); t++)
+		g_faults = curv_to_grid_line(g_faults, (*faults)[t], grid);
+
+	size_t NN = grid->getCountX();
+	size_t MM = grid->getCountY();
+
+	size_t matrix_size = NN*MM;
+	shortvec * flood_areas = create_shortvec(matrix_size);
+	int flood_areas_cnt = 0;
+
+	fill_all_areas(flood_areas, grid, g_faults, flood_areas_cnt, NULL);
+	if (flood_areas_cnt == 1)
+	{
+		flood_areas->release();
+		return;
+	}
+	
+	g_faults->release();
+
+	size_t p;
+
+	std::vector<size_t> zeros(flood_areas_cnt);
+	std::vector<size_t> total(flood_areas_cnt);
+	std::vector<REAL>   means(flood_areas_cnt);
+	std::vector<size_t>  cnts(flood_areas_cnt);
+	for (p = 0; p < matrix_size; p++)
+	{
+		short color = (*flood_areas)(p) - 1;
+
+		total[color]++;
+
+		REAL val = (*coeff)(p);
+		if (val != 0) {
+			means[color] += val;
+			cnts[color]++;
+			continue;
+		}
+
+		zeros[color]++;
+	}
+
+	int q;
+	for (q = 0; q < flood_areas_cnt; q++) {
+		size_t t = total[q];
+		size_t z = zeros[q];
+		if ( REAL(z)/REAL(t) < 0.01 )
+		{
+			for (p = 0; p < matrix_size; p++)
+			{
+				short color = (*flood_areas)(p) - 1;
+				if (color != q)
+					continue;
+				REAL val = (*coeff)(p);
+				if (val != 0)
+					continue;
+				
+				REAL sum = 0;
+				size_t cnt = 0;
+				
+				size_t i,j;
+				one2two(p, i, j, NN, MM);
+				size_t I, J;
+				for (J = MAX(j-1,0); J < MIN(j+1,MM-1); J++) {
+					for (I = MAX(i-1,0); I < MIN(i+1,NN-1); I++)
+					{
+						if ((I == i) && (J == j))
+							continue;
+						
+						size_t pos = two2one(I,J,NN,MM);
+						
+						short cmp_color = (*flood_areas)(pos)-1;
+						if (cmp_color != color)
+							continue;
+						
+						REAL val = (*coeff)( pos );
+						if (val == FLT_MAX)
+							continue;
+						cnt++;
+						sum += val;
+						
+					}
+				}
+				
+				if (cnt == 0)
+				{
+					REAL new_val = means[color]/REAL(cnts[color]); 
+					(*coeff)(p) = new_val;
+				} else {
+					sum /= REAL(cnt);
+					(*coeff)(p) = sum;
+				}
+				
+			}
+		}
+	}
+	
+	flood_areas->release();
+};
+
 size_t calcVecV(size_t size, 
 	        const extvec * X,
 	        matr * T, 
