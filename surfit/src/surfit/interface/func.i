@@ -122,6 +122,7 @@ bool surf_delall();
 bool surf_del(const char * surface_name_or_position = "0");
 int surf_size();
 void surfs_info();
+bool surf_trace_cntr(const char * surface_name_or_position = "0", REAL from = FLT_MAX, REAL to = FLT_MAX, REAL step = FLT_MAX);
 
 //
 // mask

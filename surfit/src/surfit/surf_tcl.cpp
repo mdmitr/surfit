@@ -23,6 +23,7 @@
 #include "datafile.h"
 #include "fileio.h"
 #include "interp.h"
+#include "stepFunc.h"
 
 
 #include "surf.h"
@@ -42,6 +43,8 @@
 #include "free_elements.h"
 #include "curv.h"
 #include "area.h"
+#include "cntr.h"
+#include "cntr_trace.h"
 
 #include "grid_user.h"
 #include "findfile.h"
@@ -1365,6 +1368,99 @@ struct match_swapxy
 bool surf_swapxy(const char * surf_pos)
 {
 	match_swapxy qq(surf_pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
+
+struct match_trace
+{
+	match_trace(const char * ipos, REAL ifrom, REAL ito, REAL istep) : pos(ipos), from(ifrom), to(ito), step(istep), res(false) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			if (from == FLT_MAX)
+				surf->getMinMaxZ(from, to);	
+			if (to == FLT_MAX)
+				to = from;
+
+			if (step == FLT_MAX)
+			{
+				step = stepFunc(from, to, 10);
+			}
+
+			vec * levels = create_vec();
+			REAL level;
+			for (level = from; level <= to; level += step)
+				levels->push_back(level);
+
+			size_t levels_count = levels->size();
+			size_t NN = surf->getCountX(), MM = surf->getCountY();
+			size_t q;
+			REAL x,y;
+			
+			vec * x_coords = create_vec(NN,0,0);
+			for (q = 0; q < NN; q++) {
+				surf->getCoordNode(q,0,x,y);
+				(*x_coords)(q) = x;
+			}
+
+			vec * y_coords = create_vec(MM,0,0);
+			for (q = 0; q < MM; q++) {
+				surf->getCoordNode(0,q,x,y);
+				(*y_coords)(q) = y;
+			}
+
+			extvec * data = create_extvec(*(surf->coeff)); // don't fill;
+
+			writelog(LOG_MESSAGE,"tracing %d contours from surface \"%s\"", levels_count, surf->getName());
+			std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM, surf->undef_value, false);
+			levels->release();
+			x_coords->release();
+			y_coords->release();
+			data->release();
+
+			std::vector<int> cnts(levels_count);
+			char buf[512];
+			
+			for (q = 0; q < isos->size(); q++)
+			{
+				fiso * iso = (*isos)[q];
+				vec * z = create_vec(iso->size(),0,0);
+				size_t i;
+				REAL iso_level = iso->get_level();
+				for (i = 0; i < z->size(); i++)
+					(*z)(i) = iso_level;
+
+				size_t level_num = iso->get_level_number();
+				cnts[level_num]++;
+				
+				if (cnts[level_num] == 1)
+					sprintf(buf,"%s_%g",surf->getName(), iso->get_level());
+				else
+					sprintf(buf,"%s_%g_%d",surf->getName(), iso->get_level(), cnts[level_num]);
+				d_cntr * cntr = create_cntr(iso->x, iso->y, z, buf);
+				surfit_cntrs->push_back(cntr);
+				
+				iso->x = NULL;
+				iso->y = NULL;
+			}
+
+			delete isos;
+
+			res = true;
+		}
+	};
+	const char * pos;
+	REAL from;
+	REAL to;
+	REAL step;
+	bool res;
+};
+
+bool surf_trace_cntr(const char * surface_name_or_position, REAL from, REAL to, REAL step)
+{
+	match_trace qq(surface_name_or_position, from, to, step);
 	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
 	return qq.res;
 };

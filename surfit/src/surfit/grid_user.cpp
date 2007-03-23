@@ -539,5 +539,19 @@ void draw_grid_matlab(FILE * ff, const d_grid * grd, const char * color)
 	fflush(ff);
 };
 
+size_t three2one(size_t i, size_t j, size_t k, size_t NN, size_t MM, size_t KK)
+{
+	size_t pos = UINT_MAX;
+	if ((i >= 0) && (i < NN) && (j >= 0) && (j < MM) && (k >= 0) && (k < KK))
+	{
+		pos = i + j*NN + k*NN*MM;
+		return pos;
+	}
+
+	assert(0);
+	return pos;
+
+};
+
 }; // namespace surfit;
 

@@ -93,8 +93,10 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Gs /Gs "
 				Optimization="2"
+				GlobalOptimizations="TRUE"
 				InlineFunctionExpansion="2"
 				ImproveFloatingPointConsistency="TRUE"
+				FavorSizeOrSpeed="1"
 				AdditionalIncludeDirectories="../src/sstuff,../src/sstuff/ptypes,C:\Tcl\include\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL"
 				StringPooling="TRUE"
@@ -2142,6 +2144,9 @@
 									BrowseInformation="1"/>
 							</FileConfiguration>
 						</File>
+						<File
+							RelativePath="..\src\surfit\cntr_trace.cpp">
+						</File>
 					</Filter>
 					<Filter
 						Name="grid_line_cpp"
@@ -4056,6 +4061,9 @@
 						</File>
 						<File
 							RelativePath="..\src\surfit\cntr_tcl.h">
+						</File>
+						<File
+							RelativePath="..\src\surfit\cntr_trace.h">
 						</File>
 					</Filter>
 					<Filter

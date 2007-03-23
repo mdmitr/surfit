@@ -149,6 +149,9 @@
 				AdditionalOptions="/Gs /Gs "
 				Optimization="2"
 				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="1"
+				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="../src/sstuff,../src/sstuff/ptypes,C:\Tcl\include\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_DEPRECATE"
 				StringPooling="true"
@@ -2591,6 +2594,10 @@
 								/>
 							</FileConfiguration>
 						</File>
+						<File
+							RelativePath="..\src\surfit\cntr_trace.cpp"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="grid_line_cpp"
@@ -4856,6 +4863,10 @@
 							RelativePath="..\src\surfit\cntr_tcl.h"
 							>
 						</File>
+						<File
+							RelativePath="..\src\surfit\cntr_trace.h"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="grid_line_h"
@@ -5202,14 +5213,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Deprecated code"
-			>
-			<File
-				RelativePath="..\src\surfit\deprecated"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="examples"
 			>
 			<Filter
@@ -5280,6 +5283,14 @@
 					>
 				</File>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="Deprecated code"
+			>
+			<File
+				RelativePath="..\src\surfit\deprecated"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

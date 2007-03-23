@@ -21,6 +21,7 @@
 #define __surfit_grid_user_included__
 
 #include "vec.h"
+#include <vector>
 
 namespace surfit {
 
@@ -80,6 +81,8 @@ SURFIT_EXPORT
 void one2two(size_t pos, size_t & i, size_t & j, size_t NN, size_t MM);
 SURFIT_EXPORT
 size_t two2one(size_t i, size_t j, size_t NN, size_t MM);
+SURFIT_EXPORT
+size_t three2one(size_t i, size_t j, size_t k, size_t NN, size_t MM, size_t KK);
 SURFIT_EXPORT
 bool grid_bound(size_t pos, size_t NN, size_t MM);
 SURFIT_EXPORT

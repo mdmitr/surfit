@@ -20,6 +20,8 @@
 #ifndef __surfit__surf_tcl__
 #define __surfit__surf_tcl__
 
+#include <float.h>
+
 namespace surfit {
 
 class datafile;
@@ -939,6 +941,8 @@ bool surf_del(const char * surface_name_or_position = "0");
     removes all \ref d_surf "surfaces" from memory
 */
 bool surf_delall();
+
+bool surf_trace_cntr(const char * surface_name_or_position = "0", REAL from = FLT_MAX, REAL to = FLT_MAX, REAL step = FLT_MAX);
 
 }; // namespace surfit;
 

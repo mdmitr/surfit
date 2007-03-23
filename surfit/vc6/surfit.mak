@@ -64,6 +64,8 @@ CLEAN :
 	-@erase "$(INTDIR)\cntr_internal.sbr"
 	-@erase "$(INTDIR)\cntr_tcl.obj"
 	-@erase "$(INTDIR)\cntr_tcl.sbr"
+	-@erase "$(INTDIR)\cntr_trace.obj"
+	-@erase "$(INTDIR)\cntr_trace.sbr"
 	-@erase "$(INTDIR)\curv.obj"
 	-@erase "$(INTDIR)\curv.sbr"
 	-@erase "$(INTDIR)\curv_internal.obj"
@@ -311,6 +313,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\cntr.sbr" \
 	"$(INTDIR)\cntr_internal.sbr" \
 	"$(INTDIR)\cntr_tcl.sbr" \
+	"$(INTDIR)\cntr_trace.sbr" \
 	"$(INTDIR)\grid_line.sbr" \
 	"$(INTDIR)\grid_line_internal.sbr" \
 	"$(INTDIR)\grid_line_tcl.sbr" \
@@ -410,6 +413,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\cntr.obj" \
 	"$(INTDIR)\cntr_internal.obj" \
 	"$(INTDIR)\cntr_tcl.obj" \
+	"$(INTDIR)\cntr_trace.obj" \
 	"$(INTDIR)\grid_line.obj" \
 	"$(INTDIR)\grid_line_internal.obj" \
 	"$(INTDIR)\grid_line_tcl.obj" \
@@ -511,6 +515,8 @@ CLEAN :
 	-@erase "$(INTDIR)\cntr_internal.sbr"
 	-@erase "$(INTDIR)\cntr_tcl.obj"
 	-@erase "$(INTDIR)\cntr_tcl.sbr"
+	-@erase "$(INTDIR)\cntr_trace.obj"
+	-@erase "$(INTDIR)\cntr_trace.sbr"
 	-@erase "$(INTDIR)\curv.obj"
 	-@erase "$(INTDIR)\curv.sbr"
 	-@erase "$(INTDIR)\curv_internal.obj"
@@ -760,6 +766,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\cntr.sbr" \
 	"$(INTDIR)\cntr_internal.sbr" \
 	"$(INTDIR)\cntr_tcl.sbr" \
+	"$(INTDIR)\cntr_trace.sbr" \
 	"$(INTDIR)\grid_line.sbr" \
 	"$(INTDIR)\grid_line_internal.sbr" \
 	"$(INTDIR)\grid_line_tcl.sbr" \
@@ -859,6 +866,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\cntr.obj" \
 	"$(INTDIR)\cntr_internal.obj" \
 	"$(INTDIR)\cntr_tcl.obj" \
+	"$(INTDIR)\cntr_trace.obj" \
 	"$(INTDIR)\grid_line.obj" \
 	"$(INTDIR)\grid_line_internal.obj" \
 	"$(INTDIR)\grid_line_tcl.obj" \
@@ -1142,6 +1150,12 @@ SOURCE=.\..\src\surfit\cntr_internal.cpp
 SOURCE=.\..\src\surfit\cntr_tcl.cpp
 
 "$(INTDIR)\cntr_tcl.obj"	"$(INTDIR)\cntr_tcl.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\cntr_trace.cpp
+
+"$(INTDIR)\cntr_trace.obj"	"$(INTDIR)\cntr_trace.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

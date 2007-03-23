@@ -277,6 +277,10 @@ SOURCE=.\..\src\surfit\cntr_internal.cpp
 
 SOURCE=.\..\src\surfit\cntr_tcl.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\cntr_trace.cpp
+# End Source File
 # End Group
 # Begin Group "grid_line_cpp"
 
@@ -720,6 +724,10 @@ SOURCE=.\..\src\surfit\cntr_internal.h
 # Begin Source File
 
 SOURCE=.\..\src\surfit\cntr_tcl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\cntr_trace.h
 # End Source File
 # End Group
 # Begin Group "grid_line_h"
