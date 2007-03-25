@@ -25,7 +25,6 @@
 #include "interp.h"
 #include "stepFunc.h"
 
-
 #include "surf.h"
 #include "surf_internal.h"
 #include "surf_tcl.h"
@@ -51,8 +50,6 @@
 
 #include <float.h>
 #include <algorithm>
-
-#include <windows.h>
 
 namespace surfit {
 
@@ -1416,10 +1413,7 @@ struct match_trace
 			extvec * data = create_extvec(*(surf->coeff)); // don't fill;
 			
 			writelog(LOG_MESSAGE,"tracing %d contours from surface \"%s\"", levels_count, surf->getName());
-			int ticks1 = GetTickCount();
-			std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM, surf->undef_value, true);
-			int ticks2 = GetTickCount();
-			writelog(LOG_MESSAGE,"%d",ticks2-ticks1);
+			std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM, surf->undef_value, false);
 			levels->release();
 			x_coords->release();
 			y_coords->release();
