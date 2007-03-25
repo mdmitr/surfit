@@ -22,10 +22,11 @@
 
 #include "vec.h"
 #include <vector>
+#include "grid.h"
+#include <assert.h>
 
 namespace surfit {
 
-class d_grid;
 class bitvec;
 class projector;
 
@@ -79,10 +80,36 @@ SURFIT_EXPORT
 void two2two(size_t & n, size_t & m, const d_grid * from, const d_grid * to);
 SURFIT_EXPORT
 void one2two(size_t pos, size_t & i, size_t & j, size_t NN, size_t MM);
-SURFIT_EXPORT
-size_t two2one(size_t i, size_t j, size_t NN, size_t MM);
-SURFIT_EXPORT
-size_t three2one(size_t i, size_t j, size_t k, size_t NN, size_t MM, size_t KK);
+
+inline
+size_t two2one(size_t i, size_t j, size_t NN, size_t MM)
+{
+	if ((i >= 0) && (i < NN) && (j >= 0) && (j < MM)) {
+		return i + j*NN;
+	}
+
+	if ((i < -1) || (i > NN+1) || (j < -1) || (j > MM+1)) {
+		return UINT_MAX;
+	}
+	
+	assert(0);
+	return UINT_MAX;
+};
+
+inline
+size_t three2one(size_t i, size_t j, size_t k, size_t NN, size_t MM, size_t KK)
+{
+	size_t pos = UINT_MAX;
+	if ((i >= 0) && (i < NN) && (j >= 0) && (j < MM) && (k >= 0) && (k < KK))
+	{
+		pos = i + j*NN + k*NN*MM;
+		return pos;
+	}
+
+	assert(0);
+	return pos;
+};
+
 SURFIT_EXPORT
 bool grid_bound(size_t pos, size_t NN, size_t MM);
 SURFIT_EXPORT

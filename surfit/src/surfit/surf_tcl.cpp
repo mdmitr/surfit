@@ -52,6 +52,8 @@
 #include <float.h>
 #include <algorithm>
 
+#include <windows.h>
+
 namespace surfit {
 
 bool surf_load(const char * filename, const char * surfname) 
@@ -1396,7 +1398,7 @@ struct match_trace
 
 			size_t levels_count = levels->size();
 			size_t NN = surf->getCountX(), MM = surf->getCountY();
-			size_t q;
+			size_t q,p;
 			REAL x,y;
 			
 			vec * x_coords = create_vec(NN,0,0);
@@ -1412,9 +1414,12 @@ struct match_trace
 			}
 
 			extvec * data = create_extvec(*(surf->coeff)); // don't fill;
-
+			
 			writelog(LOG_MESSAGE,"tracing %d contours from surface \"%s\"", levels_count, surf->getName());
-			std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM, surf->undef_value, false);
+			int ticks1 = GetTickCount();
+			std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM, surf->undef_value, true);
+			int ticks2 = GetTickCount();
+			writelog(LOG_MESSAGE,"%d",ticks2-ticks1);
 			levels->release();
 			x_coords->release();
 			y_coords->release();
@@ -1422,28 +1427,67 @@ struct match_trace
 
 			std::vector<int> cnts(levels_count);
 			char buf[512];
-			
+						
 			for (q = 0; q < isos->size(); q++)
 			{
 				fiso * iso = (*isos)[q];
-				vec * z = create_vec(iso->size(),0,0);
-				size_t i;
-				REAL iso_level = iso->get_level();
-				for (i = 0; i < z->size(); i++)
-					(*z)(i) = iso_level;
-
 				size_t level_num = iso->get_level_number();
-				cnts[level_num]++;
+				bool prev_visible = false;
+				d_cntr * cntr = NULL;
+				vec * x = NULL;
+				vec * y = NULL;
+				vec * z = NULL;
+				REAL iso_level = iso->get_level();
+				for (p = 0; p < iso->size(); p++) {
+
+					double px, py;
+					bool visible;
+					iso->get_point(p, px, py, visible);
+					if (visible != prev_visible) {
+						if (prev_visible == false) {
+							if (cntr) {
+								if (cntr->size() > 0)
+									surfit_cntrs->push_back(cntr);
+								else {
+									if (x)
+										x->release();
+									if (y)
+										y->release();
+									if (z)
+										z->release();
+								}
+							}
+							cnts[level_num]++;
+							if (cnts[level_num] == 1)
+								sprintf(buf,"%s_%g",surf->getName(), iso->get_level());
+							else
+								sprintf(buf,"%s_%g_%d",surf->getName(), iso->get_level(), cnts[level_num]);
+							x = create_vec();
+							y = create_vec();
+							z = create_vec();
+							cntr = create_cntr(x, y, z, buf);
+						}
+					}
+					if (visible) {
+						x->push_back(px);
+						y->push_back(py);
+						z->push_back(iso_level);
+					}
+					prev_visible = visible;
+				}
+				if (cntr) {
+					if (cntr->size() > 0)
+						surfit_cntrs->push_back(cntr);
+					else {
+						if (x)
+							x->release();
+						if (y)
+							y->release();
+						if (z)
+							z->release();
+					}
+				}
 				
-				if (cnts[level_num] == 1)
-					sprintf(buf,"%s_%g",surf->getName(), iso->get_level());
-				else
-					sprintf(buf,"%s_%g_%d",surf->getName(), iso->get_level(), cnts[level_num]);
-				d_cntr * cntr = create_cntr(iso->x, iso->y, z, buf);
-				surfit_cntrs->push_back(cntr);
-				
-				iso->x = NULL;
-				iso->y = NULL;
 			}
 
 			delete isos;

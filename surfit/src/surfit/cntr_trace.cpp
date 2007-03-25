@@ -20,6 +20,7 @@
 #include "surfit_ie.h"
 #include "cntr_trace.h"
 #include "grid_user.h"
+#include "bitvec.h"
 
 #include <float.h>
 #include <math.h>
@@ -34,8 +35,8 @@ struct trace_info
 	vec * levels;
 	vec * x_coords;
 	vec * y_coords;
-	vec * data;
-	std::vector<bool> * checks;
+	extvec * data;
+	bitvec * checks;
 	size_t nn, mm;
 	REAL uval;
 	bool close_on_bound;
@@ -51,7 +52,7 @@ size_t level_index(REAL level, trace_info & info)
 	return UINT_MAX;
 };
 
-fiso::fiso(REAL ilevel, size_t ilevel_number, size_t ilevels, std::vector<bool> * ichecks, size_t inn, size_t imm)
+fiso::fiso(REAL ilevel, size_t ilevel_number, size_t ilevels, bitvec * ichecks, size_t inn, size_t imm)
 {	
 	x = create_vec(0,0,0,MAX(inn,imm));
 	x->reserve(MAX(inn,imm));
@@ -94,7 +95,7 @@ void fiso::add_point(REAL px, REAL py, size_t i, size_t j, bool visible)
 	{
 		size_t pos;
 		pos = three2one(i, j, level_number, nn, mm, levels);
-		(*checks)[pos] = true;
+		checks->set_true(pos);
 	}
 	checksum += i+j;
 };
@@ -166,6 +167,7 @@ REAL bug_value(REAL val)
 };
 
 // returns val1 >= val2
+inline
 bool cmp_vals(REAL val1, REAL val2, REAL uval)
 {
 	if (val1 == uval)
@@ -176,6 +178,7 @@ bool cmp_vals(REAL val1, REAL val2, REAL uval)
 };
 
 // returns true in case of level lies between val1 and val2
+inline
 bool check_level_intersection(REAL val1, REAL val2, REAL level, REAL uval)
 {
         if (val1 == uval)
@@ -268,6 +271,7 @@ bool is_edge_rib(short s, size_t i, size_t j, size_t nn, size_t mm)
 		( (j == mm-2) && (s == SIDE_TOP) ) );
 };
 
+inline
 void update_vals(REAL vals[4], size_t i, size_t j, trace_info & info)
 {
 	size_t pos = two2one(i, j, info.nn, info.mm);
@@ -342,7 +346,7 @@ void finalize_iso(fiso * iso, REAL level, size_t & i, size_t & j, short & res, t
 	// mark cell 
 	size_t pos;
 	pos = three2one(i, j, k, info.nn, info.mm, info.levels->size());
-	(*(info.checks))[pos] = true;
+	info.checks->set_true(pos);
 
 	short begin_side = rib_info.first_side;
 	size_t nn = info.nn;
@@ -625,8 +629,11 @@ fiso * trace_isoline(REAL level, short side, size_t i, size_t j,
 	calc_point(level, side, i, j, vals, info, x, y, visible);
 	iso->add_point(x,y, i, j, visible);
 
-	REAL fill_level = get_fill_level(level, side, i, j, info);
-	iso->set_fill_level(fill_level);
+	if (info.close_on_bound)
+	{
+		REAL fill_level = get_fill_level(level, side, i, j, info);
+		iso->set_fill_level(fill_level);
+	}
 
 	// find second point
 	curr_side = get_next_rib(level, side, i, j, vals, info, closed, need_add, iso, rib_info);
@@ -724,7 +731,8 @@ std::vector<fiso *> * trace_isos(vec * levels,
 	levels->push_back(added_level);
 	size_t l_cnt = levels->size();
 
-        std::vector<bool> checks( l_cnt*nn*mm );
+        bitvec * checks = create_bitvec( l_cnt*nn*mm );
+	checks->init_false();
 	std::vector<fiso *> * isos = new std::vector<fiso *>();
 	vec * bugged_levels = create_vec(*levels);
 
@@ -736,7 +744,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 	info.nn = nn;
 	info.mm = mm;
 	info.uval = FLT_MAX;
-	info.checks = &checks;
+	info.checks = checks;
 	info.close_on_bound = close_on_bound;
 
 	for (pos = 0; pos < bugged_levels->size(); pos++)
@@ -808,7 +816,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 		if (swap_order) {
 			for (l = l_cnt-2; l >= 0; l--) {
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
-				if ((*(info.checks))[pos] == true) {
+				if ( info.checks->get(pos) == true ) {
 					if (l == 0)
 						break;
 					continue;
@@ -825,7 +833,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 		} else {
 			for (l = 0; l < l_cnt-1; l++) {
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
-				if ((*(info.checks))[pos] == true)
+				if ( info.checks->get(pos) == true ) 
 					continue;
 				level = (*levels)(l);
 				if (check_level_intersection(vals[0], vals[1], level, uval))
@@ -851,7 +859,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 		if (swap_order) {
 			for (l = l_cnt-2; l >= 0; l--) {
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
-				if ((*(info.checks))[pos] == true) {
+				if ( info.checks->get(pos) == true ) {
 					if (l == 0)
 						break;
 					continue;
@@ -868,7 +876,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 		} else {
 			for (l = 0; l < l_cnt-1; l++) {
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
-				if ((*(info.checks))[pos] == true)
+				if ( info.checks->get(pos) == true ) 
 					continue;
 				level = (*levels)(l);
 				if (check_level_intersection(vals[0], vals[2], level, uval))
@@ -896,7 +904,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 			for (l = l_cnt-2; l >= 0; l--) {
 				level = (*levels)(l);
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
-				if ((*(info.checks))[pos] == true) {
+				if ( info.checks->get(pos) == true ) {
 					if (l == 0)
 						break;
 					continue;
@@ -912,7 +920,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 		} else {
 			for (l = 0; l < l_cnt-1; l++) {
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
-				if ((*(info.checks))[pos] == true)
+				if ( info.checks->get(pos) == true ) 
 					continue;
 				level = (*levels)(l);
 				if (check_level_intersection(vals[2], vals[3], level, uval))
@@ -939,7 +947,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 		if (swap_order) {
 			for (l = l_cnt-2; l >= 0; l--) {
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
-				if ((*(info.checks))[pos] == true) {
+				if ( info.checks->get(pos) == true ) {
 					if (l == 0)
 						break;
 					continue;
@@ -956,7 +964,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 		} else {
 			for (l = 0; l < l_cnt-1; l++) {
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
-				if ((*(info.checks))[pos] == true)
+				if ( info.checks->get(pos) == true ) 
 					continue;
 				level = (*levels)(l);
 				if (check_level_intersection(vals[1], vals[3], level, uval))
@@ -986,7 +994,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 					if (swap_order) {
 						for (l = l_cnt-1; l >= 0; l--) {
 							pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
-							if ((*(info.checks))[pos] == true) {
+							if ( info.checks->get(pos) == true ) {
 								if (l == 0)
 									break;
 								continue;
@@ -1003,7 +1011,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 					} else {
 						for (l = 0; l < l_cnt; l++) {
 							pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
-							if ((*(info.checks))[pos] == true)
+							if ( info.checks->get(pos) == true ) 
 								continue;
 							level = (*levels)(l);
 							if (check_level_intersection(vals[1], vals[3], level, uval))
@@ -1019,7 +1027,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 		}
 	}
 	//*/
-	
+	checks->release();
 	return isos;
 }
 

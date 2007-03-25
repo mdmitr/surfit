@@ -22,6 +22,7 @@
 
 #include <vector>
 #include "vec.h"
+#include "bitvec.h"
 
 namespace surfit {
 
@@ -30,7 +31,7 @@ struct fiso
 	fiso(REAL ilevel, 
 	     size_t ilevel_number, 
 	     size_t ilevels, 
-	     std::vector<bool> * ichecks,
+	     bitvec * ichecks,
 	     size_t inn, size_t imm);
 	~fiso();
 	
@@ -52,7 +53,7 @@ struct fiso
 	vec * y;
 private:
 	std::vector<bool> * flags;
-	std::vector<bool> * checks;
+	bitvec * checks;
 	size_t level_number;
 	size_t levels;
 	size_t nn, mm;
