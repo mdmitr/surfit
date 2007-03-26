@@ -130,26 +130,26 @@ bool surf_trace_cntr(const char * surface_name_or_position = "0", REAL from = FL
 
 //save and load
 bool mask_load(const char * filename, const char * maskname = "*");
-bool mask_save(const char * filename, const char * mask_name_or_position = "0");
-bool mask_save_grd(const char * filename, const char * mask_name_or_position = "0");
-bool mask_save_xyz(const char * filename, const char * mask_name_or_position = "0");
+bool mask_save(const char * filename, const char * mask_name = "*");
+bool mask_save_grd(const char * filename, const char * mask_name = "*");
+bool mask_save_xyz(const char * filename, const char * mask_name = "*");
 //
 // math
 //
-bool mask_getValue(REAL x, REAL y, const char * mask_name_or_position = "0");
-void mask_and(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
-void mask_not(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
-void mask_or(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
-void mask_xor(const char * mask1_name_or_position = "0", const char * mask2_name_or_position = "0");
+bool mask_getValue(REAL x, REAL y, const char * mask_name = "*");
+void mask_and(const char * mask1_name = "*", const char * mask2_name = "*");
+void mask_not(const char * mask1_name = "*", const char * mask2_name = "*");
+void mask_or (const char * mask1_name = "*", const char * mask2_name = "*");
+void mask_xor(const char * mask1_name = "*", const char * mask2_name = "*");
 // CONVERTING
-bool mask_to_surf(const char * mask_name_or_position = "0");
+bool mask_to_surf(const char * mask_name = "*");
 // OTHER
-bool mask_by_surf(const char * surface_name_or_position = "0");
-bool mask_apply_to_surf(const char * mask_name_or_position = "0", const char * surface_name_or_position = "0");
-const char * mask_getName(const char * mask_name_or_position = "0");
-bool mask_setName(const char * new_name, const char * mask_name_or_position = "0");
+bool mask_by_surf(const char * surface_name = "*");
+bool mask_apply_to_surf(const char * mask_name = "*", const char * surface_name = "*");
+const char * mask_getName(const char * mask_name = "*");
+bool mask_setName(const char * new_name, const char * mask_name = "*");
 bool mask_delall();
-bool mask_del(const char * mask_name_or_position = "0");
+bool mask_del(const char * mask_name = "*");
 int mask_size();
 void masks_info();
 

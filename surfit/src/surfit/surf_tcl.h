@@ -35,10 +35,10 @@ class d_surf;
 //
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_load(const char * filename, const char * surfname = 0);
+    \fn bool surf_load(const char * filename, const char * surfname = "*");
 
     \par Tcl syntax:
-    surf_load "filename" "surfname"
+    surf_load \ref file "filename" \ref str "surfname"
     
     \par Description:
     loads surface named "surfname" from surfit datafile. If no surfname specified, then loads first one.
@@ -46,864 +46,754 @@ class d_surf;
     \param filename surfit datafile
     \param surfname name for surface (optional)
 */
-bool surf_load(const char * filename, const char * surfname = 0);
+bool surf_load(const char * filename, const char * surfname = "*");
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save(const char * filename, const char * surface_name_or_position = "0");
+    \fn bool surf_save(const char * filename, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_save "filename" "surface_name_or_position" 
+    surf_save \ref file "filename" \ref str "surface_name" 
 
     \par Description:
     saves surface to surfit datafile
-
-    \param filename surfit datafile
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
 */
-bool surf_save(const char * filename, const char * surface_name_or_position = "0");
+bool surf_save(const char * filename, const char * surface_name = "*");
 
 //
 // MATH OPERATIONS
 //
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_getValue(REAL x, REAL y, const char * surface_name_or_position = "0");
+    \fn REAL surf_getValue(REAL x, REAL y, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_getValue x y "surface_name_or_position"
+    surf_getValue x y \ref str "surface_name"
 
     \par Description:
     calculates surface value at point (x,y)
-
-    \param x point x-coordinate
-    \param y point y-coordinate 
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
 */
-REAL surf_getValue(REAL x, REAL y, const char * surface_name_or_position = "0");
+REAL surf_getValue(REAL x, REAL y, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_getValueIJ(int I, int J, const char * surface_name_or_position = "0");
+    \fn REAL surf_getValueIJ(int I, int J, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_getValueIJ I J "surface_name_or_position"
+    surf_getValueIJ I J \ref str "surface_name"
 
     \par Description:
     returns surface value at node (I,J)
 
     \param I node number in X direction
     \param J node number in Y direction
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
 */
-REAL surf_getValueIJ(int I, int J, const char * surface_name_or_position = "0");
+REAL surf_getValueIJ(int I, int J, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_resid(const char * filename, const char * surface_name_or_position = "0", const char * points_name_or_position = "0")
+    \fn bool surf_resid(const char * filename, const char * surface_name = "*", const char * points_name = "*")
 
     \par Tcl syntax:
-    surf_resid "filename" "surface_name_or_position" "points_name_or_position"
+    surf_resid \ref file "filename" \ref str "surface_name" \ref str "points_name"
 
     \par Description:
     calculates residuals between \ref d_points "points" values and \ref d_surf "surface" values, calculated at points (x,y) coordinates.
     Saves result to text file.
-
-    \param filename text file with residuals
-    \param points_name_or_position name of \ref d_points "points" dataset, or points position number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-bool surf_resid(const char * filename, const char * surface_name_or_position = "0", const char * points_name_or_position = "0");
+bool surf_resid(const char * filename, const char * surface_name = "*", const char * points_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_D1(const char * surface_name_or_position = "0");
+    \fn REAL surf_D1(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_D1 "surface_name_or_position"
+    surf_D1 \ref str "surface_name"
 
     \par Description:
     calculates value of \f$ \int\limits_\Omega \left[ f_x^2 + f_y^2 \right] dx dy \f$ 
     for surface, where f is a surface.
-
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-REAL surf_D1(const char * surface_name_or_position = "0");
+REAL surf_D1(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_D2(const char * surface_name_or_position = "0");
+    \fn REAL surf_D2(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_D2 "surface_name_or_position"
+    surf_D2 \ref str "surface_name"
 
     \par Description:
     calculates value of 
     \f$ \int\limits_\Omega \left[ f_{xx}^2 + 2f_{xy}^2 + f_{yy}^2 \right] dx dy \f$ 
     for surface, where f is a surface.
-
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-REAL surf_D2(const char * surface_name_or_position = "0");
+REAL surf_D2(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_gradient(const char * newname, const char * surface_name_or_position = "0");
+    \fn bool surf_gradient(const char * newname, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_gradient "newname" "surface_name_or_position"
+    surf_gradient "newname" \ref str "surface_name"
 
     \par Description:
     calculates surface of "gradients lengths" for surface and saves result to new surface named "newname"
-
-    \param newname name for resulting surface
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-bool surf_gradient(const char * newname, const char * surface_name_or_position = "0");
+bool surf_gradient(const char * newname, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_project(const char * newname, const char * surface_name_or_position = "0");
+    \fn bool surf_project(const char * newname, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_project "newname" "surface_name_or_position"
+    surf_project "newname" \ref str "surface_name"
 
     \par Description:
     recalculates surface on current \ref d_grid "grid" using bilinear interpolation algorithm
-
-    \param newname name for resulting surface
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-bool surf_project(const char * newname, const char * surface_name_or_position = "0");
+bool surf_project(const char * newname, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_add_noise(REAL std, const char * surface_name_or_position = "0");
+    \fn bool surf_add_noise(REAL std, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_add_noise std "surface_name_or_position"
+    surf_add_noise std \ref str "surface_name"
 
     \par Description:
     adds normally-distributed noise with parameters N(0,std) to coeff
 
     \param std standart deviation
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-bool surf_add_noise(REAL std, const char * surface_name_or_position = "0");
+bool surf_add_noise(REAL std, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_minz(const char * surface_name_or_position = "0");
+    \fn REAL surf_minz(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_minz "surface_name_or_position"
+    surf_minz \ref str "surface_name"
 
     \par Description:
     returns minimum value for surface
-
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-REAL surf_minz(const char * surface_name_or_position = "0");
+REAL surf_minz(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_area_minz(const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+    \fn REAL surf_area_minz(const char * area_name = "*", const char * surface_name = "*");
 	
     \par Tcl syntax:
-    surf_area_minz "area_name_or_position" "surface_name_or_position"
+    surf_area_minz \ref str "area_name" \ref str "surface_name"
 
     \par Description:
     returns minimum value for surface in area
-
-    \param area_name_or_position name of \ref d_area "area" dataset, or area position number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-REAL surf_area_minz(const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+REAL surf_area_minz(const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_maxz(const char * surface_name_or_position = "0");
+    \fn REAL surf_maxz(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_maxz "surface_name_or_position"
+    surf_maxz \ref str "surface_name"
      
     \par Description:
     returns maximum value for surface
-
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-REAL surf_maxz(const char * surface_name_or_position = "0");
+REAL surf_maxz(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_area_maxz(const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+    \fn REAL surf_area_maxz(const char * area_name = "*", const char * surface_name = "*");
 	
     \par Tcl syntax:
-    surf_area_maxz "area_name_or_position" "surface_name_or_position"
+    surf_area_maxz \ref str "area_name" \ref str "surface_name"
 
     \par Description:
     returns maximum value for surface in area
-
-    \param area_name_or_position name of \ref d_area "area" dataset, or area position number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-REAL surf_area_maxz(const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+REAL surf_area_maxz(const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_mean(const char * surface_name_or_position = "0");
+    \fn REAL surf_mean(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_mean "surface_name_or_position"
+    surf_mean \ref str "surface_name"
 
     \par Description:
     returns mean value for surface
-
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-REAL surf_mean(const char * surface_name_or_position = "0");
+REAL surf_mean(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_area_mean(const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+    \fn REAL surf_area_mean(const char * area_name = "*", const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_area_mean "area_name_or_position" "surface_name_or_position"
+    surf_area_mean \ref str "area_name" \ref str "surface_name"
 
     \par Description:
     returns mean value for surface in area
-
-    \param area_name_or_position name of \ref d_area "area" dataset, or area position number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-REAL surf_area_mean(const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+REAL surf_area_mean(const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_mask_mean(const char * mask_name_or_position = "0", const char * surface_name_or_position = "0");
+    \fn REAL surf_mask_mean(const char * mask_name = "*", const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_mask_mean "mask_name_or_position" "surface_name_or_position"
+    surf_mask_mean \ref str "mask_name" \ref str "surface_name"
 
     \par Description:
     returns mean value for surface where mask is "true"
-
-    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-REAL surf_mask_mean(const char * mask_name_or_position = "0", const char * surface_name_or_position = "0");
+REAL surf_mask_mean(const char * mask_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_wmean(const char * wsurface_name_or_position = "0", const char * surface_name_or_position = "0");
+    \fn REAL surf_wmean(const char * wsurface_name = "*", const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_wmean "wsurface_name_or_position" "surface_name_or_position"
+    surf_wmean \ref str "wsurface_name" \ref str "surface_name"
 
     \par Description:
     returns weighted mean value for surface
-
-    \param wsurface_name_or_position name of weighting \ref d_surf "surface" dataset, or surface position number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-REAL surf_wmean(const char * wsurface_name_or_position = "0", const char * surface_name_or_position = "0");
+REAL surf_wmean(const char * wsurface_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_area_wmean(const char * area_name_or_position = "0", const char * wsurface_name_or_position = "0", const char * surface_name_or_position = "0");
+    \fn REAL surf_area_wmean(const char * area_name = "*", const char * wsurface_name = "*", const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_area_wmean "area_name_or_position" "wsurface_name_or_position" "surface_name_or_position"
+    surf_area_wmean \ref str "area_name" \ref str "wsurface_name" \ref str "surface_name"
 
     \par Description:
-    returns weighted mean value for surface in area
-
-    \param area_name_or_position name of \ref d_area "area" dataset, or area position number
-    \param wsurface_name_or_position name of weighting \ref d_surf "surface" dataset, or surface position number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
+    returns weighted mean value for surface in area, where wsurface - weight function
 */
-REAL surf_area_wmean(const char * area_name_or_position = "0", const char * wsurface_name_or_position = "0", const char * surface_name_or_position = "0");
+REAL surf_area_wmean(const char * area_name = "*", const char * wsurface_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_mask_wmean(const char * mask_name_or_position = "0", const char * wsurface_name_or_position = "0", const char * surface_name_or_position = "0");
+    \fn REAL surf_mask_wmean(const char * mask_name = "*", const char * wsurface_name = "*", const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_mask_wmean "mask_name_or_position" "wsurface_name_or_position" "surface_name_or_position"
+    surf_mask_wmean \ref str "mask_name" \ref str "wsurface_name" \ref str "surface_name"
 
     \par Description:
-    returns weighted mean value for surface where mask is "true"
-
-    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number
-    \param wsurface_name_or_position name of weighting \ref d_surf "surface" dataset, or surface position number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
+    returns weighted mean value for surface where mask is "true", wsurface - weight surface
 */
-REAL surf_mask_wmean(const char * mask_name_or_position = "0", const char * wsurface_name_or_position = "0", const char * surface_name_or_position = "0");
+REAL surf_mask_wmean(const char * mask_name = "*", const char * wsurface_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_sum(const char * surface_name_or_position = "0");
+    \fn REAL surf_sum(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_sum "surface_name_or_position"
+    surf_sum \ref str "surface_name"
 
     \par Description:
     returns sum of all surface cell values
-
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-REAL surf_sum(const char * surface_name_or_position = "0");
+REAL surf_sum(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_sum_area(const char * area_name_or_position = "0",  const char * surface_name_or_position = "0");
+    \fn REAL surf_sum_area(const char * area_name = "*",  const char * surface_name = "*");
      
     \par Tcl syntax:
-    surf_sum_area "area_name_or_position" "surface_name_or_position"
+    surf_sum_area \res str "area_name" \ref str "surface_name"
 
     \par Description:
     returns sum of all surface cells values in area
-
-    \param area_name_or_position name of \ref d_area "area" dataset, or area position number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-REAL surf_sum_area(const char * area_name_or_position = "0",  const char * surface_name_or_position = "0");
+REAL surf_sum_area(const char * area_name = "*",  const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn int surf_cells_in_area(const char * area_name_or_position = "0",  const char * surface_name_or_position = "0");
+    \fn int surf_cells_in_area(const char * area_name = "*",  const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_cells_in_area "area_name_or_position" "surface_name_or_position"
+    surf_cells_in_area \ref str "area_name" \ref str "surface_name"
 
     \par Description:
     returns number of cells in area
-
-    \param area_name_or_position name of \ref d_area "area" dataset, or area position number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-int surf_cells_in_area(const char * area_name_or_position = "0",  const char * surface_name_or_position = "0");
+int surf_cells_in_area(const char * area_name = "*",  const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_std(REAL mean, const char * surface_name_or_position = "0");
+    \fn REAL surf_std(REAL mean, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_std mean "surface_name_or_position"
+    surf_std mean \ref str "surface_name"
 
     \par Description:
     calculates standard deviation for surface cells values with respect to surface mean value
-
-    \param mean surface mean value
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-REAL surf_std(REAL mean, const char * surface_name_or_position = "0");
+REAL surf_std(REAL mean, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_plus(const char * surface1_name_or_position, const char * surface2_name_or_position);
+    \fn bool surf_plus(const char * surface1_name, const char * surface2_name);
 
     \par Tcl syntax:
-    surf_plus "surface1_name_or_position" "surface2_name_or_position"
+    surf_plus \ref str "surface1_name" \ref str "surface2_name"
 
     \par Description:
     Performs operation with surfaces cells values:
     surface1 = surface1 + surface2
 */
-bool surf_plus(const char * surface1_name_or_position, const char * surface2_name_or_position);
+bool surf_plus(const char * surface1_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    bool surf_plus_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
+    bool surf_plus_area(const char * surface1_name, const char * area_name, const char * surface2_name);
    
     \par Tcl syntax:
-    surf_plus_area "surface1_name_or_position" "area_name_or_position" "surface2_name_or_position"
+    surf_plus_area \ref str "surface1_name" \ref str "area_name" \ref str "surface2_name"
 
     \par Description:
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface1 + surface2
 */
-bool surf_plus_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
+bool surf_plus_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_minus(const char * surface1_name_or_position, const char * surface2_name_or_position);
+    \fn bool surf_minus(const char * surface1_name, const char * surface2_name);
 
     \par Tcl syntax:
-    surf_minus "surface1_name_or_position" "surface2_name_or_position"
+    surf_minus \ref str "surface1_name" \ref str "surface2_name"
     
     \par Description:
     Performs operation with surfaces cells values:
     surface1 = surface1 - surface2
 */
-bool surf_minus(const char * surface1_name_or_position, const char * surface2_name_or_position);
+bool surf_minus(const char * surface1_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_minus_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
+    \fn bool surf_minus_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
     \par Tcl syntax:
-    surf_minus_area "surface1_name_or_position" "area_name_or_position" "surface2_name_or_position"
+    surf_minus_area \ref str "surface1_name" \ref str "area_name" \ref str "surface2_name"
     
     \par Description:
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface1 - surface2
 */
-bool surf_minus_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
+bool surf_minus_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_mult(const char * surface1_name_or_position, const char * surface2_name_or_position);
+    \fn bool surf_mult(const char * surface1_name, const char * surface2_name);
 
     \par Tcl syntax:
-    surf_mult "surface1_name_or_position" "surface2_name_or_position"
+    surf_mult \ref str "surface1_name" \ref str "surface2_name"
 
     \par Description:
     Performs operation with surfaces cells values:
     surface1 = surface1 * surface2
 */
-bool surf_mult(const char * surface1_name_or_position, const char * surface2_name_or_position);
+bool surf_mult(const char * surface1_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_mult_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
+    \fn bool surf_mult_area(const char * surface1_name, const char * area_name, const char * surface2_name);
     
     \par Tcl syntax:
-    surf_mult_area "surface1_name_or_position" "area_name_or_position" "surface2_name_or_position"
+    surf_mult_area \ref str "surface1_name" \ref str "area_name" \ref str "surface2_name"
 
     \par Description:
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface1 * surface2
 */
-bool surf_mult_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
+bool surf_mult_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_div(const char * surface1_name_or_position, const char * surface2_name_or_position);
+    \fn bool surf_div(const char * surface1_name, const char * surface2_name);
     
     \par Tcl syntax:
-    surf_mult "surface1_name_or_position" "surface2_name_or_position"
+    surf_mult \ref str "surface1_name" \ref str "surface2_name"
 
     \par Description:
     Performs operation with surfaces cells values:
     surface1 = surface1 / surface2
 */
-bool surf_div(const char * surface1_name_or_position, const char * surface2_name_or_position);
+bool surf_div(const char * surface1_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_div_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
+    \fn bool surf_div_area(const char * surface1_name, const char * area_name, const char * surface2_name);
     
     \par Tcl syntax:
-    surf_div_area "surface1_name_or_position" "area_name_or_position" "surface2_name_or_position"
+    surf_div_area \ref str "surface1_name" \ref str "area_name" \ref str "surface2_name"
 
     \par Description:
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface1 / surface2
 */
-bool surf_div_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
+bool surf_div_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_set(const char * surface1_name_or_position, const char * surface2_name_or_position);
+    \fn bool surf_set(const char * surface1_name, const char * surface2_name);
     
     \par Tcl syntax:
-    surf_set "surface1_name_or_position" "surface2_name_or_position"
+    surf_set \ref str "surface1_name" \ref str "surface2_name"
 
     \par Description:
     Performs operation with surfaces cells values:
     surface1 = surface2
 */
-bool surf_set(const char * surface1_name_or_position, const char * surface2_name_or_position);
+bool surf_set(const char * surface1_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_set_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
+    \fn bool surf_set_area(const char * surface1_name, const char * area_name, const char * surface2_name);
     
     \par Tcl syntax:
-    surf_set_area "surface1_name_or_position" "area_name_or_position" "surface2_name_or_position"
+    surf_set_area \ref str "surface1_name" \ref str "area_name" \ref str "surface2_name"
 
     \par Description:
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface2
 */
-bool surf_set_area(const char * surface1_name_or_position, const char * area_name_or_position, const char * surface2_name_or_position);
+bool surf_set_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_plus_value(REAL val, const char * surface_name_or_position = "0");
+    \fn bool surf_plus_value(REAL val, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_plus_value val "surface_name_or_position"
+    surf_plus_value val \ref str "surface_name"
 
     \par Description:
     Performs operation with surfaces cells values:
     surface = surface + val
-
-    \param val real number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-bool surf_plus_value(REAL val, const char * surface_name_or_position = "0");
+bool surf_plus_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_plus_value_area(REAL val, const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+    \fn bool surf_plus_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
     
     \par Tcl syntax:
-    surf_plus_value_area val "area_name_or_position" "surface_name_or_position"
+    surf_plus_value_area val \ref str "area_name" \ref str "surface_name"
       
     \par Description:
     Performs operation with surfaces cells values for cells in area:
     surface = surface + val
-
-    \param val real number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
-    \param area_name_or_position name of \ref d_area "area" dataset, or area position number
 */
-bool surf_plus_value_area(REAL val, const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
+bool surf_plus_value_area(REAL val, const char * surface_name = "*", const char * area_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_minus_value(REAL val, const char * surface_name_or_position = "0");
+    \fn bool surf_minus_value(REAL val, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_minus_value val "surface_name_or_position"
+    surf_minus_value val \ref str "surface_name"
 
     \par Description:
     Performs operation with surfaces cells values:
     surface = surface - val
-
-    \param val real number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-bool surf_minus_value(REAL val, const char * surface_name_or_position = "0");
+bool surf_minus_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_minus_value_area(REAL val, const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+    \fn bool surf_minus_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
     
     \par Tcl syntax:
-    surf_minus_value_area val "area_name_or_position" "surface_name_or_position"
+    surf_minus_value_area val \ref str "area_name" \ref str "surface_name"
       
     \par Description:
     Performs operation with surfaces cells values for cells in area:
     surface = surface - val
-
-    \param val real number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
-    \param area_name_or_position name of \ref d_area "area" dataset, or area position number
 */
-bool surf_minus_value_area(REAL val, const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+bool surf_minus_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_mult_value(REAL val, const char * surface_name_or_position = "0");
+    \fn bool surf_mult_value(REAL val, const char * surface_name = "*");
     
     \par Tcl syntax:
-    surf_mult_value val "surface_name_or_position"
+    surf_mult_value val \ref str "surface_name"
 
     \par Description:
     Performs operation with surfaces cells values:
     surface = surface * val
-
-    \param val real number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-bool surf_mult_value(REAL val, const char * surface_name_or_position = "0");
+bool surf_mult_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_mult_value_area(REAL val, const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+    \fn bool surf_mult_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
     
     \par Tcl syntax:
-    surf_mult_value_area val "area_name_or_position" "surface_name_or_position"
+    surf_mult_value_area val \ref str "area_name" \ref str "surface_name"
       
     \par Description:
     Performs operation with surfaces cells values for cells in area:
     surface = surface * val
-
-    \param val real number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
-    \param area_name_or_position name of \ref d_area "area" dataset, or area position number
 */
-bool surf_mult_value_area(REAL val, const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+bool surf_mult_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_div_value(REAL val, const char * surface_name_or_position = "0");
+    \fn bool surf_div_value(REAL val, const char * surface_name = "*");
     
     \par Tcl syntax:
-    surf_div_value val "surface_name_or_position"
+    surf_div_value val \ref str "surface_name"
 
     \par Description:
     Performs operation with surfaces cells values:
     surface = surface / val
-
-    \param val real number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-bool surf_div_value(REAL val, const char * surface_name_or_position = "0");
+bool surf_div_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_div_value_area(REAL val, const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+    \fn bool surf_div_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
     
     \par Tcl syntax:
-    surf_div_value_area val "area_name_or_position" "surface_name_or_position"
+    surf_div_value_area val \ref str "area_name" \ref str "surface_name"
       
     \par Description:
     Performs operation with surfaces cells values for cells in area:
     surface = surface / val
-
-    \param val real number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
-    \param area_name_or_position name of \ref d_area "area" dataset, or area position number
 */
-bool surf_div_value_area(REAL val, const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+bool surf_div_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_set_value(REAL val, const char * surface_name_or_position = "0");
+    \fn bool surf_set_value(REAL val, const char * surface_name = "*");
     
     \par Tcl syntax:
-    surf_set_value val "surface_name_or_position"
+    surf_set_value val \ref str "surface_name"
 
     \par Description:
     Performs operation with surfaces cells values:
     surface = val
-
-    \param val real number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-bool surf_set_value(REAL val, const char * surface_name_or_position = "0");
+bool surf_set_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_set_value_area(const char * val, const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+    \fn bool surf_set_value_area(const char * val, const char * area_name = "*", const char * surface_name = "*");
     
     \par Tcl syntax:
-    surf_set_value_area val "area_name_or_position" "surface_name_or_position"
+    surf_set_value_area val \ref str "area_name" \ref str "surface_name"
       
     \par Description:
     Performs operation with surfaces cells values for cells in area:
     surface = val
-
-    \param val real number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
-    \param area_name_or_position name of \ref d_area "area" dataset, or area position number
 */
-bool surf_set_value_area(const char * val, const char * area_name_or_position = "0", const char * surface_name_or_position = "0");
+bool surf_set_value_area(const char * val, const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_filter_by_mask(const char * surface_name_or_position = "0", const char * mask_name_or_position = "0");
+    \fn bool surf_filter_by_mask(const char * surface_name = "*", const char * mask_name = "*");
     
     \par Tcl syntax:
-    surf_filter_by_mask "surface_name_or_position" "mask_name_or_position"
+    surf_filter_by_mask \ref str "surface_name" \ref str "mask_name"
 
     \par Description:
     makes all cells values undefined for which \ref d_mask is false
 */
-bool surf_filter_by_mask(const char * surface_name_or_position = "0", const char * mask_name_or_position = "0");
+bool surf_filter_by_mask(const char * surface_name = "*", const char * mask_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn void surf_filter_in_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
+    \fn void surf_filter_in_area(const char * surface_name = "*", const char * area_name = "*");
     
     \par Tcl syntax:
-    surf_filter_in_area \ref match "surface_name_or_position" \ref match "area_name_or_position"
+    surf_filter_in_area \ref str "surface_name" \ref str "area_name"
 
     \par Description:
     makes all cells values undefined which are inside of \ref d_area
 */
-void surf_filter_in_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
+void surf_filter_in_area(const char * surface_name = "*", const char * area_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn void surf_filter_out_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
+    \fn void surf_filter_out_area(const char * surface_name = "*", const char * area_name = "*");
     
     \par Tcl syntax:
-    surf_filter_out_area \ref match "surface_name_or_position" \ref match "area_name_or_position"
+    surf_filter_out_area \ref str "surface_name" \ref str "area_name"
 
     \par Description:
     makes all cells values undefined which are outside of \ref d_area
 */
-void surf_filter_out_area(const char * surface_name_or_position = "0", const char * area_name_or_position = "0");
+void surf_filter_out_area(const char * surface_name = "*", const char * area_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_filter_by_surf(REAL eps, const char * surface1_name_or_position = "0", const char * surface2_name_or_position = "0")
+    \fn bool surf_filter_by_surf(REAL eps, const char * surface1_name = "*", const char * surface2_name = "*")
     
     \par Tcl syntax:
-    surf_filter_by_surf eps "surface_name_or_position" "surface_name_or_position"
+    surf_filter_by_surf eps \ref str "surface1_name" \ref str "surface2_name"
 
     \par Description:
     modifies surface1 cells values. Makes cells values undefined if \f$ |f_1(x,y) - f_2(x,y)| > \varepsilon \f$, 
     where $f_1(x,y)$ - first surface, $f_2(x,y)$ - second surface
 */
-bool surf_filter_by_surf(REAL eps, const char * surface1_name_or_position = "0", const char * surface2_name_or_position = "0");
+bool surf_filter_by_surf(REAL eps, const char * surface1_name = "*", const char * surface2_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_swapxy(const char * surface_name_or_position = "0")
+    \fn bool surf_swapxy(const char * surface_name = "*")
     
     \par Tcl syntax:
-    surf_swapxy "surface_name_or_position" 
+    surf_swapxy \ref str "surface_name" 
 
     \par Description:
     swaps X and Y coordinates
 */
-bool surf_swapxy(const char * surface_name_or_position = "0");
+bool surf_swapxy(const char * surface_name = "*");
 
 //
 // WAVELETS SECTION
 //
 
 /*! \ingroup tcl_surf_math_wavan
-    \fn int surf_get_details_level(const char * surface_name_or_position = "0");
+    \fn int surf_get_details_level(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_get_details_level "surface_name_or_position"
+    surf_get_details_level \ref str "surface_name"
 
     \par Description:
     returns the depth of applied wavelet decompositions for surface
-
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-int surf_get_details_level(const char * surface_name_or_position = "0");
+int surf_get_details_level(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math_wavan
-    \fn bool surf_decomp(const char * surface_name_or_position = "0");
+    \fn bool surf_decomp(const char * surface_name = "*");
 
     \par Tcl syntax: 
-    surf_decomp "surface_name_or_position"
+    surf_decomp \ref str "surface_name"
 
     \par Description:
     makes one wavelet-decomposition for surface 
-
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-bool surf_decomp(const char * surface_name_or_position = "0");
+bool surf_decomp(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math_wavan
-    \fn bool surf_auto_decomp(REAL eps, const char * surface_name_or_position = "0");
+    \fn bool surf_auto_decomp(REAL eps, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_auto_decomp eps "surface_name_or_position"
+    surf_auto_decomp eps \ref str "surface_name"
 
     \par Description:
     calls \ref surf_decomp until difference between original surface norm and decomposed surface norm
     will be lower than eps
-
-    \param eps real number
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-bool surf_auto_decomp(REAL eps, const char * surface_name_or_position = "0");
+bool surf_auto_decomp(REAL eps, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math_wavan
-    \fn bool surf_recons(const char * surface_name_or_position = "0");
+    \fn bool surf_recons(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_recons "surface_name_or_position"
+    surf_recons \ref str "surface_name"
 
     \par Description:
     makes one wavelet-reconstruction for surface 
-
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-bool surf_recons(const char * surface_name_or_position = "0");
+bool surf_recons(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math_wavan
-    \fn bool surf_full_recons(const char * surface_name_or_position = "0");
+    \fn bool surf_full_recons(const char * surface_name = "*");
 
     \par Tcl syntax: 
-    surf_full_recons "surface_name_or_position"
+    surf_full_recons \ref str "surface_name"
 
     \par Description:
     makes all possible wavelet-reconstructions for surface (recontructs original surface)
-
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-bool surf_full_recons(const char * surface_name_or_position = "0");
+bool surf_full_recons(const char * surface_name = "*");
 
 //
 // CONVERTING
 //
 
 /*! \ingroup tcl_surf_conv
-    \fn bool surf_to_pnts(const char * surface_name_or_position = "0");
+    \fn bool surf_to_pnts(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_to_pnts "surface_name_or_position"
+    surf_to_pnts \ref str "surface_name"
 
     \par Description:
     transforms \ref d_surf "surface" to \ref d_points "points"
-
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
 */
-bool surf_to_pnts(const char * surface_name_or_position = "0");
+bool surf_to_pnts(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_conv
-    \fn bool surf_to_mask(REAL true_from, REAL true_to, const char * surface_name_or_position = "0");
+    \fn bool surf_to_mask(REAL true_from, REAL true_to, const char * surface_name = "*");
     
     \par Tcl syntax:
-    surf_to_mask true_from true_to "surface_name_or_position"
+    surf_to_mask true_from true_to \ref str "surface_name"
       
     \par Description:
     makes \ref d_mask "mask" by surface. Cells values will be converted to "true" values if their
     values are in interval [true_from, true_to], else to "false" values.
 */
-bool surf_to_mask(REAL true_from, REAL true_to, const char * surface_name_or_position = "0");
+bool surf_to_mask(REAL true_from, REAL true_to, const char * surface_name = "*");
 
 //
 // OTHER
 //
 
 /*! \ingroup tcl_surf_other
-    \fn int surf_getCountX(const char * surface_name_or_position = "0");
+    \fn int surf_getCountX(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_getCountX "surface_name_or_position"
+    surf_getCountX \ref str "surface_name"
 
     \par Description:
     returns the amount of X-nodes for surface
 */
-int surf_getCountX(const char * surface_name_or_position = "0");
+int surf_getCountX(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn int surf_getCountY(const char * surface_name_or_position = "0");
+    \fn int surf_getCountY(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_getCountY "surface_name_or_position"
+    surf_getCountY \ref str "surface_name"
 
     \par Description:
     returns the amount of Y-nodes for surface
 */
-int surf_getCountY(const char * surface_name_or_position = "0");
+int surf_getCountY(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn REAL surf_getStepX(const char * surface_name_or_position = "0");
+    \fn REAL surf_getStepX(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_getStepX "surface_name_or_position"
+    surf_getStepX \ref str "surface_name"
     
     \par Description:
     returns step between X-nodes for surface
 */
-REAL surf_getStepX(const char * surface_name_or_position = "0");
+REAL surf_getStepX(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn REAL surf_getStepY(const char * surface_name_or_position = "0");
+    \fn REAL surf_getStepY(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_getStepY "surface_name_or_position"
+    surf_getStepY \ref str "surface_name"
     
     \par Description:
     returns step between Y-nodes for surface
 */
-REAL surf_getStepY(const char * surface_name_or_position = "0");
+REAL surf_getStepY(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn bool surf_undef(REAL new_undef_value, const char * surface_name_or_position = "0");
+    \fn bool surf_undef(REAL new_undef_value, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_undef new_undef_value "surface_name_or_position"
+    surf_undef new_undef_value \ref str "surface_name"
     
     \par Description:
     sets undefined value for surface
 */
-bool surf_undef(REAL new_undef_value, const char * surface_name_or_position = "0");
+bool surf_undef(REAL new_undef_value, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn void surf_info(const char * surface_name_or_position = "0");
+    \fn void surf_info(const char * surface_name = "*");
      
     \par Tcl syntax:
-    surf_info "surface_name_or_position"
+    surf_info \ref str "surface_name"
     
     \par Description:
     prints some info about surface
 */
-void surf_info(const char * surface_name_or_position = "0");
+void surf_info(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn const char * surf_getName(const char * surface_name_or_position = "0");
+    \fn const char * surf_getName(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_getName "surface_name_or_position"
+    surf_getName \ref str "surface_name"
     
     \par Description:
     returns name of surface 
 */
-const char * surf_getName(const char * surface_name_or_position = "0");
+const char * surf_getName(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn bool surf_setName(const char * new_name, const char * surface_name_or_position = "0");
+    \fn bool surf_setName(const char * new_name, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_setName "new_name" "surface_name_or_position"
+    surf_setName "new_name" \ref str "surface_name"
     
     \par Description:
     sets name for surface
 */
-bool surf_setName(const char * new_name, const char * surface_name_or_position = "0");
+bool surf_setName(const char * new_name, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
     \fn int surf_size();
 
     \par Tcl syntax:
+    surf_size
     
     \par Description:
     returns amount of surfaces in surfaces
@@ -914,6 +804,7 @@ int surf_size();
     \fn void surfs_info();
 
     \par Tcl syntax:
+    surfs_info
     
     \par Description:
     prints information about surfaces in surfaces
@@ -921,15 +812,15 @@ int surf_size();
 void surfs_info();
 
 /*! \ingroup tcl_surf_other
-    \fn bool surf_del(const char * surface_name_or_position = "0");
+    \fn bool surf_del(const char * surface_name = "*");
     
     \par Tcl syntax:
-    surf_del "surface_name_or_position"
+    surf_del \ref str "surface_name"
 
     \par Description:
     removes \ref d_surf "surface" from memory
 */
-bool surf_del(const char * surface_name_or_position = "0");
+bool surf_del(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
     \fn bool surf_delall();
@@ -942,7 +833,7 @@ bool surf_del(const char * surface_name_or_position = "0");
 */
 bool surf_delall();
 
-bool surf_trace_cntr(const char * surface_name_or_position = "0", REAL from = FLT_MAX, REAL to = FLT_MAX, REAL step = FLT_MAX);
+bool surf_trace_cntr(const char * surface_name = "*", REAL from = FLT_MAX, REAL to = FLT_MAX, REAL step = FLT_MAX);
 
 }; // namespace surfit;
 

@@ -27205,7 +27205,7 @@ _wrap_mask_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_save filename mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_save filename mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_save" "', argument " "1"" of type '" "char const *""'");
@@ -27322,7 +27322,7 @@ _wrap_mask_save_grd__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_save_grd filename mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_save_grd filename mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_save_grd" "', argument " "1"" of type '" "char const *""'");
@@ -27439,7 +27439,7 @@ _wrap_mask_save_xyz__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_save_xyz filename mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_save_xyz filename mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_save_xyz" "', argument " "1"" of type '" "char const *""'");
@@ -27558,7 +27558,7 @@ _wrap_mask_getValue__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_getValue x y mask_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_getValue x y mask_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_getValue" "', argument " "1"" of type '" "double""'");
@@ -27698,7 +27698,7 @@ _wrap_mask_and__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_and mask1_name_or_position mask2_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_and mask1_name mask2_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_and" "', argument " "1"" of type '" "char const *""'");
@@ -27742,7 +27742,7 @@ _wrap_mask_and__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_and mask1_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_and mask1_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_and" "', argument " "1"" of type '" "char const *""'");
@@ -27841,7 +27841,7 @@ _wrap_mask_not__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_not mask1_name_or_position mask2_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_not mask1_name mask2_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_not" "', argument " "1"" of type '" "char const *""'");
@@ -27885,7 +27885,7 @@ _wrap_mask_not__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_not mask1_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_not mask1_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_not" "', argument " "1"" of type '" "char const *""'");
@@ -27984,7 +27984,7 @@ _wrap_mask_or__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_or mask1_name_or_position mask2_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_or mask1_name mask2_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_or" "', argument " "1"" of type '" "char const *""'");
@@ -28028,7 +28028,7 @@ _wrap_mask_or__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_or mask1_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_or mask1_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_or" "', argument " "1"" of type '" "char const *""'");
@@ -28127,7 +28127,7 @@ _wrap_mask_xor__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_xor mask1_name_or_position mask2_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_xor mask1_name mask2_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_xor" "', argument " "1"" of type '" "char const *""'");
@@ -28171,7 +28171,7 @@ _wrap_mask_xor__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_xor mask1_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_xor mask1_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_xor" "', argument " "1"" of type '" "char const *""'");
@@ -28267,7 +28267,7 @@ _wrap_mask_to_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_to_surf mask_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_to_surf mask_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_to_surf" "', argument " "1"" of type '" "char const *""'");
@@ -28353,7 +28353,7 @@ _wrap_mask_by_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_by_surf surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_by_surf surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_by_surf" "', argument " "1"" of type '" "char const *""'");
@@ -28443,7 +28443,7 @@ _wrap_mask_apply_to_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_apply_to_surf mask_name_or_position surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_apply_to_surf mask_name surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_apply_to_surf" "', argument " "1"" of type '" "char const *""'");
@@ -28488,7 +28488,7 @@ _wrap_mask_apply_to_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_apply_to_surf mask_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_apply_to_surf mask_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_apply_to_surf" "', argument " "1"" of type '" "char const *""'");
@@ -28586,7 +28586,7 @@ _wrap_mask_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_getName mask_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_getName mask_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_getName" "', argument " "1"" of type '" "char const *""'");
@@ -28680,7 +28680,7 @@ _wrap_mask_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_setName new_name mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_setName new_name mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_setName" "', argument " "1"" of type '" "char const *""'");
@@ -28820,7 +28820,7 @@ _wrap_mask_del__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_del mask_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_del mask_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_del" "', argument " "1"" of type '" "char const *""'");
