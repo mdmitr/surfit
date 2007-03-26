@@ -79,7 +79,7 @@ bool _surf_save_xyz(const d_surf * srf, const char * filename) {
 	return true;
 };
 
-d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
+d_surf * _surf_load_xyz(const char * filename, const char * surfname, bool force) {
 	
 	writelog(LOG_MESSAGE, "loading surface from XYZ 3 column text file %s",filename);
 
@@ -132,7 +132,7 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
 		goto exit;
 
 	// filter bad points
-	for (i = pnt_cnt-1; i--;) {
+	for (i = pnt_cnt-1; ; i--) {
 		
 		x = (*X)(i);
 		y = (*Y)(i);
@@ -153,6 +153,13 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
 		}
 
 		if ((z >= FLT_MAX / REAL(2)) || ( z == undef_value )) {
+			X->erase(i);
+			Y->erase(i);
+			Z->erase(i);
+			continue;
+		}
+
+		if ((x == 999) && (y == 999) && (z == 999)) {
 			X->erase(i);
 			Y->erase(i);
 			Z->erase(i);
@@ -294,19 +301,24 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname) {
 		x = (*X)(i);
 		y = (*Y)(i);
 		z = (*Z)(i);
-		grd->getCoordPoint(x, y, I, J);
+		I = grd->get_i(x);
+		J = grd->get_j(y);
+		//grd->getCoordPoint(x, y, I, J);
 		
 		REAL test_x, test_y;
 		grd->getCoordNode(I, J, test_x, test_y);
 
-		REAL dist = (test_x - x)*(test_x - x) + (test_y - y)*(test_y - y);
-		if (dist > dist1/10e+3)
-			goto exit;
+		REAL dist = sqrt((test_x - x)*(test_x - x) + (test_y - y)*(test_y - y));
 
-		if (I >= nx)
-			goto exit;
+		if (force == false) {
+			if (dist > dist1/1000.)
+				goto exit;
+		}
 
-		if (J >= ny)
+		if (I >= nx) 
+			goto exit;
+		
+		if (J >= ny) 
 			goto exit;
 
 		(*coeff)( I + J*nx ) = z;

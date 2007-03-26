@@ -23,6 +23,8 @@ New:
 	  from shapefiles of SHPYT_ARC type.
 
 	+ regexp and wildcards support for commands and gridding rules
+	+ added new parameter to surf_load_xyz function. Allows to force binding points 
+          to grid cells.
 
 surfit 2.1 changes:
 

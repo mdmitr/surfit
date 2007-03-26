@@ -79,7 +79,7 @@ bool surf_load_grass(const char * filename, const char * surfname = 0);
 bool surf_load_arcgis(const char * filename, const char * surfname = 0);
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_load_xyz(const char * filename, const char * surfname = 0)
+    \fn bool surf_load_xyz(const char * filename, const char * surfname = 0, bool force = false)
 
     \par Tcl syntax:
     surf_load_xyz "filename" "surfname"
@@ -90,7 +90,7 @@ bool surf_load_arcgis(const char * filename, const char * surfname = 0);
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_load_xyz(const char * filename, const char * surfname = 0);
+bool surf_load_xyz(const char * filename, const char * surfname = 0, bool force = false);
 
 /*! \ingroup tcl_surf_save_load
     \fn bool surf_load_jpg(const char * filename, const char * surfname = 0,

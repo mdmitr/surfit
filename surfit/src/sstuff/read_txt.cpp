@@ -459,9 +459,12 @@ bool three_columns_read(const char * filename,
 		     ((val3 != FLT_MAX) || (col3 == 0)) 
 		   ) 
 		{
-			vcol1->push_back(val1);
-			vcol2->push_back(val2);
-			vcol3->push_back(val3);
+			if (!((val1 == 999) && (val2 == 999) && (val3 == 999)))
+			{
+				vcol1->push_back(val1);
+				vcol2->push_back(val2);
+				vcol3->push_back(val3);
+			}
 		}
 		val1 = FLT_MAX;
 		val2 = FLT_MAX;

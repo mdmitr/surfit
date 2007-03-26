@@ -83,7 +83,7 @@ bool surf_load_grd(const char * filename, const char * surfname = 0);
 bool surf_load_gmt(const char * filename, const char * surfname = 0);
 bool surf_load_grass(const char * filename, const char * surfname = 0);
 bool surf_load_arcgis(const char * filename, const char * surfname = 0);
-bool surf_load_xyz(const char * filename, const char * surfname = 0);
+bool surf_load_xyz(const char * filename, const char * surfname = 0, bool force = false);
 bool surf_load_jpg(const char * filename, const char * surfname = 0,
 		   REAL minz = 0, REAL maxz = 0, 
 		   REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1);
