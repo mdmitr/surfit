@@ -4,6 +4,7 @@ del libsstuff.*
 del libsurfit.*
 del libglobe.*
 del libfreeflow.*
+del libsurfit_io.*
 cd ..
 
 del /Q /S *.dat
