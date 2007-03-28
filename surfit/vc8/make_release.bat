@@ -1,2 +1,2 @@
 mkdir ..\bin
-vcbuild surfit.sln "Release|Win32"
+vcbuild /u surfit.sln "Release|Win32"

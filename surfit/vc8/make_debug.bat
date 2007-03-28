@@ -1,2 +1,2 @@
 mkdir ..\bin
-vcbuild surfit.sln "Debug|Win32"
+vcbuild /u surfit.sln "Debug|Win32"
