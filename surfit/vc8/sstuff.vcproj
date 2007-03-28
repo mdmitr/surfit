@@ -429,8 +429,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release_SSE2|Win32"
-			OutputDirectory="$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="..\$(ConfigurationName)"
+			IntermediateDirectory="..\$(ConfigurationName)"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
@@ -475,12 +475,12 @@
 				EnableEnhancedInstructionSet="2"
 				FloatingPointModel="0"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\../Release/sstuff.pch"
-				AssemblerListingLocation=".\../Release/"
-				ObjectFile=".\../Release/"
-				ProgramDataBaseFileName=".\../Release/"
+				PrecompiledHeaderFile=".\../Release_SSE2/sstuff.pch"
+				AssemblerListingLocation=".\../Release_SSE2/"
+				ObjectFile=".\../Release_SSE2/"
+				ProgramDataBaseFileName=".\../Release_SSE2/"
 				BrowseInformation="1"
-				BrowseInformationFile=".\../Release/"
+				BrowseInformationFile=".\../Release_SSE2/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				CompileAs="0"
@@ -534,7 +534,13 @@
 		</Configuration>
 		<Configuration
 			Name="Release_SSE|Win32"
-			ConfigurationType="1"
+			OutputDirectory="..\$(ConfigurationName)"
+			IntermediateDirectory="..\$(ConfigurationName)"
+			ConfigurationType="2"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -550,28 +556,61 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\../Release/sstuff.tlb"
+				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/Gs /Gs "
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				WholeProgramOptimization="true"
+				AdditionalIncludeDirectories="../sstuff/src,../src/sstuff/ptypes,C:\Tcl\include\"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_DEPRECATE"
+				StringPooling="true"
+				RuntimeLibrary="0"
+				EnableFunctionLevelLinking="false"
 				EnableEnhancedInstructionSet="1"
+				FloatingPointModel="0"
+				RuntimeTypeInfo="true"
+				PrecompiledHeaderFile=".\../Release_SSE/sstuff.pch"
+				AssemblerListingLocation=".\../Release_SSE/"
+				ObjectFile=".\../Release_SSE/"
+				ProgramDataBaseFileName=".\../Release_SSE/"
+				BrowseInformation="1"
+				BrowseInformationFile=".\../Release_SSE/"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1049"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="tcl83.lib"
+				OutputFile="../bin/libsstuff.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="c:\Tcl\lib"
+				ProgramDatabaseFile=".\../Release_SSE/libsstuff.pdb"
+				ImportLibrary="..\bin\libsstuff.lib"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -662,6 +701,16 @@
 						BrowseInformation="1"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\sstuff\fileio.cpp"
@@ -711,6 +760,16 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release_SSE2|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -780,6 +839,16 @@
 						BrowseInformation="1"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\sstuff\interp.cpp"
@@ -829,6 +898,16 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release_SSE2|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -894,6 +973,16 @@
 						BrowseInformation="1"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\sstuff\rnd.cpp"
@@ -943,6 +1032,16 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release_SSE2|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -1008,6 +1107,16 @@
 						BrowseInformation="1"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\sstuff\stepFunc.cpp"
@@ -1065,6 +1174,16 @@
 						BrowseInformation="1"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\sstuff\threads.cpp"
@@ -1114,6 +1233,16 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release_SSE2|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -1182,6 +1311,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\sstuff\boolvec.cpp"
@@ -1231,6 +1370,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1296,6 +1445,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\sstuff\shortvec.cpp"
@@ -1345,6 +1504,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1414,6 +1583,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\sstuff\vec.cpp"
@@ -1471,6 +1650,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\sstuff\vec_alg.cpp"
@@ -1520,6 +1709,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1589,6 +1788,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\sstuff\ptypes\pasync.h"
@@ -1642,6 +1851,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1707,6 +1926,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\sstuff\ptypes\pfatal.cxx"
@@ -1756,6 +1985,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1821,6 +2060,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\sstuff\ptypes\pmsgq.cxx"
@@ -1870,6 +2119,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1939,6 +2198,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\sstuff\ptypes\pstring.cxx"
@@ -1988,6 +2257,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -2053,6 +2332,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\sstuff\ptypes\ptimedsem.cxx"
@@ -2102,6 +2391,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -2171,6 +2470,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
@@ -2197,6 +2506,14 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						ExcludedFromBuild="true"
 						>
 						<Tool
@@ -2231,6 +2548,14 @@
 							Name="VCCLCompilerTool"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src_xxl\sstuff\sizetvec_xxl.cpp"
@@ -2259,6 +2584,14 @@
 							Name="VCCLCompilerTool"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src_xxl\sstuff\vec_xxl.cpp"
@@ -2281,6 +2614,14 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						ExcludedFromBuild="true"
 						>
 						<Tool

@@ -571,7 +571,8 @@ void surfit_manager::clear_data() const {
 	grid_unload();
 	
 	surf_delall();
-	mask_delall();
+	if (surfit_masks)
+		mask_del("*");
 
 	pnts_delall();
 
@@ -601,7 +602,7 @@ void surfit_manager::mem_info() const {
 
 	
 	surfs_info();
-	masks_info();
+	mask_info("*");
 	pnts_info();
 	curvs_info();
 	areas_info();

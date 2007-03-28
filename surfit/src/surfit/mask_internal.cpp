@@ -167,9 +167,9 @@ cont:
 exit:
 
 	if (!maskname)
-		writelog(LOG_ERROR, "mask_load : this file have no mask");
+		writelog(LOG_WARNING, "mask_load : this file have no mask");
 	else 
-		writelog(LOG_ERROR, "mask_load : this file have no mask named %s", maskname);
+		writelog(LOG_WARNING, "mask_load : this file have no mask named %s", maskname);
 	return NULL;
 
 };

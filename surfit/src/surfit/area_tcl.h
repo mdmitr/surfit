@@ -26,17 +26,17 @@ namespace surfit {
 // saving and loading
 
 /*! \ingroup tcl_area_save_load
-    \fn bool area_read(const char * filename, const char * areaname=NULL	, 
+    \fn bool area_read(const char * filename, const char * areaname=NULL, 
 	       int col1=1, int col2=2,
 	       const char * delimiters=" ", int skip_lines = 0, int grow_by=250);
     
     \par Tcl syntax:
-    area_read \ref wildcard "filename" "area_name" first_column_position second_column_position "delimiters" skip_lines
+    area_read \ref file "filename" "area_name" first_column_position second_column_position "delimiters" skip_lines
 
     \par Description:
     reads \ref d_area "area" from formatted text file and sets its name to "areaname"
     
-    \param filename name of formatted text file
+    \param filename \ref file name of formatted text file
     \param areaname name for \ref d_area "area" dataset
     \param col1 column with X coordinates
     \param col2 column with Y coordinates
@@ -55,13 +55,13 @@ bool area_read(const char * filename, const char * areaname=NULL	,
     \fn bool area_load(const char * filename, const char * area_name = NULL);
     
     \par Tcl syntax:
-    area_load "filename" "area_name"
+    area_load \ref file "filename" "area_name"
 
     \par Description:
     loads \ref d_area "area" from surfit datafile. if no areaname specified, 
     then loads the first area in the file.
 
-    \param filename surfit datafile filename
+    \param filename surfit datafile \ref file filename
     \param area_name \ref d_area "area" name for load
     
     \par Example
@@ -70,64 +70,60 @@ bool area_read(const char * filename, const char * areaname=NULL	,
 bool area_load(const char * filename, const char * area_name = NULL);
 
 /*! \ingroup tcl_area_save_load
-    \fn bool area_write(const char * filename, const char * area_name_or_position, const char * delimiter);
+    \fn bool area_write(const char * filename, const char * area_name, const char * delimiter);
     
     \par Tcl syntax:
-    area_write "filename" "area_name_or_position" "delimiter"
+    area_write "filename" \ref str "area_name" "delimiter"
 
     \par Description:
     writes \ref d_area "area" to formatted text file
 
     \param filename text file filename
-    \param area_name_or_position area name, or area position number
     \param delimiter delimiter between columns. May be " ", "\t", "," or other symbols
     
     \par Example
     area_write "C:\\area.txt" my_area
 */
-bool area_write(const char * filename, const char * area_name_or_position = "0", const char * delimiter = "\t");
+bool area_write(const char * filename, const char * area_name = "*", const char * delimiter = "\t");
 
 /*! \ingroup tcl_area_save_load
-    \fn bool area_save(const char * filename, const char * area_name_or_position = "0");
+    \fn bool area_save(const char * filename, const char * area_name = "*");
     
     \par Tcl syntax:
-    area_save "filename" "area_name_or_position"
+    area_save "filename" \ref str "area_name"
 
     \par Description:
     saves \ref d_area "area" to surfit datafile
 
-    \param filename Surfer BLN file
-    \param area_name_or_position \ref d_area "area" name, or area position number
-    
     \par Example
     area_save "C:\\area.dat" my_area
 */
-bool area_save(const char * filename, const char * area_name_or_position = "0");
+boolvec * area_save(const char * filename, const char * area_name = "*");
 
 //////////////
 // other
 
 /*! \ingroup tcl_area_other
-    \fn const char * area_getName(const char * area_name_or_position = "0");
+    \fn const char * area_getName(const char * area_name = "*");
     
     \par Tcl syntax:
-    area_getName "area_name_or_position"
+    area_getName \ref str "area_name"
 
     \par Description:
-    returns name of \ref area 
+    returns name of \ref d_area 
 */
-const char * area_getName(const char * area_name_or_position = "0");
+const char * area_getName(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
-    \fn bool area_setName(const char * new_name, const char * area_name_or_position = "0");
+    \fn bool area_setName(const char * new_name, const char * area_name = "*");
     
     \par Tcl syntax:
-    area_setName new_name "area_name_or_position"
+    area_setName new_name \ref str "area_name"
 
     \par Description:
-    sets name of \ref area 
+    sets name of \ref d_area 
 */
-bool area_setName(const char * new_name, const char * area_name_or_position = "0");
+bool area_setName(const char * new_name, const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
     \fn bool area_delall();
@@ -141,16 +137,16 @@ bool area_setName(const char * new_name, const char * area_name_or_position = "0
 bool area_delall();
 
 /*! \ingroup tcl_area_other
-    \fn bool area_del(const char * area_name_or_position = "0");
+    \fn bool area_del(const char * area_name = "*");
         
     \par Tcl syntax:
-    area_del "area_name_or_position"
+    area_del \ref str "area_name"
 
     \par Description:
-    removes \ref area from at 'area_name_or_position' position
+    removes \ref d_area from at 'area_name' position
 
 */
-bool area_del(const char * area_name_or_position = "0");
+bool area_del(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
     \fn int area_size();
@@ -163,7 +159,7 @@ bool area_del(const char * area_name_or_position = "0");
 */
 int area_size();
 
-bool area_invert(const char * area_name_or_position = "0");
+bool area_invert(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
     \fn void areas_info();

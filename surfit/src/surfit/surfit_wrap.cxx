@@ -1628,6 +1628,8 @@ SWIGEXPORT int SWIG_init(Tcl_Interp *);
 #include "real.h"
 #include "fileio.h"
 #include "interp.h"
+#include "boolvec.h"
+#include "strvec.h"
 
 #include "variables.h"
 #include "variables_internal.h"
@@ -2449,6 +2451,93 @@ _wrap_putlog(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl
   return TCL_OK;
 fail:
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_datafile_mode(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *result = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,":datafile_mode ") == TCL_ERROR) SWIG_fail;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (char *)surfit::datafile_mode();
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  {
+    Tcl_SetObjResult(interp,Tcl_NewStringObj(result,-1));
+  }
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_datafile_new(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *result = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,":datafile_new ") == TCL_ERROR) SWIG_fail;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (char *)surfit::datafile_new();
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  {
+    Tcl_SetObjResult(interp,Tcl_NewStringObj(result,-1));
+  }
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_datafile_append(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *result = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,":datafile_append ") == TCL_ERROR) SWIG_fail;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (char *)surfit::datafile_append();
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  {
+    Tcl_SetObjResult(interp,Tcl_NewStringObj(result,-1));
+  }
+  return TCL_OK;
+fail:
   return TCL_ERROR;
 }
 
@@ -15340,7 +15429,7 @@ _wrap_surface__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surface surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surface surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surface" "', argument " "1"" of type '" "char const *""'");
@@ -15429,7 +15518,7 @@ _wrap_surface_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surface_add weight surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surface_add weight surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surface_add" "', argument " "1"" of type '" "double""'");
@@ -15544,7 +15633,7 @@ _wrap_surface_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surface_leq surface_name_or_position mult ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surface_leq surface_name mult ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surface_leq" "', argument " "1"" of type '" "char const *""'");
@@ -15587,7 +15676,7 @@ _wrap_surface_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surface_leq surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surface_leq surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surface_leq" "', argument " "1"" of type '" "char const *""'");
@@ -15690,7 +15779,7 @@ _wrap_surface_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surface_geq surface_name_or_position mult ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surface_geq surface_name mult ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surface_geq" "', argument " "1"" of type '" "char const *""'");
@@ -15733,7 +15822,7 @@ _wrap_surface_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surface_geq surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surface_geq surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surface_geq" "', argument " "1"" of type '" "char const *""'");
@@ -15839,7 +15928,7 @@ _wrap_trend__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:trend D1 D2 surface_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:trend D1 D2 surface_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "trend" "', argument " "1"" of type '" "double""'");
@@ -16060,7 +16149,7 @@ _wrap_trend_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf4 = 0 ;
   int alloc4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:trend_add weight D1 D2 surface_name_or_position ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:trend_add weight D1 D2 surface_name ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "trend_add" "', argument " "1"" of type '" "double""'");
@@ -16330,7 +16419,7 @@ _wrap_mask__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask val mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask val mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask" "', argument " "1"" of type '" "char const *""'");
@@ -16449,7 +16538,7 @@ _wrap_mask_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_add val weigh mask_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_add val weigh mask_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_add" "', argument " "1"" of type '" "double""'");
@@ -16637,7 +16726,7 @@ _wrap_mask_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_leq value mask_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_leq value mask_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_leq" "', argument " "1"" of type '" "double""'");
@@ -16688,7 +16777,7 @@ _wrap_mask_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_leq value mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_leq value mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_leq" "', argument " "1"" of type '" "double""'");
@@ -16826,7 +16915,7 @@ _wrap_mask_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_geq value mask_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_geq value mask_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_geq" "', argument " "1"" of type '" "double""'");
@@ -16877,7 +16966,7 @@ _wrap_mask_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_geq value mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_geq value mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_geq" "', argument " "1"" of type '" "double""'");
@@ -17013,7 +17102,7 @@ _wrap_mask_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_surf surf_name_or_position mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_surf surf_name mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_surf" "', argument " "1"" of type '" "char const *""'");
@@ -17058,7 +17147,7 @@ _wrap_mask_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_surf surf_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_surf surf_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_surf" "', argument " "1"" of type '" "char const *""'");
@@ -17163,7 +17252,7 @@ _wrap_mask_surf_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_surf_add surf_name_or_position weight mask_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_surf_add surf_name weight mask_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_surf_add" "', argument " "1"" of type '" "char const *""'");
@@ -17216,7 +17305,7 @@ _wrap_mask_surf_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_surf_add surf_name_or_position weight ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_surf_add surf_name weight ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_surf_add" "', argument " "1"" of type '" "char const *""'");
@@ -17259,7 +17348,7 @@ _wrap_mask_surf_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_surf_add surf_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_surf_add surf_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_surf_add" "', argument " "1"" of type '" "char const *""'");
@@ -17384,7 +17473,7 @@ _wrap_mask_surf_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_surf_leq surf_name_or_position mask_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_surf_leq surf_name mask_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_surf_leq" "', argument " "1"" of type '" "char const *""'");
@@ -17438,7 +17527,7 @@ _wrap_mask_surf_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_surf_leq surf_name_or_position mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_surf_leq surf_name mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_surf_leq" "', argument " "1"" of type '" "char const *""'");
@@ -17483,7 +17572,7 @@ _wrap_mask_surf_leq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_surf_leq surf_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_surf_leq surf_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_surf_leq" "', argument " "1"" of type '" "char const *""'");
@@ -17606,7 +17695,7 @@ _wrap_mask_surf_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_surf_geq surf_name_or_position mask_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_surf_geq surf_name mask_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_surf_geq" "', argument " "1"" of type '" "char const *""'");
@@ -17660,7 +17749,7 @@ _wrap_mask_surf_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_surf_geq surf_name_or_position mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_surf_geq surf_name mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_surf_geq" "', argument " "1"" of type '" "char const *""'");
@@ -17705,7 +17794,7 @@ _wrap_mask_surf_geq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_surf_geq surf_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_surf_geq surf_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_surf_geq" "', argument " "1"" of type '" "char const *""'");
@@ -17827,7 +17916,7 @@ _wrap_mask_mean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_mean mean mask_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_mean mean mask_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_mean" "', argument " "1"" of type '" "double""'");
@@ -17878,7 +17967,7 @@ _wrap_mask_mean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_mean mean mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_mean mean mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_mean" "', argument " "1"" of type '" "double""'");
@@ -18020,7 +18109,7 @@ _wrap_mask_wmean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   double val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:mask_wmean mean mask_name_or_position surf_name_or_position mult ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:mask_wmean mean mask_name surf_name mult ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_wmean" "', argument " "1"" of type '" "double""'");
@@ -18082,7 +18171,7 @@ _wrap_mask_wmean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_wmean mean mask_name_or_position surf_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_wmean mean mask_name surf_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_wmean" "', argument " "1"" of type '" "double""'");
@@ -18135,7 +18224,7 @@ _wrap_mask_wmean__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_wmean mean mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_wmean mean mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_wmean" "', argument " "1"" of type '" "double""'");
@@ -18301,7 +18390,7 @@ _wrap_mask_completer__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   double val5 ;
   int ecode5 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:mask_completer mask_name_or_position D1 D2 alpha w ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:mask_completer mask_name D1 D2 alpha w ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_completer" "', argument " "1"" of type '" "char const *""'");
@@ -18368,7 +18457,7 @@ _wrap_mask_completer__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   double val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:mask_completer mask_name_or_position D1 D2 alpha ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:mask_completer mask_name D1 D2 alpha ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_completer" "', argument " "1"" of type '" "char const *""'");
@@ -18427,7 +18516,7 @@ _wrap_mask_completer__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_completer mask_name_or_position D1 D2 ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_completer mask_name D1 D2 ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_completer" "', argument " "1"" of type '" "char const *""'");
@@ -18478,7 +18567,7 @@ _wrap_mask_completer__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_completer mask_name_or_position D1 ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_completer mask_name D1 ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_completer" "', argument " "1"" of type '" "char const *""'");
@@ -18521,7 +18610,7 @@ _wrap_mask_completer__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_completer mask_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_completer mask_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_completer" "', argument " "1"" of type '" "char const *""'");
@@ -18714,7 +18803,7 @@ _wrap_mask_completer_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   double val6 ;
   int ecode6 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo:mask_completer_add weight mask_name_or_position D1 D2 alpha w ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:mask_completer_add weight mask_name D1 D2 alpha w ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_completer_add" "', argument " "1"" of type '" "double""'");
@@ -18789,7 +18878,7 @@ _wrap_mask_completer_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   double val5 ;
   int ecode5 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:mask_completer_add weight mask_name_or_position D1 D2 alpha ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:mask_completer_add weight mask_name D1 D2 alpha ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_completer_add" "', argument " "1"" of type '" "double""'");
@@ -18856,7 +18945,7 @@ _wrap_mask_completer_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   double val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:mask_completer_add weight mask_name_or_position D1 D2 ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:mask_completer_add weight mask_name D1 D2 ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_completer_add" "', argument " "1"" of type '" "double""'");
@@ -18915,7 +19004,7 @@ _wrap_mask_completer_add__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_completer_add weight mask_name_or_position D1 ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:mask_completer_add weight mask_name D1 ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_completer_add" "', argument " "1"" of type '" "double""'");
@@ -18966,7 +19055,7 @@ _wrap_mask_completer_add__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_completer_add weight mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_completer_add weight mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_completer_add" "', argument " "1"" of type '" "double""'");
@@ -19345,7 +19434,7 @@ _wrap_surf_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_save filename surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_save filename surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_save" "', argument " "1"" of type '" "char const *""'");
@@ -19464,7 +19553,7 @@ _wrap_surf_getValue__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_getValue x y surface_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_getValue x y surface_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_getValue" "', argument " "1"" of type '" "double""'");
@@ -19607,7 +19696,7 @@ _wrap_surf_getValueIJ__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_getValueIJ I J surface_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_getValueIJ I J surface_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_getValueIJ" "', argument " "1"" of type '" "int""'");
@@ -19752,7 +19841,7 @@ _wrap_surf_resid__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_resid filename surface_name_or_position pnts_pos ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_resid filename surface_name pnts_pos ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_resid" "', argument " "1"" of type '" "char const *""'");
@@ -19808,7 +19897,7 @@ _wrap_surf_resid__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_resid filename surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_resid filename surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_resid" "', argument " "1"" of type '" "char const *""'");
@@ -19937,7 +20026,7 @@ _wrap_surf_D1__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_D1 surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_D1 surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_D1" "', argument " "1"" of type '" "char const *""'");
@@ -20023,7 +20112,7 @@ _wrap_surf_D2__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_D2 surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_D2 surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_D2" "', argument " "1"" of type '" "char const *""'");
@@ -20113,7 +20202,7 @@ _wrap_surf_gradient__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_gradient newname surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_gradient newname surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_gradient" "', argument " "1"" of type '" "char const *""'");
@@ -20230,7 +20319,7 @@ _wrap_surf_project__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_project newname surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_project newname surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_project" "', argument " "1"" of type '" "char const *""'");
@@ -20346,7 +20435,7 @@ _wrap_surf_add_noise__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_add_noise std surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_add_noise std surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_add_noise" "', argument " "1"" of type '" "double""'");
@@ -20458,7 +20547,7 @@ _wrap_surf_minz__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_minz surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_minz surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_minz" "', argument " "1"" of type '" "char const *""'");
@@ -20548,7 +20637,7 @@ _wrap_surf_area_minz__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_area_minz area_name_or_position surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_area_minz area_name surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_area_minz" "', argument " "1"" of type '" "char const *""'");
@@ -20593,7 +20682,7 @@ _wrap_surf_area_minz__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_area_minz area_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_area_minz area_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_area_minz" "', argument " "1"" of type '" "char const *""'");
@@ -20691,7 +20780,7 @@ _wrap_surf_maxz__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_maxz surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_maxz surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_maxz" "', argument " "1"" of type '" "char const *""'");
@@ -20781,7 +20870,7 @@ _wrap_surf_area_maxz__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_area_maxz area_name_or_position surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_area_maxz area_name surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_area_maxz" "', argument " "1"" of type '" "char const *""'");
@@ -20826,7 +20915,7 @@ _wrap_surf_area_maxz__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_area_maxz area_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_area_maxz area_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_area_maxz" "', argument " "1"" of type '" "char const *""'");
@@ -20924,7 +21013,7 @@ _wrap_surf_mean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_mean surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_mean surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_mean" "', argument " "1"" of type '" "char const *""'");
@@ -21014,7 +21103,7 @@ _wrap_surf_area_mean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_area_mean area_name_or_position surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_area_mean area_name surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_area_mean" "', argument " "1"" of type '" "char const *""'");
@@ -21059,7 +21148,7 @@ _wrap_surf_area_mean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_area_mean area_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_area_mean area_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_area_mean" "', argument " "1"" of type '" "char const *""'");
@@ -21161,7 +21250,7 @@ _wrap_surf_mask_mean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_mask_mean mask_name_or_position surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_mask_mean mask_name surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_mask_mean" "', argument " "1"" of type '" "char const *""'");
@@ -21206,7 +21295,7 @@ _wrap_surf_mask_mean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_mask_mean mask_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_mask_mean mask_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_mask_mean" "', argument " "1"" of type '" "char const *""'");
@@ -21308,7 +21397,7 @@ _wrap_surf_wmean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_wmean surface_name_or_position surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_wmean surface_name surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_wmean" "', argument " "1"" of type '" "char const *""'");
@@ -21353,7 +21442,7 @@ _wrap_surf_wmean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_wmean surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_wmean surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_wmean" "', argument " "1"" of type '" "char const *""'");
@@ -21459,7 +21548,7 @@ _wrap_surf_area_wmean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_area_wmean area_name_or_position wsurface_name_or_position surface_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_area_wmean area_name wsurface_name surface_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_area_wmean" "', argument " "1"" of type '" "char const *""'");
@@ -21515,7 +21604,7 @@ _wrap_surf_area_wmean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_area_wmean area_name_or_position wsurface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_area_wmean area_name wsurface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_area_wmean" "', argument " "1"" of type '" "char const *""'");
@@ -21560,7 +21649,7 @@ _wrap_surf_area_wmean__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_area_wmean area_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_area_wmean area_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_area_wmean" "', argument " "1"" of type '" "char const *""'");
@@ -21682,7 +21771,7 @@ _wrap_surf_mask_wmean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_mask_wmean mask_name_or_position wsurface_name_or_position surface_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_mask_wmean mask_name wsurface_name surface_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_mask_wmean" "', argument " "1"" of type '" "char const *""'");
@@ -21738,7 +21827,7 @@ _wrap_surf_mask_wmean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_mask_wmean mask_name_or_position wsurface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_mask_wmean mask_name wsurface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_mask_wmean" "', argument " "1"" of type '" "char const *""'");
@@ -21783,7 +21872,7 @@ _wrap_surf_mask_wmean__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_mask_wmean mask_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_mask_wmean mask_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_mask_wmean" "', argument " "1"" of type '" "char const *""'");
@@ -21900,7 +21989,7 @@ _wrap_surf_std__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_std mean surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_std mean surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_std" "', argument " "1"" of type '" "double""'");
@@ -22012,7 +22101,7 @@ _wrap_surf_sum__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_sum surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_sum surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_sum" "', argument " "1"" of type '" "char const *""'");
@@ -22102,7 +22191,7 @@ _wrap_surf_plus(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_plus surface1_name_or_position surface2_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_plus surface1_name surface2_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_plus" "', argument " "1"" of type '" "char const *""'");
@@ -22155,7 +22244,7 @@ _wrap_surf_plus_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_plus_area surface1_name_or_position area_name_or_position surface2_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_plus_area surface1_name area_name surface2_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_plus_area" "', argument " "1"" of type '" "char const *""'");
@@ -22211,7 +22300,7 @@ _wrap_surf_minus(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_minus surface1_name_or_position surface2_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_minus surface1_name surface2_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_minus" "', argument " "1"" of type '" "char const *""'");
@@ -22264,7 +22353,7 @@ _wrap_surf_minus_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_minus_area surface1_name_or_position area_name_or_position surface2_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_minus_area surface1_name area_name surface2_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_minus_area" "', argument " "1"" of type '" "char const *""'");
@@ -22320,7 +22409,7 @@ _wrap_surf_mult(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_mult surface1_name_or_position surface2_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_mult surface1_name surface2_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_mult" "', argument " "1"" of type '" "char const *""'");
@@ -22373,7 +22462,7 @@ _wrap_surf_mult_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_mult_area surface1_name_or_position area_name_or_position surface2_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_mult_area surface1_name area_name surface2_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_mult_area" "', argument " "1"" of type '" "char const *""'");
@@ -22429,7 +22518,7 @@ _wrap_surf_div(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, T
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_div surface1_name_or_position surface2_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_div surface1_name surface2_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_div" "', argument " "1"" of type '" "char const *""'");
@@ -22482,7 +22571,7 @@ _wrap_surf_div_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_div_area surface1_name_or_position area_name_or_position surface2_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_div_area surface1_name area_name surface2_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_div_area" "', argument " "1"" of type '" "char const *""'");
@@ -22538,7 +22627,7 @@ _wrap_surf_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, T
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_set surface1_name_or_position surface2_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_set surface1_name surface2_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_set" "', argument " "1"" of type '" "char const *""'");
@@ -22591,7 +22680,7 @@ _wrap_surf_set_area(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_set_area surface1_name_or_position area_name_or_position surface2_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_set_area surface1_name area_name surface2_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_set_area" "', argument " "1"" of type '" "char const *""'");
@@ -22646,7 +22735,7 @@ _wrap_surf_plus_value__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_plus_value val surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_plus_value val surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_plus_value" "', argument " "1"" of type '" "double""'");
@@ -22765,7 +22854,7 @@ _wrap_surf_plus_value_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp 
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_plus_value_area val area_name_or_position surface_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_plus_value_area val area_name surface_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_plus_value_area" "', argument " "1"" of type '" "double""'");
@@ -22818,7 +22907,7 @@ _wrap_surf_plus_value_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp 
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_plus_value_area val area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_plus_value_area val area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_plus_value_area" "', argument " "1"" of type '" "double""'");
@@ -22951,7 +23040,7 @@ _wrap_surf_minus_value__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_minus_value val surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_minus_value val surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_minus_value" "', argument " "1"" of type '" "double""'");
@@ -23070,7 +23159,7 @@ _wrap_surf_minus_value_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_minus_value_area val area_name_or_position surface_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_minus_value_area val area_name surface_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_minus_value_area" "', argument " "1"" of type '" "double""'");
@@ -23123,7 +23212,7 @@ _wrap_surf_minus_value_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_minus_value_area val area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_minus_value_area val area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_minus_value_area" "', argument " "1"" of type '" "double""'");
@@ -23256,7 +23345,7 @@ _wrap_surf_mult_value__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_mult_value val surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_mult_value val surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_mult_value" "', argument " "1"" of type '" "double""'");
@@ -23375,7 +23464,7 @@ _wrap_surf_mult_value_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp 
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_mult_value_area val area_name_or_position surface_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_mult_value_area val area_name surface_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_mult_value_area" "', argument " "1"" of type '" "double""'");
@@ -23428,7 +23517,7 @@ _wrap_surf_mult_value_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp 
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_mult_value_area val area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_mult_value_area val area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_mult_value_area" "', argument " "1"" of type '" "double""'");
@@ -23561,7 +23650,7 @@ _wrap_surf_div_value__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_div_value val surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_div_value val surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_div_value" "', argument " "1"" of type '" "double""'");
@@ -23680,7 +23769,7 @@ _wrap_surf_div_value_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_div_value_area val area_name_or_position surface_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_div_value_area val area_name surface_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_div_value_area" "', argument " "1"" of type '" "double""'");
@@ -23733,7 +23822,7 @@ _wrap_surf_div_value_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_div_value_area val area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_div_value_area val area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_div_value_area" "', argument " "1"" of type '" "double""'");
@@ -23866,7 +23955,7 @@ _wrap_surf_set_value__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_set_value val surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_set_value val surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_set_value" "', argument " "1"" of type '" "double""'");
@@ -23986,7 +24075,7 @@ _wrap_surf_set_value_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_set_value_area val area_name_or_position surface_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_set_value_area val area_name surface_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_set_value_area" "', argument " "1"" of type '" "char const *""'");
@@ -24042,7 +24131,7 @@ _wrap_surf_set_value_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_set_value_area val area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_set_value_area val area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_set_value_area" "', argument " "1"" of type '" "char const *""'");
@@ -24175,7 +24264,7 @@ _wrap_surf_sum_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_sum_area curv_pos surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_sum_area curv_pos surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_sum_area" "', argument " "1"" of type '" "char const *""'");
@@ -24322,7 +24411,7 @@ _wrap_surf_cells_in_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_cells_in_area curv_pos surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_cells_in_area curv_pos surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_cells_in_area" "', argument " "1"" of type '" "char const *""'");
@@ -24469,7 +24558,7 @@ _wrap_surf_filter_by_mask__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_filter_by_mask surface_name_or_position mask_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_filter_by_mask surface_name mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_filter_by_mask" "', argument " "1"" of type '" "char const *""'");
@@ -24514,7 +24603,7 @@ _wrap_surf_filter_by_mask__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_filter_by_mask surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_filter_by_mask surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_filter_by_mask" "', argument " "1"" of type '" "char const *""'");
@@ -24615,7 +24704,7 @@ _wrap_surf_filter_in_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_filter_in_area surface_name_or_position area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_filter_in_area surface_name area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_filter_in_area" "', argument " "1"" of type '" "char const *""'");
@@ -24659,7 +24748,7 @@ _wrap_surf_filter_in_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_filter_in_area surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_filter_in_area surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_filter_in_area" "', argument " "1"" of type '" "char const *""'");
@@ -24758,7 +24847,7 @@ _wrap_surf_filter_out_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp 
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_filter_out_area surface_name_or_position area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_filter_out_area surface_name area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_filter_out_area" "', argument " "1"" of type '" "char const *""'");
@@ -24802,7 +24891,7 @@ _wrap_surf_filter_out_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp 
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_filter_out_area surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_filter_out_area surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_filter_out_area" "', argument " "1"" of type '" "char const *""'");
@@ -24905,7 +24994,7 @@ _wrap_surf_filter_by_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_filter_by_surf eps surface1_name_or_position surface2_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_filter_by_surf eps surface1_name surface2_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_filter_by_surf" "', argument " "1"" of type '" "double""'");
@@ -24958,7 +25047,7 @@ _wrap_surf_filter_by_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_filter_by_surf eps surface1_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_filter_by_surf eps surface1_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_filter_by_surf" "', argument " "1"" of type '" "double""'");
@@ -25088,7 +25177,7 @@ _wrap_surf_swapxy__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_swapxy surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_swapxy surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_swapxy" "', argument " "1"" of type '" "char const *""'");
@@ -25174,7 +25263,7 @@ _wrap_surf_get_details_level__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Inter
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_get_details_level surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_get_details_level surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_get_details_level" "', argument " "1"" of type '" "char const *""'");
@@ -25260,7 +25349,7 @@ _wrap_surf_decomp__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_decomp surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_decomp surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_decomp" "', argument " "1"" of type '" "char const *""'");
@@ -25349,7 +25438,7 @@ _wrap_surf_auto_decomp__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_auto_decomp eps surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_auto_decomp eps surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_auto_decomp" "', argument " "1"" of type '" "double""'");
@@ -25461,7 +25550,7 @@ _wrap_surf_recons__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_recons surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_recons surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_recons" "', argument " "1"" of type '" "char const *""'");
@@ -25547,7 +25636,7 @@ _wrap_surf_full_recons__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_full_recons surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_full_recons surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_full_recons" "', argument " "1"" of type '" "char const *""'");
@@ -25633,7 +25722,7 @@ _wrap_surf_to_pnts__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_to_pnts surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_to_pnts surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_to_pnts" "', argument " "1"" of type '" "char const *""'");
@@ -25725,7 +25814,7 @@ _wrap_surf_to_mask__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_to_mask true_from true_to surface_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_to_mask true_from true_to surface_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_to_mask" "', argument " "1"" of type '" "double""'");
@@ -25862,7 +25951,7 @@ _wrap_surf_getCountX__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_getCountX surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_getCountX surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_getCountX" "', argument " "1"" of type '" "char const *""'");
@@ -25948,7 +26037,7 @@ _wrap_surf_getCountY__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_getCountY surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_getCountY surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_getCountY" "', argument " "1"" of type '" "char const *""'");
@@ -26034,7 +26123,7 @@ _wrap_surf_getStepX__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_getStepX surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_getStepX surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_getStepX" "', argument " "1"" of type '" "char const *""'");
@@ -26120,7 +26209,7 @@ _wrap_surf_getStepY__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_getStepY surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_getStepY surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_getStepY" "', argument " "1"" of type '" "char const *""'");
@@ -26209,7 +26298,7 @@ _wrap_surf_undef__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_undef new_undef_value surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_undef new_undef_value surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_undef" "', argument " "1"" of type '" "double""'");
@@ -26320,7 +26409,7 @@ _wrap_surf_info__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_info surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_info surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_info" "', argument " "1"" of type '" "char const *""'");
@@ -26404,7 +26493,7 @@ _wrap_surf_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_getName surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_getName surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_getName" "', argument " "1"" of type '" "char const *""'");
@@ -26498,7 +26587,7 @@ _wrap_surf_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_setName new_name surface_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_setName new_name surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_setName" "', argument " "1"" of type '" "char const *""'");
@@ -26638,7 +26727,7 @@ _wrap_surf_del__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_del surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_del surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_del" "', argument " "1"" of type '" "char const *""'");
@@ -26785,7 +26874,7 @@ _wrap_surf_trace_cntr__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   double val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:surf_trace_cntr surface_name_or_position from to step ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:surf_trace_cntr surface_name from to step ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_trace_cntr" "', argument " "1"" of type '" "char const *""'");
@@ -26844,7 +26933,7 @@ _wrap_surf_trace_cntr__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_trace_cntr surface_name_or_position from to ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_trace_cntr surface_name from to ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_trace_cntr" "', argument " "1"" of type '" "char const *""'");
@@ -26895,7 +26984,7 @@ _wrap_surf_trace_cntr__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_trace_cntr surface_name_or_position from ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_trace_cntr surface_name from ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_trace_cntr" "', argument " "1"" of type '" "char const *""'");
@@ -26938,7 +27027,7 @@ _wrap_surf_trace_cntr__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:surf_trace_cntr surface_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_trace_cntr surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_trace_cntr" "', argument " "1"" of type '" "char const *""'");
@@ -27080,7 +27169,7 @@ SWIGINTERN int
 _wrap_mask_load__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -27102,7 +27191,7 @@ _wrap_mask_load__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_load((char const *)arg1,(char const *)arg2);
+        result = (surfit::boolvec *)surfit::mask_load((char const *)arg1,(char const *)arg2);
         
       }
     }
@@ -27114,7 +27203,19 @@ _wrap_mask_load__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return TCL_OK;
@@ -27128,7 +27229,7 @@ fail:
 SWIGINTERN int
 _wrap_mask_load__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -27142,7 +27243,7 @@ _wrap_mask_load__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_load((char const *)arg1);
+        result = (surfit::boolvec *)surfit::mask_load((char const *)arg1);
         
       }
     }
@@ -27154,7 +27255,19 @@ _wrap_mask_load__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
@@ -27197,7 +27310,7 @@ SWIGINTERN int
 _wrap_mask_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -27219,7 +27332,7 @@ _wrap_mask_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_save((char const *)arg1,(char const *)arg2);
+        result = (surfit::boolvec *)surfit::mask_save((char const *)arg1,(char const *)arg2);
         
       }
     }
@@ -27231,7 +27344,19 @@ _wrap_mask_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return TCL_OK;
@@ -27245,7 +27370,7 @@ fail:
 SWIGINTERN int
 _wrap_mask_save__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -27259,7 +27384,7 @@ _wrap_mask_save__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_save((char const *)arg1);
+        result = (surfit::boolvec *)surfit::mask_save((char const *)arg1);
         
       }
     }
@@ -27271,7 +27396,19 @@ _wrap_mask_save__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
@@ -27311,245 +27448,11 @@ _wrap_mask_save(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
 
 
 SWIGINTERN int
-_wrap_mask_save_grd__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  char *arg1 = (char *) 0 ;
-  char *arg2 = (char *) 0 ;
-  bool result;
-  int res1 ;
-  char *buf1 = 0 ;
-  int alloc1 = 0 ;
-  int res2 ;
-  char *buf2 = 0 ;
-  int alloc2 = 0 ;
-  
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_save_grd filename mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
-  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_save_grd" "', argument " "1"" of type '" "char const *""'");
-  }
-  arg1 = buf1;
-  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "mask_save_grd" "', argument " "2"" of type '" "char const *""'");
-  }
-  arg2 = buf2;
-  {
-    try {
-      if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_save_grd((char const *)arg1,(char const *)arg2);
-        
-      }
-    }
-    catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR_TCL,"%s",str);
-      return TCL_ERROR;
-    }
-    catch(...) {
-      return TCL_ERROR;
-    }
-  }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  return TCL_OK;
-fail:
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  return TCL_ERROR;
-}
-
-
-SWIGINTERN int
-_wrap_mask_save_grd__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  char *arg1 = (char *) 0 ;
-  bool result;
-  int res1 ;
-  char *buf1 = 0 ;
-  int alloc1 = 0 ;
-  
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_save_grd filename ",(void *)0) == TCL_ERROR) SWIG_fail;
-  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_save_grd" "', argument " "1"" of type '" "char const *""'");
-  }
-  arg1 = buf1;
-  {
-    try {
-      if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_save_grd((char const *)arg1);
-        
-      }
-    }
-    catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR_TCL,"%s",str);
-      return TCL_ERROR;
-    }
-    catch(...) {
-      return TCL_ERROR;
-    }
-  }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
-  return TCL_OK;
-fail:
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
-  return TCL_ERROR;
-}
-
-
-SWIGINTERN int
-_wrap_mask_save_grd(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  Tcl_Obj *CONST *argv = objv+1;
-  int argc = objc-1;
-  if (argc == 1) {
-    int _v;
-    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      return _wrap_mask_save_grd__SWIG_1(clientData, interp, objc, argv - 1);
-    }
-  }
-  if (argc == 2) {
-    int _v;
-    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        return _wrap_mask_save_grd__SWIG_0(clientData, interp, objc, argv - 1);
-      }
-    }
-  }
-  
-  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'mask_save_grd'", TCL_STATIC);
-  return TCL_ERROR;
-}
-
-
-SWIGINTERN int
-_wrap_mask_save_xyz__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  char *arg1 = (char *) 0 ;
-  char *arg2 = (char *) 0 ;
-  bool result;
-  int res1 ;
-  char *buf1 = 0 ;
-  int alloc1 = 0 ;
-  int res2 ;
-  char *buf2 = 0 ;
-  int alloc2 = 0 ;
-  
-  if (SWIG_GetArgs(interp, objc, objv,"oo:mask_save_xyz filename mask_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
-  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_save_xyz" "', argument " "1"" of type '" "char const *""'");
-  }
-  arg1 = buf1;
-  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "mask_save_xyz" "', argument " "2"" of type '" "char const *""'");
-  }
-  arg2 = buf2;
-  {
-    try {
-      if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_save_xyz((char const *)arg1,(char const *)arg2);
-        
-      }
-    }
-    catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR_TCL,"%s",str);
-      return TCL_ERROR;
-    }
-    catch(...) {
-      return TCL_ERROR;
-    }
-  }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  return TCL_OK;
-fail:
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  return TCL_ERROR;
-}
-
-
-SWIGINTERN int
-_wrap_mask_save_xyz__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  char *arg1 = (char *) 0 ;
-  bool result;
-  int res1 ;
-  char *buf1 = 0 ;
-  int alloc1 = 0 ;
-  
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_save_xyz filename ",(void *)0) == TCL_ERROR) SWIG_fail;
-  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_save_xyz" "', argument " "1"" of type '" "char const *""'");
-  }
-  arg1 = buf1;
-  {
-    try {
-      if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_save_xyz((char const *)arg1);
-        
-      }
-    }
-    catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR_TCL,"%s",str);
-      return TCL_ERROR;
-    }
-    catch(...) {
-      return TCL_ERROR;
-    }
-  }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
-  return TCL_OK;
-fail:
-  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
-  return TCL_ERROR;
-}
-
-
-SWIGINTERN int
-_wrap_mask_save_xyz(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  Tcl_Obj *CONST *argv = objv+1;
-  int argc = objc-1;
-  if (argc == 1) {
-    int _v;
-    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      return _wrap_mask_save_xyz__SWIG_1(clientData, interp, objc, argv - 1);
-    }
-  }
-  if (argc == 2) {
-    int _v;
-    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        return _wrap_mask_save_xyz__SWIG_0(clientData, interp, objc, argv - 1);
-      }
-    }
-  }
-  
-  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'mask_save_xyz'", TCL_STATIC);
-  return TCL_ERROR;
-}
-
-
-SWIGINTERN int
 _wrap_mask_getValue__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   double arg1 ;
   double arg2 ;
   char *arg3 = (char *) 0 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   double val1 ;
   int ecode1 = 0 ;
   double val2 ;
@@ -27577,7 +27480,7 @@ _wrap_mask_getValue__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_getValue(arg1,arg2,(char const *)arg3);
+        result = (surfit::boolvec *)surfit::mask_getValue(arg1,arg2,(char const *)arg3);
         
       }
     }
@@ -27589,7 +27492,19 @@ _wrap_mask_getValue__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
   return TCL_OK;
 fail:
@@ -27602,7 +27517,7 @@ SWIGINTERN int
 _wrap_mask_getValue__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   double arg1 ;
   double arg2 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   double val1 ;
   int ecode1 = 0 ;
   double val2 ;
@@ -27622,7 +27537,7 @@ _wrap_mask_getValue__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_getValue(arg1,arg2);
+        result = (surfit::boolvec *)surfit::mask_getValue(arg1,arg2);
         
       }
     }
@@ -27634,7 +27549,19 @@ _wrap_mask_getValue__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   return TCL_OK;
 fail:
   return TCL_ERROR;
@@ -28262,7 +28189,6 @@ _wrap_mask_xor(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, T
 SWIGINTERN int
 _wrap_mask_to_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -28276,7 +28202,7 @@ _wrap_mask_to_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_to_surf((char const *)arg1);
+        surfit::mask_to_surf((char const *)arg1);
         
       }
     }
@@ -28288,7 +28214,7 @@ _wrap_mask_to_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
@@ -28299,13 +28225,11 @@ fail:
 
 SWIGINTERN int
 _wrap_mask_to_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  bool result;
-  
   if (SWIG_GetArgs(interp, objc, objv,":mask_to_surf ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_to_surf();
+        surfit::mask_to_surf();
         
       }
     }
@@ -28317,7 +28241,7 @@ _wrap_mask_to_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   return TCL_OK;
 fail:
   return TCL_ERROR;
@@ -28346,23 +28270,22 @@ _wrap_mask_to_surf(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
 
 
 SWIGINTERN int
-_wrap_mask_by_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_mask_from_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:mask_by_surf surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_from_surf surface_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_by_surf" "', argument " "1"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_from_surf" "', argument " "1"" of type '" "char const *""'");
   }
   arg1 = buf1;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_by_surf((char const *)arg1);
+        surfit::mask_from_surf((char const *)arg1);
         
       }
     }
@@ -28374,7 +28297,7 @@ _wrap_mask_by_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
@@ -28384,14 +28307,12 @@ fail:
 
 
 SWIGINTERN int
-_wrap_mask_by_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  bool result;
-  
-  if (SWIG_GetArgs(interp, objc, objv,":mask_by_surf ") == TCL_ERROR) SWIG_fail;
+_wrap_mask_from_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  if (SWIG_GetArgs(interp, objc, objv,":mask_from_surf ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_by_surf();
+        surfit::mask_from_surf();
         
       }
     }
@@ -28403,7 +28324,7 @@ _wrap_mask_by_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   return TCL_OK;
 fail:
   return TCL_ERROR;
@@ -28411,22 +28332,22 @@ fail:
 
 
 SWIGINTERN int
-_wrap_mask_by_surf(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_mask_from_surf(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   Tcl_Obj *CONST *argv = objv+1;
   int argc = objc-1;
   if (argc == 0) {
-    return _wrap_mask_by_surf__SWIG_1(clientData, interp, objc, argv - 1);
+    return _wrap_mask_from_surf__SWIG_1(clientData, interp, objc, argv - 1);
   }
   if (argc == 1) {
     int _v;
     int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_mask_by_surf__SWIG_0(clientData, interp, objc, argv - 1);
+      return _wrap_mask_from_surf__SWIG_0(clientData, interp, objc, argv - 1);
     }
   }
   
-  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'mask_by_surf'", TCL_STATIC);
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'mask_from_surf'", TCL_STATIC);
   return TCL_ERROR;
 }
 
@@ -28435,7 +28356,7 @@ SWIGINTERN int
 _wrap_mask_apply_to_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -28457,7 +28378,7 @@ _wrap_mask_apply_to_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_apply_to_surf((char const *)arg1,(char const *)arg2);
+        result = (surfit::boolvec *)surfit::mask_apply_to_surf((char const *)arg1,(char const *)arg2);
         
       }
     }
@@ -28469,7 +28390,19 @@ _wrap_mask_apply_to_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *i
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return TCL_OK;
@@ -28483,7 +28416,7 @@ fail:
 SWIGINTERN int
 _wrap_mask_apply_to_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -28497,7 +28430,7 @@ _wrap_mask_apply_to_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_apply_to_surf((char const *)arg1);
+        result = (surfit::boolvec *)surfit::mask_apply_to_surf((char const *)arg1);
         
       }
     }
@@ -28509,7 +28442,19 @@ _wrap_mask_apply_to_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *i
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
@@ -28520,13 +28465,13 @@ fail:
 
 SWIGINTERN int
 _wrap_mask_apply_to_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  bool result;
+  surfit::boolvec *result = 0 ;
   
   if (SWIG_GetArgs(interp, objc, objv,":mask_apply_to_surf ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_apply_to_surf();
+        result = (surfit::boolvec *)surfit::mask_apply_to_surf();
         
       }
     }
@@ -28538,7 +28483,19 @@ _wrap_mask_apply_to_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *i
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   return TCL_OK;
 fail:
   return TCL_ERROR;
@@ -28581,7 +28538,7 @@ _wrap_mask_apply_to_surf(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
 SWIGINTERN int
 _wrap_mask_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  char *result = 0 ;
+  surfit::strvec *result = 0 ;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -28595,7 +28552,7 @@ _wrap_mask_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (char *)surfit::mask_getName((char const *)arg1);
+        result = (surfit::strvec *)surfit::mask_getName((char const *)arg1);
         
       }
     }
@@ -28608,7 +28565,17 @@ _wrap_mask_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
     }
   }
   {
-    Tcl_SetObjResult(interp,Tcl_NewStringObj(result,-1));
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        char * val = (*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewStringObj(val,-1));
+      }
+      (result)->release();
+    }
   }
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
@@ -28620,13 +28587,13 @@ fail:
 
 SWIGINTERN int
 _wrap_mask_getName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  char *result = 0 ;
+  surfit::strvec *result = 0 ;
   
   if (SWIG_GetArgs(interp, objc, objv,":mask_getName ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (char *)surfit::mask_getName();
+        result = (surfit::strvec *)surfit::mask_getName();
         
       }
     }
@@ -28639,7 +28606,17 @@ _wrap_mask_getName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
     }
   }
   {
-    Tcl_SetObjResult(interp,Tcl_NewStringObj(result,-1));
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        char * val = (*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewStringObj(val,-1));
+      }
+      (result)->release();
+    }
   }
   return TCL_OK;
 fail:
@@ -28672,7 +28649,6 @@ SWIGINTERN int
 _wrap_mask_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
-  bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -28694,7 +28670,7 @@ _wrap_mask_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_setName((char const *)arg1,(char const *)arg2);
+        surfit::mask_setName((char const *)arg1,(char const *)arg2);
         
       }
     }
@@ -28706,7 +28682,7 @@ _wrap_mask_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return TCL_OK;
@@ -28720,7 +28696,6 @@ fail:
 SWIGINTERN int
 _wrap_mask_setName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -28734,7 +28709,7 @@ _wrap_mask_setName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_setName((char const *)arg1);
+        surfit::mask_setName((char const *)arg1);
         
       }
     }
@@ -28746,7 +28721,7 @@ _wrap_mask_setName__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
@@ -28786,36 +28761,8 @@ _wrap_mask_setName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
 
 
 SWIGINTERN int
-_wrap_mask_delall(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  bool result;
-  
-  if (SWIG_GetArgs(interp, objc, objv,":mask_delall ") == TCL_ERROR) SWIG_fail;
-  {
-    try {
-      if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_delall();
-        
-      }
-    }
-    catch ( const char * str ) {
-      surfit::writelog(LOG_ERROR_TCL,"%s",str);
-      return TCL_ERROR;
-    }
-    catch(...) {
-      return TCL_ERROR;
-    }
-  }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
-  return TCL_OK;
-fail:
-  return TCL_ERROR;
-}
-
-
-SWIGINTERN int
 _wrap_mask_del__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  bool result;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -28829,7 +28776,7 @@ _wrap_mask_del__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_del((char const *)arg1);
+        surfit::mask_del((char const *)arg1);
         
       }
     }
@@ -28841,7 +28788,7 @@ _wrap_mask_del__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
@@ -28852,13 +28799,11 @@ fail:
 
 SWIGINTERN int
 _wrap_mask_del__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  bool result;
-  
   if (SWIG_GetArgs(interp, objc, objv,":mask_del ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::mask_del();
+        surfit::mask_del();
         
       }
     }
@@ -28870,7 +28815,7 @@ _wrap_mask_del__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  
   return TCL_OK;
 fail:
   return TCL_ERROR;
@@ -28926,12 +28871,49 @@ fail:
 
 
 SWIGINTERN int
-_wrap_masks_info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  if (SWIG_GetArgs(interp, objc, objv,":masks_info ") == TCL_ERROR) SWIG_fail;
+_wrap_mask_info__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_info mask_name ",(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mask_info" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
   {
     try {
       if (surfit::stop_execution == 0) {
-        surfit::masks_info();
+        surfit::mask_info((char const *)arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_mask_info__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  if (SWIG_GetArgs(interp, objc, objv,":mask_info ") == TCL_ERROR) SWIG_fail;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        surfit::mask_info();
         
       }
     }
@@ -28951,6 +28933,27 @@ fail:
 
 
 SWIGINTERN int
+_wrap_mask_info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  Tcl_Obj *CONST *argv = objv+1;
+  int argc = objc-1;
+  if (argc == 0) {
+    return _wrap_mask_info__SWIG_1(clientData, interp, objc, argv - 1);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_mask_info__SWIG_0(clientData, interp, objc, argv - 1);
+    }
+  }
+  
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'mask_info'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
 _wrap_fault__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   bool result;
@@ -28958,7 +28961,7 @@ _wrap_fault__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:fault curv_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:fault curv_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "fault" "', argument " "1"" of type '" "char const *""'");
@@ -29047,7 +29050,7 @@ _wrap_curve__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:curve value curv_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:curve value curv_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "curve" "', argument " "1"" of type '" "double""'");
@@ -29165,7 +29168,7 @@ _wrap_curve_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_add value weight curv_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_add value weight curv_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "curve_add" "', argument " "1"" of type '" "double""'");
@@ -29308,7 +29311,7 @@ _wrap_curve_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_leq value curv_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_leq value curv_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "curve_leq" "', argument " "1"" of type '" "double""'");
@@ -29359,7 +29362,7 @@ _wrap_curve_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:curve_leq value curv_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:curve_leq value curv_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "curve_leq" "', argument " "1"" of type '" "double""'");
@@ -29497,7 +29500,7 @@ _wrap_curve_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_geq value curv_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_geq value curv_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "curve_geq" "', argument " "1"" of type '" "double""'");
@@ -29548,7 +29551,7 @@ _wrap_curve_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:curve_geq value curv_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:curve_geq value curv_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "curve_geq" "', argument " "1"" of type '" "double""'");
@@ -29684,7 +29687,7 @@ _wrap_curve_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:curve_surf surf_name_or_position curv_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:curve_surf surf_name curv_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curve_surf" "', argument " "1"" of type '" "char const *""'");
@@ -29729,7 +29732,7 @@ _wrap_curve_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:curve_surf surf_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:curve_surf surf_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curve_surf" "', argument " "1"" of type '" "char const *""'");
@@ -29834,7 +29837,7 @@ _wrap_curve_surf_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_surf_add surf_name_or_position weight curv_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_surf_add surf_name weight curv_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curve_surf_add" "', argument " "1"" of type '" "char const *""'");
@@ -29887,7 +29890,7 @@ _wrap_curve_surf_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:curve_surf_add surf_name_or_position weight ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:curve_surf_add surf_name weight ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curve_surf_add" "', argument " "1"" of type '" "char const *""'");
@@ -29930,7 +29933,7 @@ _wrap_curve_surf_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:curve_surf_add surf_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:curve_surf_add surf_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curve_surf_add" "', argument " "1"" of type '" "char const *""'");
@@ -30055,7 +30058,7 @@ _wrap_curve_surf_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_surf_leq surf_name_or_position curv_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_surf_leq surf_name curv_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curve_surf_leq" "', argument " "1"" of type '" "char const *""'");
@@ -30109,7 +30112,7 @@ _wrap_curve_surf_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:curve_surf_leq surf_name_or_position curv_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:curve_surf_leq surf_name curv_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curve_surf_leq" "', argument " "1"" of type '" "char const *""'");
@@ -30154,7 +30157,7 @@ _wrap_curve_surf_leq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:curve_surf_leq surf_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:curve_surf_leq surf_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curve_surf_leq" "', argument " "1"" of type '" "char const *""'");
@@ -30277,7 +30280,7 @@ _wrap_curve_surf_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_surf_geq surf_name_or_position curv_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_surf_geq surf_name curv_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curve_surf_geq" "', argument " "1"" of type '" "char const *""'");
@@ -30331,7 +30334,7 @@ _wrap_curve_surf_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:curve_surf_geq surf_name_or_position curv_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:curve_surf_geq surf_name curv_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curve_surf_geq" "', argument " "1"" of type '" "char const *""'");
@@ -30376,7 +30379,7 @@ _wrap_curve_surf_geq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:curve_surf_geq surf_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:curve_surf_geq surf_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curve_surf_geq" "', argument " "1"" of type '" "char const *""'");
@@ -30499,7 +30502,7 @@ _wrap_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   int val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:area value area_name_or_position inside ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area value area_name inside ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area" "', argument " "1"" of type '" "char const *""'");
@@ -30553,7 +30556,7 @@ _wrap_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area value area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area value area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area" "', argument " "1"" of type '" "char const *""'");
@@ -30723,7 +30726,7 @@ _wrap_area_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_add value weight area_name_or_position inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_add value weight area_name inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_add" "', argument " "1"" of type '" "double""'");
@@ -30782,7 +30785,7 @@ _wrap_area_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_add value weight area_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_add value weight area_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_add" "', argument " "1"" of type '" "double""'");
@@ -30954,7 +30957,7 @@ _wrap_area_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_leq value area_name_or_position mult inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_leq value area_name mult inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_leq" "', argument " "1"" of type '" "double""'");
@@ -31013,7 +31016,7 @@ _wrap_area_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_leq value area_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_leq value area_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_leq" "', argument " "1"" of type '" "double""'");
@@ -31064,7 +31067,7 @@ _wrap_area_leq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area_leq value area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_leq value area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_leq" "', argument " "1"" of type '" "double""'");
@@ -31231,7 +31234,7 @@ _wrap_area_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_geq value area_name_or_position mult inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_geq value area_name mult inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_geq" "', argument " "1"" of type '" "double""'");
@@ -31290,7 +31293,7 @@ _wrap_area_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_geq value area_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_geq value area_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_geq" "', argument " "1"" of type '" "double""'");
@@ -31341,7 +31344,7 @@ _wrap_area_geq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area_geq value area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_geq value area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_geq" "', argument " "1"" of type '" "double""'");
@@ -31506,7 +31509,7 @@ _wrap_area_surf__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_surf surf_name_or_position area_name_or_position inside ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_surf surf_name area_name inside ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf" "', argument " "1"" of type '" "char const *""'");
@@ -31560,7 +31563,7 @@ _wrap_area_surf__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area_surf surf_name_or_position area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_surf surf_name area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf" "', argument " "1"" of type '" "char const *""'");
@@ -31605,7 +31608,7 @@ _wrap_area_surf__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:area_surf surf_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:area_surf surf_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf" "', argument " "1"" of type '" "char const *""'");
@@ -31731,7 +31734,7 @@ _wrap_area_surf_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_surf_add surf_name_or_position weight area_name_or_position inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_surf_add surf_name weight area_name inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf_add" "', argument " "1"" of type '" "char const *""'");
@@ -31793,7 +31796,7 @@ _wrap_area_surf_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_surf_add surf_name_or_position weight area_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_surf_add surf_name weight area_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf_add" "', argument " "1"" of type '" "char const *""'");
@@ -31846,7 +31849,7 @@ _wrap_area_surf_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area_surf_add surf_name_or_position weight ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_surf_add surf_name weight ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf_add" "', argument " "1"" of type '" "char const *""'");
@@ -31889,7 +31892,7 @@ _wrap_area_surf_add__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:area_surf_add surf_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:area_surf_add surf_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf_add" "', argument " "1"" of type '" "char const *""'");
@@ -32041,7 +32044,7 @@ _wrap_area_surf_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_surf_leq surf_name_or_position area_name_or_position mult inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_surf_leq surf_name area_name mult inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf_leq" "', argument " "1"" of type '" "char const *""'");
@@ -32103,7 +32106,7 @@ _wrap_area_surf_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_surf_leq surf_name_or_position area_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_surf_leq surf_name area_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf_leq" "', argument " "1"" of type '" "char const *""'");
@@ -32157,7 +32160,7 @@ _wrap_area_surf_leq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area_surf_leq surf_name_or_position area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_surf_leq surf_name area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf_leq" "', argument " "1"" of type '" "char const *""'");
@@ -32202,7 +32205,7 @@ _wrap_area_surf_leq__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:area_surf_leq surf_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:area_surf_leq surf_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf_leq" "', argument " "1"" of type '" "char const *""'");
@@ -32352,7 +32355,7 @@ _wrap_area_surf_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_surf_geq surf_name_or_position area_name_or_position mult inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_surf_geq surf_name area_name mult inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf_geq" "', argument " "1"" of type '" "char const *""'");
@@ -32414,7 +32417,7 @@ _wrap_area_surf_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_surf_geq surf_name_or_position area_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_surf_geq surf_name area_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf_geq" "', argument " "1"" of type '" "char const *""'");
@@ -32468,7 +32471,7 @@ _wrap_area_surf_geq__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area_surf_geq surf_name_or_position area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_surf_geq surf_name area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf_geq" "', argument " "1"" of type '" "char const *""'");
@@ -32513,7 +32516,7 @@ _wrap_area_surf_geq__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:area_surf_geq surf_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:area_surf_geq surf_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_surf_geq" "', argument " "1"" of type '" "char const *""'");
@@ -32662,7 +32665,7 @@ _wrap_area_mean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_mean mean area_name_or_position mult inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_mean mean area_name mult inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_mean" "', argument " "1"" of type '" "double""'");
@@ -32721,7 +32724,7 @@ _wrap_area_mean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_mean mean area_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_mean mean area_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_mean" "', argument " "1"" of type '" "double""'");
@@ -32772,7 +32775,7 @@ _wrap_area_mean__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area_mean mean area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_mean mean area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_mean" "', argument " "1"" of type '" "double""'");
@@ -32943,7 +32946,7 @@ _wrap_area_wmean__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int val5 ;
   int ecode5 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:area_wmean mean area_name_or_position surf_name_or_position mult inside ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:area_wmean mean area_name surf_name mult inside ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_wmean" "', argument " "1"" of type '" "double""'");
@@ -33013,7 +33016,7 @@ _wrap_area_wmean__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   double val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_wmean mean area_name_or_position surf_name_or_position mult ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_wmean mean area_name surf_name mult ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_wmean" "', argument " "1"" of type '" "double""'");
@@ -33075,7 +33078,7 @@ _wrap_area_wmean__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_wmean mean area_name_or_position surf_name_or_position ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_wmean mean area_name surf_name ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_wmean" "', argument " "1"" of type '" "double""'");
@@ -33128,7 +33131,7 @@ _wrap_area_wmean__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area_wmean mean area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_wmean mean area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_wmean" "', argument " "1"" of type '" "double""'");
@@ -33327,7 +33330,7 @@ _wrap_area_completer__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int val6 ;
   int ecode6 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo:area_completer area_name_or_position D1 D2 alpha w inside ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:area_completer area_name D1 D2 alpha w inside ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer" "', argument " "1"" of type '" "char const *""'");
@@ -33402,7 +33405,7 @@ _wrap_area_completer__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   double val5 ;
   int ecode5 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:area_completer area_name_or_position D1 D2 alpha w ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:area_completer area_name D1 D2 alpha w ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer" "', argument " "1"" of type '" "char const *""'");
@@ -33469,7 +33472,7 @@ _wrap_area_completer__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   double val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_completer area_name_or_position D1 D2 alpha ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_completer area_name D1 D2 alpha ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer" "', argument " "1"" of type '" "char const *""'");
@@ -33528,7 +33531,7 @@ _wrap_area_completer__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_completer area_name_or_position D1 D2 ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_completer area_name D1 D2 ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer" "', argument " "1"" of type '" "char const *""'");
@@ -33579,7 +33582,7 @@ _wrap_area_completer__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area_completer area_name_or_position D1 ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_completer area_name D1 ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer" "', argument " "1"" of type '" "char const *""'");
@@ -33622,7 +33625,7 @@ _wrap_area_completer__SWIG_5(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:area_completer area_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:area_completer area_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_completer" "', argument " "1"" of type '" "char const *""'");
@@ -33856,7 +33859,7 @@ _wrap_area_completer_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int val7 ;
   int ecode7 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:area_completer_add weight area_name_or_position D1 D2 alpha w inside ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:area_completer_add weight area_name D1 D2 alpha w inside ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_completer_add" "', argument " "1"" of type '" "double""'");
@@ -33939,7 +33942,7 @@ _wrap_area_completer_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   double val6 ;
   int ecode6 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo:area_completer_add weight area_name_or_position D1 D2 alpha w ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:area_completer_add weight area_name D1 D2 alpha w ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_completer_add" "', argument " "1"" of type '" "double""'");
@@ -34014,7 +34017,7 @@ _wrap_area_completer_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   double val5 ;
   int ecode5 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:area_completer_add weight area_name_or_position D1 D2 alpha ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:area_completer_add weight area_name D1 D2 alpha ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_completer_add" "', argument " "1"" of type '" "double""'");
@@ -34081,7 +34084,7 @@ _wrap_area_completer_add__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   double val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_completer_add weight area_name_or_position D1 D2 ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_completer_add weight area_name D1 D2 ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_completer_add" "', argument " "1"" of type '" "double""'");
@@ -34140,7 +34143,7 @@ _wrap_area_completer_add__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_completer_add weight area_name_or_position D1 ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_completer_add weight area_name D1 ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_completer_add" "', argument " "1"" of type '" "double""'");
@@ -34191,7 +34194,7 @@ _wrap_area_completer_add__SWIG_5(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area_completer_add weight area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_completer_add weight area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_completer_add" "', argument " "1"" of type '" "double""'");
@@ -34503,7 +34506,7 @@ _wrap_area_hist__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_hist area_name_or_position histogram_name_or_position mult inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:area_hist area_name histogram_name mult inside ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_hist" "', argument " "1"" of type '" "char const *""'");
@@ -34565,7 +34568,7 @@ _wrap_area_hist__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_hist area_name_or_position histogram_name_or_position mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_hist area_name histogram_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_hist" "', argument " "1"" of type '" "char const *""'");
@@ -34619,7 +34622,7 @@ _wrap_area_hist__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area_hist area_name_or_position histogram_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_hist area_name histogram_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_hist" "', argument " "1"" of type '" "char const *""'");
@@ -34664,7 +34667,7 @@ _wrap_area_hist__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:area_hist area_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:area_hist area_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_hist" "', argument " "1"" of type '" "char const *""'");
@@ -34804,7 +34807,7 @@ _wrap_contour__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:contour cntr_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:contour cntr_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "contour" "', argument " "1"" of type '" "char const *""'");
@@ -34893,7 +34896,7 @@ _wrap_contour_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:contour_add weight cntr_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:contour_add weight cntr_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "contour_add" "', argument " "1"" of type '" "double""'");
@@ -35008,7 +35011,7 @@ _wrap_contour_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:contour_leq cntr_name_or_position mult ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:contour_leq cntr_name mult ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "contour_leq" "', argument " "1"" of type '" "char const *""'");
@@ -35051,7 +35054,7 @@ _wrap_contour_leq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:contour_leq cntr_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:contour_leq cntr_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "contour_leq" "', argument " "1"" of type '" "char const *""'");
@@ -35154,7 +35157,7 @@ _wrap_contour_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:contour_geq cntr_name_or_position mult ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:contour_geq cntr_name mult ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "contour_geq" "', argument " "1"" of type '" "char const *""'");
@@ -35197,7 +35200,7 @@ _wrap_contour_geq__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:contour_geq cntr_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:contour_geq cntr_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "contour_geq" "', argument " "1"" of type '" "char const *""'");
@@ -36057,7 +36060,7 @@ _wrap_curv_write__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:curv_write filename curv_name_or_position delimiter ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:curv_write filename curv_name delimiter ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curv_write" "', argument " "1"" of type '" "char const *""'");
@@ -36113,7 +36116,7 @@ _wrap_curv_write__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:curv_write filename curv_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:curv_write filename curv_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curv_write" "', argument " "1"" of type '" "char const *""'");
@@ -36246,7 +36249,7 @@ _wrap_curv_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:curv_save filename curv_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:curv_save filename curv_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curv_save" "', argument " "1"" of type '" "char const *""'");
@@ -36359,7 +36362,7 @@ _wrap_curv_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:curv_getName curv_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:curv_getName curv_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curv_getName" "', argument " "1"" of type '" "char const *""'");
@@ -36453,7 +36456,7 @@ _wrap_curv_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:curv_setName new_name curv_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:curv_setName new_name curv_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curv_setName" "', argument " "1"" of type '" "char const *""'");
@@ -36593,7 +36596,7 @@ _wrap_curv_del__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:curv_del curv_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:curv_del curv_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curv_del" "', argument " "1"" of type '" "char const *""'");
@@ -37590,7 +37593,7 @@ _wrap_cntr_write__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:cntr_write filename cntr_name_or_position delimiter ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:cntr_write filename cntr_name delimiter ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cntr_write" "', argument " "1"" of type '" "char const *""'");
@@ -37646,7 +37649,7 @@ _wrap_cntr_write__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_write filename cntr_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_write filename cntr_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cntr_write" "', argument " "1"" of type '" "char const *""'");
@@ -37779,7 +37782,7 @@ _wrap_cntr_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_save filename cntr_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_save filename cntr_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cntr_save" "', argument " "1"" of type '" "char const *""'");
@@ -37895,7 +37898,7 @@ _wrap_cntr_plus_real__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_plus_real value cntr_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_plus_real value cntr_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "cntr_plus_real" "', argument " "1"" of type '" "double""'");
@@ -38010,7 +38013,7 @@ _wrap_cntr_minus_real__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_minus_real value cntr_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_minus_real value cntr_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "cntr_minus_real" "', argument " "1"" of type '" "double""'");
@@ -38125,7 +38128,7 @@ _wrap_cntr_mult_real__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_mult_real value cntr_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_mult_real value cntr_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "cntr_mult_real" "', argument " "1"" of type '" "double""'");
@@ -38240,7 +38243,7 @@ _wrap_cntr_div_real__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_div_real value cntr_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_div_real value cntr_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "cntr_div_real" "', argument " "1"" of type '" "double""'");
@@ -38352,7 +38355,7 @@ _wrap_cntr_to_curv__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:cntr_to_curv cntr_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:cntr_to_curv cntr_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cntr_to_curv" "', argument " "1"" of type '" "char const *""'");
@@ -38438,7 +38441,7 @@ _wrap_cntr_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:cntr_getName cntr_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:cntr_getName cntr_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cntr_getName" "', argument " "1"" of type '" "char const *""'");
@@ -38532,7 +38535,7 @@ _wrap_cntr_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_setName new_name cntr_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_setName new_name cntr_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cntr_setName" "', argument " "1"" of type '" "char const *""'");
@@ -39522,7 +39525,7 @@ _wrap_area_write__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_write filename area_name_or_position delimiter ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:area_write filename area_name delimiter ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_write" "', argument " "1"" of type '" "char const *""'");
@@ -39578,7 +39581,7 @@ _wrap_area_write__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area_write filename area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_write filename area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_write" "', argument " "1"" of type '" "char const *""'");
@@ -39703,7 +39706,7 @@ SWIGINTERN int
 _wrap_area_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -39711,7 +39714,7 @@ _wrap_area_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area_save filename area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_save filename area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_save" "', argument " "1"" of type '" "char const *""'");
@@ -39725,7 +39728,7 @@ _wrap_area_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::area_save((char const *)arg1,(char const *)arg2);
+        result = (surfit::boolvec *)surfit::area_save((char const *)arg1,(char const *)arg2);
         
       }
     }
@@ -39737,7 +39740,19 @@ _wrap_area_save__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return TCL_OK;
@@ -39751,7 +39766,7 @@ fail:
 SWIGINTERN int
 _wrap_area_save__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
@@ -39765,7 +39780,7 @@ _wrap_area_save__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::area_save((char const *)arg1);
+        result = (surfit::boolvec *)surfit::area_save((char const *)arg1);
         
       }
     }
@@ -39777,7 +39792,19 @@ _wrap_area_save__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
@@ -39824,7 +39851,7 @@ _wrap_area_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:area_getName area_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:area_getName area_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_getName" "', argument " "1"" of type '" "char const *""'");
@@ -39918,7 +39945,7 @@ _wrap_area_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:area_setName new_name area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:area_setName new_name area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_setName" "', argument " "1"" of type '" "char const *""'");
@@ -40058,7 +40085,7 @@ _wrap_area_del__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:area_del area_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:area_del area_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_del" "', argument " "1"" of type '" "char const *""'");
@@ -40171,7 +40198,7 @@ _wrap_area_invert__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:area_invert area_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:area_invert area_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "area_invert" "', argument " "1"" of type '" "char const *""'");
@@ -40597,6 +40624,9 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "mem_info", (swig_wrapper_func) _wrap_mem_info, NULL},
     { SWIG_prefix "types_info", (swig_wrapper_func) _wrap_types_info, NULL},
     { SWIG_prefix "putlog", (swig_wrapper_func) _wrap_putlog, NULL},
+    { SWIG_prefix "datafile_mode", (swig_wrapper_func) _wrap_datafile_mode, NULL},
+    { SWIG_prefix "datafile_new", (swig_wrapper_func) _wrap_datafile_new, NULL},
+    { SWIG_prefix "datafile_append", (swig_wrapper_func) _wrap_datafile_append, NULL},
     { SWIG_prefix "file_load", (swig_wrapper_func) _wrap_file_load, NULL},
     { SWIG_prefix "file_save", (swig_wrapper_func) _wrap_file_save, NULL},
     { SWIG_prefix "file_info", (swig_wrapper_func) _wrap_file_info, NULL},
@@ -40791,22 +40821,19 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "surf_trace_cntr", (swig_wrapper_func) _wrap_surf_trace_cntr, NULL},
     { SWIG_prefix "mask_load", (swig_wrapper_func) _wrap_mask_load, NULL},
     { SWIG_prefix "mask_save", (swig_wrapper_func) _wrap_mask_save, NULL},
-    { SWIG_prefix "mask_save_grd", (swig_wrapper_func) _wrap_mask_save_grd, NULL},
-    { SWIG_prefix "mask_save_xyz", (swig_wrapper_func) _wrap_mask_save_xyz, NULL},
     { SWIG_prefix "mask_getValue", (swig_wrapper_func) _wrap_mask_getValue, NULL},
     { SWIG_prefix "mask_and", (swig_wrapper_func) _wrap_mask_and, NULL},
     { SWIG_prefix "mask_not", (swig_wrapper_func) _wrap_mask_not, NULL},
     { SWIG_prefix "mask_or", (swig_wrapper_func) _wrap_mask_or, NULL},
     { SWIG_prefix "mask_xor", (swig_wrapper_func) _wrap_mask_xor, NULL},
     { SWIG_prefix "mask_to_surf", (swig_wrapper_func) _wrap_mask_to_surf, NULL},
-    { SWIG_prefix "mask_by_surf", (swig_wrapper_func) _wrap_mask_by_surf, NULL},
+    { SWIG_prefix "mask_from_surf", (swig_wrapper_func) _wrap_mask_from_surf, NULL},
     { SWIG_prefix "mask_apply_to_surf", (swig_wrapper_func) _wrap_mask_apply_to_surf, NULL},
     { SWIG_prefix "mask_getName", (swig_wrapper_func) _wrap_mask_getName, NULL},
     { SWIG_prefix "mask_setName", (swig_wrapper_func) _wrap_mask_setName, NULL},
-    { SWIG_prefix "mask_delall", (swig_wrapper_func) _wrap_mask_delall, NULL},
     { SWIG_prefix "mask_del", (swig_wrapper_func) _wrap_mask_del, NULL},
     { SWIG_prefix "mask_size", (swig_wrapper_func) _wrap_mask_size, NULL},
-    { SWIG_prefix "masks_info", (swig_wrapper_func) _wrap_masks_info, NULL},
+    { SWIG_prefix "mask_info", (swig_wrapper_func) _wrap_mask_info, NULL},
     { SWIG_prefix "fault", (swig_wrapper_func) _wrap_fault, NULL},
     { SWIG_prefix "curve", (swig_wrapper_func) _wrap_curve, NULL},
     { SWIG_prefix "curve_add", (swig_wrapper_func) _wrap_curve_add, NULL},

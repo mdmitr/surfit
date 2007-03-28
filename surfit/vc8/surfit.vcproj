@@ -424,8 +424,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release_SSE2|Win32"
-			OutputDirectory="$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="..\$(ConfigurationName)"
+			IntermediateDirectory="..\$(ConfigurationName)"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
@@ -470,12 +470,12 @@
 				EnableEnhancedInstructionSet="2"
 				FloatingPointModel="0"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\../Release/surfit.pch"
-				AssemblerListingLocation=".\../Release/"
-				ObjectFile=".\../Release/"
-				ProgramDataBaseFileName=".\../Release/"
+				PrecompiledHeaderFile=".\../Release_SSE2/surfit.pch"
+				AssemblerListingLocation=".\../Release_SSE2/"
+				ObjectFile=".\../Release_SSE2/"
+				ProgramDataBaseFileName=".\../Release_SSE2/"
 				BrowseInformation="1"
-				BrowseInformationFile=".\../Release/"
+				BrowseInformationFile=".\../Release_SSE2/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				CompileAs="0"
@@ -530,7 +530,13 @@
 		</Configuration>
 		<Configuration
 			Name="Release_SSE|Win32"
-			ConfigurationType="1"
+			OutputDirectory="..\$(ConfigurationName)"
+			IntermediateDirectory="..\$(ConfigurationName)"
+			ConfigurationType="2"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -546,28 +552,62 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\../Release/surfit.tlb"
+				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/Gs /Gs "
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				WholeProgramOptimization="true"
+				AdditionalIncludeDirectories="../src/sstuff,../src/sstuff/ptypes,C:\Tcl\include\"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_DEPRECATE"
+				StringPooling="true"
+				RuntimeLibrary="0"
+				EnableFunctionLevelLinking="true"
 				EnableEnhancedInstructionSet="1"
+				FloatingPointModel="0"
+				RuntimeTypeInfo="true"
+				PrecompiledHeaderFile=".\../Release_SSE/surfit.pch"
+				AssemblerListingLocation=".\../Release_SSE/"
+				ObjectFile=".\../Release_SSE/"
+				ProgramDataBaseFileName=".\../Release_SSE/"
+				BrowseInformation="1"
+				BrowseInformationFile=".\../Release_SSE/"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1049"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="tcl83.lib"
+				OutputFile="../bin/libsurfit.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="C:\Tcl\lib"
+				IgnoreDefaultLibraryNames="LIBC"
+				ProgramDatabaseFile=".\../Release/libsurfit.pdb"
+				ImportLibrary="..\bin\libsurfit.lib "
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -657,6 +697,16 @@
 						BrowseInformation="1"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\surfit\mrf.cpp"
@@ -705,6 +755,16 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release_SSE2|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="4"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -769,6 +829,16 @@
 						BrowseInformation="1"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\surfit\surfit.cpp"
@@ -825,6 +895,16 @@
 						BrowseInformation="1"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\surfit\surfit_wrap.cxx"
@@ -845,7 +925,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="4"
+						Optimization="3"
 						AdditionalIncludeDirectories=""
 						BrowseInformation="1"
 					/>
@@ -876,7 +956,17 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="4"
+						Optimization="3"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="3"
 						AdditionalIncludeDirectories=""
 						BrowseInformation="1"
 					/>
@@ -929,6 +1019,16 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release_SSE2|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -996,6 +1096,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\surfit\matr.cpp"
@@ -1044,6 +1154,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1108,6 +1228,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\surfit\matr_eye.cpp"
@@ -1156,6 +1286,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1220,6 +1360,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\surfit\matrD1.cpp"
@@ -1268,6 +1418,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1332,6 +1492,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\surfit\matrD1_rect.cpp"
@@ -1388,6 +1558,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\surfit\matrD2.cpp"
@@ -1436,6 +1616,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1505,6 +1695,17 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\surfit\matrD2_rect.cpp"
@@ -1553,6 +1754,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1621,6 +1832,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\surfit\license.cpp"
@@ -1669,6 +1890,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1737,6 +1968,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\surfit\solvers.cpp"
@@ -1785,6 +2026,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1852,6 +2103,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\solvers\J.cpp"
@@ -1900,6 +2161,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -1964,6 +2235,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\solvers\RF.cpp"
@@ -2020,6 +2301,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\solvers\SSOR.cpp"
@@ -2068,6 +2359,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -2137,6 +2438,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\surfit\grid_internal.cpp"
@@ -2185,6 +2496,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -2249,6 +2570,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\surfit\grid_user.cpp"
@@ -2297,6 +2628,16 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release_SSE2|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -2365,6 +2706,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<Filter
 					Name="surf_cpp"
@@ -2416,6 +2767,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -2480,6 +2841,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\surf_tcl.cpp"
@@ -2528,6 +2899,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -2598,6 +2979,17 @@
 									BrowseInformation="1"
 								/>
 							</FileConfiguration>
+							<FileConfiguration
+								Name="Release_SSE|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									Optimization="2"
+									AdditionalIncludeDirectories=""
+									PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+									BrowseInformation="1"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath="..\src\surfit\mask_internal.cpp"
@@ -2657,6 +3049,17 @@
 									BrowseInformation="1"
 								/>
 							</FileConfiguration>
+							<FileConfiguration
+								Name="Release_SSE|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									Optimization="2"
+									AdditionalIncludeDirectories=""
+									PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+									BrowseInformation="1"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath="..\src\surfit\mask_tcl.cpp"
@@ -2707,6 +3110,17 @@
 							</FileConfiguration>
 							<FileConfiguration
 								Name="Release_SSE2|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									Optimization="2"
+									AdditionalIncludeDirectories=""
+									PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+									BrowseInformation="1"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release_SSE|Win32"
 								>
 								<Tool
 									Name="VCCLCompilerTool"
@@ -2777,6 +3191,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\pnts_tcl.cpp"
@@ -2833,6 +3257,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\points.cpp"
@@ -2881,6 +3315,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -2949,6 +3393,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\curv_internal.cpp"
@@ -3005,6 +3459,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\curv_tcl.cpp"
@@ -3053,6 +3517,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -3120,6 +3594,16 @@
 									BrowseInformation="1"
 								/>
 							</FileConfiguration>
+							<FileConfiguration
+								Name="Release_SSE|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									Optimization="2"
+									AdditionalIncludeDirectories=""
+									BrowseInformation="1"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath="..\src\surfit\cntr_internal.cpp"
@@ -3176,6 +3660,16 @@
 									BrowseInformation="1"
 								/>
 							</FileConfiguration>
+							<FileConfiguration
+								Name="Release_SSE|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									Optimization="2"
+									AdditionalIncludeDirectories=""
+									BrowseInformation="1"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath="..\src\surfit\cntr_tcl.cpp"
@@ -3224,6 +3718,16 @@
 							</FileConfiguration>
 							<FileConfiguration
 								Name="Release_SSE2|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									Optimization="2"
+									AdditionalIncludeDirectories=""
+									BrowseInformation="1"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release_SSE|Win32"
 								>
 								<Tool
 									Name="VCCLCompilerTool"
@@ -3296,6 +3800,16 @@
 									BrowseInformation="1"
 								/>
 							</FileConfiguration>
+							<FileConfiguration
+								Name="Release_SSE|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									Optimization="2"
+									AdditionalIncludeDirectories=""
+									BrowseInformation="1"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath="..\src\surfit\grid_line_internal.cpp"
@@ -3344,6 +3858,16 @@
 							</FileConfiguration>
 							<FileConfiguration
 								Name="Release_SSE2|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									Optimization="2"
+									AdditionalIncludeDirectories=""
+									BrowseInformation="1"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release_SSE|Win32"
 								>
 								<Tool
 									Name="VCCLCompilerTool"
@@ -3408,6 +3932,16 @@
 									BrowseInformation="1"
 								/>
 							</FileConfiguration>
+							<FileConfiguration
+								Name="Release_SSE|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									Optimization="2"
+									AdditionalIncludeDirectories=""
+									BrowseInformation="1"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath="..\src\surfit\grid_line_user.cpp"
@@ -3456,6 +3990,16 @@
 							</FileConfiguration>
 							<FileConfiguration
 								Name="Release_SSE2|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									Optimization="2"
+									AdditionalIncludeDirectories=""
+									BrowseInformation="1"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release_SSE|Win32"
 								>
 								<Tool
 									Name="VCCLCompilerTool"
@@ -3525,6 +4069,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\hist_internal.cpp"
@@ -3581,6 +4135,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\hist_tcl.cpp"
@@ -3629,6 +4193,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -3697,6 +4271,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\area_internal.cpp"
@@ -3753,6 +4337,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\area_tcl.cpp"
@@ -3801,6 +4395,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -3870,6 +4474,16 @@
 							BrowseInformation="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release_SSE|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="2"
+							AdditionalIncludeDirectories=""
+							BrowseInformation="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<Filter
 					Name="points.cpp"
@@ -3921,6 +4535,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -3985,6 +4609,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_points_tcl.cpp"
@@ -4033,6 +4667,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -4101,6 +4745,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_hist.cpp"
@@ -4149,6 +4803,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -4213,6 +4877,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_mean.cpp"
@@ -4261,6 +4935,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -4325,6 +5009,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_wmean.cpp"
@@ -4381,6 +5075,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\others_tcl.cpp"
@@ -4429,6 +5133,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -4497,6 +5211,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_area.cpp"
@@ -4545,6 +5269,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -4613,6 +5347,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_area_mean.cpp"
@@ -4661,6 +5405,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -4725,6 +5479,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_area_surf_ineq.cpp"
@@ -4773,6 +5537,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -4837,6 +5611,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_cntr.cpp"
@@ -4885,6 +5669,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -4949,6 +5743,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_curv.cpp"
@@ -4997,6 +5801,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -5061,6 +5875,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_curv_surf.cpp"
@@ -5117,6 +5941,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_curv_surf_ineq.cpp"
@@ -5165,6 +5999,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -5233,6 +6077,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_mask_ineq.cpp"
@@ -5281,6 +6135,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -5345,6 +6209,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_mask_surf.cpp"
@@ -5393,6 +6267,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -5457,6 +6341,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_mask_wmean.cpp"
@@ -5505,6 +6399,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -5569,6 +6473,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_surf_ineq.cpp"
@@ -5617,6 +6531,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -5681,6 +6605,16 @@
 								BrowseInformation="1"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\surfit\surfs_tcl.cpp"
@@ -5729,6 +6663,16 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release_SSE2|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								BrowseInformation="1"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -6251,6 +7195,16 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release_SSE2|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="surfit_swig.bat&#x0D;&#x0A;"
+						AdditionalDependencies="../src/surfit/interface/fileio.i;../src/surfit/interface/solve.i;../src/surfit/interface/task.i;../src/surfit/interface/geom.i;../src/surfit/interface/func.i;../src/surfit/interface/curv.i;"
+						Outputs="../src/surfit/surfit_wrap.cxx"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32"
 					>
 					<Tool
 						Name="VCCustomBuildTool"

@@ -21,6 +21,7 @@
 
 #include "interp.h"
 #include "fileio.h"
+#include "datafile.h"
 
 #include "variables.h"
 #include "variables_tcl.h"
@@ -194,6 +195,27 @@ functional * get_modifiable_functional() {
 	writelog(LOG_ERROR,"\"%s\" is not modifiable rule!", srf->getName());
 	return NULL;
 	
+};
+
+const char * datafile_mode()
+{
+	if (datafile_modE == 1)
+		return "datafile_new";
+	if (datafile_modE == 0)
+		return "datafile_append";
+	return NULL;
+};
+
+const char * datafile_new()
+{
+	datafile_modE = 1;
+	return datafile_mode();
+};
+
+const char * datafile_append()
+{
+	datafile_modE = 0;
+	return datafile_mode();
 };
 
 }; // namespace surfit;

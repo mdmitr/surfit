@@ -20,8 +20,13 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
+				Optimization="3"
+				GlobalOptimizations="TRUE"
 				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="TRUE"
+				FavorSizeOrSpeed="1"
+				OmitFramePointers="TRUE"
+				OptimizeForProcessor="3"
 				AdditionalIncludeDirectories="../src/sstuff,../src/sstuff/ptypes,../src/surfit,C:\Tcl\include\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL"
 				StringPooling="TRUE"
@@ -282,6 +287,154 @@
 			<Tool
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
+		<Configuration
+			Name="Release_SSE|Win32"
+			OutputDirectory="..\$(ConfigurationName)"
+			IntermediateDirectory="..\$(ConfigurationName)"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="3"
+				GlobalOptimizations="TRUE"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="TRUE"
+				FavorSizeOrSpeed="1"
+				OmitFramePointers="TRUE"
+				OptimizeForProcessor="3"
+				AdditionalIncludeDirectories="../src/sstuff,../src/sstuff/ptypes,../src/surfit,C:\Tcl\include\"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL"
+				StringPooling="TRUE"
+				RuntimeLibrary="0"
+				EnableFunctionLevelLinking="TRUE"
+				EnableEnhancedInstructionSet="1"
+				RuntimeTypeInfo="TRUE"
+				PrecompiledHeaderFile=".\../Release_SSE/freeflow.pch"
+				AssemblerListingLocation=".\../Release_SSE/"
+				ObjectFile=".\../Release_SSE/"
+				ProgramDataBaseFileName=".\../Release_SSE/"
+				BrowseInformation="1"
+				BrowseInformationFile=".\../Release_SSE/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="tcl83.lib"
+				OutputFile="../bin/libfreeflow.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="C:\Tcl\lib"
+				ProgramDatabaseFile=".\../Release/libfreeflow.pdb"
+				ImportLibrary="../bin/libfreeflow.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\../Release/freeflow.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1049"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release_SSE2|Win32"
+			OutputDirectory="..\$(ConfigurationName)"
+			IntermediateDirectory="..\$(ConfigurationName)"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="3"
+				GlobalOptimizations="TRUE"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="TRUE"
+				FavorSizeOrSpeed="1"
+				OmitFramePointers="TRUE"
+				OptimizeForProcessor="3"
+				AdditionalIncludeDirectories="../src/sstuff,../src/sstuff/ptypes,../src/surfit,C:\Tcl\include\"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL"
+				StringPooling="TRUE"
+				RuntimeLibrary="0"
+				EnableFunctionLevelLinking="TRUE"
+				EnableEnhancedInstructionSet="2"
+				RuntimeTypeInfo="TRUE"
+				PrecompiledHeaderFile=".\../Release_SSE2/freeflow.pch"
+				AssemblerListingLocation=".\../Release_SSE2/"
+				ObjectFile=".\../Release_SSE2/"
+				ProgramDataBaseFileName=".\../Release_SSE2/"
+				BrowseInformation="1"
+				BrowseInformationFile=".\../Release_SSE2/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="tcl83.lib"
+				OutputFile="../bin/libfreeflow.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="C:\Tcl\lib"
+				ProgramDatabaseFile=".\../Release/libfreeflow.pdb"
+				ImportLibrary="../bin/libfreeflow.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\../Release/freeflow.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1049"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
 	</Configurations>
 	<References>
 	</References>
@@ -327,6 +480,24 @@
 						AdditionalIncludeDirectories=""
 						BrowseInformation="1"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE2|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+						BrowseInformation="1"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\freeflow\flow_variables.cpp">
@@ -366,6 +537,24 @@
 						AdditionalIncludeDirectories=""
 						BrowseInformation="1"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE2|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+						BrowseInformation="1"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\freeflow\freeflow_wrap.cxx">
@@ -403,6 +592,24 @@
 						Name="VCCLCompilerTool"
 						Optimization="4"
 						AdditionalIncludeDirectories=""
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="4"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE2|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="4"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 						BrowseInformation="1"/>
 				</FileConfiguration>
 			</File>
@@ -450,6 +657,24 @@
 								AdditionalIncludeDirectories=""
 								BrowseInformation="1"/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE2|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\freeflow\flow_surf_tcl.cpp">
@@ -487,6 +712,24 @@
 								Name="VCCLCompilerTool"
 								Optimization="2"
 								AdditionalIncludeDirectories=""
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE2|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 								BrowseInformation="1"/>
 						</FileConfiguration>
 					</File>
@@ -536,6 +779,24 @@
 								AdditionalIncludeDirectories=""
 								BrowseInformation="1"/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE2|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\freeflow\flow_points_tcl.cpp">
@@ -573,6 +834,24 @@
 								Name="VCCLCompilerTool"
 								Optimization="2"
 								AdditionalIncludeDirectories=""
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE2|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 								BrowseInformation="1"/>
 						</FileConfiguration>
 					</File>
@@ -618,6 +897,24 @@
 								AdditionalIncludeDirectories=""
 								BrowseInformation="1"/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE2|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\freeflow\flow_cntr.cpp">
@@ -655,6 +952,24 @@
 								Name="VCCLCompilerTool"
 								Optimization="2"
 								AdditionalIncludeDirectories=""
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE2|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 								BrowseInformation="1"/>
 						</FileConfiguration>
 					</File>
@@ -696,6 +1011,24 @@
 								AdditionalIncludeDirectories=""
 								BrowseInformation="1"/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE2|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\freeflow\flow_curvs_tcl.cpp">
@@ -733,6 +1066,24 @@
 								Name="VCCLCompilerTool"
 								Optimization="2"
 								AdditionalIncludeDirectories=""
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE2|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 								BrowseInformation="1"/>
 						</FileConfiguration>
 					</File>
@@ -778,6 +1129,24 @@
 								AdditionalIncludeDirectories=""
 								BrowseInformation="1"/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE2|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\freeflow\f_lcm_simple_tcl.cpp">
@@ -815,6 +1184,24 @@
 								Name="VCCLCompilerTool"
 								Optimization="2"
 								AdditionalIncludeDirectories=""
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								BrowseInformation="1"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_SSE2|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								Optimization="2"
+								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 								BrowseInformation="1"/>
 						</FileConfiguration>
 					</File>
@@ -922,6 +1309,24 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="XXL_Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="freeflow_swig.bat
+"
+						AdditionalDependencies="../src/freeflow/interface/lcm.i;"
+						Outputs="../src/freeflow/freeflow_wrap.cxx"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="freeflow_swig.bat
+"
+						AdditionalDependencies="../src/freeflow/interface/lcm.i;"
+						Outputs="../src/freeflow/freeflow_wrap.cxx"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE2|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine="freeflow_swig.bat

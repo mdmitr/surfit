@@ -333,6 +333,9 @@ libsurfit_io_la_SOURCES += src/surfit_io/surf_io_tcl.cpp
 libsurfit_io_la_SOURCES += src/surfit_io/surf_jpg.cpp              
 libsurfit_io_la_SOURCES += src/surfit_io/surf_xyz.cpp              
 libsurfit_io_la_SOURCES += src/surfit_io/surfit_io_wrap.cxx              
+libsurfit_io_la_SOURCES += src/surfit_io/mask_xyz.cpp              
+libsurfit_io_la_SOURCES += src/surfit_io/mask_grd.cpp              
+libsurfit_io_la_SOURCES += src/surfit_io/mask_io_tcl.cpp              
 # shapelib
 libsurfit_io_la_SOURCES += src/surfit_io/shapelib/shapefil.h
 libsurfit_io_la_SOURCES += src/surfit_io/shapelib/dbfopen.c
@@ -360,6 +363,8 @@ libsurfit_io_la_SOURCES  += src/surfit_io/surfit_io_tcl.h
 libsurfit_io_la_HEADERS  += src/surfit_io/surfit_io_variables.h   
 libsurfit_io_la_HEADERS  += src/surfit_io/surf_io.h               
 libsurfit_io_la_SOURCES  += src/surfit_io/surf_io_tcl.h           
+libsurfit_io_la_SOURCES  += src/surfit_io/mask_io_tcl.h           
+
 
 
 libsurfit_io_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) libsstuff.la libsurfit.la

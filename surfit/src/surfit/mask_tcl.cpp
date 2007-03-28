@@ -21,6 +21,8 @@
 
 #include "datafile.h"
 #include "fileio.h"
+#include "boolvec.h"
+#include "strvec.h"
 
 #include "mask.h"
 #include "surf.h"
@@ -40,17 +42,18 @@
 
 namespace surfit {
 
-bool mask_load(const char * filename, const char * defname) 
+boolvec * mask_load(const char * filename, const char * defname) 
 {
 	const char * fname = find_first(filename);
-	bool res = false;
+	boolvec * res = create_boolvec();
 
 	while (fname != NULL) {
 		d_mask * msk = _mask_load(fname, defname);
 		if (msk) {
 			surfit_masks->push_back(msk);
-			res = true;
-		}
+			res->push_back(true);
+		} else
+			res->push_back(false);
 		fname = find_next();
 	}
 
@@ -58,106 +61,29 @@ bool mask_load(const char * filename, const char * defname)
 	return res;
 };
 
-bool mask_save(const char * filename, const char * pos) 
+struct match_mask_save
 {
-	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
-	if (!msk)
-		return false;
-
-	return _mask_save(msk, filename);
-};
-
-bool mask_save_grd(const char * filename, const char * pos) 
-{
-	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
-	if (!msk)
-		return false;
-
-	if (!filename)
-		return false;
-
-	FILE * f = fopen(filename,"w");
-
-	if (!f) {
-		writelog(LOG_ERROR, "Can't write data to file %s",filename,strerror( errno ));
-		return false;
-	}
-
-	writelog(LOG_MESSAGE,"Saving mask %s to file %s (grd-ASCII)", msk->getName(), filename);
-
-	fprintf(f,"DSAA\n");
-	int nx = msk->getCountX();
-	int ny = msk->getCountY();
-
-	fprintf(f,"%d %d\n", nx, ny);
-	fprintf(f,"%lf %lf\n", msk->getMinX(), msk->getMaxX());
-	fprintf(f,"%lf %lf\n", msk->getMinY(), msk->getMaxY());
-	fprintf(f,"0 1\n");
-
-	// matrix 
-	int iy, ix;
-	int ncnt;
-	int cnt = 0;
-	REAL val;
-	
-	for(iy=0; iy<ny; iy++)	{
-		ncnt = 0;
-		
-		for(ix=0; ix<nx; ix++)	{
-			val = msk->coeff->get( ix + nx*iy );
-			fprintf(f,"%lf ", val);
-			if (ncnt>9) { 
-				fprintf(f,"\n");
-				ncnt = 0;
-			}
-			ncnt++;
-		}
-		fprintf(f,"\n");
-	}
-
-	fclose(f);
-
-	return true;
-};
-
-bool mask_save_xyz(const char * filename, const char * pos) 
-{
-	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
-	if (!msk)
-		return false;
-
-	if (!filename)
-		return false;
-
-	writelog(LOG_MESSAGE,"Saving mask %s to file %s (xyz-ASCII)", msk->getName(), filename);
-
-	FILE * f = fopen(filename,"w");
-
-	if (!f) {
-		writelog(LOG_ERROR, "Can't write data to file %s",filename,strerror( errno ));
-		return false;
-	}
-
-	int nx = msk->getCountX();
-	int ny = msk->getCountY();
-
-	int iy, ix;
-	int cnt = 0;
-	REAL val;
-	REAL x_coord, y_coord;
-	
-    
-	for(iy=0; iy<ny; iy++)	{
-		for(ix=0; ix<nx; ix++)	{
-			msk->getCoordNode(ix, iy, x_coord, y_coord);
-			val = msk->coeff->get( ix + nx*iy );
-			fprintf(f,"%lf %lf %lf \n", x_coord, y_coord, val);
+	match_mask_save(const char * ifilename, const char * ipos) : filename(ifilename), pos(ipos), res(NULL) {};
+	void operator()(d_mask * mask)
+	{
+		if ( StringMatch(pos, mask->getName()) )
+		{
+			bool r = _mask_save(mask, filename);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(r);
 		}
 	}
+	const char * filename;
+	const char * pos;
+	boolvec * res;
+};
 
-	fclose(f);
-
-	return true;
+boolvec * mask_save(const char * filename, const char * pos) 
+{
+	match_mask_save qq(filename, pos);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 struct mask_oper
@@ -251,102 +177,146 @@ void mask_not(const char * pos1, const char * pos2)
 	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_oper(pos1, pos2, &not_oper));	
 };
 
-struct match_mask_by_surf
+struct match_mask_from_surf
 {
-	match_mask_by_surf(const char * isurf_pos) : surf_pos(isurf_pos), res(false) {};
+	match_mask_from_surf(const char * isurf_pos) : surf_pos(isurf_pos) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( surf_pos, surf->getName() ) )
 		{
 			writelog(LOG_MESSAGE,"creating mask by surface %s", surf->getName());
 			d_mask * msk = _mask_by_surf(surf);
-			if (msk) {
-				surfit_masks->push_back(msk);
-				res = true;
-			}
+			surfit_masks->push_back(msk);
 		}
 			
 	};
 	const char * surf_pos;
-	bool res;
 };
 
-bool mask_by_surf(const char * surf_pos) 
+void mask_from_surf(const char * surf_pos) 
 {
-	match_mask_by_surf mm(surf_pos);
+	match_mask_from_surf mm(surf_pos);
 	mm = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), mm);
-	return mm.res;
 };
 
 struct match_mask_apply_to_surf2
 {
-	match_mask_apply_to_surf2(d_mask * imask, const char * isurf_pos) : mask(imask), surf_pos(isurf_pos), res(false) {};
+	match_mask_apply_to_surf2(d_mask * imask, const char * isurf_pos) : mask(imask), surf_pos(isurf_pos), res(NULL) {};
 	void operator()(d_surf * surf) {
 		if ( StringMatch( surf_pos, surf->getName() ) )
 		{
-			res = _mask_apply_to_surf(mask, surf);		
+			bool r = _mask_apply_to_surf(mask, surf);		
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(r);
 		}
 	};
 	d_mask * mask;
 	const char * surf_pos;
-	bool res;
+	boolvec * res;
 };
 
 struct match_mask_apply_to_surf
 {
-	match_mask_apply_to_surf(const char * idef_pos, const char * isurf_pos) : def_pos(idef_pos), surf_pos(isurf_pos), res(false) {};
+	match_mask_apply_to_surf(const char * idef_pos, const char * isurf_pos) : def_pos(idef_pos), surf_pos(isurf_pos), res(NULL) {};
 	void operator()(d_mask * mask) {
 		if ( StringMatch( def_pos, mask->getName() ) )
 		{
+			if (res == NULL)
+				res = create_boolvec();
 			match_mask_apply_to_surf2 ss(mask, surf_pos);
 			ss = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), ss);
-			res = ss.res;
+			if (ss.res) {
+				res->push_back(ss.res);
+				ss.res->release();
+			}
 		}
 	};
 	const char * def_pos;
 	const char * surf_pos;
-	bool res;
+	boolvec * res;
 };
 
-bool mask_apply_to_surf(const char * def_pos, const char * surf_pos) 
+boolvec * mask_apply_to_surf(const char * def_pos, const char * surf_pos) 
 {
 	match_mask_apply_to_surf ss(def_pos, surf_pos);
 	ss = std::for_each(surfit_masks->begin(), surfit_masks->end(), ss);
 	return ss.res;
 };
 
-bool mask_setName(const char * new_name, const char * pos) 
+struct match_mask_setName
 {
-	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
-	if (!msk)
-		return false;
-
-	writelog(LOG_MESSAGE,"setting name \"%s\" to mask \"%s\"",
-		new_name, msk->getName());
-
-	msk->setName(new_name);
-	return true;
+	match_mask_setName(const char * inew_name, const char * ipos) : new_name(inew_name), pos(ipos) {};
+	void operator()(d_mask * mask)
+	{
+		if ( StringMatch(pos, mask->getName()) )
+		{
+			writelog(LOG_MESSAGE,"setting name \"%s\" to mask \"%s\"",
+				 new_name, mask->getName());
+			mask->setName(new_name);
+		}
+	}
+	const char * new_name;
+	const char * pos;
 };
 
-const char * mask_getName(const char * pos) 
+void mask_setName(const char * new_name, const char * pos) 
 {
-	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
-	if (!msk)
-		return false;
-	return msk->getName();
+	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_setName(new_name, pos));
 };
 
-bool mask_getValue(REAL x, REAL y, const char * pos) 
+struct match_mask_getName 
 {
-	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
-	if (!msk)
-		return false;
-	return msk->getValue(x,y);
+	match_mask_getName(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_mask * mask)
+	{
+		if ( StringMatch(pos, mask->getName()) )
+		{
+			if (res == NULL)
+				res = create_strvec();
+			res->push_back( strdup(mask->getName()) );
+		}
+	}
+	const char * pos;
+	strvec * res;
+};
+
+
+strvec * mask_getName(const char * pos) 
+{
+	match_mask_getName qq(pos);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
+};
+
+struct match_mask_getValue
+{
+	match_mask_getValue(REAL ix, REAL iy, const char * ipos) : x(ix), y(iy), pos(ipos), res(NULL) {};
+	void operator()(d_mask * mask)
+	{
+		if ( StringMatch(pos, mask->getName()) )
+		{
+			bool r = mask->getValue(x,y);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(r);
+		}
+	}
+	REAL x, y;
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * mask_getValue(REAL x, REAL y, const char * pos) 
+{
+	match_mask_getValue qq(x, y, pos);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 struct match_mask_to_surf
 {
-	match_mask_to_surf(const char * ipos) : pos(ipos), res(false) {};
+	match_mask_to_surf(const char * ipos) : pos(ipos) {};
 	void operator()(d_mask * mask)
 	{
 		if ( StringMatch( pos, mask->getName() ) )
@@ -354,81 +324,49 @@ struct match_mask_to_surf
 			writelog(LOG_MESSAGE,"converting mask \"%s\" to surface", mask->getName());
 			d_surf * srf = create_surf_by_mask(mask);
 			surfit_surfs->push_back(srf);
-			res = true;
 		}
 	}
 	const char * pos;
-	bool res;
 };
 
-bool mask_to_surf(const char * pos) 
+void mask_to_surf(const char * pos) 
 {
 	match_mask_to_surf mms(pos);
 	mms = std::for_each(surfit_masks->begin(), surfit_masks->end(), mms);
-	return mms.res;
 };
 
-bool mask_delall() {
-
-	size_t i;
-
-	writelog(LOG_MESSAGE,"removing all masks from memory");
-
-	if (surfit_masks == NULL)
-		return false;
-
-	if (surfit_masks->size() == 0) {
-		return false;
-	}
-	
-	for (i = 0; i < surfit_masks->size(); i++) {
-		d_mask * msk = (*surfit_masks)[i];
-		if (msk)
-			msk->release();
-	}
-	
-	surfit_masks->resize(0);
-
-	return true;
-};
-
-struct match_mask_del
+void mask_del(const char * pos) 
 {
-	match_mask_del(const char * ipos) : pos(ipos), res(false) {};
+	size_t i;
+	for (i = surfit_masks->size()-1; i >= 0; i--)
+	{
+		d_mask * mask = (*surfit_masks)[i];
+		if ( StringMatch(pos, mask->getName()) == true )
+		{
+			writelog(LOG_MESSAGE,"removing mask \"%s\" from memory", mask->getName());
+			mask->release();
+			surfit_masks->erase(surfit_masks->begin()+i);
+		}
+		if (i == 0)
+			break;
+	}
+	//std::for_each(surfit_masks->rbegin(), surfit_masks->rend(), match_mask_del(pos));
+};
+
+struct match_mask_info {
+	match_mask_info(const char * ipos) : pos(ipos) {};
 	void operator()(d_mask * mask)
 	{
-		if ( StringMatch( pos, mask->getName() ) )
+		if ( StringMatch(pos, mask->getName()) )
 		{
-			std::vector<d_mask *>::iterator it = std::find(surfit_masks->begin(), surfit_masks->end(), mask);
-			if (it != surfit_masks->end())
-			{
-				writelog(LOG_MESSAGE,"removing mask \"%s\" from memory", mask->getName());
-				surfit_masks->erase(it);	
-				res = true;
-			}
-		}
-	};
-	const char * pos;
-	bool res;
-};
-
-bool mask_del(const char * pos) 
-{
-	match_mask_del mmd(pos);
-	mmd = std::for_each(surfit_masks->begin(), surfit_masks->end(), mmd);
-	return mmd.res;
-};
-
-void masks_info() {
-	if (surfit_masks->size() > 0) {
-		size_t mask_cnt;
-		for (mask_cnt = 0; mask_cnt < surfit_masks->size(); mask_cnt++) {
-			d_mask * a_srf = *(surfit_masks->begin()+mask_cnt);
-			if (a_srf) {
-				_mask_info(a_srf);
-			}
+			_mask_info(mask);
 		}
 	}
+	const char * pos;
+};
+
+void mask_info(const char * pos) {
+	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_info(pos));
 };
 
 int mask_size() {

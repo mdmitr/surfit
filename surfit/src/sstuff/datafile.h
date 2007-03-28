@@ -31,7 +31,7 @@ class bitvec;
 class boolvec;
 class strvec;
 
-extern SSTUFF_EXPORT int datafile_mode;
+extern SSTUFF_EXPORT int datafile_modE;
 extern SSTUFF_EXPORT int rw_mode;
 
 #define BUFFER 2048
@@ -173,7 +173,7 @@ public:
 	bool isWord(const char * testword) const;
 	
 	//! skips one element
-	bool skip(bool print_name, char * name = NULL, bool print_name_inside_tag = true);
+	bool skip(bool print_name = false, char * name = NULL, bool print_name_inside_tag = false);
 
 	//! skips until "endtag"
 	bool skipToEndTag();
@@ -287,7 +287,7 @@ public:
 	//! skips header
 	void skipHeader(const char * filename);
 	//! skips tag
-	bool skipTag(bool print_name, char * name = NULL, bool print_name_inside_tag = true);
+	bool skipTag(bool print_name, char * name = NULL, bool print_name_inside_tag = false);
 	
 	//! file handler	
 	int file;

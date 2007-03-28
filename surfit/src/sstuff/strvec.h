@@ -27,7 +27,7 @@ namespace surfit {
 class strvec;
 
 SSTUFF_EXPORT
-strvec * create_strvec(int size = 0, int grow_by = 250);
+strvec * create_strvec(size_t size = 0, size_t grow_by = 250);
 
 /*! \class vec
     \brief surfit vector of REAL 
@@ -55,12 +55,12 @@ protected:
 	    \param fill_default use initial value filling
 	    \param grow_by value for resizing vector
     	*/
-	strvec(int size = 0, int grow_by = 250);
+	strvec(size_t size = 0, size_t grow_by = 250);
 	
 public:
 
 	friend SSTUFF_EXPORT
-	strvec * create_strvec(int size, int grow_by);
+	strvec * create_strvec(size_t size, size_t grow_by);
 
 private:
 	//! Destructor
@@ -85,16 +85,16 @@ public:
 	void erase(char**);
 
 	//! removes element by index
-	void erase(int index);
+	void erase(size_t index);
 		
 	//! changes vector size
-	void resize(int newsize);
+	void resize(size_t newsize);
 
 	//! returns vector size
-	int size() const { return datasize; };
+	size_t size() const { return datasize; };
 
 	//! returns reference to i'th element
-	char*& operator()(int i) {
+	char*& operator()(size_t i) {
 #ifdef LSS_BOUNDS_CHECK
 		if ((i < 0) || (i >= size()))
 			throw "invalid argument";
@@ -104,7 +104,7 @@ public:
 	};
 		
 	//! returns const reference to i'th element
-	const char * operator()(int i) const {
+	const char * operator()(size_t i) const {
 #ifdef LSS_BOUNDS_CHECK
 		if ((i < 0) || (i >= size()))
 			throw "invalid argument";
@@ -120,13 +120,13 @@ public:
 	void push_back(const char*);
 
 	//! sets currently allocated vector size to reserve_size
-	void reserve(int reserve_size);
+	void reserve(size_t reserve_size);
 
 	//! sets vector's grow factor
-	void set_grow(int grow_by);
+	void set_grow(size_t grow_by);
 
 	//! exchanges two elements
-	void swap(int i, int j);
+	void swap(size_t i, size_t j);
 
 	//! forgets all allocated memory
 	void drop_data();
@@ -139,13 +139,13 @@ protected:
 	char** data;
 
 	//! real vector size in elements
-	int datasize;
+	size_t datasize;
 
 	//! size of allocated memory in elements
-	int real_datasize;
+	size_t real_datasize;
 	
 	//! grow factor
-	int grow_by;
+	size_t grow_by;
 };
 
 }; // namespace surfit

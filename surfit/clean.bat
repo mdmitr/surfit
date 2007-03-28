@@ -5,6 +5,30 @@ del libsurfit.*
 del libglobe.*
 del libfreeflow.*
 del libsurfit_io.*
+del libacml*.*
+del surfit.chm
+cd ..
+
+mkdir bin_SSE
+cd bin_SSE
+del libsstuff.*
+del libsurfit.*
+del libglobe.*
+del libfreeflow.*
+del libsurfit_io.*
+del libacml*.*
+del surfit.chm
+cd ..
+
+mkdir bin_SSE2
+cd bin_SSE2
+del libsstuff.*
+del libsurfit.*
+del libglobe.*
+del libfreeflow.*
+del libsurfit_io.*
+del libacml*.*
+del surfit.chm
 cd ..
 
 del /Q /S *.dat
@@ -16,19 +40,39 @@ del *.plg
 del *.stt
 
 mkdir Debug
-
 cd Debug
 del /Q /S *.*
 cd ..
 
 mkdir Release 
-
 cd Release
+del /Q /S *.*
+cd ..
+
+mkdir Release_SSE
+cd Release_SSE
+del /Q /S *.*
+cd ..
+
+mkdir Release_SSE2
+cd Release_SSE2
 del /Q /S *.*
 cd ..
 
 mkdir vc6
 cd vc6
+del *.ncb
+del *.plg
+cd ..
+
+mkdir vc7
+cd vc7
+del *.ncb
+del *.plg
+cd ..
+
+mkdir vc8
+cd vc8
 del *.ncb
 del *.plg
 cd ..

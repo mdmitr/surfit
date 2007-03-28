@@ -28,6 +28,7 @@
 #include "area_io_tcl.h"
 #include "cntr_io_tcl.h"
 #include "surf_io_tcl.h"
+#include "mask_io_tcl.h"
 
 #include "variables_tcl.h"
 %}
@@ -99,6 +100,9 @@ bool surf_save_arcgis(const char * filename, const char * surface_name_or_positi
 bool surf_save_xyz(const char * filename, const char * surface_name_or_position = "0");
 bool surf_save_jpg(const char * filename, const char * surface_name_or_position = "0", int quality = 255);
 bool surf_save_bmp(const char * filename, const char * surface_name_or_position = "0");
+
+bool mask_save_grd(const char * filename, const char * mask_name = "*");
+bool mask_save_xyz(const char * filename, const char * mask_name = "*");
 
 }; // namespace surfit
 

@@ -70,13 +70,28 @@ bool surf_load(const char * filename, const char * surfname)
 	return res;
 };
 
+struct match_surf_save
+{
+	match_surf_save(const char * ifilename, const char * ipos) : filename(ifilename), pos(ipos), res(false) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			bool r = _surf_save(surf, filename);
+			if (r)
+				res = true;
+		}
+	}
+	const char * filename;
+	const char * pos;
+	bool res;
+};
+
 bool surf_save(const char * filename, const char * pos) 
 {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-
-	return _surf_save(srf, filename);
+	match_surf_save qq(filename, pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 bool surf_resid(const char * filename, const char * surf_pos, const char * pnts_pos) 

@@ -27,7 +27,7 @@
 
 namespace surfit {
 
-strvec * create_strvec(int size, int grow_by)
+strvec * create_strvec(size_t size, size_t grow_by)
 {
 	return new strvec(size, grow_by);
 };
@@ -36,7 +36,7 @@ strvec * create_strvec(const strvec &in) {
 	return new strvec(in);
 };
 
-strvec::strvec(int newsize, int igrow_by) {
+strvec::strvec(size_t newsize, size_t igrow_by) {
 	grow_by = igrow_by;
 	if (newsize == 0) {
 		data = NULL;
@@ -49,7 +49,7 @@ strvec::strvec(int newsize, int igrow_by) {
 		datasize = newsize;
 		real_datasize = newsize;
 		// init
-		for (int i = 0; i < size(); i++) {
+		for (size_t i = 0; i < size(); i++) {
 			operator()(i) = NULL;
 		}
 	};
@@ -60,7 +60,7 @@ strvec::strvec(int newsize, int igrow_by) {
 
 strvec::~strvec() {
 	if (data) {
-		int i;
+		size_t i;
 		for (i = 0; i < datasize; i++)
 			free( *(data+i) );
 		free(data);
@@ -74,7 +74,7 @@ void strvec::release() {
 	delete this;
 };
 
-void strvec::resize(int newsize) {
+void strvec::resize(size_t newsize) {
 	if (datasize == newsize)
 		return;
 	if ((newsize == 0) && (data = NULL)) {
@@ -85,11 +85,11 @@ void strvec::resize(int newsize) {
 	char ** tmpData = (char**)realloc(data, sizeof(char*)*newsize);
 	if (tmpData) {
 		data = tmpData;
-		int oldsize = datasize;
+		size_t oldsize = datasize;
 		datasize = newsize;
 		real_datasize = datasize;
 		if (oldsize < newsize) {
-			for (int i = oldsize; i < newsize; i++) {
+			for (size_t i = oldsize; i < newsize; i++) {
 				operator()(i) = NULL;
 			}
 		}
@@ -118,12 +118,12 @@ void strvec::push_back(const char * x) {
 	}
 };
 
-void strvec::set_grow(int igrow_by) {
+void strvec::set_grow(size_t igrow_by) {
 	grow_by = igrow_by;
 };
 
-void strvec::reserve(int reserve_size) {
-	int oldsize = real_datasize;
+void strvec::reserve(size_t reserve_size) {
+	size_t oldsize = real_datasize;
 	if (oldsize < reserve_size) {
 		
 		char ** tmpData = (char**)realloc(data, sizeof(char*)*reserve_size);
@@ -143,7 +143,7 @@ void strvec::reserve(int reserve_size) {
 	}
 };
 
-void strvec::swap(int i, int j) {
+void strvec::swap(size_t i, size_t j) {
 	#ifdef LSS_BOUNDS_CHECK
 	if ((i < 1) || (i > size()))
 			throw "invalid argument";
@@ -161,7 +161,7 @@ void strvec::erase(char** del) {
 	erase(i);
 };
 
-void strvec::erase(int index) {
+void strvec::erase(size_t index) {
 #ifdef LSS_BOUNDS_CHECK
 	if (index > datasize) 
 		throw "invalid argument";

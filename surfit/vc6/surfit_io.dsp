@@ -228,6 +228,22 @@ SOURCE=..\src\surfit_io\cntr_io_tcl.cpp
 SOURCE=..\src\surfit_io\cntr_shp.cpp
 # End Source File
 # End Group
+# Begin Group "mask_cpp"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\src\surfit_io\mask_grd.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit_io\mask_io_tcl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit_io\mask_xyz.cpp
+# End Source File
+# End Group
 # Begin Source File
 
 SOURCE=..\src\surfit_io\surfit_io.cpp
@@ -271,6 +287,10 @@ SOURCE=..\src\surfit_io\curv_io.h
 # Begin Source File
 
 SOURCE=..\src\surfit_io\curv_io_tcl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit_io\mask_io_tcl.h
 # End Source File
 # Begin Source File
 

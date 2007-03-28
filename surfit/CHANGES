@@ -16,15 +16,19 @@ New:
 	+ added surf_filter_out_area
 	+ added surf_filter_by_surf
 	+ added surf_swapxy
-	- removed curvs_load_shp, use curv_load_shp instead
-	- removed areas_load_shp, use area_load_shp instead
-	- removed cntrs_load_shp, use cntr_load_shp instead
 	+ cntr_load_shp syntax extended. Now you can load contours with constant Z value
 	  from shapefiles of SHPYT_ARC type.
 
 	+ regexp and wildcards support for commands and gridding rules
 	+ added new parameter to surf_load_xyz function. Allows to force binding points 
           to grid cells.
+
+Other changes:
+	- removed curvs_load_shp, use curv_load_shp instead
+	- removed areas_load_shp, use area_load_shp instead
+	- removed cntrs_load_shp, use cntr_load_shp instead
+	$ mask_by_surf renamed to mask_from_surf
+
 
 surfit 2.1 changes:
 

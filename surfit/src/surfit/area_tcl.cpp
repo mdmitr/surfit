@@ -23,12 +23,15 @@
 #include "fileio.h"
 #include "findfile.h"
 #include "sstuff.h"
+#include "boolvec.h"
 
 #include "area.h"
 #include "area_tcl.h"
 #include "area_internal.h"
 #include "variables_internal.h"
 #include "free_elements.h"
+
+#include <algorithm>
 
 namespace surfit {
 
@@ -69,13 +72,28 @@ bool area_read(const char * filename, const char * areaname,
 
 };
 
-bool area_load(const char * filename, const char * areaname) {
-	d_area * area = _area_load(filename, areaname);
-	if (area) {
-		surfit_areas->push_back(area);
-		return true;
+bool area_load(const char * filename, const char * areaname) 
+{
+
+	const char * fname = find_first(filename);
+
+	while (fname != NULL) {
+		d_area * area = _area_load(fname, areaname);
+		if (area) {
+			surfit_areas->push_back(area);
+		}
+		if (areaname == NULL)
+		{
+			char * name = get_name(fname);
+			area->setName( name );
+			sstuff_free_char(name);
+		}
+		
+		fname = find_next();
 	}
-	return false;
+
+	find_close();
+	return true;
 };
 
 bool area_write(const char * filename, const char * pos, const char * delimiter) 
@@ -91,14 +109,30 @@ bool area_write(const char * filename, const char * pos, const char * delimiter)
 	return _area_write(area, filename, buf);
 };
 
-bool area_save(const char * filename, const char * pos) {
-	d_area * area = get_element<d_area>(pos, surfit_areas->begin(), surfit_areas->end());
-	if (area == NULL)
-		return false;
+struct match_area_save
+{
+	match_area_save(const char * ifilename, const char * ipos) : filename(ifilename), pos(ipos), res(NULL) {};
+	void operator()(d_area * area)
+	{
+		if ( StringMatch(pos, area->getName()) )
+		{
+			writelog(LOG_MESSAGE,"Saving area \"%s\" to file %s", area->getName(), filename);
+			bool r = _area_save(area, filename);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(r);
+		}
+	}
+	const char * filename;
+	const char * pos;
+	boolvec * res;
+};
 
-	writelog(LOG_MESSAGE,"Saving area to file %s", filename);
-
-	return _area_save(area, filename);
+boolvec * area_save(const char * filename, const char * pos) 
+{
+	match_area_save qq(filename, pos);
+	qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
+	return qq.res;
 };
 
 bool area_setName(const char * new_name, const char * pos) {

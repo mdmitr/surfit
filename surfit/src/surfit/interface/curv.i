@@ -27,35 +27,35 @@
 
 namespace surfit {
 
-bool fault(const char * curv_name_or_position = "0");
+bool fault(const char * curv_name = "*");
 
-bool curve(REAL value, const char * curv_name_or_position = "0");
-bool curve_add(REAL value, REAL weight, const char * curv_name_or_position = "0");
-bool curve_leq(REAL value, const char * curv_name_or_position = "0", REAL mult = 0.001);
-bool curve_geq(REAL value, const char * curv_name_or_position = "0", REAL mult = 0.001);
-bool curve_surf(const char * surf_name_or_position = "0", const char * curv_name_or_position = "0");
-bool curve_surf_add(const char * surf_name_or_position = "0", REAL weight = 1, const char * curv_name_or_position = "0");
-bool curve_surf_leq(const char * surf_name_or_position = "0", const char * curv_name_or_position = "0", REAL mult = 0.001);
-bool curve_surf_geq(const char * surf_name_or_position = "0", const char * curv_name_or_position = "0", REAL mult = 0.001);
+bool curve(REAL value, const char * curv_name = "*");
+bool curve_add(REAL value, REAL weight, const char * curv_name = "*");
+bool curve_leq(REAL value, const char * curv_name = "*", REAL mult = 0.001);
+bool curve_geq(REAL value, const char * curv_name = "*", REAL mult = 0.001);
+bool curve_surf(const char * surf_name = "*", const char * curv_name = "*");
+bool curve_surf_add(const char * surf_name = "*", REAL weight = 1, const char * curv_name = "*");
+bool curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 0.001);
+bool curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 0.001);
 
-bool area(const char * value = "undef", const char * area_name_or_position = "0", int inside = 1);
-bool area_add(REAL value, REAL weight, const char * area_name_or_position = "0", int inside = 1);
-bool area_leq(REAL value, const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
-bool area_geq(REAL value, const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
-bool area_surf(const char * surf_name_or_position = "0", const char * area_name_or_position = "0", int inside = 1);
-bool area_surf_add(const char * surf_name_or_position = "0", REAL weight = 1, const char * area_name_or_position = "0", int inside = 1);
-bool area_surf_leq(const char * surf_name_or_position = "0", const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
-bool area_surf_geq(const char * surf_name_or_position = "0", const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
-bool area_mean(REAL mean, const char * area_name_or_position = "0", REAL mult = 0.001, int inside = 1);
-bool area_wmean(REAL mean, const char * area_name_or_position = "0", const char * surf_name_or_position = "0", REAL mult = 0.001, int inside = 1);
-bool area_completer(const char * area_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
-bool area_completer_add(REAL weight = 1, const char * area_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
-bool area_hist(const char * area_name_or_position = "0", const char * histogram_name_or_position = "0", REAL mult = 0.001, int inside = 1);
+bool area(const char * value = "undef", const char * area_name = "*", int inside = 1);
+bool area_add(REAL value, REAL weight, const char * area_name = "*", int inside = 1);
+bool area_leq(REAL value, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+bool area_geq(REAL value, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+bool area_surf(const char * surf_name = "*", const char * area_name = "*", int inside = 1);
+bool area_surf_add(const char * surf_name = "*", REAL weight = 1, const char * area_name = "*", int inside = 1);
+bool area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+bool area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+bool area_mean(REAL mean, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+bool area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL mult = 0.001, int inside = 1);
+bool area_completer(const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
+bool area_completer_add(REAL weight = 1, const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
+bool area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL mult = 0.001, int inside = 1);
 
-bool contour(const char * cntr_name_or_position = "0");
-bool contour_add(REAL weight, const char * cntr_name_or_position = "0");
-bool contour_leq(const char * cntr_name_or_position = "0", REAL mult = 0.001);
-bool contour_geq(const char * cntr_name_or_position = "0", REAL mult = 0.001);
+bool contour(const char * cntr_name = "*");
+bool contour_add(REAL weight, const char * cntr_name = "*");
+bool contour_leq(const char * cntr_name = "*", REAL mult = 0.001);
+bool contour_geq(const char * cntr_name = "*", REAL mult = 0.001);
 
 //
 // 2D
@@ -76,14 +76,14 @@ bool curv_read(const char * filename, const char * curvname=NULL,
 	       const char * delimiters=" \t", int skip_lines = 0, int grow_by=250);
 bool curv_load(const char * filename, const char * curvname = NULL);
 
-bool curv_write(const char * filename, const char * curv_name_or_position = "0", const char * delimiter = "\t");
-bool curv_save(const char * filename, const char * curv_name_or_position = "0");
+bool curv_write(const char * filename, const char * curv_name = "*", const char * delimiter = "\t");
+bool curv_save(const char * filename, const char * curv_name = "*");
 
 // other
-const char * curv_getName(const char * curv_name_or_position = "0");
-bool curv_setName(const char * new_name, const char * curv_name_or_position = "0");
+const char * curv_getName(const char * curv_name = "*");
+bool curv_setName(const char * new_name, const char * curv_name = "*");
 bool curv_delall();
-bool curv_del(const char * curv_name_or_position = "0");
+bool curv_del(const char * curv_name = "*");
 int curv_size();
 void curvs_info();
 
@@ -96,18 +96,18 @@ bool cntr_read(const char * filename, const char * cntrname,
 		       int col1=1, int col2=2, int col3=3,
 		       const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
 bool cntr_load(const char * filename, const char * cntrname = NULL);
-bool cntr_write(const char * filename, const char * cntr_name_or_position = "0", const char * delimiter = "\t");
-bool cntr_save(const char * filename, const char * cntr_name_or_position = "0");
+bool cntr_write(const char * filename, const char * cntr_name = "*", const char * delimiter = "\t");
+bool cntr_save(const char * filename, const char * cntr_name = "*");
 // math
-bool cntr_plus_real(REAL value, const char * cntr_name_or_position = "0");
-bool cntr_minus_real(REAL value, const char * cntr_name_or_position = "0");
-bool cntr_mult_real(REAL value, const char * cntr_name_or_position = "0");
-bool cntr_div_real(REAL value, const char * cntr_name_or_position = "0");
+bool cntr_plus_real(REAL value, const char * cntr_name = "*");
+bool cntr_minus_real(REAL value, const char * cntr_name = "*");
+bool cntr_mult_real(REAL value, const char * cntr_name = "*");
+bool cntr_div_real(REAL value, const char * cntr_name = "*");
 // convers
-bool cntr_to_curv(const char * cntr_name_or_position = "0");
+bool cntr_to_curv(const char * cntr_name = "*");
 // other
-const char * cntr_getName(const char * cntr_name_or_position = "0");
-bool cntr_setName(const char * new_name, const char * cntr_name_or_position = "0");
+const char * cntr_getName(const char * cntr_name = "*");
+bool cntr_setName(const char * new_name, const char * cntr_name = "*");
 bool cntr_delall();
 bool cntr_del(const char * cntr_name_or_position);
 int cntr_size();
@@ -120,16 +120,16 @@ bool area_read(const char * filename, const char * areaname=NULL,
      	       int col1=1, int col2=2,
 	       const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
 bool area_load(const char * filename, const char * areaname = NULL);
-bool area_write(const char * filename, const char * area_name_or_position = "0", const char * delimiter = "\t");
-bool area_save(const char * filename, const char * area_name_or_position = "0");
+bool area_write(const char * filename, const char * area_name = "*", const char * delimiter = "\t");
+surfit::boolvec * area_save(const char * filename, const char * area_name = "*");
 
 // other
-const char * area_getName(const char * area_name_or_position = "0");
-bool area_setName(const char * new_name, const char * area_name_or_position = "0");
+const char * area_getName(const char * area_name = "*");
+bool area_setName(const char * new_name, const char * area_name = "*");
 bool area_delall();
-bool area_del(const char * area_name_or_position = "0");
+bool area_del(const char * area_name = "*");
 int area_size();
-bool area_invert(const char * area_name_or_position = "0");
+bool area_invert(const char * area_name = "*");
 void areas_info();
 
 //

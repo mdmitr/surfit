@@ -26,6 +26,8 @@
 #include "real.h"
 #include "fileio.h"
 #include "interp.h"
+#include "boolvec.h"
+#include "strvec.h"
 
 #include "variables.h"
 #include "variables_internal.h"
@@ -84,6 +86,62 @@ namespace surfit {
    Tcl_SetObjResult(interp,Tcl_NewStringObj($1,-1));
 };
 
+%typemap(out) surfit::vec * {
+	Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+	Tcl_SetObjResult(interp, res_obj);
+	if ($1) {
+		size_t i;
+		for (i = 0; i < ($1)->size(); i++)
+		{
+			double val = (double)(*($1))(i);
+			Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewDoubleObj(val));
+		}
+		($1)->release();
+	}
+}
+
+%typemap(out) surfit::intvec * {
+	Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+	Tcl_SetObjResult(interp, res_obj);
+	if ($1) {
+		size_t i;
+		for (i = 0; i < ($1)->size(); i++)
+		{
+			int val = (int)(*($1))(i);
+			Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewIntObj(val));
+		}
+		($1)->release();
+	}
+}
+
+%typemap(out) surfit::boolvec * {
+	Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+	Tcl_SetObjResult(interp, res_obj);
+	if ($1) {
+		size_t i;
+		for (i = 0; i < ($1)->size(); i++)
+		{
+			bool val = (bool)(*($1))(i);
+			Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+		}
+		($1)->release();
+	}
+}
+
+%typemap(out) surfit::strvec * {
+	Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+	Tcl_SetObjResult(interp, res_obj);
+	if ($1) {
+		size_t i;
+		for (i = 0; i < ($1)->size(); i++)
+		{
+			char * val = (*($1))(i);
+			Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewStringObj(val,-1));
+		}
+		($1)->release();
+	}
+}
+
 %include "../../src/sstuff/real.h"
 
 extern bool stop_execution;
@@ -112,6 +170,9 @@ char * types_info();
 
 void putlog(const char * str);
 
+const char * datafile_mode();
+const char * datafile_new();
+const char * datafile_append();
 void file_load(const char * filename);
 bool file_save(const char * filename);
 char * file_info(const char * filename);
@@ -142,8 +203,7 @@ int hist_size();
 void hists_info();
 bool surf_histeq(const char * surf_name = "0", const char * hist_name = NULL);
 
-
-// license stuff
+// license
 void show_w();
 void show_c();
 

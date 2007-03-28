@@ -52,7 +52,7 @@
 
 namespace surfit {
 
-int datafile_mode = 1;
+int datafile_modE = 1; // 1 - create new file, 0 - create or append if file already exists
 int rw_mode = 0;
 
 void add_word(char * contents, const char * word) {
@@ -76,12 +76,12 @@ datafile::datafile(const char * filename, int imode) {
 
 	datafile_filename = strdup(filename);
 
-	extern int datafile_mode;
+	extern int datafile_modE;
 
 	// write mode
 	if (imode == DF_MODE_WRITE) {
 
-		if (datafile_mode == 0) {
+		if (datafile_modE == 0) {
 #if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 			file = open(filename, O_BINARY|O_RDWR);
 #else
@@ -89,7 +89,7 @@ datafile::datafile(const char * filename, int imode) {
 #endif
 		}
 
-		if (datafile_mode == 1) {
+		if (datafile_modE == 1) {
 #if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 			file = open(filename, O_BINARY|O_RDWR|O_TRUNC|O_APPEND);
 #else
@@ -255,7 +255,7 @@ bool datafile::findTagEof() {
 	};
 	
 	while ( strcmp(tagname,"eof") != 0 ) {
-		if (!skipTag(false)) {
+		if (!skipTag(false,NULL,false)) {
 			writelog(LOG_ERROR, error);
 			return false;
 		};
@@ -662,7 +662,7 @@ bool datafile::writeStringArray(const char * name, const strvec * data) {
 	r += writeBinaryString("string");
 	r += writeBinaryString(name);
 	r += write(file, (void *)&size, sizeof(surfit_int32));
-	int i;
+	size_t i;
 	for (i = 0; i < data->size(); i++)
 		r += writeBinaryString( (*data)(i) );
 	return (r > 0);

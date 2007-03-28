@@ -20,6 +20,8 @@
 #ifndef __surfit__variables_tcl__
 #define __surfit__variables_tcl__
 
+#include "vec.h"
+
 namespace surfit {
 
 	extern SURFIT_EXPORT bool stop_execution;
@@ -85,6 +87,10 @@ namespace surfit {
 	extern int penalty_max_iter;
 	extern REAL penalty_weight;
 	extern REAL penalty_weight_mult;
+
+	const char * datafile_mode();
+	const char * datafile_new();
+	const char * datafile_append();
 
 }; // namespace surfit
 
