@@ -153,6 +153,19 @@ void intvec::push_back(const int& x) {
 	}
 };
 
+void intvec::push_back(intvec * v)
+{
+	size_t old_size = size();
+	size_t new_size = old_size+v->size();
+	resize(new_size);
+	size_t i;
+	for (i = 0; i < new_size-old_size; i++)
+	{
+		this->operator ()(old_size+i) = (*v)(i);
+	}
+	v->release();
+};
+
 void intvec::set_grow(size_t igrow_by) {
 	grow_by = igrow_by;
 };

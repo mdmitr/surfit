@@ -137,8 +137,10 @@ void boolvec::push_back(const bool& x) {
 	}
 };
 
-void boolvec::push_back(const boolvec * v)
+void boolvec::push_back(boolvec * v)
 {
+	if (v == NULL)
+		return;
 	size_t old_size = size();
 	size_t new_size = old_size+v->size();
 	resize(new_size);
@@ -147,6 +149,7 @@ void boolvec::push_back(const boolvec * v)
 	{
 		this->operator ()(old_size+i) = (*v)(i);
 	}
+	v->release();
 }
 
 void boolvec::set_grow(size_t igrow_by) {

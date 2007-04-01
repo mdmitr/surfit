@@ -29,6 +29,8 @@ class vec;
 class datafile;
 class d_grid;
 class d_surf;
+class boolvec;
+class intvec;
 
 //
 // saveload
@@ -46,7 +48,7 @@ class d_surf;
     \param filename surfit datafile
     \param surfname name for surface (optional)
 */
-bool surf_load(const char * filename, const char * surfname = "*");
+boolvec * surf_load(const char * filename, const char * surfname = "*");
 
 /*! \ingroup tcl_surf_save_load
     \fn bool surf_save(const char * filename, const char * surface_name = "*");
@@ -57,7 +59,7 @@ bool surf_load(const char * filename, const char * surfname = "*");
     \par Description:
     saves surface to surfit datafile
 */
-bool surf_save(const char * filename, const char * surface_name = "*");
+boolvec * surf_save(const char * filename, const char * surface_name = "*");
 
 //
 // MATH OPERATIONS
@@ -72,7 +74,7 @@ bool surf_save(const char * filename, const char * surface_name = "*");
     \par Description:
     calculates surface value at point (x,y)
 */
-REAL surf_getValue(REAL x, REAL y, const char * surface_name = "*");
+vec * surf_getValue(REAL x, REAL y, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_getValueIJ(int I, int J, const char * surface_name = "*");
@@ -86,7 +88,7 @@ REAL surf_getValue(REAL x, REAL y, const char * surface_name = "*");
     \param I node number in X direction
     \param J node number in Y direction
 */
-REAL surf_getValueIJ(int I, int J, const char * surface_name = "*");
+vec * surf_getValueIJ(int I, int J, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_resid(const char * filename, const char * surface_name = "*", const char * points_name = "*")
@@ -110,7 +112,7 @@ bool surf_resid(const char * filename, const char * surface_name = "*", const ch
     calculates value of \f$ \int\limits_\Omega \left[ f_x^2 + f_y^2 \right] dx dy \f$ 
     for surface, where f is a surface.
 */
-REAL surf_D1(const char * surface_name = "*");
+vec * surf_D1(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_D2(const char * surface_name = "*");
@@ -123,29 +125,29 @@ REAL surf_D1(const char * surface_name = "*");
     \f$ \int\limits_\Omega \left[ f_{xx}^2 + 2f_{xy}^2 + f_{yy}^2 \right] dx dy \f$ 
     for surface, where f is a surface.
 */
-REAL surf_D2(const char * surface_name = "*");
+vec * surf_D2(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_gradient(const char * newname, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_gradient "newname" \ref str "surface_name"
+    surf_gradient \ref str "surface_name" "newname"
 
     \par Description:
     calculates surface of "gradients lengths" for surface and saves result to new surface named "newname"
 */
-bool surf_gradient(const char * newname, const char * surface_name = "*");
+boolvec * surf_gradient(const char * surface_name = "*", const char * newname = NULL);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_project(const char * newname, const char * surface_name = "*");
+    \fn bool surf_project(const char * surface_name = "*", const char * newname);
 
     \par Tcl syntax:
-    surf_project "newname" \ref str "surface_name"
+    surf_project \ref str "surface_name" "newname"
 
     \par Description:
     recalculates surface on current \ref d_grid "grid" using bilinear interpolation algorithm
 */
-bool surf_project(const char * newname, const char * surface_name = "*");
+boolvec * surf_project(const char * surface_name = "*", const char * newname = NULL);
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_add_noise(REAL std, const char * surface_name = "*");
@@ -158,7 +160,7 @@ bool surf_project(const char * newname, const char * surface_name = "*");
 
     \param std standart deviation
 */
-bool surf_add_noise(REAL std, const char * surface_name = "*");
+void surf_add_noise(REAL std, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_minz(const char * surface_name = "*");
@@ -169,7 +171,7 @@ bool surf_add_noise(REAL std, const char * surface_name = "*");
     \par Description:
     returns minimum value for surface
 */
-REAL surf_minz(const char * surface_name = "*");
+vec * surf_minz(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_area_minz(const char * area_name = "*", const char * surface_name = "*");
@@ -180,7 +182,7 @@ REAL surf_minz(const char * surface_name = "*");
     \par Description:
     returns minimum value for surface in area
 */
-REAL surf_area_minz(const char * area_name = "*", const char * surface_name = "*");
+vec * surf_area_minz(const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_maxz(const char * surface_name = "*");
@@ -191,7 +193,7 @@ REAL surf_area_minz(const char * area_name = "*", const char * surface_name = "*
     \par Description:
     returns maximum value for surface
 */
-REAL surf_maxz(const char * surface_name = "*");
+vec * surf_maxz(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_area_maxz(const char * area_name = "*", const char * surface_name = "*");
@@ -202,7 +204,7 @@ REAL surf_maxz(const char * surface_name = "*");
     \par Description:
     returns maximum value for surface in area
 */
-REAL surf_area_maxz(const char * area_name = "*", const char * surface_name = "*");
+vec * surf_area_maxz(const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_mean(const char * surface_name = "*");
@@ -213,7 +215,7 @@ REAL surf_area_maxz(const char * area_name = "*", const char * surface_name = "*
     \par Description:
     returns mean value for surface
 */
-REAL surf_mean(const char * surface_name = "*");
+vec * surf_mean(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_area_mean(const char * area_name = "*", const char * surface_name = "*");
@@ -224,7 +226,7 @@ REAL surf_mean(const char * surface_name = "*");
     \par Description:
     returns mean value for surface in area
 */
-REAL surf_area_mean(const char * area_name = "*", const char * surface_name = "*");
+vec * surf_area_mean(const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_mask_mean(const char * mask_name = "*", const char * surface_name = "*");
@@ -235,7 +237,7 @@ REAL surf_area_mean(const char * area_name = "*", const char * surface_name = "*
     \par Description:
     returns mean value for surface where mask is "true"
 */
-REAL surf_mask_mean(const char * mask_name = "*", const char * surface_name = "*");
+vec * surf_mask_mean(const char * mask_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_wmean(const char * wsurface_name = "*", const char * surface_name = "*");
@@ -246,7 +248,7 @@ REAL surf_mask_mean(const char * mask_name = "*", const char * surface_name = "*
     \par Description:
     returns weighted mean value for surface
 */
-REAL surf_wmean(const char * wsurface_name = "*", const char * surface_name = "*");
+vec * surf_wmean(const char * wsurface_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_area_wmean(const char * area_name = "*", const char * wsurface_name = "*", const char * surface_name = "*");
@@ -257,7 +259,7 @@ REAL surf_wmean(const char * wsurface_name = "*", const char * surface_name = "*
     \par Description:
     returns weighted mean value for surface in area, where wsurface - weight function
 */
-REAL surf_area_wmean(const char * area_name = "*", const char * wsurface_name = "*", const char * surface_name = "*");
+vec * surf_area_wmean(const char * area_name = "*", const char * wsurface_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_mask_wmean(const char * mask_name = "*", const char * wsurface_name = "*", const char * surface_name = "*");
@@ -268,7 +270,7 @@ REAL surf_area_wmean(const char * area_name = "*", const char * wsurface_name = 
     \par Description:
     returns weighted mean value for surface where mask is "true", wsurface - weight surface
 */
-REAL surf_mask_wmean(const char * mask_name = "*", const char * wsurface_name = "*", const char * surface_name = "*");
+vec * surf_mask_wmean(const char * mask_name = "*", const char * wsurface_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_sum(const char * surface_name = "*");
@@ -279,7 +281,7 @@ REAL surf_mask_wmean(const char * mask_name = "*", const char * wsurface_name = 
     \par Description:
     returns sum of all surface cell values
 */
-REAL surf_sum(const char * surface_name = "*");
+vec * surf_sum(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_sum_area(const char * area_name = "*",  const char * surface_name = "*");
@@ -290,7 +292,7 @@ REAL surf_sum(const char * surface_name = "*");
     \par Description:
     returns sum of all surface cells values in area
 */
-REAL surf_sum_area(const char * area_name = "*",  const char * surface_name = "*");
+vec * surf_sum_area(const char * area_name = "*",  const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn int surf_cells_in_area(const char * area_name = "*",  const char * surface_name = "*");
@@ -301,7 +303,7 @@ REAL surf_sum_area(const char * area_name = "*",  const char * surface_name = "*
     \par Description:
     returns number of cells in area
 */
-int surf_cells_in_area(const char * area_name = "*",  const char * surface_name = "*");
+intvec * surf_cells_in_area(const char * area_name = "*",  const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_std(REAL mean, const char * surface_name = "*");
@@ -312,7 +314,7 @@ int surf_cells_in_area(const char * area_name = "*",  const char * surface_name 
     \par Description:
     calculates standard deviation for surface cells values with respect to surface mean value
 */
-REAL surf_std(REAL mean, const char * surface_name = "*");
+vec * surf_std(REAL mean, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_plus(const char * surface1_name, const char * surface2_name);

@@ -162,6 +162,9 @@ public:
 	//! adds one element at the end of array
 	void push_back(const REAL&);
 
+	//! adds array at the end of array
+	void push_back(vec * v);
+
 	//! sets currently allocated vector size to reserve_size
 	void reserve(size_t reserve_size);
 

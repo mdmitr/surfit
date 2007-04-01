@@ -28,6 +28,7 @@
 #include "interp.h"
 #include "boolvec.h"
 #include "strvec.h"
+#include "intvec.h"
 
 #include "variables.h"
 #include "variables_internal.h"

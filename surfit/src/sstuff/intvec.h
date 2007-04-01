@@ -127,6 +127,9 @@ public:
 
 	//! add one element at the end of array
 	void push_back(const int&);
+	
+	//! add vector at the end of array
+	void push_back(intvec * v);
 
 	//! set currently allocated vector size to reserve_size
 	void reserve(size_t reserve_size);

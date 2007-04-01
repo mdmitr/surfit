@@ -337,6 +337,8 @@ void mask_to_surf(const char * pos)
 
 void mask_del(const char * pos) 
 {
+	if (surfit_masks->size() == 0)
+		return;
 	size_t i;
 	for (i = surfit_masks->size()-1; i >= 0; i--)
 	{

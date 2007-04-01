@@ -133,7 +133,7 @@ public:
 	void push_back(const bool&);
 
 	//! adds elements from other boolvec from another boolvec
-	void push_back(const boolvec * v);
+	void push_back(boolvec * v);
 
 	//! sets currently allocated vector size to reserve_size
 	void reserve(size_t reserve_size);

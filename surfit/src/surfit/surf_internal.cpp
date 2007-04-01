@@ -249,8 +249,8 @@ struct surf_project_job : public job
 surf_project_job surf_project_jobs[MAX_CPU];
 #endif
 
-d_surf * _surf_project(const d_surf * srf, d_grid * grd) {
-
+d_surf * _surf_project(const d_surf * srf, d_grid * grd) 
+{
 	size_t size_x = grd->getCountX();
 	size_t size_y = grd->getCountY();
 
@@ -1017,6 +1017,8 @@ REAL _surf_wmean_area(const d_surf * srf, const d_surf * wsrf, const d_area * ar
 	if (mask)
 		mask->release();
 
+	if (denom == 0)
+		return srf->undef_value;
 	return sum/denom;
 	
 };
@@ -1252,9 +1254,9 @@ cont:
 exit:
 
 	if (!surfname)
-		writelog(LOG_ERROR, "surf_load : this file have no surf");
+		writelog(LOG_WARNING, "surf_load : this file have no surf");
 	else 
-		writelog(LOG_ERROR, "surf_load : this file have no surf named %s", surfname);
+		writelog(LOG_WARNING, "surf_load : this file have no surf named %s", surfname);
 	return NULL;
 
 };
