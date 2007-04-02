@@ -21,6 +21,8 @@
 #include "mask.h"
 #include "bitvec.h"
 
+#include <errno.h>
+
 namespace surfit {
 
 bool mask_save_grd(const char * filename, const char * pos) 

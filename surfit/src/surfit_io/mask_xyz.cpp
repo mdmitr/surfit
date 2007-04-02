@@ -21,6 +21,8 @@
 #include "mask.h"
 #include "bitvec.h"
 
+#include <errno.h>
+
 namespace surfit {
 
 bool mask_save_xyz(const char * filename, const char * pos) 

@@ -186,7 +186,8 @@ am_libsurfit_io_la_OBJECTS = area_bln.lo area_io_tcl.lo area_shp.lo \
 	surfit_io.lo surfit_io_data_manager.lo surfit_io_variables.lo \
 	surf_arcgis.lo surf_bmp.lo surf_gmt.lo surf_grass.lo \
 	surf_grd.lo surf_io_tcl.lo surf_jpg.lo surf_xyz.lo \
-	surfit_io_wrap.lo dbfopen.lo shpopen.lo EasyBMP.lo
+	surfit_io_wrap.lo mask_xyz.lo mask_grd.lo mask_io_tcl.lo \
+	dbfopen.lo shpopen.lo EasyBMP.lo
 libsurfit_io_la_OBJECTS = $(am_libsurfit_io_la_OBJECTS)
 @MAKE_SURFIT_IO_TRUE@am_libsurfit_io_la_rpath = -rpath $(libdir)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
@@ -510,7 +511,8 @@ libsurfit_io_la_SOURCES = src/surfit_io/area_bln.cpp \
 	src/surfit_io/surf_gmt.cpp src/surfit_io/surf_grass.cpp \
 	src/surfit_io/surf_grd.cpp src/surfit_io/surf_io_tcl.cpp \
 	src/surfit_io/surf_jpg.cpp src/surfit_io/surf_xyz.cpp \
-	src/surfit_io/surfit_io_wrap.cxx \
+	src/surfit_io/surfit_io_wrap.cxx src/surfit_io/mask_xyz.cpp \
+	src/surfit_io/mask_grd.cpp src/surfit_io/mask_io_tcl.cpp \
 	src/surfit_io/shapelib/shapefil.h \
 	src/surfit_io/shapelib/dbfopen.c \
 	src/surfit_io/shapelib/shpopen.c \
@@ -522,7 +524,7 @@ libsurfit_io_la_SOURCES = src/surfit_io/area_bln.cpp \
 	src/surfit_io/area_io_tcl.h src/surfit_io/cntr_io_tcl.h \
 	src/surfit_io/curv_io_tcl.h src/surfit_io/pnts_io_tcl.h \
 	src/surfit_io/surfit_io_ie.h src/surfit_io/surfit_io_tcl.h \
-	src/surfit_io/surf_io_tcl.h
+	src/surfit_io/surf_io_tcl.h src/surfit_io/mask_io_tcl.h
 libsurfit_io_la_HEADERS = src/surfit_io/area_io.h \
 	src/surfit_io/cntr_io.h src/surfit_io/curv_io.h \
 	src/surfit_io/pnts_io.h src/surfit_io/surfit_io.h \
@@ -775,8 +777,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ioapi.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/license.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mask.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mask_grd.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mask_internal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mask_io_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mask_tcl.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mask_xyz.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matlab.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrD1.Plo@am__quote@
@@ -2085,6 +2090,27 @@ surfit_io_wrap.lo: src/surfit_io/surfit_io_wrap.cxx
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/surfit_io_wrap.cxx' object='surfit_io_wrap.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surfit_io_wrap.lo `test -f 'src/surfit_io/surfit_io_wrap.cxx' || echo '$(srcdir)/'`src/surfit_io/surfit_io_wrap.cxx
+
+mask_xyz.lo: src/surfit_io/mask_xyz.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mask_xyz.lo -MD -MP -MF "$(DEPDIR)/mask_xyz.Tpo" -c -o mask_xyz.lo `test -f 'src/surfit_io/mask_xyz.cpp' || echo '$(srcdir)/'`src/surfit_io/mask_xyz.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/mask_xyz.Tpo" "$(DEPDIR)/mask_xyz.Plo"; else rm -f "$(DEPDIR)/mask_xyz.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/mask_xyz.cpp' object='mask_xyz.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mask_xyz.lo `test -f 'src/surfit_io/mask_xyz.cpp' || echo '$(srcdir)/'`src/surfit_io/mask_xyz.cpp
+
+mask_grd.lo: src/surfit_io/mask_grd.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mask_grd.lo -MD -MP -MF "$(DEPDIR)/mask_grd.Tpo" -c -o mask_grd.lo `test -f 'src/surfit_io/mask_grd.cpp' || echo '$(srcdir)/'`src/surfit_io/mask_grd.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/mask_grd.Tpo" "$(DEPDIR)/mask_grd.Plo"; else rm -f "$(DEPDIR)/mask_grd.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/mask_grd.cpp' object='mask_grd.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mask_grd.lo `test -f 'src/surfit_io/mask_grd.cpp' || echo '$(srcdir)/'`src/surfit_io/mask_grd.cpp
+
+mask_io_tcl.lo: src/surfit_io/mask_io_tcl.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mask_io_tcl.lo -MD -MP -MF "$(DEPDIR)/mask_io_tcl.Tpo" -c -o mask_io_tcl.lo `test -f 'src/surfit_io/mask_io_tcl.cpp' || echo '$(srcdir)/'`src/surfit_io/mask_io_tcl.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/mask_io_tcl.Tpo" "$(DEPDIR)/mask_io_tcl.Plo"; else rm -f "$(DEPDIR)/mask_io_tcl.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_io/mask_io_tcl.cpp' object='mask_io_tcl.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mask_io_tcl.lo `test -f 'src/surfit_io/mask_io_tcl.cpp' || echo '$(srcdir)/'`src/surfit_io/mask_io_tcl.cpp
 
 EasyBMP.lo: src/surfit_io/EasyBmp/EasyBMP.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT EasyBMP.lo -MD -MP -MF "$(DEPDIR)/EasyBMP.Tpo" -c -o EasyBMP.lo `test -f 'src/surfit_io/EasyBmp/EasyBMP.cpp' || echo '$(srcdir)/'`src/surfit_io/EasyBmp/EasyBMP.cpp; \
