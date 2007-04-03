@@ -23,6 +23,7 @@
 #include "fileio.h"
 #include "datafile.h"
 #include "interp.h"
+#include "boolvec.h"
 
 #include "data_manager.h"
 
@@ -299,12 +300,14 @@ const data * data_manager::data_get(int i) const {
 	return NULL;
 };
 
-const data * data_manager::data_get(const char * type, const char * name) const {
+const data * data_manager::data_get(const char * type, const char * name, int id) const {
 	int i;
 	for (i = 0; i < data_count(); i++) {
 		const data * dat = data_get(i);
 		if (dat->getType() && dat->getName())
-			if ( (strcmp(dat->getType(), type) == 0) && (strcmp(dat->getName(), name) == 0))
+			if ( (strcmp(dat->getType(), type) == 0) && 
+			     (strcmp(dat->getName(), name) == 0) &&
+			     (dat->getId() == id) )
 				return dat;
 	};
 	return NULL;
@@ -570,8 +573,10 @@ void surfit_manager::clear_data() const {
 
 	grid_unload();
 	
-	surf_delall();
-	if (surfit_masks)
+	if (surfit_surfs) 
+		surf_del("*");
+	
+	if (surfit_masks) 
 		mask_del("*");
 
 	pnts_delall();

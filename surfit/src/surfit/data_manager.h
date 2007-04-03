@@ -113,8 +113,8 @@ public:
 	int data_count() const;
 	//! returns i'th data
 	const data * data_get(int i) const;
-	//! returns data with specified type and name
-	const data * data_get(const char * type, const char * name) const;
+	//! returns data with specified type, name and id
+	const data * data_get(const char * type, const char * name, int id) const;
 
 	int get_managers_count() const;
 	const manager * get_manager(int pos) const;

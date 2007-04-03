@@ -27,35 +27,35 @@
 
 namespace surfit {
 
-bool fault(const char * curv_name = "*");
+surfit::boolvec * fault(const char * curv_name = "*");
 
-bool curve(REAL value, const char * curv_name = "*");
-bool curve_add(REAL value, REAL weight, const char * curv_name = "*");
-bool curve_leq(REAL value, const char * curv_name = "*", REAL mult = 0.001);
-bool curve_geq(REAL value, const char * curv_name = "*", REAL mult = 0.001);
-bool curve_surf(const char * surf_name = "*", const char * curv_name = "*");
-bool curve_surf_add(const char * surf_name = "*", REAL weight = 1, const char * curv_name = "*");
-bool curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 0.001);
-bool curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 0.001);
+surfit::boolvec * curve(REAL value, const char * curv_name = "*");
+surfit::boolvec * curve_add(REAL value, REAL weight, const char * curv_name = "*");
+surfit::boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL mult = 0.001);
+surfit::boolvec * curve_geq(REAL value, const char * curv_name = "*", REAL mult = 0.001);
+surfit::boolvec * curve_surf(const char * surf_name = "*", const char * curv_name = "*");
+surfit::boolvec * curve_surf_add(const char * surf_name = "*", REAL weight = 1, const char * curv_name = "*");
+surfit::boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 0.001);
+surfit::boolvec * curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 0.001);
 
-bool area(const char * value = "undef", const char * area_name = "*", int inside = 1);
-bool area_add(REAL value, REAL weight, const char * area_name = "*", int inside = 1);
-bool area_leq(REAL value, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
-bool area_geq(REAL value, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
-bool area_surf(const char * surf_name = "*", const char * area_name = "*", int inside = 1);
-bool area_surf_add(const char * surf_name = "*", REAL weight = 1, const char * area_name = "*", int inside = 1);
-bool area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 0.001, int inside = 1);
-bool area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 0.001, int inside = 1);
-bool area_mean(REAL mean, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
-bool area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL mult = 0.001, int inside = 1);
-bool area_completer(const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
-bool area_completer_add(REAL weight = 1, const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
-bool area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL mult = 0.001, int inside = 1);
+surfit::boolvec * area(const char * value = "undef", const char * area_name = "*", int inside = 1);
+surfit::boolvec * area_add(REAL value, REAL weight, const char * area_name = "*", int inside = 1);
+surfit::boolvec * area_leq(REAL value, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+surfit::boolvec * area_geq(REAL value, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+surfit::boolvec * area_surf(const char * surf_name = "*", const char * area_name = "*", int inside = 1);
+surfit::boolvec * area_surf_add(const char * surf_name = "*", REAL weight = 1, const char * area_name = "*", int inside = 1);
+surfit::boolvec * area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+surfit::boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+surfit::boolvec * area_mean(REAL mean, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+surfit::boolvec * area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL mult = 0.001, int inside = 1);
+surfit::boolvec * area_completer(const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
+surfit::boolvec * area_completer_add(REAL weight = 1, const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
+surfit::boolvec * area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL mult = 0.001, int inside = 1);
 
-bool contour(const char * cntr_name = "*");
-bool contour_add(REAL weight, const char * cntr_name = "*");
-bool contour_leq(const char * cntr_name = "*", REAL mult = 0.001);
-bool contour_geq(const char * cntr_name = "*", REAL mult = 0.001);
+surfit::boolvec * contour(const char * cntr_name = "*");
+surfit::boolvec * contour_add(REAL weight, const char * cntr_name = "*");
+surfit::boolvec * contour_leq(const char * cntr_name = "*", REAL mult = 0.001);
+surfit::boolvec * contour_geq(const char * cntr_name = "*", REAL mult = 0.001);
 
 //
 // 2D

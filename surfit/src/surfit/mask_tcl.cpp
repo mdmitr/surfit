@@ -23,6 +23,7 @@
 #include "fileio.h"
 #include "boolvec.h"
 #include "strvec.h"
+#include "intvec.h"
 
 #include "mask.h"
 #include "surf.h"
@@ -281,10 +282,32 @@ struct match_mask_getName
 	strvec * res;
 };
 
-
 strvec * mask_getName(const char * pos) 
 {
 	match_mask_getName qq(pos);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
+};
+
+struct match_mask_getId
+{
+	match_mask_getId(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_mask * mask)
+	{
+		if ( StringMatch(pos, mask->getName()) )
+		{
+			if (res == NULL)
+				res = create_intvec();
+			res->push_back( mask->getId() );
+		}
+	}
+	const char * pos;
+	intvec * res;
+};
+
+intvec * mask_getId(const char * pos) 
+{
+	match_mask_getId qq(pos);
 	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
 	return qq.res;
 };
@@ -352,7 +375,6 @@ void mask_del(const char * pos)
 		if (i == 0)
 			break;
 	}
-	//std::for_each(surfit_masks->rbegin(), surfit_masks->rend(), match_mask_del(pos));
 };
 
 struct match_mask_info {

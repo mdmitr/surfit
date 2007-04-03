@@ -28,10 +28,13 @@
 namespace surfit {
 
 static int noname_counter = 0;
+static int id_counter = 0;
 
 data::data(const char * itype) {
 	name = NULL;
 	type = strdup(itype);
+	id = id_counter;
+	id_counter++;
 };
 
 data::~data() {
@@ -73,6 +76,10 @@ void data::setType(const char * newtype) {
 
 const char * data::getName() const {
 	return name?name:"noname";
+};
+
+int data::getId() const {
+	return id;
 };
 
 const char * data::getType() const {

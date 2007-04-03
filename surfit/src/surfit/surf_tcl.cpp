@@ -26,6 +26,8 @@
 #include "stepFunc.h"
 #include "boolvec.h"
 #include "intvec.h"
+#include "strvec.h"
+#include "read_txt.h"
 
 #include "surf.h"
 #include "surf_internal.h"
@@ -46,6 +48,7 @@
 #include "area.h"
 #include "cntr.h"
 #include "cntr_trace.h"
+#include "variables_tcl.h"
 
 #include "grid_user.h"
 #include "findfile.h"
@@ -395,61 +398,125 @@ vec * surf_sum(const char * pos)
 
 struct match_surf_to_pnts
 {
-	match_surf_to_pnts(const char * ipos) : pos(ipos), res(false) {};
+	match_surf_to_pnts(const char * ipos) : pos(ipos), res(NULL) {};
 	void operator()(d_surf * srf) 
 	{
 		if ( StringMatch( pos, srf->getName() ) )
 		{
+			if (res == NULL)
+				res = create_boolvec();
 			writelog(LOG_MESSAGE,"converting surface \"%s\" to points", srf->getName());
 			d_points * pnts = _surf_to_pnts(srf);
-			if (!pnts)
+			if (!pnts) {
+				res->push_back(false);
 				return;
+			}
 			
 			surfit_pnts->push_back(pnts);
-			res = true;
+			res->push_back(true);
 		}
 	};
-	bool res;
+	boolvec * res;
 	const char * pos;
 };
 
-bool surf_to_pnts(const char * surf_pos) 
+boolvec * surf_to_pnts(const char * surf_pos) 
 {
 	match_surf_to_pnts msp(surf_pos);
 	msp = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), msp);
 	return msp.res;
 }
 
-int surf_getCountX(const char * pos) 
+struct match_surf_getCountX
 {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return 0;
-	return srf->getCountX();
+	match_surf_getCountX(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf) 
+	{
+		if ( StringMatch( pos, surf->getName() ) )
+		{
+			if (res == NULL)
+				res = create_intvec();
+			writelog(LOG_MESSAGE, "surf_getCountX : \"%s\"", surf->getName());
+			res->push_back( surf->getCountX() );
+		}
+	}
+	const char * pos;
+	intvec * res;
 };
 
-int surf_getCountY(const char * pos) 
+intvec * surf_getCountX(const char * pos) 
 {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return 0;
-	return srf->getCountY();
+	match_surf_getCountX qq(pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
-REAL surf_getStepX(const char * pos) 
+struct match_surf_getCountY
 {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return FLT_MAX;
-	return srf->getStepX();
+	match_surf_getCountY(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf) 
+	{
+		if ( StringMatch( pos, surf->getName() ) )
+		{
+			if (res == NULL)
+				res = create_intvec();
+			writelog(LOG_MESSAGE, "surf_getCountY : \"%s\"", surf->getName());
+			res->push_back( surf->getCountY() );
+		}
+	}
+	const char * pos;
+	intvec * res;
 };
 
-REAL surf_getStepY(const char * pos) 
+intvec * surf_getCountY(const char * pos) 
 {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return FLT_MAX;
-	return srf->getStepY();
+	match_surf_getCountY qq(pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
+
+struct match_surf_getStepX {
+	match_surf_getStepX(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf) 
+	{
+		if ( StringMatch( pos, surf->getName() ) )
+		{
+			if (res == NULL)
+				res = create_vec();
+			res->push_back( surf->getStepX() );
+		};
+	};
+	const char * pos;
+	vec * res;
+};
+
+vec * surf_getStepX(const char * pos) 
+{
+	match_surf_getStepX qq(pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
+
+struct match_surf_getStepY {
+	match_surf_getStepY(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf) 
+	{
+		if ( StringMatch( pos, surf->getName() ) )
+		{
+			if (res == NULL)
+				res = create_vec();
+			res->push_back( surf->getStepY() );
+		};
+	};
+	const char * pos;
+	vec * res;
+};
+
+vec * surf_getStepY(const char * pos) 
+{
+	match_surf_getStepY qq(pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 struct match_surf_getValue
@@ -510,36 +577,39 @@ struct surf_oper
 
 struct match_surf_oper2
 {
-	match_surf_oper2(d_surf * isurf1, const char * ipos2, surf_oper * ioper) : surf1(isurf1), pos2(ipos2), res(false), oper(ioper) {};
+	match_surf_oper2(d_surf * isurf1, const char * ipos2, surf_oper * ioper) : surf1(isurf1), pos2(ipos2), res(NULL), oper(ioper) {};
 	void operator()(d_surf * surf2)
 	{
 		if ( StringMatch(pos2, surf2->getName()) )
 		{
-			res = oper->do_oper(surf1, surf2);	
-			
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( oper->do_oper(surf1, surf2) );
 		}
 	}
 	d_surf * surf1;
 	const char * pos2;
-	bool res;
+	boolvec * res;
 	surf_oper * oper;
 };
 
 struct match_surf_oper
 {
-	match_surf_oper(const char * ipos1, const char * ipos2, surf_oper * ioper) : pos1(ipos1), pos2(ipos2), res(false), oper(ioper) {};
+	match_surf_oper(const char * ipos1, const char * ipos2, surf_oper * ioper) : pos1(ipos1), pos2(ipos2), res(NULL), oper(ioper) {};
 	void operator()(d_surf * surf)
 	{
 		if ( StringMatch(pos1, surf->getName()) )
 		{
 			match_surf_oper2 qq(surf, pos2, oper);
 			qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
-			res = qq.res;
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(qq.res);
 		}
 	}
 	const char * pos1;
 	const char * pos2;
-	bool res;
+	boolvec * res;
 	surf_oper * oper;
 };
 
@@ -557,7 +627,7 @@ struct surf_oper_plus : public surf_oper
 	}
 };
 
-bool surf_plus(const char * pos1, const char * pos2) 
+boolvec * surf_plus(const char * pos1, const char * pos2) 
 {
 	surf_oper_plus oper_plus;
 	match_surf_oper qq(pos1, pos2, &oper_plus);
@@ -579,7 +649,7 @@ struct surf_oper_minus : public surf_oper
 	}
 };
 
-bool surf_minus(const char * pos1, const char * pos2) 
+boolvec * surf_minus(const char * pos1, const char * pos2) 
 {
 	surf_oper_minus oper_minus;
 	match_surf_oper qq(pos1, pos2, &oper_minus);
@@ -601,7 +671,7 @@ struct surf_oper_mult : public surf_oper
 	}
 };
 
-bool surf_mult(const char * pos1, const char * pos2) 
+boolvec * surf_mult(const char * pos1, const char * pos2) 
 {
 	surf_oper_mult oper_mult;
 	match_surf_oper qq(pos1, pos2, &oper_mult);
@@ -623,7 +693,7 @@ struct surf_oper_div : public surf_oper
 	}
 };
 
-bool surf_div(const char * pos1, const char * pos2) 
+boolvec * surf_div(const char * pos1, const char * pos2) 
 {
 	surf_oper_div oper_div;
 	match_surf_oper qq(pos1, pos2, &oper_div);
@@ -645,7 +715,7 @@ struct surf_oper_set : public surf_oper
 	}
 };
 
-bool surf_set(const char * pos1, const char * pos2) 
+boolvec * surf_set(const char * pos1, const char * pos2) 
 {
 	surf_oper_set oper_set;
 	match_surf_oper qq(pos1, pos2, &oper_set);
@@ -661,57 +731,63 @@ struct surf_area_oper
 
 struct match_surf_area_oper3
 {
-	match_surf_area_oper3(d_surf * isurf1, d_surf * isurf2, const char * iarea_pos, surf_area_oper * ioper) : surf1(isurf1), surf2(isurf2), res(false), oper(ioper), area_pos(iarea_pos) {};
+	match_surf_area_oper3(d_surf * isurf1, d_surf * isurf2, const char * iarea_pos, surf_area_oper * ioper) : surf1(isurf1), surf2(isurf2), res(NULL), oper(ioper), area_pos(iarea_pos) {};
 	void operator()(d_area * area)
 	{
 		if ( StringMatch(area_pos, area->getName()) )
 		{
-			res = oper->do_oper(surf1, surf2, area);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( oper->do_oper(surf1, surf2, area) );
 		}
 	}
 	d_surf * surf1;
 	d_surf * surf2;
 	const char * area_pos;
-	bool res;
+	boolvec * res;
 	surf_area_oper * oper;
 };
 
 
 struct match_surf_area_oper2
 {
-	match_surf_area_oper2(d_surf * isurf1, const char * ipos2, const char * iarea_pos, surf_area_oper * ioper) : surf1(isurf1), pos2(ipos2), res(false), oper(ioper), area_pos(iarea_pos) {};
+	match_surf_area_oper2(d_surf * isurf1, const char * ipos2, const char * iarea_pos, surf_area_oper * ioper) : surf1(isurf1), pos2(ipos2), res(NULL), oper(ioper), area_pos(iarea_pos) {};
 	void operator()(d_surf * surf2)
 	{
 		if ( StringMatch(pos2, surf2->getName()) )
 		{
 			match_surf_area_oper3 qq(surf1, surf2, area_pos, oper);	
 			qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
-			res = qq.res;
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( qq.res );
 		}
 	}
 	d_surf * surf1;
 	const char * pos2;
 	const char * area_pos;
-	bool res;
+	boolvec * res;
 	surf_area_oper * oper;
 };
 
 struct match_surf_area_oper
 {
-	match_surf_area_oper(const char * ipos1, const char * ipos2, const char * iarea_pos, surf_area_oper * ioper) : pos1(ipos1), pos2(ipos2), res(false), oper(ioper), area_pos(iarea_pos) {};
+	match_surf_area_oper(const char * ipos1, const char * ipos2, const char * iarea_pos, surf_area_oper * ioper) : pos1(ipos1), pos2(ipos2), res(NULL), oper(ioper), area_pos(iarea_pos) {};
 	void operator()(d_surf * surf)
 	{
 		if ( StringMatch(pos1, surf->getName()) )
 		{
 			match_surf_area_oper2 qq(surf, pos2, area_pos, oper);
 			qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
-			res = qq.res;
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( qq.res );
 		}
 	}
 	const char * pos1;
 	const char * pos2;
 	const char * area_pos;
-	bool res;
+	boolvec * res;
 	surf_area_oper * oper;
 };
 
@@ -736,7 +812,7 @@ struct surf_area_oper_plus : public surf_area_oper
 	}
 };
 
-bool surf_plus_area(const char * pos1, const char * area_pos, const char * pos2) 
+boolvec * surf_plus_area(const char * pos1, const char * area_pos, const char * pos2) 
 {
 	surf_area_oper_plus oper_plus;
 	match_surf_area_oper qq(pos1, pos2, area_pos, &oper_plus);
@@ -765,7 +841,7 @@ struct surf_area_oper_minus : public surf_area_oper
 	}
 };
 
-bool surf_minus_area(const char * pos1, const char * area_pos, const char * pos2) 
+boolvec * surf_minus_area(const char * pos1, const char * area_pos, const char * pos2) 
 {
 	surf_area_oper_minus oper_minus;
 	match_surf_area_oper qq(pos1, pos2, area_pos, &oper_minus);
@@ -794,7 +870,7 @@ struct surf_area_oper_mult : public surf_area_oper
 	}
 };
 
-bool surf_mult_area(const char * pos1, const char * area_pos, const char * pos2) 
+boolvec * surf_mult_area(const char * pos1, const char * area_pos, const char * pos2) 
 {
 	surf_area_oper_mult oper_mult;
 	match_surf_area_oper qq(pos1, pos2, area_pos, &oper_mult);
@@ -823,7 +899,7 @@ struct surf_area_oper_div : public surf_area_oper
 	}
 };
 
-bool surf_div_area(const char * pos1, const char * area_pos, const char * pos2) 
+boolvec * surf_div_area(const char * pos1, const char * area_pos, const char * pos2) 
 {
 	surf_area_oper_div oper_div;
 	match_surf_area_oper qq(pos1, pos2, area_pos, &oper_div);
@@ -852,7 +928,7 @@ struct surf_area_oper_set : public surf_area_oper
 	}
 };
 
-bool surf_set_area(const char * pos1, const char * area_pos, const char * pos2) 
+boolvec * surf_set_area(const char * pos1, const char * area_pos, const char * pos2) 
 {
 	surf_area_oper_set oper_set;
 	match_surf_area_oper qq(pos1, pos2, area_pos, &oper_set);
@@ -867,17 +943,19 @@ struct surf_val_oper
 
 struct match_val_oper
 {
-	match_val_oper(REAL ival, const char * ipos, surf_val_oper * ioper) : val(ival), pos(ipos), res(false), oper(ioper) {};
+	match_val_oper(REAL ival, const char * ipos, surf_val_oper * ioper) : val(ival), pos(ipos), res(NULL), oper(ioper) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( pos, surf->getName()) )
 		{
-			res = oper->do_oper(val, surf); 
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( oper->do_oper(val, surf) ); 
 		}
 	}
 	REAL val;
 	const char * pos;
-	bool res;
+	boolvec * res;
 	surf_val_oper * oper;
 };
 
@@ -891,7 +969,7 @@ struct surf_val_oper_plus : public surf_val_oper
 	}
 };
 
-bool surf_plus_value(REAL val, const char * pos) 
+boolvec * surf_plus_value(REAL val, const char * pos) 
 {
 	surf_val_oper_plus oper_plus;
 	match_val_oper qq(val, pos, &oper_plus);
@@ -909,7 +987,7 @@ struct surf_val_oper_minus : public surf_val_oper
 	}
 };
 
-bool surf_minus_value(REAL val, const char * pos) 
+boolvec * surf_minus_value(REAL val, const char * pos) 
 {
 	surf_val_oper_minus oper_minus;
 	match_val_oper qq(val, pos, &oper_minus);
@@ -927,7 +1005,7 @@ struct surf_val_oper_mult : public surf_val_oper
 	}
 };
 
-bool surf_mult_value(REAL val, const char * pos) 
+boolvec * surf_mult_value(REAL val, const char * pos) 
 {
 	surf_val_oper_mult oper_mult;
 	match_val_oper qq(val, pos, &oper_mult);
@@ -945,7 +1023,7 @@ struct surf_val_oper_div : public surf_val_oper
 	}
 };
 
-bool surf_div_value(REAL val, const char * pos) 
+boolvec * surf_div_value(REAL val, const char * pos) 
 {
 	surf_val_oper_div oper_div;
 	match_val_oper qq(val, pos, &oper_div);
@@ -963,7 +1041,7 @@ struct surf_val_oper_set : public surf_val_oper
 	}
 };
 
-bool surf_set_value(REAL val, const char * pos) 
+boolvec * surf_set_value(REAL val, const char * pos) 
 {
 	surf_val_oper_set oper_set;
 	match_val_oper qq(val, pos, &oper_set);
@@ -971,159 +1049,230 @@ bool surf_set_value(REAL val, const char * pos)
 	return qq.res;
 };
 
-bool surf_plus_value_area(REAL val, const char * surf_pos, const char * area_pos) 
+struct surf_val_oper_area 
 {
-	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	
-	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
-	if (!area)
-		return false;
-
-	writelog(LOG_MESSAGE,"surf_plus_value_area: \"%s\" += %g in area \"%s\"",
-		srf->getName()?srf->getName():surf_pos,val,
-		area->getName()?area->getName():area_pos);
-
-	bitvec * mask = nodes_in_area_mask(area, srf->grd);
-	if (mask == NULL)
-		return false;
-
-	srf->plus_mask(val, mask);
-	if (mask)
-		mask->release();
-	return true;
+	virtual bool do_oper(REAL val, d_surf * surf, d_area * area) = 0;
 };
 
-bool surf_minus_value_area(REAL val, const char * area_pos, const char * surf_pos) 
+struct match_val_oper_area2
 {
-	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	
-	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
-	if (!area)
-		return false;
-
-	writelog(LOG_MESSAGE,"surf_minus_value_area: \"%s\" -= %g in area \"%s\"",
-		srf->getName()?srf->getName():surf_pos,val,
-		area->getName()?area->getName():area_pos);
-
-	bitvec * mask = nodes_in_area_mask(area, srf->grd);
-	if (mask == NULL)
-		return false;
-
-	srf->minus_mask(val, mask);
-	if (mask)
-		mask->release();
-	return true;
-};
-
-bool surf_mult_value_area(REAL val, const char * area_pos, const char * surf_pos) 
-{
-	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	
-	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
-	if (!area)
-		return false;
-
-	writelog(LOG_MESSAGE,"surf_mult_value_area: \"%s\" *= %g in area \"%s\"",
-		srf->getName()?srf->getName():surf_pos,val,
-		area->getName()?area->getName():area_pos);
-
-	bitvec * mask = nodes_in_area_mask(area, srf->grd);
-	if (mask == NULL)
-		return false;
-
-	srf->mult_mask(val, mask);
-	if (mask)
-		mask->release();
-	return true;
-};
-
-bool surf_div_value_area(REAL val, const char * area_pos, const char * surf_pos) 
-{
-	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	
-	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
-	if (!area)
-		return false;
-
-	writelog(LOG_MESSAGE,"surf_div_value_area: \"%s\" /= %g in area \"%s\"",
-		srf->getName()?srf->getName():surf_pos,val,
-		area->getName()?area->getName():area_pos);
-
-	bitvec * mask = nodes_in_area_mask(area, srf->grd);
-	if (mask == NULL)
-		return false;
-
-	srf->div_mask(val, mask);
-	if (mask)
-		mask->release();
-	return true;
-};
-
-bool surf_set_value_area(const char * Value, const char * area_pos, const char * surf_pos) {
-	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	
-	d_area * area = get_element<d_area>(area_pos, surfit_areas->begin(), surfit_areas->end());
-	if (!area)
-		return false;
-
-	writelog(LOG_MESSAGE,"surf_set_value_area: \"%s\" = %s in area \"%s\"",
-		srf->getName()?srf->getName():surf_pos,Value,
-		area->getName()?area->getName():area_pos);
-
-	bitvec * mask = nodes_in_area_mask(area, srf->grd);
-	if (mask == NULL)
-		return false;
-
-	REAL val = srf->undef_value;
-
-	if ( strcmp("undef", Value) != 0 )
-		val = atof(Value);
-
-	srf->set_mask(val, mask);
-	if (mask)
-		mask->release();
-	return true;
-};
-
-bool surf_to_mask(REAL true_from, REAL true_to, const char * pos)
-{
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-
-	writelog(LOG_MESSAGE,"converting surface \"%s\" to mask",
-		srf->getName()?srf->getName():pos);
-	
-	bitvec * bcoeff = create_bitvec( srf->coeff->size() );
-	size_t i;
+	match_val_oper_area2(REAL ival, d_surf * isurf, const char * iarea_pos, surf_val_oper_area * ioper_area) : val(ival), surf(isurf), area_pos(iarea_pos), oper(ioper_area), res(NULL) {};
+	void operator()(d_area * area) 
+	{
+		if ( StringMatch(area_pos, area->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( oper->do_oper(val, surf, area) );
+		}
+	}
 	REAL val;
-	for (i = 0; i < srf->coeff->size(); i++) {
-		val = (*(srf->coeff))(i);
-		bool bval = ( (val >= true_from) && (val <= true_to) );
-		if (bval)
-			bcoeff->set_true(i);
-		else
-			bcoeff->set_false(i);
+	d_surf * surf;
+	const char * area_pos;
+	boolvec * res;
+	surf_val_oper_area * oper;
+};
+
+struct match_val_oper_area
+{
+	match_val_oper_area(REAL ival, const char * isurf_pos, const char * iarea_pos, surf_val_oper_area * ioper_area) 
+		: val(ival), surf_pos(isurf_pos), area_pos(iarea_pos), res(NULL), oper(ioper_area) {};
+	void operator()(d_surf * surf) 
+	{
+		if ( StringMatch( surf_pos, surf->getName()) )
+		{
+			match_val_oper_area2 qq(val, surf, area_pos, oper);
+			qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( qq.res ); 
+		}
+	}
+	REAL val;
+	const char * surf_pos;
+	const char * area_pos;
+	boolvec * res;
+	surf_val_oper_area * oper;
+};
+
+struct surf_val_oper_area_plus : public surf_val_oper_area
+{
+	virtual bool do_oper(REAL val, d_surf * surf, d_area * area) 
+	{
+		writelog(LOG_MESSAGE,"surf_plus_value_area: \"%s\" += %g in area \"%s\"",
+			surf->getName(),val,area->getName());
+
+		bitvec * mask = nodes_in_area_mask(area, surf->grd);
+		if (mask == NULL)
+			return false;
+
+		surf->plus_mask(val, mask);
+		if (mask)
+			mask->release();
+		return true;
 	};
+};
 
-	d_grid * fgrd = srf->grd;
-	d_grid * grd = create_grid(fgrd);
+boolvec * surf_plus_value_area(REAL val, const char * surf_pos, const char * area_pos) 
+{
+	surf_val_oper_area_plus oper_plus;
+	match_val_oper_area qq(val, surf_pos, area_pos, &oper_plus);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
 
-	d_mask * msk = create_mask(bcoeff, grd);
-	msk->setName(srf->getName());
-	surfit_masks->push_back(msk);
+struct surf_val_oper_area_minus : public surf_val_oper_area
+{
+	virtual bool do_oper(REAL val, d_surf * surf, d_area * area) 
+	{
+		writelog(LOG_MESSAGE,"surf_minus_value_area: \"%s\" -= %g in area \"%s\"",
+			surf->getName(),val,area->getName());
 
-	return true;
+		bitvec * mask = nodes_in_area_mask(area, surf->grd);
+		if (mask == NULL)
+			return false;
+
+		surf->minus_mask(val, mask);
+		if (mask)
+			mask->release();
+		return true;
+	};
+};
+
+boolvec * surf_minus_value_area(REAL val, const char * area_pos, const char * surf_pos) 
+{
+	surf_val_oper_area_minus oper_minus;
+	match_val_oper_area qq(val, surf_pos, area_pos, &oper_minus);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
+
+struct surf_val_oper_area_mult : public surf_val_oper_area
+{
+	virtual bool do_oper(REAL val, d_surf * surf, d_area * area) 
+	{
+		writelog(LOG_MESSAGE,"surf_mult_value_area: \"%s\" *= %g in area \"%s\"",
+			surf->getName(),val,area->getName());
+
+		bitvec * mask = nodes_in_area_mask(area, surf->grd);
+		if (mask == NULL)
+			return false;
+
+		surf->minus_mask(val, mask);
+		if (mask)
+			mask->release();
+		return true;
+	};
+};
+
+boolvec * surf_mult_value_area(REAL val, const char * area_pos, const char * surf_pos) 
+{
+	surf_val_oper_area_mult oper_mult;
+	match_val_oper_area qq(val, surf_pos, area_pos, &oper_mult);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
+
+struct surf_val_oper_area_div : public surf_val_oper_area
+{
+	virtual bool do_oper(REAL val, d_surf * surf, d_area * area) 
+	{
+		writelog(LOG_MESSAGE,"surf_div_value_area: \"%s\" /= %g in area \"%s\"",
+			surf->getName(),val,area->getName());
+
+		bitvec * mask = nodes_in_area_mask(area, surf->grd);
+		if (mask == NULL)
+			return false;
+
+		surf->minus_mask(val, mask);
+		if (mask)
+			mask->release();
+		return true;
+	};
+};
+
+boolvec * surf_div_value_area(REAL val, const char * area_pos, const char * surf_pos) 
+{
+	surf_val_oper_area_div oper_div;
+	match_val_oper_area qq(val, surf_pos, area_pos, &oper_div);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
+
+struct surf_val_oper_area_set : public surf_val_oper_area
+{
+	virtual bool do_oper(REAL val, d_surf * surf, d_area * area) 
+	{
+		writelog(LOG_MESSAGE,"surf_set_value_area: \"%s\" = %g in area \"%s\"",
+			surf->getName(),val,area->getName());
+
+		bitvec * mask = nodes_in_area_mask(area, surf->grd);
+		if (mask == NULL)
+			return false;
+
+		surf->minus_mask(val, mask);
+		if (mask)
+			mask->release();
+		return true;
+	};
+};
+
+boolvec * surf_set_value_area(const char * Val, const char * area_pos, const char * surf_pos) 
+{
+	char * cp = strdup(Val);
+	REAL val = ator(cp);
+	free(cp);
+	if (strcmp(Val,"undef") == 0)
+		val = undef_value;
+	surf_val_oper_area_set oper_set;
+	match_val_oper_area qq(val, surf_pos, area_pos, &oper_set);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
+
+struct match_surf_to_mask
+{
+	match_surf_to_mask(REAL itrue_from, REAL itrue_to, const char * ipos) : true_from(itrue_from), true_to(itrue_to), pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			writelog(LOG_MESSAGE,"converting surface \"%s\" to mask",surf->getName());
+
+			bitvec * bcoeff = create_bitvec( surf->coeff->size() );
+			size_t i;
+			REAL val;
+			for (i = 0; i < surf->coeff->size(); i++) {
+				val = (*(surf->coeff))(i);
+				bool bval = ( (val >= true_from) && (val <= true_to) );
+				if (bval)
+					bcoeff->set_true(i);
+				else
+					bcoeff->set_false(i);
+			};
+
+			d_grid * fgrd = surf->grd;
+			d_grid * grd = create_grid(fgrd);
+
+			d_mask * msk = create_mask(bcoeff, grd);
+			msk->setName(surf->getName());
+			surfit_masks->push_back(msk);
+			res->push_back(true);
+		}
+	}
+	REAL true_from; 
+	REAL true_to; 
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * surf_to_mask(REAL true_from, REAL true_to, const char * pos)
+{
+	match_surf_to_mask qq(true_from, true_to, pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 //
@@ -1131,18 +1280,52 @@ bool surf_to_mask(REAL true_from, REAL true_to, const char * pos)
 // wavelets section
 //
 //
-bool surf_decomp(const char * pos) {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	return _surf_decomp(srf);
+
+struct match_surf_decomp
+{
+	match_surf_decomp(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( _surf_decomp(surf) );
+		}
+	}
+	const char * pos;
+	boolvec * res;
 };
 
-bool surf_auto_decomp(REAL eps, const char * pos) {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	return _surf_auto_decomp(srf,eps);
+boolvec * surf_decomp(const char * pos) 
+{
+	match_surf_decomp qq(pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
+
+struct match_surf_auto_decomp
+{
+	match_surf_auto_decomp(REAL ieps, const char * ipos) : pos(ipos), res(NULL), eps(ieps) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( _surf_auto_decomp(surf,eps) );
+		}
+	}
+	const char * pos;
+	boolvec * res;
+	REAL eps;
+};
+
+boolvec * surf_auto_decomp(REAL eps, const char * pos) 
+{
+	match_surf_auto_decomp qq(eps, pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 struct match_surf_add_noise
@@ -1165,33 +1348,98 @@ void surf_add_noise(REAL std, const char * pos)
 	std::for_each(surfit_surfs->begin(), surfit_surfs->end(), match_surf_add_noise(std, pos));
 };
 
-bool surf_recons(const char * pos) {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	return _surf_recons(srf);
+struct match_surf_recons
+{
+	match_surf_recons(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( _surf_recons(surf) );
+		}
+	}
+	const char * pos;
+	boolvec * res;
 };
 
-bool surf_full_recons(const char * pos) {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	return _surf_full_recons(srf);
+boolvec * surf_recons(const char * pos) 
+{
+	match_surf_recons qq(pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
-int surf_get_details_level(const char * pos) {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return -1;
-	return srf->details_h->size();
+struct match_surf_full_recons
+{
+	match_surf_full_recons(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( _surf_full_recons(surf) );
+		}
+	}
+	const char * pos;
+	boolvec * res;
 };
 
-bool surf_undef(REAL new_undef_value, const char * pos) {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	srf->set_undef_value(new_undef_value);
-	return true;
+boolvec * surf_full_recons(const char * pos) 
+{
+	match_surf_full_recons qq(pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
+
+struct match_surf_get_details_level
+{
+	match_surf_get_details_level(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			if (res == NULL)
+				res = create_intvec();
+			res->push_back( (int)surf->details_h->size() );
+		}
+	}
+	const char * pos;
+	intvec * res;
+};
+
+intvec * surf_get_details_level(const char * pos) 
+{
+	match_surf_get_details_level qq(pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
+
+struct match_surf_undef
+{
+	match_surf_undef(REAL inew_undef_value, const char * ipos) : new_undef_value(inew_undef_value), pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			surf->undef_value = new_undef_value;
+			res->push_back( true );
+		}
+	}
+	REAL new_undef_value;
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * surf_undef(REAL new_undef_value, const char * pos) 
+{
+	match_surf_undef qq(new_undef_value, pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 struct match_surf_D1
@@ -1338,52 +1586,91 @@ boolvec * surf_gradient(const char * pos, const char * newname)
 	return qq.res;
 };
 
-const char * surf_getName(const char * pos) {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	return srf->getName();
+struct match_surf_getName {
+	match_surf_getName(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			if (res == NULL)
+				res = create_strvec();
+			res->push_back( surf->getName() );
+		}
+	};
+	const char * pos;
+	strvec * res;
 };
 
-bool surf_setName(const char * new_name, const char * pos) {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	srf->setName(new_name);
-	return true;
+strvec * surf_getName(const char * pos) 
+{
+	match_surf_getName qq(pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
-bool surf_delall() {
+struct match_surf_getId {
+	match_surf_getId(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			if (res == NULL)
+				res = create_intvec();
+			res->push_back( surf->getId() );
+		}
+	};
+	const char * pos;
+	intvec * res;
+};
 
-	writelog(LOG_MESSAGE,"removing all surfaces from memory");
+intvec * surf_getId(const char * pos) 
+{
+	match_surf_getId qq(pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
 
-	if (surfit_surfs == NULL)
-		return false;
+struct match_surf_setName {
+	match_surf_setName(const char * inewname, const char * ipos) : newname(inewname), pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			surf->setName(newname);
+			res->push_back(true);
+		}
+	};
+	const char * pos;
+	const char * newname;
+	boolvec * res;
+};
 
-	if (surfit_surfs->size() == 0) {
-		return false;
+boolvec * surf_setName(const char * new_name, const char * pos) 
+{
+	match_surf_setName qq(new_name, pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
+
+void surf_del(const char * pos) 
+{
+	if (surfit_surfs->size() == 0)
+		return;
+	size_t i;
+	for (i = surfit_surfs->size()-1; i >= 0; i--)
+	{
+		d_surf * surf = (*surfit_surfs)[i];
+		if ( StringMatch(pos, surf->getName()) == true )
+		{
+			writelog(LOG_MESSAGE,"removing surface \"%s\" from memory", surf->getName());
+			surf->release();
+			surfit_surfs->erase(surfit_surfs->begin()+i);
+		}
+		if (i == 0)
+			break;
 	}
-	
-	release_elements(surfit_surfs->begin(), surfit_surfs->end());
-	surfit_surfs->resize(0);
-
-	return true;
-};
-
-bool surf_del(const char * pos) {
-	std::vector<d_surf *>::iterator srf = get_iterator<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (srf == surfit_surfs->end())
-		return false;
-
-	if (*srf == NULL)
-		return false;
-
-	writelog(LOG_MESSAGE,"removing surface \"%s\" from memory", (*srf)->getName()?(*srf)->getName():pos);
-
-	if (*srf)
-		(*srf)->release();
-	surfit_surfs->erase(srf);
-	return true;
 };
 
 int surf_size() {
@@ -1718,55 +2005,86 @@ intvec * surf_cells_in_area(const char * area_pos,  const char * surf_pos)
 	return qq.res;
 };
 
-bool surf_filter_by_mask(const char * surf_pos, const char * def_pos) {
-	
-	d_surf * surf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (surf == NULL)
-		return false;
+struct match_surf_filter_by_mask2
+{
+	match_surf_filter_by_mask2(d_surf * isurf, const char * imask_pos) : surf(isurf), mask_pos(imask_pos), res(NULL) {};
+	void operator()(d_mask * mask)
+	{
+		if ( StringMatch(mask_pos, mask->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			writelog(LOG_MESSAGE,"filtering surface \"%s\" with mask \"%s\"",
+				surf->getName(), mask->getName());
 
-	d_mask * msk = get_element<d_mask>(def_pos, surfit_masks->begin(), surfit_masks->end());
-	if (msk == NULL)
-		return false;
+			size_t i,j;
+			REAL x,y;
+			bool val;
 
-	writelog(LOG_MESSAGE,"filtering surface \"%s\" with mask \"%s\"",
-		surf->getName(), msk->getName());
-		
-	size_t i,j;
-	REAL x,y;
-	bool val;
-	
-	size_t NN = surf->getCountX();
-	size_t MM = surf->getCountY();
-	size_t pos;
+			size_t NN = surf->getCountX();
+			size_t MM = surf->getCountY();
+			size_t pos;
 
-	for (i = 0; i < NN; i++) {
-		x = surf->getCoordNodeX(i);
-		for (j = 0; j < MM; j++) {
-			y = surf->getCoordNodeY(j);
-			val = msk->getValue(x,y);
-			if (val == false) {
-				pos = two2one(i, j, NN, MM);
-				(*(surf->coeff))( pos ) = surf->undef_value;
+			for (i = 0; i < NN; i++) {
+				x = surf->getCoordNodeX(i);
+				for (j = 0; j < MM; j++) {
+					y = surf->getCoordNodeY(j);
+					val = mask->getValue(x,y);
+					if (val == false) {
+						pos = two2one(i, j, NN, MM);
+						(*(surf->coeff))( pos ) = surf->undef_value;
+					}
+				}
 			}
+			res->push_back(true);
 		}
 	}
-	
-	return true;
+	d_surf * surf;
+	const char * mask_pos;
+	boolvec * res;
+};
+
+struct match_surf_filter_by_mask
+{
+	match_surf_filter_by_mask(const char * isurf_pos, const char * imask_pos) : surf_pos(isurf_pos), mask_pos(imask_pos), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(surf_pos, surf->getName()) )
+		{
+			match_surf_filter_by_mask2 qq(surf, mask_pos);
+			qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(qq.res);
+		}
+	}
+	const char * surf_pos;
+	const char * mask_pos;
+	boolvec * res;
+};
+
+boolvec * surf_filter_by_mask(const char * surf_pos, const char * mask_pos) 
+{
+	match_surf_filter_by_mask qq(surf_pos, mask_pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 struct match_sfa_by_area
 {
-	match_sfa_by_area(const char * iarea_pos, d_surf * isrf, bool iin_area) : area_pos(iarea_pos), srf(isrf), in_area(iin_area) {};
-	
+	match_sfa_by_area(const char * iarea_pos, d_surf * isrf, bool iin_area) : area_pos(iarea_pos), srf(isrf), in_area(iin_area), res(NULL) {};
 	void operator()(d_area * area)
 	{
 		if ( StringMatch(area_pos, area->getName()) )
 		{
-			writelog(LOG_MESSAGE,"filtering surface \"%s\" inside area \"%s\"", srf->getName()?srf->getName():"noname", area->getName());
-			
+			writelog(LOG_MESSAGE,"filtering surface \"%s\" inside area \"%s\"", srf->getName(), area->getName());
+			if (res == NULL)
+				res = create_boolvec();
 			bitvec * area_mask = nodes_in_area_mask(area, srf->grd);
-			if (area_mask == NULL)
+			if (area_mask == NULL) {
+				res->push_back(false);
 				return;
+			}
 			
 			size_t i,j,pos;
 			bool val;
@@ -1782,46 +2100,55 @@ struct match_sfa_by_area
 					}
 				}
 			}	
+			res->push_back(true);
 		}
 	};
 
 	const char * area_pos;
 	d_surf * srf;
 	bool in_area;
+	boolvec * res;
 };
-
 
 struct match_sfa_by_surf
 {
-	match_sfa_by_surf(const char * isurf_pos, const char * iarea_pos, bool iin_area) : surf_pos(isurf_pos), area_pos(iarea_pos), in_area(iin_area) {};
-	
+	match_sfa_by_surf(const char * isurf_pos, const char * iarea_pos, bool iin_area) : surf_pos(isurf_pos), area_pos(iarea_pos), in_area(iin_area), res(NULL) {};
 	void operator()(d_surf * srf)
 	{
 		if ( StringMatch(surf_pos, srf->getName()) )
 		{
-			std::for_each( surfit_areas->begin(), surfit_areas->end(), match_sfa_by_area(area_pos, srf, in_area));		
+			if (res == NULL)
+				res = create_boolvec();
+			match_sfa_by_area qq(area_pos, srf, in_area);
+			qq = std::for_each( surfit_areas->begin(), surfit_areas->end(), qq);		
+			res->push_back( qq.res );
 		}
 	};
 
 	const char * surf_pos;
 	const char * area_pos;
 	bool in_area;
+	boolvec * res;
 };
 
 
-void surf_filter_in_area(const char * surf_pos, const char * area_pos) 
+boolvec * surf_filter_in_area(const char * surf_pos, const char * area_pos) 
 {
-	std::for_each( surfit_surfs->begin(), surfit_surfs->end(), match_sfa_by_surf(surf_pos, area_pos, true) );
+	match_sfa_by_surf qq(surf_pos, area_pos, true);
+	qq = std::for_each( surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
-void surf_filter_out_area(const char * surf_pos, const char * area_pos) 
+boolvec * surf_filter_out_area(const char * surf_pos, const char * area_pos) 
 {
-	std::for_each( surfit_surfs->begin(), surfit_surfs->end(), match_sfa_by_surf(surf_pos, area_pos, false) );
+	match_sfa_by_surf qq(surf_pos, area_pos, false);
+	qq = std::for_each( surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 struct match_sfbs2
 {
-	match_sfbs2(REAL ieps, d_surf * isurf1, const char * isurf2_pos) : eps(ieps), surf1(isurf1), surf2_pos(isurf2_pos), res(false) {};
+	match_sfbs2(REAL ieps, d_surf * isurf1, const char * isurf2_pos) : eps(ieps), surf1(isurf1), surf2_pos(isurf2_pos), res(NULL) {};
 	void operator()(d_surf * surf2)
 	{
 		if ( StringMatch(surf2_pos, surf2->getName()) )
@@ -1853,10 +2180,12 @@ struct match_sfbs2
 					}
 				}
 			}
-			res = true;
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	}
-	bool res;
+	boolvec * res;
 	REAL eps;
 	d_surf * surf1;
 	const char * surf2_pos;
@@ -1864,23 +2193,25 @@ struct match_sfbs2
 
 struct match_sfbs
 {
-	match_sfbs(REAL ieps, const char * isurf1_pos, const char * isurf2_pos) : eps(ieps), surf1_pos(isurf1_pos), surf2_pos(isurf2_pos), res(false) {};
+	match_sfbs(REAL ieps, const char * isurf1_pos, const char * isurf2_pos) : eps(ieps), surf1_pos(isurf1_pos), surf2_pos(isurf2_pos), res(NULL) {};
 	void operator()(d_surf * surf)
 	{
 		if ( StringMatch(surf1_pos, surf->getName()) )
 		{
 			match_sfbs2 qq(eps, surf, surf2_pos);
 			qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
-			res = qq.res;
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( qq.res );
 		}
 	}
 	REAL eps;
 	const char * surf1_pos;
 	const char * surf2_pos;
-	bool res;
+	boolvec * res;
 };
 
-bool surf_filter_by_surf(REAL eps, const char * surf1_pos, const char * surf2_pos) 
+boolvec * surf_filter_by_surf(REAL eps, const char * surf1_pos, const char * surf2_pos) 
 {
 	match_sfbs qq(eps, surf1_pos, surf2_pos);
 	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
@@ -1889,18 +2220,23 @@ bool surf_filter_by_surf(REAL eps, const char * surf1_pos, const char * surf2_po
 
 struct match_swapxy
 {
-	match_swapxy(const char * ipos) : pos(ipos), res(false) {};
+	match_swapxy(const char * ipos) : pos(ipos), res(NULL) {};
 	void operator()(d_surf * surf)
 	{
 		if ( StringMatch(pos, surf->getName()) )
 		{
 			writelog(LOG_MESSAGE,"changing axes for surface \"%s\"",surf->getName());
+			boolvec * res = create_boolvec();
 			
-			if (surf->coeff == NULL)
+			if (surf->coeff == NULL) {
+				res->push_back(false);
 				return;
+			}
 			
-			if (surf->grd == NULL)
+			if (surf->grd == NULL) {
+				res->push_back(false);
 				return;
+			}
 			
 			extvec * new_coeff = create_extvec(surf->coeff->size());
 			
@@ -1926,14 +2262,15 @@ struct match_swapxy
 			std::swap(surf->grd->startX, surf->grd->startY);
 			std::swap(surf->grd->stepX, surf->grd->stepY);
 			std::swap(surf->grd->endX, surf->grd->endY);
-			res = true;
+			
+			res->push_back(true);
 		}
 	}
 	const char * pos;
-	bool res;
+	boolvec * res;
 };
 
-bool surf_swapxy(const char * surf_pos)
+boolvec * surf_swapxy(const char * surf_pos)
 {
 	match_swapxy qq(surf_pos);
 	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
@@ -1942,11 +2279,13 @@ bool surf_swapxy(const char * surf_pos)
 
 struct match_trace
 {
-	match_trace(const char * ipos, REAL ifrom, REAL ito, REAL istep) : pos(ipos), from(ifrom), to(ito), step(istep), res(false) {};
+	match_trace(const char * ipos, REAL ifrom, REAL ito, REAL istep) : pos(ipos), from(ifrom), to(ito), step(istep), res(NULL) {};
 	void operator()(d_surf * surf)
 	{
 		if ( StringMatch(pos, surf->getName()) )
 		{
+			if (res == NULL)
+				res = create_boolvec();
 			if (from == FLT_MAX)
 				surf->getMinMaxZ(from, to);	
 			if (to == FLT_MAX)
@@ -2054,18 +2393,17 @@ struct match_trace
 			}
 
 			delete isos;
-
-			res = true;
+			res->push_back(true);
 		}
 	};
 	const char * pos;
 	REAL from;
 	REAL to;
 	REAL step;
-	bool res;
+	boolvec * res;
 };
 
-bool surf_trace_cntr(const char * surface_name_or_position, REAL from, REAL to, REAL step)
+boolvec * surf_trace_cntr(const char * surface_name_or_position, REAL from, REAL to, REAL step)
 {
 	match_trace qq(surface_name_or_position, from, to, step);
 	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);

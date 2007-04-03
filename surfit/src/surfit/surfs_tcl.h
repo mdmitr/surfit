@@ -19,16 +19,18 @@
 
 namespace surfit {
 
+class boolvec;
+
 /*! \ingroup tcl_rules_surfs
-    \fn bool surface(const char * surface_name_or_position = "0");
+    \fn bool surface(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surface "surface_name_or_position"
+    surface "surface_name"
 
     \par Description:
     Using this rule the resulting surface approximates other surface in least squares meaning.
 
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
+    \param surface_name name of \ref d_surf "surface" dataset, or surface position number
 
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -37,19 +39,19 @@ namespace surfit {
     \f]
     where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 */
-bool surface(const char * surface_name_or_position = "0");
+boolvec * surface(const char * surface_name = "*");
 
 /*! \ingroup tcl_rules_surfs
-    \fn bool surface_add(REAL weight, const char * surface_name_or_position = "0");
+    \fn bool surface_add(REAL weight, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surface_add weight "surface_name_or_position"
+    surface_add weight "surface_name"
 
     \par Description:
     This function modifies previous (modifiable) rule by adding the \ref surface rule with some weight.
 
     \param weight informational weight for this rule
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
+    \param surface_name name of \ref d_surf "surface" dataset, or surface position number
 
     \par Math:
     This command modifies previous functional \f$ \Phi_0 \f$ by adding \f$ \Phi_1 \f$:
@@ -62,20 +64,20 @@ bool surface(const char * surface_name_or_position = "0");
     \f]
     where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 */
-bool surface_add(REAL weight, const char * surface_name_or_position = "0");
+boolvec * surface_add(REAL weight, const char * surface_name = "*");
 
 /*! \ingroup tcl_rules_surfs
-    \fn bool surface_leq(const char * surface_name_or_position = "0", REAL mult = 0.001);
+    \fn bool surface_leq(const char * surface_name = "*", REAL mult = 0.001);
 
     \par Tcl syntax:
-    surface_leq "surface_name_or_position" mult
+    surface_leq "surface_name" mult
 
     \par Description:
     This rule adds the surface condition - "the surface should be lower than equal to other surface".
     In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
     your conditions and if they are correct, try to change "mult" parameter
 
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
+    \param surface_name name of \ref d_surf "surface" dataset, or surface position number
     \param mult multiplier parameter for \ref penalty algorithm
 
     \par Math:
@@ -85,20 +87,20 @@ bool surface_add(REAL weight, const char * surface_name_or_position = "0");
     \f]
     where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 */
-bool surface_leq(const char * surface_name_or_position = "0", REAL mult = 0.001);
+boolvec * surface_leq(const char * surface_name = "*", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_surfs
-    \fn bool surface_geq(const char * surface_name_or_position = "0", REAL mult = 0.001);
+    \fn bool surface_geq(const char * surface_name = "*", REAL mult = 0.001);
 
     \par Tcl syntax:
-    surface_geq "surface_name_or_position" mult
+    surface_geq "surface_name" mult
 
     \par Description:
     This rule adds the surface condition - "the surface should be greater than equal to other surface".
     In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
     your conditions and if they are correct, try to change "mult" parameter
 
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number
+    \param surface_name name of \ref d_surf "surface" dataset, or surface position number
     \param mult multiplier parameter for \ref penalty algorithm
 
     \par Math:
@@ -108,13 +110,13 @@ bool surface_leq(const char * surface_name_or_position = "0", REAL mult = 0.001)
     \f]
     where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 */
-bool surface_geq(const char * surface_name_or_position = "0", REAL mult = 0.001);
+boolvec * surface_geq(const char * surface_name = "*", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_surfs
-    \fn bool trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name_or_position = "0");
+    \fn bool trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name = "*");
 
     \par Tcl syntax:
-    trend D1 D2 "surface_name_or_position"
+    trend D1 D2 "surface_name"
 
     \par Description:
     This rule determines resulting surface behaviour in regions out low information density. This rule
@@ -123,7 +125,7 @@ bool surface_geq(const char * surface_name_or_position = "0", REAL mult = 0.001)
     
     \param D1 informational weight for rule that sounds "resulting surface should have the same gradients as trend surface"
     \param D2 informational weight for rule that sounds "resulting surface should have the same curvature as trend surface"
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number. This is a trend surface.
+    \param surface_name name of \ref d_surf "surface" dataset, or surface position number. This is a trend surface.
 
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -194,13 +196,13 @@ bool surface_geq(const char * surface_name_or_position = "0", REAL mult = 0.001)
 \f]
 
 */
-bool trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name_or_position = "0");
+boolvec * trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name = "*");
 
 /*! \ingroup tcl_rules_surfs
-    bool trend_add(REAL weight, REAL D1 = 1, REAL D2 = 2, const char * surface_name_or_position = "0");
+    bool trend_add(REAL weight, REAL D1 = 1, REAL D2 = 2, const char * surface_name = "*");
 
     \par Tcl syntax:
-    trend_add weight D1 D2 "surface_name_or_position"
+    trend_add weight D1 D2 "surface_name"
 
     \par Description:
     This function modifies previous (modifiable) rule by adding the \ref trend rule with some weight.
@@ -208,22 +210,22 @@ bool trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name_or_position = "0"
     \param weight informational weight for \ref trend rule
     \param D1 informational weight for rule that sounds "resulting surface should have the same gradients as trend surface"
     \param D2 informational weight for rule that sounds "resulting surface should have the same curvature as trend surface"
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number. This is a trend surface.
+    \param surface_name name of \ref d_surf "surface" dataset, or surface position number. This is a trend surface.
 */	
-bool trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_name_or_position = "0");
+boolvec * trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_name = "*");
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask(const char * val, const char * mask_name_or_position = "0");
+    \fn bool mask(const char * val, const char * mask_name = "*");
 
     \par Tcl syntax:
-    mask val "surface_name_or_position"
+    mask val "surface_name"
 
     \par Description:
     Using this rule the resulting surface approximates cells where mask is true with constant real number.
     In case val is equal to word "undef", resulting surface would have "undefined values" for cells where mask is true.
 
     \param val real number or word "undef" for approximation.
-    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number
+    \param mask_name name of \ref d_mask "mask" dataset, or mask position number
 
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -233,28 +235,28 @@ bool trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_name_
     where (i,j) - indices of the cells where mask is true, z - constant real number.
 
 */
-bool mask(const char * val, const char * mask_name_or_position = "0");
+surfit::boolvec * mask(const char * val, const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_add(REAL val, REAL weight = 1, const char * mask_name_or_position = "0");
+    \fn bool mask_add(REAL val, REAL weight = 1, const char * mask_name = "*");
 
     \par Tcl syntax:
-    mask_add val weight "surface_name_or_position"
+    mask_add val weight "surface_name"
 
     \par Description:
     This function modifies previous (modifiable) rule by adding the \ref mask rule with some weight.
 
     \param val real number for approximation.
     \param weight informational weight for \ref mask rule
-    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number
+    \param mask_name name of \ref d_mask "mask" dataset, or mask position number
 */
-bool mask_add(REAL val, REAL weight = 1, const char * mask_name_or_position = "0");
+surfit::boolvec * mask_add(REAL val, REAL weight = 1, const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_leq(REAL value, const char * mask_name_or_position = "0", REAL mult = 0.001);
+    \fn bool mask_leq(REAL value, const char * mask_name = "*", REAL mult = 0.001);
     
     \par Tcl syntax:
-    mask_leq value "mask_name_or_position" mult
+    mask_leq value "mask_name" mult
 
     \par Description:
     This rule adds the surface condition - "the resulting surface should be lower than or equal to value where mask is true".
@@ -262,7 +264,7 @@ bool mask_add(REAL val, REAL weight = 1, const char * mask_name_or_position = "0
     your conditions and if they are correct, try to change "mult" parameter.
 
     \param value resulting surface values should be lower than or equal to this real number
-    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number.
+    \param mask_name name of \ref d_mask "mask" dataset, or mask position number.
     \param mult multiplier parameter for \ref penalty algorithm
     
     \par Math:
@@ -273,13 +275,13 @@ bool mask_add(REAL val, REAL weight = 1, const char * mask_name_or_position = "0
     where (i,j) - indices of the cells where mask is true, z - constant value
 
 */
-bool mask_leq(REAL value, const char * mask_name_or_position = "0", REAL mult = 0.001);
+surfit::boolvec * mask_leq(REAL value, const char * mask_name = "*", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_geq(REAL value, const char * mask_name_or_position = "0", REAL mult = 0.001);
+    \fn bool mask_geq(REAL value, const char * mask_name = "*", REAL mult = 0.001);
     
     \par Tcl syntax:
-    mask_geq value "mask_name_or_position" mult
+    mask_geq value "mask_name" mult
 
     \par Description:
     This rule adds the surface condition - "the resulting surface should be greater than or equal to value where mask is true".
@@ -287,7 +289,7 @@ bool mask_leq(REAL value, const char * mask_name_or_position = "0", REAL mult = 
     your conditions and if they are correct, try to change "mult" parameter.
 
     \param value resulting surface values should be greater than or equal to this real number
-    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number.
+    \param mask_name name of \ref d_mask "mask" dataset, or mask position number.
     \param mult multiplier parameter for \ref penalty algorithm
     
     \par Math:
@@ -300,20 +302,20 @@ bool mask_leq(REAL value, const char * mask_name_or_position = "0", REAL mult = 
     \sa mask_leq area_leq area_geq
 
 */
-bool mask_geq(REAL value, const char * mask_name_or_position = "0", REAL mult = 0.001);
+surfit::boolvec * mask_geq(REAL value, const char * mask_name = "*", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_surf(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0");
+    \fn bool mask_surf(const char * surf_name = "*", const char * mask_name = "*");
 
     \par Tcl syntax:
-    mask_surf "surf_name_or_position" mult
+    mask_surf "surf_name" mult
 
     \par Description:
     Using this rule the resulting surface approximates values taken from the other surface in 
     least squares meaning where mask is "true".
     
-    \param surf_name_or_position name of \ref d_surf "surface", or surface position number.
-    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number.
+    \param surf_name name of \ref d_surf "surface", or surface position number.
+    \param mask_name name of \ref d_mask "mask" dataset, or mask position number.
     
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -323,22 +325,22 @@ bool mask_geq(REAL value, const char * mask_name_or_position = "0", REAL mult = 
     where (i,j) - indices of the cells, where mask is "true", \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 
 */
-bool mask_surf(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0");
+surfit::boolvec * mask_surf(const char * surf_name = "*", const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_surf_add(const char * surf_name_or_position = "0", REAL weight = 1, const char * mask_name_or_position = "0");
+    \fn bool mask_surf_add(const char * surf_name = "*", REAL weight = 1, const char * mask_name = "*");
 
     \par Tcl syntax:
-    mask_surf_add "surf_name_or_position" weight "mask_name_or_position"
+    mask_surf_add "surf_name" weight "mask_name"
 
     \par Description:
     This function modifies previous (modifiable) rule by adding the \ref mask_surf rule with some weight. 
     Using this rule the resulting surface approximates other surface "values" where mask is "true", taking into
     account a previous (modifiable) rule.
 
-    \param surf_name_or_position name of \ref d_surf "surface", or surface position number.
+    \param surf_name name of \ref d_surf "surface", or surface position number.
     \param weight informational weight for this rule
-    \param mask_name_or_position name of \ref d_mask "mask" dataset, or mask position number.
+    \param mask_name name of \ref d_mask "mask" dataset, or mask position number.
     
     \par Math:
     This command modifies previous functional \f$ \Phi_0 \f$ by adding \f$ \Phi_1 \f$:
@@ -352,13 +354,13 @@ bool mask_surf(const char * surf_name_or_position = "0", const char * mask_name_
     where (i,j) - indices of the cells where mask is "true", \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 
 */
-bool mask_surf_add(const char * surf_name_or_position = "0", REAL weight = 1, const char * mask_name_or_position = "0");
+surfit::boolvec * mask_surf_add(const char * surf_name = "*", REAL weight = 1, const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_surf_leq(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0", REAL mult = 0.001);
+    \fn bool mask_surf_leq(const char * surf_name = "*", const char * mask_name = "*", REAL mult = 0.001);
     
     \par Tcl syntax:
-    mask_surf_leq "surf_name_or_position_or_position" "mask_name_or_position" mult 
+    mask_surf_leq "surf_name" "mask_name" mult 
 
     \par Description:
     This rule adds the surface condition - "the resulting surface should be lower than or equal to other surface values where mask is true".
@@ -373,13 +375,13 @@ bool mask_surf_add(const char * surf_name_or_position = "0", REAL weight = 1, co
     where (i,j) - indices of the cells where mask is true, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
 
 */
-bool mask_surf_leq(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0", REAL mult = 0.001);
+surfit::boolvec * mask_surf_leq(const char * surf_name = "*", const char * mask_name = "*", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_surf_geq(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0", REAL mult = 0.001);
+    \fn bool mask_surf_geq(const char * surf_name = "*", const char * mask_name = "*", REAL mult = 0.001);
     
     \par Tcl syntax:
-    mask_surf_geq "surf_name_or_position_or_position" "mask_name_or_position" mult
+    mask_surf_geq "surf_name" "mask_name" mult
 
     \par Description:
     This rule adds the surface condition - "the resulting surface should be greater than or equal to other surface values where mask is true".
@@ -394,13 +396,13 @@ bool mask_surf_leq(const char * surf_name_or_position = "0", const char * mask_n
     where (i,j) - indices of the cells where mask is true, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
 
 */
-bool mask_surf_geq(const char * surf_name_or_position = "0", const char * mask_name_or_position = "0", REAL mult = 0.001);
+surfit::boolvec * mask_surf_geq(const char * surf_name = "*", const char * mask_name = "*", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_mean(REAL mean, const char * mask_name_or_position = "0", REAL mult = 0.001);
+    \fn bool mask_mean(REAL mean, const char * mask_name = "*", REAL mult = 0.001);
     
     \par Tcl syntax:
-    mask_mean mean_value "mask_name_or_position" mult
+    mask_mean mean_value "mask_name" mult
 
     \par Description:
     This rule adds the surface condition - "the resulting surface mean value should be 
@@ -415,13 +417,13 @@ bool mask_surf_geq(const char * surf_name_or_position = "0", const char * mask_n
     \f]
     where (i,j) - indices of the cells where mask is true, Q - number of cells in mask, m - desired mean value
 */
-bool mask_mean(REAL mean, const char * mask_name_or_position = "0", REAL mult = 0.001);
+surfit::boolvec * mask_mean(REAL mean, const char * mask_name = "*", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_wmean(REAL mean, const char * mask_name_or_position = "0", const char * surf_name_or_position = "0", REAL mult = 0.001);
+    \fn bool mask_wmean(REAL mean, const char * mask_name = "*", const char * surf_name = "*", REAL mult = 0.001);
     
     \par Tcl syntax:
-    mask_wmean weighted_mean_value "mask_name_or_position" "surf_name_or_position_or_position" mult
+    mask_wmean weighted_mean_value "mask_name" "surf_name" mult
 
     \par Description:
     This rule adds the surface condition - "the resulting surface weighted mean value  
@@ -437,13 +439,13 @@ bool mask_mean(REAL mean, const char * mask_name_or_position = "0", REAL mult = 
     where (i,j) - indices of the cells where mask is true, \f$z(x_i,y_j)\f$ - weighted surface value for the (i,j) cell,
     m - desired weighted mean value
 */
-bool mask_wmean(REAL mean, const char * mask_name_or_position = "0", const char * surf_name_or_position = "0", REAL mult = 0.001);
+surfit::boolvec * mask_wmean(REAL mean, const char * mask_name = "*", const char * surf_name = "*", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_completer(const char * mask_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
+    \fn bool mask_completer(const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
     \par Tcl syntax:
-    mask_completer "mask_name_or_position" D1 D2 alpha w 
+    mask_completer "mask_name" D1 D2 alpha w 
 
     \par Description
     This rule implements \ref completer rule where \ref d_mask "mask" is true
@@ -453,13 +455,13 @@ bool mask_wmean(REAL mean, const char * mask_name_or_position = "0", const char 
     \param alpha anisotropy angle (degrees)
     \param w anisotropy factor
 */
-bool mask_completer(const char * mask_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
+surfit::boolvec * mask_completer(const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_completer_add(REAL weight = 1,const char * mask_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
+    \fn bool mask_completer_add(REAL weight = 1,const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
     \par Tcl syntax:
-    mask_completer_add weight "mask_name_or_position" D1 D2 alpha w inside
+    mask_completer_add weight "mask_name" D1 D2 alpha w inside
 
     \par Description
     This rule adds rule \ref mask_completer with informational "weight" to the previous rule.
@@ -469,7 +471,7 @@ bool mask_completer(const char * mask_name_or_position = "0", REAL D1 = 1, REAL 
     \param alpha anisotropy angle (degrees)
     \param w anisotropy factor
 */
-bool mask_completer_add(REAL weight = 1, const char * mask_name_or_position = "0", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);	
+surfit::boolvec * mask_completer_add(REAL weight = 1, const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);	
 
 }; // namespace surfit;
 

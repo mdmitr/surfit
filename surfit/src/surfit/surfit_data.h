@@ -47,6 +47,9 @@ public:
 	//! returns object name 
 	const char * getName() const;
 
+	//! return unique identificator
+	int getId() const;
+
 	//! sets object type to newtype
 	void setType(const char * newtypename);
 
@@ -71,6 +74,9 @@ protected:
 
 	//! object type
 	char * type;
+
+	//! object id
+	int id;
 
 };
 

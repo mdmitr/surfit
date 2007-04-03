@@ -173,6 +173,17 @@ boolvec * mask_apply_to_surf(const char * mask_name = "*", const char * surface_
 strvec * mask_getName(const char * mask_name = "*");
 
 /*! \ingroup tcl_mask_other
+    \fn const char * mask_getId(const char * mask_name = "*");
+
+    \par Tcl syntax:
+    mask_getId \ref str "mask_name"
+
+    \par Description:
+    returns unique \ref d_mask "mask" identificator
+*/
+intvec * mask_getId(const char * mask_name = "*");
+
+/*! \ingroup tcl_mask_other
     \fn void mask_setName(const char * new_name, const char * mask_name = "*");
     
     \par Tcl syntax:

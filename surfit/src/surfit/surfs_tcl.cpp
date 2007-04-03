@@ -34,6 +34,7 @@
 #include "variables.h"
 #include "variables_tcl.h"
 #include "interp.h"
+#include "boolvec.h"
 
 #include <algorithm>
 
@@ -41,7 +42,7 @@ namespace surfit {
 
 struct match_surface
 {
-	match_surface(const char * ipos) : pos(ipos) {};
+	match_surface(const char * ipos) : pos(ipos), res(NULL) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( pos, surf->getName() ) )
@@ -49,47 +50,57 @@ struct match_surface
 			writelog(LOG_MESSAGE,"creating gridding rule surface(\"%s\")",surf->getName());
 			f_surf * f = new f_surf(surf);
 			functionals_push_back(f);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	};
 	const char * pos;
+	boolvec * res;
 };
 
-bool surface(const char * pos) 
+boolvec * surface(const char * pos) 
 {
-	std::for_each(surfit_surfs->begin(), surfit_surfs->end(), match_surface(pos));
-	return true;
+	match_surface qq(pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 struct match_surface_add
 {
-	match_surface_add(REAL iweight, const char * ipos, functional * iff) : weight(iweight), pos(ipos), ff(iff) {};
+	match_surface_add(REAL iweight, const char * ipos) : weight(iweight), pos(ipos), res(NULL) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( pos, surf->getName() ) )
 		{
+			if (res == NULL)
+				res = create_boolvec();
 			writelog(LOG_MESSAGE,"creating gridding rule surface_add(%g,\"%s\")",weight, surf->getName());
+			functional * f = get_modifiable_functional();
+			if (f == NULL) {
+				res->push_back(false);
+				return;
+			}
 			f_surf * srf2 = new f_surf(surf);
-			ff->add_functional(srf2, weight);
+			f->add_functional(srf2, weight);
+			res->push_back(true);
 		}
 	};
 	REAL weight;
 	const char * pos;
-	functional * ff;
+	boolvec * res;
 };
 
-bool surface_add(REAL weight, const char * pos) 
+boolvec * surface_add(REAL weight, const char * pos) 
 {
-	functional * f = get_modifiable_functional();
-	if (f == NULL)
-		return false;
-
-	std::for_each(surfit_surfs->begin(), surfit_surfs->end(), match_surface_add(weight, pos, f));
-	return true;
+	match_surface_add qq(weight, pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 struct match_surface_leq
 {
-	match_surface_leq(const char * ipos, REAL imult) : pos(ipos), mult(imult) {};
+	match_surface_leq(const char * ipos, REAL imult) : pos(ipos), mult(imult), res(NULL) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( pos, surf->getName() ) )
@@ -98,21 +109,26 @@ struct match_surface_leq
 				surf->getName(), mult);
 			f_surf_ineq * f = new f_surf_ineq(surf, true, mult);
 			functionals_push_back(f);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	}
 	const char * pos;
 	REAL mult;
+	boolvec * res;
 };
 
-bool surface_leq(const char * pos, REAL mult) 
+boolvec * surface_leq(const char * pos, REAL mult) 
 {
-	std::for_each(surfit_surfs->begin(), surfit_surfs->end(), match_surface_leq(pos, mult));
-	return true;
+	match_surface_leq qq(pos, mult);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 struct match_surface_geq
 {
-	match_surface_geq(const char * ipos, REAL imult) : pos(ipos), mult(imult) {};
+	match_surface_geq(const char * ipos, REAL imult) : pos(ipos), mult(imult), res(NULL) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( pos, surf->getName() ) )
@@ -121,21 +137,26 @@ struct match_surface_geq
 				surf->getName(), mult);
 			f_surf_ineq * f = new f_surf_ineq(surf, false, mult);
 			functionals_push_back(f);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	}
 	const char * pos;
 	REAL mult;
+	boolvec * res;
 };
 
-bool surface_geq(const char * pos, REAL mult) 
+boolvec * surface_geq(const char * pos, REAL mult) 
 {
-	std::for_each(surfit_surfs->begin(), surfit_surfs->end(), match_surface_geq(pos, mult));
-	return true;
+	match_surface_geq qq(pos, mult);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 struct match_trend
 {
-	match_trend(REAL iD1, REAL iD2, const char * ipos) : D1(iD1), D2(iD2), pos(ipos) {};
+	match_trend(REAL iD1, REAL iD2, const char * ipos) : D1(iD1), D2(iD2), pos(ipos), res(NULL) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( pos, surf->getName() ) )
@@ -144,52 +165,62 @@ struct match_trend
 				D1, D2, surf->getName());
 			f_trend * f = new f_trend(D1, D2, surf);
 			functionals_push_back(f);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	};
 	REAL D1;
 	REAL D2;
 	const char * pos;
+	boolvec * res;
 };
 
-bool trend(REAL D1, REAL D2, const char * pos) 
+boolvec * trend(REAL D1, REAL D2, const char * pos) 
 {
-	std::for_each(surfit_surfs->begin(), surfit_surfs->end(), match_trend(D1, D2, pos));
-	return true;
+	match_trend qq(D1, D2, pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 struct match_trend_add
 {
-	match_trend_add(REAL iweight, REAL iD1, REAL iD2, const char * ipos, functional * iff) : weight(iweight), D1(iD1), D2(iD2), pos(ipos), ff(iff) {};
+	match_trend_add(REAL iweight, REAL iD1, REAL iD2, const char * ipos) : weight(iweight), D1(iD1), D2(iD2), pos(ipos), res(NULL) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( pos, surf->getName() ) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule trend_add(%g,%g,%g,\"%s\")",
 				weight, D1, D2, surf->getName());
+			if (res == NULL)
+				res = create_boolvec();
+			functional * f = get_modifiable_functional();
+			if (f == NULL){
+				res->push_back(false);
+				return;
+			}
 			f_trend * srf2 = new f_trend(D1, D2, surf);
-			ff->add_functional(srf2, weight);
+			f->add_functional(srf2, weight);
+			res->push_back(true);
 		}
 	};
 	REAL weight;
 	REAL D1;
 	REAL D2;
 	const char * pos;
-	functional * ff;
+	boolvec * res;
 };
 
-bool trend_add(REAL weight, REAL D1, REAL D2, const char * pos) 
+boolvec * trend_add(REAL weight, REAL D1, REAL D2, const char * pos) 
 {
-	functional * f = get_modifiable_functional();
-	if (f == NULL)
-		return false;
-
-	std::for_each(surfit_surfs->begin(), surfit_surfs->end(), match_trend_add(weight, D1, D2, pos, f));
-	return true;
+	match_trend_add qq(weight, D1, D2, pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 struct match_mask
 {
-	match_mask(REAL ivalue, const char * ipos) : value(ivalue), pos(ipos) {};
+	match_mask(REAL ivalue, const char * ipos) : value(ivalue), pos(ipos), res(NULL) {};
 	void operator()(d_mask * mask) 
 	{
 		if ( StringMatch( pos, mask->getName() ) )
@@ -200,54 +231,63 @@ struct match_mask
 				writelog(LOG_MESSAGE,"creating gridding rule mask(%g,\"%s\")",value,mask->getName());
 			f_mask * f = new f_mask(mask, value);
 			functionals_push_back(f);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	};
 	REAL value;
 	const char * pos;
+	boolvec * res;
 };
 
-bool mask(const char * Value, const char * pos) 
+boolvec *  mask(const char * Value, const char * pos) 
 {
 	REAL value = undef_value;
 	if (strcmp(Value,"undef") != 0) {
 		value = atof(Value);
 	}
-
-	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask(value, pos));
-	return true;
+	match_mask qq(value, pos);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 struct match_mask_add
 {
-	match_mask_add(REAL iweight, REAL ivalue, const char * ipos, functional * iff) : weight(iweight), value(ivalue), pos(ipos), ff(iff) {};
+	match_mask_add(REAL iweight, REAL ivalue, const char * ipos) : weight(iweight), value(ivalue), pos(ipos), res(NULL) {};
 	void operator()(d_mask * mask) 
 	{
 		if ( StringMatch( pos, mask->getName() ) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule mask_add(%g, %g,\"%s\")",value,weight,mask->getName());
+			if (res == NULL)
+				res = create_boolvec();
+			functional * mf = get_modifiable_functional();
+			if (mf == NULL) {
+				res->push_back(false);
+				return;
+			}
 			f_mask * f = new f_mask(mask, value);
-			ff->add_functional(f, weight);
+			mf->add_functional(f, weight);
+			res->push_back(true);
 		}
 	};
 	REAL weight;
 	REAL value;
 	const char * pos;
-	functional * ff;
+	boolvec * res;
 };
 
-bool mask_add(REAL value, REAL weight, const char * pos) 
+boolvec * mask_add(REAL value, REAL weight, const char * pos) 
 {
-	functional * mf = get_modifiable_functional();
-	if (mf == NULL)
-		return false;
-
-	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_add(weight, value, pos, mf));
-	return true;
+	match_mask_add qq(weight, value, pos);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 struct match_mask_leq
 {
-	match_mask_leq(REAL ivalue, const char * imask_pos, REAL imult) : value(ivalue), mask_pos(imask_pos), mult(imult) {};
+	match_mask_leq(REAL ivalue, const char * imask_pos, REAL imult) : value(ivalue), mask_pos(imask_pos), mult(imult), res(NULL) {};
 	void operator()(d_mask * mask) 
 	{
 		if ( StringMatch( mask_pos, mask->getName() ) )
@@ -256,22 +296,27 @@ struct match_mask_leq
 				value, mask->getName(), mult);
 			f_mask_ineq * f = new f_mask_ineq(value, mask, true, mult);
 			functionals_push_back(f);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	};
 	REAL value;
 	const char * mask_pos;
 	REAL mult;
+	boolvec * res;
 };
 
-bool mask_leq(REAL value, const char * mask_pos, REAL mult) 
+boolvec * mask_leq(REAL value, const char * mask_pos, REAL mult) 
 {
-	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_leq(value, mask_pos, mult));
-	return true;
+	match_mask_leq qq(value, mask_pos, mult);
+	std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 struct match_mask_geq
 {
-	match_mask_geq(REAL ivalue, const char * imask_pos, REAL imult) : value(ivalue), mask_pos(imask_pos), mult(imult) {};
+	match_mask_geq(REAL ivalue, const char * imask_pos, REAL imult) : value(ivalue), mask_pos(imask_pos), mult(imult), res(NULL) {};
 	void operator()(d_mask * mask) 
 	{
 		if ( StringMatch( mask_pos, mask->getName() ) )
@@ -280,22 +325,27 @@ struct match_mask_geq
 				value, mask->getName(), mult);
 			f_mask_ineq * f = new f_mask_ineq(value, mask, false, mult);
 			functionals_push_back(f);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	};
 	REAL value;
 	const char * mask_pos;
 	REAL mult;
+	boolvec * res;
 };
 
-bool mask_geq(REAL value, const char * mask_pos, REAL mult) 
+boolvec * mask_geq(REAL value, const char * mask_pos, REAL mult) 
 {
-	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_geq(value, mask_pos, mult));
-	return true;
+	match_mask_geq qq(value, mask_pos, mult);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 struct match_mask_surf2
 {
-	match_mask_surf2(const char * isurf_pos, d_mask * imask) : surf_pos(isurf_pos), mask(imask) {};
+	match_mask_surf2(const char * isurf_pos, d_mask * imask) : surf_pos(isurf_pos), mask(imask), res(NULL) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( surf_pos, surf->getName() ) )
@@ -304,80 +354,99 @@ struct match_mask_surf2
 				surf->getName(), mask->getName());
 			f_mask_surf * f = new f_mask_surf(surf, mask);
 			functionals_push_back(f);		
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	};
 	const char * surf_pos;
 	d_mask * mask;
+	boolvec * res;
 };
 
 struct match_mask_surf
 {
-	match_mask_surf(const char * isurf_pos, const char * imask_pos) : surf_pos(isurf_pos), mask_pos(imask_pos) {};
+	match_mask_surf(const char * isurf_pos, const char * imask_pos) : surf_pos(isurf_pos), mask_pos(imask_pos), res(NULL) {};
 	void operator()(d_mask * mask) 
 	{
 		if ( StringMatch( mask_pos, mask->getName() ) )
 		{
-			std::for_each(surfit_surfs->begin(), surfit_surfs->end(), match_mask_surf2(surf_pos, mask));
+			match_mask_surf2 qq(surf_pos, mask);
+			qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(qq.res);
 		}
 	};
 	const char * surf_pos;
 	const char * mask_pos;
+	boolvec * res;
 };
 
-bool mask_surf(const char * surf_pos, const char * mask_pos) 
+boolvec * mask_surf(const char * surf_pos, const char * mask_pos) 
 {
-	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_surf(surf_pos, mask_pos));
-	return true;
+	match_mask_surf qq(surf_pos, mask_pos);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 struct match_mask_surf_add2
 {
-	match_mask_surf_add2(REAL iweight, const char * isurf_pos, d_mask * imask, functional * iff) : weight(iweight), surf_pos(isurf_pos), mask(imask), ff(iff) {};
+	match_mask_surf_add2(REAL iweight, const char * isurf_pos, d_mask * imask) : weight(iweight), surf_pos(isurf_pos), mask(imask), res(NULL) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( surf_pos, surf->getName() ) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule mask_surf_add(\"%s\",%g,\"%s\")",
 				surf->getName(), weight, mask->getName());
+			if (res == NULL)
+				res = create_boolvec();
+			functional * srf = get_modifiable_functional();
+			if (srf == NULL) {
+				res->push_back(false);
+				return;
+			}
 			f_mask_surf * f = new f_mask_surf(surf, mask);
-			ff->add_functional(f, weight);
+			srf->add_functional(f, weight);
+			res->push_back(true);
 		}
 	};
 	REAL weight;
 	const char * surf_pos;
 	d_mask * mask;
-	functional * ff;
+	boolvec * res;
 };
 
 struct match_mask_surf_add
 {
-	match_mask_surf_add(REAL iweight, const char * isurf_pos, const char * imask_pos, functional * iff) : weight(iweight), surf_pos(isurf_pos), mask_pos(imask_pos), ff(iff) {};
+	match_mask_surf_add(REAL iweight, const char * isurf_pos, const char * imask_pos) : weight(iweight), surf_pos(isurf_pos), mask_pos(imask_pos), res(NULL) {};
 	void operator()(d_mask * mask) 
 	{
 		if ( StringMatch( mask_pos, mask->getName() ) )
 		{
-			std::for_each(surfit_surfs->begin(), surfit_surfs->end(), match_mask_surf_add2(weight, surf_pos, mask, ff));
+			if (res == NULL)
+				res = create_boolvec();
+			match_mask_surf_add2 qq(weight, surf_pos, mask);
+			qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+			res->push_back(qq.res);
 		}
 	};
 	const char * surf_pos;
 	const char * mask_pos;
 	REAL weight;
-	functional * ff;
+	boolvec * res;
 };
 
-bool mask_surf_add(const char * surf_pos, REAL weight, const char * mask_pos) 
+boolvec * mask_surf_add(const char * surf_pos, REAL weight, const char * mask_pos) 
 {
-	functional * srf = get_modifiable_functional();
-	if (srf == NULL)
-		return false;
-
-	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_surf_add(weight, surf_pos, mask_pos, srf));
-	return true;
+	match_mask_surf_add qq(weight, surf_pos, mask_pos);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 struct match_mask_surf_leq2
 {
-	match_mask_surf_leq2(const char * isurf_pos, d_mask * imask, REAL imult)  : surf_pos(isurf_pos), mask(imask), mult(imult) {};
+	match_mask_surf_leq2(const char * isurf_pos, d_mask * imask, REAL imult)  : surf_pos(isurf_pos), mask(imask), mult(imult), res(NULL) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( surf_pos, surf->getName() ) )
@@ -386,37 +455,47 @@ struct match_mask_surf_leq2
 				surf->getName(), mask->getName(), mult);
 			f_mask_surf_ineq * f = new f_mask_surf_ineq(surf, mask, true, mult);
 			functionals_push_back(f);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	};
 	const char * surf_pos;
 	d_mask * mask;
 	REAL mult;
+	boolvec * res;
 };
 
 struct match_mask_surf_leq
 {
-	match_mask_surf_leq(const char * isurf_pos, const char * imask_pos, REAL imult)  : surf_pos(isurf_pos), mask_pos(imask_pos), mult(imult) {};
+	match_mask_surf_leq(const char * isurf_pos, const char * imask_pos, REAL imult)  : surf_pos(isurf_pos), mask_pos(imask_pos), mult(imult), res(NULL) {};
 	void operator()(d_mask * mask) 
 	{
 		if ( StringMatch( mask_pos, mask->getName() ) )
 		{
-			std::for_each(surfit_surfs->begin(), surfit_surfs->end(), match_mask_surf_leq2(surf_pos, mask, mult));
+			match_mask_surf_leq2 qq(surf_pos, mask, mult);
+			qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(qq.res);
 		}
 	};
 	const char * surf_pos;
 	const char * mask_pos;
 	REAL mult;
+	boolvec * res;
 };
 
-bool mask_surf_leq(const char * surf_pos, const char * mask_pos, REAL mult) 
+boolvec * mask_surf_leq(const char * surf_pos, const char * mask_pos, REAL mult) 
 {
-	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_surf_leq(surf_pos, mask_pos, mult));
-	return true;
+	match_mask_surf_leq qq(surf_pos, mask_pos, mult);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 struct match_mask_surf_geq2
 {
-	match_mask_surf_geq2(const char * isurf_pos, d_mask * imask, REAL imult)  : surf_pos(isurf_pos), mask(imask), mult(imult) {};
+	match_mask_surf_geq2(const char * isurf_pos, d_mask * imask, REAL imult)  : surf_pos(isurf_pos), mask(imask), mult(imult), res(NULL) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( surf_pos, surf->getName() ) )
@@ -425,37 +504,47 @@ struct match_mask_surf_geq2
 				surf->getName(), mask->getName(), mult);
 			f_mask_surf_ineq * f = new f_mask_surf_ineq(surf, mask, false, mult);
 			functionals_push_back(f);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	};
 	const char * surf_pos;
 	d_mask * mask;
 	REAL mult;
+	boolvec * res;
 };
 
 struct match_mask_surf_geq
 {
-	match_mask_surf_geq(const char * isurf_pos, const char * imask_pos, REAL imult)  : surf_pos(isurf_pos), mask_pos(imask_pos), mult(imult) {};
+	match_mask_surf_geq(const char * isurf_pos, const char * imask_pos, REAL imult)  : surf_pos(isurf_pos), mask_pos(imask_pos), mult(imult), res(NULL) {};
 	void operator()(d_mask * mask) 
 	{
 		if ( StringMatch( mask_pos, mask->getName() ) )
 		{
-			std::for_each(surfit_surfs->begin(), surfit_surfs->end(), match_mask_surf_geq2(surf_pos, mask, mult));
+			match_mask_surf_geq2 qq(surf_pos, mask, mult);
+			qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(qq.res);
 		}
 	};
 	const char * surf_pos;
 	const char * mask_pos;
 	REAL mult;
+	boolvec * res;
 };
 
-bool mask_surf_geq(const char * surf_pos, const char * mask_pos, REAL mult) 
+boolvec * mask_surf_geq(const char * surf_pos, const char * mask_pos, REAL mult) 
 {
-	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_surf_geq(surf_pos, mask_pos, mult));
-	return true;
+	match_mask_surf_geq qq(surf_pos, mask_pos, mult);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 struct match_mask_mean
 {
-	match_mask_mean(REAL imean, const char * ipos, REAL imult) : mean(imean), pos(ipos), mult(imult) {};
+	match_mask_mean(REAL imean, const char * ipos, REAL imult) : mean(imean), pos(ipos), mult(imult), res(NULL) {};
 	void operator()(d_mask * mask) 
 	{
 		if ( StringMatch( pos, mask->getName() ) )
@@ -464,22 +553,27 @@ struct match_mask_mean
 				mean, pos, mult);
 			f_mask_mean * f = new f_mask_mean(mean, mask, mult);
 			functionals_push_back(f);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	};
 	REAL mean;
 	const char * pos;
 	REAL mult;
+	boolvec * res;
 };
 
-bool mask_mean(REAL mean, const char * pos, REAL mult) 
+boolvec * mask_mean(REAL mean, const char * pos, REAL mult) 
 {
-	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_mean(mean, pos, mult));
-	return true;
+	match_mask_mean qq(mean, pos, mult);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 struct match_mask_wmean2
 {
-	match_mask_wmean2(REAL imean, d_mask * imask, const char * isurf_pos, REAL imult) : mean(imean), mask(imask), surf_pos(isurf_pos), mult(imult) {};
+	match_mask_wmean2(REAL imean, d_mask * imask, const char * isurf_pos, REAL imult) : mean(imean), mask(imask), surf_pos(isurf_pos), mult(imult), res(NULL) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( surf_pos, surf->getName() ) )
@@ -488,39 +582,49 @@ struct match_mask_wmean2
 				mean, mask->getName(), surf->getName(), mult);
 			f_mask_wmean * f = new f_mask_wmean(mean, surf, mask, mult);
 			functionals_push_back(f);	
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	};
 	REAL mean;
 	d_mask * mask;
 	const char * surf_pos;
 	REAL mult;
+	boolvec * res;
 };
 
 struct match_mask_wmean
 {
-	match_mask_wmean(REAL imean, const char * imask_pos, const char * isurf_pos, REAL imult) : mean(imean), mask_pos(imask_pos), surf_pos(isurf_pos), mult(imult) {};
+	match_mask_wmean(REAL imean, const char * imask_pos, const char * isurf_pos, REAL imult) : mean(imean), mask_pos(imask_pos), surf_pos(isurf_pos), mult(imult), res(NULL) {};
 	void operator()(d_mask * mask) 
 	{
 		if ( StringMatch( mask_pos, mask->getName() ) )
 		{
-			std::for_each(surfit_surfs->begin(), surfit_surfs->end(), match_mask_wmean2(mean, mask, surf_pos, mult));
+			match_mask_wmean2 qq(mean, mask, surf_pos, mult);
+			qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(qq.res);
 		}
 	};
 	REAL mean;
 	const char * mask_pos;
 	const char * surf_pos;
 	REAL mult;
+	boolvec * res;
 };
 
-bool mask_wmean(REAL mean, const char * mask_pos, const char * surf_pos, REAL mult) 
+boolvec * mask_wmean(REAL mean, const char * mask_pos, const char * surf_pos, REAL mult) 
 {
-	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_wmean(mean, mask_pos, surf_pos, mult));
-	return true;
+	match_mask_wmean qq(mean, mask_pos, surf_pos, mult);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 struct match_mask_completer
 {
-	match_mask_completer(const char * imask_pos, REAL iD1, REAL iD2, REAL ialpha, REAL iw) : mask_pos(imask_pos), D1(iD1), D2(iD2), alpha(ialpha), w(iw) {};
+	match_mask_completer(const char * imask_pos, REAL iD1, REAL iD2, REAL ialpha, REAL iw) : mask_pos(imask_pos), D1(iD1), D2(iD2), alpha(ialpha), w(iw), res(NULL) {};
 	void operator()(d_mask * mask) 
 	{
 		if ( StringMatch( mask_pos, mask->getName() ) )
@@ -530,6 +634,9 @@ struct match_mask_completer
 			f_completer * f = new f_completer(D1, D2, alpha, w);
 			f->set_mask(mask);
 			functionals_push_back(f);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	};
 	const char * mask_pos;
@@ -537,26 +644,36 @@ struct match_mask_completer
 	REAL D2;
 	REAL alpha;
 	REAL w;
+	boolvec * res;
 };
 
-bool mask_completer(const char * mask_pos, REAL D1, REAL D2, REAL alpha, REAL w) 
+boolvec * mask_completer(const char * mask_pos, REAL D1, REAL D2, REAL alpha, REAL w) 
 {
-	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_completer(mask_pos, D1, D2, alpha, w));
-	return true;
+	match_mask_completer qq(mask_pos, D1, D2, alpha, w);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 struct match_mask_completer_add
 {
-	match_mask_completer_add(REAL iweight, const char * imask_pos, REAL iD1, REAL iD2, REAL ialpha, REAL iw, functional * iff) : weight(iweight), mask_pos(imask_pos), D1(iD1), D2(iD2), alpha(ialpha), w(iw), ff(iff) {};
+	match_mask_completer_add(REAL iweight, const char * imask_pos, REAL iD1, REAL iD2, REAL ialpha, REAL iw) : weight(iweight), mask_pos(imask_pos), D1(iD1), D2(iD2), alpha(ialpha), w(iw), res(NULL) {};
 	void operator()(d_mask * mask) 
 	{
 		if ( StringMatch( mask_pos, mask->getName() ) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule mask_completer_add(%g,\"%s\",%g,%g,%g,%g)",
 				weight, mask->getName(), D1, D2, alpha, w);
+			if (res == NULL)
+				res = create_boolvec();
+			functional * srf = get_modifiable_functional();
+			if (srf == NULL) {
+				res->push_back(false);
+				return;
+			}
 			f_completer * f = new f_completer(D1, D2, alpha, w);
 			f->set_mask(mask);
-			ff->add_functional(f, weight);
+			srf->add_functional(f, weight);
+			res->push_back(true);
 		}
 	};
 	REAL weight;
@@ -565,17 +682,14 @@ struct match_mask_completer_add
 	REAL D2;
 	REAL alpha;
 	REAL w;
-	functional * ff;
+	boolvec * res;
 };
 
-bool mask_completer_add(REAL weight, const char * mask_pos, REAL D1, REAL D2, REAL alpha, REAL w) 
+boolvec * mask_completer_add(REAL weight, const char * mask_pos, REAL D1, REAL D2, REAL alpha, REAL w) 
 {
-	functional * srf = get_modifiable_functional();
-	if (srf == NULL)
-		return false;
-
-	std::for_each(surfit_masks->begin(), surfit_masks->end(), match_mask_completer_add(weight, mask_pos, D1, D2, alpha, w, srf));
-	return true;
+	match_mask_completer_add qq(weight, mask_pos, D1, D2, alpha, w);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 }; // namespace surfit;

@@ -31,6 +31,7 @@ class d_grid;
 class d_surf;
 class boolvec;
 class intvec;
+class strvec;
 
 //
 // saveload
@@ -326,7 +327,7 @@ vec * surf_std(REAL mean, const char * surface_name = "*");
     Performs operation with surfaces cells values:
     surface1 = surface1 + surface2
 */
-bool surf_plus(const char * surface1_name, const char * surface2_name);
+boolvec * surf_plus(const char * surface1_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
     bool surf_plus_area(const char * surface1_name, const char * area_name, const char * surface2_name);
@@ -338,7 +339,7 @@ bool surf_plus(const char * surface1_name, const char * surface2_name);
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface1 + surface2
 */
-bool surf_plus_area(const char * surface1_name, const char * area_name, const char * surface2_name);
+boolvec * surf_plus_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_minus(const char * surface1_name, const char * surface2_name);
@@ -350,7 +351,7 @@ bool surf_plus_area(const char * surface1_name, const char * area_name, const ch
     Performs operation with surfaces cells values:
     surface1 = surface1 - surface2
 */
-bool surf_minus(const char * surface1_name, const char * surface2_name);
+boolvec * surf_minus(const char * surface1_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_minus_area(const char * surface1_name, const char * area_name, const char * surface2_name);
@@ -362,7 +363,7 @@ bool surf_minus(const char * surface1_name, const char * surface2_name);
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface1 - surface2
 */
-bool surf_minus_area(const char * surface1_name, const char * area_name, const char * surface2_name);
+boolvec * surf_minus_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_mult(const char * surface1_name, const char * surface2_name);
@@ -374,7 +375,7 @@ bool surf_minus_area(const char * surface1_name, const char * area_name, const c
     Performs operation with surfaces cells values:
     surface1 = surface1 * surface2
 */
-bool surf_mult(const char * surface1_name, const char * surface2_name);
+boolvec * surf_mult(const char * surface1_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_mult_area(const char * surface1_name, const char * area_name, const char * surface2_name);
@@ -386,7 +387,7 @@ bool surf_mult(const char * surface1_name, const char * surface2_name);
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface1 * surface2
 */
-bool surf_mult_area(const char * surface1_name, const char * area_name, const char * surface2_name);
+boolvec * surf_mult_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_div(const char * surface1_name, const char * surface2_name);
@@ -398,7 +399,7 @@ bool surf_mult_area(const char * surface1_name, const char * area_name, const ch
     Performs operation with surfaces cells values:
     surface1 = surface1 / surface2
 */
-bool surf_div(const char * surface1_name, const char * surface2_name);
+boolvec * surf_div(const char * surface1_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_div_area(const char * surface1_name, const char * area_name, const char * surface2_name);
@@ -410,7 +411,7 @@ bool surf_div(const char * surface1_name, const char * surface2_name);
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface1 / surface2
 */
-bool surf_div_area(const char * surface1_name, const char * area_name, const char * surface2_name);
+boolvec * surf_div_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_set(const char * surface1_name, const char * surface2_name);
@@ -422,7 +423,7 @@ bool surf_div_area(const char * surface1_name, const char * area_name, const cha
     Performs operation with surfaces cells values:
     surface1 = surface2
 */
-bool surf_set(const char * surface1_name, const char * surface2_name);
+boolvec * surf_set(const char * surface1_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_set_area(const char * surface1_name, const char * area_name, const char * surface2_name);
@@ -434,7 +435,7 @@ bool surf_set(const char * surface1_name, const char * surface2_name);
     Performs operation with surfaces cells values for cells in area:
     surface1 = surface2
 */
-bool surf_set_area(const char * surface1_name, const char * area_name, const char * surface2_name);
+boolvec * surf_set_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_plus_value(REAL val, const char * surface_name = "*");
@@ -446,7 +447,7 @@ bool surf_set_area(const char * surface1_name, const char * area_name, const cha
     Performs operation with surfaces cells values:
     surface = surface + val
 */
-bool surf_plus_value(REAL val, const char * surface_name = "*");
+boolvec * surf_plus_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_plus_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
@@ -458,7 +459,7 @@ bool surf_plus_value(REAL val, const char * surface_name = "*");
     Performs operation with surfaces cells values for cells in area:
     surface = surface + val
 */
-bool surf_plus_value_area(REAL val, const char * surface_name = "*", const char * area_name = "*");
+boolvec * surf_plus_value_area(REAL val, const char * surface_name = "*", const char * area_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_minus_value(REAL val, const char * surface_name = "*");
@@ -470,7 +471,7 @@ bool surf_plus_value_area(REAL val, const char * surface_name = "*", const char 
     Performs operation with surfaces cells values:
     surface = surface - val
 */
-bool surf_minus_value(REAL val, const char * surface_name = "*");
+boolvec * surf_minus_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_minus_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
@@ -482,7 +483,7 @@ bool surf_minus_value(REAL val, const char * surface_name = "*");
     Performs operation with surfaces cells values for cells in area:
     surface = surface - val
 */
-bool surf_minus_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
+boolvec * surf_minus_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_mult_value(REAL val, const char * surface_name = "*");
@@ -494,7 +495,7 @@ bool surf_minus_value_area(REAL val, const char * area_name = "*", const char * 
     Performs operation with surfaces cells values:
     surface = surface * val
 */
-bool surf_mult_value(REAL val, const char * surface_name = "*");
+boolvec * surf_mult_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_mult_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
@@ -506,7 +507,7 @@ bool surf_mult_value(REAL val, const char * surface_name = "*");
     Performs operation with surfaces cells values for cells in area:
     surface = surface * val
 */
-bool surf_mult_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
+boolvec * surf_mult_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_div_value(REAL val, const char * surface_name = "*");
@@ -518,7 +519,7 @@ bool surf_mult_value_area(REAL val, const char * area_name = "*", const char * s
     Performs operation with surfaces cells values:
     surface = surface / val
 */
-bool surf_div_value(REAL val, const char * surface_name = "*");
+boolvec * surf_div_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_div_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
@@ -530,7 +531,7 @@ bool surf_div_value(REAL val, const char * surface_name = "*");
     Performs operation with surfaces cells values for cells in area:
     surface = surface / val
 */
-bool surf_div_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
+boolvec * surf_div_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_set_value(REAL val, const char * surface_name = "*");
@@ -542,7 +543,7 @@ bool surf_div_value_area(REAL val, const char * area_name = "*", const char * su
     Performs operation with surfaces cells values:
     surface = val
 */
-bool surf_set_value(REAL val, const char * surface_name = "*");
+boolvec * surf_set_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_set_value_area(const char * val, const char * area_name = "*", const char * surface_name = "*");
@@ -554,7 +555,7 @@ bool surf_set_value(REAL val, const char * surface_name = "*");
     Performs operation with surfaces cells values for cells in area:
     surface = val
 */
-bool surf_set_value_area(const char * val, const char * area_name = "*", const char * surface_name = "*");
+boolvec * surf_set_value_area(const char * val, const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_filter_by_mask(const char * surface_name = "*", const char * mask_name = "*");
@@ -565,7 +566,7 @@ bool surf_set_value_area(const char * val, const char * area_name = "*", const c
     \par Description:
     makes all cells values undefined for which \ref d_mask is false
 */
-bool surf_filter_by_mask(const char * surface_name = "*", const char * mask_name = "*");
+boolvec * surf_filter_by_mask(const char * surface_name = "*", const char * mask_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn void surf_filter_in_area(const char * surface_name = "*", const char * area_name = "*");
@@ -576,7 +577,7 @@ bool surf_filter_by_mask(const char * surface_name = "*", const char * mask_name
     \par Description:
     makes all cells values undefined which are inside of \ref d_area
 */
-void surf_filter_in_area(const char * surface_name = "*", const char * area_name = "*");
+boolvec * surf_filter_in_area(const char * surface_name = "*", const char * area_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn void surf_filter_out_area(const char * surface_name = "*", const char * area_name = "*");
@@ -587,7 +588,7 @@ void surf_filter_in_area(const char * surface_name = "*", const char * area_name
     \par Description:
     makes all cells values undefined which are outside of \ref d_area
 */
-void surf_filter_out_area(const char * surface_name = "*", const char * area_name = "*");
+boolvec * surf_filter_out_area(const char * surface_name = "*", const char * area_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_filter_by_surf(REAL eps, const char * surface1_name = "*", const char * surface2_name = "*")
@@ -599,7 +600,7 @@ void surf_filter_out_area(const char * surface_name = "*", const char * area_nam
     modifies surface1 cells values. Makes cells values undefined if \f$ |f_1(x,y) - f_2(x,y)| > \varepsilon \f$, 
     where $f_1(x,y)$ - first surface, $f_2(x,y)$ - second surface
 */
-bool surf_filter_by_surf(REAL eps, const char * surface1_name = "*", const char * surface2_name = "*");
+boolvec * surf_filter_by_surf(REAL eps, const char * surface1_name = "*", const char * surface2_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn bool surf_swapxy(const char * surface_name = "*")
@@ -610,7 +611,7 @@ bool surf_filter_by_surf(REAL eps, const char * surface1_name = "*", const char 
     \par Description:
     swaps X and Y coordinates
 */
-bool surf_swapxy(const char * surface_name = "*");
+boolvec * surf_swapxy(const char * surface_name = "*");
 
 //
 // WAVELETS SECTION
@@ -625,7 +626,7 @@ bool surf_swapxy(const char * surface_name = "*");
     \par Description:
     returns the depth of applied wavelet decompositions for surface
 */
-int surf_get_details_level(const char * surface_name = "*");
+intvec * surf_get_details_level(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math_wavan
     \fn bool surf_decomp(const char * surface_name = "*");
@@ -636,7 +637,7 @@ int surf_get_details_level(const char * surface_name = "*");
     \par Description:
     makes one wavelet-decomposition for surface 
 */
-bool surf_decomp(const char * surface_name = "*");
+boolvec * surf_decomp(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math_wavan
     \fn bool surf_auto_decomp(REAL eps, const char * surface_name = "*");
@@ -648,7 +649,7 @@ bool surf_decomp(const char * surface_name = "*");
     calls \ref surf_decomp until difference between original surface norm and decomposed surface norm
     will be lower than eps
 */
-bool surf_auto_decomp(REAL eps, const char * surface_name = "*");
+boolvec * surf_auto_decomp(REAL eps, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math_wavan
     \fn bool surf_recons(const char * surface_name = "*");
@@ -659,7 +660,7 @@ bool surf_auto_decomp(REAL eps, const char * surface_name = "*");
     \par Description:
     makes one wavelet-reconstruction for surface 
 */
-bool surf_recons(const char * surface_name = "*");
+boolvec * surf_recons(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math_wavan
     \fn bool surf_full_recons(const char * surface_name = "*");
@@ -670,7 +671,7 @@ bool surf_recons(const char * surface_name = "*");
     \par Description:
     makes all possible wavelet-reconstructions for surface (recontructs original surface)
 */
-bool surf_full_recons(const char * surface_name = "*");
+boolvec * surf_full_recons(const char * surface_name = "*");
 
 //
 // CONVERTING
@@ -685,7 +686,7 @@ bool surf_full_recons(const char * surface_name = "*");
     \par Description:
     transforms \ref d_surf "surface" to \ref d_points "points"
 */
-bool surf_to_pnts(const char * surface_name = "*");
+boolvec * surf_to_pnts(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_conv
     \fn bool surf_to_mask(REAL true_from, REAL true_to, const char * surface_name = "*");
@@ -697,7 +698,7 @@ bool surf_to_pnts(const char * surface_name = "*");
     makes \ref d_mask "mask" by surface. Cells values will be converted to "true" values if their
     values are in interval [true_from, true_to], else to "false" values.
 */
-bool surf_to_mask(REAL true_from, REAL true_to, const char * surface_name = "*");
+boolvec * surf_to_mask(REAL true_from, REAL true_to, const char * surface_name = "*");
 
 //
 // OTHER
@@ -712,7 +713,7 @@ bool surf_to_mask(REAL true_from, REAL true_to, const char * surface_name = "*")
     \par Description:
     returns the amount of X-nodes for surface
 */
-int surf_getCountX(const char * surface_name = "*");
+intvec * surf_getCountX(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
     \fn int surf_getCountY(const char * surface_name = "*");
@@ -723,7 +724,7 @@ int surf_getCountX(const char * surface_name = "*");
     \par Description:
     returns the amount of Y-nodes for surface
 */
-int surf_getCountY(const char * surface_name = "*");
+intvec * surf_getCountY(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
     \fn REAL surf_getStepX(const char * surface_name = "*");
@@ -734,7 +735,7 @@ int surf_getCountY(const char * surface_name = "*");
     \par Description:
     returns step between X-nodes for surface
 */
-REAL surf_getStepX(const char * surface_name = "*");
+vec * surf_getStepX(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
     \fn REAL surf_getStepY(const char * surface_name = "*");
@@ -745,7 +746,7 @@ REAL surf_getStepX(const char * surface_name = "*");
     \par Description:
     returns step between Y-nodes for surface
 */
-REAL surf_getStepY(const char * surface_name = "*");
+vec * surf_getStepY(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
     \fn bool surf_undef(REAL new_undef_value, const char * surface_name = "*");
@@ -756,7 +757,7 @@ REAL surf_getStepY(const char * surface_name = "*");
     \par Description:
     sets undefined value for surface
 */
-bool surf_undef(REAL new_undef_value, const char * surface_name = "*");
+boolvec * surf_undef(REAL new_undef_value, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
     \fn void surf_info(const char * surface_name = "*");
@@ -778,7 +779,18 @@ void surf_info(const char * surface_name = "*");
     \par Description:
     returns name of surface 
 */
-const char * surf_getName(const char * surface_name = "*");
+strvec * surf_getName(const char * surface_name = "*");
+
+/*! \ingroup tcl_surf_other
+    \fn int surf_getId(const char * surface_name = "*");
+
+    \par Tcl syntax:
+    surf_getId \ref str "surface_name"
+    
+    \par Description:
+    returns unique surface identificator 
+*/
+intvec * surf_getId(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
     \fn bool surf_setName(const char * new_name, const char * surface_name = "*");
@@ -789,7 +801,7 @@ const char * surf_getName(const char * surface_name = "*");
     \par Description:
     sets name for surface
 */
-bool surf_setName(const char * new_name, const char * surface_name = "*");
+boolvec * surf_setName(const char * new_name, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
     \fn int surf_size();
@@ -822,20 +834,9 @@ void surfs_info();
     \par Description:
     removes \ref d_surf "surface" from memory
 */
-bool surf_del(const char * surface_name = "*");
+void surf_del(const char * surface_name = "*");
 
-/*! \ingroup tcl_surf_other
-    \fn bool surf_delall();
- 
-    \par Tcl syntax:
-    surf_delall
-
-    \par Description:
-    removes all \ref d_surf "surfaces" from memory
-*/
-bool surf_delall();
-
-bool surf_trace_cntr(const char * surface_name = "*", REAL from = FLT_MAX, REAL to = FLT_MAX, REAL step = FLT_MAX);
+boolvec * surf_trace_cntr(const char * surface_name = "*", REAL from = FLT_MAX, REAL to = FLT_MAX, REAL step = FLT_MAX);
 
 }; // namespace surfit;
 
