@@ -150,9 +150,10 @@ const char * find_first(const char * pattern)
 		path_pos2 = strrchr(find_pattern+path_pos2, '\\') - find_pattern + 1;
 
 	path_pos = MAX(path_pos1, path_pos2);
-	if (path_pos != 0)
+	if (path_pos != 0) {
 		strncpy(find_res, find_pattern, path_pos);
-	else {
+		find_res[path_pos] = '\0';
+	} else {
 		find_res[0]='.';
 		find_res[1]='\0';
 	}
