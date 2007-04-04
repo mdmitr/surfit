@@ -585,7 +585,9 @@ void surfit_manager::clear_data() const {
 		curv_del("*");
 
 	area_delall();
-	cntr_delall();
+	
+	if (surfit_cntrs) 
+		cntr_del("*");
 
 	hist_delall();
 		

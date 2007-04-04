@@ -1121,12 +1121,13 @@ void _surfit_surf_add(d_surf * srf) {
 	surfit_surfs->push_back(srf);
 };
 
-d_surf * _surf_load_df(datafile * df, const char * surfname) {
-
-	if (!surfname) 
-		writelog(LOG_MESSAGE,"loading first surface from file %s",df->get_filename());
+d_surf * _surf_load_df(datafile * df, const char * surfname) 
+{
+	
+	if (surfname)
+		writelog2(LOG_MESSAGE,"loading first surface from file %s",df->get_filename());
 	else 
-		writelog(LOG_MESSAGE,"loading surface \"%s\" from file %s",surfname,df->get_filename());
+		writelog2(LOG_MESSAGE,"loading surface \"%s\" from file %s",surfname,df->get_filename());
 
 	if (!df->condition()) {
 		return NULL;
@@ -1238,7 +1239,8 @@ cont:
 			return srf;
 		} else {
 			if (srf->getName()) {
-				if (strcmp(srf->getName(),surfname) == 0) {
+				if ( StringMatch(surfname,srf->getName()) ) {
+					log_printf(" : \"%s\"\n", srf->getName());
 					return srf;
 				}
 			}
@@ -1249,10 +1251,12 @@ cont:
 		
 	}
 	
+	log_printf(" : \"%s\"\n", srf->getName());
 	return srf;
 
 exit:
 
+	log_printf("\n");
 	if (!surfname)
 		writelog(LOG_WARNING, "surf_load : this file have no surf");
 	else 

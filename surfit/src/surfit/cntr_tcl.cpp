@@ -240,55 +240,112 @@ boolvec * cntr_div_real(REAL value, const char * pos)
 	return qq.res;
 };
 
-bool cntr_to_curv(const char * pos) {
-	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	std::vector<d_cntr *>::iterator pcontour = get_iterator<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	if (contour == NULL)
-		return false;
-	surfit_cntrs->erase(pcontour);
-	surfit_curvs->push_back(contour);
-	return true;
-};
-
-bool cntr_setName(const char * new_name, const char * pos) {
-	
-	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	if (contour == NULL)
-		return false;
-	contour->setName(new_name);
-	return true;
-};
-
-const char * cntr_getName(const char * pos) {
-	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	if (contour == NULL)
-		return false;
-	return contour->getName();
-};
-
-bool cntr_delall() {
-
-	if (surfit_cntrs == NULL)
-		return false;
-
-	if (surfit_cntrs->size() == 0) {
-		//writelog(SURFIT_WARNING,"cntrs_delall : empty surfit_cntrs");
-		return false;
+boolvec * cntr_to_curv(const char * pos) 
+{
+	boolvec * res = create_boolvec();
+	size_t i;
+	for (i = 0; i < surfit_cntrs->size(); i++)
+	{
+		d_cntr * cntr = (*surfit_cntrs)[i];
+		if (StringMatch(pos, cntr->getName()) == false)
+			continue;
+		writelog(LOG_MESSAGE,"converting contour \"%s\" to curve", cntr->getName());
+		d_curv * curv = create_curv(cntr);
+		surfit_curvs->push_back(curv);
+		res->push_back(true);
 	}
-
-	release_elements(surfit_cntrs->begin(), surfit_cntrs->end());
-	surfit_cntrs->resize(0);
-	return true;
+	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
+	return res;
 };
 
-bool cntr_del(const char * pos) {
-	std::vector<d_cntr *>::iterator contour = get_iterator<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	if (contour == surfit_cntrs->end())
-		return false;
-	if (*contour)
-		(*contour)->release();
-	surfit_cntrs->erase(contour);
-	return true;
+struct match_cntr_setName
+{
+	match_cntr_setName(const char * inew_name, const char * ipos) : new_name(inew_name), pos(ipos), res(NULL) {};
+	void operator()(d_cntr * cntr)
+	{
+		if ( StringMatch(pos, cntr->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			cntr->setName(new_name);
+			res->push_back(true);
+		}
+	}
+	const char * new_name;
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * cntr_setName(const char * new_name, const char * pos) 
+{
+	match_cntr_setName qq(new_name, pos);
+	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
+	return qq.res;
+};
+
+struct match_cntr_getName
+{
+	match_cntr_getName(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_cntr * cntr)
+	{
+		if ( StringMatch(pos, cntr->getName()) )
+		{
+			if (res == NULL)
+				res = create_strvec();
+			res->push_back( cntr->getName() );
+		}
+	}
+	const char * pos;
+	strvec * res;
+};
+
+strvec * cntr_getName(const char * pos) 
+{
+	match_cntr_getName qq(pos);
+	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
+	return qq.res;
+};
+
+struct match_cntr_getId
+{
+	match_cntr_getId(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_cntr * cntr)
+	{
+		if ( StringMatch(pos, cntr->getName()) )
+		{
+			if (res == NULL)
+				res = create_intvec();
+			res->push_back( cntr->getId() );
+		}
+	}
+	const char * pos;
+	intvec * res;
+};
+
+intvec * cntr_getId(const char * pos) 
+{
+	match_cntr_getId qq(pos);
+	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
+	return qq.res;
+};
+
+void cntr_del(const char * pos) 
+{
+	if (surfit_cntrs->size() == 0)
+		return;
+	size_t i;
+	for (i = surfit_cntrs->size()-1; i >= 0; i--)
+	{
+		d_cntr * cntr = (*surfit_cntrs)[i];
+		if ( StringMatch(pos, cntr->getName()) == true )
+		{
+			writelog(LOG_MESSAGE,"removing contour \"%s\" from memory", cntr->getName());
+			cntr->release();
+			surfit_cntrs->erase(surfit_cntrs->begin()+i);
+		}
+		if (i == 0)
+			break;
+	}
 };
 
 int cntr_size() {

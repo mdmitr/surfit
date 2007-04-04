@@ -104,12 +104,12 @@ surfit::boolvec * cntr_minus_real(REAL value, const char * cntr_name = "*");
 surfit::boolvec * cntr_mult_real(REAL value, const char * cntr_name = "*");
 surfit::boolvec * cntr_div_real(REAL value, const char * cntr_name = "*");
 // convers
-bool cntr_to_curv(const char * cntr_name = "*");
+surfit::boolvec * cntr_to_curv(const char * cntr_name = "*");
 // other
-const char * cntr_getName(const char * cntr_name = "*");
-bool cntr_setName(const char * new_name, const char * cntr_name = "*");
-bool cntr_delall();
-bool cntr_del(const char * cntr_name_or_position);
+surfit::strvec * cntr_getName(const char * cntr_name = "*");
+surfit::intvec * cntr_getId(const char * cntr_name = "*");
+surfit::boolvec * cntr_setName(const char * new_name, const char * cntr_name = "*");
+void cntr_del(const char * cntr_name_or_position);
 int cntr_size();
 void cntrs_info();
 

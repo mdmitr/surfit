@@ -151,12 +151,12 @@ boolvec * cntr_div_real(REAL value, const char * cntr_name = "*");
     \fn bool cntr_to_curv(const char * cntr_name = "*");
     
     \par Tcl syntax:
-    cntr_to_curv "cntr_name"
+    cntr_to_curv \ref str "cntr_name"
 
     \par Description:
     makes \ref d_curv "curve" from \ref d_cntr "contour"
 */
-bool cntr_to_curv(const char * cntr_name = "*");
+boolvec * cntr_to_curv(const char * cntr_name = "*");
 
 ///////////////
 // other
@@ -165,45 +165,45 @@ bool cntr_to_curv(const char * cntr_name = "*");
     \fn const char * cntr_getName(const char * cntr_name = "*");
     
     \par Tcl syntax:
-    cntr_getName cntr_position
+    cntr_getName \ref str "cntr_position"
 
     \par Description:
     returns name of \ref d_cntr "contour"
 */
-const char * cntr_getName(const char * cntr_name = "*");
+strvec * cntr_getName(const char * cntr_name = "*");
+
+/*! \ingroup tcl_cntr_other
+    \fn int cntr_getId(const char * contour_name = "*");
+
+    \par Tcl syntax:
+    cntr_getId \ref str "contour_name"
+    
+    \par Description:
+    returns unique contour identificator 
+*/
+intvec * cntr_getId(const char * cntrace_name = "*");
 
 /*! \ingroup tcl_cntr_other
     \fn bool cntr_setName(const char * new_name, const char * cntr_name = "*");
     
     \par Tcl syntax:
-    cntr_setName "new_name" "cntr_name"
+    cntr_setName "new_name" \ref str "cntr_name"
 
     \par Description:
     sets name of \ref d_cntr "contour"
 */
-bool cntr_setName(const char * new_name, const char * cntr_name = "*");
-
-/*! \ingroup tcl_cntr_other
-    \fn bool cntr_delall();
-    
-    \par Tcl syntax:
-    cntr_delall
-
-    \par Description:
-    removes all \ref d_cntr "contours" from memory
-*/
-bool cntr_delall();
+boolvec * cntr_setName(const char * new_name, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_other
     \fn bool cntr_del(const char * cntr_name);
     
     \par Tcl syntax:
-    cntr_del "cntr_name"
+    cntr_del \ref str "cntr_name"
 
     \par Description:
     removes \ref d_cntr "contour" from memory
 */
-bool cntr_del(const char * cntr_name);
+void cntr_del(const char * cntr_name);
 
 /*! \ingroup tcl_cntr_other
     \fn int cntr_size();
