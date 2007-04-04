@@ -71,19 +71,19 @@ class grid_line;
 //
 
 //saveload
-bool curv_read(const char * filename, const char * curvname=NULL, 
-               int col1=1, int col2=2,
-	       const char * delimiters=" \t", int skip_lines = 0, int grow_by=250);
-bool curv_load(const char * filename, const char * curvname = NULL);
+surfit::boolvec * curv_read(const char * filename, const char * curvname=NULL, 
+							int col1=1, int col2=2,
+							const char * delimiters=" \t", int skip_lines = 0, int grow_by=250);
+surfit::boolvec * curv_load(const char * filename, const char * curvname = NULL);
 
-bool curv_write(const char * filename, const char * curv_name = "*", const char * delimiter = "\t");
-bool curv_save(const char * filename, const char * curv_name = "*");
+surfit::boolvec * curv_write(const char * filename, const char * curv_name = "*", const char * delimiter = "\t");
+surfit::boolvec * curv_save(const char * filename, const char * curv_name = "*");
 
 // other
-const char * curv_getName(const char * curv_name = "*");
-bool curv_setName(const char * new_name, const char * curv_name = "*");
-bool curv_delall();
-bool curv_del(const char * curv_name = "*");
+surfit::strvec * curv_getName(const char * curv_name = "*");
+surfit::intvec * curv_getId(const char * curv_name = "*");
+surfit::boolvec * curv_setName(const char * new_name, const char * curv_name = "*");
+void curv_del(const char * curv_name = "*");
 int curv_size();
 void curvs_info();
 
@@ -92,17 +92,17 @@ void curvs_info();
 //
 
 //saveload
-bool cntr_read(const char * filename, const char * cntrname, 
-		       int col1=1, int col2=2, int col3=3,
-		       const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
-bool cntr_load(const char * filename, const char * cntrname = NULL);
-bool cntr_write(const char * filename, const char * cntr_name = "*", const char * delimiter = "\t");
-bool cntr_save(const char * filename, const char * cntr_name = "*");
+surfit::boolvec * cntr_read(const char * filename, const char * cntrname, 
+							int col1=1, int col2=2, int col3=3,
+						    const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
+surfit::boolvec * cntr_load(const char * filename, const char * cntrname = NULL);
+surfit::boolvec * cntr_write(const char * filename, const char * cntr_name = "*", const char * delimiter = "\t");
+surfit::boolvec * cntr_save(const char * filename, const char * cntr_name = "*");
 // math
-bool cntr_plus_real(REAL value, const char * cntr_name = "*");
-bool cntr_minus_real(REAL value, const char * cntr_name = "*");
-bool cntr_mult_real(REAL value, const char * cntr_name = "*");
-bool cntr_div_real(REAL value, const char * cntr_name = "*");
+surfit::boolvec * cntr_plus_real(REAL value, const char * cntr_name = "*");
+surfit::boolvec * cntr_minus_real(REAL value, const char * cntr_name = "*");
+surfit::boolvec * cntr_mult_real(REAL value, const char * cntr_name = "*");
+surfit::boolvec * cntr_div_real(REAL value, const char * cntr_name = "*");
 // convers
 bool cntr_to_curv(const char * cntr_name = "*");
 // other

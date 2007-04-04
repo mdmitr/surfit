@@ -581,7 +581,9 @@ void surfit_manager::clear_data() const {
 
 	pnts_delall();
 
-	curv_delall();
+	if (surfit_curvs) 
+		curv_del("*");
+
 	area_delall();
 	cntr_delall();
 
@@ -647,7 +649,12 @@ bool surfit_manager::auto_load(const char * filename, const char * first1024, in
 
 	if (columns == 2) {
 		try {
-			res = curv_read(filename);
+			boolvec * vec_res = curv_read(filename);
+			if (vec_res) {
+				if (vec_res->size() == 1)
+					res = (*vec_res)(0);
+				vec_res->release();
+			}
 		} catch (...) {
 			goto exit;
 		}

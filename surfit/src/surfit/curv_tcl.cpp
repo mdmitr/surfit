@@ -23,6 +23,9 @@
 #include "fileio.h"
 #include "findfile.h"
 #include "sstuff.h"
+#include "boolvec.h"
+#include "strvec.h"
+#include "intvec.h"
 
 #include "curv.h"
 #include "curv_tcl.h"
@@ -31,14 +34,15 @@
 #include "free_elements.h"
 
 #include <errno.h>
+#include <algorithm>
 
 namespace surfit {
 
-bool curv_read(const char * filename, const char * curvname,
+boolvec * curv_read(const char * filename, const char * curvname,
 	       int col1, int col2,
 	       const char* delimiter, int skip_lines, int grow_by)
 {
-
+	boolvec * res = create_boolvec();
 	const char * fname = find_first(filename);
 	
 	while (fname) {
@@ -55,9 +59,9 @@ bool curv_read(const char * filename, const char * curvname,
 				sstuff_free_char(name);
 			}
 			surfit_curvs->push_back(curve);
+			res->push_back(true);
 		} else {
-			find_close();
-			return false;
+			res->push_back(false);
 		}
 
 		fname = find_next();
@@ -65,80 +69,166 @@ bool curv_read(const char * filename, const char * curvname,
 	}
 
 	find_close();
-	return true;
-
+	return res;
 };
 
-bool curv_load(const char * filename, const char * curvname) {
-	d_curv * curve = _curv_load(filename, curvname);
-	if (curve) {
-		surfit_curvs->push_back(curve);
-		return false;
-	}
-	return true;
-};
-
-bool curv_write(const char * filename, const char * pos, const char * delimiter) 
+boolvec * curv_load(const char * filename, const char * curvname) 
 {
-	d_curv * curve = get_element<d_curv>(pos, surfit_curvs->begin(), surfit_curvs->end());
-	if (curve == NULL)
-		return false;
+	boolvec * res = create_boolvec();
+	const char * fname = find_first(filename);
 
-	char buf[80];
-	strcpy( buf, "%lf" );
-	strcat( buf, delimiter );
-	strcat( buf, "%lf\n" );
-	return _curv_write(curve, filename, buf);
-};
-
-bool curv_save(const char * filename, const char * pos) {
-	d_curv * curve = get_element<d_curv>(pos, surfit_curvs->begin(), surfit_curvs->end());
-	if (curve == NULL)
-		return false;
-
-	writelog(LOG_MESSAGE,"Saving curv to file %s", filename);
-
-	return _curv_save(curve, filename);
-};
-
-bool curv_setName(const char * new_name, const char * pos) {
-	d_curv * curve = get_element<d_curv>(pos, surfit_curvs->begin(), surfit_curvs->end());
-	if (curve == NULL)
-		return false;
-	curve->setName(new_name);
-	return true;
-};
-
-const char * curv_getName(const char * pos) {
-	d_curv * curve = get_element<d_curv>(pos, surfit_curvs->begin(), surfit_curvs->end());
-	if (curve == NULL)
-		return false;
-	return curve->getName();
-};
-
-bool curv_delall() {
-
-	if (surfit_curvs == NULL)
-		return false;
-
-	if (surfit_curvs->size() == 0) {
-		//writelog(SURFIT_WARNING,"curvs_delall : empty surfit_curvs");
-		return false;
+	while (fname) {
+		d_curv * curve = _curv_load(fname, curvname);
+		if (curve) {
+			surfit_curvs->push_back(curve);
+			res->push_back(true);
+		} else
+			res->push_back(false);
 	}
 
-	release_elements(surfit_curvs->begin(), surfit_curvs->end());
-	surfit_curvs->resize(0);
-	return true;
+	return res;
 };
 
-bool curv_del(const char * pos) {
-	std::vector<d_curv *>::iterator curve = get_iterator<d_curv>(pos, surfit_curvs->begin(), surfit_curvs->end());
-	if (curve == surfit_curvs->end())
-		return false;
-	if (*curve)
-		(*curve)->release();
-	surfit_curvs->erase(curve);
-	return true;
+struct match_curv_write
+{
+	match_curv_write(const char * ifilename, const char * ipos, const char * idelimiter) : filename(ifilename), pos(ipos), delimiter(idelimiter), res(NULL) {};
+	void operator()(d_curv * curv)
+	{
+		if ( StringMatch(pos, curv->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			char buf[80];
+			strcpy( buf, "%lf" );
+			strcat( buf, delimiter );
+			strcat( buf, "%lf\n" );
+			res->push_back( _curv_write(curv, filename, buf) );;
+		}
+	}
+	const char * filename;
+	const char * pos;
+	const char * delimiter;
+	boolvec * res;
+};
+
+boolvec * curv_write(const char * filename, const char * pos, const char * delimiter) 
+{
+	match_curv_write qq(filename, pos, delimiter);
+	qq = std::for_each(surfit_curvs->begin(), surfit_curvs->end(), qq);
+	return qq.res;
+};
+
+struct match_curv_save {
+	match_curv_save(const char * ifilename, const char * ipos) : filename(ifilename), pos(ipos), res(NULL) {}
+	void operator()(d_curv * curv)
+	{
+		if ( StringMatch(pos, curv->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			writelog(LOG_MESSAGE,"Saving curv to file %s", filename);
+			res->push_back( _curv_save(curv, filename) );
+		}
+	}
+	const char * filename;
+	const char * pos;
+	boolvec * res;
+};
+boolvec * curv_save(const char * filename, const char * pos) 
+{
+	match_curv_save qq(filename, pos);
+	qq = std::for_each(surfit_curvs->begin(), surfit_curvs->end(), qq);
+	return qq.res;
+};
+
+struct match_curv_setName
+{
+	match_curv_setName(const char * inew_name, const char * ipos) : new_name(inew_name), pos(ipos), res(NULL) {};
+	void operator()(d_curv * curv)
+	{
+		if ( StringMatch(pos, curv->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			curv->setName( new_name );
+			res->push_back(true);
+		}
+	}
+	const char * new_name; 
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * curv_setName(const char * new_name, const char * pos) 
+{
+	match_curv_setName qq(new_name, pos);
+	qq = std::for_each(surfit_curvs->begin(), surfit_curvs->end(), qq);
+	return qq.res;
+};
+
+struct match_curv_getName
+{
+	match_curv_getName(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_curv * curv)
+	{
+		if ( StringMatch(pos, curv->getName()) )
+		{
+			if (res == NULL)
+				res = create_strvec();
+			res->push_back( curv->getName() );
+		}
+	}
+	const char * pos;
+	strvec * res;
+};
+
+strvec * curv_getName(const char * pos) 
+{
+	match_curv_getName qq(pos);
+	qq = std::for_each(surfit_curvs->begin(), surfit_curvs->end(), qq);
+	return qq.res;
+};
+
+struct match_curv_getId
+{
+	match_curv_getId(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_curv * curv)
+	{
+		if ( StringMatch(pos, curv->getName()) )
+		{
+			if (res == NULL)
+				res = create_intvec();
+			res->push_back( curv->getId() );
+		}
+	}
+	const char * pos;
+	intvec * res;
+};
+
+intvec * curv_getId(const char * pos) 
+{
+	match_curv_getId qq(pos);
+	qq = std::for_each(surfit_curvs->begin(), surfit_curvs->end(), qq);
+	return qq.res;
+};
+
+void curv_del(const char * pos) 
+{
+	if (surfit_curvs->size() == 0)
+		return;
+	size_t i;
+	for (i = surfit_curvs->size()-1; i >= 0; i--)
+	{
+		d_curv * curv = (*surfit_curvs)[i];
+		if ( StringMatch(pos, curv->getName()) == true )
+		{
+			writelog(LOG_MESSAGE,"removing curve \"%s\" from memory", curv->getName());
+			curv->release();
+			surfit_curvs->erase(surfit_curvs->begin()+i);
+		}
+		if (i == 0)
+			break;
+	}
 };
 
 int curv_size() {

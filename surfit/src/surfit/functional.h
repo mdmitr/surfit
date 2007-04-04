@@ -197,16 +197,6 @@ protected:
 	grid_line * gfaults;
 };
 
-/* \class projector
-   \brief functionals of that type can help to make project operation
- */
-class SURFIT_EXPORT projector
-{
-public:
-	//! modifies projected solution
-	virtual void modify(extvec * coeff, d_grid * grid) = 0;
-};
-
 }; // namespace surfit;
 
 #endif

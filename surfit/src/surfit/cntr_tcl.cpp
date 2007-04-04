@@ -21,6 +21,10 @@
 
 #include "datafile.h"
 #include "fileio.h"
+#include "findfile.h"
+#include "strvec.h"
+#include "boolvec.h"
+#include "intvec.h"
 
 #include "cntr.h"
 #include "cntr_tcl.h"
@@ -29,95 +33,211 @@
 #include "variables_internal.h"
 #include "free_elements.h"
 
+#include <algorithm>
+
 namespace surfit {
 
-bool cntr_read(const char * filename, const char * cntrname,
+boolvec * cntr_read(const char * filename, const char * cntrname,
 	       int col1, int col2, int col3,
 	       const char* delimiter, int skip_lines, int grow_by)
 {
+	boolvec * res = create_boolvec();
+	const char * fname = find_first(filename);
 
-	d_cntr * contour = _cntr_read(filename, cntrname,
-				      col1, col2, col3, skip_lines,
-				      grow_by, delimiter);
+	while (fname) {
 
-	if (contour != NULL) {
-		surfit_cntrs->push_back(contour);
-		return true;
+		d_cntr * contour = _cntr_read(fname, cntrname,
+			col1, col2, col3, skip_lines,
+			grow_by, delimiter);
+
+		if (contour != NULL) {
+			surfit_cntrs->push_back(contour);
+			res->push_back(true);
+			
+		} else
+			res->push_back(false);
+
+		fname = find_next();
 	}
-	return false;
 
+	find_close();
+	return res;
 };
 
-bool cntr_load(const char * filename, const char * cntrname) {
-	
-	d_cntr * contour = _cntr_load(filename, cntrname);
-	if (contour) {
-		surfit_cntrs->push_back(contour);
-		return true;
-	}
-	return false;
-};
-
-bool cntr_write(const char * filename, const char * pos, const char * delimiter) 
+boolvec * cntr_load(const char * filename, const char * cntrname) 
 {
-	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	if (contour == NULL)
-		return false;
+	boolvec * res = create_boolvec();
+	const char * fname = find_first(filename);
 
-	char buf[80];
-	strcpy( buf, "%lf" );
-	strcat( buf, delimiter );
-	strcat( buf, "%lf" );
-	strcat( buf, delimiter );
-	strcat( buf, "%lf\n" );
-	return _cntr_write(contour, filename, buf);
+	while (fname) {
+		d_cntr * contour = _cntr_load(fname, cntrname);
+		if (contour) {
+			surfit_cntrs->push_back(contour);
+			res->push_back(true);
+		} else
+			res->push_back(false);
+
+		fname = find_next();
+	}
+
+	find_close();
+	return res;
 };
 
-bool cntr_save(const char * filename, const char * pos) {
-
-	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	if (contour == NULL)
-		return false;
-	
-	writelog(LOG_MESSAGE,"Saving cntr to file %s", filename);
-
-	return _cntr_save(contour, filename);
+struct match_cntr_write
+{
+	match_cntr_write(const char * ifilename, const char * ipos, const char * idelimiter) : filename(ifilename), pos(ipos), delimiter(idelimiter), res(NULL) {};
+	void operator()(d_cntr * cntr)
+	{
+		if ( StringMatch(pos, cntr->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			char buf[80];
+			strcpy( buf, "%lf" );
+			strcat( buf, delimiter );
+			strcat( buf, "%lf" );
+			strcat( buf, delimiter );
+			strcat( buf, "%lf\n" );
+			res->push_back( _cntr_write(cntr, filename, buf) );
+		}
+	}
+	const char * filename;
+	const char * pos;
+	const char * delimiter;
+	boolvec * res;
 };
 
-bool cntr_plus_real(REAL value, const char * pos) {
-	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	if (contour == NULL)
-		return false;
-	writelog(LOG_MESSAGE,"Increasing cntr Z-values at %lf", value);
-	contour->plus(value);
-	return true;
+boolvec * cntr_write(const char * filename, const char * pos, const char * delimiter) 
+{
+	match_cntr_write qq(filename, pos, delimiter);
+	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
+	return qq.res;
 };
 
-bool cntr_minus_real(REAL value, const char * pos) {
-	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	if (contour == NULL)
-		return false;
-	writelog(LOG_MESSAGE,"Decreasing cntr Z-values at %lf", value);
-	contour->minus(value);
-	return true;
+struct match_cntr_save
+{
+	match_cntr_save(const char * ifilename, const char * ipos) : filename(ifilename), pos(ipos), res(NULL) {};
+	void operator()(d_cntr * cntr)
+	{
+		if ( StringMatch(pos, cntr->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			writelog(LOG_MESSAGE,"Saving cntr to file %s", filename);
+			res->push_back( _cntr_save(cntr, filename) );
+		}
+	}
+	const char * filename;
+	const char * pos;
+	boolvec * res;
 };
 
-bool cntr_mult_real(REAL value, const char * pos) {
-	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	if (contour == NULL)
-		return false;
-	writelog(LOG_MESSAGE,"Multiplying cntr Z-values at %lf", value);
-	contour->mult(value);
-	return true;
+boolvec * cntr_save(const char * filename, const char * pos) 
+{
+	match_cntr_save qq(filename, pos);
+	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
+	return qq.res;
 };
 
-bool cntr_div_real(REAL value, const char * pos) {
-	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	if (contour == NULL)
-		return false;
-	writelog(LOG_MESSAGE,"Dividing cntr Z-values at %lf", value);
-	contour->div(value);
-	return true;
+struct match_cntr_plus_real
+{
+	match_cntr_plus_real(REAL ivalue, const char * ipos) : value(ivalue), pos(ipos), res(NULL) {};
+	void operator()(d_cntr * cntr)
+	{
+		if ( StringMatch(pos, cntr->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			writelog(LOG_MESSAGE,"Increasing contour \"%s\" Z-values at %lf", cntr->getName(), value);
+			cntr->plus(value);
+		}
+	}
+	REAL value;
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * cntr_plus_real(REAL value, const char * pos) 
+{
+	match_cntr_plus_real qq(value, pos);
+	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
+	return qq.res;
+};
+
+struct match_cntr_minus_real
+{
+	match_cntr_minus_real(REAL ivalue, const char * ipos) : value(ivalue), pos(ipos), res(NULL) {};
+	void operator()(d_cntr * cntr)
+	{
+		if ( StringMatch(pos, cntr->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			writelog(LOG_MESSAGE,"Decreasing contour \"%s\" Z-values at %lf", cntr->getName(), value);
+			cntr->minus(value);
+		}
+	}
+	REAL value;
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * cntr_minus_real(REAL value, const char * pos) 
+{
+	match_cntr_minus_real qq(value, pos);
+	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
+	return qq.res;
+};
+
+struct match_cntr_mult_real
+{
+	match_cntr_mult_real(REAL ivalue, const char * ipos) : value(ivalue), pos(ipos), res(NULL) {};
+	void operator()(d_cntr * cntr)
+	{
+		if ( StringMatch(pos, cntr->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			writelog(LOG_MESSAGE,"Multiplying contour \"%s\" Z-values at %lf", cntr->getName(), value);
+			cntr->mult(value);
+		}
+	}
+	REAL value;
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * cntr_mult_real(REAL value, const char * pos) 
+{
+	match_cntr_mult_real qq(value, pos);
+	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
+	return qq.res;
+};
+
+struct match_cntr_div_real
+{
+	match_cntr_div_real(REAL ivalue, const char * ipos) : value(ivalue), pos(ipos), res(NULL) {};
+	void operator()(d_cntr * cntr)
+	{
+		if ( StringMatch(pos, cntr->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			writelog(LOG_MESSAGE,"Dividing contour \"%s\" Z-values at %lf", cntr->getName(), value);
+			cntr->div(value);
+		}
+	}
+	REAL value;
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * cntr_div_real(REAL value, const char * pos) 
+{
+	match_cntr_div_real qq(value, pos);
+	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
+	return qq.res;
 };
 
 bool cntr_to_curv(const char * pos) {

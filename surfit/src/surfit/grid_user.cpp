@@ -346,7 +346,7 @@ void grid_begin() {
 
 };
 
-void grid_finish(const std::vector<projector *> * projectors) {
+void grid_finish() {
 
 	if (
 		(method_grid->getCountX() >= surfit_grid->getCountX()) &&
@@ -365,6 +365,75 @@ void grid_finish(const std::vector<projector *> * projectors) {
 				(*method_X)(i) = undef_value;
 		}
 		return;		
+	}
+
+	{
+		size_t i;
+		REAL mean = 0;
+		size_t cnt = 0;
+		for (i = 0; i < method_mask_undefined->size(); i++)
+		{
+			if ((method_mask_undefined->get(i) == true) || (method_mask_solved->get(i) == false))
+			{
+				(*method_X)(i) = undef_value;
+				continue;
+			}
+			mean += (*method_X)(i);
+			cnt++;
+		}
+		if (cnt != 0)
+		{
+			mean /= REAL(cnt);
+			size_t NN = method_grid->getCountX();
+			size_t MM = method_grid->getCountY();
+			for (i = 0; i < NN*MM; i++) {
+				if ((*method_X)(i) == undef_value)
+				{
+					size_t ii,jj;
+					one2two(i, ii, jj, NN, MM);
+					REAL lmean = 0;
+					size_t lcnt = 0;
+					if (jj >= 1)
+					{
+						REAL val = (*method_X)( two2one(ii,jj-1,NN,MM) );
+						if (val != undef_value) {
+							lmean += val;
+							lcnt++;
+						}
+					}
+					if (ii >= 1)
+					{
+						REAL val = (*method_X)( two2one(ii-1,jj,NN,MM) );
+						if (val != undef_value) {
+							lmean += val;
+							lcnt++;
+						}
+					}
+					if (ii+1 < NN)
+					{
+						REAL val = (*method_X)( two2one(ii+1,jj,NN,MM) );
+						if (val != undef_value) {
+							lmean += val;
+							lcnt++;
+						}
+					}
+					if (jj+1 < MM)
+					{
+						REAL val = (*method_X)( two2one(ii,jj+1,NN,MM) );
+						if (val != undef_value) {
+							lmean += val;
+							lcnt++;
+						}
+					}
+					if (lcnt == 0)
+						(*method_X)(i) = mean;
+					else {
+						lmean /= REAL(lcnt);
+						(*method_X)(i) = lmean;
+					}
+				}
+			}
+		}
 	}
 
 
@@ -404,7 +473,7 @@ void grid_finish(const std::vector<projector *> * projectors) {
 	if (use_fast_project)
 	{
 		project_vector<extvec,extvec::iterator>(method_X, method_grid->getCountX(), method_grid->getCountY(), doubleX, doubleY);
-
+/*
 		if (projectors->size() > 0) {
 			d_grid * new_grid = create_calc_grd(method_basis_cntX, method_basis_cntY);
 			size_t i;
@@ -414,6 +483,7 @@ void grid_finish(const std::vector<projector *> * projectors) {
 			}
 			new_grid->release();
 		}
+		*/
 
 	} else {
 		d_surf * current_surf = create_surf(method_X, method_grid, map_name);
@@ -440,6 +510,18 @@ void grid_finish(const std::vector<projector *> * projectors) {
 		method_grid = projected_surf->grd;
 		projected_surf->grd = NULL;
 		projected_surf->release();
+/*
+		if (projectors->size() > 0) {
+			d_grid * new_grid = create_calc_grd(method_basis_cntX, method_basis_cntY);
+			size_t i;
+			for (i = 0; i < projectors->size(); i++) {
+				projector * proj = (*projectors)[i];
+				proj->modify(method_X, new_grid);
+			}
+			new_grid->release();
+		}
+		*/
+
 	}
 		
 	

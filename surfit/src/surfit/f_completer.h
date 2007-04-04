@@ -36,7 +36,7 @@ class matr;
     \brief Functional that tells how resulting surface should be in areas 
     of low information density.
 */
-class f_completer : public faultable, public projector {
+class f_completer : public faultable {
 public:
 
 	//! constructor
@@ -61,8 +61,6 @@ public:
 	void set_area(const d_area * iarea, bool iinside);
 	void set_mask(const d_mask * imask);
 
-	void modify(extvec * coeff, d_grid * grid);
-	
 protected:
 	
 	int this_get_data_count() const;

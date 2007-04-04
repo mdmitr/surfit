@@ -23,6 +23,9 @@
 namespace surfit {
 
 class cntr;
+class boolvec;
+class strvec;
+class intvec;
 
 //////////////////
 // save and load
@@ -31,7 +34,7 @@ class cntr;
     \fn bool cntr_read(const char * filename, const char * cntrname, int col1=1, int col2=2, int col3=3, const char * delimiters = " \t", int skip_lines = 0, int grow_by = 250);
     
     \par Tcl syntax:
-    cntr_read "filename" "cntrname" columns col1 col2 col3 "delimiters" skip_lines
+    cntr_read \file "filename" "cntrname" columns col1 col2 col3 "delimiters" skip_lines
 
     \par Description:
     reads \ref d_cntr from formatted text file
@@ -48,7 +51,7 @@ class cntr;
     \par Example:
     cntr_read "C:\\my_cntr.txt" "my_cntr"
 */
-bool cntr_read(const char * filename, const char * cntrname, 
+boolvec * cntr_read(const char * filename, const char * cntrname, 
     	       int col1=1, int col2=2, int col3=3,
 	       const char * delimiters=" \t", int skip_lines = 0, int grow_by=250);
 
@@ -56,7 +59,7 @@ bool cntr_read(const char * filename, const char * cntrname,
     \fn bool cntr_load(const char * filename, const char * cntrname = NULL);
     
     \par Tcl syntax:
-    cntr_load "filename" "cntrname"
+    cntr_load \ref file "filename" "cntrname"
 
     \par Description:
     reads \ref d_cntr "countour" named 'cntrname' from surfit datafile
@@ -64,13 +67,13 @@ bool cntr_read(const char * filename, const char * cntrname,
     \par Example:
     cntr_load "C:\\my_cntr.dat" "my_cntr"
 */
-bool cntr_load(const char * filename, const char * cntrname = NULL);
+boolvec * cntr_load(const char * filename, const char * cntrname = NULL);
 
 /*! \ingroup tcl_cntr_save_load
-    \fn bool cntr_write(const char * filename, const char * cntr_name_or_position = "0", const char * delimiter = "\t");
+    \fn bool cntr_write(const char * filename, const char * cntr_name = "*", const char * delimiter = "\t");
     
     \par Tcl syntax:
-    cntr_write "filename" "cntr_name_or_position" "delimiter"
+    cntr_write \ref file "filename" \ref str "cntr_name" "delimiter"
 
     \par Description:
     saves \ref d_cntr "contour" to formatted text file. 
@@ -78,13 +81,13 @@ bool cntr_load(const char * filename, const char * cntrname = NULL);
     \par Example:
     cntr_write "C:\\my_cntr.txt" "my_cntr"
 */
-bool cntr_write(const char * filename, const char * cntr_name_or_position = "0", const char * delimiter = "\t");
+boolvec * cntr_write(const char * filename, const char * cntr_name = "*", const char * delimiter = "\t");
 
 /*! \ingroup tcl_cntr_save_load
-    \fn bool cntr_save(const char * filename, const char * cntr_name_or_position = "0");
+    \fn bool cntr_save(const char * filename, const char * cntr_name = "*");
     
     \par Tcl syntax:
-    cntr_save "filename" "cntr_name_or_position"
+    cntr_save \ref file "filename" \ref str "cntr_name"
 
     \par Description:
     saves \ref d_cntr "contour" to surfit datafile
@@ -92,74 +95,74 @@ bool cntr_write(const char * filename, const char * cntr_name_or_position = "0",
     \par Example:
     cntr_save "C:\\my_cntr.dat" "my_cntr"
 */
-bool cntr_save(const char * filename, const char * cntr_name_or_position = "0");
+boolvec * cntr_save(const char * filename, const char * cntr_name = "*");
 
 ///////////////
 // math
 
 /*! \ingroup tcl_cntr_math
-    \fn bool cntr_plus_real(REAL value, const char * cntr_name_or_position = "0");
+    \fn bool cntr_plus_real(REAL value, const char * cntr_name = "*");
     
     \par Tcl syntax:
-    cntr_plus_real value "cntr_name_or_position"
+    cntr_plus_real value "cntr_name"
 
     \par Description:
     adds real value to \ref d_cntr "contour" values
 */
-bool cntr_plus_real(REAL value, const char * cntr_name_or_position = "0");
+boolvec * cntr_plus_real(REAL value, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_math
-    \fn bool cntr_minus_real(REAL value, const char * cntr_name_or_position = "0");
+    \fn bool cntr_minus_real(REAL value, const char * cntr_name = "*");
     
     \par Tcl syntax:
-    cntr_minus_real value "cntr_name_or_position"
+    cntr_minus_real value \ref str "cntr_name"
 
     \par Description:
     deducts real value from \ref d_cntr "contour" values
 */
-bool cntr_minus_real(REAL value, const char * cntr_name_or_position = "0");
+boolvec * cntr_minus_real(REAL value, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_math
-    \fn bool cntr_mult_real(REAL value, const char * cntr_name_or_position = "0");
+    \fn bool cntr_mult_real(REAL value, const char * cntr_name = "*");
     
     \par Tcl syntax:
-    cntr_mult_real value "cntr_name_or_position"
+    cntr_mult_real value \ref str "cntr_name"
 
     \par Description:
     multiplies \ref d_cntr "contour" values with real value
 */
-bool cntr_mult_real(REAL value, const char * cntr_name_or_position = "0");
+boolvec * cntr_mult_real(REAL value, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_math
-    \fn bool cntr_div_real(REAL value, const char * cntr_name_or_position = "0");
+    \fn bool cntr_div_real(REAL value, const char * cntr_name = "*");
     
     \par Tcl syntax:
-    cntr_div_real value "cntr_name_or_position"
+    cntr_div_real value \ref str "cntr_name"
 
     \par Description:
     divides \ref d_cntr "contour" values with real value
 */
-bool cntr_div_real(REAL value, const char * cntr_name_or_position = "0");
+boolvec * cntr_div_real(REAL value, const char * cntr_name = "*");
 
 ///////////////
 // convers
 
 /*! \ingroup tcl_cntr_conv
-    \fn bool cntr_to_curv(const char * cntr_name_or_position = "0");
+    \fn bool cntr_to_curv(const char * cntr_name = "*");
     
     \par Tcl syntax:
-    cntr_to_curv "cntr_name_or_position"
+    cntr_to_curv "cntr_name"
 
     \par Description:
     makes \ref d_curv "curve" from \ref d_cntr "contour"
 */
-bool cntr_to_curv(const char * cntr_name_or_position = "0");
+bool cntr_to_curv(const char * cntr_name = "*");
 
 ///////////////
 // other
 
 /*! \ingroup tcl_cntr_other
-    \fn const char * cntr_getName(const char * cntr_name_or_position = "0");
+    \fn const char * cntr_getName(const char * cntr_name = "*");
     
     \par Tcl syntax:
     cntr_getName cntr_position
@@ -167,18 +170,18 @@ bool cntr_to_curv(const char * cntr_name_or_position = "0");
     \par Description:
     returns name of \ref d_cntr "contour"
 */
-const char * cntr_getName(const char * cntr_name_or_position = "0");
+const char * cntr_getName(const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_other
-    \fn bool cntr_setName(const char * new_name, const char * cntr_name_or_position = "0");
+    \fn bool cntr_setName(const char * new_name, const char * cntr_name = "*");
     
     \par Tcl syntax:
-    cntr_setName "new_name" "cntr_name_or_position"
+    cntr_setName "new_name" "cntr_name"
 
     \par Description:
     sets name of \ref d_cntr "contour"
 */
-bool cntr_setName(const char * new_name, const char * cntr_name_or_position = "0");
+bool cntr_setName(const char * new_name, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_other
     \fn bool cntr_delall();
@@ -192,15 +195,15 @@ bool cntr_setName(const char * new_name, const char * cntr_name_or_position = "0
 bool cntr_delall();
 
 /*! \ingroup tcl_cntr_other
-    \fn bool cntr_del(const char * cntr_name_or_position);
+    \fn bool cntr_del(const char * cntr_name);
     
     \par Tcl syntax:
-    cntr_del "cntr_name_or_position"
+    cntr_del "cntr_name"
 
     \par Description:
     removes \ref d_cntr "contour" from memory
 */
-bool cntr_del(const char * cntr_name_or_position);
+bool cntr_del(const char * cntr_name);
 
 /*! \ingroup tcl_cntr_other
     \fn int cntr_size();
