@@ -181,7 +181,7 @@ strvec * cntr_getName(const char * cntr_name = "*");
     \par Description:
     returns unique contour identificator 
 */
-intvec * cntr_getId(const char * cntrace_name = "*");
+intvec * cntr_getId(const char * contour_name = "*");
 
 /*! \ingroup tcl_cntr_other
     \fn bool cntr_setName(const char * new_name, const char * cntr_name = "*");
@@ -195,7 +195,7 @@ intvec * cntr_getId(const char * cntrace_name = "*");
 boolvec * cntr_setName(const char * new_name, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_other
-    \fn bool cntr_del(const char * cntr_name);
+    \fn void cntr_del(const char * cntr_name);
     
     \par Tcl syntax:
     cntr_del \ref str "cntr_name"

@@ -33,7 +33,7 @@ class strvec;
 //
 
 /*! \ingroup tcl_mask_save_load
-    \fn bool mask_load(const char * filename, const char * mask_name = "*");
+    \fn bool mask_load(const char * filename, const char * mask_name = NULL);
     
     \par Tcl syntax:
     mask_load \ref file "filename" \ref str "mask_name"
@@ -43,7 +43,7 @@ class strvec;
     \param filename surfit datafile
     \param maskname name for mask (optional)
 */
-boolvec * mask_load(const char * filename, const char * mask_name = 0);
+boolvec * mask_load(const char * filename, const char * mask_name = NULL);
 
 /*! \ingroup tcl_mask_save_load
     \fn bool mask_save(const char * filename, const char * mask_name = "*");
@@ -195,7 +195,7 @@ intvec * mask_getId(const char * mask_name = "*");
 void mask_setName(const char * new_name, const char * mask_name = "*");
 
 /*! \ingroup tcl_mask_other
-    \fn bool mask_del(const char * mask_name = "*");
+    \fn void mask_del(const char * mask_name = "*");
 
     \par Tcl syntax:
     mask_del \ref str "mask_name"

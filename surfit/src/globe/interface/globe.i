@@ -25,6 +25,9 @@
 #include "dem_tcl.h"
 #include "globe_surf_tcl.h"
 #include "variables_tcl.h"
+#include "boolvec.h"
+#include "strvec.h"
+#include "intvec.h"
 
 #include "dems_tcl.h"
 %}
@@ -58,70 +61,128 @@ class dem;
    Tcl_SetObjResult(interp,Tcl_NewStringObj($1,-1));
 };
 
+%typemap(out) surfit::vec * {
+	Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+	Tcl_SetObjResult(interp, res_obj);
+	if ($1) {
+		size_t i;
+		for (i = 0; i < ($1)->size(); i++)
+		{
+			double val = (double)(*($1))(i);
+			Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewDoubleObj(val));
+		}
+		($1)->release();
+	}
+}
+
+%typemap(out) surfit::intvec * {
+	Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+	Tcl_SetObjResult(interp, res_obj);
+	if ($1) {
+		size_t i;
+		for (i = 0; i < ($1)->size(); i++)
+		{
+			int val = (int)(*($1))(i);
+			Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewIntObj(val));
+		}
+		($1)->release();
+	}
+}
+
+%typemap(out) surfit::boolvec * {
+	Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+	Tcl_SetObjResult(interp, res_obj);
+	if ($1) {
+		size_t i;
+		for (i = 0; i < ($1)->size(); i++)
+		{
+			bool val = (bool)(*($1))(i);
+			Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+		}
+		($1)->release();
+	}
+}
+
+%typemap(out) surfit::strvec * {
+	Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+	Tcl_SetObjResult(interp, res_obj);
+	if ($1) {
+		size_t i;
+		for (i = 0; i < ($1)->size(); i++)
+		{
+			char * val = (*($1))(i);
+			Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewStringObj(val,-1));
+		}
+		($1)->release();
+	}
+}
+
 %include "../../src/sstuff/real.h"
 
 ////////////////////////////////
 // Digital elevation model
 ////////////////////////////////
 
-bool dem(const char * demname_or_position = "0");
-bool dem_add(REAL weight, const char * demname_or_position = "0");
-
-
+surfit::boolvec * dem(const char * demname = "*");
+surfit::boolvec * dem_add(REAL weight, const char * demname = "*");
+//
 //saveload
-bool dem_load(const char * filename, const char * demname = 0);
-bool dem_load_grd(const char * filename, const char * demname = 0);
-bool dem_load_dtm(const char * hdr_filename, const char * name, const char * bin_filename = 0);
-bool dem_load_hgt(const char * hgt_filename, const char * name = 0);
-bool dem_load_hgt_zip(const char * hgt_filename, const char * name = 0);
-bool dem_load_globe(const char * filename, const char * name = 0);
-bool dem_save(const char * filename, const char * dem_name_or_position = "0");
-bool dem_save_grd(const char * filename, const char * dem_name_or_position = "0");
-bool dem_save_xyz(const char * filename, const char * dem_name_or_position = "0");
-bool dem_save_dtm(const char * filename, const char * dem_name_or_position = "0");
-// MATH OPERATIONS
-REAL dem_getValue(REAL x, REAL y, const char * dem_name_or_position = "0");
-bool dem_resid(const char * filename, const char * dem_name_or_position = "0", const char * points_name_or_position = "0");
-REAL dem_D1(const char * dem_name_or_position = "0");
-REAL dem_D2(const char * dem_name_or_position = "0");
-bool dem_gradient(const char * newname, const char * dem_name_or_position = "0");
-bool dem_project(const char * newname, const char * dem_name_or_position = "0");
-REAL dem_minz(const char * dem_name_or_position = "0");
-REAL dem_maxz(const char * dem_name_or_position = "0");
-bool dem_plus(const char * dem1_name_or_position, const char * dem2_name_or_position);
-bool dem_minus(const char * dem1_name_or_position, const char * dem2_name_or_position);
-bool dem_mult(const char * dem1_name_or_position, const char * dem2_name_or_position);
-bool dem_div(const char * dem1_name_or_position, const char * dem2_name_or_position);
-bool dem_set(const char * dem1_name_or_position, const char * dem2_name_or_position);
-bool dem_plus_real(REAL val, const char * dem_name_or_position = "0");
-bool dem_minus_real(REAL val, const char * dem_name_or_position = "0");
-bool dem_mult_real(REAL val, const char * dem_name_or_position = "0");
-bool dem_div_real(REAL val, const char * dem_name_or_position = "0");
-bool dem_set_real(REAL val, const char * dem_name_or_position = "0");
-// WAVELETS SECTION
-int dem_get_details_level(const char * dem_name_or_position = "0");
-bool dem_decomp(const char * dem_name_or_position = "0");
-bool dem_auto_decomp(REAL eps, const char * dem_name_or_position = "0");
-bool dem_recons(const char * dem_name_or_position = "0");
-bool dem_full_recons(const char * dem_name_or_position = "0");
-// CONVERTING
-bool dem_to_pnts(const char * dem_name_or_position = "0");
-bool dem_to_surf(const char * dem_name_or_position = "0");
-bool dem_to_mask(short true_from, short true_to, const char * dem_name_or_position = "0");
-bool surf_to_dem(const char * surface_name_or_position = "0");
-// OTHER
-int dem_getCountX(const char * dem_name_or_position = "0");
-int dem_getCountY(const char * dem_name_or_position = "0");
-REAL dem_getStepX(const char * dem_name_or_position = "0");
-REAL dem_getStepY(const char * dem_name_or_position = "0");
-bool dem_undef(REAL new_undef_value, const char * dem_name_or_position = "0");
-const char * dem_getName(const char * dem_name_or_position = "0");
-bool dem_setName(const char * new_name, const char * dem_name_or_position = "0");
+surfit::boolvec * dem_load(const char * filename, const char * demname = 0);
+surfit::boolvec * dem_load_grd(const char * filename, const char * demname = 0);
+surfit::boolvec * dem_load_dtm(const char * hdr_filename, const char * name, const char * bin_filename = 0);
+surfit::boolvec * dem_load_hgt(const char * hgt_filename, const char * name = 0);
+surfit::boolvec * dem_load_hgt_zip(const char * hgt_filename, const char * name = 0);
+surfit::boolvec * dem_load_globe(const char * filename, const char * name = 0);
+surfit::boolvec * dem_save(const char * filename, const char * dem_name = "*");
+surfit::boolvec * dem_save_grd(const char * filename, const char * dem_name = "*");
+surfit::boolvec * dem_save_xyz(const char * filename, const char * dem_name = "*");
+surfit::boolvec * dem_save_dtm(const char * filename, const char * dem_name = "*");
+//
+// math operations
+REAL dem_getValue(REAL x, REAL y, const char * dem_name = "*");
+REAL dem_D1(const char * dem_name = "*");
+REAL dem_D2(const char * dem_name = "*");
+REAL dem_minz(const char * dem_name = "*");
+REAL dem_maxz(const char * dem_name = "*");
+bool dem_resid(const char * filename, const char * dem_name = "*", const char * points_name = "*");
+bool dem_gradient(const char * newname, const char * dem_name = "*");
+bool dem_project(const char * newname, const char * dem_name = "*");
+bool dem_plus(const char * dem1_name, const char * dem2_name);
+bool dem_minus(const char * dem1_name, const char * dem2_name);
+bool dem_mult(const char * dem1_name, const char * dem2_name);
+bool dem_div(const char * dem1_name, const char * dem2_name);
+bool dem_set(const char * dem1_name, const char * dem2_name);
+bool dem_plus_real(REAL val, const char * dem_name = "*");
+bool dem_minus_real(REAL val, const char * dem_name = "*");
+bool dem_mult_real(REAL val, const char * dem_name = "*");
+bool dem_div_real(REAL val, const char * dem_name = "*");
+bool dem_set_real(REAL val, const char * dem_name = "*");
+//
+// wavelets section
+int dem_get_details_level(const char * dem_name = "*");
+bool dem_decomp(const char * dem_name = "*");
+bool dem_auto_decomp(REAL eps, const char * dem_name = "*");
+bool dem_recons(const char * dem_name = "*");
+bool dem_full_recons(const char * dem_name = "*");
+//
+// converting
+bool dem_to_pnts(const char * dem_name = "*");
+bool dem_to_surf(const char * dem_name = "*");
+bool dem_to_mask(short true_from, short true_to, const char * dem_name = "*");
+bool surf_to_dem(const char * surface_name = "*");
+//
+// other
+int dem_getCountX(const char * dem_name = "*");
+int dem_getCountY(const char * dem_name = "*");
+REAL dem_getStepX(const char * dem_name = "*");
+REAL dem_getStepY(const char * dem_name = "*");
+bool dem_undef(REAL new_undef_value, const char * dem_name = "*");
+const char * dem_getName(const char * dem_name = "*");
+bool dem_setName(const char * new_name, const char * dem_name = "*");
 bool dem_delall();
-bool dem_del(const char * dem_name_or_position = "0");
+bool dem_del(const char * dem_name = "*");
 int dem_size();
 void dems_info();
-
 
 }; // namespace surfit
 

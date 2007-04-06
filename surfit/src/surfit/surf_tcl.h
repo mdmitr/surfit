@@ -38,7 +38,7 @@ class strvec;
 //
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_load(const char * filename, const char * surfname = "*");
+    \fn bool surf_load(const char * filename, const char * surfname = NULL);
 
     \par Tcl syntax:
     surf_load \ref file "filename" \ref str "surfname"
@@ -49,7 +49,7 @@ class strvec;
     \param filename surfit datafile
     \param surfname name for surface (optional)
 */
-boolvec * surf_load(const char * filename, const char * surfname = "*");
+boolvec * surf_load(const char * filename, const char * surfname = NULL);
 
 /*! \ingroup tcl_surf_save_load
     \fn bool surf_save(const char * filename, const char * surface_name = "*");
@@ -826,7 +826,7 @@ int surf_size();
 void surfs_info();
 
 /*! \ingroup tcl_surf_other
-    \fn bool surf_del(const char * surface_name = "*");
+    \fn void surf_del(const char * surface_name = "*");
     
     \par Tcl syntax:
     surf_del \ref str "surface_name"

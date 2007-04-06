@@ -23,6 +23,7 @@
 #include "f_dem.h"
 #include "variables.h"
 #include "interp.h"
+#include "boolvec.h"
 
 #include <algorithm>
 
@@ -30,50 +31,61 @@ namespace surfit {
 
 struct match_dem
 {
-	match_dem(const char * ipos) : pos(ipos) {};
+	match_dem(const char * ipos) : pos(ipos), res(NULL) {};
 	void operator()(d_dem * dem) 
 	{
 		if ( StringMatch(pos, dem->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule dem(\"%s\")", dem->getName());
+			if (res == NULL)
+				res = create_boolvec();
 			f_dem * f = new f_dem(dem);
 			functionals_push_back(f);
+			res->push_back(true);
 		}
 	}
 	const char * pos;
+	boolvec * res;
 };
 
-bool dem(const char * pos) {
-	std::for_each(globe_dems->begin(), globe_dems->end(), match_dem(pos));
-	return true;
+boolvec * dem(const char * pos) 
+{
+	match_dem qq(pos);
+	qq = std::for_each(globe_dems->begin(), globe_dems->end(), qq);
+	return qq.res;
 };
 
 struct match_dem_add
 {
-	match_dem_add(const char * ipos, functional * isrf, REAL iweight) : 
-			   pos(ipos), srf(isrf), weight(iweight) {};
+	match_dem_add(const char * ipos, REAL iweight) : 
+			   pos(ipos), weight(iweight), res(NULL) {};
 	void operator()(d_dem * dem)
 	{
 		if ( StringMatch(pos, dem->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule dem_add(\"%s\")",dem->getName());
+			if (res == NULL)
+				res = create_boolvec();
+			functional * srf = get_modifiable_functional();
+			if (srf == NULL) {
+				res->push_back(false);
+				return;
+			}
 			f_dem * srf2 = new f_dem(dem);
 			srf->add_functional(srf2, weight);
+			res->push_back(true);
 		}
 	}
 	const char * pos;
-	functional * srf;
 	REAL weight;
+	boolvec * res;
 };
 
-bool dem_add(REAL weight, const char * pos) 
+boolvec * dem_add(REAL weight, const char * pos) 
 {
-	functional * srf = get_modifiable_functional();
-	if (srf == NULL)
-		return false;
-
-	std::for_each(globe_dems->begin(), globe_dems->end(), match_dem_add(pos, srf, weight));
-	return true;
+	match_dem_add qq(pos, weight);
+	qq = std::for_each(globe_dems->begin(), globe_dems->end(), qq);
+	return qq.res;
 };
 
 }; // namespace surfit;

@@ -26,6 +26,7 @@
 #include "points.h"
 #include "f_points_ineq.h"
 #include "interp.h"
+#include "boolvec.h"
 
 #include <algorithm>
 
@@ -33,77 +34,92 @@ namespace surfit {
 
 struct match_points
 {
-	match_points(const char * ipos) : pos(ipos) {};
+	match_points(const char * ipos) : pos(ipos), res(NULL) {};
 	void operator()(d_points * pnts) 
 	{
 		if ( StringMatch( pos, pnts->getName() ) )
 		{
+			if (res == NULL)
+				res = create_boolvec();
 			writelog(LOG_MESSAGE,"creating gridding rule points(\"%s\")", pnts->getName());
 			f_points * fnc = new f_points(pnts);
 			functionals_push_back(fnc);
+			res->push_back(true);
 		}
 	}
 	const char * pos;
+	boolvec * res;
 };
 
-bool points(const char * pos) 
+boolvec * points(const char * pos) 
 {
-	std::for_each(surfit_pnts->begin(), surfit_pnts->end(), match_points(pos));
-	return true;
+	match_points qq(pos);
+	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+	return qq.res;
 };
 
 struct match_points_add
 {
-	match_points_add(const char * ipos, REAL iweight, functional * iff) : pos(ipos), weight(iweight), ff(iff) {};
+	match_points_add(const char * ipos, REAL iweight) : pos(ipos), weight(iweight), res(NULL) {};
 	void operator()(d_points * pnts) 
 	{
 		if ( StringMatch( pos, pnts->getName() ) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule points_add(%g,\"%s\")", weight, pnts->getName());
+			if (res == NULL)
+				res = create_boolvec();
+			functional * ff = get_modifiable_functional();
+			if (ff == NULL) {
+				res->push_back(false);
+				return;
+			}
 			f_points * fnc2 = new f_points(pnts);
 			ff->add_functional(fnc2, weight);
+			res->push_back(true);
 		}
 	}
 	const char * pos;
 	REAL weight;
-	functional * ff;
+	boolvec * res;
 };
 
-bool points_add(REAL weight, const char * pos) 
+boolvec * points_add(REAL weight, const char * pos) 
 {
-	functional * fnc = get_modifiable_functional();
-	if (fnc == NULL)
-		return false;
-
-	std::for_each(surfit_pnts->begin(), surfit_pnts->end(), match_points_add(pos, weight, fnc));
-	return true;
+	match_points_add qq(pos, weight);
+	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+	return qq.res;
 };
 
 struct match_points_leq
 {
-	match_points_leq(const char * ipos, REAL imult) : pos(ipos), mult(imult) {};
+	match_points_leq(const char * ipos, REAL imult) : pos(ipos), mult(imult), res(NULL) {};
 	void operator()(d_points * pnts) 
 	{
 		if ( StringMatch( pos, pnts->getName() ) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule points_leq(\"%s\",%g)", pnts->getName(), mult);
+			if (res == NULL)
+				res = create_boolvec();
 			f_points_ineq * inpnts = new f_points_ineq(pnts, true, mult);
 			functionals_push_back(inpnts);
+			res->push_back(true);
 		}
 	}
 	const char * pos;
 	REAL mult;
+	boolvec * res;
 };
 
-bool points_leq(const char * pos, REAL mult) 
+boolvec * points_leq(const char * pos, REAL mult) 
 {
-	std::for_each(surfit_pnts->begin(), surfit_pnts->end(), match_points_leq(pos, mult));
-	return true;
+	match_points_leq qq(pos, mult);
+	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+	return qq.res;
 };
 
 struct match_points_geq
 {
-	match_points_geq(const char * ipos, REAL imult) : pos(ipos), mult(imult) {};
+	match_points_geq(const char * ipos, REAL imult) : pos(ipos), mult(imult), res(NULL) {};
 	void operator()(d_points * pnts) 
 	{
 		if ( StringMatch( pos, pnts->getName() ) )
@@ -111,16 +127,21 @@ struct match_points_geq
 			writelog(LOG_MESSAGE,"creating gridding rule points_geq(\"%s\",%g)", pnts->getName(), mult);
 			f_points_ineq * inpnts = new f_points_ineq(pnts, true, mult);
 			functionals_push_back(inpnts);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	}
 	const char * pos;
 	REAL mult;
+	boolvec * res;
 };
 
-bool points_geq(const char * pos, REAL mult) 
+boolvec * points_geq(const char * pos, REAL mult) 
 {
-	std::for_each(surfit_pnts->begin(), surfit_pnts->end(), match_points_geq(pos, mult));
-	return true;
+	match_points_geq qq(pos, mult);
+	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+	return qq.res;
 };
 
 }; // namespace surfit;

@@ -323,7 +323,7 @@ void prepare_scattered_points(const d_points * pnts,
 	
 	std::vector<size_t> * point_numbers = new std::vector<size_t>( pnts->size() );
 	
-	int point_counter;
+	size_t point_counter;
 	for (point_counter = 0; point_counter < pnts->size(); point_counter++) {
 		*( point_numbers->begin() + point_counter ) = point_counter;
 	}

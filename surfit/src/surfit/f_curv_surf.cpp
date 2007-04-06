@@ -72,7 +72,7 @@ void f_curv_surf::create_f_approx_points() {
 		d_grid * grd = create_last_grd();
 		pnts = discretize_curv(crv, grd, 0, crv->getName());
 		if (pnts) {
-			int i;
+			size_t i;
 			REAL x, y, z;
 			for (i = 0; i < pnts->size(); i++) {
 				x = (*(pnts->X))(i);

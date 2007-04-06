@@ -22,17 +22,19 @@
 
 namespace surfit {
 
+class boolvec;
+
 /*! \ingroup tcl_rules_points
-    \fn bool points(const char * points_name_or_position = "0");
+    \fn bool points(const char * points_name = "*");
     
     \par Tcl syntax:
-    points "points_name_or_position"
+    points \ref str "points_name"
 
     \par Description:
     Using this rule the resulting surface approximates points in least squares meaning.
     If each cell contains no more than one point, resulting surface interpolates points.
 
-    \param points_name_or_position name of \ref d_points "points" dataset, or points position number.
+    \param points_name \ref str "name" of \ref d_points "points" dataset, or points position number.
 
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -42,19 +44,19 @@ namespace surfit {
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
-bool points(const char * points_name_or_position = "0");
+boolvec * points(const char * points_name = "*");
 
 /*! \ingroup tcl_rules_points
-    \fn bool points_add(REAL weight = 1, const char * points_name_or_position = "0");
+    \fn bool points_add(REAL weight = 1, const char * points_name = "*");
     
     \par Tcl syntax:
-    points_add weight "points_name_or_position"
+    points_add weight \ref str "points_name"
 
     \par Description:
     This function modifies previous (modifiable) rule by adding the \ref points rule with some weight.
 
     \param weight informational weight for this rule
-    \param points_name_or_position name of \ref d_points "points" dataset, or points position number.
+    \param points_name \ref str "name" of \ref d_points "points" dataset, or points position number.
 
     \par Math:
     This command modifies previous functional \f$ \Phi_0 \f$ by adding \f$ \Phi_1 \f$:
@@ -68,20 +70,20 @@ bool points(const char * points_name_or_position = "0");
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
-bool points_add(REAL weight = 1, const char * points_name_or_position = "0");
+boolvec * points_add(REAL weight = 1, const char * points_name = "*");
 
 /*! \ingroup tcl_rules_points
-    \fn bool points_leq(const char * points_name_or_position = "0", REAL mult = REAL(0.001));
+    \fn bool points_leq(const char * points_name = "*", REAL mult = REAL(0.001));
     
     \par Tcl syntax:
-    points "points_name_or_position" mult
+    points_leq \ref str "points_name" mult
 
     \par Description:
     This rule adds the surface condition - "the surface should be lower than equal to points".
     In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
     your conditions and if they are correct, try to change "mult" parameter
 
-    \param points_name_or_position name of \ref d_points "points" dataset, or points position number.
+    \param points_name \ref str "name" of \ref d_points "points" dataset, or points position number.
     \param mult multiplier parameter for \ref penalty algorithm
 
     \par Math:
@@ -92,20 +94,20 @@ bool points_add(REAL weight = 1, const char * points_name_or_position = "0");
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
-bool points_leq(const char * points_name_or_position = "0", REAL mult = REAL(0.001));
+boolvec * points_leq(const char * points_name = "*", REAL mult = REAL(0.001));
 
 /*! \ingroup tcl_rules_points
-    \fn bool points_geq(const char * points_name_or_position = "0", REAL mult = REAL(0.001));
+    \fn bool points_geq(const char * points_name = "*", REAL mult = REAL(0.001));
     
     \par Tcl syntax:
-    points_geq "points_name_or_position" mult
+    points_geq \ref str "points_name" mult
 
     \par Description:
     This rule adds the surface condition - "the surface should be greater than equal to points".
     In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
     your conditions and if they are correct, try to change "mult" parameter
 
-    \param points_name_or_position name of \ref d_points "points" dataset, or points position number.
+    \param points_name \ref str "name" of \ref d_points "points" dataset, or points position number.
     \param mult multiplier parameter for \ref penalty algorithm
 
     \par Math:
@@ -116,7 +118,7 @@ bool points_leq(const char * points_name_or_position = "0", REAL mult = REAL(0.0
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
-bool points_geq(const char * points_name_or_position = "0", REAL mult = REAL(0.001));
+boolvec * points_geq(const char * points_name = "*", REAL mult = REAL(0.001));
 
 }; // namespace surfit;
 

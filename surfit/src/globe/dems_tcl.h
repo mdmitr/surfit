@@ -19,16 +19,18 @@
 
 namespace surfit {
 
+class boolvec;
+
 /*! \ingroup tcl_rules_dems
-    \fn bool dem(const char * dem_name_or_position = "0");
+    \fn bool dem(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem \ref regexp "dem_name_or_position"
+    dem \ref str "dem_name"
 
     \par Description:
     Using this rule the resulting surface approximates \ref d_dem "DEM" in least squares meaning.
 
-    \param dem_name_or_position name of \ref d_dem "DEM" dataset, or DEM position number
+    \param dem_name \ref str "name" of \ref d_dem "DEM" dataset, or DEM position number
 
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -37,19 +39,19 @@ namespace surfit {
     \f]
     where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - DEM value for the (i,j) cell.
 */
-bool dem(const char * dem_name_or_position = "0");
+boolvec * dem(const char * dem_name = "*");
 
 /*! \ingroup tcl_rules_dems
-    \fn bool dem_add(REAL weight, const char * dem_name_or_position = "0");
+    \fn bool dem_add(REAL weight, const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_add weight \ref regexp "dem_name_or_position"
+    dem_add weight \ref str "dem_name"
 
     \par Description:
     This function modifies previous (modifiable) rule by adding the \ref dem rule with some weight.
 
     \param weight informational weight for this rule
-    \param dem_name_or_position name of \ref d_dem "DEM" dataset, or DEM position number
+    \param dem_name \ref str "name" of \ref d_dem "DEM" dataset, or DEM position number
 
     \par Math:
     This command modifies previous functional \f$ \Phi_0 \f$ by adding \f$ \Phi_1 \f$:
@@ -62,7 +64,7 @@ bool dem(const char * dem_name_or_position = "0");
     \f]
     where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - DEM value for the (i,j) cell.
 */
-bool dem_add(REAL weight, const char * dem_name_or_position = "0");
+boolvec * dem_add(REAL weight, const char * dem_name = "*");
 
 }; // namespace surfit;
 

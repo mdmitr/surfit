@@ -22,6 +22,10 @@
 
 namespace surfit {
 
+class boolvec;
+class intvec;
+class strvec;
+
 ///////////////////////
 // saving and loading
 
@@ -47,7 +51,7 @@ namespace surfit {
     area_read "C:\\area.txt" my_area
     area_read "C:\\area2.txt" my_area2 2 3 "\t"
 */
-bool area_read(const char * filename, const char * areaname=NULL	, 
+boolvec * area_read(const char * filename, const char * areaname=NULL	, 
 	       int col1=1, int col2=2,
 	       const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
 
@@ -67,7 +71,7 @@ bool area_read(const char * filename, const char * areaname=NULL	,
     \par Example
     area_load "C:\\area.dat" my_area
 */
-bool area_load(const char * filename, const char * area_name = NULL);
+boolvec * area_load(const char * filename, const char * area_name = NULL);
 
 /*! \ingroup tcl_area_save_load
     \fn bool area_write(const char * filename, const char * area_name, const char * delimiter);
@@ -84,7 +88,7 @@ bool area_load(const char * filename, const char * area_name = NULL);
     \par Example
     area_write "C:\\area.txt" my_area
 */
-bool area_write(const char * filename, const char * area_name = "*", const char * delimiter = "\t");
+boolvec * area_write(const char * filename, const char * area_name = "*", const char * delimiter = "\t");
 
 /*! \ingroup tcl_area_save_load
     \fn bool area_save(const char * filename, const char * area_name = "*");
@@ -112,7 +116,18 @@ boolvec * area_save(const char * filename, const char * area_name = "*");
     \par Description:
     returns name of \ref d_area 
 */
-const char * area_getName(const char * area_name = "*");
+strvec * area_getName(const char * area_name = "*");
+
+/*! \ingroup tcl_area_other
+    \fn int area_getId(const char * area_name = "*");
+
+    \par Tcl syntax:
+    area_getId \ref str "area_name"
+    
+    \par Description:
+    returns unique area identificator 
+*/
+intvec * area_getId(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
     \fn bool area_setName(const char * new_name, const char * area_name = "*");
@@ -123,21 +138,10 @@ const char * area_getName(const char * area_name = "*");
     \par Description:
     sets name of \ref d_area 
 */
-bool area_setName(const char * new_name, const char * area_name = "*");
+boolvec * area_setName(const char * new_name, const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
-    \fn bool area_delall();
-    
-    \par Tcl syntax:
-    area_delall
-
-    \par Description:
-    removes all areas from memory
-*/
-bool area_delall();
-
-/*! \ingroup tcl_area_other
-    \fn bool area_del(const char * area_name = "*");
+    \fn void area_del(const char * area_name = "*");
         
     \par Tcl syntax:
     area_del \ref str "area_name"
@@ -146,7 +150,7 @@ bool area_delall();
     removes \ref d_area from at 'area_name' position
 
 */
-bool area_del(const char * area_name = "*");
+void area_del(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
     \fn int area_size();
@@ -159,7 +163,16 @@ bool area_del(const char * area_name = "*");
 */
 int area_size();
 
-bool area_invert(const char * area_name = "*");
+/*! \ingroup tcl_area_other
+    \fn bool area_invert(const char * area_name = "*");
+
+    \par Tcl syntax:
+    area_invert \ref str "area_name"
+
+    \par Description:
+    changes area interior inside or outside area
+*/
+boolvec * area_invert(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
     \fn void areas_info();

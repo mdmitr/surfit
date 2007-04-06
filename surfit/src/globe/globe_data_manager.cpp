@@ -20,6 +20,7 @@
 #include "globe_ie.h"
 #include "globe_data_manager.h"
 #include "variables.h"
+#include "boolvec.h"
 
 #include "sstuff.h"
 
@@ -124,11 +125,21 @@ bool globe_manager::auto_load(const char * filename, const char * first1024, int
 
 	if (ext != NULL) {
 		if (strcmp( uext, ".HDR" ) == 0) {
-			res = dem_load_dtm(filename, strdup(name));
+			boolvec * vecres = dem_load_dtm(filename, strdup(name));
+			if (vecres) {
+				if (vecres->size() == 1)
+					res = (*vecres)(0);
+				vecres->release();
+			}
 			goto exit;
 		}
 		if (strcmp( uext, ".HGT" ) == 0) {
-			res = dem_load_hgt(filename, strdup(name));
+			boolvec * vecres = dem_load_hgt(filename, strdup(name));
+			if (vecres) {
+				if (vecres->size() == 1)
+					res = (*vecres)(0);
+				vecres->release();
+			}
 			goto exit;
 		}
 		if (strcmp( uext, ".ZIP" ) == 0) {
@@ -136,7 +147,12 @@ bool globe_manager::auto_load(const char * filename, const char * first1024, int
 			ext = get_full_ext(filename);				
 			if (strcmp(ext, ".hgt.zip") == 0) {
 				char * name2 = get_name(name);
-				res = dem_load_hgt_zip(filename, strdup(name2));
+				boolvec * vecres = dem_load_hgt_zip(filename, strdup(name2));
+				if (vecres) {
+					if (vecres->size() == 1)
+						res = (*vecres)(0);
+					vecres->release();
+				}
 				sstuff_free_char(name2);
 				goto exit;
 			}
@@ -145,7 +161,12 @@ bool globe_manager::auto_load(const char * filename, const char * first1024, int
 	if (name != NULL) {
 		if (strlen(name) == 4) {
 			if (strcmp( uname+1, "10G") == 0) {
-				res = dem_load_globe(filename);
+				boolvec * vecres = dem_load_globe(filename);
+				if (vecres) {
+					if (vecres->size() == 1)
+						res = (*vecres)(0);
+					vecres->release();
+				}
 				goto exit;
 			}
 		}

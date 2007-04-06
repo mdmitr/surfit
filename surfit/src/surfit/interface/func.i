@@ -49,7 +49,7 @@ surfit::boolvec * mask_completer_add(REAL weight = 1, const char * mask_name = "
 //
 
 // save_load
-surfit::boolvec * surf_load(const char * filename, const char * surfname = 0);
+surfit::boolvec * surf_load(const char * filename, const char * surfname = NULL);
 surfit::boolvec * surf_save(const char * filename, const char * surface_name = "*");
 // MATH OPERATIONS
 surfit::vec * surf_getValue(REAL x, REAL y, const char * surface_name = "*");
@@ -130,7 +130,7 @@ surfit::boolvec * surf_trace_cntr(const char * surface_name = "*", REAL from = F
 //
 
 //save and load
-surfit::boolvec * mask_load(const char * filename, const char * maskname = "*");
+surfit::boolvec * mask_load(const char * filename, const char * maskname = NULL);
 surfit::boolvec * mask_save(const char * filename, const char * mask_name = "*");
 //
 // math

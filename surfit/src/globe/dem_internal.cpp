@@ -387,6 +387,20 @@ d_dem * _dem_load_dtm(const char * hdr_file, const char * bin_file) {
 			Bin_file = strdup(hdr_file);
 			char * ptr = Bin_file + strlen(Bin_file)-4;
 			*ptr = '\0'; 
+			FILE * test = fopen(Bin_file, "r");
+			if (test)
+				fclose(test);
+			else {
+				*ptr = '.';
+				ptr++;
+				*ptr = 'D';
+				ptr++;
+				*ptr = 'E';
+				ptr++;
+				*ptr = 'M';
+				ptr++;
+				*ptr = '\0'; 
+			}
 		}
 
 		size_t nrows = UINT_MAX;

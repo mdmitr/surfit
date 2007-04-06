@@ -579,12 +579,14 @@ void surfit_manager::clear_data() const {
 	if (surfit_masks) 
 		mask_del("*");
 
-	pnts_delall();
+	if (surfit_pnts) 
+		pnts_del("*");
 
 	if (surfit_curvs) 
 		curv_del("*");
 
-	area_delall();
+	if (surfit_areas) 
+		area_del("*");
 	
 	if (surfit_cntrs) 
 		cntr_del("*");
@@ -665,7 +667,12 @@ bool surfit_manager::auto_load(const char * filename, const char * first1024, in
 	
 	if (columns == 3) {
 		try {
-			res = pnts_read(filename);
+			boolvec * vec_res = pnts_read(filename);
+			if (vec_res) {
+				if (vec_res->size() == 1)
+					res = (*vec_res)(0);
+				vec_res->release();
+			}
 		} catch (...) {
 			goto exit;
 		}

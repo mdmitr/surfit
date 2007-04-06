@@ -24,6 +24,8 @@
 #include "findfile.h"
 #include "sstuff.h"
 #include "boolvec.h"
+#include "strvec.h"
+#include "intvec.h"
 
 #include "area.h"
 #include "area_tcl.h"
@@ -35,11 +37,12 @@
 
 namespace surfit {
 
-bool area_read(const char * filename, const char * areaname,
+boolvec * area_read(const char * filename, const char * areaname,
                int col1, int col2,
                const char* delimiter, int skip_lines, int grow_by)
 {
 
+	boolvec * res = create_boolvec();
 	const char * fname = find_first(filename);
 
 	while (fname != NULL) {
@@ -51,9 +54,10 @@ bool area_read(const char * filename, const char * areaname,
 		if (area != NULL) 
 			surfit_areas->push_back(area);
 		else {
-			find_close();
-			writelog(LOG_ERROR,"failed to read area from file %s", fname);
-			return false;
+			writelog(LOG_WARNING,"failed to read area from file %s", fname);
+			res->push_back(false);
+			fname = find_next();
+			continue;
 		}
 
 		if (areaname == NULL)
@@ -63,24 +67,30 @@ bool area_read(const char * filename, const char * areaname,
 			sstuff_free_char(name);
 		}
 		
+		res->push_back(true);
 		fname = find_next();
 		
 	}
 
 	find_close();
-	return true;
+	return res;
 
 };
 
-bool area_load(const char * filename, const char * areaname) 
+boolvec * area_load(const char * filename, const char * areaname) 
 {
-
+	boolvec * res = create_boolvec();
 	const char * fname = find_first(filename);
 
 	while (fname != NULL) {
 		d_area * area = _area_load(fname, areaname);
 		if (area) {
 			surfit_areas->push_back(area);
+			res->push_back(true);
+		} else {
+			res->push_back(false);
+			fname = find_next();
+			continue;
 		}
 		if (areaname == NULL)
 		{
@@ -93,20 +103,37 @@ bool area_load(const char * filename, const char * areaname)
 	}
 
 	find_close();
-	return true;
+	return res;
 };
 
-bool area_write(const char * filename, const char * pos, const char * delimiter) 
+struct match_area_write
 {
-	d_area * area = get_element<d_area>(pos, surfit_areas->begin(), surfit_areas->end());
-	if (area == NULL)
-		return false;
+	match_area_write(const char * ifilename, const char * ipos, const char * idelimiter) : filename(ifilename), pos(ipos), delimiter(idelimiter), res(NULL) {};
+	void operator()(d_area * area)
+	{
+		if ( StringMatch(pos, area->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
 
-	char buf[80];
-	strcpy( buf, "%lf" );
-	strcat( buf, delimiter );
-	strcat( buf, "%lf\n" );
-	return _area_write(area, filename, buf);
+			char buf[80];
+			strcpy( buf, "%lf" );
+			strcat( buf, delimiter );
+			strcat( buf, "%lf\n" );
+			res->push_back( _area_write(area, filename, buf) );
+		}
+	}
+	const char * filename;
+	const char * pos;
+	const char * delimiter;
+	boolvec * res;
+};
+
+boolvec * area_write(const char * filename, const char * pos, const char * delimiter) 
+{
+	match_area_write qq(filename, pos, delimiter);
+	qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
+	return qq.res;
 };
 
 struct match_area_save
@@ -135,53 +162,118 @@ boolvec * area_save(const char * filename, const char * pos)
 	return qq.res;
 };
 
-bool area_setName(const char * new_name, const char * pos) {
-	d_area * area = get_element<d_area>(pos, surfit_areas->begin(), surfit_areas->end());
-	if (area == NULL)
-		return false;
-	area->setName(new_name);
-	return true;
-};
-
-const char * area_getName(const char * pos) {
-	d_area * area = get_element<d_area>(pos, surfit_areas->begin(), surfit_areas->end());
-	if (area == NULL)
-		return false;
-	return area->getName();
-};
-
-bool area_delall() {
-
-	if (surfit_areas == NULL)
-		return false;
-
-	if (surfit_areas->size() == 0) {
-		//writelog(SURFIT_WARNING,"areas_delall : empty surfit_areas");
-		return false;
+struct match_area_setName
+{
+	match_area_setName(const char * inew_name, const char * ipos) : new_name(inew_name), pos(ipos), res(NULL) {} ;
+	void operator()(d_area * area)
+	{
+		if ( StringMatch(pos, area->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			area->setName(new_name);
+			res->push_back(true);
+		}
 	}
-
-	release_elements(surfit_areas->begin(), surfit_areas->end());
-	surfit_areas->resize(0);
-	return true;
+	const char * new_name;
+	const char * pos;
+	boolvec * res;
 };
 
-bool area_del(const char * pos) {
-	std::vector<d_area *>::iterator area = get_iterator<d_area>(pos, surfit_areas->begin(), surfit_areas->end());
-	if (area == surfit_areas->end())
-		return false;
-	if (*area)
-		(*area)->release();
-	surfit_areas->erase(area);
-	return true;
+boolvec * area_setName(const char * new_name, const char * pos) 
+{
+	match_area_setName qq(new_name, pos);
+	qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
+	return qq.res;
 };
 
-bool area_invert(const char * pos) {
-	d_area * area = get_element<d_area>(pos, surfit_areas->begin(), surfit_areas->end());
-	if (area == NULL)
-		return false;
+struct match_area_getName
+{
+	match_area_getName(const char * ipos) : pos(ipos), res(NULL) {} ;
+	void operator()(d_area * area)
+	{
+		if ( StringMatch(pos, area->getName()) )
+		{
+			if (res == NULL)
+				res = create_strvec();
+			res->push_back( area->getName() );
+		}
+	}
+	const char * pos;
+	strvec * res;
+};
 
-	area->invert();
-	return true;
+strvec * area_getName(const char * pos) 
+{
+	match_area_getName qq(pos);
+	qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
+	return qq.res;
+};
+
+struct match_area_getId
+{
+	match_area_getId(const char * ipos) : pos(ipos), res(NULL) {} ;
+	void operator()(d_area * area)
+	{
+		if ( StringMatch(pos, area->getName()) )
+		{
+			if (res == NULL)
+				res = create_intvec();
+			res->push_back( area->getId() );
+		}
+	}
+	const char * pos;
+	intvec * res;
+};
+
+intvec * area_getId(const char * pos) 
+{
+	match_area_getId qq(pos);
+	qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
+	return qq.res;
+};
+
+void area_del(const char * pos) 
+{
+	if (surfit_areas->size() == 0)
+		return;
+	size_t i;
+	for (i = surfit_areas->size()-1; i >= 0; i--)
+	{
+		d_area * area = (*surfit_areas)[i];
+		if ( StringMatch(pos, area->getName()) == true )
+		{
+			writelog(LOG_MESSAGE,"removing area \"%s\" from memory", area->getName());
+			area->release();
+			surfit_areas->erase(surfit_areas->begin()+i);
+		}
+		if (i == 0)
+			break;
+	}
+};
+
+struct match_area_invert
+{
+	match_area_invert(const char * ipos) : pos(ipos), res(NULL) {} ;
+	void operator()(d_area * area)
+	{
+		if ( StringMatch(pos, area->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			area->invert();
+			res->push_back( true );
+		}
+	}
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * area_invert(const char * pos) 
+{
+	match_area_invert qq(pos);
+	qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
+	return qq.res;
 };
 
 int area_size() {

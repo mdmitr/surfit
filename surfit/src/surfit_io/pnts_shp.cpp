@@ -104,7 +104,7 @@ bool _pnts_save_shp(const d_points * pnts, const char * filename) {
 	}
 
 	char buf[1024];
-	int i;
+	size_t i;
 	for (i = 0; i < pnts->size(); i++) {
 
 		double x = (*(pnts->X))(i);

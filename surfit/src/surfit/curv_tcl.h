@@ -124,7 +124,7 @@ surfit::intvec * curv_getId(const char * curv_name = "*");
 boolvec * curv_setName(const char * new_name, const char * curv_name = "*");
 
 /*! \ingroup tcl_curv_other
-    \fn bool curv_del(const char * curv_name = "*");
+    \fn void curv_del(const char * curv_name = "*");
     
     \par Tcl syntax:
     curv_del "curv_name

@@ -39,6 +39,9 @@
 #include "variables_tcl.h"
 #include "free_elements.h"
 #include "surf.h"
+#include "boolvec.h"
+#include "strvec.h"
+#include "intvec.h"
 
 #include "grid_user.h"
 
@@ -47,34 +50,72 @@
 
 namespace surfit {
 
-bool dem_load(const char * filename, const char * demname) {
-	d_dem * d = _dem_load(filename, demname);
-	if (d) {
-		globe_dems->push_back(d);
-		return true;
+boolvec * dem_load(const char * filename, const char * demname) 
+{
+	boolvec * res = create_boolvec();
+	const char * fname = find_first(filename);
+
+	while (fname != NULL) {
+		d_dem * d = _dem_load(fname, demname);
+		if (d) {
+			globe_dems->push_back(d);
+			res->push_back(true);
+		} else
+			res->push_back(false);
+		fname = find_next();
 	}
-	return false;
+
+	return res;
 };
 
-bool dem_save(const char * filename, const char * pos) {
-	d_dem * d = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
-	if (!d) 
-		return false;
-	return _dem_save(d, filename);
-};
-
-bool dem_load_dtm(const char * hdr_filename, const char * name, const char * bin_filename) {
-	d_dem * d = _dem_load_dtm(hdr_filename, bin_filename);
-	if (d && name) {
-		d->setName(name);
-		globe_dems->push_back(d);
-		return true;
+struct match_dem_save
+{
+	match_dem_save(const char * ifilename, const char * ipos) : filename(ifilename), pos(ipos), res(NULL) {};
+	void operator()(d_dem * dem) 
+	{
+		if ( StringMatch(pos, dem->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( _dem_save(dem, filename) );
+		}
 	}
-	return false;
+	const char * filename;
+	const char * pos;
+	boolvec * res;
 };
 
-bool dem_load_hgt_zip(const char * hgt_zip_filename, const char * dem_name) {
+boolvec * dem_save(const char * filename, const char * pos) 
+{
+	match_dem_save qq(filename, pos);
+	qq = std::for_each(globe_dems->begin(), globe_dems->end(), qq);
+	return qq.res;
+};
 
+boolvec * dem_load_dtm(const char * hdr_filename, const char * name, const char * bin_filename) 
+{
+	boolvec * res = create_boolvec();
+	const char * fname = find_first(hdr_filename);
+
+	while (fname != NULL) {
+		d_dem * d = _dem_load_dtm(fname, bin_filename);
+		if (d) {
+			if (name)
+				d->setName(name);
+			globe_dems->push_back(d);
+			res->push_back(true);
+		} else
+			res->push_back(false);
+		fname = find_next();
+	};
+
+	find_close();
+	return res;
+};
+
+boolvec * dem_load_hgt_zip(const char * hgt_zip_filename, const char * dem_name) 
+{
+	boolvec * res = create_boolvec();
 	const char * fname = find_first(hgt_zip_filename);
 
 	while (fname != NULL) {
@@ -84,8 +125,9 @@ bool dem_load_hgt_zip(const char * hgt_zip_filename, const char * dem_name) {
 			if (dem_name)
 				d->setName(dem_name);
 			globe_dems->push_back(d);
+			res->push_back(true);
 		} else
-			return false;
+			res->push_back(false);
 
 		fname = find_next();
 
@@ -95,37 +137,81 @@ bool dem_load_hgt_zip(const char * hgt_zip_filename, const char * dem_name) {
 	}
 
 	find_close();
-	return true;
-		
+	return res;
 };
 
-bool dem_load_hgt(const char * hgt_filename, const char * dem_name) {
-	d_dem * d = _dem_load_hgt(hgt_filename);
-	if (d) {
-		if (dem_name)
-			d->setName(dem_name);
-		globe_dems->push_back(d);
-		return true;
+boolvec *  dem_load_hgt(const char * hgt_filename, const char * dem_name) 
+{
+	boolvec * res = create_boolvec();
+	const char * fname = find_first(hgt_filename);
+
+	while (fname != NULL) {
+		d_dem * d = _dem_load_hgt(fname);
+		if (d) {
+			if (dem_name)
+				d->setName(dem_name);
+			globe_dems->push_back(d);
+			res->push_back(true);
+		} else
+			res->push_back(false);
+
+		fname = find_next();
+
+		if (stop_execution)
+			break;
 	}
-	return false;
+	
+	find_close();
+	return res;
 };
 
-bool dem_load_globe(const char * filename, const char * dem_name) {
-	d_dem * d = _dem_load_globe(filename);
-	if (d) {
-		if (dem_name)
-			d->setName(dem_name);
-		globe_dems->push_back(d);
-		return true;
+boolvec * dem_load_globe(const char * filename, const char * dem_name) 
+{
+	boolvec * res = create_boolvec();
+	const char * fname = find_first(filename);
+
+	while (fname != NULL) {
+		d_dem * d = _dem_load_globe(fname);
+		if (d) {
+			if (dem_name)
+				d->setName(dem_name);
+			globe_dems->push_back(d);
+			res->push_back(true);
+		} else
+			res->push_back(false);
+
+		fname = find_next();
+
+		if (stop_execution)
+			break;
 	}
-	return false;
+
+	find_close();
+	return res;
 };
 
-bool dem_save_dtm(const char * filename, const char * pos) {
-	d_dem * d = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
-	if (!d) 
-		return false;
-	return _dem_save_dtm(d, filename);
+struct match_dem_save_dtm
+{
+	match_dem_save_dtm(const char * ifilename, const char * ipos) : filename(ifilename), pos(ipos), res(NULL) {};
+	void operator()(d_dem * dem) 
+	{
+		if ( StringMatch(pos, dem->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( _dem_save_dtm(dem, filename) );
+		}
+	}
+	const char * filename;
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * dem_save_dtm(const char * filename, const char * pos) 
+{
+	match_dem_save_dtm qq(filename, pos);
+	qq = std::for_each(globe_dems->begin(), globe_dems->end(), qq);
+	return qq.res;
 };
 
 bool dem_resid(const char * filename, const char * dem_pos, const char * pnts_pos) {
@@ -158,28 +244,77 @@ REAL dem_maxz(const char * pos) {
 	return maxZ;
 };
 
-bool dem_save_grd(const char * filename, const char * pos) {
-	d_dem * d = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
-	if (!d) 
-		return false;
-	return _dem_save_grd(d, filename);
-};
-
-bool dem_load_grd(const char * filename, const char * demname) {
-	d_dem * d = _dem_load_grd(filename, demname);
-	if (d) {
-		d->setName(demname);
-		globe_dems->push_back(d);
-		return true;
+struct match_dem_save_grd
+{
+	match_dem_save_grd(const char * ifilename, const char * ipos) : filename(ifilename), pos(ipos), res(NULL) {};
+	void operator()(d_dem * dem) 
+	{
+		if ( StringMatch(pos, dem->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( _dem_save_grd(dem, filename) );
+		}
 	}
-	return false;
+	const char * filename;
+	const char * pos;
+	boolvec * res;
 };
 
-bool dem_save_xyz(const char * filename, const char * pos) {
-	d_dem * d = get_element<d_dem>(pos, globe_dems->begin(), globe_dems->end());
-	if (!d) 
-		return false;
-	return _dem_save_xyz(d, filename);
+boolvec * dem_save_grd(const char * filename, const char * pos) 
+{
+	match_dem_save_grd qq(filename, pos);
+	qq = std::for_each(globe_dems->begin(), globe_dems->end(), qq);
+	return qq.res;
+};
+
+boolvec * dem_load_grd(const char * filename, const char * demname) 
+{
+	boolvec * res = create_boolvec();
+	const char * fname = find_first(filename);
+
+	while (fname != NULL) {
+		d_dem * d = _dem_load_grd(fname, demname);
+		if (d) {
+			if (demname)
+				d->setName(demname);
+			globe_dems->push_back(d);
+			res->push_back(true);
+		} else
+			res->push_back(false);
+
+		fname = find_next();
+
+		if (stop_execution)
+			break;
+	}
+	
+	find_close();
+	return res;
+};
+
+struct match_dem_save_xyz
+{
+	match_dem_save_xyz(const char * ifilename, const char * ipos) : filename(ifilename), pos(ipos), res(NULL) {};
+	void operator()(d_dem * dem) 
+	{
+		if ( StringMatch(pos, dem->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( _dem_save_xyz(dem, filename) );
+		}
+	}
+	const char * filename;
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * dem_save_xyz(const char * filename, const char * pos) 
+{
+	match_dem_save_xyz qq(filename, pos);
+	qq = std::for_each(globe_dems->begin(), globe_dems->end(), qq);
+	return qq.res;
 };
 
 int dem_getCountX(const char * pos) {

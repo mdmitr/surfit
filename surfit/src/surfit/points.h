@@ -110,7 +110,7 @@ public:
 	bool getMinMaxZ(REAL & minz, REAL & maxz) const;
 
 	//! returns amount of points
-	int size() const;
+	size_t size() const;
 
 	//! calculates mean value of all points values
 	REAL mean() const;

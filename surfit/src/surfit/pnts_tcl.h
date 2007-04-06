@@ -25,6 +25,9 @@ namespace surfit {
 class vec;
 class d_grid;
 class d_points;
+class boolvec;
+class strvec;
+class intvec;
 
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
@@ -39,7 +42,7 @@ class d_points;
     \fn bool pnts_load(const char * filename, const char * pntsname = NULL);
     
     \par Tcl syntax:
-    pnts_load "filename" "pntsname"
+    pnts_load \ref file "filename" "pntsname"
 
     \par Description:
     reads \ref d_points "points" named 'pntsname' from surfit datafile
@@ -47,14 +50,14 @@ class d_points;
     \par Example:
     pnts_load "C:\\my_points.dat" "my_points"
 */
-bool pnts_load(const char * filename, const char * pntsname = NULL);
+boolvec * pnts_load(const char * filename, const char * pntsname = NULL);
 
 /*! \ingroup tcl_pnts_save_load
-    \fn bool pnts_read(const char * filename, const char * pntsname, int col1, int col2, int col3, int col4, 
+    \fn boolvec * pnts_read(const char * filename, const char * pntsname, int col1, int col2, int col3, int col4, 
 	       const char * delimiter, int skip_lines, int grow_by);
     
     \par Tcl syntax:
-    pnts_read "filename" "pntsname" col1 col2 col3 col4 "delimiter" skip_lines grow_by
+    pnts_read \ref file "filename" "pntsname" col1 col2 col3 col4 "delimiter" skip_lines grow_by
 
     \par Description:
     reads \ref d_points "points" from formatted text file
@@ -73,15 +76,15 @@ bool pnts_load(const char * filename, const char * pntsname = NULL);
     \li pnts_read "C:\\points.txt" "points" 1 2 3 0 " 	" 0 
     \li pnts_read "C:\\points_geq.txt" "points_geq" 1 2 3 3 " 	" 0 
 */
-bool pnts_read(const char * filename, const char * pntsname = NULL, 
+boolvec * pnts_read(const char * filename, const char * pntsname = NULL, 
 	       int col1 = 1, int col2 = 2, int col3 = 3, int col4 = 0, 
 	       const char * delimiter = " \t", int skip_lines = 0, int grow_by = 250);
 
 /*! \ingroup tcl_pnts_save_load
-    \fn bool pnts_save(const char * filename, const char * points_name_or_position = "0");
+    \fn bool pnts_save(const char * filename, const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_save "filename" "points_name_or_position"
+    pnts_save "filename" \ref str "points_name"
 
     \par Description:
     saves \ref d_points "points" to surfit datafile
@@ -89,433 +92,444 @@ bool pnts_read(const char * filename, const char * pntsname = NULL,
     \par Example
     pnts_save "C:\\points.dat" "my_points"
 */
-bool pnts_save(const char * filename, const char * points_name_or_position = "0");
+boolvec * pnts_save(const char * filename, const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_save_load
-    \fn bool pnts_write(const char * filename, const char * points_name_or_position = "0", const char * delimiter = "\t");
+    \fn bool pnts_write(const char * filename, const char * points_name = "*", const char * delimiter = "\t");
     
     \par Tcl syntax:
-    pnts_write "filename" "points_name_or_position" "delimiter" 
+    pnts_write "filename" \ref str "points_name" "delimiter" 
 
     \par Description:
     saves \ref d_points "points" to formatted text file
 */
-bool pnts_write(const char * filename, const char * points_name_or_position = "0", const char * delimiter = "\t");
+boolvec * pnts_write(const char * filename, const char * points_name = "*", const char * delimiter = "\t");
 
 //////////////
 // math
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, const char * points_name_or_position = "0");
+    \fn bool pnts_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_transform shiftX scaleX shiftY scaleY "points_name_or_position"
+    pnts_transform shiftX scaleX shiftY scaleY \ref str "points_name"
 
     \par Description:
     makes geometrical transform on \ref d_points "points" (shifting and scaling). 
 */
-bool pnts_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, const char * points_name_or_position = "0");
+boolvec * pnts_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_inverse_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, const char * points_name_or_position = "0");
+    \fn bool pnts_inverse_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_inverse_transfort shiftX scaleX shiftY scaleY "points_name_or_position"
+    pnts_inverse_transfort shiftX scaleX shiftY scaleY \ref str "points_name"
 
     \par Description:
     makes inverse to \ref pnts_transform operation
 */
-bool pnts_inverse_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, const char * points_name_or_position = "0");
+boolvec * pnts_inverse_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_rotate(REAL centerX, REAL centerY, REAL angle, const char * points_name_or_position = "0");
+    \fn bool pnts_rotate(REAL centerX, REAL centerY, REAL angle, const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_rotate centerX centerY angle "points_name_or_position"
+    pnts_rotate centerX centerY angle \ref str "points_name"
      
     \par Description:
     rotates \ref d_points "points" around point with coords (centerX, centerY)
 */
-bool pnts_rotate(REAL centerX, REAL centerY, REAL angle, const char * points_name_or_position = "0");
+boolvec * pnts_rotate(REAL centerX, REAL centerY, REAL angle, const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_filter_by_mask(const char * points_name_or_position = "0", const char * mask_name_or_position = "0");
+    \fn bool pnts_filter_by_mask(const char * points_name = "*", const char * mask_name = "*");
     
     \par Tcl syntax:
-    pnts_filter_by_mask "points_name_or_position" "mask_name_or_position"
+    pnts_filter_by_mask \ref str "points_name" \ref str "mask_name"
 
     \par Description:
     removes all points from \ref d_points "points" dataset for which \ref d_mask is undefined
 */
-bool pnts_filter_by_mask(const char * points_name_or_position = "0", const char * mask_name_or_position = "0");
+boolvec * pnts_filter_by_mask(const char * points_name = "*", const char * mask_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_filter_in_area(const char * points_name_or_position = "0", const char * area_name_or_position = "0");
+    \fn bool pnts_filter_in_area(const char * points_name = "*", const char * area_name = "*");
     
     \par Tcl syntax:
-    pnts_filter_in_area "points_name_or_position" "area_name_or_position"
+    pnts_filter_in_area \ref str "points_name" \ref str "area_name"
 
     \par Description:
     removes all points from \ref d_points "points" dataset which are inside of \ref d_area
 */
-bool pnts_filter_in_area(const char * points_name_or_position = "0", const char * area_name_or_position = "0");
+boolvec * pnts_filter_in_area(const char * points_name = "*", const char * area_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_filter_out_area(const char * points_name_or_position = "0", const char * area_name_or_position = "0");
+    \fn bool pnts_filter_out_area(const char * points_name = "*", const char * area_name = "*");
     
     \par Tcl syntax:
-    pnts_filter_out_area "points_name_or_position" "area_name_or_position"
+    pnts_filter_out_area \ref str "points_name" \ref str "area_name"
 
     \par Description:
     removes all points from \ref d_points "points" dataset which are outside of \ref d_area
 */
-bool pnts_filter_out_area(const char * points_name_or_position = "0", const char * area_name_or_position = "0");
+boolvec * pnts_filter_out_area(const char * points_name = "*", const char * area_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_filter_by_surf(REAL eps, const char * points_name_or_position = "0", const char * surf_name_or_position = "0")
+    \fn bool pnts_filter_by_surf(REAL eps, const char * points_name = "*", const char * surf_name = "*")
     
     \par Tcl syntax:
-    pnts_filter_by_surf eps "points_name_or_position" "surf_name_or_position"
+    pnts_filter_by_surf eps \ref str "points_name" \ref str "surf_name"
 
     \par Description:
     removes points from \ref d_points "points" dataset, if \f$ |z - f(x,y)| > \varepsilon \f$, 
     where (x,y,z) - \ref d_points "data points", f(x,y) - \ref d_surf value at point (x,y)
 */
-bool pnts_filter_by_surf(REAL eps, const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+boolvec * pnts_filter_by_surf(REAL eps, const char * points_name = "*", const char * surf_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_update_by_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+    \fn bool pnts_update_by_surf(const char * points_name = "*", const char * surf_name = "*");
     
     \par Tcl syntax:
-    pnts_update_by_surf "points_name_or_position" "surf_name_or_position"
+    pnts_update_by_surf \ref str "points_name" \ref str "surf_name"
 
     \par Description:
     sets points values to z = f(x,y), where (x,y,z) - \ref d_points "data points", 
     f(x,y) - \ref d_surf value at point (x,y)
 */
-bool pnts_update_by_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+boolvec * pnts_update_by_surf(const char * points_name = "*", const char * surf_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn REAL pnts_minx(const char * points_name_or_position = "0");
+    \fn REAL pnts_minx(const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_minz "points_name_or_position"
+    pnts_minz \ref str "points_name"
 
     \par Description:
     returns minimum X value of all data-points
 */
-REAL pnts_minx(const char * points_name_or_position = "0");
+vec * pnts_minx(const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn REAL pnts_maxx(const char * points_name_or_position = "0");
+    \fn REAL pnts_maxx(const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_maxx "points_name_or_position"
+    pnts_maxx \ref str "points_name"
 
     \par Description:
     returns maximum X value of all data-points
 */
-REAL pnts_maxx(const char * points_name_or_position = "0");
+vec * pnts_maxx(const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn REAL pnts_miny(const char * points_name_or_position = "0");
+    \fn REAL pnts_miny(const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_miny "poinst_name_or_position"
+    pnts_miny \ref str "poinst_name"
 
     \par Description:
     returns minimum Y value of all data-points
 */
-REAL pnts_miny(const char * points_name_or_position = "0");
+vec * pnts_miny(const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn REAL pnts_maxy(const char * points_name_or_position = "0");
+    \fn REAL pnts_maxy(const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_maxy "points_name_or_position"
+    pnts_maxy \ref str "points_name"
 
     \par Description:
     returns maximum Y value of all data-points
 */
-REAL pnts_maxy(const char * points_name_or_position = "0");
+vec * pnts_maxy(const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn REAL pnts_minz(const char * points_name_or_position = "0");
+    \fn REAL pnts_minz(const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_minz "points_name_or_position"
+    pnts_minz \ref str "points_name"
 
     \par Description:
     returns minimum Z value of all data-points
 */
-REAL pnts_minz(const char * points_name_or_position = "0");
+vec * pnts_minz(const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn REAL pnts_maxz(const char * points_name_or_position = "0");
+    \fn REAL pnts_maxz(const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_maxz "points_name_or_position"
+    pnts_maxz \ref str "points_name"
 
     \par Description:
     returns maximum Z value of all data-points
 */
-REAL pnts_maxz(const char * points_name_or_position = "0");
+vec * pnts_maxz(const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_add_noise(REAL std, const char * points_name_or_position = "0");
+    \fn bool pnts_add_noise(REAL std, const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_add_noise std "points_name_or_position"
+    pnts_add_noise std \ref str "points_name"
 
     \par Description:
     adds noise distributed as N(0,std) to \ref d_points "points"
 */
-bool pnts_add_noise(REAL std, const char * points_name_or_position = "0");
+boolvec * pnts_add_noise(REAL std, const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_abs(const char * points_name_or_position = "0");
+    \fn bool pnts_abs(const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_abs "points_name_or_position"
+    pnts_abs \ref str "points_name"
 
     \par Description:
     calculates absolute values for points
 */
-bool pnts_abs(const char * points_name_or_position = "0");
+boolvec * pnts_abs(const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn REAL pnts_mean(const char * points_name_or_position = "0")
+    \fn REAL pnts_mean(const char * points_name = "*")
     
     \par Tcl syntax:
-    pnts_mean "points_name_or_position"
+    pnts_mean \ref str "points_name"
 
     \par Description:
     calculates mean value of all data-points in \ref d_points "points"
 */
-REAL pnts_mean(const char * points_name_or_position = "0");
+vec * pnts_mean(const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn REAL pnts_std(REAL mean, const char * points_name_or_position = "0");
+    \fn REAL pnts_std(REAL mean, const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_std mean "points_name_or_position"
+    pnts_std mean \ref str "points_name"
 
     \par Description:
     calculates standart deviation value from mean value (for \ref d_points "points")
 */
-REAL pnts_std(REAL mean, const char * points_name_or_position = "0");
+vec * pnts_std(REAL mean, const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_plus(const char * points_name_or_position1, const char * points_name_or_position2);
+    \fn bool pnts_plus(const char * points_name1, const char * points_name2);
     
     \par Tcl syntax:
-    pnts_plus "points_name_or_position1" "points_name_or_position2"
+    pnts_plus \ref str "points_name1" \ref str "points_name2"
 
     \par Description:
     calculates A = A+B, where A - points at pos1, B - points at pos2
 */
-bool pnts_plus(const char * points_name_or_position1, const char * points_name_or_position2);
+boolvec * pnts_plus(const char * points_name1, const char * points_name2);
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_minus(const char * points_name_or_position1, const char * points_name_or_position2);
+    \fn bool pnts_minus(const char * points_name1, const char * points_name2);
     
     \par Tcl syntax:
-    pnts_minus "points_name_or_position1" "points_name_or_position2"
+    pnts_minus \ref str "points_name1" \ref str "points_name2"
 
     \par Description:
     calculates A = A-B, where A - points at pos1, B - points at pos2
 */
-bool pnts_minus(const char * points_name_or_position1, const char * points_name_or_position2);
+boolvec * pnts_minus(const char * points_name1, const char * points_name2);
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_mult(const char * points_name_or_position1, const char * points_name_or_position2);
+    \fn bool pnts_mult(const char * points_name1, const char * points_name2);
     
     \par Tcl syntax:
-    pnts_mult "points_name_or_position1" "points_name_or_position2"
+    pnts_mult \ref str "points_name1" \ref str "points_name2"
 
     \par Description:
     calculates A = A*B, where A - points at pos1, B - points at pos2
 */
-bool pnts_mult(const char * points_name_or_position1, const char * points_name_or_position2);
+boolvec * pnts_mult(const char * points_name1, const char * points_name2);
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_div(const char * points_name_or_position1, const char * points_name_or_position2);
+    \fn bool pnts_div(const char * points_name1, const char * points_name2);
     
     \par Tcl syntax:
-    pnts_div "points_name_or_position1" "points_name_or_position2"
+    pnts_div \ref str "points_name1" \ref str "points_name2"
 
     \par Description:
     calculates A = A/B, where A - points at pos1, B - points at pos2
 */
-bool pnts_div(const char * points_name_or_position1, const char * points_name_or_position2);
+boolvec * pnts_div(const char * points_name1, const char * points_name2);
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_set(const char * points_name_or_position1, const char * points_name_or_position2);
+    \fn bool pnts_set(const char * points_name1, const char * points_name2);
     
     \par Tcl syntax:
-    pnts_set "points_name_or_position1" "points_name_or_position2"
+    pnts_set \ref str "points_name1" \ref str "points_name2"
 
     \par Description:
     calculates A = B, where A - points at pos1, B - points at pos2
 */
-bool pnts_set(const char * points_name_or_position1, const char * points_name_or_position2);
+boolvec * pnts_set(const char * points_name1, const char * points_name2);
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_plus_real(REAL val, const char * points_name_or_position = "0");
+    \fn bool pnts_plus_real(REAL val, const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_plus_real val "points_name_or_position"
+    pnts_plus_real val \ref str "points_name"
 
     \par Description:
     calculates A = A+B, where A - this class, B - some numeric
 */
-bool pnts_plus_real(REAL val, const char * points_name_or_position = "0");
+boolvec * pnts_plus_real(REAL val, const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_minus_real(REAL val, const char * points_name_or_position = "0");
+    \fn bool pnts_minus_real(REAL val, const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_minus_real val "points_name_or_position"
+    pnts_minus_real val \ref str "points_name"
 
     \par Description:
     calculates A = A-B, where A - this class, B - some numeric
 */
-bool pnts_minus_real(REAL val, const char * points_name_or_position = "0");
+boolvec * pnts_minus_real(REAL val, const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_mult_real(REAL val, const char * points_name_or_position = "0");
+    \fn bool pnts_mult_real(REAL val, const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_mult_real val "points_name_or_position"
+    pnts_mult_real val \ref str "points_name"
 
     \par Description:
     calculates A = A*B, where A - this class, B - some numeric
 */
-bool pnts_mult_real(REAL val, const char * points_name_or_position = "0");
+boolvec * pnts_mult_real(REAL val, const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_div_real(REAL val, const char * points_name_or_position = "0");
+    \fn bool pnts_div_real(REAL val, const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_div_real val "points_name_or_position"
+    pnts_div_real val \ref str "points_name"
 
     \par Description:
     calculates A = A/B, where A - this class, B - some numeric
 */
-bool pnts_div_real(REAL val, const char * points_name_or_position = "0");
+boolvec * pnts_div_real(REAL val, const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_set_real(REAL val, const char * points_name_or_position = "0");
+    \fn bool pnts_set_real(REAL val, const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_set_real val "points_name_or_position"
+    pnts_set_real val \ref str "points_name"
 
     \par Description:
     calculates A = B, where A - this class, B - some numeric
 */
-bool pnts_set_real(REAL val, const char * points_name_or_position = "0");
+boolvec * pnts_set_real(REAL val, const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_plus_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+    \fn bool pnts_plus_surf(const char * points_name = "*", const char * surf_name = "*");
     
     \par Tcl syntax:
-    pnts_plus_surf "points_name_or_position" "surf_name_or_position"
+    pnts_plus_surf \ref str "points_name" \ref str "surf_name"
 
     \par Description:
-    calculates A = A+B, where A - points at points_name_or_position, B - surface values at points
+    calculates A = A+B, where A - points at points_name, B - surface values at points
 */
-bool pnts_plus_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+boolvec * pnts_plus_surf(const char * points_name = "*", const char * surf_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_minus_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+    \fn bool pnts_minus_surf(const char * points_name = "*", const char * surf_name = "*");
     
     \par Tcl syntax:
-    pnts_minus_surf "points_name_or_position" "surf_name_or_position"
+    pnts_minus_surf \ref str "points_name" \ref str "surf_name"
 
     \par Description:
-    calculates A = A-B, where A - points at points_name_or_position, B - surface values at points
+    calculates A = A-B, where A - points at points_name, B - surface values at points
 */
-bool pnts_minus_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+boolvec * pnts_minus_surf(const char * points_name = "*", const char * surf_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_mult_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+    \fn bool pnts_mult_surf(const char * points_name = "*", const char * surf_name = "*");
     
     \par Tcl syntax:
-    pnts_mult_surf "points_name_or_position" "surf_name_or_position"
+    pnts_mult_surf \ref str "points_name" \ref str "surf_name"
 
     \par Description:
-    calculates A = A*B, where A - points at points_name_or_position, B - surface values at points
+    calculates A = A*B, where A - points at points_name, B - surface values at points
 */
-bool pnts_mult_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+boolvec * pnts_mult_surf(const char * points_name = "*", const char * surf_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_div_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+    \fn bool pnts_div_surf(const char * points_name = "*", const char * surf_name = "*");
     
     \par Tcl syntax:
-    pnts_div_surf "points_name_or_position" "surf_name_or_position"
+    pnts_div_surf \ref str "points_name" \ref str "surf_name"
 
     \par Description:
-    calculates A = A/B, where A - points at points_name_or_position, B - surface values at points
+    calculates A = A/B, where A - points at points_name, B - surface values at points
 */
-bool pnts_div_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+boolvec * pnts_div_surf(const char * points_name = "*", const char * surf_name = "*");
 
 /*! \ingroup tcl_pnts_math
-    \fn bool pnts_set_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+    \fn bool pnts_set_surf(const char * points_name = "*", const char * surf_name = "*");
     
     \par Tcl syntax:
-    pnts_set_surf "points_name_or_position" "surf_name_or_position"
+    pnts_set_surf \ref str "points_name" \ref str "surf_name"
 
     \par Description:
-    calculates A = B, where A - points at points_name_or_position, B - surface values at points
+    calculates A = B, where A - points at points_name, B - surface values at points
 */
-bool pnts_set_surf(const char * points_name_or_position = "0", const char * surf_name_or_position = "0");
+boolvec * pnts_set_surf(const char * points_name = "*", const char * surf_name = "*");
 
 //////////////
 // other
 
 /*! \ingroup tcl_pnts_other
-    \fn int pnts_getCount(const char * points_name_or_position = "0");
+    \fn int pnts_getCount(const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_getCount "points_name_or_position"
+    pnts_getCount "points_name"
 
     \par Description:
     returns \ref d_points "points" size (number of points)
 */
-int pnts_getCount(const char * points_name_or_position = "0");
+int pnts_getCount(const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_other
-    \fn const char * pnts_getName(const char * points_name_or_position = "0");
+    \fn const char * pnts_getName(const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_getName "points_name_or_position"
+    pnts_getName \ref str "points_name"
 
     \par Description:
     returns name of \ref d_points "points" dataset
 */
-const char * pnts_getName(const char * points_name_or_position = "0");
+strvec * pnts_getName(const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_other
-    \fn bool pnts_setName(const char * new_name, const char * points_name_or_position = "0");
+    \fn int pnts_getId(const char * points_name = "*");
+
+    \par Tcl syntax:
+    pnts_getId \ref str "points_name"
+    
+    \par Description:
+    returns unique points identificator 
+*/
+intvec * pnts_getId(const char * pntsace_name = "*");
+
+/*! \ingroup tcl_pnts_other
+    \fn bool pnts_setName(const char * new_name, const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_setName "new_name" "points_name_or_position"
+    pnts_setName "new_name" \ref str "points_name"
 
     \par Description:
     sets name of \ref d_points "points" to new_name
 */
-bool pnts_setName(const char * new_name, const char * points_name_or_position = "0");
+boolvec * pnts_setName(const char * new_name, const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_other
-    \fn bool pnts_concat(const char * points_name_or_position1, const char * points_name_or_position2);
+    \fn bool pnts_concat(const char * points_name1, const char * points_name2);
     
     \par Tcl syntax:
-    pnts_concat "points_name_or_position1" "points_name_or_position2"
+    pnts_concat \ref str "points_name1" \ref str "points_name2"
 
     \par Description:
     adds scattered data-points from points at pos2 to points at pos1
 */
-bool pnts_concat(const char * points_name_or_position1, const char * points_name_or_position2);
+boolvec * pnts_concat(const char * points_name1, const char * points_name2);
 
 /*! \ingroup tcl_pnts_other
     \fn int pnts_size();
@@ -540,33 +554,22 @@ int pnts_size();
 void pnts_info();
 
 /*! \ingroup tcl_pnts_other
-    \fn bool pnts_del(const char * points_name_or_position = "0");
+    \fn void pnts_del(const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_del "points_name_or_position"
+    pnts_del \ref str "points_name"
 
     \par Description:
     removes \ref d_points "points" from memory
     
-    \param points_name_or_position points name, or points position number
+    \param points_name points name
 
     \par Examples:
     \li pnts_del "my_points"
     \li pnts_del 0
 
 */
-bool pnts_del(const char * points_name_or_position = "0");
-
-/*! \ingroup tcl_pnts_other
-    \fn bool pnts_delall();
-    
-    \par Tcl syntax:
-    pnts_delall
-
-    \par Description:
-    removes all points objects from memory
-*/
-bool pnts_delall();
+void pnts_del(const char * points_name = "*");
 
 }; // namespace surfit;
 

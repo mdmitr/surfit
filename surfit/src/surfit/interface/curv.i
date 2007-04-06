@@ -116,20 +116,20 @@ void cntrs_info();
 //
 // areas
 //
-bool area_read(const char * filename, const char * areaname=NULL, 
-     	       int col1=1, int col2=2,
-	       const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
-bool area_load(const char * filename, const char * areaname = NULL);
-bool area_write(const char * filename, const char * area_name = "*", const char * delimiter = "\t");
+surfit::boolvec * area_read(const char * filename, const char * areaname=NULL, 
+     					    int col1=1, int col2=2,
+						    const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
+surfit::boolvec * area_load(const char * filename, const char * areaname = NULL);
+surfit::boolvec * area_write(const char * filename, const char * area_name = "*", const char * delimiter = "\t");
 surfit::boolvec * area_save(const char * filename, const char * area_name = "*");
 
 // other
-const char * area_getName(const char * area_name = "*");
-bool area_setName(const char * new_name, const char * area_name = "*");
-bool area_delall();
-bool area_del(const char * area_name = "*");
+surfit::strvec * area_getName(const char * area_name = "*");
+surfit::intvec * area_getId(const char * area_name = "*");
+surfit::boolvec * area_setName(const char * new_name, const char * area_name = "*");
+void area_del(const char * area_name = "*");
 int area_size();
-bool area_invert(const char * area_name = "*");
+surfit::boolvec * area_invert(const char * area_name = "*");
 void areas_info();
 
 //

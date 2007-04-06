@@ -98,7 +98,7 @@ d_points::~d_points() {
 		names->release();
 };
 
-int d_points::size() const {
+size_t d_points::size() const {
 	if (Z)
 		return Z->size();
 	return 0;
@@ -147,7 +147,7 @@ bool d_points::plus(const d_points * pnts) {
 		return false;
 	if (size() == 0)
 		return true;
-	int i;
+	size_t i;
 	vec::iterator ptr1 = Z->begin();
 	vec::const_iterator ptr2 = pnts->Z->const_begin();
 	for (i = 0; i < size(); i++)
@@ -162,7 +162,7 @@ bool d_points::minus(const d_points * pnts) {
 		return false;
 	if (size() == 0)
 		return true;
-	int i;
+	size_t i;
 	vec::iterator ptr1 = Z->begin();
 	vec::const_iterator ptr2 = pnts->Z->const_begin();
 	for (i = 0; i < size(); i++)
@@ -177,7 +177,7 @@ bool d_points::mult(const d_points * pnts) {
 		return false;
 	if (size() == 0)
 		return true;
-	int i;
+	size_t i;
 	vec::iterator ptr1 = Z->begin();
 	vec::const_iterator ptr2 = pnts->Z->const_begin();
 	for (i = 0; i < size(); i++)
@@ -192,7 +192,7 @@ bool d_points::div(const d_points * pnts) {
 		return false;
 	if (size() == 0)
 		return true;
-	int i;
+	size_t i;
 	vec::iterator ptr1 = Z->begin();
 	vec::const_iterator ptr2 = pnts->Z->const_begin();
 	for (i = 0; i < size(); i++)
@@ -207,7 +207,7 @@ bool d_points::set(const d_points * pnts) {
 		return false;
 	if (size() == 0)
 		return true;
-	int i;
+	size_t i;
 	vec::iterator ptr1 = Z->begin();
 	vec::const_iterator ptr2 = pnts->Z->const_begin();
 	for (i = 0; i < size(); i++)
@@ -216,35 +216,35 @@ bool d_points::set(const d_points * pnts) {
 };
 
 void d_points::plus(REAL val) {
-	int i;
+	size_t i;
 	vec::iterator ptr = Z->begin();
 	for (i = 0; i < size(); i++)
 		*(ptr + i) += val;
 };
 
 void d_points::minus(REAL val) {
-	int i;
+	size_t i;
 	vec::iterator ptr = Z->begin();
 	for (i = 0; i < size(); i++)
 		*(ptr + i) -= val;
 };
 
 void d_points::mult(REAL val) {
-	int i;
+	size_t i;
 	vec::iterator ptr = Z->begin();
 	for (i = 0; i < size(); i++)
 		*(ptr + i) *= val;
 };
 
 void d_points::div(REAL val) {
-	int i;
+	size_t i;
 	vec::iterator ptr = Z->begin();
 	for (i = 0; i < size(); i++)
 		*(ptr + i) /= val;
 };
 
 void d_points::set(REAL val) {
-	int i;
+	size_t i;
 	vec::iterator ptr = Z->begin();
 	for (i = 0; i < size(); i++)
 		*(ptr + i) = val;
