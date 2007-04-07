@@ -160,214 +160,214 @@ boolvec * dem_save_dtm(const char * filename, const char * dem_name = "*");
     \fn REAL dem_getValue(REAL x, REAL y, const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_getValue x y "dem_name"
+    dem_getValue x y \ref str "dem_name"
 
     \par Description:
     calculates \ref d_dem "DEM" value at (x,y) point
 */
-REAL dem_getValue(REAL x, REAL y, const char * dem_name = "*");
+vec * dem_getValue(REAL x, REAL y, const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math
     \fn bool dem_resid(const char * filename, const char * dem_name = "*", const char * points_name = "*")
 
     \par Tcl syntax:
-    dem_resid "filename" "dem_name" "points_name"
+    dem_resid "filename" \ref str "dem_name" \ref str "points_name"
 
     \par Description:
     calculates residuals between \ref d_points "points" and \ref d_dem "DEM"
     Saves result to text file.
 */
-bool dem_resid(const char * filename, const char * dem_name = "*", const char * points_name = "*");
+boolvec * dem_resid(const char * filename, const char * dem_name = "*", const char * points_name = "*");
 
 /*! \ingroup tcl_dem_math
     \fn REAL dem_D1(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_D1 "dem_name"
+    dem_D1 \ref str "dem_name"
 
     \par Description:
     calculates value of 
     \f$ \int\limits_\Omega \left[ f_x^2 + f_y^2 \right] dx dy \f$ 
     for \ref d_dem "DEM"
 */
-REAL dem_D1(const char * dem_name = "*");
+vec * dem_D1(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math
     \fn REAL dem_D2(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_D2 "dem_name"
+    dem_D2 \ref str "dem_name"
 
     \par Description:
     calculates value of 
     \f$ \int\limits_\Omega \left[ f_{xx}^2 + 2f_{xy}^2 + f_{yy}^2 \right] dx dy \f$ 
     for \ref d_dem "DEM"
 */
-REAL dem_D2(const char * dem_name = "*");
+vec * dem_D2(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math
     \fn bool dem_gradient(const char * newname, const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_gradient "newname" "dem_name"
+    dem_gradient "newname" \ref str "dem_name"
 
     \par Description:
     calculates "DEM of gradients lengths" from \ref d_dem "DEM"
 */
-bool dem_gradient(const char * newname, const char * dem_name = "*");
+boolvec * dem_gradient(const char * newname, const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math
     \fn bool dem_project(const char * newname, const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_project "newname" "dem_name"
+    dem_project "newname" \ref str "dem_name"
 
     \par Description:
     recalculates d_dem "DEM" on \ref d_grid using bilinear interpolation algorithm
 */
-bool dem_project(const char * newname, const char * dem_name = "*");
+boolvec * dem_project(const char * newname, const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math
     \fn REAL dem_minz(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_minz "dem_name"
+    dem_minz \ref str "dem_name"
 
     \par Description:
     calculates minimum Z-value for \ref d_dem "DEM"
 */
-REAL dem_minz(const char * dem_name = "*");
+vec * dem_minz(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math
     \fn REAL dem_maxz(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_maxz "dem_name"
+    dem_maxz \ref str "dem_name"
 
     \par Description:
     calculates maximum Z-value for \ref d_dem "DEM"
 */
-REAL dem_maxz(const char * dem_name = "*");
+vec * dem_maxz(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math
     \fn bool dem_plus(const char * dem1_name, const char * dem2_name);
 
     \par Tcl syntax:
-    dem_plus "dem1_name" "dem2_name"
+    dem_plus \ref str "dem1_name" \ref str "dem2_name"
 
     \par Description:
     Performs operation with DEMs cells values:
     dem1 = dem1 + dem2
 */
-bool dem_plus(const char * dem1_name, const char * dem2_name);
+boolvec * dem_plus(const char * dem1_name, const char * dem2_name);
 
 /*! \ingroup tcl_dem_math
     \fn bool dem_minus(const char * dem1_name, const char * dem2_name);
 
     \par Tcl syntax:
-    dem_minus "dem1_name" "dem2_name"
+    dem_minus \ref str "dem1_name" \ref str "dem2_name"
 
     \par Description:
     Performs operation with DEMs cells values:
     dem1 = dem1 - dem2
 */
-bool dem_minus(const char * dem1_name, const char * dem2_name);
+boolvec * dem_minus(const char * dem1_name, const char * dem2_name);
 
 /*! \ingroup tcl_dem_math
     \fn bool dem_mult(const char * dem1_name, const char * dem2_name);
 
     \par Tcl syntax:
-    dem_mult "dem1_name" "dem2_name"
+    dem_mult \ref str "dem1_name" \ref str "dem2_name"
 
     \par Description:
     Performs operation with DEMs cells values:
     dem1 = dem1 * dem2
 */
-bool dem_mult(const char * dem1_name, const char * dem2_name);
+boolvec * dem_mult(const char * dem1_name, const char * dem2_name);
 
 /*! \ingroup tcl_dem_math
     \fn bool dem_div(const char * dem1_name, const char * dem2_name);
 
     \par Tcl syntax:
-    dem_div "dem1_name" "dem2_name"
+    dem_div \ref str "dem1_name" \ref str "dem2_name"
 
     \par Description:
     Performs operation with DEMs cells values:
     dem1 = dem1 / dem2
 */
-bool dem_div(const char * dem1_name, const char * dem2_name);
+boolvec * dem_div(const char * dem1_name, const char * dem2_name);
 
 /*! \ingroup tcl_dem_math
     \fn bool dem_set(const char * dem1_name, const char * dem2_name);
 
     \par Tcl syntax:
-    dem_set "dem1_name" "dem2_name"
+    dem_set \ref str "dem1_name" \ref str "dem2_name"
 
     \par Description:
     Performs operation with DEMs cells values:
     dem1 = dem2
 */
-bool dem_set(const char * dem1_name, const char * dem2_name);
+boolvec * dem_set(const char * dem1_name, const char * dem2_name);
 
 /*! \ingroup tcl_dem_math
     \fn bool dem_plus_real(REAL val, const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_plus_real val "dem_name"
+    dem_plus_real val \ref str "dem_name"
 
     \par Description:
     Performs operation with DEMs cells values:
     dem = dem + val
 */
-bool dem_plus_real(REAL val, const char * dem_name = "*");
+boolvec * dem_plus_real(REAL val, const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math
     \fn bool dem_minus_real(REAL val, const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_minus_real val "dem_name"
+    dem_minus_real val \ref str "dem_name"
 
     \par Description:
     Performs operation with DEMs cells values:
     dem = dem - val
 */
-bool dem_minus_real(REAL val, const char * dem_name = "*");
+boolvec * dem_minus_real(REAL val, const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math
     \fn bool dem_mult_real(REAL val, const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_mult_real val "dem_name"
+    dem_mult_real val \ref str "dem_name"
 
     \par Description:
     Performs operation with DEMs cells values:
     dem = dem * val
 */
-bool dem_mult_real(REAL val, const char * dem_name = "*");
+boolvec * dem_mult_real(REAL val, const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math
     \fn bool dem_div_real(REAL val, const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_div_real val "dem_name"
+    dem_div_real val \ref str "dem_name"
 
     \par Description:
     Performs operation with DEMs cells values:
     dem = dem / val
 */
-bool dem_div_real(REAL val, const char * dem_name = "*");
+boolvec * dem_div_real(REAL val, const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math
     \fn bool dem_set_real(REAL val, const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_set_real val "dem_name"
+    dem_set_real val \ref str "dem_name"
 
     \par Description:
     Performs operation with DEMs cells values:
     dem = val
 */
-bool dem_set_real(REAL val, const char * dem_name = "*");
+boolvec * dem_set_real(REAL val, const char * dem_name = "*");
 
 //
 // WAVELETS SECTION
@@ -377,57 +377,57 @@ bool dem_set_real(REAL val, const char * dem_name = "*");
     \fn int dem_get_details_level(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_get_details_level "dem_name"
+    dem_get_details_level \ref str "dem_name"
 
     \par Description:
     returns the depth of wavelet decomposition for dem
 */
-int dem_get_details_level(const char * dem_name = "*");
+intvec * dem_get_details_level(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math_wavan
     \fn bool dem_decomp(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_decomp \ref regexp "dem_name"
+    dem_decomp \ref str "dem_name"
 
     \par Description:
     makes one wavelet-decomposition for dem
 */
-bool dem_decomp(const char * dem_name = "*");
+boolvec * dem_decomp(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math_wavan
     \fn bool dem_auto_decomp(REAL eps, const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_auto_decomp eps "dem_name"
+    dem_auto_decomp eps \ref str "dem_name"
 
     \par Description:
     calls \ref dem_decomp until difference between original DEM norm and decomposed DEM norm
     will be lower than eps
 */
-bool dem_auto_decomp(REAL eps, const char * dem_name = "*");
+boolvec * dem_auto_decomp(REAL eps, const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math_wavan
     \fn bool dem_recons(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_recons \ref regexp "dem_name"
+    dem_recons \ref str "dem_name"
 
     \par Description:
     makes one wavelet-reconstruction for dem
 */
-bool dem_recons(const char * dem_name = "*");
+boolvec * dem_recons(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_math_wavan
     \fn bool dem_full_recons(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_full_recons "dem_name"
+    dem_full_recons \ref str "dem_name"
 
     \par Description:
     makes all possible wavelet-reconstruction (recontructs original dem)
 */
-bool dem_full_recons(const char * dem_name = "*");
+boolvec * dem_full_recons(const char * dem_name = "*");
 
 //
 // CONVERTING
@@ -437,34 +437,34 @@ bool dem_full_recons(const char * dem_name = "*");
     \fn bool dem_to_pnts(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_to_pnts "dem_name" "new_name"
+    dem_to_pnts \ref str "dem_name" "new_name"
 
     \par Description:
     transforms \ref d_dem "DEM" to \ref d_points "points"
 */
-bool dem_to_pnts(const char * dem_name = "*");
+boolvec * dem_to_pnts(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_conv
     \fn bool dem_to_surf(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_to_surf "dem_name"
+    dem_to_surf \ref str "dem_name"
 
     \par Description:
     makes \ref d_surf "surface" from \ref d_dem "DEM"
 */
-bool dem_to_surf(const char * dem_name = "*");
+boolvec * dem_to_surf(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_conv
     \fn bool dem_to_mask(short true_from, short true_to, const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_to_mask true_from true_to "dem_name"
+    dem_to_mask true_from true_to \ref str "dem_name"
 
     \par Description:
     makes \ref d_mask "mask" by \ref d_dem "DEM". Value will be true, if it lies in interval [true_from, true_to]
 */
-bool dem_to_mask(short true_from, short true_to, const char * dem_name = "*");
+boolvec * dem_to_mask(short true_from, short true_to, const char * dem_name = "*");
 
 //
 // OTHER
@@ -474,100 +474,100 @@ bool dem_to_mask(short true_from, short true_to, const char * dem_name = "*");
     \fn int dem_getCountX(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_getCountX "dem_name"
+    dem_getCountX \ref str "dem_name"
 
     \par Description:
     returns the number of X-nodes for \ref d_dem "DEM"
 */
-int dem_getCountX(const char * dem_name = "*");
+intvec * dem_getCountX(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_other
     \fn int dem_getCountY(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_getCountY "dem_name"
+    dem_getCountY \ref str "dem_name"
 
     \par Description:
     returns the number of Y-nodes for \ref d_dem "DEM"
 */
-int dem_getCountY(const char * dem_name = "*");
+intvec * dem_getCountY(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_other
     \fn REAL dem_getStepX(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_getStepX "dem_name"
+    dem_getStepX \ref str "dem_name"
 
     \par Description:
     returns step between X-nodes for \ref d_dem "DEM"
 */
-REAL dem_getStepX(const char * dem_name = "*");
+vec * dem_getStepX(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_other
     \fn REAL dem_getStepY(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_getStepY "dem_name"
+    dem_getStepY \ref str "dem_name"
 
     \par Description:
     returns step between Y-nodes for \ref d_dem "DEM"
 */
-REAL dem_getStepY(const char * dem_name = "*");
+vec * dem_getStepY(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_other
     \fn bool dem_undef(REAL new_undef_value, const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_undef new_undef_value "dem_name"
+    dem_undef new_undef_value \ref str "dem_name"
 
     \par Description:
     sets new undefined value for \ref d_dem "DEM"
 */
-bool dem_undef(REAL new_undef_value, const char * dem_name = "*");
+boolvec * dem_undef(REAL new_undef_value, const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_other
     \fn const char * dem_getName(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_getName "dem_name"
+    dem_getName \ref str "dem_name"
 
     \par Description:
     returns name of \ref d_dem 
 */
-const char * dem_getName(const char * dem_name = "*");
+strvec * dem_getName(const char * dem_name = "*");
+
+/*! \ingroup tcl_dem_other
+    \fn const char * dem_getId(const char * dem_name = "*");
+
+    \par Tcl syntax:
+    dem_getId \ref str "dem_name"
+
+    \par Description:
+    returns unique \ref d_dem "dem" identificator
+*/
+intvec * dem_getId(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_other
     \fn bool dem_setName(const char * new_name, const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_setName "new_name" "dem_name"
+    dem_setName "new_name" \ref str "dem_name"
 
     \par Description:
     sets name of \ref d_dem "DEM"
 */
-bool dem_setName(const char * new_name, const char * dem_name = "*");
+boolvec * dem_setName(const char * new_name, const char * dem_name = "*");
 
 /*! \ingroup tcl_dems
-    \fn bool dem_delall();
+    \fn void dem_del(const char * dem_name = "*");
 
     \par Tcl syntax:
-    dem_delall
-
-    \par Description:
-    removes all \ref d_dem "DEMs" from memory
-*/
-bool dem_delall();
-
-/*! \ingroup tcl_dems
-    \fn bool dem_del(const char * dem_name = "*");
-
-    \par Tcl syntax:
-    dem_del "dem_name"
+    dem_del \ref str "dem_name"
 
     \par Description:
     removes \ref d_dem "DEM" from memory
 */
-bool dem_del(const char * dem_name = "*");
+void dem_del(const char * dem_name = "*");
 
 /*! \ingroup tcl_dems
     \fn int dem_size();

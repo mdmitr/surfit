@@ -22,6 +22,8 @@
 
 namespace surfit {
 
+class boolvec;
+
 /*! \ingroup tcl_rules_other
     \fn bool completer(REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
@@ -160,10 +162,10 @@ bool value_add(REAL weight = 1, REAL val = 0);
 bool mean(REAL value, REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_other
-    \fn bool wmean(REAL value, const char * surface_name_or_position = "0", REAL mult = 0.001);
+    \fn bool wmean(REAL value, const char * surface_name = "*", REAL mult = 0.001);
 
     \par Tcl syntax:
-    wmean value "surface_name_or_position" mult
+    wmean value "surface_name" mult
 
     \par Description:
     This rule adds the surface condition - "the resulting surface weighted mean value 
@@ -179,7 +181,7 @@ bool mean(REAL value, REAL mult = 0.001);
     where (i,j) - indices of the cells, \f$z(x_i,y_j)\f$ - weighted surface value for the (i,j) cell,
     m - desired weighted mean value
 */
-bool wmean(REAL value, const char * surface_name_or_position = "0", REAL mult = 0.001);
+boolvec * wmean(REAL value, const char * surface_name = "*", REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_other
     \fn bool leq(REAL value, REAL mult = 0.001);
@@ -228,17 +230,17 @@ bool leq(REAL value, REAL mult = 0.001);
 bool geq(REAL value, REAL mult = 0.001);
 
 /*! \ingroup tcl_rules_other
-    \fn bool hist(const char * histogram_name_or_position = "0", REAL mult = 0.001);
+    \fn bool hist(const char * histogram_name = "*", REAL mult = 0.001);
 
     \par Tcl syntax:
-    hist "histogram_name_or_position" mult
+    hist "histogram_name" mult
 
     \par Description:
     This rule adds the surface condition - "the resulting surface histogram should be equal to given histogram".
     In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
     your conditions and if they are correct, try to change "mult" parameter.
 
-    \param histogram_name_or_position desired \ref d_hist "histogram"
+    \param histogram_name desired \ref d_hist "histogram"
     \param mult multiplier parameter for \ref penalty algorithm
 
     \par Math:
@@ -250,7 +252,7 @@ bool geq(REAL value, REAL mult = 0.001);
     R. Gonzalez and R. Woods Digital Image Processing, Addison-Wesley Publishing Company, 1992, Chap. 4.
     
 */
-bool hist(const char * histogram_name_or_position = "0", REAL mult = 0.001);
+boolvec * hist(const char * histogram_name = "*", REAL mult = 0.001);
 
 }; // namespace surfit;
 

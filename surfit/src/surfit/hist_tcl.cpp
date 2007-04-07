@@ -24,6 +24,7 @@
 #include "sort_alg.h"
 #include "vec.h"
 #include "stepFunc.h"
+#include "findfile.h"
 
 #include "hist.h"
 #include "hist_tcl.h"
@@ -32,51 +33,82 @@
 #include "free_elements.h"
 #include "surf.h"
 #include "points.h"
+#include "boolvec.h"
+#include "strvec.h"
+#include "intvec.h"
 
 #include <math.h>
 #include <float.h>
+#include <algorithm>
 
 namespace surfit {
 
-bool hist_setName(const char * new_name, const char * pos) {
-	d_hist * hst = get_element<d_hist>(pos, surfit_hists->begin(), surfit_hists->end());
-	if (hst == NULL)
-		return false;
-	hst->setName(new_name);
-	return true;
-};
-
-const char * hist_getName(const char * pos) {
-	d_hist * hst = get_element<d_hist>(pos, surfit_hists->begin(), surfit_hists->end());
-	if (hst == NULL)
-		return false;
-	return hst->getName();
-};
-
-bool hist_delall() {
-
-	writelog(LOG_MESSAGE,"removing all histograms from memory");
-
-	if (surfit_hists == NULL)
-		return false;
-
-	if (surfit_hists->size() == 0) {
-		return false;
+struct match_hist_setName
+{
+	match_hist_setName(const char * inew_name, const char * ipos) : new_name(inew_name), pos(ipos), res(NULL) {};
+	void operator()(d_hist * hist)
+	{
+		if ( StringMatch(pos, hist->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			hist->setName(new_name);
+			res->push_back(true);
+		}
 	}
-
-	release_elements(surfit_hists->begin(), surfit_hists->end());
-	surfit_hists->resize(0);
-	return true;
+	const char * new_name;
+	const char * pos;
+	boolvec * res;
 };
 
-bool hist_del(const char * pos) {
-	std::vector<d_hist *>::iterator hst = get_iterator<d_hist>(pos, surfit_hists->begin(), surfit_hists->end());
-	if (hst == surfit_hists->end())
-		return false;
-	if (*hst)
-		(*hst)->release();
-	surfit_hists->erase(hst);
-	return true;
+boolvec * hist_setName(const char * new_name, const char * pos) 
+{
+	match_hist_setName qq(new_name, pos);
+	qq = std::for_each(surfit_hists->begin(), surfit_hists->end(), qq);
+	return qq.res;
+};
+
+struct match_hist_getName
+{
+	match_hist_getName(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_hist * hist)
+	{
+		if ( StringMatch(pos, hist->getName()) )
+		{
+			if (res == NULL)
+				res = create_strvec();
+			res->push_back( hist->getName() );
+		}
+	}
+	const char * new_name;
+	const char * pos;
+	strvec * res;
+};
+
+strvec * hist_getName(const char * pos) 
+{
+	match_hist_getName qq(pos);
+	qq = std::for_each(surfit_hists->begin(), surfit_hists->end(), qq);
+	return qq.res;
+};
+
+void hist_del(const char * pos) 
+{
+	if (surfit_hists->size() == 0)
+		return;
+	size_t i;
+	for (i = surfit_hists->size()-1; i >= 0; i--)
+	{
+		d_hist * hist = (*surfit_hists)[i];
+		if ( StringMatch(pos, hist->getName()) == true )
+		{
+			writelog(LOG_MESSAGE,"removing hist \"%s\" from memory", hist->getName());
+			hist->release();
+			surfit_hists->erase(surfit_hists->begin()+i);
+		}
+		if (i == 0)
+			break;
+	}
 };
 
 int hist_size() {
@@ -91,61 +123,140 @@ void hists_info() {
 	}
 };
 
-bool hist_from_surf(const char * surf_pos, size_t intervs, const char * histname, REAL from, REAL to) {
-
-	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (srf == NULL)
-		return false;
-
-	d_hist * hst = _hist_from_surf(srf, intervs, from, to);
-
-	hst->setName(histname?histname:srf->getName());
-
-	surfit_hists->push_back(hst);
-
-	return true;
-};
-
-bool hist_from_pnts(const char * pnts_pos, size_t intervs, const char * histname, REAL from, REAL to) {
-
-	d_points * pnts = get_element<d_points>(pnts_pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (pnts == NULL)
-		return false;
-
-	d_hist * hst = _hist_from_points(pnts, intervs, from, to);
-
-	hst->setName(histname?histname:pnts->getName());
-
-	surfit_hists->push_back(hst);
-
-	return true;
-};
-
-bool surf_histeq(const char * surf_pos, const char * hist_pos)
+struct match_hist_from_surf
 {
-	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (srf == NULL)
-		return false;
-
-	d_hist * hist = NULL;
-	if (hist_pos) {
-		hist = get_element<d_hist>(hist_pos, surfit_hists->begin(), surfit_hists->end());
-		if (hist == NULL)
-			return false;
+	match_hist_from_surf(const char * isurf_pos, size_t iintervs, REAL ifrom, REAL ito, const char * ihistname) 
+		: surf_pos(isurf_pos), intervs(iintervs), histname(ihistname), from(ifrom), to(ito), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(surf_pos, surf->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			d_hist * hst = _hist_from_surf(surf, intervs, from, to);
+			if (hst == NULL)
+			{
+				res->push_back(false);
+				return;
+			}
+			hst->setName(histname?histname:surf->getName());
+			surfit_hists->push_back(hst);
+			res->push_back(true);
+		}
 	}
-
-	return _surf_histeq(srf, hist);
+	const char * surf_pos;
+	size_t intervs;
+	const char * histname;
+	REAL from;
+	REAL to;
+	boolvec * res;
 };
 
-bool hist_read(const char * filename, REAL minz, REAL maxz, const char * histname, 
+boolvec * hist_from_surf(const char * surf_pos, size_t intervs, REAL from, REAL to, const char * histname) 
+{
+	match_hist_from_surf qq(surf_pos, intervs, from, to, histname);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
+
+struct match_hist_from_pnts
+{
+	match_hist_from_pnts(const char * ipnts_pos, size_t iintervs, REAL ifrom, REAL ito, const char * ihistname) 
+		: pnts_pos(ipnts_pos), intervs(iintervs), histname(ihistname), from(ifrom), to(ito), res(NULL) {};
+	void operator()(d_points * pnts)
+	{
+		if ( StringMatch(pnts_pos, pnts->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			d_hist * hst = _hist_from_points(pnts, intervs, from, to);
+			if (hst == NULL)
+			{
+				res->push_back(false);
+				return;
+			}
+			hst->setName(histname?histname:pnts->getName());
+			surfit_hists->push_back(hst);
+			res->push_back(true);
+		}
+	}
+	const char * pnts_pos;
+	size_t intervs;
+	const char * histname;
+	REAL from;
+	REAL to;
+	boolvec * res;
+};
+
+boolvec * hist_from_pnts(const char * pnts_pos, size_t intervs, REAL from, REAL to, const char * histname) 
+{
+	match_hist_from_pnts qq(pnts_pos, intervs, from, to, histname);
+	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+	return qq.res;
+};
+
+struct match_surf_histeq2
+{
+	match_surf_histeq2(d_surf * isurf, const char * ihist_pos) : surf(isurf), hist_pos(ihist_pos), res(NULL) {};
+	void operator()(d_hist * hist)
+	{
+		if ( StringMatch(hist_pos, hist->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( _surf_histeq(surf, hist) );
+		}
+	}
+	d_surf * surf;
+	const char * hist_pos;
+	boolvec * res;
+};
+
+struct match_surf_histeq
+{
+	match_surf_histeq(const char * isurf_pos, const char * ihist_pos) : surf_pos(isurf_pos), hist_pos(ihist_pos), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(surf_pos, surf->getName()) )
+		{
+			match_surf_histeq2 qq(surf, hist_pos);
+			qq = std::for_each(surfit_hists->begin(), surfit_hists->end(), qq);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(qq.res);
+		}
+	}
+	const char * surf_pos;
+	const char * hist_pos;
+	boolvec * res;
+};
+
+boolvec * surf_histeq(const char * surf_pos, const char * hist_pos)
+{
+	match_surf_histeq qq(surf_pos, hist_pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
+
+boolvec * hist_read(const char * filename, REAL minz, REAL maxz, const char * histname, 
 	       int col1, const char * delimiter, int skip_lines, int grow_by)
 {
-	d_hist * hist = _hist_read(filename, minz, maxz, histname, col1, delimiter, skip_lines, grow_by);
-	if (hist) {
-		surfit_hists->push_back(hist);
-		return true;
-	}
-	return false;
+	boolvec * res = create_boolvec();
+	const char * fname = find_first(filename);
+
+	while (fname) {
+		d_hist * hist = _hist_read(fname, minz, maxz, histname, col1, delimiter, skip_lines, grow_by);
+		if (hist) {
+			surfit_hists->push_back(hist);
+			res->push_back(true);
+		} else
+			res->push_back(false);
+
+		fname = find_next();
+	};
+
+	find_close();
+	return res;
 };
 
 bool hist_write(const char * filename, const char * pos, bool three_columns)

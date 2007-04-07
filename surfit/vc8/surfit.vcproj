@@ -7147,6 +7147,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\surfit\interface\hist.i"
+				>
+			</File>
+			<File
 				RelativePath="..\src\surfit\interface\solve.i"
 				>
 			</File>
@@ -7159,7 +7163,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine="surfit_swig.bat&#x0D;&#x0A;"
-						AdditionalDependencies="../src/surfit/interface/fileio.i;../src/surfit/interface/solve.i;../src/surfit/interface/task.i;../src/surfit/interface/geom.i;../src/surfit/interface/func.i;../src/surfit/interface/curv.i;"
+						AdditionalDependencies="../src/surfit/interface/fileio.i;../src/surfit/interface/solve.i;../src/surfit/interface/task.i;../src/surfit/interface/geom.i;../src/surfit/interface/func.i;../src/surfit/interface/hist.i;../src/surfit/interface/curv.i"
 						Outputs="../src/surfit/surfit_wrap.cxx"
 					/>
 				</FileConfiguration>
@@ -7169,7 +7173,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine="surfit_swig.bat&#x0D;&#x0A;"
-						AdditionalDependencies="../src/surfit/interface/fileio.i;../src/surfit/interface/solve.i;../src/surfit/interface/task.i;../src/surfit/interface/geom.i;../src/surfit/interface/func.i;../src/surfit/interface/curv.i;"
+						AdditionalDependencies="../src/surfit/interface/fileio.i;../src/surfit/interface/solve.i;../src/surfit/interface/task.i;../src/surfit/interface/geom.i;../src/surfit/interface/func.i;../src/surfit/interface/curv.i;../src/surfit/interface/hist.i"
 						Outputs="../src/surfit/surfit_wrap.cxx"
 					/>
 				</FileConfiguration>
@@ -7199,7 +7203,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine="surfit_swig.bat&#x0D;&#x0A;"
-						AdditionalDependencies="../src/surfit/interface/fileio.i;../src/surfit/interface/solve.i;../src/surfit/interface/task.i;../src/surfit/interface/geom.i;../src/surfit/interface/func.i;../src/surfit/interface/curv.i;"
+						AdditionalDependencies="../src/surfit/interface/fileio.i;../src/surfit/interface/solve.i;../src/surfit/interface/task.i;../src/surfit/interface/geom.i;../src/surfit/interface/func.i;../src/surfit/interface/curv.i;../src/surfit/interface/hist.i"
 						Outputs="../src/surfit/surfit_wrap.cxx"
 					/>
 				</FileConfiguration>
@@ -7209,7 +7213,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine="surfit_swig.bat&#x0D;&#x0A;"
-						AdditionalDependencies="../src/surfit/interface/fileio.i;../src/surfit/interface/solve.i;../src/surfit/interface/task.i;../src/surfit/interface/geom.i;../src/surfit/interface/func.i;../src/surfit/interface/curv.i;"
+						AdditionalDependencies="../src/surfit/interface/fileio.i;../src/surfit/interface/solve.i;../src/surfit/interface/task.i;../src/surfit/interface/geom.i;../src/surfit/interface/func.i;../src/surfit/interface/curv.i;../src/surfit/interface/hist.i"
 						Outputs="../src/surfit/surfit_wrap.cxx"
 					/>
 				</FileConfiguration>

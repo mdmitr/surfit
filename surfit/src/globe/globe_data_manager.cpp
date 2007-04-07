@@ -73,7 +73,8 @@ bool globe_manager::save(datafile *df) const {
 
 void globe_manager::clear_data() const {
 	
-	dem_delall();
+	if (globe_dems)
+		dem_del("*");
 	
 };
 

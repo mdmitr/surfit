@@ -31,6 +31,9 @@
 #include "surf.h"
 #include "hist.h"
 #include "interp.h"
+#include "boolvec.h"
+#include "intvec.h"
+#include "strvec.h"
 
 #include <algorithm>
 
@@ -97,19 +100,24 @@ struct match_wmean
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule wmean(%g,\"%s\",%g)",
 				value, surf->getName(), mult);
+			if (res == NULL)
+				res = create_boolvec();
 			f_wmean * f = new f_wmean(value, surf, mult);
 			functionals_push_back(f);
+			res->push_back(true);
 		}
 	}
 	REAL value;
 	const char * surf_pos;
 	REAL mult;
+	boolvec * res;
 };
 
-bool wmean(REAL value, const char * surf_pos, REAL mult) 
+boolvec * wmean(REAL value, const char * surf_pos, REAL mult) 
 {
-	std::for_each(surfit_surfs->begin(), surfit_surfs->end(), match_wmean(value, surf_pos, mult));
-	return true;
+	match_wmean qq(value, surf_pos, mult);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 bool leq(REAL value, REAL mult) 
@@ -139,16 +147,21 @@ struct match_hist
 				hist->getName(), mult);
 			f_hist * f = new f_hist(hist, mult);
 			functionals_push_back(f);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(true);
 		}
 	}
 	const char * pos;
 	REAL mult;
+	boolvec * res;
 };
 
-bool hist(const char * pos, REAL mult) 
+boolvec * hist(const char * pos, REAL mult) 
 {
-	std::for_each(surfit_hists->begin(), surfit_hists->end(), match_hist(pos, mult));
-	return true;
+	match_hist qq(pos, mult);
+	qq = std::for_each(surfit_hists->begin(), surfit_hists->end(), qq);
+	return qq.res;
 };
 
 }; // namespace surfit;

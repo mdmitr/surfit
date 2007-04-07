@@ -254,7 +254,6 @@ boolvec * cntr_to_curv(const char * pos)
 		surfit_curvs->push_back(curv);
 		res->push_back(true);
 	}
-	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
 	return res;
 };
 

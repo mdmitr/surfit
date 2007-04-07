@@ -62,6 +62,7 @@
 #include "variables_tcl.h"
 #include "functional.h"
 #include "cmofs.h"
+#include "hist.h"
 #include "hist_tcl.h"
 
 namespace surfit {
@@ -591,7 +592,8 @@ void surfit_manager::clear_data() const {
 	if (surfit_cntrs) 
 		cntr_del("*");
 
-	hist_delall();
+	if (surfit_hists)
+		hist_del("*");
 		
 	grid_line_unload();
 
