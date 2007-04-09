@@ -25,22 +25,41 @@
 #include "surf.h"
 #include "surf_tcl.h"
 #include "globe_surf_internal.h"
+#include "boolvec.h"
 
 #include <float.h>
+#include <algorithm>
 
 namespace surfit {
 
-bool surf_to_dem(const char * pos) {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	
-	d_dem * d = _surf_to_dem(srf);
-	if (!d)
-		return false;
+struct match_surf_to_dem
+{
+	match_surf_to_dem(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			d_dem * d = _surf_to_dem(surf);
+			if (!d) {
+				res->push_back(false);
+				return;
+			}
 
-	globe_dems->push_back(d);
-	return true;
+			globe_dems->push_back(d);
+			res->push_back(true);
+		}
+	}
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * surf_to_dem(const char * pos) 
+{
+	match_surf_to_dem qq(pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 }; // namespace surfit;

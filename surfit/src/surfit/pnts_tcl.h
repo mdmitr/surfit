@@ -485,7 +485,7 @@ boolvec * pnts_set_surf(const char * points_name = "*", const char * surf_name =
     \par Description:
     returns \ref d_points "points" size (number of points)
 */
-int pnts_getCount(const char * points_name = "*");
+intvec * pnts_getCount(const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_other
     \fn const char * pnts_getName(const char * points_name = "*");

@@ -259,13 +259,30 @@ boolvec * hist_read(const char * filename, REAL minz, REAL maxz, const char * hi
 	return res;
 };
 
-bool hist_write(const char * filename, const char * pos, bool three_columns)
+struct match_hist_write
 {
-	d_hist * hist = get_element<d_hist>(pos, surfit_hists->begin(), surfit_hists->end());
-	if (hist == NULL)
-		return false;
+	match_hist_write(const char * ifilename, const char * ipos, bool ithree_columns) 
+		: filename(ifilename), pos(ipos), three_columns(ithree_columns), res(NULL) {};
+	void operator()(d_hist * hist)
+	{
+		if ( StringMatch(pos, hist->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( _hist_write(hist, filename, three_columns) );
+		}
+	}
+	const char * pos;
+	const char * filename;
+	bool three_columns;
+	boolvec * res;
+};
 
-	return _hist_write(hist, filename, three_columns);
+boolvec * hist_write(const char * filename, const char * pos, bool three_columns)
+{
+	match_hist_write qq(filename, pos, three_columns);
+	qq = std::for_each(surfit_hists->begin(), surfit_hists->end(), qq);
+	return qq.res;
 };
 
 }; // namespace surfit;

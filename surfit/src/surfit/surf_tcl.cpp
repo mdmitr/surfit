@@ -101,16 +101,51 @@ boolvec * surf_save(const char * filename, const char * pos)
 	return qq.res;
 };
 
-bool surf_resid(const char * filename, const char * surf_pos, const char * pnts_pos) 
+struct match_surf_resid2
 {
-	d_surf * srf = get_element<d_surf>(surf_pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return false;
-	d_points * pnts = get_element<d_points>(pnts_pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (!pnts)
-		return false;
-	
-	return _surf_resid(srf, pnts, filename);
+	match_surf_resid2(const char * ifilename, d_surf * isurf, const char * ipnts_pos)
+		: filename(ifilename), surf(isurf), pnts_pos(ipnts_pos), res(NULL) {};
+	void operator()(d_points * pnts)
+	{
+		if ( StringMatch(pnts_pos, pnts->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back( _surf_resid(surf, pnts, filename) );
+		}
+	}
+	const char * filename;
+	d_surf * surf;
+	const char * pnts_pos;
+	boolvec * res;
+};
+
+struct match_surf_resid
+{
+	match_surf_resid(const char * ifilename, const char * isurf_pos, const char * ipnts_pos)
+		: filename(ifilename), surf_pos(isurf_pos), pnts_pos(ipnts_pos), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(surf_pos, surf->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			match_surf_resid2 qq(filename, surf, pnts_pos);
+			qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+			res->push_back( qq.res );
+		}
+	}
+	const char * filename;
+	const char * surf_pos;
+	const char * pnts_pos;
+	boolvec * res;
+};
+
+boolvec * surf_resid(const char * filename, const char * surf_pos, const char * pnts_pos) 
+{
+	match_surf_resid qq(filename, surf_pos, pnts_pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
 };
 
 struct match_surf_minz
@@ -1490,11 +1525,23 @@ vec * surf_D2(const char * pos)
 	return qq.res;
 };
 
-void surf_info(const char * pos) {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
-		return;
-	_surf_info(srf);
+struct match_surf_info
+{
+	match_surf_info(const char * ipos) : pos(ipos) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			_surf_info(surf);
+		}
+	}
+	const char * pos;
+};
+
+void surf_info(const char * pos) 
+{
+	match_surf_info qq(pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
 };
 
 struct match_surf_project

@@ -62,7 +62,7 @@ boolvec * hist_read(const char * filename, REAL minz, REAL maxz, const char * hi
     \par Description:
     saves \ref d_hist "histogram" to formatted text file. Writes histogram interval bounds if three_columns is 1
 */
-bool hist_write(const char * filename, const char * hist_name = "*", bool three_columns = true);
+boolvec * hist_write(const char * filename, const char * hist_name = "*", bool three_columns = true);
 
 //////////////
 // other

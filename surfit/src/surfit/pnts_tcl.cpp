@@ -169,12 +169,27 @@ boolvec * pnts_save(const char * filename, const char * pos)
 	return qq.res;
 };
 
-int pnts_getCount(const char * pos) 
+struct match_pnts_getCount
 {
-	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (pnts == NULL)
-		return -1;
-	return pnts->size();
+	match_pnts_getCount(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_points * pnts)
+	{
+		if ( StringMatch(pos, pnts->getName()) )
+		{
+			if (res == NULL)
+				res = create_intvec();
+			res->push_back( pnts->size() );
+		}
+	}
+	const char * pos;
+	intvec * res;
+};
+
+intvec * pnts_getCount(const char * pos) 
+{
+	match_pnts_getCount qq(pos);
+	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+	return qq.res;
 };
 
 boolvec * pnts_read(const char * filename, const char * pntsname, int col1, int col2, int col3, int col4, const char * delimiter, int skip_lines, int grow_by) 

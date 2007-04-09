@@ -22,20 +22,22 @@
 
 namespace surfit {
 
+class boolvec;
+
 //
 // CONVERTING
 //
 
 /*! \ingroup tcl_globe_surf_conv
-    \fn bool surf_to_dem(const char * surface_name_or_position = "0");
+    \fn bool surf_to_dem(const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_to_dem "surface_name_or_position"
+    surf_to_dem "surface_name"
 
     \par Description:
     transforms \ref d_surf "surface" to \ref d_dem "DEM".
 */
-bool surf_to_dem(const char * surface_name_or_position = "0");
+boolvec * surf_to_dem(const char * surface_name_or_position = "0");
 
 }; // namespace surfit;
 

@@ -101,7 +101,7 @@ vec * surf_getValueIJ(int I, int J, const char * surface_name = "*");
     calculates residuals between \ref d_points "points" values and \ref d_surf "surface" values, calculated at points (x,y) coordinates.
     Saves result to text file.
 */
-bool surf_resid(const char * filename, const char * surface_name = "*", const char * points_name = "*");
+boolvec * surf_resid(const char * filename, const char * surface_name = "*", const char * points_name = "*");
 
 /*! \ingroup tcl_surf_math
     \fn REAL surf_D1(const char * surface_name = "*");
