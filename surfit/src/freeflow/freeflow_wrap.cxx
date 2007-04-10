@@ -1605,7 +1605,10 @@ SWIGEXPORT int SWIG_init(Tcl_Interp *);
 
 
 
+#include "flow_ie.h"
 #include "real.h"
+#include "boolvec.h"
+#include "vec.h"
 #include "flow_ie.h"
 #include "variables.h"
 #include "variables_tcl.h"
@@ -1660,9 +1663,6 @@ SWIG_AsCharPtrAndSize(Tcl_Obj *obj, char** cptr, size_t* psize, int *alloc)
 
 
 
-  #define SWIG_From_bool   Tcl_NewBooleanObj 
-
-
 SWIGINTERN int
 SWIG_AsVal_double SWIG_TCL_DECL_ARGS_2(Tcl_Obj *obj, double *val)
 {
@@ -1680,7 +1680,7 @@ SWIG_AsVal_double SWIG_TCL_DECL_ARGS_2(Tcl_Obj *obj, double *val)
 #include "f_lcm_simple_tcl.h"
 
 
-  #define SWIG_From_double   Tcl_NewDoubleObj 
+  #define SWIG_From_bool   Tcl_NewBooleanObj 
 
 #ifdef __cplusplus
 extern "C" {
@@ -1688,12 +1688,12 @@ extern "C" {
 SWIGINTERN int
 _wrap_flow_points__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:flow_points points_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:flow_points points_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "flow_points" "', argument " "1"" of type '" "char const *""'");
@@ -1702,7 +1702,7 @@ _wrap_flow_points__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::flow_points((char const *)arg1);
+        result = (surfit::boolvec *)surfit::flow_points((char const *)arg1);
         
       }
     }
@@ -1710,7 +1710,19 @@ _wrap_flow_points__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
@@ -1721,13 +1733,13 @@ fail:
 
 SWIGINTERN int
 _wrap_flow_points__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  bool result;
+  surfit::boolvec *result = 0 ;
   
   if (SWIG_GetArgs(interp, objc, objv,":flow_points ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::flow_points();
+        result = (surfit::boolvec *)surfit::flow_points();
         
       }
     }
@@ -1735,7 +1747,19 @@ _wrap_flow_points__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   return TCL_OK;
 fail:
   return TCL_ERROR;
@@ -1767,14 +1791,14 @@ SWIGINTERN int
 _wrap_flow_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   double arg1 ;
   char *arg2 = (char *) 0 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   double val1 ;
   int ecode1 = 0 ;
   int res2 ;
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:flow_area value area_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:flow_area value area_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "flow_area" "', argument " "1"" of type '" "double""'");
@@ -1788,7 +1812,7 @@ _wrap_flow_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::flow_area(arg1,(char const *)arg2);
+        result = (surfit::boolvec *)surfit::flow_area(arg1,(char const *)arg2);
         
       }
     }
@@ -1796,7 +1820,19 @@ _wrap_flow_area__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return TCL_OK;
 fail:
@@ -1808,7 +1844,7 @@ fail:
 SWIGINTERN int
 _wrap_flow_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   double arg1 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   double val1 ;
   int ecode1 = 0 ;
   
@@ -1821,7 +1857,7 @@ _wrap_flow_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::flow_area(arg1);
+        result = (surfit::boolvec *)surfit::flow_area(arg1);
         
       }
     }
@@ -1829,7 +1865,19 @@ _wrap_flow_area__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   return TCL_OK;
 fail:
   return TCL_ERROR;
@@ -1874,14 +1922,14 @@ SWIGINTERN int
 _wrap_flow_curve__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   double arg1 ;
   char *arg2 = (char *) 0 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   double val1 ;
   int ecode1 = 0 ;
   int res2 ;
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:flow_curve value curve_name_or_position ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:flow_curve value curve_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "flow_curve" "', argument " "1"" of type '" "double""'");
@@ -1895,7 +1943,7 @@ _wrap_flow_curve__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::flow_curve(arg1,(char const *)arg2);
+        result = (surfit::boolvec *)surfit::flow_curve(arg1,(char const *)arg2);
         
       }
     }
@@ -1903,7 +1951,19 @@ _wrap_flow_curve__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return TCL_OK;
 fail:
@@ -1915,7 +1975,7 @@ fail:
 SWIGINTERN int
 _wrap_flow_curve__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   double arg1 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   double val1 ;
   int ecode1 = 0 ;
   
@@ -1928,7 +1988,7 @@ _wrap_flow_curve__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::flow_curve(arg1);
+        result = (surfit::boolvec *)surfit::flow_curve(arg1);
         
       }
     }
@@ -1936,7 +1996,19 @@ _wrap_flow_curve__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   return TCL_OK;
 fail:
   return TCL_ERROR;
@@ -1980,12 +2052,12 @@ _wrap_flow_curve(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
 SWIGINTERN int
 _wrap_flow_contour__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
-  bool result;
+  surfit::boolvec *result = 0 ;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:flow_contour contour_name_or_position ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:flow_contour contour_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "flow_contour" "', argument " "1"" of type '" "char const *""'");
@@ -1994,7 +2066,7 @@ _wrap_flow_contour__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::flow_contour((char const *)arg1);
+        result = (surfit::boolvec *)surfit::flow_contour((char const *)arg1);
         
       }
     }
@@ -2002,7 +2074,19 @@ _wrap_flow_contour__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
@@ -2013,13 +2097,13 @@ fail:
 
 SWIGINTERN int
 _wrap_flow_contour__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  bool result;
+  surfit::boolvec *result = 0 ;
   
   if (SWIG_GetArgs(interp, objc, objv,":flow_contour ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::flow_contour();
+        result = (surfit::boolvec *)surfit::flow_contour();
         
       }
     }
@@ -2027,7 +2111,19 @@ _wrap_flow_contour__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
   return TCL_OK;
 fail:
   return TCL_ERROR;
@@ -2522,7 +2618,7 @@ _wrap_surf_debit__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   double arg4 ;
   double arg5 ;
   char *arg6 = (char *) 0 ;
-  double result;
+  surfit::vec *result = 0 ;
   double val1 ;
   int ecode1 = 0 ;
   double val2 ;
@@ -2537,7 +2633,7 @@ _wrap_surf_debit__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf6 = 0 ;
   int alloc6 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo:surf_debit x y perm visc mult surface_name_or_position ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:surf_debit x y perm visc mult surface_name ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_debit" "', argument " "1"" of type '" "double""'");
@@ -2571,7 +2667,7 @@ _wrap_surf_debit__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (double)surfit::surf_debit(arg1,arg2,arg3,arg4,arg5,(char const *)arg6);
+        result = (surfit::vec *)surfit::surf_debit(arg1,arg2,arg3,arg4,arg5,(char const *)arg6);
         
       }
     }
@@ -2579,7 +2675,19 @@ _wrap_surf_debit__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_double(static_cast<double >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        double val = (double)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewDoubleObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc6 == SWIG_NEWOBJ) delete[] buf6;
   return TCL_OK;
 fail:
@@ -2595,7 +2703,7 @@ _wrap_surf_debit__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   double arg3 ;
   double arg4 ;
   double arg5 ;
-  double result;
+  surfit::vec *result = 0 ;
   double val1 ;
   int ecode1 = 0 ;
   double val2 ;
@@ -2636,7 +2744,7 @@ _wrap_surf_debit__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (double)surfit::surf_debit(arg1,arg2,arg3,arg4,arg5);
+        result = (surfit::vec *)surfit::surf_debit(arg1,arg2,arg3,arg4,arg5);
         
       }
     }
@@ -2644,7 +2752,19 @@ _wrap_surf_debit__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_double(static_cast<double >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        double val = (double)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewDoubleObj(val));
+      }
+      (result)->release();
+    }
+  }
   return TCL_OK;
 fail:
   return TCL_ERROR;
@@ -2743,7 +2863,7 @@ _wrap_surf_debit_rect__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   double arg6 ;
   double arg7 ;
   char *arg8 = (char *) 0 ;
-  double result;
+  surfit::vec *result = 0 ;
   double val1 ;
   int ecode1 = 0 ;
   double val2 ;
@@ -2762,7 +2882,7 @@ _wrap_surf_debit_rect__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   char *buf8 = 0 ;
   int alloc8 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooooo:surf_debit_rect x1 y1 x2 y2 perm visc mult surface_name_or_position ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooooo:surf_debit_rect x1 y1 x2 y2 perm visc mult surface_name ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_debit_rect" "', argument " "1"" of type '" "double""'");
@@ -2806,7 +2926,7 @@ _wrap_surf_debit_rect__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (double)surfit::surf_debit_rect(arg1,arg2,arg3,arg4,arg5,arg6,arg7,(char const *)arg8);
+        result = (surfit::vec *)surfit::surf_debit_rect(arg1,arg2,arg3,arg4,arg5,arg6,arg7,(char const *)arg8);
         
       }
     }
@@ -2814,7 +2934,19 @@ _wrap_surf_debit_rect__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_double(static_cast<double >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        double val = (double)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewDoubleObj(val));
+      }
+      (result)->release();
+    }
+  }
   if (alloc8 == SWIG_NEWOBJ) delete[] buf8;
   return TCL_OK;
 fail:
@@ -2832,7 +2964,7 @@ _wrap_surf_debit_rect__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   double arg5 ;
   double arg6 ;
   double arg7 ;
-  double result;
+  surfit::vec *result = 0 ;
   double val1 ;
   int ecode1 = 0 ;
   double val2 ;
@@ -2887,7 +3019,7 @@ _wrap_surf_debit_rect__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (double)surfit::surf_debit_rect(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
+        result = (surfit::vec *)surfit::surf_debit_rect(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
         
       }
     }
@@ -2895,7 +3027,19 @@ _wrap_surf_debit_rect__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
       return TCL_ERROR;
     }
   }
-  Tcl_SetObjResult(interp,SWIG_From_double(static_cast<double >(result)));
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        double val = (double)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewDoubleObj(val));
+      }
+      (result)->release();
+    }
+  }
   return TCL_OK;
 fail:
   return TCL_ERROR;

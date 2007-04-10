@@ -54,7 +54,7 @@ surfit::boolvec * surf_save(const char * filename, const char * surface_name = "
 // MATH OPERATIONS
 surfit::vec * surf_getValue(REAL x, REAL y, const char * surface_name = "*");
 surfit::vec * surf_getValueIJ(int I, int J, const char * surface_name = "*");
-bool surf_resid(const char * filename, const char * surface_name = "*", const char * pnts_pos = "*");
+surfit::boolvec * surf_resid(const char * filename, const char * surface_name = "*", const char * pnts_pos = "*");
 surfit::vec * surf_D1(const char * surface_name = "*");
 surfit::vec * surf_D2(const char * surface_name = "*");
 surfit::boolvec * surf_gradient(const char * surface_name = "*", const char * newname = NULL);

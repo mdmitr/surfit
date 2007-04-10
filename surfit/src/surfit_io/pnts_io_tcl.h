@@ -19,11 +19,13 @@
 
 namespace surfit {
 
+class boolvec;
+
 /*! \ingroup tcl_pnts_save_load
     \fn bool pnts_load_shp(const char * filename, const char * pntsname = NULL, const char * param = "VALUE");
     
     \par Tcl syntax:
-    pnts_load_shp "filename" "pntsname" "param"
+    pnts_load_shp \ref file "filename" "pntsname" "param"
 
     \par Description:
     reads \ref d_points "points" from ESRI shape file and names them "pntsname"
@@ -34,13 +36,13 @@ namespace surfit {
     \par Implemented in library:
     libsurfit_io
 */
-bool pnts_load_shp(const char * filename, const char * pntsname = NULL, const char * param = "VALUE");
+boolvec * pnts_load_shp(const char * filename, const char * pntsname = NULL, const char * param = "VALUE");
 
 /*! \ingroup tcl_pnts_save_load
-    \fn bool pnts_save_shp(const char * filename, const char * points_name_or_position = "0");
+    \fn bool pnts_save_shp(const char * filename, const char * points_name = "*");
     
     \par Tcl syntax:
-    pnts_save_shp "filename" "points_name_or_position"
+    pnts_save_shp "filename" \ref str "points_name"
 
     \par Description:
     saves \ref d_points "points" to ESRI shapefile format
@@ -51,7 +53,7 @@ bool pnts_load_shp(const char * filename, const char * pntsname = NULL, const ch
     \par Implemented in library:
     libsurfit_io
 */
-bool pnts_save_shp(const char * filename, const char * points_name_or_position = "0");
+boolvec * pnts_save_shp(const char * filename, const char * points_name = "*");
 
 
 };

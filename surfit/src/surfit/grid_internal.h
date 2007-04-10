@@ -20,6 +20,8 @@
 #ifndef __surfit__grid_internal_
 #define __surfit__grid_internal_
 
+#include <vector>
+
 namespace surfit {
 
 class datafile;
@@ -158,6 +160,9 @@ void _grid_intersect1(const d_grid * grd1, const d_grid * grd2,
 
 SURFIT_EXPORT
 d_grid * _create_sub_grid(const d_grid * grd, int x_from, int x_to, int y_from, int y_to);
+
+SURFIT_EXPORT
+d_grid * _grid_get_best( std::vector<d_grid *> * grids );
 
 }; // namespace surfit;
 

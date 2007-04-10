@@ -25,6 +25,7 @@
 
 #include "datafile.h"
 #include "fileio.h"
+#include "free_elements.h"
 
 #include "grid.h"
 #include "grid_internal.h"
@@ -145,27 +146,54 @@ bool grid_get2(REAL startX, REAL endX, REAL stepX,
 	return (surfit_grid != NULL);
 };
 
-bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * pos, const char * name) {
-
-	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (!pnts)
+bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * pos, const char * name) 
+{
+	std::vector<d_grid *> grids;
+	size_t i;
+	for (i = 0; i < surfit_pnts->size(); i++)
+	{
+		d_points * pnts = (*surfit_pnts)[i];
+		if ( StringMatch(pos, pnts->getName()) == false )
+			continue;
+		d_grid * grd = _grid_get_for_pnts(pnts, Xnodes, Ynodes, name);
+		grids.push_back(grd);
+	}
+	
+	if (grids.size() == 0)
 		return false;
 
 	grid_unload();
-	surfit_grid = _grid_get_for_pnts(pnts, Xnodes, Ynodes, name);
+	surfit_grid = _grid_get_best(&grids);
+	if (name)
+		surfit_grid->setName(name);
+	release_elements(grids.begin(), grids.end());
 	
 	grid_info();
 	return (surfit_grid != NULL);
 };
 
-bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * pos, const char * name) {
-
-	d_points * pnts = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (!pnts)
-		return false;
+bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * pos, const char * name) 
+{
+	std::vector<d_grid *> grids;
+	size_t i;
+	for (i = 0; i < surfit_pnts->size(); i++)
+	{
+		d_points * pnts = (*surfit_pnts)[i];
+		if ( StringMatch(pos, pnts->getName()) == false )
+			continue;
+		d_grid * grd = _grid_get_for_pnts_step(pnts, stepX, stepY, name);
+		grids.push_back(grd);
+	}
 	
+	if (grids.size() == 0)
+		return false;
+
 	grid_unload();
-	surfit_grid = _grid_get_for_pnts_step(pnts, stepX, stepY, name);
+	surfit_grid = _grid_get_best(&grids);
+	if (name)
+		surfit_grid->setName(name);
+	release_elements(grids.begin(), grids.end());
+	
 	grid_info();
 	return (surfit_grid != NULL);
 };
@@ -177,14 +205,27 @@ bool grid_load(const char * filename, const char * gridname) {
 	return (surfit_grid != NULL);
 };
 
-bool grid_get_from_surf(const char * pos, const char * gridname) {
-	d_surf * srf = get_element<d_surf>(pos, surfit_surfs->begin(), surfit_surfs->end());
-	if (!srf)
+bool grid_get_from_surf(const char * pos, const char * gridname) 
+{
+	std::vector<d_grid *> grids;
+	size_t i;
+	for (i = 0; i < surfit_surfs->size(); i++)
+	{
+		d_surf * srf = (*surfit_surfs)[i];
+		if ( StringMatch(pos, srf->getName()) == false )
+			continue;
+		d_grid * grd = _grid_from_surf(srf, gridname);
+		if (grd)
+			grids.push_back(grd);
+	}
+	if (grids.size() == 0)
 		return false;
+
+	d_grid * res = _grid_get_best(&grids);
+	if (gridname)
+		res->setName(gridname);
+	release_elements(grids.begin(), grids.end());
 	
-	d_grid * res = _grid_from_surf(srf, gridname);
-	if (!res)
-		return false;
 	grid_unload();
 	surfit_grid = res;
 	grid_info();

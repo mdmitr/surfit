@@ -21,6 +21,8 @@
 
 #include "cntr.h"
 #include "cntr_io.h"
+#include "boolvec.h"
+#include "findfile.h"
 
 #include "interp.h"
 #include <tcl.h>
@@ -29,73 +31,106 @@
 
 namespace surfit {
 
-bool cntr_load_bln(const char * filename, const char * cntrname) {
+boolvec * cntr_load_bln(const char * filename, const char * cntrname) 
+{
 	if (cntrname != NULL) {
 
-		FILE * file = fopen(filename, "r");
-		if (!file) {
-			writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
-			return false;
-		}
-		if (ferror(file) != 0) {
-			writelog(LOG_ERROR, "loading from BLN: file error.");
-			fclose(file);
-			return false;
-		}
-		
-		bool res = false;
-		
-		int orient = 1;
-		d_cntr * crv = _cntr_load_bln(file, orient);
-		while (crv != NULL) {
+		const char * fname = find_first(filename);
+		boolvec * res = create_boolvec();
+
+		while (fname) {
+			FILE * file = fopen(fname, "r");
+			if (!file) {
+				writelog(LOG_WARNING, "The file %s was not opened: %s",filename,strerror( errno ));
+				res->push_back(false);
+				fname = find_next();
+				continue;
+			}
+			if (ferror(file) != 0) {
+				writelog(LOG_WARNING, "loading from BLN: file error.");
+				fclose(file);
+				res->push_back(false);
+				fname = find_next();
+				continue;
+			}
 			
-			if ( StringMatch(cntrname, crv->getName()) == false ) {
-				crv->release();
+			int orient = 1;
+			d_cntr * crv = _cntr_load_bln(file, orient);
+			while (crv != NULL) {
+
+				if ( StringMatch(cntrname, crv->getName()) == false ) {
+					crv->release();
+					crv = _cntr_load_bln(file, orient);
+					continue;
+				}
+
+				writelog(LOG_MESSAGE,"loading contour \"%s\" from Surfer BLN file %s", crv->getName(), filename);
+
+				surfit_cntrs->push_back(crv);
 				crv = _cntr_load_bln(file, orient);
 				continue;
 			}
 
-			writelog(LOG_MESSAGE,"loading contour \"%s\" from Surfer BLN file %s", crv->getName(), filename);
-
-			surfit_cntrs->push_back(crv);
-			res = true;
-			crv = _cntr_load_bln(file, orient);
-			continue;
+			fclose(file);
+			res->push_back(true);
+			fname = find_next();
 		}
-		
-		fclose(file);
+
+		find_close();
 		return res;
 	}
 
-	writelog(LOG_MESSAGE,"loading contours from BLN file %s", filename);
+	boolvec * res = create_boolvec();
+	const char * fname = find_first(filename);
 
-	FILE * file = fopen(filename, "r");
-	if (!file) {
-		writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
-		return false;
-	}
-	if (ferror(file) != 0) {
-		writelog(LOG_ERROR, "loading from BLN: file error.");
+	while (fname) {
+
+		writelog(LOG_MESSAGE,"loading contours from BLN file %s", fname);
+
+		FILE * file = fopen(fname, "r");
+		if (!file) {
+			writelog(LOG_WARNING, "The file %s was not opened: %s",filename,strerror( errno ));
+			res->push_back(false);
+			fname = find_next();
+			continue;
+		}
+		if (ferror(file) != 0) {
+			writelog(LOG_WARNING, "loading from BLN: file error.");
+			fclose(file);
+			res->push_back(false);
+			fname = find_next();
+			continue;
+		}
+
+		int orient = 1;
+		d_cntr * crv = _cntr_load_bln(file, orient);
+		while (crv != NULL) {
+			surfit_cntrs->push_back(crv);
+			crv = _cntr_load_bln(file, orient);
+		}
+
 		fclose(file);
-		return false;
+		res->push_back(true);
+		fname = find_next();
+
 	}
-	
-	bool res = false;
-	
-	int orient = 1;
-	d_cntr * crv = _cntr_load_bln(file, orient);
-	while (crv != NULL) {
-		res = true;
-		surfit_cntrs->push_back(crv);
-		crv = _cntr_load_bln(file, orient);
-	}
-	
-	fclose(file);
+
+	find_close();
 	return res;
 };
 
-bool cntr_load_shp(const char * filename, const char * cntrname, const char * zfield) {
-	return _cntr_load_shp(filename, cntrname, zfield);
+boolvec * cntr_load_shp(const char * filename, const char * cntrname, const char * zfield) 
+{
+	boolvec * res = create_boolvec();
+	const char * fname = find_first(filename);
+	while (fname)
+	{
+		res->push_back( _cntr_load_shp(fname, cntrname, zfield) );
+		fname = find_next();
+	}
+	
+	find_close();
+	return res;
 };
 
 struct match_cntr_save_shp
@@ -104,28 +139,28 @@ struct match_cntr_save_shp
 	{
 		filename = ifilename;
 		cntr_pos = icntr_pos;
-		res = true;
+		res = NULL;
 	}
 
 	void operator()(d_cntr * crv)
 	{
-		if (res == false)
-			return;
+		if (res == NULL)
+			res = create_boolvec();
 
 		if ( StringMatch(cntr_pos, crv->getName()) )
 		{
 			writelog(LOG_MESSAGE,"saving contour \"%s\" to ESRI shape file %s",
 				 crv->getName(), filename);
-			res = _cntr_save_shp(crv, filename);
+			res->push_back( _cntr_save_shp(crv, filename) );
 		}
 	};
 
 	const char * filename;
 	const char * cntr_pos;
-	bool res;
+	boolvec * res;
 };
 
-bool cntr_save_shp(const char * filename, const char * cntr_pos) {
+boolvec * cntr_save_shp(const char * filename, const char * cntr_pos) {
 	match_cntr_save_shp saver(filename, cntr_pos);
 	saver = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), saver);
 	return saver.res;
@@ -133,49 +168,47 @@ bool cntr_save_shp(const char * filename, const char * cntr_pos) {
 
 struct match_cntr_save_bln
 {
-	match_cntr_save_bln(const char * ifilename, const char * icntr_pos, int iorient, FILE * ifile)
+	match_cntr_save_bln(const char * ifilename, const char * icntr_pos, FILE * ifile)
 	{
 		filename = ifilename;
 		cntr_pos = icntr_pos;
-		orient = iorient;
-		res = true;
+		res = NULL;
 		file = ifile;
 	}
 
 	void operator()(d_cntr * crv)
 	{
-		if (res == false)
-			return;
+		if (res == NULL)
+			res = create_boolvec();
 
 		if ( StringMatch(cntr_pos, crv->getName()) )
 		{
 			writelog(LOG_MESSAGE,"saving contour \"%s\" to Surfer BLN file %s",
 				 crv->getName(), filename);
-			res = _cntr_save_bln(crv, file, orient);
+			res->push_back( _cntr_save_bln(crv, file, 1) );
 		}
 	};
 
 	const char * filename;
 	const char * cntr_pos;
-	int orient;
-	bool res;
+	boolvec * res;
 	FILE * file;
 };
 
-bool cntr_save_bln(const char * filename, const char * cntr_pos, int orient) 
+boolvec * cntr_save_bln(const char * filename, const char * cntr_pos) 
 {
 	FILE * file = fopen(filename, "a");
 	if (!file) {
 		writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
-		return false;;
+		return NULL;
 	}
 	if (ferror(file) != 0) {
 		writelog(LOG_ERROR, "saving BLN: file error.");
 		fclose(file);
-		return false;
+		return NULL;
 	}
 
-	match_cntr_save_bln saver(filename, cntr_pos, orient, file);
+	match_cntr_save_bln saver(filename, cntr_pos, file);
 	saver = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), saver);
 
 	fclose(file);

@@ -23,26 +23,46 @@
 #include "flow_points.h"
 #include "variables.h"
 #include "f_lcm_simple.h"
+#include "boolvec.h"
+
+#include <algorithm>
 
 namespace surfit {
 
-bool flow_points(const char * pos) {
+struct match_flow_points
+{
+	match_flow_points(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_points * pnts) 
+	{
+		if ( StringMatch(pos, pnts->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			functional * fnc = get_modifiable_functional();
+			if (fnc == NULL) {
+				res->push_back(false);
+				return;
+			}
+			f_lcm_simple * f = dynamic_cast<f_lcm_simple *>(fnc);
+			if (f == NULL) {
+				res->push_back(false);
+				return;
+			}
 
-	functional * fnc = get_modifiable_functional();
-	if (fnc == NULL)
-		return false;
-	f_lcm_simple * f = dynamic_cast<f_lcm_simple *>(fnc);
-	if (f == NULL)
-		return false;
-	
-	d_points * tsk = get_element<d_points>(pos, surfit_pnts->begin(), surfit_pnts->end());
-	if (tsk == NULL)
-		return false;
+			f_flow_points * ff = new f_flow_points(pnts);
+			f->add_flow(ff);
+			res->push_back(true);
+		}
+	}
+	const char * pos;
+	boolvec * res;
+};
 
-	f_flow_points * ff = new f_flow_points(tsk);
-	f->add_flow(ff);
-	return true;
-
+boolvec * flow_points(const char * pos) 
+{
+	match_flow_points qq(pos);
+	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+	return qq.res;
 };
 
 }; // namespace surfit;

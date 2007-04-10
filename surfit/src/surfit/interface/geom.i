@@ -36,9 +36,9 @@ bool grid(REAL stepX=0, REAL stepY=0, REAL percent=2, const char * gridname=NULL
 bool grid2(REAL stepX=0, REAL stepY=0, REAL percent=2, const char * gridname=NULL);
 bool grid_get(REAL startX, REAL endX, REAL stepX, REAL startY, REAL endY, REAL stepY, const char * gridname=NULL);
 bool grid_get2(REAL startX, REAL endX, REAL stepX, REAL startY, REAL endY, REAL stepY, const char * gridname=NULL);
-bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * points_name_or_position = "0", const char * gridname=NULL);
-bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * points_name_or_position = "0", const char * gridname=NULL);
-bool grid_get_from_surf(const char * surface_name_or_position = "0", const char * gridname = NULL);
+bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * points_name = "*", const char * gridname=NULL);
+bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * points_name = "*", const char * gridname=NULL);
+bool grid_get_from_surf(const char * surface_name = "*", const char * gridname = NULL);
 //other
 bool grid_check();
 void grid_info();

@@ -20,49 +20,64 @@
 #include "surfit_io_ie.h"
 #include "mask.h"
 #include "bitvec.h"
+#include "boolvec.h"
 
 #include <errno.h>
+#include <algorithm>
 
 namespace surfit {
 
-bool mask_save_xyz(const char * filename, const char * pos) 
+struct match_mask_save_xyz
 {
-	d_mask * msk = get_element<d_mask>(pos, surfit_masks->begin(), surfit_masks->end());
-	if (!msk)
-		return false;
+	match_mask_save_xyz(const char * ifilename, const char * ipos) : filename(ifilename), pos(ipos), res(NULL) {};
+	void operator()(d_mask * msk)
+	{
+		if ( StringMatch(pos, msk->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
 
-	if (!filename)
-		return false;
+			writelog(LOG_MESSAGE,"Saving mask %s to file %s (xyz-ASCII)", msk->getName(), filename);
 
-	writelog(LOG_MESSAGE,"Saving mask %s to file %s (xyz-ASCII)", msk->getName(), filename);
+			FILE * f = fopen(filename,"w");
 
-	FILE * f = fopen(filename,"w");
+			if (!f) {
+				writelog(LOG_WARNING, "Can't write data to file %s",filename,strerror( errno ));
+				res->push_back(false);
+				return;
+			}
 
-	if (!f) {
-		writelog(LOG_ERROR, "Can't write data to file %s",filename,strerror( errno ));
-		return false;
-	}
+			int nx = msk->getCountX();
+			int ny = msk->getCountY();
 
-	int nx = msk->getCountX();
-	int ny = msk->getCountY();
+			int iy, ix;
+			int cnt = 0;
+			REAL val;
+			REAL x_coord, y_coord;
 
-	int iy, ix;
-	int cnt = 0;
-	REAL val;
-	REAL x_coord, y_coord;
-	
-    
-	for(iy=0; iy<ny; iy++)	{
-		for(ix=0; ix<nx; ix++)	{
-			msk->getCoordNode(ix, iy, x_coord, y_coord);
-			val = msk->coeff->get( ix + nx*iy );
-			fprintf(f,"%lf %lf %lf \n", x_coord, y_coord, val);
+
+			for(iy=0; iy<ny; iy++)	{
+				for(ix=0; ix<nx; ix++)	{
+					msk->getCoordNode(ix, iy, x_coord, y_coord);
+					val = msk->coeff->get( ix + nx*iy );
+					fprintf(f,"%lf %lf %lf \n", x_coord, y_coord, val);
+				}
+			}
+
+			fclose(f);
+			res->push_back(true);
 		}
 	}
+	const char * filename;
+	const char * pos;
+	boolvec * res;
+};
 
-	fclose(f);
-
-	return true;
+boolvec * mask_save_xyz(const char * filename, const char * pos) 
+{
+	match_mask_save_xyz qq(filename, pos);
+	qq = std::for_each(surfit_masks->begin(), surfit_masks->end(), qq);
+	return qq.res;
 };
 
 }; // namespace surfit;

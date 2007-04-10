@@ -22,6 +22,7 @@
 #include "surfit_io_data_manager.h"
 #include "variables.h"
 #include "fileio.h"
+#include "boolvec.h"
 #include "surf_io_tcl.h"
 #include "pnts_io_tcl.h"
 #include "curv_io_tcl.h"
@@ -42,10 +43,10 @@ void surfit_io_manager::release() {
 	delete this;
 };
 
-bool load_ESRI_shape(const char * filename, const char * name) {
+boolvec * load_ESRI_shape(const char * filename, const char * name) {
 	SHPHandle hSHP = SHPOpen(filename, "rb");
 	if( hSHP == NULL )
-		return false;
+		return NULL;
 	int shpType;
 	SHPGetInfo(hSHP, NULL, &shpType, NULL, NULL);
 	SHPClose( hSHP );
@@ -60,7 +61,7 @@ bool load_ESRI_shape(const char * filename, const char * name) {
 	case SHPT_POLYGONZ:
 		return cntr_load_shp(filename);
 	default:
-		return false;
+		return NULL;
 	}
 };
 
@@ -79,38 +80,74 @@ bool surfit_io_manager::auto_load(const char * filename, const char * first1024,
 	int columns = calc_columns(first1024, readed, " \t");
 
 	if (columns == 3) {
-		res = surf_load_xyz(filename, name);
+		boolvec * vecres = surf_load_xyz(filename, name);
+		if (vecres) {
+			if (vecres->size() == 1)
+				res = (*vecres)(0);
+			vecres->release();
+		}
 		goto exit;
 	}
 
 	if (ext != NULL) {
 		if (strcmp( uext, ".BLN" ) == 0) {
-			res = cntr_load_bln(filename);
+			{
+				boolvec * vecres = cntr_load_bln(filename);
+				if (vecres) {
+					if (vecres->size() == 1)
+						res = (*vecres)(0);
+					vecres->release();
+				}
+			}
 			if (res)
 				goto exit;
-			res = curv_load_bln(filename);
-			if (res)
+			{
+				boolvec * vecres = area_load_bln(filename, name);
+				if (vecres) {
+					if (vecres->size() == 1)
+						res = (*vecres)(0);
+					vecres->release();
+				}
 				goto exit;
-			res = area_load_bln(filename, name);
-			goto exit;
+			}
 		}
 		if (strcmp( uext, ".JPG" ) == 0) {
-			res = surf_load_jpg(filename, name);
+			boolvec * vecres = surf_load_jpg(filename, name);
+			if (vecres) {
+				if (vecres->size() == 1)
+					res = (*vecres)(0);
+				vecres->release();
+			}
 			goto exit;
 		}
 		if (strcmp( uext, ".BMP" ) == 0) {
-			res = surf_load_bmp(filename, name);
+			boolvec * vecres = surf_load_bmp(filename, name);
+			if (vecres) {
+				if (vecres->size() == 1)
+					res = (*vecres)(0);
+				vecres->release();
+			}
 			goto exit;
 		}
 		if (strcmp( uext, ".XYZ" ) == 0) {
-			res = surf_load_xyz(filename, name);
+			boolvec * vecres = surf_load_xyz(filename, name);
+			if (vecres) {
+				if (vecres->size() == 1)
+					res = (*vecres)(0);
+				vecres->release();
+			}
 			goto exit;
 		}
 	}
 
 	if ( strncmp(first1024,"\0x00\0x00\0x27\0x0A",4) == 0 ) {
 		try {
-			res = load_ESRI_shape(filename, name);
+			boolvec * vecres = load_ESRI_shape(filename, name);
+			if (vecres) {
+				if (vecres->size() == 1)
+					res = (*vecres)(0);
+				vecres->release();
+			}
 		} catch (...) {
 			goto exit;
 		}
@@ -119,7 +156,12 @@ bool surfit_io_manager::auto_load(const char * filename, const char * first1024,
 
 	if ( strncmp(first1024, "CDF", 3) == 0 ) {
 		try {
-			res = surf_load_gmt(filename);
+			boolvec * vecres = surf_load_gmt(filename);
+			if (vecres) {
+				if (vecres->size() == 1)
+					res = (*vecres)(0);
+				vecres->release();
+			}
 		} catch (...) {
 			goto exit;
 		}
@@ -133,7 +175,12 @@ bool surfit_io_manager::auto_load(const char * filename, const char * first1024,
 	   )
 	{
 		try {
-			res = surf_load_grd(filename);
+			boolvec * vecres = surf_load_grd(filename);
+			if (vecres) {
+				if (vecres->size() == 1)
+					res = (*vecres)(0);
+				vecres->release();
+			}
 		} catch (...) {
 			goto exit;
 		}
@@ -142,7 +189,12 @@ bool surfit_io_manager::auto_load(const char * filename, const char * first1024,
 
 	if ( strncmp(first1024,"north:",6) == 0 ) {
 		try {
-			res = surf_load_grass(filename);
+			boolvec * vecres = surf_load_grass(filename);
+			if (vecres) {
+				if (vecres->size() == 1)
+					res = (*vecres)(0);
+				vecres->release();
+			}
 		} catch (...) {
 			goto exit;
 		}
@@ -150,7 +202,12 @@ bool surfit_io_manager::auto_load(const char * filename, const char * first1024,
 	}
 	if ( strncmp(first1024,"ncols ",6) == 0 ) {
 		try {
-			res = surf_load_arcgis(filename);
+			boolvec * vecres = surf_load_arcgis(filename);
+			if (vecres) {
+				if (vecres->size() == 1)
+					res = (*vecres)(0);
+				vecres->release();
+			}
 		} catch (...) {
 			goto exit;
 		}

@@ -19,28 +19,30 @@
 
 namespace surfit {
 
+class boolvec;
+
 /*! \ingroup tcl_surf_save_load
     \fn bool surf_load_grd(const char * filename, const char * surfname = 0)
 
     \par Tcl syntax:
-    surf_load_grd "filename" "surfname"
+    surf_load_grd \ref file "filename" "surfname"
 
     \par Description:
     loads surface from SURFER grd file (ASCII format)
 
     \param filename Surfer grd file (ASCII format)
-    \param surfname name for surface (optional)
+    \param surfname name for the surface (optional)
 
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_load_grd(const char * filename, const char * surfname = 0);
+boolvec * surf_load_grd(const char * filename, const char * surfname = 0);
 
 /*! \ingroup tcl_surf_save_load
     \fn bool surf_load_gmt(const char * filename, const char * surfname = 0)
 
     \par Tcl syntax:
-    surf_load_gmt "filename" "surfname"
+    surf_load_gmt \ref file "filename" "surfname"
 
     \par Description:
     loads surface from Generic Mapping Tools grd file (CDF format)
@@ -48,13 +50,13 @@ bool surf_load_grd(const char * filename, const char * surfname = 0);
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_load_gmt(const char * filename, const char * surfname = 0);
+boolvec * surf_load_gmt(const char * filename, const char * surfname = 0);
 
 /*! \ingroup tcl_surf_save_load
     \fn bool surf_load_grass(const char * filename, const char * surfname = 0)
 
     \par Tcl syntax:
-    surf_load_grass "filename" "surfname"
+    surf_load_grass \ref file "filename" "surfname"
 
     \par Description:
     loads surface from GRASS ASCII file
@@ -62,13 +64,13 @@ bool surf_load_gmt(const char * filename, const char * surfname = 0);
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_load_grass(const char * filename, const char * surfname = 0);
+boolvec * surf_load_grass(const char * filename, const char * surfname = 0);
 
 /*! \ingroup tcl_surf_save_load
     \fn bool surf_load_arcgis(const char * filename, const char * surfname = 0)
 
     \par Tcl syntax:
-    surf_load_arcgis "filename" "surfname"
+    surf_load_arcgis \ref "filename" "surfname"
 
     \par Description:
     loads surface from ArcGIS ASCII file
@@ -76,13 +78,13 @@ bool surf_load_grass(const char * filename, const char * surfname = 0);
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_load_arcgis(const char * filename, const char * surfname = 0);
+boolvec * surf_load_arcgis(const char * filename, const char * surfname = 0);
 
 /*! \ingroup tcl_surf_save_load
     \fn bool surf_load_xyz(const char * filename, const char * surfname = 0, bool force = false)
 
     \par Tcl syntax:
-    surf_load_xyz "filename" "surfname"
+    surf_load_xyz \ref file "filename" "surfname"
 
     \par Description:
     loads surface from XYZ 3-column text file
@@ -90,7 +92,7 @@ bool surf_load_arcgis(const char * filename, const char * surfname = 0);
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_load_xyz(const char * filename, const char * surfname = 0, bool force = false);
+boolvec * surf_load_xyz(const char * filename, const char * surfname = 0, bool force = false);
 
 /*! \ingroup tcl_surf_save_load
     \fn bool surf_load_jpg(const char * filename, const char * surfname = 0,
@@ -98,7 +100,7 @@ bool surf_load_xyz(const char * filename, const char * surfname = 0, bool force 
 			   REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1)
 
     \par Tcl syntax:
-    surf_load_jpg "filename" "surfname"
+    surf_load_jpg \ref file "filename" "surfname"
 
     \par Description:
     loads surface from JPEG file
@@ -106,7 +108,7 @@ bool surf_load_xyz(const char * filename, const char * surfname = 0, bool force 
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_load_jpg(const char * filename, const char * surfname = 0,
+boolvec * surf_load_jpg(const char * filename, const char * surfname = 0,
 		   REAL minz = 0, REAL maxz = 0, 
 		   REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1);
 
@@ -116,7 +118,7 @@ bool surf_load_jpg(const char * filename, const char * surfname = 0,
 			   REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1)
 
     \par Tcl syntax:
-    surf_load_bmp "filename" "surfname" 
+    surf_load_bmp \ref file "filename" "surfname" 
 
     \par Description:
     loads surface from Windows bitmap file
@@ -124,7 +126,7 @@ bool surf_load_jpg(const char * filename, const char * surfname = 0,
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_load_bmp(const char * filename, const char * surfname = 0,
+boolvec * surf_load_bmp(const char * filename, const char * surfname = 0,
 		   REAL minz = 0, REAL maxz = 0, 
 		   REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1);
 
@@ -139,28 +141,28 @@ bool surf_load_bmp(const char * filename, const char * surfname = 0,
 //
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_grd(const char * filename, const char * surface_name_or_position = "0", int format);
+    \fn bool surf_save_grd(const char * filename, const char * surface_name = "*", int format);
 
     \par Tcl syntax:
-    surf_save_grd "filename" "surface_name_or_position" format
+    surf_save_grd "filename" \ref str "surface_name" format
 
     \par Description:
     saves surface to SURFER grd file
 
     \param filename SURFER grd file 
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
+    \param surface_name \ref str "name" of \ref d_surf "surface" dataset
     \param format 0 - ascii, 1 - binary, 2 - Surfer7 binary
 
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_save_grd(const char * filename, const char * surface_name_or_position = "0", int format = 0);
+boolvec * surf_save_grd(const char * filename, const char * surface_name = "*", int format = 0);
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_gmt(const char * filename, const char * surface_name_or_position = "0");
+    \fn bool surf_save_gmt(const char * filename, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_save_gmt "filename" "surface_name_or_position"
+    surf_save_gmt "filename" \ref str "surface_name"
 
     \par Description:
     saves surface to Generic Mapping Tools grd file (CDF format)
@@ -168,13 +170,13 @@ bool surf_save_grd(const char * filename, const char * surface_name_or_position 
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_save_gmt(const char * filename, const char * surface_name_or_position = "0");
+boolvec * surf_save_gmt(const char * filename, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_grass(const char * filename, const char * surface_name_or_position = "0");
+    \fn bool surf_save_grass(const char * filename, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_save_grass "filename" "surface_name_or_position"
+    surf_save_grass "filename" \ref str "surface_name"
 
     \par Description:
     saves surface to GRASS ASCII file
@@ -182,13 +184,13 @@ bool surf_save_gmt(const char * filename, const char * surface_name_or_position 
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_save_grass(const char * filename, const char * surface_name_or_position = "0");
+boolvec * surf_save_grass(const char * filename, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_arcgis(const char * filename, const char * surface_name_or_position = "0");
+    \fn bool surf_save_arcgis(const char * filename, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_save_arcgis "filename" "surface_name_or_position"
+    surf_save_arcgis "filename" \ref str "surface_name"
 
     \par Description:
     saves surface to ArcGIS ASCII file
@@ -196,59 +198,59 @@ bool surf_save_grass(const char * filename, const char * surface_name_or_positio
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_save_arcgis(const char * filename, const char * surface_name_or_position = "0");
+boolvec * surf_save_arcgis(const char * filename, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_xyz(const char * filename, const char * surface_name_or_position = "0");
+    \fn bool surf_save_xyz(const char * filename, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_save_xyz "filename" "surface_name_or_position"
+    surf_save_xyz "filename" \ref str "surface_name"
 
     \par Description:
     saves surface to XYZ text format
 
     \param filename XYZ text file
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
+    \param surface_name \ref str "name" of \ref d_surf "surface" dataset
 
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_save_xyz(const char * filename, const char * surface_name_or_position = "0");
+boolvec * surf_save_xyz(const char * filename, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_jpg(const char * filename, const char * surface_name_or_position = "0", int quality = 255);
+    \fn bool surf_save_jpg(const char * filename, const char * surface_name = "*", int quality = 255);
 
     \par Tcl syntax:
-    surf_save_jpg "filename" "surface_name_or_position"
+    surf_save_jpg "filename" \ref str "surface_name"
 
     \par Description:
     saves surface to JPEG in grayscale colours
 
     \param filename jpeg file
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
+    \param surface_name \ref str "name" of \ref d_surf "surface" dataset
     \param quality jpeg quality 0..255
 
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_save_jpg(const char * filename, const char * surface_name_or_position = "0", int quality = 255);
+boolvec * surf_save_jpg(const char * filename, const char * surface_name = "*", int quality = 255);
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_bmp(const char * filename, const char * surface_name_or_position = "0");
+    \fn bool surf_save_bmp(const char * filename, const char * surface_name = "*");
 
     \par Tcl syntax:
-    surf_save_bmp "filename" "surface_name_or_position"
+    surf_save_bmp "filename" \ref str "surface_name"
 
     \par Description:
     saves surface to Windows BitMap file in grayscale colours
 
     \param filename bitmap file
-    \param surface_name_or_position name of \ref d_surf "surface" dataset, or surface position number.
+    \param surface_name \ref str "name" of \ref d_surf "surface" dataset
 
     \par Implemented in library:
     libsurfit_io
 */
-bool surf_save_bmp(const char * filename, const char * surface_name_or_position = "0");
+boolvec * surf_save_bmp(const char * filename, const char * surface_name = "*");
 
 };
 

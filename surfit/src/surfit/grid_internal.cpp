@@ -493,5 +493,29 @@ d_grid * _create_sub_grid(const d_grid * grd, int x_from, int x_to, int y_from, 
 
 };
 
+d_grid * _grid_get_best( std::vector<d_grid *> * grids )
+{
+	size_t i;
+	REAL stepX = FLT_MAX;
+	REAL stepY = FLT_MAX;
+	REAL startX = FLT_MAX;
+	REAL startY = FLT_MAX;
+	REAL endX = -FLT_MAX;
+	REAL endY = -FLT_MAX;
+	for (i = 0; i < grids->size(); i++)
+	{
+		d_grid * grd = (*grids)[i];
+		stepX = MIN(grd->stepX, stepX);
+		stepY = MIN(grd->stepY, stepY);
+		startX = MIN(grd->startX, startX);
+		startY = MIN(grd->startY, startY);
+		endX = MAX(grd->endX, endX);
+		endY = MAX(grd->endY, endY);
+	}
+	d_grid * res = create_grid(startX, endX, stepX,
+				   startY, endY, stepY);
+	return res;
+};
+
 }; // namespace surfit;
 

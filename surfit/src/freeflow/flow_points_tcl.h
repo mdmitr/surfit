@@ -22,14 +22,16 @@
 
 namespace surfit {
 
+class boolvec;
+
 /*! \ingroup tcl_freeflow_rules
-    \fn bool flow_points(const char * points_name_or_position = "0");
+    \fn bool flow_points(const char * points_name = "*");
 
     \par Tcl syntax: 
-    flow_point value "points_name_or_position"
+    flow_point value "points_name"
 */
 FLOW_EXPORT
-bool flow_points(const char * points_name_or_position = "0");
+boolvec * flow_points(const char * points_name = "*");
 
 }; // namespace surfit;
 

@@ -23,7 +23,7 @@ namespace surfit {
     \fn bool area_load_bln(const char * filename, const char * areaname = NULL);
     
     \par Tcl syntax:
-    area_load_bln "filename" "area_name" 
+    area_load_bln \ref file "filename" "area_name" 
 
     \par Description:
     loads \ref d_area "area" from Surfer BLN files and sets its name to "areaname".
@@ -36,13 +36,13 @@ namespace surfit {
     libsurfit_io
 
 */
-bool area_load_bln(const char * filename, const char * areaname = NULL);
+boolvec * area_load_bln(const char * filename, const char * areaname = NULL);
 
 /*! \ingroup tcl_area_save_load
     \fn bool area_load_shp(const char * filename, const char * area_name = NULL);
     
     \par Tcl syntax:
-    area_load_shp "filename" "area_name"
+    area_load_shp \ref file "filename" "area_name"
 
     \par Description:
     loads \ref d_area "area" named "area_name" from ERSI shape file. 
@@ -57,40 +57,39 @@ bool area_load_bln(const char * filename, const char * areaname = NULL);
     \par Implemented in library:
     libsurfit_io
 */
-bool area_load_shp(const char * filename, const char * area_name = NULL);
+boolvec * area_load_shp(const char * filename, const char * area_name = NULL);
 
 /*! \ingroup tcl_area_save_load
-    \fn bool area_save_bln(const char * filename, const char * area_name_or_position = "0", int orient = 1);
+    \fn bool area_save_bln(const char * filename, const char * area_name = "*");
     
     \par Tcl syntax:
-    area_save_bln "filename" "area_name_or_position" orient
+    area_save_bln "filename" \ref str "area_name"
 
     \par Description:
     saves \ref d_area "area" to Surfer BLN file
 
     \param filename name for BLN file
-    \param area_name_or_position area name, or area position number. If area_name_or_position = "*" then saves all areas
-    \param orient This value is equal to 1 if the region is inside area and equal to 0 if the region is outside area 
+    \param area_name area \ref str "name". If area_name = "*" then saves all areas
     
     \par Example
-    area_save_bln "C:\\area.bln" my_area 1
+    area_save_bln "C:\\area.bln" my_area 
 
     \par Implemented in library:
     libsurfit_io
 */
-bool area_save_bln(const char * filename, const char * area_name_or_position = "0", int flag = 1);
+boolvec * area_save_bln(const char * filename, const char * area_name = "*");
 
 /*! \ingroup tcl_area_save_load
-    \fn bool area_save_shp(const char * filename, const char * area_name_or_position = "0");
+    \fn bool area_save_shp(const char * filename, const char * area_name = "*");
     
     \par Tcl syntax:
-    area_save_shp "filename" "area_name_or_position"
+    area_save_shp "filename" \ref str "area_name"
 
     \par Description:
     saves \ref d_area "area" to ERSI shape file
 
     \param filename ERSI shape file name
-    \param area_name_or_position \ref d_area "area" name, or area position number
+    \param area_name \ref d_area "area" \ref str "name"
     
     \par Example
     area_save_shp "C:\\area.shp" my_area
@@ -98,7 +97,7 @@ bool area_save_bln(const char * filename, const char * area_name_or_position = "
     \par Implemented in library:
     libsurfit_io
 */
-bool area_save_shp(const char * filename, const char * area_name_or_position = "0");
+boolvec * area_save_shp(const char * filename, const char * area_name = "*");
 
 };
 

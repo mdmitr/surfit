@@ -22,32 +22,34 @@
 
 namespace surfit {
 
-/*! \ingroup tcl_freeflow_rules
-    \fn bool flow_area(REAL value, const char * area_name_or_position = "0");
-
-    \par Tcl syntax: 
-    flow_area value "area_name_or_position"
-*/
-FLOW_EXPORT
-bool flow_area(REAL value, const char * area_name_or_position = "0");
+class boolvec;
 
 /*! \ingroup tcl_freeflow_rules
-    \fn bool flow_curve(REAL value, const char * curve_name_or_position = "0");
+    \fn bool flow_area(REAL value, const char * area_name = "*");
 
     \par Tcl syntax: 
-    flow_curve value "curve_name_or_position"
+    flow_area value \ref str "area_name"
 */
 FLOW_EXPORT
-bool flow_curve(REAL value, const char * curve_name_or_position = "0");
+boolvec * flow_area(REAL value, const char * area_name = "*");
 
 /*! \ingroup tcl_freeflow_rules
-    \fn bool flow_contour(const char * contour_name_or_position = "0");
+    \fn bool flow_curve(REAL value, const char * curve_name = "*");
 
     \par Tcl syntax: 
-    flow_contour "contour_name_or_position"
+    flow_curve value \ref str "curve_name"
 */
 FLOW_EXPORT
-bool flow_contour(const char * contour_name_or_position = "0");
+boolvec * flow_curve(REAL value, const char * curve_name = "*");
+
+/*! \ingroup tcl_freeflow_rules
+    \fn bool flow_contour(const char * contour_name = "*");
+
+    \par Tcl syntax: 
+    flow_contour \ref str "contour_name"
+*/
+FLOW_EXPORT
+boolvec * flow_contour(const char * contour_name = "*");
 
 }; // namespace surfit;
 

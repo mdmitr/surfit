@@ -1026,6 +1026,10 @@ SOURCE=.\..\src\surfit\interface\geom.i
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\surfit\interface\hist.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\..\src\surfit\interface\solve.i
 # End Source File
 # Begin Source File
@@ -1034,7 +1038,7 @@ SOURCE=.\..\src\surfit\interface\surfit.i
 
 !IF  "$(CFG)" == "surfit - Win32 Release"
 
-USERDEP__SURFI="../src/surfit/interface/fileio.i"	"../src/surfit/interface/solve.i"	"../src/surfit/interface/task.i"	"../src/surfit/interface/geom.i"	"../src/surfit/interface/func.i"	"../src/surfit/interface/curv.i"	
+USERDEP__SURFI="../src/surfit/interface/fileio.i"	"../src/surfit/interface/solve.i"	"../src/surfit/interface/task.i"	"../src/surfit/interface/geom.i"	"../src/surfit/interface/func.i"	"../src/surfit/interface/curv.i"	"../src/surfit/interface/hist.i"	
 # Begin Custom Build
 InputPath=.\..\src\surfit\interface\surfit.i
 
@@ -1045,7 +1049,7 @@ InputPath=.\..\src\surfit\interface\surfit.i
 
 !ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
 
-USERDEP__SURFI="../src/surfit/interface/fileio.i"	"../src/surfit/interface/solve.i"	"../src/surfit/interface/task.i"	"../src/surfit/interface/geom.i"	"../src/surfit/interface/func.i"	"../src/surfit/interface/curv.i"	
+USERDEP__SURFI="../src/surfit/interface/fileio.i"	"../src/surfit/interface/solve.i"	"../src/surfit/interface/task.i"	"../src/surfit/interface/geom.i"	"../src/surfit/interface/func.i"	"../src/surfit/interface/curv.i"	"../src/surfit/interface/hist.i"	
 # Begin Custom Build
 InputPath=.\..\src\surfit\interface\surfit.i
 

@@ -27,64 +27,122 @@
 #include "flow_area.h"
 #include "flow_curv.h"
 #include "flow_cntr.h"
+#include "boolvec.h"
+
+#include <algorithm>
 
 namespace surfit {
 
-bool flow_area(REAL value, const char * pos) {
+struct match_flow_area
+{
+	match_flow_area(REAL ivalue, const char * ipos) : value(ivalue), pos(ipos), res(NULL) {};
+	void operator()(d_area * area)
+	{
+		if ( StringMatch(pos, area->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			functional * fnc = get_modifiable_functional();
+			if (fnc == NULL) {
+				res->push_back(false);
+				return;
+			}
+			f_lcm_simple * f = dynamic_cast<f_lcm_simple *>(fnc);
+			if (f == NULL) {
+				res->push_back(false);
+				return;
+			}
 
-	functional * fnc = get_modifiable_functional();
-	if (fnc == NULL)
-		return false;
-	f_lcm_simple * f = dynamic_cast<f_lcm_simple *>(fnc);
-	if (f == NULL)
-		return false;
-	
-	d_area * area = get_element<d_area>(pos, surfit_areas->begin(), surfit_areas->end());
-	if (area == NULL)
-		return false;
-
-	f_flow_area * ff = new f_flow_area(value, area);
-	f->add_flow(ff);
-	return true;
-
+			writelog(LOG_MESSAGE,"creating gridding rule flow_area \"%s\"(%g)",area->getName(),value);
+			f_flow_area * ff = new f_flow_area(value, area);
+			f->add_flow(ff);
+			res->push_back(true);	
+		}
+	}
+	REAL value;
+	const char * pos;
+	boolvec * res;
 };
 
-bool flow_curve(REAL value, const char * pos) {
-
-	functional * fnc = get_modifiable_functional();
-	if (fnc == NULL)
-		return false;
-	f_lcm_simple * f = dynamic_cast<f_lcm_simple *>(fnc);
-	if (f == NULL)
-		return false;
-	
-	d_curv * crv = get_element<d_curv>(pos, surfit_curvs->begin(), surfit_curvs->end());
-	if (crv == NULL)
-		return false;
-
-	f_flow_curv * ff = new f_flow_curv(value, crv);
-	f->add_flow(ff);
-	return true;
-
+boolvec * flow_area(REAL value, const char * pos) 
+{
+	match_flow_area qq(value, pos);
+	qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
+	return qq.res;
 };
 
-bool flow_contour(const char * pos) {
+struct match_flow_curve
+{
+	match_flow_curve(REAL ivalue, const char * ipos) : value(ivalue), pos(ipos), res(NULL) {};
+	void operator()(d_curv * curve)
+	{
+		if ( StringMatch(pos, curve->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			functional * fnc = get_modifiable_functional();
+			if (fnc == NULL) {
+				res->push_back(false);
+				return;
+			}
+			f_lcm_simple * f = dynamic_cast<f_lcm_simple *>(fnc);
+			if (f == NULL) {
+				res->push_back(false);
+				return;
+			}
 
-	functional * fnc = get_modifiable_functional();
-	if (fnc == NULL)
-		return false;
-	f_lcm_simple * f = dynamic_cast<f_lcm_simple *>(fnc);
-	if (f == NULL)
-		return false;
-	
-	d_cntr * contour = get_element<d_cntr>(pos, surfit_cntrs->begin(), surfit_cntrs->end());
-	if (contour == NULL)
-		return false;
+			writelog(LOG_MESSAGE,"creating gridding rule flow_curve \"%s\"(%g)",curve->getName(),value);
+			f_flow_curv * ff = new f_flow_curv(value, curve);
+			f->add_flow(ff);
+			res->push_back(true);	
+		}
+	}
+	REAL value;
+	const char * pos;
+	boolvec * res;
+};
 
-	f_flow_cntr * ff = new f_flow_cntr(contour);
-	f->add_flow(ff);
-	return true;
+boolvec * flow_curve(REAL value, const char * pos)
+{
+	match_flow_curve qq(value, pos);
+	qq = std::for_each(surfit_curvs->begin(), surfit_curvs->end(), qq);
+	return qq.res;
+};
 
+struct match_flow_contour
+{
+	match_flow_contour(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_cntr * contour)
+	{
+		if ( StringMatch(pos, contour->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			functional * fnc = get_modifiable_functional();
+			if (fnc == NULL) {
+				res->push_back(false);
+				return;
+			}
+			f_lcm_simple * f = dynamic_cast<f_lcm_simple *>(fnc);
+			if (f == NULL) {
+				res->push_back(false);
+				return;
+			}
+			writelog(LOG_MESSAGE,"creating gridding rule flow_cntr \"%s\"",contour->getName());
+			f_flow_cntr * ff = new f_flow_cntr(contour);
+			f->add_flow(ff);
+			res->push_back(true);	
+		}
+	}
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * flow_contour(const char * pos) 
+{
+	match_flow_contour qq(pos);
+	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
+	return qq.res;
 };
 
 }; // namespace surfit;

@@ -19,25 +19,27 @@
 
 namespace surfit {
 
+class boolvec;
+
 /*! \ingroup tcl_mask_save_load
     \fn bool mask_save_grd(const char * filename, const char * mask_name = "*");
 
     \par Tcl syntax:
-    mask_save_grd \ref file "filename" \ref str "mask_name"
+    mask_save_grd "filename" \ref str "mask_name"
 
     \par Description:
-    saves first \ref d_mask "mask" with name matching \ref str "mask_name" to Surfer grd file (ASCII format)
+    saves \ref d_mask "masks" with name matching \ref str "mask_name" to Surfer grd file (ASCII format)
 
     \par Implemented in library:
     libsurfit_io
 */
-bool mask_save_grd(const char * filename, const char * mask_name = "*");
+boolvec * mask_save_grd(const char * filename, const char * mask_name = "*");
 
 /*! \ingroup tcl_mask_save_load
     \fn bool mask_save_xyz(const char * filename, const char * mask_name = "*");
 
     \par Tcl syntax:
-    mask_save_xyz \ref file "filename" \ref str "mask_name"
+    mask_save_xyz "filename" \ref str "mask_name"
     
     \par Description:
     saves first \ref d_mask "mask" with name matching \ref str "mask_name" to xyz-file (ASCII format)
@@ -45,7 +47,7 @@ bool mask_save_grd(const char * filename, const char * mask_name = "*");
     \par Implemented in library:
     libsurfit_io
 */
-bool mask_save_xyz(const char * filename, const char * mask_name = "*");
+boolvec * mask_save_xyz(const char * filename, const char * mask_name = "*");
 
 }; // namespace surfit;
 

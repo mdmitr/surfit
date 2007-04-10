@@ -23,7 +23,7 @@ namespace surfit {
     \fn bool cntr_load_shp(const char * filename, const char * cntrname = NULL);
     
     \par Tcl syntax:
-    cntr_load_shp "filename" \ref match "cntrname"
+    cntr_load_shp \ref file "filename" "cntrname"
 
     \par Description:
     reads \ref d_cntr "countour" named 'cntrname' from ERSI shape file. Loads
@@ -35,13 +35,13 @@ namespace surfit {
     \par Implemented in library:
     libsurfit_io
 */
-bool cntr_load_shp(const char * filename, const char * cntrname = NULL, const char * zfield = NULL);
+boolvec * cntr_load_shp(const char * filename, const char * cntrname = NULL, const char * zfield = NULL);
 
 /*! \ingroup tcl_cntr_save_load
     \fn bool cntr_load_bln(const char * filename, const char * cntrname = NULL, const char * zfield);
     
     \par Tcl syntax:
-    cntr_load_bln "filename" \ref match "cntrname" "fieldtouseforzvalue"
+    cntr_load_bln \ref file "filename" "cntrname" "fieldtouseforzvalue"
 
     \par Description:
     loads \ref d_cntr "contour" named "cntrname" from BLN file. Loads
@@ -50,13 +50,13 @@ bool cntr_load_shp(const char * filename, const char * cntrname = NULL, const ch
     \par Implemented in library:
     libsurfit_io
 */
-bool cntr_load_bln(const char * filename, const char * cntrname = NULL);
+boolvec * cntr_load_bln(const char * filename, const char * cntrname = NULL);
 
 /*! \ingroup tcl_cntr_save_load
-    \fn bool cntr_save_shp(const char * filename, const char * cntr_name_or_position = "0");
+    \fn bool cntr_save_shp(const char * filename, const char * cntr_name = "*");
     
     \par Tcl syntax:
-    cntr_save_shp "filename" \ref match "cntr_name_or_position" 
+    cntr_save_shp "filename" \ref str "cntr_name" 
 
     \par Description:
     saves \ref d_cntr "contour" to ESRI shape file
@@ -67,29 +67,27 @@ bool cntr_load_bln(const char * filename, const char * cntrname = NULL);
     \par Implemented in library:
     libsurfit_io
 */
-bool cntr_save_shp(const char * filename, const char * cntr_name_or_position = "0");
+boolvec * cntr_save_shp(const char * filename, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_save_load
-    \fn bool cntr_save_bln(const char * filename, const char * cntr_name_or_position = "0", int orient=1)
+    \fn bool cntr_save_bln(const char * filename, const char * cntr_name = "*")
     
     \par Tcl syntax:
-    cntr_save_bln "filename" \ref match "cntr_name_or_position" orient
+    cntr_save_bln "filename" \ref str "cntr_name" 
 
     \par Description:
     saves \ref d_cntr "cntre" to BLN file
 
     \param filename name for BLN file
-    \param cntr_name_or_position cntr name, or cntre position number
-    \param orient This value is equal to 1 if the region is inside area and equal to 0 if the region is outside area 
+    \param cntr_name \ref d_contour "contour" \ref str "name"
     
     \par Example
-    cntr_save_bln "C:\\cntr.bln" my_cntr 1
+    cntr_save_bln "C:\\cntr.bln" my_cntr 
 
     \par Implemented in library:
     libsurfit_io
 */
-bool cntr_save_bln(const char * filename, const char * cntr_name_or_position = "0", int orient = 1);
-
+boolvec * cntr_save_bln(const char * filename, const char * cntr_name = "*");
 
 };
 

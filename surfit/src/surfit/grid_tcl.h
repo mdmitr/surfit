@@ -154,30 +154,30 @@ bool grid_get2(REAL startX, REAL endX, REAL stepX,
                const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_create
-    \fn bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * points_name_or_position = "0", const char * gridname = NULL);
+    \fn bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * points_name = "*", const char * gridname = NULL);
 
     \par Tcl syntax:
-    grid_get_for_pnts Xnodex Ynodes "points_name_or_position" "gridname"
+    grid_get_for_pnts Xnodex Ynodes "points_name" "gridname"
 
     \par Description:
     constructs \ref d_grid "grid" which covers \ref d_points "points", and consists of Xnodes*Ynodes nodes. 
 */
-bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * points_name_or_position = "0", const char * gridname = NULL);
+bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * points_name = "*", const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_create
-    \fn bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * points_name_or_position = "0", const char * gridname = NULL);
+    \fn bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * points_name = "*", const char * gridname = NULL);
     
     \par Tcl syntax:
-    grid_get_for_pnts_step steX stepY "points_name_or_position" "gridname" 
+    grid_get_for_pnts_step steX stepY "points_name" "gridname" 
 
     \par Description:
     constructs \ref d_grid "grid" with cell size stepX and stepY. Resulting grid will
     cover \ref d_points "points" dataset. 
 */
-bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * points_name_or_position = "0", const char * gridname = NULL);
+bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * points_name = "*", const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_create
-    \fn bool grid_get_from_surf(const char * surface_name_or_position = "0", const char * gridname = NULL);
+    \fn bool grid_get_from_surf(const char * surface_name = "*", const char * gridname = NULL);
 
     \par Tcl syntax:
     grid_get_from_surf
@@ -185,7 +185,7 @@ bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * points_name_or_
     \par Description:
     constructs \ref d_grid "grid" equal to \ref d_surf "surface" grid
 */
-bool grid_get_from_surf(const char * surface_name_or_position = "0", const char * gridname = NULL);
+bool grid_get_from_surf(const char * surface_name = "*", const char * gridname = NULL);
 
 /////////////////
 // other

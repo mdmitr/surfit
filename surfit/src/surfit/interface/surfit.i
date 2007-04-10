@@ -182,7 +182,7 @@ bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, RE
 bool value(REAL val = 0);
 bool value_add(REAL weight = 1, REAL val = 0);
 bool mean(REAL value, REAL mult = 0.001);
-bool wmean(REAL value, const char * surface_name_or_position = "0", REAL mult = 0.001);
+surfit::boolvec * wmean(REAL value, const char * surface_name = "*", REAL mult = 0.001);
 bool leq(REAL value, REAL mult = 1);
 bool geq(REAL value, REAL mult = 1);
 
