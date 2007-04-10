@@ -15,10 +15,10 @@
 
   ;Name and file
   Name "surfit"
-  OutFile "surfit-2.1-setup.exe"
+  OutFile "surfit-2.2-setup.exe"
 
   ;Default installation folder
-  InstallDir "$PROGRAMFILES\surfit-2.1"
+  InstallDir "$PROGRAMFILES\surfit-2.2"
   
   ;Get installation folder from registry if available
   InstallDirRegKey HKCU "Software\surfit" ""
@@ -67,7 +67,7 @@ Function .onInit
 
   StrCmp $SURFIT_VERSION "" can_continue_install
 
-  ${VersionCompare} "2.1" $SURFIT_VERSION" $R0
+  ${VersionCompare} "2.2" $SURFIT_VERSION" $R0
 
   StrCmp $R0 "0" can_continue_install
 
@@ -76,8 +76,8 @@ Function .onInit
 
 can_continue_install:
 
-  StrCpy $STARTMENU_FOLDER "surfit-2.1"
-  StrCpy $VERSION "2.1"
+  StrCpy $STARTMENU_FOLDER "surfit-2.2"
+  StrCpy $VERSION "2.2"
 
   InitPluginsDir
   SearchPath $1 tclsh83.exe
@@ -160,9 +160,7 @@ FunctionEnd
 ;--------------------------------
 ;Installer Sections
 
-SectionGroup "binaries" SecBinary
-
-	Section "libsurfit" SecSurfitDll
+Section "binaries" SecBinary
 
 	  SetOutPath "$INSTDIR\bin"
 	  SectionIn RO
@@ -185,91 +183,96 @@ SectionGroup "binaries" SecBinary
   
 	  !insertmacro MUI_STARTMENU_WRITE_END
 
-	  File "..\bin\libsstuff.dll"
-	  File "..\bin\libsurfit.dll"
-
 	  Push $INSTDIR/bin
 	  Call AddToPath
 
-	SectionEnd
-
-	Section "libfreeflow" SecFreeflowDll
 	  SetOutPath "$INSTDIR\bin"
+
+	  cpudesc::tell
+	  Pop $0                     ;full identification string in $0
+
+	  StrCpy $3 $0 1 41         ;pull out one character after SSE2=
+	  IntCmpU $3 1 +1 check_sse check_sse
+	  File "..\bin_SSE2\libsstuff.dll"
+	  File "..\bin_SSE2\libsurfit.dll"
+	  File "..\bin_SSE2\libfreeflow.dll"
+	  File "..\bin_SSE2\libglobe.dll"
+	  File "..\bin_SSE2\libsurfit_io.dll"
+	  Goto binary_done
+
+check_sse:
+
+	  StrCpy $3 $0 1 34         ;pull out one character after SSE=
+  	  IntCmpU $3 1 +1 usual_install usual_install
+	  File "..\bin_SSE\libsstuff.dll"
+	  File "..\bin_SSE\libsurfit.dll"
+	  File "..\bin_SSE\libfreeflow.dll"
+	  File "..\bin_SSE\libglobe.dll"
+	  File "..\bin_SSE\libsurfit_io.dll"
+	  Goto binary_done
+
+usual_install:
+
 	  File "..\bin\libsstuff.dll"
+	  File "..\bin\libsurfit.dll"
 	  File "..\bin\libfreeflow.dll"
-	SectionEnd
-
-	Section "libglobe" SecGlobeDll
-	  SetOutPath "$INSTDIR\bin"
-	  File "..\bin\libsstuff.dll"
 	  File "..\bin\libglobe.dll"
-	  File "..\bin\zlib1.dll"
-	SectionEnd
-
-	Section "libsurfit_io" SecSurfitIODll
-	  SetOutPath "$INSTDIR\bin"
 	  File "..\bin\libsurfit_io.dll"
-	  File "..\bin\netcdf.dll"
-	  File "..\bin\shapelib.dll"
-        SectionEnd
-	 
 
-SectionGroupEnd
+binary_done:
+
+ 	  File "..\bin\zlib1.dll"
+	  File "..\bin\netcdf.dll"
+
+
+SectionEnd
 
 Section "examples" SecExamples
 
   SetOutPath "$INSTDIR\examples"
-  File /r /x CVS "..\examples\*.*"
+  File /r /x .svn "..\examples\*.*"
   CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
   CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\examples.lnk" "$INSTDIR\examples\"
 
 SectionEnd
 
-SectionGroup "sources" SecSources
-
-	Section "surfit" SecSurfitSources
+Section "sources" SecSources
 	  SetOutPath "$INSTDIR\src\sstuff"
-	  File /r /x CVS "..\src\sstuff\*.*"
+	  File /r /x .svn "..\src\sstuff\*.*"
 	  SetOutPath "$INSTDIR\src\surfit"
-	  File /r /x CVS "..\src\surfit\*.*"
-	SectionEnd
-
-	Section "freeflow" SecFreeflowSources
+	  File /r /x .svn "..\src\surfit\*.*"
 	  SetOutPath "$INSTDIR\src\freeflow\"
-	  File /r /x CVS "..\src\freeflow\*.*"
-	SectionEnd
-
-	Section "globe" SecGlobeSources
+	  File /r /x .svn "..\src\freeflow\*.*"
 	  SetOutPath "$INSTDIR\src\globe"
-	  File /r /x CVS "..\src\globe\*.*"
-	SectionEnd
-       
-	Section "surfit_io" SecSurfitIOSources
+	  File /r /x .svn "..\src\globe\*.*"
 	  SetOutPath "$INSTDIR\src\surfit_io"
-	  File /r /x CVS "..\src\surfit_io\*.*"
-	SectionEnd
-
-	Section "VC6 project files" SecVC6
+	  File /r /x .svn "..\src\surfit_io\*.*"
 	  SetOutPath "$INSTDIR\vc6"
-	  File /r /x CVS "..\vc6\*.bat"
-	  File /r /x CVS "..\vc6\*.dsp"
-	  File /r /x CVS "..\vc6\*.dsw"
-	  File /r /x CVS "..\vc6\*.mak"
+	  File /r /x .svn "..\vc6\*.bat"
+	  File /r /x .svn "..\vc6\*.dsp"
+	  File /r /x .svn "..\vc6\*.dsw"
+	  File /r /x .svn "..\vc6\*.mak"
+	  File /r /x .svn "..\vc7\*.sln"
+	  File /r /x .svn "..\vc7\*.bat"
+	  File /r /x .svn "..\vc7\*.vcproj"
+	  File /r /x .svn "..\vc8\*.sln"
+	  File /r /x .svn "..\vc8\*.bat"
+	  File /r /x .svn "..\vc8\*.vcproj"
 	  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
-	  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\build"
-	  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\build\surfit.lnk" "$INSTDIR\vc6\surfit.dsw"
-        SectionEnd
-
-	Section "configure scripts" SecLinux
+	  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\sources"
+	  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\sources\vc6"
+	  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\sources\vc6\surfit.lnk" "$INSTDIR\vc6\surfit.dsw"
+	  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\sources\vc7"
+	  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\sources\vc7\surfit.lnk" "$INSTDIR\vc7\surfit.sln"
+	  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\sources\vc8"
+	  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\sources\vc8\surfit.lnk" "$INSTDIR\vc8\surfit.sln"
           SetOutPath "$INSTDIR"
 	  File ..\*.*
-        SectionEnd
-
-SectionGroupEnd
+SectionEnd
 
 Section "documentation" SecDocs
   SetOutPath "$INSTDIR\doc\"
-  File /x CVS "..\bin\surfit.chm"
+  File /x .svn "..\bin\surfit.chm"
   CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
   CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\surfit.lnk" "$INSTDIR\doc\surfit.chm"
 SectionEnd
@@ -279,36 +282,18 @@ SectionEnd
 ;Descriptions
 
   ;Language strings
-  LangString DESC_SecSurfitDll ${LANG_ENGLISH} "libsurfit.dll"
-  LangString DESC_SecFreeflowDll ${LANG_ENGLISH} "libfreeflow.dll"
-  LangString DESC_SecGlobeDll ${LANG_ENGLISH} "libglobe.dll"
-  LangString DESC_SecSurfitIODll ${LANG_ENGLISH} "libsurfit_io.dll"
-  LangString DESC_SecSurfitSources ${LANG_ENGLISH} "surfit sources."
-  LangString DESC_SecFreeflowSources ${LANG_ENGLISH} "freeflow sources."
-  LangString DESC_SecGlobeSources ${LANG_ENGLISH} "globe sources."
-  LangString DESC_SecSurfitIOSources ${LANG_ENGLISH} "surfit_io sources."
   LangString DESC_SecDocs ${LANG_ENGLISH} "documentation for surfit, freeflow and globe"
   LangString DESC_Src ${LANG_ENGLISH} "source files (*.cpp, *.h, ...)"
   LangString DESC_Examples ${LANG_ENGLISH} "set of scripts for example"
   LangString DESC_Binary ${LANG_ENGLISH} "libsstuff.dll libsurfit.dll libfreeflow.dll libglobe.dll"
-  LangString DESC_VC6 ${LANG_ENGLISH} "Contains *.dsw and *.dsp files"
 
 
   ;Assign language strings to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecSurfitDll} $(DESC_SecSurfitDll)
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecFreeflowDll} $(DESC_SecFreeflowDll)    
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecGlobeDll} $(DESC_SecGlobeDll)
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecSurfitIODll} $(DESC_SecSurfitIODll)
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecSurfitSources} $(DESC_SecSurfitSources)
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecFreeflowSources} $(DESC_SecFreeflowSources)
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecGlobeSources} $(DESC_SecGlobeSources)
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecSurfitIOSources} $(DESC_SecSurfitIOSources)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecDocs} $(DESC_SecDocs)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecSources} $(DESC_Src)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecExamples} $(DESC_Examples)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecBinary} $(DESC_Binary)
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecVC6} $(DESC_VC6)
   !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ;--------------------------------
