@@ -60,5 +60,5 @@ grid_unload
 surf_save "points_hist.dat" "map_points_hist" 
 
 hist_del
-hist_from_surf "map_points_hist" 10 "res_hist"
+hist_from_surf "map_points_hist" 10 
 hist_write "res_hist.txt"
