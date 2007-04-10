@@ -93,7 +93,7 @@ bool mean(REAL value, REAL mult)
 
 struct match_wmean
 {
-	match_wmean(REAL ivalue, const char * isurf_pos, REAL imult) : value(ivalue), surf_pos(isurf_pos), mult(imult) {};
+	match_wmean(REAL ivalue, const char * isurf_pos, REAL imult) : value(ivalue), surf_pos(isurf_pos), mult(imult), res(NULL) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( surf_pos, surf->getName() ) )
@@ -138,7 +138,7 @@ bool geq(REAL value, REAL mult)
 
 struct match_hist 
 {
-	match_hist(const char * ipos, REAL imult) : pos(ipos), mult(imult) {};
+	match_hist(const char * ipos, REAL imult) : pos(ipos), mult(imult), res(NULL) {};
 	void operator()(d_hist * hist) 
 	{
 		if ( StringMatch( pos, hist->getName() ) ) 

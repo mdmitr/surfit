@@ -19,6 +19,7 @@ EXTRA_DIST += doc/html/*
 EXTRA_DIST += doc/surfit.cfg
 EXTRA_DIST += doc/make_doc*
 EXTRA_DIST += make_release.bat
+EXTRA_DIST += make_releases.bat
 EXTRA_DIST += make_debug.bat
 EXTRA_DIST += clean.bat
 EXTRA_DIST += make_rpm_fc4
