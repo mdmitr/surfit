@@ -365,6 +365,12 @@ d_points * discretize_cntr(const d_cntr * crv, d_grid * grd, const char * pnts_n
 		
 	}
 
+	if (data->size() == 0)
+	{
+		delete data;
+		return NULL;
+	}
+
 	std::sort(data->begin(), data->end(), ptr_pos_z_w_less);
 
 	vec * points_x = create_vec();

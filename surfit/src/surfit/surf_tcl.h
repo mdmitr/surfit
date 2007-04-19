@@ -288,7 +288,7 @@ vec * surf_sum(const char * surface_name = "*");
     \fn REAL surf_sum_area(const char * area_name = "*",  const char * surface_name = "*");
      
     \par Tcl syntax:
-    surf_sum_area \res str "area_name" \ref str "surface_name"
+    surf_sum_area \ref str "area_name" \ref str "surface_name"
 
     \par Description:
     returns sum of all surface cells values in area
@@ -836,7 +836,7 @@ void surfs_info();
 */
 void surf_del(const char * surface_name = "*");
 
-boolvec * surf_trace_cntr(const char * surface_name = "*", REAL from = FLT_MAX, REAL to = FLT_MAX, REAL step = FLT_MAX);
+boolvec * surf_trace_cntr(const char * surface_name = "*", REAL step = FLT_MAX, REAL from = FLT_MAX, REAL to = FLT_MAX);
 
 }; // namespace surfit;
 

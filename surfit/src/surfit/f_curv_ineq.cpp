@@ -69,6 +69,8 @@ void f_curv_ineq::create_f_points_ineq() {
 	if (pnts == NULL) {
 		d_grid * grd = create_last_grd();
 		pnts = discretize_curv(crv, grd, value, crv->getName());
+		if (pnts == NULL)
+			return;
 		if (grd)
 			grd->release();
 	}
@@ -90,17 +92,22 @@ void f_curv_ineq::create_f_points_ineq() {
 
 bool f_curv_ineq::minimize() {
 	create_f_points_ineq();
-	return f_pnts_ineq->minimize();
+	if (f_pnts_ineq)
+		return f_pnts_ineq->minimize();
+	return true;
 };
 
 bool f_curv_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	create_f_points_ineq();
-	return f_pnts_ineq->make_matrix_and_vector(matrix, v);
+	if (f_pnts_ineq)
+		return f_pnts_ineq->make_matrix_and_vector(matrix, v);
+	return false;
 };
 
 void f_curv_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 	create_f_points_ineq();
-	f_pnts_ineq->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
+	if (f_pnts_ineq)
+		f_pnts_ineq->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
 };
 
 bool f_curv_ineq::solvable_without_cond(const bitvec * mask_solved,

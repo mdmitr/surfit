@@ -34,7 +34,7 @@ class intvec;
     \fn bool cntr_read(const char * filename, const char * cntrname, int col1=1, int col2=2, int col3=3, const char * delimiters = " \t", int skip_lines = 0, int grow_by = 250);
     
     \par Tcl syntax:
-    cntr_read \file "filename" "cntrname" columns col1 col2 col3 "delimiters" skip_lines
+    cntr_read \ref file "filename" "cntrname" columns col1 col2 col3 "delimiters" skip_lines
 
     \par Description:
     reads \ref d_cntr from formatted text file

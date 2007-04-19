@@ -56,6 +56,10 @@
 #include <float.h>
 #include <algorithm>
 
+#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+#include <windows.h>
+#endif
+
 namespace surfit {
 
 boolvec * surf_load(const char * filename, const char * surfname) 
@@ -2368,7 +2372,15 @@ struct match_trace
 			extvec * data = create_extvec(*(surf->coeff)); // don't fill;
 			
 			writelog(LOG_MESSAGE,"tracing %d contours from surface \"%s\"", levels_count, surf->getName());
-			std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM, surf->undef_value, false);
+#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+			int tick1 = GetTickCount();
+#endif
+			std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM, surf->undef_value, true);
+#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+			int tick2 = GetTickCount();
+			writelog(LOG_MESSAGE, "%d miliseconds elapsed", tick2-tick1);
+#endif
+
 			levels->release();
 			x_coords->release();
 			y_coords->release();
@@ -2450,7 +2462,7 @@ struct match_trace
 	boolvec * res;
 };
 
-boolvec * surf_trace_cntr(const char * surface_name_or_position, REAL from, REAL to, REAL step)
+boolvec * surf_trace_cntr(const char * surface_name_or_position, REAL step, REAL from, REAL to)
 {
 	match_trace qq(surface_name_or_position, from, to, step);
 	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);

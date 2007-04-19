@@ -123,7 +123,7 @@ surfit::boolvec * surf_setName(const char * new_name, const char * surface_name 
 void surf_del(const char * surface_name = "*");
 int surf_size();
 void surfs_info();
-surfit::boolvec * surf_trace_cntr(const char * surface_name = "*", REAL from = FLT_MAX, REAL to = FLT_MAX, REAL step = FLT_MAX);
+surfit::boolvec * surf_trace_cntr(const char * surface_name = "*", REAL step = FLT_MAX, REAL from = FLT_MAX, REAL to = FLT_MAX);
 
 //
 // mask

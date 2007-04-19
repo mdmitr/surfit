@@ -75,31 +75,29 @@ bool f_cntr_ineq::minimize() {
 
 };
 
-bool f_cntr_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_cntr_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) 
+{
 	create_f_points_ineq();
-	return f_pnts_ineq->make_matrix_and_vector(matrix, v);
-
+	if (f_pnts_ineq)
+		return f_pnts_ineq->make_matrix_and_vector(matrix, v);
+	return true;
 };
 
-void f_cntr_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
-
+void f_cntr_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
 	create_f_points_ineq();
 	if (f_pnts_ineq)
 		f_pnts_ineq->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
-
 };
 
 bool f_cntr_ineq::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
 					const extvec * X)
 {
-	
 	create_f_points_ineq();
 	if (f_pnts_ineq == NULL)
 		return false;
 	return f_pnts_ineq->solvable_without_cond(mask_solved, mask_undefined, X);
-
 };
 
 void f_cntr_ineq::drop_private_data() {};
@@ -109,6 +107,8 @@ void f_cntr_ineq::create_f_points_ineq() {
 	if (pnts == NULL) {
 		d_grid * grd = create_last_grd();
 		pnts = discretize_cntr(cntr, grd, cntr->getName());
+		if (pnts == NULL)
+			return;
 		if (grd)
 			grd->release();
 	}

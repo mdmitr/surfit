@@ -86,6 +86,8 @@ void f_curv_surf_ineq::create_f_points_ineq() {
 		}
 		if (grd)
 			grd->release();
+		if (pnts == NULL)
+			return;
 	}
 
 	if (f_pnts_ineq == NULL)
@@ -105,12 +107,16 @@ void f_curv_surf_ineq::create_f_points_ineq() {
 
 bool f_curv_surf_ineq::minimize() {
 	create_f_points_ineq();
-	return f_pnts_ineq->minimize();
+	if (f_pnts_ineq)
+		return f_pnts_ineq->minimize();
+	return true;
 };
 
 bool f_curv_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	create_f_points_ineq();
-	return f_pnts_ineq->make_matrix_and_vector(matrix, v);
+	if (f_pnts_ineq)
+		return f_pnts_ineq->make_matrix_and_vector(matrix, v);
+	return false;
 };
 
 void f_curv_surf_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {

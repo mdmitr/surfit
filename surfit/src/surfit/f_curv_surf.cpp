@@ -84,6 +84,8 @@ void f_curv_surf::create_f_approx_points() {
 		}
 		if (grd)
 			grd->release();
+		if (pnts == NULL)
+			return;
 	}
 
 	if (f_pnts == NULL)
@@ -103,17 +105,22 @@ void f_curv_surf::create_f_approx_points() {
 
 bool f_curv_surf::minimize() {
 	create_f_approx_points();
-	return f_pnts->minimize();
+	if (f_pnts)
+		return f_pnts->minimize();
+	return true;
 };
 
 bool f_curv_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	create_f_approx_points();
-	return f_pnts->make_matrix_and_vector(matrix, v);
+	if (f_pnts)
+		return f_pnts->make_matrix_and_vector(matrix, v);
+	return false;
 };
 
 void f_curv_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
 	create_f_approx_points();
-	f_pnts->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
+	if (f_pnts)
+		f_pnts->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
 };
 
 bool f_curv_surf::solvable_without_cond(const bitvec * mask_solved,

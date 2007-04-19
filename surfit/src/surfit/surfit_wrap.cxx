@@ -28457,7 +28457,7 @@ _wrap_surf_trace_cntr__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   double val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:surf_trace_cntr surface_name from to step ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:surf_trace_cntr surface_name step from to ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_trace_cntr" "', argument " "1"" of type '" "char const *""'");
@@ -28528,7 +28528,7 @@ _wrap_surf_trace_cntr__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_trace_cntr surface_name from to ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:surf_trace_cntr surface_name step from ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_trace_cntr" "', argument " "1"" of type '" "char const *""'");
@@ -28591,7 +28591,7 @@ _wrap_surf_trace_cntr__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_trace_cntr surface_name from ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_trace_cntr surface_name step ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_trace_cntr" "', argument " "1"" of type '" "char const *""'");
