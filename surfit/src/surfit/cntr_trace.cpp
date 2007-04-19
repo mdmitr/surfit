@@ -358,62 +358,62 @@ void finalize_iso(fiso * iso, REAL level, size_t & i, size_t & j, short & res, t
 	{
 		if (end_side ==  SIDE_LEFT)
 		{
-			add_left_edge(iso, j+1, mm-1,info);
+			add_left_edge(iso, j, mm-1,info);
 			add_top_edge(iso, 0, nn-1, info);
 			add_right_edge(iso, mm-1, 0, info);
 			add_bottom_edge(iso, nn-1, fi+1, info);
 		}
 		if (end_side == SIDE_TOP)
 		{
-			add_top_edge(iso, i+1, nn-1, info);
+			add_top_edge(iso, i, nn-1, info);
 			add_right_edge(iso, mm-1, 0, info);
 			add_bottom_edge(iso, nn-1, fi+1, info);
 		}
 		if (end_side == SIDE_RIGHT)
 		{
-			add_right_edge(iso, j+1, 0, info);
+			add_right_edge(iso, j, 0, info);
 			add_bottom_edge(iso, nn-1, fi+1, info);
 		}
 		if (end_side == SIDE_BOTTOM)
 		{
-			add_bottom_edge(iso, i+1, fi+1, info);
+			add_bottom_edge(iso, i, fi+1, info);
 		}
 	}
 	if (begin_side == SIDE_LEFT)
 	{
 		if (end_side == SIDE_RIGHT)
 		{
-			add_right_edge(iso, j+1, mm-1, info);
+			add_right_edge(iso, j, mm-1, info);
 			add_top_edge(iso, nn-1, 0, info);
 			add_left_edge(iso, mm-1, fj+1, info);
 		}
 		if (end_side == SIDE_TOP)
 		{
-			add_top_edge(iso, i+1, 0, info);
+			add_top_edge(iso, i, 0, info);
 			add_left_edge(iso, mm-1, fj+1, info);
 		}
 		if (end_side == SIDE_LEFT)
 		{
-			add_left_edge(iso, j+1, fj+1, info);
+			add_left_edge(iso, j, fj+1, info);
 		}
 	}
 	if (begin_side == SIDE_TOP)
 	{
 		if (end_side == SIDE_RIGHT)
 		{
-			add_right_edge(iso, j+1, 0, info);
+			add_right_edge(iso, j, 0, info);
 			add_top_edge(iso, nn-1, fi+1, info);
 		}
 		if (end_side == SIDE_TOP)
 		{
-			add_top_edge(iso, i+1, fi+1, info);
+			add_top_edge(iso, i, fi+1, info);
 		}
 	}
 	if (begin_side == SIDE_RIGHT)
 	{
 		if (end_side == SIDE_RIGHT)
 		{
-			add_right_edge(iso, j+1, fj+1, info);
+			add_right_edge(iso, j, fj+1, info);
 		}
 	}
 
@@ -543,6 +543,7 @@ short get_next_rib(REAL level,
 		if (closed)
 		{
 			need_add = false;
+			return SHRT_MAX;
 		}
 		else 
 		{
@@ -587,12 +588,15 @@ REAL get_fill_level(REAL level, short side, size_t i, size_t j, trace_info & inf
 	pos = two2one(i, j, info.nn, info.mm);
 	REAL check_val = (*(info.data))(pos);
 	int l_cnt = info.levels->size();
+	REAL added_level = (*(info.levels))(l_cnt-1);
 
 	if ( cmp_vals(check_val, level, info.uval) )
 	{
 		if (k == l_cnt - 1) {
-			return (*(info.levels))(k)*1.5;
+			return added_level;
 		} else {
+			if (((*(info.levels))(k+1) == added_level) && (check_val > added_level))
+				return FLT_MAX;
 			return ((*(info.levels))(k) + (*(info.levels))(k+1) ) / 2.;
 		}
 	}
@@ -643,12 +647,61 @@ fiso * trace_isoline(REAL level, short side, size_t i, size_t j,
 	// find the rest
 	while ( !( rib_info.first_i == i && rib_info.first_j == j && curr_side == side) )
 	{
+		short prev_side = curr_side;
+		size_t prev_i = i, prev_j = j;
 		curr_side = get_next_rib(level, curr_side, i, j, vals, info, closed, need_add, iso, rib_info);
 		if (!need_add)
 			break;
 
+		if (curr_side == SHRT_MAX) {
+			delete iso;
+			return NULL;
+		}
+
 		calc_point(level, curr_side, i, j, vals, info, x, y, visible);
  		iso->add_point(x,y,i,j,visible);
+		if (closed == false) {
+			// BOTTOM
+			if ( ((curr_side == SIDE_LEFT) || (curr_side == SIDE_RIGHT)) && (j == 0))
+			{
+				if (prev_side == SIDE_TOP)
+				{
+					size_t pos = three2one(prev_i, prev_j, level_number, info.nn, info.mm, info.levels->size());
+					info.checks->set_false(pos);
+					continue;
+				}
+			}
+			// LEFT
+			if ( ((curr_side == SIDE_TOP) || (curr_side == SIDE_BOTTOM)) && (i == 0))
+			{
+				if (prev_side == SIDE_RIGHT)
+				{
+					size_t pos = three2one(prev_i, prev_j, level_number, info.nn, info.mm, info.levels->size());
+					info.checks->set_false(pos);
+					continue;
+				}
+			}
+			// TOP
+			if ( ((curr_side == SIDE_LEFT) || (curr_side == SIDE_RIGHT)) && (j == info.mm-1))
+			{
+				if (prev_side == SIDE_BOTTOM)
+				{
+					size_t pos = three2one(prev_i, prev_j, level_number, info.nn, info.mm, info.levels->size());
+					info.checks->set_false(pos);
+					continue;
+				}
+			}
+			// RIGHT
+			if ( ((curr_side == SIDE_TOP) || (curr_side == SIDE_BOTTOM)) && (i == info.nn-1))
+			{
+				if (prev_side == SIDE_LEFT)
+				{
+					size_t pos = three2one(prev_i, prev_j, level_number, info.nn, info.mm, info.levels->size());
+					info.checks->set_false(pos);
+					continue;
+				}
+			}
+		}
 	}
 
 	update_vals(vals, rib_info.first_i, rib_info.first_j, info);
@@ -814,7 +867,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 
 		swap_order = cmp_vals(vals[0], vals[1], uval);
 		if (swap_order) {
-			for (l = l_cnt-2; l >= 0; l--) {
+			for (l = l_cnt-1; l >= 0; l--) {
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
 				if ( info.checks->get(pos) == true ) {
 					if (l == 0)
@@ -831,7 +884,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 					break;
 			}
 		} else {
-			for (l = 0; l < l_cnt-1; l++) {
+			for (l = 0; l < l_cnt; l++) {
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
 				if ( info.checks->get(pos) == true ) 
 					continue;
@@ -857,7 +910,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 
 		swap_order = cmp_vals(vals[0], vals[2], uval);
 		if (swap_order) {
-			for (l = l_cnt-2; l >= 0; l--) {
+			for (l = l_cnt-1; l >= 0; l--) {
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
 				if ( info.checks->get(pos) == true ) {
 					if (l == 0)
@@ -874,7 +927,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 					break;
 			}
 		} else {
-			for (l = 0; l < l_cnt-1; l++) {
+			for (l = 0; l < l_cnt; l++) {
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
 				if ( info.checks->get(pos) == true ) 
 					continue;
@@ -901,7 +954,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 
 		swap_order = cmp_vals(vals[2], vals[3], uval);
 		if (swap_order) {
-			for (l = l_cnt-2; l >= 0; l--) {
+			for (l = l_cnt-1; l >= 0; l--) {
 				level = (*levels)(l);
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
 				if ( info.checks->get(pos) == true ) {
@@ -918,7 +971,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 					break;
 			}
 		} else {
-			for (l = 0; l < l_cnt-1; l++) {
+			for (l = 0; l < l_cnt; l++) {
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
 				if ( info.checks->get(pos) == true ) 
 					continue;
@@ -945,7 +998,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 
 		swap_order = cmp_vals(vals[1], vals[3], uval);
 		if (swap_order) {
-			for (l = l_cnt-2; l >= 0; l--) {
+			for (l = l_cnt-1; l >= 0; l--) {
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
 				if ( info.checks->get(pos) == true ) {
 					if (l == 0)
@@ -962,7 +1015,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 					break;
 			}
 		} else {
-			for (l = 0; l < l_cnt-1; l++) {
+			for (l = 0; l < l_cnt; l++) {
 				pos = three2one(i, j, l, info.nn, info.mm, l_cnt);
 				if ( info.checks->get(pos) == true ) 
 					continue;
