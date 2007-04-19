@@ -25,10 +25,6 @@ NULL=
 NULL=nul
 !ENDIF 
 
-CPP=cl.exe
-MTL=midl.exe
-RSC=rc.exe
-
 !IF  "$(CFG)" == "surfit - Win32 Release"
 
 OUTDIR=.\../Release
@@ -243,8 +239,42 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "C:\Tcl\include\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
+CPP=cl.exe
+CPP_PROJ=/nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+MTL=midl.exe
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
+RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\surfit.bsc" 
 BSC32_SBRS= \
@@ -346,7 +376,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=tcl83.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libsurfit.pdb" /machine:I386 /nodefaultlib:"LIBC" /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib" /libpath:"C:\Tcl\lib" 
+LINK32_FLAGS=tcl83.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libsurfit.pdb" /machine:I386 /nodefaultlib:"LIBC" /out:"../bin/libsurfit.dll" /implib:"../bin/libsurfit.lib" /libpath:"..\..\libs\tcl8.3.5\win\RELEASE" 
 LINK32_OBJS= \
 	"$(INTDIR)\matlab.obj" \
 	"$(INTDIR)\matr.obj" \
@@ -662,8 +692,42 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "C:\Tcl\include\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DEBUG" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP=cl.exe
+CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DEBUG" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+MTL=midl.exe
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
+RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\surfit.bsc" 
 BSC32_SBRS= \
@@ -866,36 +930,6 @@ LINK32_OBJS= \
 <<
 
 !ENDIF 
-
-.c{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.c{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
 
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
@@ -1129,7 +1163,7 @@ SOURCE=.\..\src\surfit\grid_line.cpp
 
 !IF  "$(CFG)" == "surfit - Win32 Release"
 
-CPP_SWITCHES=/nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "C:\Tcl\include\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
+CPP_SWITCHES=/nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
 
 "$(INTDIR)\grid_line.obj"	"$(INTDIR)\grid_line.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -1139,7 +1173,7 @@ CPP_SWITCHES=/nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../src/sstuff" /I "../src/
 
 !ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
 
-CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "C:\Tcl\include\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DEBUG" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DEBUG" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\grid_line.obj"	"$(INTDIR)\grid_line.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -1447,7 +1481,7 @@ SOURCE=.\..\src\surfit\mrf.cpp
 
 !IF  "$(CFG)" == "surfit - Win32 Release"
 
-CPP_SWITCHES=/nologo /MT /W3 /GR /GX /Op /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "C:\Tcl\include\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
+CPP_SWITCHES=/nologo /MT /W3 /GR /GX /Op /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
 
 "$(INTDIR)\mrf.obj"	"$(INTDIR)\mrf.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -1457,7 +1491,7 @@ CPP_SWITCHES=/nologo /MT /W3 /GR /GX /Op /Ob2 /I "../src/sstuff" /I "../src/sstu
 
 !ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
 
-CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "C:\Tcl\include\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DEBUG" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DEBUG" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\mrf.obj"	"$(INTDIR)\mrf.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -1483,7 +1517,7 @@ SOURCE=.\..\src\surfit\surfit_wrap.cxx
 
 !IF  "$(CFG)" == "surfit - Win32 Release"
 
-CPP_SWITCHES=/nologo /MT /W3 /GR /GX /Op /Oy- /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "C:\Tcl\include\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
+CPP_SWITCHES=/nologo /MT /W3 /GR /GX /Op /Oy- /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
 
 "$(INTDIR)\surfit_wrap.obj"	"$(INTDIR)\surfit_wrap.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -1493,7 +1527,7 @@ CPP_SWITCHES=/nologo /MT /W3 /GR /GX /Op /Oy- /Ob2 /I "../src/sstuff" /I "../src
 
 !ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
 
-CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "C:\Tcl\include\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DEBUG" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DEBUG" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\surfit_wrap.obj"	"$(INTDIR)\surfit_wrap.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
