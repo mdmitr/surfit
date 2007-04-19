@@ -156,8 +156,8 @@ To examine data, already loaded use \ref mem_info command.
 
 <H4>loading points</H4>
 
-The \ref pnts_read command reads formatted text files containing interpolation scattered data points 
-coordinates. The text file should organized as a rectangular table of numbers, separated by blanks, with one row 
+The \ref pnts_read command reads formatted text files containing scattered data points 
+coordinates. Text file should be organized as a rectangular table of numbers, separated by blanks, with one row 
 per line, and an equal number of elements in each row.  For example, outside of <TT><B>surfit</B></TT>, create a 
 text file containing these four lines: 
 
@@ -228,29 +228,25 @@ $ \ref pnts_size
 1
 # If there is no \ref d_points "points" datasets in memory, surfit returns 0.
 #
-# Print \ref d_points "points" name (for first dataset)
-$ \ref pnts_getName 0
-13/01/05 15:02:52 : my_points
-#
-# Print \ref d_points "points" name (for second dataset) 
-$ \ref pnts_getName 1
-13/01/05 15:02:52 : Error! class surfit::d_points (1) : bad element requested
+# Print \ref d_points "points" name 
+$ \ref pnts_getName 
+my_points
 #
 # Get number of points in points dataset
-$ \ref pnts_getCount
+$ \ref pnts_getCount my_points
 4
 $ Minimum and maximum values:
-$ \ref pnts_minx
+$ \ref pnts_minx my_points
 4.0
-$ \ref pnts_maxx
+$ \ref pnts_maxx my_points
 16.0
-$ \ref pnts_miny
+$ \ref pnts_miny my_points
 3.0
-$ \ref pnts_maxy
+$ \ref pnts_maxy my_points
 15.0
-$ \ref pnts_minz
+$ \ref pnts_minz my_points
 2.0
-$ \ref pnts_maxz
+$ \ref pnts_maxz my_points
 14.0
 </PRE></TT>
 </TD>
@@ -394,14 +390,13 @@ Gridding fills in these holes by extrapolating or interpolating Z values at thos
 where no data exists.
 
 For each data, loaded into surfit memory you can specify 
-\ref tcl_rules "gridding rule", which describes how to use your data in \ref surfit "surfit 
-gridding algorithm".
+\ref tcl_rules "gridding rule", which describes how to use your data in \ref surfit "surfit gridding algorithm".
 
 Gridding procedure consists of 4 steps:
 \li <a href="#loading">load data</a> into memory
 \li <a href="#grid">create grid</a>
 \li create ordered set of \ref tcl_rules "gridding rules"
-\li execute \ref surfit gridding algorithm
+\li execute \ref surfit "surfit" gridding algorithm
 
 Here is some examples:
 
@@ -431,7 +426,7 @@ After <A href="#gridding">gridding</A> procedure result saves as new \ref d_surf
 variable value. You can export
 it to Surfer GRD-ASCII format with command \ref surf_save_grd or to <TT><B>surfit</B></TT> datafile with command
 \ref surf_save. Also you can save your results into <TT><B>surfit</B></TT> datafile with all other data in 
-memory by command \ref file_save.
+memory with command \ref file_save.
 
 <H2><A NAME="visual">Visualising results</A></H2>
 
@@ -454,7 +449,7 @@ Also you can select file from command line:
 <TR>
 <TD>
 <TT><PRE>
-$ funner my_map.dat
+> funner my_map.dat
 </PRE></TT>
 </TD>
 </TR>

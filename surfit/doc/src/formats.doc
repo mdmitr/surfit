@@ -1,0 +1,187 @@
+/*! \page formats File formats supported by surfit
+
+<TABLE>
+<TR>
+    <TD align="center"> Data type </TD>
+    <TD align="center"> Format </TD>
+    <TD align="center"> Function for loading data </TD>
+    <TD align="center"> Function for saving data </TD>
+</TR>
+<TR>
+    <TD rowspan = 9> \ref d_surf "Surfaces (grids)" </TD>
+    <TD> surfit native </TD> 
+    <TD> \ref surf_load </TD> 
+    <TD> \ref surf_save </TD>
+</TR>
+<TR>
+    <TD> Surfer ASCII-grd </TD>
+    <TD> \ref surf_load_grd </TD>
+    <TD> \ref surf_save_grd </TD>
+</TR>
+<TR>
+    <TD> Surfer binary formats (v6, v7) </TD>
+    <TD> \ref surf_load_grd </TD>
+    <TD> \ref surf_save_grd </TD>
+</TR>
+<TR>
+    <TD> Three columns XYZ files </TD>
+    <TD> \ref surf_load_xyz </TD>
+    <TD> \ref surf_save_xyz </TD>
+</TR>
+<TR>
+    <TD> General Mapping Tools format </TD>
+    <TD> \ref surf_load_gmt </TD>
+    <TD> \ref surf_save_gmt </TD>
+</TR>
+<TR>
+    <TD> Grass GIS ASCII format </TD>
+    <TD> \ref surf_load_grass </TD>
+    <TD> \ref surf_save_grass </TD>
+</TR>
+<TR>
+    <TD> ArcGis ASCII grids </TD>
+    <TD> \ref surf_load_arcgis </TD>
+    <TD> \ref surf_save_arcgis </TD>
+</TR>
+<TR>
+    <TD> JPG files </TD>
+    <TD> \ref surf_load_jpg </TD>
+    <TD> \ref surf_save_jpg </TD>
+</TR>
+<TR>
+    <TD> BMP files </TD>
+    <TD> \ref surf_load_bmp </TD>
+    <TD> \ref surf_save_bmp </TD>
+</TR>
+
+
+<TR>
+    <TD rowspan=3> \ref d_points "Scattered points" </TD>
+    <TD> surfit native </TD>
+    <TD> \ref pnts_load </TD>
+    <TD> \ref pnts_save </TD>
+</TR>
+<TR>
+    <TD> columned text files </TD>
+    <TD> \ref pnts_read </TD>
+    <TD> \ref pnts_write </TD> 
+</TR>
+<TR>
+    <TD> ESRI shape files (shp) </TD>
+    <TD> \ref pnts_load_shp </TD>
+    <TD> \ref pnts_save_shp </TD> 
+</TR>
+
+
+
+
+<TR>
+    <TD rowspan=4> \ref d_curv "2D curves" </TD>
+    <TD> surfit native </TD>
+    <TD> \ref curv_load </TD>
+    <TD> \ref curv_save </TD>
+</TR>
+<TR>
+    <TD> columned text files </TD>
+    <TD> \ref curv_read </TD>
+    <TD> \ref curv_write </TD>
+</TR>
+<TR>
+    <TD> Surfer BLN files </TD>
+    <TD> \ref curv_load_bln </TD>
+    <TD> \ref curv_save_bln </TD>
+</TR>
+<TR>
+    <TD> ESRI shape files (shp) </TD>
+    <TD> \ref curv_load_shp </TD>
+    <TD> \ref curv_save_shp </TD>
+</TR>
+
+
+<TR>
+    <TD rowspan=4> \ref d_cntr "3D curves (contours)" </TD>
+    <TD> surfit native </TD>
+    <TD> \ref cntr_load </TD>
+    <TD> \ref cntr_save </TD>
+</TR>
+<TR>
+    <TD> columned text files </TD>
+    <TD> \ref cntr_read </TD>
+    <TD> \ref cntr_write </TD>
+</TR>
+<TR>
+    <TD> Surfer BLN files </TD>
+    <TD> \ref cntr_load_bln </TD>
+    <TD> \ref cntr_save_bln </TD>
+</TR>
+<TR>
+    <TD> ESRI shape files (shp) </TD>
+    <TD> \ref cntr_load_shp </TD>
+    <TD> \ref cntr_save_shp </TD>
+</TR>
+
+<TR>
+    <TD rowspan=4> \ref d_area "Areas (polygons)" </TD>
+    <TD> surfit native </TD>
+    <TD> \ref area_load </TD>
+    <TD> \ref area_save </TD>
+</TR>
+<TR>
+    <TD> columned text files </TD>
+    <TD> \ref area_read </TD>
+    <TD> \ref area_write </TD>
+</TR>
+<TR>
+    <TD> Surfer BLN files </TD>
+    <TD> \ref area_load_bln </TD>
+    <TD> \ref area_save_bln </TD>
+</TR>
+<TR>
+    <TD> ESRI shape files (shp) </TD>
+    <TD> \ref area_load_shp </TD>
+    <TD> \ref area_save_shp </TD>
+</TR>
+
+
+<TR>
+    <TD rowspan=7> \ref d_dem "DEMs" </TD>
+    <TD> surfit native </TD>
+    <TD> \ref dem_load </TD>
+    <TD> \ref dem_save </TD>
+</TR>
+<TR>
+    <TD> Surfer ASCII-grd </TD>
+    <TD> \ref dem_load_grd </TD>
+    <TD> \ref dem_save_grd </TD>
+</TR>
+<TR>
+    <TD> DTM </TD>
+    <TD> \ref dem_load_dtm </TD>
+    <TD> \ref dem_save_dtm </TD>
+</TR>
+<TR>
+    <TD> HGT files (Shuttle Radar Topographic Mission files) </TD>
+    <TD> \ref dem_load_hgt </TD>
+    <TD>  </TD>
+</TR>
+<TR>
+    <TD> zipped HGT files </TD>
+    <TD> \ref dem_load_hgt_zip </TD>
+    <TD>  </TD>
+</TR>
+<TR>
+    <TD> GTOPO30/GLOBE files </TD>
+    <TD> \ref dem_load_globe </TD>
+    <TD>  </TD>
+</TR>
+<TR>
+    <TD> Three columns XYZ files </TD>
+    <TD>  </TD>
+    <TD> \ref dem_save_xyz </TD>
+</TR>
+
+
+</TABLE>
+                        
+
+*/
