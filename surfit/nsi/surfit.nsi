@@ -1,5 +1,8 @@
 ;NSIS Modern User Interface
 
+!define TEMP1 $R0 ;Temp variable
+ReserveFile "${NSISDIR}\Plugins\InstallOptions.dll"
+ReserveFile "surfit.ini"
 
 ;--------------------------------
 ;Include Modern UI
@@ -37,6 +40,21 @@
 
   !define MUI_ABORTWARNING
 
+!define SHCNE_ASSOCCHANGED 0x08000000
+!define SHCNF_IDLIST 0
+ 
+Function RefreshShellIcons
+  ; By jerome tremblay - april 2003
+  System::Call 'shell32.dll::SHChangeNotify(i, i, i, i) v \
+  (${SHCNE_ASSOCCHANGED}, ${SHCNF_IDLIST}, 0, 0)'
+FunctionEnd
+
+Function un.RefreshShellIcons
+  ; By jerome tremblay - april 2003
+  System::Call 'shell32.dll::SHChangeNotify(i, i, i, i) v \
+  (${SHCNE_ASSOCCHANGED}, ${SHCNF_IDLIST}, 0, 0)'
+FunctionEnd
+
 Function ConnectInternet
 
   Push $R0
@@ -63,6 +81,9 @@ FunctionEnd
 
 Function .onInit
 
+  InitPluginsDir
+  File /oname=$PLUGINSDIR\surfit.ini "surfit.ini"
+
   ReadRegStr $SURFIT_VERSION HKCU "Software\surfit" "Version"
 
   StrCmp $SURFIT_VERSION "" can_continue_install
@@ -80,60 +101,55 @@ can_continue_install:
   StrCpy $VERSION "2.2"
 
   InitPluginsDir
-  SearchPath $1 tclsh83.exe
-
-  StrCmp $1 "" wanna_tcl
-  Goto end
-  
-  wanna_tcl:
-
-  	MessageBox MB_YESNOCANCEL "Installer can't find Tcl8.3 library! Installation will be aborted. Do you want to automatically download Active Tcl8.3.5 (about 7mb)? Press NO to download manually, CANCEL to abort installation" IDYES auto IDNO manual
-
-		Abort 
-
-		manual:
-
-		ExecShell "open" "http://downloads.activestate.com/ActiveTcl/Windows/8.3.5/"
-		Abort
-
-		auto:
-
-        	Call ConnectInternet ;Make an internet connection (if no connection available)
-		StrCpy $2 "$TEMP\ActiveTcl8.3.5.0-2-win32-ix86.exe"
- 		StrCpy $3 http://downloads.activestate.com/ActiveTcl/Windows/8.3.5/ActiveTcl8.3.5.0-win32-ix86.exe 
-		NSISdl::download $3 $2
-		Pop $R0 ;Get the return value
-
-		StrCmp $R0 "success" tcl_success tcl_failed
-
-		  tcl_success:
-		  Exec '$2'
-
-		  tcl_failed:
-                  MessageBox MB_OK "Download failed: $R0, you can download it manually from $3" IDYES true2 IDNO false2
-		  
-		  true2:
-		  ExecShell "open" "http://downloads.activestate.com/ActiveTcl/Windows/8.3.5/"
-
-		  false2:
-
-		Abort
-  
-	Abort
-  end:
 
 FunctionEnd
 
-  Function .onInstSuccess
-    MessageBox MB_YESNO "Congratulations, installation is completed! Do you want to download GUI for surfit?" IDNO NoGui
-      ExecShell "open" "http://www.gridding.info/funner.php"
-    NoGui:
-  FunctionEnd
+Function DownloadGuiDlg
+
+  Push ${TEMP1}
+
+    InstallOptions::dialog "$PLUGINSDIR\surfit.ini"
+    Pop ${TEMP1}
+  
+  Pop ${TEMP1}
+
+FunctionEnd
+
+Function .onInstSuccess
+
+MessageBox MB_YESNO "Do you want to associate .tcl files with tclsh83.exe?" IDNO nodatassoc_tcl
+; back up old value of .tcl
+	!define Index "Line${__LINE__}"
+	  ReadRegStr $1 HKCR ".tcl" ""
+	  StrCmp $1 "" "${Index}-NoBackup"
+	    StrCmp $1 "Tcl script" "${Index}-NoBackup"
+	    WriteRegStr HKCR ".tcl" "backup_val" $1
+	"${Index}-NoBackup:"
+	  WriteRegStr HKCR ".tcl" "" "Tcl script"
+	  ReadRegStr $0 HKCR "Tcl script" ""
+	  StrCmp $0 "" 0 "${Index}-Skip"
+		WriteRegStr HKCR "Tcl script" "" "Tcl script"
+		WriteRegStr HKCR "Tcl script\shell" "" "open"
+		WriteRegStr HKCR "Tcl script\DefaultIcon" "" "$INSTDIR\bin\tclsh83.exe,0"
+	"${Index}-Skip:"
+	  WriteRegStr HKCR "Tcl script\shell\open\command" "" \
+	    '$INSTDIR\bin\tclsh83.exe "%1"'
+	  WriteRegStr HKCR "Tcl script\shell\edit" "" "Edit Tcl script"
+	  WriteRegStr HKCR "Tcl script\shell\edit\command" "" \
+	    'notepad.exe "%1"'
+	!undef Index
+	Call RefreshShellIcons
+; Rest of script
+
+nodatassoc_tcl:
+
+FunctionEnd
 
 
 ;--------------------------------
 ;Pages
 
+  ;Page custom DownloadGuiDlg 
   !insertmacro MUI_PAGE_LICENSE "..\copying"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
@@ -145,12 +161,12 @@ FunctionEnd
 
  
   !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
-
-
   !insertmacro MUI_PAGE_INSTFILES
-  
+  Page custom DownloadGuiDlg 
+                               
   !insertmacro MUI_UNPAGE_CONFIRM
   !insertmacro MUI_UNPAGE_INSTFILES
+  
   
 ;--------------------------------
 ;Languages
@@ -221,8 +237,20 @@ usual_install:
 
 binary_done:
 
+	  File "C:\Program Files\Microsoft Visual Studio 8\VC\redist\x86\Microsoft.VC80.CRT\msvcr80.dll"
+	  File "C:\Program Files\Microsoft Visual Studio 8\VC\redist\x86\Microsoft.VC80.CRT\msvcp80.dll"
+	  File "C:\Program Files\Microsoft Visual Studio 8\VC\redist\x86\Microsoft.VC80.CRT\Microsoft.VC80.CRT.manifest"
  	  File "..\bin\zlib1.dll"
 	  File "..\bin\netcdf.dll"
+
+; Tcl 8.3.5
+
+	  File /r "..\..\libs\tcl8.3.5\win\Release\tcl83.dll"
+	  File /r "..\..\libs\tcl8.3.5\win\Release\tclsh83.exe"
+	  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\tclsh83.lnk" "$INSTDIR\bin\tclsh83.exe"
+          SetOutPath "$INSTDIR\library"
+	  File /r "..\..\libs\tcl8.3.5\library\*"
+ 
 
 
 SectionEnd
@@ -337,6 +365,26 @@ Section "Uninstall"
 
   Push $INSTDIR/bin
   Call un.RemoveFromPath
+
+; .tcl
+!define Index "Line${__LINE__}"
+  ReadRegStr $1 HKCR ".tcl" ""
+  StrCmp $1 "Tcl script" 0 "${Index}-NoOwn" ; only do this if we own it
+    ReadRegStr $1 HKCR ".tcl" "backup_val"
+    StrCmp $1 "" 0 "${Index}-Restore" ; if backup="" then delete the whole key
+      DeleteRegKey HKCR ".tcl"
+    Goto "${Index}-NoOwn"
+"${Index}-Restore:"
+      WriteRegStr HKCR ".tcl" "" $1
+      DeleteRegValue HKCR ".tcl" "backup_val"
+   
+    DeleteRegKey HKCR "Tcl script" ;Delete key with association settings
+
+"${Index}-NoOwn:"
+!undef Index
+
+
+Call un.RefreshShellIcons
 
 
 SectionEnd
