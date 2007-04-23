@@ -237,9 +237,9 @@ usual_install:
 
 binary_done:
 
-	  File "C:\Program Files\Microsoft Visual Studio 8\VC\redist\x86\Microsoft.VC80.CRT\msvcr80.dll"
-	  File "C:\Program Files\Microsoft Visual Studio 8\VC\redist\x86\Microsoft.VC80.CRT\msvcp80.dll"
-	  File "C:\Program Files\Microsoft Visual Studio 8\VC\redist\x86\Microsoft.VC80.CRT\Microsoft.VC80.CRT.manifest"
+	  File "..\..\libs\vc8_redist\msvcr80.dll"
+	  File "..\..\libs\vc8_redist\msvcp80.dll"
+	  File "..\..\libs\vc8_redist\Microsoft.VC80.CRT.manifest"
  	  File "..\bin\zlib1.dll"
 	  File "..\bin\netcdf.dll"
 
