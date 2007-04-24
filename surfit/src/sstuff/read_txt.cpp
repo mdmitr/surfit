@@ -36,6 +36,15 @@
 
 namespace surfit {
 
+long file_size(FILE * file)
+{
+	long pos = ftell(file);
+	fseek(file, 0, SEEK_END);
+	long res = ftell(file);
+	fseek(file, pos, SEEK_SET);
+	return res;
+};
+
 REAL ator(char * text) {
 	size_t pos = strcspn(text, "0123456789,.");
 	if (pos == strlen(text))
@@ -63,6 +72,13 @@ bool one_columns_read(const char * filename,
 		fclose(file);
 		return false;
 	}
+	
+	if (grow_by == 250)
+	{
+		int size = file_size(file);
+		grow_by = MAX(250,size/100);
+	}
+
 
 	char string_buf[MY_READ_BUF_SIZE];
 
@@ -211,6 +227,12 @@ bool two_columns_read(const char * filename,
 		writelog(LOG_ERROR, "Loading from two-column file: file error.");
 		fclose(file);
 		return false;
+	}
+
+	if (grow_by == 250)
+	{
+		int size = file_size(file);
+		grow_by = MAX(250,size/100);
 	}
 
 	char string_buf[MY_READ_BUF_SIZE];
@@ -369,6 +391,12 @@ bool three_columns_read(const char * filename,
 		return false;
 	}
 
+	if (grow_by == 250)
+	{
+		int size = file_size(file);
+		grow_by = MAX(250,size/100);
+	}
+
 	char string_buf[MY_READ_BUF_SIZE];
 
 	int i;
@@ -516,6 +544,12 @@ bool three_columns_read_with_names(const char * filename,
 		writelog(LOG_ERROR, "Loading from therr-column file: file error.");
 		fclose(file);
 		return false;
+	}
+
+	if (grow_by == 250)
+	{
+		int size = file_size(file);
+		grow_by = MAX(250,size/100);
 	}
 
 	char string_buf[MY_READ_BUF_SIZE];
@@ -709,6 +743,12 @@ bool four_columns_read(const char * filename,
 		writelog(LOG_ERROR, "Loading from four-column file: file error.");
 		fclose(file);
 		return false;
+	}
+
+	if (grow_by == 250)
+	{
+		int size = file_size(file);
+		grow_by = size/50;
 	}
 
 	vcol1 = create_vec();
