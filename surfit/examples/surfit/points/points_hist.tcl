@@ -35,6 +35,7 @@ grid  150 150
 ##
 ## create gridding rules
 ##
+points
 hist "hist"
 # resulting surface at points = points values
 
@@ -43,7 +44,7 @@ hist "hist"
 
 # resulting surface should tend to be constant or plane 
 completer 1 20  
-points_add 75 "points" 
+#points_add 75 "points" 
 ##
 ## run gridding algorithm
 ##
