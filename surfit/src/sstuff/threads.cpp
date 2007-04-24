@@ -109,7 +109,8 @@ void do_jobs() {
 
 	job * j = jobs[0];
 	jobs[0] = NULL;
-	j->do_job();
+	if (j)
+		j->do_job();
 
 	for (i = 0; i < added_slaves; i++) {
 		slavethread * slave = slaves[i];
