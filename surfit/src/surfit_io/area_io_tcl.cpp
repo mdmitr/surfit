@@ -36,11 +36,9 @@ boolvec * area_load_bln(const char * filename, const char * areaname)
 
 	while (fname) {
 		d_area * area = _area_load_bln(fname, areaname);
-		if (area) {
+		if (area)
 			surfit_areas->push_back(area);
-			res->push_back(true);
-		} else
-			res->push_back(false);
+		res->push_back( area != NULL );
 		fname = find_next();	
 	}
 	find_close();
@@ -53,12 +51,7 @@ boolvec * area_load_shp(const char * filename, const char * areaname)
 	const char * fname = find_first(filename);
 
 	while (fname) {
-		d_area * area = _area_load_shp(fname, areaname);
-		if (area) {
-			surfit_areas->push_back(area);
-			res->push_back(true);
-		} else
-			res->push_back(false);
+		res->push_back(_area_load_shp(fname, areaname));
 		fname = find_next();	
 	}
 	find_close();

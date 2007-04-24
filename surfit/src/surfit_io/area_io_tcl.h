@@ -20,7 +20,7 @@
 namespace surfit {
 
 /*! \ingroup tcl_area_save_load
-    \fn bool area_load_bln(const char * filename, const char * areaname = NULL);
+    \fn bool area_load_bln(const char * filename, const char * areaname = "*");
     
     \par Tcl syntax:
     area_load_bln \ref file "filename" "area_name" 
@@ -36,10 +36,10 @@ namespace surfit {
     libsurfit_io
 
 */
-boolvec * area_load_bln(const char * filename, const char * areaname = NULL);
+boolvec * area_load_bln(const char * filename, const char * areaname = "*");
 
 /*! \ingroup tcl_area_save_load
-    \fn bool area_load_shp(const char * filename, const char * area_name = NULL);
+    \fn bool area_load_shp(const char * filename, const char * area_name = "*");
     
     \par Tcl syntax:
     area_load_shp \ref file "filename" "area_name"
@@ -57,7 +57,7 @@ boolvec * area_load_bln(const char * filename, const char * areaname = NULL);
     \par Implemented in library:
     libsurfit_io
 */
-boolvec * area_load_shp(const char * filename, const char * area_name = NULL);
+boolvec * area_load_shp(const char * filename, const char * area_name = "*");
 
 /*! \ingroup tcl_area_save_load
     \fn bool area_save_bln(const char * filename, const char * area_name = "*");

@@ -445,10 +445,5 @@ void draw_curv_matlab(FILE * ff, const d_curv * crv, const char * color, short w
 	fflush(ff);
 };
 
-void surfit_curvs_push_back(d_curv * curve)
-{
-	surfit_curvs->push_back(curve);
-};
-
 }; // namespace surfit;
 

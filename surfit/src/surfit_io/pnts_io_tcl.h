@@ -22,7 +22,7 @@ namespace surfit {
 class boolvec;
 
 /*! \ingroup tcl_pnts_save_load
-    \fn bool pnts_load_shp(const char * filename, const char * pntsname = NULL, const char * param = "VALUE");
+    \fn bool pnts_load_shp(const char * filename, const char * pntsname = "*", const char * param = "VALUE");
     
     \par Tcl syntax:
     pnts_load_shp \ref file "filename" "pntsname" "param"
@@ -36,7 +36,7 @@ class boolvec;
     \par Implemented in library:
     libsurfit_io
 */
-boolvec * pnts_load_shp(const char * filename, const char * pntsname = NULL, const char * param = "VALUE");
+boolvec * pnts_load_shp(const char * filename, const char * pntsname = "*", const char * param = "VALUE");
 
 /*! \ingroup tcl_pnts_save_load
     \fn bool pnts_save_shp(const char * filename, const char * points_name = "*");

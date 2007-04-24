@@ -540,7 +540,7 @@ d_surf * _surf_load_grd_bin7(const char * filename, const char * surfname)
 
 	for (i = 0; i < faults.size(); i++) {
 		d_curv * crv = faults[i];
-		surfit_curvs_push_back(crv);
+		surfit_curvs->push_back(crv);
 	}
 
 	sstuff_free_char(name);

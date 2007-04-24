@@ -20,7 +20,7 @@
 namespace surfit {
 
 /*! \ingroup tcl_cntr_save_load
-    \fn bool cntr_load_shp(const char * filename, const char * cntrname = NULL, const char * zfield = NULL);
+    \fn bool cntr_load_shp(const char * filename, const char * cntrname = "*", const char * zfield = NULL);
     
     \par Tcl syntax:
     cntr_load_shp \ref file "filename" "cntrname" "zfield"
@@ -36,10 +36,10 @@ namespace surfit {
     \par Implemented in library:
     libsurfit_io
 */
-boolvec * cntr_load_shp(const char * filename, const char * cntrname = NULL, const char * zfield = NULL);
+boolvec * cntr_load_shp(const char * filename, const char * cntrname = "*", const char * zfield = NULL);
 
 /*! \ingroup tcl_cntr_save_load
-    \fn bool cntr_load_bln(const char * filename, const char * cntrname = NULL);
+    \fn bool cntr_load_bln(const char * filename, const char * cntrname = "*");
     
     \par Tcl syntax:
     cntr_load_bln \ref file "filename" "cntrname"
@@ -51,7 +51,7 @@ boolvec * cntr_load_shp(const char * filename, const char * cntrname = NULL, con
     \par Implemented in library:
     libsurfit_io
 */
-boolvec * cntr_load_bln(const char * filename, const char * cntrname = NULL);
+boolvec * cntr_load_bln(const char * filename, const char * cntrname = "*");
 
 /*! \ingroup tcl_cntr_save_load
     \fn bool cntr_save_shp(const char * filename, const char * cntr_name = "*");

@@ -20,7 +20,7 @@
 namespace surfit {
 
 /*! \ingroup tcl_curv_save_load
-    \fn bool curv_load_bln(const char * filename, const char * curv_name = NULL);
+    \fn bool curv_load_bln(const char * filename, const char * curv_name = "*");
     
     \par Tcl syntax:
     curv_load_bln \ref file "filename" "curv_name"
@@ -32,10 +32,10 @@ namespace surfit {
     \par Implemented in library:
     libsurfit_io
 */
-boolvec * curv_load_bln(const char * filename, const char * curv_name = NULL);
+boolvec * curv_load_bln(const char * filename, const char * curv_name = "*");
 
 /*! \ingroup tcl_curv_save_load
-    \fn bool curv_load_shp(const char * filename, const char * curv_name = NULL);
+    \fn bool curv_load_shp(const char * filename, const char * curv_name = "*");
     
     \par Tcl syntax:
     curv_load_shp \ref file "filename" "curv_name"
@@ -47,7 +47,7 @@ boolvec * curv_load_bln(const char * filename, const char * curv_name = NULL);
     \par Implemented in library:
     libsurfit_io
 */
-boolvec * curv_load_shp(const char * filename, const char * curvname = NULL);
+boolvec * curv_load_shp(const char * filename, const char * curvname = "*");
 
 /*! \ingroup tcl_curv_save_load
     \fn bool curv_save_bln(const char * filename, const char * curv_name = "*")

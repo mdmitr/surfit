@@ -205,7 +205,7 @@ d_area * shape2area(SHPObject * shpObject, const char * areaname) {
 	return res;
 };
 
-d_area * _area_load_shp(const char * filename, const char * areaname) {
+bool _area_load_shp(const char * filename, const char * areaname) {
 
 	writelog(LOG_MESSAGE,"loading area \"%s\" from ESRI shape file %s",
 		areaname, filename);
@@ -251,83 +251,21 @@ d_area * _area_load_shp(const char * filename, const char * areaname) {
 
 	int i;
 	for (i = 0; i < Entities; i++) {
-		const char * name = DBFReadStringAttribute( hDBF, i, name_field );
-		if (strcmp(areaname, name) == 0)
-			break;
-	}
-
-	if (i == Entities) {
-		SHPClose( hSHP );
-		DBFClose( hDBF );
-		writelog(LOG_ERROR, "Cannot find area named \"%s\"", areaname);
-		return NULL;
-	}
-	
-	SHPObject * shpObject = SHPReadObject( hSHP, i );
-
-	d_area * res = shape2area(shpObject, areaname);
-
-	SHPDestroyObject(shpObject);
-
-	DBFClose( hDBF );
-	SHPClose( hSHP );
-
-	return res;
-};
-
-bool _areas_load_shp(const char * filename) {
-
-	SHPHandle hSHP;
-	DBFHandle hDBF;
-	
-	hSHP = SHPOpen(filename, "rb");
-	if( hSHP == NULL ) {
-		writelog(LOG_ERROR, "Unable to open:%s", filename );
-		return false;
-	}
-
-	int shpType;
-	int Entities;
-	SHPGetInfo(hSHP, &Entities, &shpType, NULL, NULL);
-
-	if (shpType != SHPT_POLYGON) {
-		SHPClose( hSHP );
-		writelog(LOG_ERROR, "%s : Wrong shape type!", filename);
-		return false;
-	}
-
-	hDBF = DBFOpen(filename, "rb");
-	if( hDBF == NULL ) {
-		SHPClose(hSHP);
-		writelog(LOG_ERROR, "Unable to open DBF for %s", filename );
-		return false;
-	}
-
-	int name_field = DBFGetFieldIndex( hDBF, "NAME" );
-	int dbf_records = DBFGetRecordCount( hDBF );
-
-	Entities = MIN(dbf_records, Entities);
-
-	int i;
-	for (i = 0; i < Entities; i++) {
-		const char * name = NULL;
-		if (name_field != -1)
-			name = DBFReadStringAttribute( hDBF, i, name_field );
-		
 		SHPObject * shpObject = SHPReadObject( hSHP, i );
-		
-		d_area * res = shape2area(shpObject, name);
 
-		surfit_areas->push_back(res);
+		const char * name = DBFReadStringAttribute( hDBF, i, name_field );
 		
+		if ( StringMatch(areaname, name) == false)
+			break;
+
+		d_area * res = shape2area(shpObject, name);
+		surfit_areas->push_back(res);
 		SHPDestroyObject(shpObject);
 	}
 
-	DBFClose( hDBF );
 	SHPClose( hSHP );
-
+	DBFClose( hDBF );
 	return true;
-	
 };
 
 };

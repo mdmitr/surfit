@@ -1,19 +1,10 @@
-functionals:
-01  value // test only
-02  value_add // test only
-03  area_func
-04  area_func_leq // test only
-05  area_func_geq // test only
-06  area_completer
-07  area_trend
-08  mask_leq
-09  mask_geq
-10  mask_func_leq
-11  mask_func_geq
-12  mask_completer
-13  mask_trend
-14  anizo
 
-svn test
+Link:
+http://surfit.sourceforge.net
 
-mask_save_grd -> surfit_io
+Description:
+surfit is an open source and free gridding and contouring
+software. surfit can do interpolation/approximation of points, 
+contours and surfaces, can take fault lines and trend surfaces 
+into account, can use inequalities and other conditions.
+Supports a lot of data types and formats.

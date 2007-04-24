@@ -53,7 +53,7 @@ boolvec * load_ESRI_shape(const char * filename, const char * name) {
 
 	switch (shpType) {
 	case SHPT_POINT:
-		return pnts_load_shp(filename, name);
+		return pnts_load_shp(filename);
 	case SHPT_ARC:
 		return curv_load_shp(filename);
 	case SHPT_POLYGON:

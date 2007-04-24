@@ -22,10 +22,10 @@ namespace surfit {
 class d_area;
 
 SURFIT_IO_EXPORT
-d_area * _area_load_bln(const char * filename, const char * areaname);
+d_area * _area_load_bln(const char * filename, const char * areaname = "*");
 
 SURFIT_IO_EXPORT
-d_area * _area_load_shp(const char * filename, const char * areaname);
+bool _area_load_shp(const char * filename, const char * areaname = "*");
 
 SURFIT_IO_EXPORT
 bool _areas_load_shp(const char * filename);

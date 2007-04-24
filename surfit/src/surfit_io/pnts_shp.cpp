@@ -166,6 +166,10 @@ d_points * _pnts_load_shp(const char * filename, const char * pntsname, const ch
 		return NULL;
 	}
 
+	int name_field = DBFGetFieldIndex( hDBF, "NAME" );
+	if (name_field == -1)
+		writelog(LOG_WARNING,"can't find field named \"NAME\"");
+
 	int val_field = DBFGetFieldIndex( hDBF, param );
 	
 	if (val_field == -1) 
@@ -181,6 +185,18 @@ d_points * _pnts_load_shp(const char * filename, const char * pntsname, const ch
 	int i;
 	for (i = 0; i < Entities; i++) {
 		SHPObject * shpObject = SHPReadObject( hSHP, i );
+		if (shpObject == NULL)
+			continue;
+
+		const char * name = NULL;
+		if (name_field != -1) {
+			name = DBFReadStringAttribute( hDBF, i, name_field );
+			if (pntsname != NULL) {
+				if ( StringMatch(pntsname, name) == false )
+					continue;
+			}
+		}
+
 		(*X)(i) = *(shpObject->padfX);
 		(*Y)(i) = *(shpObject->padfY);
 		SHPDestroyObject(shpObject);
@@ -197,7 +213,9 @@ d_points * _pnts_load_shp(const char * filename, const char * pntsname, const ch
 	DBFClose( hDBF );
 	SHPClose( hSHP );
 
-	d_points * res = create_points(X, Y, Z, pntsname);
+	char * fname = get_name(filename);
+	d_points * res = create_points(X, Y, Z, fname);
+	sstuff_free_char(fname);
 	return res;
 
 };

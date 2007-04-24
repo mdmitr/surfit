@@ -203,6 +203,8 @@ bool _cntr_load_shp(const char * filename, const char * cntrname, const char * z
 	}
 
 	int name_field = DBFGetFieldIndex( hDBF, "NAME" );
+	if (name_field == -1)
+		writelog(LOG_WARNING,"can't find field named \"NAME\"");
 	int z_field = INT_MAX;
 	if (zfield != NULL)
 		z_field = DBFGetFieldIndex( hDBF, zfield );
@@ -231,16 +233,13 @@ bool _cntr_load_shp(const char * filename, const char * cntrname, const char * z
 			zval = DBFReadDoubleAttribute( hDBF, i, z_field );
 			
 		const char * name = NULL;
-		if (name_field != -1)
+		if (name_field != -1) {
 			name = DBFReadStringAttribute( hDBF, i, name_field );
-
-		
-
-		if (cntrname != NULL) {
-			if ( StringMatch(cntrname, name) == false )
-				continue;
+			if (cntrname != NULL) {
+				if ( StringMatch(cntrname, name) == false )
+					continue;
+			}
 		}
-
 		
 
 		writelog(LOG_MESSAGE,"loading contour \"%s\" from ESRI shape file %s",
@@ -260,8 +259,8 @@ bool _cntr_load_shp(const char * filename, const char * cntrname, const char * z
 		}
 		
 		d_cntr * res = create_cntr(X, Y, Z, name);
-
 		surfit_cntrs->push_back(res);
+		SHPDestroyObject(shpObject);
 	}
 
 	DBFClose( hDBF );

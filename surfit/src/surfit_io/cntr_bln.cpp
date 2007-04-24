@@ -140,7 +140,7 @@ bool _cntr_save_bln(const d_cntr * crv, FILE * file, int orient) {
 	}
 
 	for (i = 0; i < size; i++) {
-		if ( fprintf(file, "%g,%g,%g\n", (*(crv->X))(i), (*(crv->Y))(i), (*(crv->Z))(i)) <= 0)
+		if ( fprintf(file, "%lf,%lf,%lf\n", (*(crv->X))(i), (*(crv->Y))(i), (*(crv->Z))(i)) <= 0)
 			goto bad_save_bln;
 	}
 
