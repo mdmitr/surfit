@@ -25,6 +25,7 @@
 #include "read_txt.h"
 #include "vec.h"
 #include "strvec.h"
+#include "threads.h"
 
 #include <string.h>
 #include <assert.h>
@@ -334,6 +335,124 @@ void prepare_scattered_points(const d_points * pnts,
 	(*proc_sub_tsks)[0] = sub_tsk;
 };
 
+#ifdef HAVE_THREADS
+struct bind_points_job : public job
+{
+	bind_points_job(std::vector<sub_points *>::iterator iit_from, 
+		        std::vector<sub_points *>::iterator iit_to, 
+		        d_grid * igrd,
+			const d_points * ipnts,
+			size_t iNN, size_t iMM) 
+			: grd(igrd), pnts(ipnts), NN(iNN), MM(iMM)
+	{
+		nums = new std::vector<size_t>();
+		tasks = new std::vector<sub_points *>();
+		it_from = iit_from;
+		it_to = iit_to;
+	};
+
+	~bind_points_job()
+	{
+		delete nums;
+		delete tasks;
+	}
+
+	virtual void do_job()
+	{
+		std::vector<sub_points *>::iterator it;
+		for (it = it_from; it < it_to; it++) {
+			size_t total_size = 0;
+			sub_points * old_sub_points = *it;
+
+			REAL minx, maxx, miny, maxy;
+			old_sub_points->bounds(minx, maxx, miny, maxy, pnts);
+
+			std::vector<size_t> sortx;
+			std::vector<size_t> sorty;
+
+			_sort_points(pnts, old_sub_points->point_numbers, sortx, sorty);
+
+			size_t i_from = grd->get_i(minx);
+			size_t i_to   = grd->get_i(maxx);
+			size_t j_from = grd->get_j(miny);
+			size_t j_to   = grd->get_j(maxy);
+
+			i_from = MIN(i_from, NN-1);
+			j_from = MIN(j_from, MM-1);
+			i_to = MIN(i_to, NN-1);
+			j_to = MIN(j_to, MM-1);
+
+			i_from = MAX(i_from, 0);
+			j_from = MAX(j_from, 0);
+			i_to = MAX(i_to, 0);
+			j_to = MAX(j_to, 0);
+
+			size_t old_size = old_sub_points->point_numbers->size();
+			size_t i;
+
+			for (i = i_from; i <= i_to; i++) {
+
+				REAL x_from = grd->startX + (i - REAL(0.5))*grd->stepX;
+				REAL x_to   = grd->startX + (i + REAL(0.5))*grd->stepX;
+
+				if (i == i_from)
+					x_from = MIN(x_from, minx) - grd->stepX/REAL(100.);
+				if (i == i_to)
+					x_to = MAX(x_to, maxx) + grd->stepX/REAL(100.);
+
+				size_t j;
+				for (j = j_from; j <= j_to; j++) {
+
+					REAL y_from = grd->startY + (j - REAL(0.5))*grd->stepY;
+					REAL y_to   = grd->startY + (j + REAL(0.5))*grd->stepY;
+
+					if (j == j_from)
+						y_from = MIN(y_from, miny) - grd->stepY/REAL(100.);
+					if (j == j_to)
+						y_to = MAX(y_to, maxy) + grd->stepY/REAL(100.);
+
+					getPointsInRect(x_from, x_to, y_from, y_to,
+						sortx, sorty,
+						pnts->X, pnts->Y,
+						*nums);
+
+					size_t nums_size = nums->size();
+					total_size += nums_size;
+
+					if (nums_size > 0) {
+
+						size_t node = i+j*grd->getCountX();
+
+						sub_points * new_sub_points = new sub_points(node, nums);
+						tasks->push_back(new_sub_points);
+
+						nums = new std::vector<size_t>;
+					}
+
+					if (total_size == old_size)
+						break;
+				}
+
+				if (total_size == old_size)
+					break;
+			}
+			if (total_size != old_size)
+				assert(0);
+			if (*it)
+				(*it)->release();
+			*it = NULL;
+		}
+	}
+
+	std::vector<sub_points *>::iterator it_from, it_to;
+	d_grid * grd;
+	const d_points * pnts;
+	size_t NN, MM;
+	std::vector<size_t> * nums;
+	std::vector<sub_points *> * tasks;
+};
+#endif
+
 void bind_points_to_grid(d_grid *& old_grid, 
 			 const d_points * pnts,
 			 std::vector<sub_points *> *& old_pnts,
@@ -354,7 +473,11 @@ void bind_points_to_grid(d_grid *& old_grid,
 	
 	std::vector<size_t> * nums = new std::vector<size_t>;
 	size_t nums_size;
-	
+
+#ifdef HAVE_THREADS
+	if (sstuff_get_threads() == 1) {
+#endif
+
 	for (it = old_pnts->begin(); it != old_pnts->end(); it++) {
 		
 		size_t total_size = 0;
@@ -437,6 +560,46 @@ void bind_points_to_grid(d_grid *& old_grid,
 		*it = NULL;
 		
 	}
+
+#ifdef HAVE_THREADS
+	} else {
+		size_t jobs_count = old_pnts->size();
+		size_t step = jobs_count/(sstuff_get_threads());
+		size_t ost = jobs_count % (sstuff_get_threads());
+		std::vector<bind_points_job *> bind_jobs(sstuff_get_threads());
+		size_t i,j;
+		size_t from = 0;
+		size_t to = 0;
+		for (i = 0; i < sstuff_get_threads(); i++)
+		{
+			to = from + step;
+			if (i == 0)
+				to += ost;
+			if (from == to)
+				bind_jobs[i] = NULL;
+			else {
+				bind_points_job * bind_job = new bind_points_job( old_pnts->begin()+from, old_pnts->begin()+to, grd, pnts, NN, MM );
+				bind_jobs[i] = bind_job;
+				set_job(bind_job, i);
+			}
+			from = to;
+		}
+		do_jobs();
+		
+		for (i = 0; i < sstuff_get_threads(); i++)
+		{
+			bind_points_job * bind_job = bind_jobs[i];
+			if (bind_job == NULL)
+				continue;
+			for (j = 0; j < bind_job->tasks->size(); j++)
+			{
+				tasks->push_back( (*(bind_job->tasks))[j] );
+			}
+			delete bind_job;
+		}
+
+	}
+#endif
 	
 	delete old_pnts;
 	old_pnts = tasks;
