@@ -9,9 +9,6 @@
 \li Allows to determine priority and set specific \ref tcl_rules "gridding rule" for each data.
 \li Allows to interpolate, approximate data, use inequalities and set specific conditions.
 
-\ref formats "File formats supported by surfit"
-\par Import/Export:
-\li Import/Export of Surfer GRD-ASCII files.
-\li Import/Export of points and curves from columned text files.
+\sa \ref formats "File formats supported by surfit"
 
 */
