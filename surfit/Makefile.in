@@ -373,9 +373,9 @@ EXTRA_DIST = vc6/surfit* vc6/freeflow* vc6/globe* \
 	src/surfit/interface/*.i examples/* src/freeflow/interface/*.i \
 	src/globe/interface/*.i src/surfit_io/interface/*.i \
 	doc/gallery/* doc/src/* doc/html/* doc/surfit.cfg \
-	doc/make_doc* make_release.bat make_debug.bat clean.bat \
-	make_rpm_fc4 make_rpm_rh73 surfit.spec.fc4 surfit.spec.rh73 \
-	CHANGES
+	doc/make_doc* make_release.bat make_releases.bat \
+	make_debug.bat clean.bat make_rpm_fc4 make_rpm_rh73 \
+	surfit.spec.fc4 surfit.spec.rh73 CHANGES
 lib_LTLIBRARIES = libsstuff.la libsurfit.la $(am__append_1) \
 	$(am__append_2) $(am__append_3)
 libsstuff_ladir = $(prefix)/include/sstuff
