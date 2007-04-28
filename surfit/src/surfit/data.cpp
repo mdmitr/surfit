@@ -118,5 +118,64 @@ void data::release_private() {
 
 };
 
+/*
+template <class T>
+objects_container<T>::objects_container() {};
+
+template <class T>
+void objects_container<T>::push_back(typename std::vector<T*>::value_type elem)
+{
+	data->push_back(elem);
+};
+
+template <class T>
+typename std::vector<T*>::iterator objects_container<T>::begin()
+{
+	return data->begin();
+};
+
+template <class T>
+typename std::vector<T*>::const_iterator objects_container<T>::const_begin()
+{
+	return data->const_begin();
+};
+
+template <class T>
+typename std::vector<T*>::iterator objects_container<T>::end()
+{
+	return data->end();
+};
+
+template <class T>
+typename std::vector<T*>::const_iterator objects_container<T>::const_end()
+{
+	return data->const_end();
+};
+
+template <class T>
+typename std::vector<T*>::reference objects_container<T>::operator[](typename std::vector<T*>::size_type pos)
+{
+	return data[pos];
+};
+	
+template <class T>
+typename std::vector<T*>::const_reference objects_container<T>::operator[](typename std::vector<T*>::size_type _Pos) const
+{
+	return data[pos];
+};
+
+template <class T>
+typename std::vector<T*>::size_type objects_container<T>::size() const
+{
+	return data.size();
+};
+
+template <class T>
+typename std::vector<T*>::iterator objects_container<T>::erase(typename std::vector<T*>::iterator _Where)
+{
+	return data.erase(_Where);
+};
+*/
+
 }; // namespace surfit;
 

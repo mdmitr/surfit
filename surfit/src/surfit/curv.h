@@ -107,7 +107,13 @@ class d_grid;
     \var std::vector<d_curv *> * surfit_curvs;
     collection of \ref curv objects
 */
-extern SURFIT_EXPORT std::vector<d_curv *> * surfit_curvs;
+class SURFIT_EXPORT curvs_container : public objects_container<d_curv>
+{
+public:
+	virtual void push_back(d_curv * elem);
+};
+
+extern SURFIT_EXPORT curvs_container * surfit_curvs;
 
 SURFIT_EXPORT
 d_points * discretize_curv(const d_curv * crv, d_grid * grd, REAL value, const char * pnts_name);

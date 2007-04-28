@@ -262,7 +262,13 @@ public:
     \var std::vector<d_surf *> * surfit_surfs
     collection of \ref surf objects
 */
-extern SURFIT_EXPORT std::vector<d_surf *> * surfit_surfs;
+class SURFIT_EXPORT surfs_container : public objects_container<d_surf>
+{
+public:
+	virtual void push_back(d_surf * elem);
+};
+
+extern SURFIT_EXPORT surfs_container * surfit_surfs;
 
 
 }; // namespace surfit;

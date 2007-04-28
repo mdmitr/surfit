@@ -612,7 +612,12 @@ bool d_dem::full_reconstruct() {
 
 
 
-std::vector<d_dem *>     * globe_dems     = NULL;
+void dems_container::push_back(d_dem * elem)
+{
+	data->push_back(elem);
+};
+
+dems_container * globe_dems = NULL;
 
 /*! \struct dem_garbage
     \brief struct for deletion of \ref dem pointers

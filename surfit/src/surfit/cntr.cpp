@@ -112,9 +112,12 @@ void d_cntr::div(REAL value) {
 
 
 
+void cntrs_container::push_back(d_cntr * elem)
+{
+	data->push_back(elem);
+};
 
-
-std::vector<d_cntr *>     * surfit_cntrs     = NULL;
+cntrs_container * surfit_cntrs = NULL;
 
 /*! \struct cntr_garbage
     \brief struct for deletion of \ref cntr pointers
@@ -122,7 +125,7 @@ std::vector<d_cntr *>     * surfit_cntrs     = NULL;
 struct cntr_garbage : public binman {
 	//! inits \ref surfit_cntr and \ref surfit_cntrs
 	cntr_garbage() {
-		surfit_cntrs = new std::vector<d_cntr *>;
+		surfit_cntrs = new cntrs_container();
 	};
 	//! removes \ref surfit_cntr and \ref surfit_cntrs
 	~cntr_garbage() {
@@ -313,7 +316,6 @@ d_points * discretize_cntr(const d_cntr * crv, d_grid * grd, const char * pnts_n
 				if (flag) {
 					
 					if (fabs( DY*(X_0-X1) + DX*(Y1-Y_1) ) - fabs( DY*(X_1-X1) + DX*(Y1-Y_0)) < 0) {
-						bool change = true;
 						x -= kx;
 						y += ky;
 						add_mean_val(grd, x, y, 
@@ -432,10 +434,312 @@ d_points * discretize_cntr(const d_cntr * crv, d_grid * grd, const char * pnts_n
 	return pnts;
 };
 
+d_points * discretize_cntr8(const d_cntr * crv, d_grid * grd, const char * pnts_name) 
+{
+	if (grd == NULL)
+		return NULL;
 
+	if (!crv)
+		return NULL;
 
+	if (crv->size() == 0)
+		return NULL;
 
+	// using modified brezengham algorithm
+	size_t qq;
+	REAL X2, X1, Y2, Y1, Z1, Z2;
 
+	std::vector<pos_z_w> * data = new std::vector<pos_z_w>();
+	
+	for (qq = 0; qq < crv->size()-1; qq++) {
+		X1 = (*(crv->X))(qq);
+		Y1 = (*(crv->Y))(qq);
+		Z1 = (*(crv->Z))(qq);
+		X2 = (*(crv->X))(qq + 1);
+		Y2 = (*(crv->Y))(qq + 1);
+		Z2 = (*(crv->Z))(qq + 1);
+
+		int x1 = grd->get_i(X1);
+		int x2 = grd->get_i(X2);
+		int y1 = grd->get_j(Y1);
+		int y2 = grd->get_j(Y2);
+			
+		int dx, dy, i1, i2, i, kx, ky;
+		int d;      // "отклонение" 
+		int x, y;
+		int flag;
+			
+		dy = y2 - y1;
+		dx = x2 - x1;
+		REAL DY = Y2-Y1;
+		REAL DX = X2-X1;
+
+		if (dx == 0 && dy == 0) // only one point
+		{
+			add_mean_val(grd, x1, y1, 
+				     X1, Y1, Z1, 
+				     X2, Y2, Z2,
+				     data);
+			continue; 
+		}
+		
+		kx = 1; // шаг по x
+		ky = 1; // шаг по y
+
+		// Выбор тактовой оси
+		if ( dx < 0 ) { 
+			dx = -dx; 
+			kx = -1;       // Y
+		} else {
+			if(dx == 0)
+				kx = 0;    // X 
+		}
+			
+		if (dy < 0) { 
+			dy = -dy; 
+			ky = -1; 
+		}
+		
+		if (dx < dy) { 
+			flag = 0; 
+			d = dx; 
+			dx = dy; 
+			dy = d; 
+		}
+		else         
+			flag = 1;
+		
+		i1 = dy + dy; d = i1 - dx; i2 = d - dx;
+		x = x1; y = y1;
+		
+		for ( i = 0; i < dx; i++ ) {
+			
+			add_mean_val(grd, x, y, 
+				     X1, Y1, Z1, 
+				     X2, Y2, Z2,
+				     data);
+			
+			if (flag) 
+				x += kx; // шаг по такт. оси   
+			else     
+				y += ky;
+			
+			if( d < 0 ) {// горизонтальный шаг   
+				d += i1;
+			} else {       // диагональный шаг        
+				
+				int x_0;
+				int x_1;
+				int y_0;
+				int y_1;
+				
+				if (flag) {
+					x_0 = x-kx;
+					x_1 = x;
+					y_0 = y;
+					y_1 = y+ky;
+				} else {
+					y_0 = y-ky;
+					y_1 = y;
+					x_0 = x;
+					x_1 = x+kx;
+				}
+				REAL X_0 = grd->getCoordNodeX(x_0);
+				REAL X_1 = grd->getCoordNodeX(x_1);
+				REAL Y_0 = grd->getCoordNodeY(y_0);
+				REAL Y_1 = grd->getCoordNodeY(y_1);
+				
+				if (flag) {
+					
+					if (fabs( DY*(X_0-X1) + DX*(Y1-Y_1) ) - fabs( DY*(X_1-X1) + DX*(Y1-Y_0)) < 0) {
+						x -= kx;
+						y += ky;
+						/*
+						add_mean_val(grd, x, y, 
+							         X1, Y1, Z1, 
+							         X2, Y2, Z2,
+							         data);
+						*/
+						x += kx;
+					} else {
+						/*add_mean_val(grd, x, y, 
+				                     X1, Y1, Z1, 
+						             X2, Y2, Z2,
+				                     data);*/
+						y += ky; // прирост высоты 
+					}
+					
+				} else {
+					
+					if (fabs( DX*(Y_0-Y1) + DY*(X1-X_1) ) - fabs( DX*(Y_1-Y1) + DY*(X1-X_0)) < 0) {
+						
+						y -= ky;
+						x += kx;
+						
+						/*add_mean_val(grd, x, y, 
+							X1, Y1, Z1, 
+							X2, Y2, Z2,
+							data);*/
+
+						y += ky;
+						
+					} else {
+						
+						/*add_mean_val(grd, x, y, 
+							X1, Y1, Z1, 
+							X2, Y2, Z2,
+							data);*/
+
+						x += kx;
+					}
+				}
+				
+				d += i2;
+			}
+		}
+		
+		add_mean_val(grd, x, y, 
+			     X1, Y1, Z1, 
+			     X2, Y2, Z2,
+			     data); // последняя точка 
+		
+	}
+
+	if (data->size() == 0)
+	{
+		delete data;
+		return NULL;
+	}
+
+	std::sort(data->begin(), data->end(), ptr_pos_z_w_less);
+
+	vec * points_x = create_vec();
+	vec * points_y = create_vec();
+	vec * points_z = create_vec();
+
+	points_x->reserve(data->size());
+	points_y->reserve(data->size());
+	points_z->reserve(data->size());
+
+	size_t prev_pos = UINT_MAX;
+	pos_z_w elem;
+	REAL total_weight = 0;
+	REAL sum_val = 0;
+	size_t NN = grd->getCountX();
+	
+	for (qq = 0; qq < data->size(); qq++) {
+		elem = (*data)[qq];
+		if (prev_pos == elem.pos) {
+			sum_val += elem.w*elem.z;
+			total_weight += elem.w;
+		} else {
+			// write
+			if (prev_pos != UINT_MAX) {
+				size_t pos_x = prev_pos % NN;
+				size_t pos_y = (prev_pos - pos_x)/NN;
+				REAL x, y, z;
+				grd->getCoordNode(pos_x, pos_y, x, y);
+				z = sum_val / total_weight;
+				points_x->push_back(x);
+				points_y->push_back(y);
+				points_z->push_back(z);
+			}
+			//
+			sum_val = elem.w*elem.z;
+			total_weight = elem.w;
+		}
+		prev_pos = elem.pos;
+	};
+
+	size_t pos_x = prev_pos % NN;
+	size_t pos_y = (prev_pos - pos_x)/NN;
+	REAL x, y, z;
+	grd->getCoordNode(pos_x, pos_y, x, y);
+	z = sum_val / total_weight;
+	points_x->push_back(x);
+	points_y->push_back(y);
+	points_z->push_back(z);
+
+	points_x->resize(points_x->size());
+	points_y->resize(points_y->size());
+	points_z->resize(points_z->size());
+
+	delete data;
+	
+	d_points * pnts = create_points(points_x, points_y, points_z,
+			                pnts_name);
+	
+	return pnts;
+};
+
+d_points * discretize_cntr(const d_cntr * crv, REAL step, const char * pnts_name) 
+{
+	if (!crv)
+		return NULL;
+
+	if (crv->size() == 0)
+		return NULL;
+
+	if (step == 0)
+		return NULL;
+
+	step = fabs(step);
+
+	REAL len = crv->length_xy();
+
+	vec * points_x = create_vec();
+	vec * points_y = create_vec();
+	vec * points_z = create_vec();
+
+	points_x->reserve( (size_t)(len/step/4.) );
+	points_y->reserve( (size_t)(len/step/4.) );
+	points_z->reserve( (size_t)(len/step/4.) );
+
+	size_t qq;
+	REAL X2, X1, Y2, Y1, Z1, Z2;
+
+	len = 0;
+	REAL nlen=0;
+
+	for (qq = 0; qq < crv->size()-1; qq++) {
+		X1 = (*(crv->X))(qq);
+		Y1 = (*(crv->Y))(qq);
+		Z1 = (*(crv->Z))(qq);
+		X2 = (*(crv->X))(qq + 1);
+		Y2 = (*(crv->Y))(qq + 1);
+		Z2 = (*(crv->Z))(qq + 1);
+
+		REAL ri = sqrt( (X1-X2)*(X1-X2) + (Y1-Y2)*(Y1-Y2)  );
+		if( fabs(ri) < 1E-12 ) continue;
+		
+		while( nlen <= len + ri )
+		{
+			REAL lambda = (nlen - len)/ri;
+			REAL x = X1+lambda*(X2-X1);
+			REAL y = Y1+lambda*(Y2-Y1);
+			REAL z = Z1+lambda*(Z2-Z1);
+			points_x->push_back(x);
+			points_y->push_back(y);
+			points_z->push_back(z);
+			nlen += step;
+		}
+
+		len += ri;
+
+	}
+
+	if (points_x->size() == 0)
+	{
+		points_x->release();
+		points_y->release();
+		points_z->release();
+		return NULL;
+	}
+
+	d_points * pnts = create_points(points_x, points_y, points_z,
+			                pnts_name);
+	return pnts;
+};
 
 }; // namespace surfit;
 

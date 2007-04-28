@@ -89,6 +89,71 @@ public:
 	virtual ~binman() {};
 };
 
+template <class T>
+class objects_container
+{
+public:
+	objects_container() 
+	{
+		data = new std::vector<T*>();
+	};
+
+	~objects_container()
+	{
+		delete data;
+	}
+
+	typename std::vector<T*>::iterator begin() 
+	{
+		return data->begin();
+	};
+	
+	typename std::vector<T*>::const_iterator const_begin()
+	{
+		return data->begin();
+	};
+
+	typename std::vector<T*>::iterator end()
+	{
+		return data->end();
+	};
+
+	typename std::vector<T*>::const_iterator const_end()
+	{
+		return data->end();
+	};
+	
+	typename std::vector<T*>::reference operator[](typename std::vector<T*>::size_type pos)
+	{
+		return (*data)[pos];
+	};
+
+	typename std::vector<T*>::const_reference operator[](typename std::vector<T*>::size_type pos) const
+	{
+		return (*data)[pos];
+	};
+
+	typename std::vector<T*>::size_type size() const
+	{
+		return data->size();
+	};
+
+	typename std::vector<T*>::iterator erase(typename std::vector<T*>::iterator _Where)
+	{
+		return data->erase(_Where);
+	};
+
+	void resize(typename std::vector<T*>::size_type _Newsize)
+	{
+		return data->resize(_Newsize);
+	};
+
+	virtual void push_back(T * elem) = 0;
+
+protected:
+	std::vector<T*> * data;
+};
+
 }; // namespace surfit;
 
 #endif

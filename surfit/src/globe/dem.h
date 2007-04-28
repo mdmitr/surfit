@@ -194,7 +194,13 @@ public:
     \var std::vector<d_dem *> * globe_dems
     collection of \ref dem objects
 */
-extern GLOBE_EXPORT std::vector<d_dem *> * globe_dems;
+class GLOBE_EXPORT dems_container : public objects_container<d_dem>
+{
+public:
+	virtual void push_back(d_dem * elem);
+};
+
+extern GLOBE_EXPORT dems_container * globe_dems;
 
 }; // namespace surfit;
 

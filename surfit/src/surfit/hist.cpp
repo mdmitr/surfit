@@ -160,7 +160,12 @@ vec * d_hist::get_cumulative_hist()
 	return res;
 };
 
-std::vector<d_hist *>     * surfit_hists     = NULL;
+void hists_container::push_back(d_hist * elem)
+{
+	data->push_back(elem);
+};
+
+hists_container * surfit_hists = NULL;
 
 /*! \struct hist_garbage
     \brief struct for deletion of \ref hist pointers
@@ -168,7 +173,7 @@ std::vector<d_hist *>     * surfit_hists     = NULL;
 struct hist_garbage : public binman {
 	//! inits \ref surfit_hist and \ref surfit_hists
 	hist_garbage() {
-		surfit_hists = new std::vector<d_hist *>;
+		surfit_hists = new hists_container();
 	}
 	//! removes \ref surfit_hist and \ref surfit_hists
 	~hist_garbage() {

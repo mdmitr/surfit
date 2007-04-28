@@ -236,7 +236,13 @@ bool d_curv::in_region(REAL x, REAL y) const {
 
 
 
-std::vector<d_curv *>     * surfit_curvs     = NULL;
+void curvs_container::push_back(d_curv * elem)
+{
+	data->push_back(elem);
+};
+
+curvs_container * surfit_curvs = NULL;
+
 
 /*! \struct curv_garbage
     \brief struct for deletion of \ref curv pointers
@@ -244,7 +250,7 @@ std::vector<d_curv *>     * surfit_curvs     = NULL;
 struct curv_garbage : public binman {
 	//! inits \ref surfit_curv and \ref surfit_curvs
 	curv_garbage() {
-		surfit_curvs = new std::vector<d_curv *>;
+		surfit_curvs = new curvs_container;
 	}
 	//! removes \ref surfit_curv and \ref surfit_curvs
 	~curv_garbage() {

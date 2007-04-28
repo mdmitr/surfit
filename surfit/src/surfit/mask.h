@@ -136,7 +136,13 @@ public:
     \var std::vector<d_mask *> * surfit_masks
     collection of \ref mask objects
 */
-extern SURFIT_EXPORT std::vector<d_mask *> * surfit_masks;
+class SURFIT_EXPORT masks_container : public objects_container<d_mask>
+{
+public:
+	virtual void push_back(d_mask * elem);
+};
+
+extern SURFIT_EXPORT masks_container * surfit_masks;
 
 }; // namespace surfit
 

@@ -453,7 +453,12 @@ void _inverse_points_transform(d_points * pnts,
 };
 
 
-std::vector<d_points *>     * surfit_pnts = NULL;
+void pnts_container::push_back(d_points * elem)
+{
+	data->push_back(elem);
+};
+
+pnts_container * surfit_pnts = NULL;
 
 /*! \struct pnts_garbage
     \brief struct for deletion of \ref d_points pointers
@@ -461,7 +466,7 @@ std::vector<d_points *>     * surfit_pnts = NULL;
 struct pnts_garbage : public binman {
 	//! inits \ref surfit_pnts
 	pnts_garbage() {
-		surfit_pnts = new std::vector<d_points *>;
+		surfit_pnts = new pnts_container();
 	};
 	//! removes \ref surfit_task and \ref surfit_tasks
 	~pnts_garbage() {

@@ -238,8 +238,12 @@ bitvec * d_mask::get_bitvec_mask(const d_grid * grid) const {
 
 
 
+void masks_container::push_back(d_mask * elem)
+{
+	data->push_back(elem);
+};
 
-std::vector<d_mask *>  * surfit_masks  = NULL;
+masks_container * surfit_masks = NULL;
 
 /*! \struct mask_garbage
     \brief struct for deletion of \ref mask pointers
@@ -247,7 +251,7 @@ std::vector<d_mask *>  * surfit_masks  = NULL;
 struct mask_garbage : public binman {
 	//! inits \ref surfit_mask and \ref surfit_masks
 	mask_garbage() {
-		surfit_masks  = new std::vector<d_mask *>;
+		surfit_masks  = new masks_container();
 	};
 	//! removes \ref surfit_mask and \ref surfit_masks
 	~mask_garbage() {

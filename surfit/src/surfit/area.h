@@ -104,7 +104,16 @@ public:
     \var std::vector<d_area *> * surfit_areas;
     collection of \ref area objects
 */
-extern SURFIT_EXPORT std::vector<d_area *> * surfit_areas;
+//extern SURFIT_EXPORT std::vector<d_area *> * surfit_areas;
+
+class SURFIT_EXPORT areas_container : public objects_container<d_area>
+{
+public:
+	virtual void push_back(d_area * elem);
+};
+
+extern SURFIT_EXPORT
+areas_container * surfit_areas;
 
 void draw_area_matlab(FILE * ff, const d_area * area, const char * color = "green", short width = 3);
 

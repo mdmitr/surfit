@@ -133,7 +133,13 @@ void d_area::invert() {
 	inverted = !inverted;
 };
 
-std::vector<d_area *>     * surfit_areas     = NULL;
+void areas_container::push_back(d_area * elem)
+{
+	data->push_back(elem);
+};
+
+//std::vector<d_area *>     * surfit_areas     = NULL;
+areas_container * surfit_areas = NULL;
 
 /*! \struct area_garbage
     \brief struct for deletion of \ref area pointers
@@ -141,7 +147,8 @@ std::vector<d_area *>     * surfit_areas     = NULL;
 struct area_garbage : public binman {
 	//! inits \ref surfit_area and \ref surfit_areas
 	area_garbage() {
-		surfit_areas = new std::vector<d_area *>;
+		//surfit_areas = new std::vector<d_area *>;
+		surfit_areas = new areas_container();
 	}
 	//! removes \ref surfit_area and \ref surfit_areas
 	~area_garbage() {

@@ -233,8 +233,8 @@ exit:
 
 };
 
-bool _pnts_write(const d_points * pnts, const char * filename, const char * mask) {
-
+bool _pnts_write(const d_points * pnts, const char * filename, const char * mask) 
+{
 	if (!pnts) {
 		writelog(LOG_WARNING, "NULL pointer to points.");
 		return false;

@@ -949,7 +949,13 @@ void d_surf::set_undef_value(REAL new_undef_value) {
 	this->undef_value = new_undef_value;
 };
 
-std::vector<d_surf *> * surfit_surfs = NULL;
+void surfs_container::push_back(d_surf * elem)
+{
+	data->push_back(elem);
+};
+
+surfs_container * surfit_surfs = NULL;
+
 
 /*! \struct surf_garbage
     \brief struct for deletion of \ref surf pointers
@@ -957,7 +963,7 @@ std::vector<d_surf *> * surfit_surfs = NULL;
 struct surf_garbage : public binman {
 	//! inits \ref surfit_surf and \ref surfit_surfs
 	surf_garbage() {
-		surfit_surfs = new std::vector<d_surf *>;
+		surfit_surfs = new surfs_container();
 	};
 	//! removes \ref surfit_surf and \ref surfit_surfs
 	~surf_garbage() {

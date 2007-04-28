@@ -75,12 +75,22 @@ public:
 class d_points;
 class d_grid;
 
-extern SURFIT_EXPORT std::vector<d_cntr *> * surfit_cntrs;
+class SURFIT_EXPORT cntrs_container : public objects_container<d_cntr>
+{
+public:
+	virtual void push_back(d_cntr * elem);
+};
+
+extern SURFIT_EXPORT cntrs_container * surfit_cntrs;
 
 SURFIT_EXPORT
 d_points * discretize_cntr(const d_cntr * crv, d_grid * grd, const char * pnts_name);
 
+SURFIT_EXPORT
+d_points * discretize_cntr8(const d_cntr * crv, d_grid * grd, const char * pnts_name);
 
+SURFIT_EXPORT
+d_points * discretize_cntr(const d_cntr * crv, REAL step, const char * pnts_name);
 
 }; // namespace surfit;
 

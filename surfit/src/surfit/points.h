@@ -190,7 +190,13 @@ public:
     \var std::vector<d_points *> * surfit_pnts
     \brief collection of \ref d_points objects (scattered data-points)
 */
-extern SURFIT_EXPORT std::vector<d_points *> * surfit_pnts;
+class SURFIT_EXPORT pnts_container : public objects_container<d_points>
+{
+public:
+	virtual void push_back(d_points * elem);
+};
+
+extern SURFIT_EXPORT pnts_container * surfit_pnts;
 
 /*! \class sub_points
     \brief subset of points for some cell

@@ -89,7 +89,13 @@ public:
 	
 };
 
-extern SURFIT_EXPORT std::vector<d_hist *> * surfit_hists;
+class SURFIT_EXPORT hists_container : public objects_container<d_hist>
+{
+public:
+	virtual void push_back(d_hist * elem);
+};
+
+extern SURFIT_EXPORT hists_container * surfit_hists;
 
 }; // namespace surfit;
 
