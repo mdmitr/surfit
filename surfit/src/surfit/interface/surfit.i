@@ -158,7 +158,7 @@ extern int reproject_faults;
 extern int reproject_undef_areas;
 extern int process_isolated_areas;
 
-extern int penalty_max_iter;
+extern size_t penalty_max_iter;
 extern REAL penalty_weight;
 extern REAL penalty_weight_mult;
 

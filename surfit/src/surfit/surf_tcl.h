@@ -782,6 +782,17 @@ void surf_info(const char * surface_name = "*");
 strvec * surf_getName(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
+    \fn const char * surf_getNameAt(int pos);
+    
+    \par Tcl syntax:
+    surf_getNameAt position
+
+    \par Description:
+    returns name of \ref d_surf at position "pos"
+*/
+const char * surf_getNameAt(int pos);
+
+/*! \ingroup tcl_surf_other
     \fn int surf_getId(const char * surface_name = "*");
 
     \par Tcl syntax:

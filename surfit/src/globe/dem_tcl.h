@@ -537,6 +537,17 @@ boolvec * dem_undef(REAL new_undef_value, const char * dem_name = "*");
 strvec * dem_getName(const char * dem_name = "*");
 
 /*! \ingroup tcl_dem_other
+    \fn const char * dem_getNameAt(int pos);
+    
+    \par Tcl syntax:
+    dem_getNameAt position
+
+    \par Description:
+    returns name of \ref d_dem at position "pos"
+*/
+const char * dem_getNameAt(int pos);
+
+/*! \ingroup tcl_dem_other
     \fn const char * dem_getId(const char * dem_name = "*");
 
     \par Tcl syntax:

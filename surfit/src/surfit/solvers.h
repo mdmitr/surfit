@@ -29,14 +29,14 @@ class matr;
 class functional;
 
 SURFIT_EXPORT
-void solve(matr * T, const extvec * V, extvec *& X);
+size_t solve(matr * T, const extvec * V, extvec *& X);
 
 SURFIT_EXPORT
 bool solve_with_penalties(functional * fnc, 
 			  matr * T, extvec * V, extvec *& X);
 
 struct solver {
-	virtual void solve(matr * T, const extvec * V, extvec *& X) = 0;
+	virtual size_t solve(matr * T, const extvec * V, extvec *& X) = 0;
 	virtual const char * get_long_name() const = 0;
 	virtual const char * get_short_name() const = 0;
 };
@@ -81,12 +81,12 @@ SURFIT_EXPORT
 REAL threaded_times(const extvec * a, const extvec * b);
 #endif
 
-extvec *     RF(matr * A, const extvec * b, int max_it, REAL tol = 1e-6, extvec * X = NULL, REAL undef_value = FLT_MAX);
-extvec *     CG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value = FLT_MAX);
-extvec *      J(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value = FLT_MAX);
-extvec *    JCG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value = FLT_MAX);
-extvec *   SSOR(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value = FLT_MAX, REAL omega = REAL(1.6));
-extvec * SSORCG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value = FLT_MAX, REAL omega = REAL(1.6));
+extvec *     RF(matr * A, const extvec * b, int max_it, REAL tol, extvec * X, size_t & iters, REAL undef_value = FLT_MAX);
+extvec *     CG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, size_t & iters, REAL undef_value = FLT_MAX);
+extvec *      J(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, size_t & iters, REAL undef_value = FLT_MAX);
+extvec *    JCG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, size_t & iters, REAL undef_value = FLT_MAX);
+extvec *   SSOR(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, size_t & iters, REAL undef_value = FLT_MAX, REAL omega = REAL(1.6));
+extvec * SSORCG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, size_t & iters, REAL undef_value = FLT_MAX, REAL omega = REAL(1.6));
 
 };
 

@@ -289,6 +289,13 @@ strvec * mask_getName(const char * pos)
 	return qq.res;
 };
 
+const char * mask_getNameAt(int pos)
+{
+	if ((size_t)pos > surfit_masks->size())
+		return NULL;
+	return (*surfit_masks)[pos]->getName();
+};
+
 struct match_mask_getId
 {
 	match_mask_getId(const char * ipos) : pos(ipos), res(NULL) {};

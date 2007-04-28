@@ -1702,6 +1702,22 @@ SWIG_AsVal_short SWIG_TCL_DECL_ARGS_2(Tcl_Obj * obj, short *val)
 }
 
 
+SWIGINTERN int
+SWIG_AsVal_int SWIG_TCL_DECL_ARGS_2(Tcl_Obj * obj, int *val)
+{
+  long v;
+  int res = SWIG_AsVal_long SWIG_TCL_CALL_ARGS_2(obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v < INT_MIN || v > INT_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = static_cast<int >(v);
+    }
+  }  
+  return res;
+}
+
+
 SWIGINTERNINLINE Tcl_Obj* 
 SWIG_From_long  (long value)
 {
@@ -6951,6 +6967,39 @@ _wrap_dem_getName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
 
 
 SWIGINTERN int
+_wrap_dem_getNameAt(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  int arg1 ;
+  char *result = 0 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:dem_getNameAt pos ",(void *)0) == TCL_ERROR) SWIG_fail;
+  ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "dem_getNameAt" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast<int >(val1);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (char *)surfit::dem_getNameAt(arg1);
+        
+      }
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  {
+    Tcl_SetObjResult(interp,Tcl_NewStringObj(result,-1));
+  }
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
 _wrap_dem_getId__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   surfit::intvec *result = 0 ;
@@ -7351,6 +7400,7 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "dem_getStepY", (swig_wrapper_func) _wrap_dem_getStepY, NULL},
     { SWIG_prefix "dem_undef", (swig_wrapper_func) _wrap_dem_undef, NULL},
     { SWIG_prefix "dem_getName", (swig_wrapper_func) _wrap_dem_getName, NULL},
+    { SWIG_prefix "dem_getNameAt", (swig_wrapper_func) _wrap_dem_getNameAt, NULL},
     { SWIG_prefix "dem_getId", (swig_wrapper_func) _wrap_dem_getId, NULL},
     { SWIG_prefix "dem_setName", (swig_wrapper_func) _wrap_dem_setName, NULL},
     { SWIG_prefix "dem_del", (swig_wrapper_func) _wrap_dem_del, NULL},

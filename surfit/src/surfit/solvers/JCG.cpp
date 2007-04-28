@@ -32,10 +32,11 @@ using namespace std;
 
 namespace surfit {
 
-extvec * JCG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value) {
+extvec * JCG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, size_t & iters, REAL undef_value) {
 	
 	int flag = 0;				     // initialization
 	int iter = 0;
+	iters = 0;
 	REAL val;
 	int i;
 	int N = b->size();
@@ -201,6 +202,7 @@ extvec * JCG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL
 	
 	log_printf(" error : %12.6G iter : %d\n",error, iter);
 	
+	iters = (size_t)iter;
 	return x;
 };
 

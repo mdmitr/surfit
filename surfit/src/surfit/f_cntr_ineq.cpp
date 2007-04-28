@@ -96,7 +96,7 @@ bool f_cntr_ineq::solvable_without_cond(const bitvec * mask_solved,
 {
 	create_f_points_ineq();
 	if (f_pnts_ineq == NULL)
-		return false;
+		return true;
 	return f_pnts_ineq->solvable_without_cond(mask_solved, mask_undefined, X);
 };
 
@@ -106,7 +106,8 @@ void f_cntr_ineq::create_f_points_ineq() {
 
 	if (pnts == NULL) {
 		d_grid * grd = create_last_grd();
-		pnts = discretize_cntr(cntr, grd, cntr->getName());
+		//pnts = discretize_cntr8(cntr, grd, cntr->getName());
+		pnts = discretize_cntr(cntr, MIN(grd->stepX, grd->stepY)/2., cntr->getName());
 		if (pnts == NULL)
 			return;
 		if (grd)

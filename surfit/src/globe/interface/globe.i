@@ -178,6 +178,7 @@ surfit::vec * dem_getStepX(const char * dem_name = "*");
 surfit::vec * dem_getStepY(const char * dem_name = "*");
 surfit::boolvec * dem_undef(REAL new_undef_value, const char * dem_name = "*");
 surfit::strvec * dem_getName(const char * dem_name = "*");
+const char * dem_getNameAt(int pos);
 surfit::intvec * dem_getId(const char * dem_name = "*");
 surfit::boolvec * dem_setName(const char * new_name, const char * dem_name = "*");
 void dem_del(const char * dem_name = "*");

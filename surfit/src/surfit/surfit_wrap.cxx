@@ -1789,38 +1789,32 @@ SWIG_AsVal_int SWIG_TCL_DECL_ARGS_2(Tcl_Obj * obj, int *val)
 }
 
 
+#include <stdio.h>
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(_WATCOM)
+# ifndef snprintf
+#  define snprintf _snprintf
+# endif
+#endif
 
 
-
-#include "fileio.h"
-
-
-#include "pnts_tcl.h"
-#include "f_points_tcl.h"
-
-
-#include "grid_tcl.h"
-#include "grid_user.h"
-
-
-#include "cmofs.h"
+SWIGINTERNINLINE Tcl_Obj* 
+SWIG_From_unsigned_SS_long  (unsigned long value)
+{
+  if (value < (unsigned long) LONG_MAX) {
+    return SWIG_From_long  (static_cast<long >(value));
+  } else {
+    char temp[256]; 
+    sprintf(temp, "%lu", value);
+    return Tcl_NewStringObj(temp,-1);
+  }
+}
 
 
-#include "surf_tcl.h"
-#include "mask_tcl.h"
-
-#include "surfs_tcl.h"
-
-
-#include "curv_tcl.h"
-#include "cntr_tcl.h"
-#include "area_tcl.h"
-#include "grid_line_tcl.h"
-
-#include "curvs_tcl.h"
-
-
-#include "hist_tcl.h"
+SWIGINTERNINLINE Tcl_Obj *
+SWIG_From_size_t  (size_t value)
+{    
+  return SWIG_From_unsigned_SS_long  (static_cast<unsigned long >(value));
+}
 
 
 SWIGINTERN int
@@ -1863,6 +1857,40 @@ SWIG_AsVal_size_t SWIG_TCL_DECL_ARGS_2(Tcl_Obj * obj, size_t *val)
   if (SWIG_IsOK(res) && val) *val = static_cast<size_t >(v);
   return res;
 }
+
+
+
+
+
+#include "fileio.h"
+
+
+#include "pnts_tcl.h"
+#include "f_points_tcl.h"
+
+
+#include "grid_tcl.h"
+#include "grid_user.h"
+
+
+#include "cmofs.h"
+
+
+#include "surf_tcl.h"
+#include "mask_tcl.h"
+
+#include "surfs_tcl.h"
+
+
+#include "curv_tcl.h"
+#include "cntr_tcl.h"
+#include "area_tcl.h"
+#include "grid_line_tcl.h"
+
+#include "curvs_tcl.h"
+
+
+#include "hist_tcl.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -2181,7 +2209,7 @@ fail:
 SWIGINTERN char *penalty_max_iter_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, char *name1, char *name2, int flags) {
   Tcl_Obj *value = 0;
   
-  value = SWIG_From_int(static_cast<int >(surfit::penalty_max_iter));
+  value = SWIG_From_size_t(static_cast<size_t >(surfit::penalty_max_iter));
   if (value) {
     Tcl_SetVar2(interp,name1,name2,Tcl_GetStringFromObj(value,NULL), flags);
     Tcl_DecrRefCount(value);
@@ -2199,12 +2227,12 @@ SWIGINTERN char *penalty_max_iter_set(ClientData clientData SWIGUNUSED, Tcl_Inte
   Tcl_DecrRefCount(name1o);
   if (!value) SWIG_fail;
   {
-    int val;
-    int res = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(value, &val);
+    size_t val;
+    int res = SWIG_AsVal_size_t SWIG_TCL_CALL_ARGS_2(value, &val);
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""surfit::penalty_max_iter""' of type '""int""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""surfit::penalty_max_iter""' of type '""size_t""'");
     }
-    surfit::penalty_max_iter = static_cast<int >(val);
+    surfit::penalty_max_iter = static_cast<size_t >(val);
   }
   return NULL;
 fail:
@@ -11544,6 +11572,43 @@ _wrap_pnts_getName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   }
   
   Tcl_SetResult(interp,(char *) "No matching function for overloaded 'pnts_getName'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_pnts_getNameAt(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  int arg1 ;
+  char *result = 0 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:pnts_getNameAt pos ",(void *)0) == TCL_ERROR) SWIG_fail;
+  ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "pnts_getNameAt" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast<int >(val1);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (char *)surfit::pnts_getNameAt(arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  {
+    Tcl_SetObjResult(interp,Tcl_NewStringObj(result,-1));
+  }
+  return TCL_OK;
+fail:
   return TCL_ERROR;
 }
 
@@ -28055,6 +28120,43 @@ _wrap_surf_getName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
 
 
 SWIGINTERN int
+_wrap_surf_getNameAt(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  int arg1 ;
+  char *result = 0 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_getNameAt pos ",(void *)0) == TCL_ERROR) SWIG_fail;
+  ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "surf_getNameAt" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast<int >(val1);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (char *)surfit::surf_getNameAt(arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  {
+    Tcl_SetObjResult(interp,Tcl_NewStringObj(result,-1));
+  }
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
 _wrap_surf_getId__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   surfit::intvec *result = 0 ;
@@ -30284,6 +30386,43 @@ _wrap_mask_getName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   }
   
   Tcl_SetResult(interp,(char *) "No matching function for overloaded 'mask_getName'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_mask_getNameAt(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  int arg1 ;
+  char *result = 0 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:mask_getNameAt pos ",(void *)0) == TCL_ERROR) SWIG_fail;
+  ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "mask_getNameAt" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast<int >(val1);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (char *)surfit::mask_getNameAt(arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  {
+    Tcl_SetObjResult(interp,Tcl_NewStringObj(result,-1));
+  }
+  return TCL_OK;
+fail:
   return TCL_ERROR;
 }
 
@@ -39586,6 +39725,43 @@ _wrap_curv_getName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
 
 
 SWIGINTERN int
+_wrap_curv_getNameAt(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  int arg1 ;
+  char *result = 0 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:curv_getNameAt pos ",(void *)0) == TCL_ERROR) SWIG_fail;
+  ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "curv_getNameAt" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast<int >(val1);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (char *)surfit::curv_getNameAt(arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  {
+    Tcl_SetObjResult(interp,Tcl_NewStringObj(result,-1));
+  }
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
 _wrap_curv_getId__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   surfit::intvec *result = 0 ;
@@ -41967,6 +42143,145 @@ _wrap_cntr_to_curv(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
 
 
 SWIGINTERN int
+_wrap_cntr_to_pnts__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  double arg1 ;
+  char *arg2 = (char *) 0 ;
+  surfit::boolvec *result = 0 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oo:cntr_to_pnts step cntr_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "cntr_to_pnts" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast<double >(val1);
+  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "cntr_to_pnts" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = buf2;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (surfit::boolvec *)surfit::cntr_to_pnts(arg1,(char const *)arg2);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_OK;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_cntr_to_pnts__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  double arg1 ;
+  surfit::boolvec *result = 0 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:cntr_to_pnts step ",(void *)0) == TCL_ERROR) SWIG_fail;
+  ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "cntr_to_pnts" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast<double >(val1);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (surfit::boolvec *)surfit::cntr_to_pnts(arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_cntr_to_pnts(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  Tcl_Obj *CONST *argv = objv+1;
+  int argc = objc-1;
+  if (argc == 1) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      return _wrap_cntr_to_pnts__SWIG_1(clientData, interp, objc, argv - 1);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_cntr_to_pnts__SWIG_0(clientData, interp, objc, argv - 1);
+      }
+    }
+  }
+  
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'cntr_to_pnts'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
 _wrap_cntr_getName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   surfit::strvec *result = 0 ;
@@ -42072,6 +42387,43 @@ _wrap_cntr_getName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   }
   
   Tcl_SetResult(interp,(char *) "No matching function for overloaded 'cntr_getName'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_cntr_getNameAt(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  int arg1 ;
+  char *result = 0 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:cntr_getNameAt pos ",(void *)0) == TCL_ERROR) SWIG_fail;
+  ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "cntr_getNameAt" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast<int >(val1);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (char *)surfit::cntr_getNameAt(arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  {
+    Tcl_SetObjResult(interp,Tcl_NewStringObj(result,-1));
+  }
+  return TCL_OK;
+fail:
   return TCL_ERROR;
 }
 
@@ -43752,6 +44104,43 @@ _wrap_area_getName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   }
   
   Tcl_SetResult(interp,(char *) "No matching function for overloaded 'area_getName'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_area_getNameAt(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  int arg1 ;
+  char *result = 0 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:area_getNameAt pos ",(void *)0) == TCL_ERROR) SWIG_fail;
+  ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "area_getNameAt" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast<int >(val1);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (char *)surfit::area_getNameAt(arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  {
+    Tcl_SetObjResult(interp,Tcl_NewStringObj(result,-1));
+  }
+  return TCL_OK;
+fail:
   return TCL_ERROR;
 }
 
@@ -46981,6 +47370,43 @@ _wrap_hist_getName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
 
 
 SWIGINTERN int
+_wrap_hist_getNameAt(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  int arg1 ;
+  char *result = 0 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:hist_getNameAt pos ",(void *)0) == TCL_ERROR) SWIG_fail;
+  ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "hist_getNameAt" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast<int >(val1);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (char *)surfit::hist_getNameAt(arg1);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  {
+    Tcl_SetObjResult(interp,Tcl_NewStringObj(result,-1));
+  }
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
 _wrap_hist_setName__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -47326,6 +47752,7 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "pnts_concat", (swig_wrapper_func) _wrap_pnts_concat, NULL},
     { SWIG_prefix "pnts_getCount", (swig_wrapper_func) _wrap_pnts_getCount, NULL},
     { SWIG_prefix "pnts_getName", (swig_wrapper_func) _wrap_pnts_getName, NULL},
+    { SWIG_prefix "pnts_getNameAt", (swig_wrapper_func) _wrap_pnts_getNameAt, NULL},
     { SWIG_prefix "pnts_getId", (swig_wrapper_func) _wrap_pnts_getId, NULL},
     { SWIG_prefix "pnts_setName", (swig_wrapper_func) _wrap_pnts_setName, NULL},
     { SWIG_prefix "pnts_del", (swig_wrapper_func) _wrap_pnts_del, NULL},
@@ -47441,6 +47868,7 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "surf_undef", (swig_wrapper_func) _wrap_surf_undef, NULL},
     { SWIG_prefix "surf_info", (swig_wrapper_func) _wrap_surf_info, NULL},
     { SWIG_prefix "surf_getName", (swig_wrapper_func) _wrap_surf_getName, NULL},
+    { SWIG_prefix "surf_getNameAt", (swig_wrapper_func) _wrap_surf_getNameAt, NULL},
     { SWIG_prefix "surf_getId", (swig_wrapper_func) _wrap_surf_getId, NULL},
     { SWIG_prefix "surf_setName", (swig_wrapper_func) _wrap_surf_setName, NULL},
     { SWIG_prefix "surf_del", (swig_wrapper_func) _wrap_surf_del, NULL},
@@ -47458,6 +47886,7 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "mask_from_surf", (swig_wrapper_func) _wrap_mask_from_surf, NULL},
     { SWIG_prefix "mask_apply_to_surf", (swig_wrapper_func) _wrap_mask_apply_to_surf, NULL},
     { SWIG_prefix "mask_getName", (swig_wrapper_func) _wrap_mask_getName, NULL},
+    { SWIG_prefix "mask_getNameAt", (swig_wrapper_func) _wrap_mask_getNameAt, NULL},
     { SWIG_prefix "mask_getId", (swig_wrapper_func) _wrap_mask_getId, NULL},
     { SWIG_prefix "mask_setName", (swig_wrapper_func) _wrap_mask_setName, NULL},
     { SWIG_prefix "mask_del", (swig_wrapper_func) _wrap_mask_del, NULL},
@@ -47494,6 +47923,7 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "curv_write", (swig_wrapper_func) _wrap_curv_write, NULL},
     { SWIG_prefix "curv_save", (swig_wrapper_func) _wrap_curv_save, NULL},
     { SWIG_prefix "curv_getName", (swig_wrapper_func) _wrap_curv_getName, NULL},
+    { SWIG_prefix "curv_getNameAt", (swig_wrapper_func) _wrap_curv_getNameAt, NULL},
     { SWIG_prefix "curv_getId", (swig_wrapper_func) _wrap_curv_getId, NULL},
     { SWIG_prefix "curv_setName", (swig_wrapper_func) _wrap_curv_setName, NULL},
     { SWIG_prefix "curv_del", (swig_wrapper_func) _wrap_curv_del, NULL},
@@ -47508,7 +47938,9 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "cntr_mult_real", (swig_wrapper_func) _wrap_cntr_mult_real, NULL},
     { SWIG_prefix "cntr_div_real", (swig_wrapper_func) _wrap_cntr_div_real, NULL},
     { SWIG_prefix "cntr_to_curv", (swig_wrapper_func) _wrap_cntr_to_curv, NULL},
+    { SWIG_prefix "cntr_to_pnts", (swig_wrapper_func) _wrap_cntr_to_pnts, NULL},
     { SWIG_prefix "cntr_getName", (swig_wrapper_func) _wrap_cntr_getName, NULL},
+    { SWIG_prefix "cntr_getNameAt", (swig_wrapper_func) _wrap_cntr_getNameAt, NULL},
     { SWIG_prefix "cntr_getId", (swig_wrapper_func) _wrap_cntr_getId, NULL},
     { SWIG_prefix "cntr_setName", (swig_wrapper_func) _wrap_cntr_setName, NULL},
     { SWIG_prefix "cntr_del", (swig_wrapper_func) _wrap_cntr_del, NULL},
@@ -47519,6 +47951,7 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "area_write", (swig_wrapper_func) _wrap_area_write, NULL},
     { SWIG_prefix "area_save", (swig_wrapper_func) _wrap_area_save, NULL},
     { SWIG_prefix "area_getName", (swig_wrapper_func) _wrap_area_getName, NULL},
+    { SWIG_prefix "area_getNameAt", (swig_wrapper_func) _wrap_area_getNameAt, NULL},
     { SWIG_prefix "area_getId", (swig_wrapper_func) _wrap_area_getId, NULL},
     { SWIG_prefix "area_setName", (swig_wrapper_func) _wrap_area_setName, NULL},
     { SWIG_prefix "area_del", (swig_wrapper_func) _wrap_area_del, NULL},
@@ -47537,6 +47970,7 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "hist_from_pnts", (swig_wrapper_func) _wrap_hist_from_pnts, NULL},
     { SWIG_prefix "surf_histeq", (swig_wrapper_func) _wrap_surf_histeq, NULL},
     { SWIG_prefix "hist_getName", (swig_wrapper_func) _wrap_hist_getName, NULL},
+    { SWIG_prefix "hist_getNameAt", (swig_wrapper_func) _wrap_hist_getNameAt, NULL},
     { SWIG_prefix "hist_setName", (swig_wrapper_func) _wrap_hist_setName, NULL},
     { SWIG_prefix "hist_del", (swig_wrapper_func) _wrap_hist_del, NULL},
     { SWIG_prefix "hist_size", (swig_wrapper_func) _wrap_hist_size, NULL},

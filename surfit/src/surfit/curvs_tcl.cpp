@@ -1031,7 +1031,7 @@ struct match_contour_leq
 	{
 		if ( StringMatch(cntr_pos, contour->getName()) )
 		{
-			writelog(LOG_MESSAGE,"creating gridding rule contour_leq(\"%s\",%d)",
+			writelog(LOG_MESSAGE,"creating gridding rule contour_leq(\"%s\",%g)",
 				contour->getName(), mult);
 			f_cntr_ineq * f = new f_cntr_ineq(contour, true, mult);
 			functionals_push_back(f);
@@ -1059,7 +1059,7 @@ struct match_contour_geq
 	{
 		if ( StringMatch(cntr_pos, contour->getName()) )
 		{
-			writelog(LOG_MESSAGE,"creating gridding rule contour_geq(\"%s\",%d)",
+			writelog(LOG_MESSAGE,"creating gridding rule contour_geq(\"%s\",%g)",
 				contour->getName(), mult);
 			f_cntr_ineq * f = new f_cntr_ineq(contour, false, mult);
 			functionals_push_back(f);

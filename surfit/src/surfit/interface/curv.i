@@ -81,6 +81,7 @@ surfit::boolvec * curv_save(const char * filename, const char * curv_name = "*")
 
 // other
 surfit::strvec * curv_getName(const char * curv_name = "*");
+const char * curv_getNameAt(int pos);
 surfit::intvec * curv_getId(const char * curv_name = "*");
 surfit::boolvec * curv_setName(const char * new_name, const char * curv_name = "*");
 void curv_del(const char * curv_name = "*");
@@ -105,8 +106,10 @@ surfit::boolvec * cntr_mult_real(REAL value, const char * cntr_name = "*");
 surfit::boolvec * cntr_div_real(REAL value, const char * cntr_name = "*");
 // convers
 surfit::boolvec * cntr_to_curv(const char * cntr_name = "*");
+surfit::boolvec * cntr_to_pnts(REAL step, const char * cntr_name = "*");
 // other
 surfit::strvec * cntr_getName(const char * cntr_name = "*");
+const char * cntr_getNameAt(int pos);
 surfit::intvec * cntr_getId(const char * cntr_name = "*");
 surfit::boolvec * cntr_setName(const char * new_name, const char * cntr_name = "*");
 void cntr_del(const char * cntr_name_or_position);
@@ -125,6 +128,7 @@ surfit::boolvec * area_save(const char * filename, const char * area_name = "*")
 
 // other
 surfit::strvec * area_getName(const char * area_name = "*");
+const char * area_getNameAt(int pos);
 surfit::intvec * area_getId(const char * area_name = "*");
 surfit::boolvec * area_setName(const char * new_name, const char * area_name = "*");
 void area_del(const char * area_name = "*");

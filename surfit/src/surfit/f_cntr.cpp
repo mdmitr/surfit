@@ -65,7 +65,8 @@ void f_cntr::create_f_approx_points() {
 
 	if (pnts == NULL) {
 		d_grid * grd = create_last_grd();
-		pnts = discretize_cntr(contour, grd, contour->getName());
+		//pnts = discretize_cntr8(contour, grd, contour->getName());
+		pnts = discretize_cntr(contour, MIN(grd->stepX, grd->stepY)/2., contour->getName());
 		if (grd)
 			grd->release();
 		if (pnts == NULL)

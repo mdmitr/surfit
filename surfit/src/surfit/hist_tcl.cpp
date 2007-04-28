@@ -92,6 +92,13 @@ strvec * hist_getName(const char * pos)
 	return qq.res;
 };
 
+const char * hist_getNameAt(int pos)
+{
+	if ((size_t)pos > surfit_hists->size())
+		return NULL;
+	return (*surfit_hists)[pos]->getName();
+};
+
 void hist_del(const char * pos) 
 {
 	if (surfit_hists->size() == 0)

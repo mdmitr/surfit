@@ -125,29 +125,33 @@ void solvers_info() {
 	}
 };
 
-void solve(matr * T, const extvec * V, extvec *& X) {
+size_t solve(matr * T, const extvec * V, extvec *& X) {
 
 	if (solver_name == NULL) {
 		writelog(LOG_ERROR,"Solver not found!");
-		return;
+		return 0;
 	}
 	bool solved = false;
+	size_t iters = 0;
 	size_t i;
 	for (i = 0; i < solvers.size(); i++) {
 		solver * slvr = solvers[i];
 		const char * name = slvr->get_short_name();
 		if ( strcmp(name, solver_name) != 0 )
 			continue;
-		slvr->solve(T, V, X);
+		iters = slvr->solve(T, V, X);
 		solved = true;
 		break;
 	}
 	if (!solved)
 		writelog(LOG_ERROR,"Solver not found!");
+	return iters;
 };
 
-bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X) {
-		
+bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X) 
+{
+	int prev_loglevel = loglevel;
+	loglevel = LOG_SILENT;
 	bitvec * test_mask_solved = create_bitvec(method_mask_solved->size());
 	test_mask_solved->init_false();
 	bitvec * test_mask_undefined = create_bitvec(method_mask_solved->size());
@@ -176,27 +180,41 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X) {
 		delete T; 
 		if (V)
 			V->release();
+		loglevel = prev_loglevel;
 		return false;
 	}
 					
 	REAL weight = penalty_weight;
 	REAL x_norm = norm2(X, FLT_MAX);
-	int counter = 0;
+	size_t counter = 0;
 
 	bitvec * parent_mask = create_bitvec(method_mask_solved->size());
 	parent_mask->init_false();
 	fnc->mark_solved_and_undefined(parent_mask, parent_mask, false);
 
+	REAL from = FLT_MAX;
+	REAL to = FLT_MAX;
+	REAL step = FLT_MAX;
+	short prp = 0;
+	size_t iters = 0;
+
 	bool ok = false;
 	while (!ok) {
 
-		if (counter == 0)
-			writelog(LOG_MESSAGE,"processing with penalties...");
-		
 		matr * P_matrix = NULL;
 		extvec * P_vec = NULL;
+		if (counter == 0) 
+			loglevel = prev_loglevel;
 		fnc->cond_make_matrix_and_vector(P_matrix, P_vec, parent_mask);
-			
+		if (counter == 0) 
+			loglevel = LOG_SILENT;
+
+		if (counter == 0) {
+			loglevel = prev_loglevel;
+			writelog2(LOG_MESSAGE,"processing with penalties");
+			loglevel = LOG_SILENT;
+		}
+					
 		size_t matrix_size = X->size();
 			
 		matr_sum * S_matrix = new matr_sum(1, T, weight, P_matrix);
@@ -209,7 +227,7 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X) {
 			(*S_vec)(i) = (*P_vec)(i)*weight + (*V)(i);
 		};
 		
-		solve(S_matrix, S_vec, X);
+		iters += solve(S_matrix, S_vec, X);
 		counter++;
 		
 		delete S_matrix;
@@ -223,7 +241,27 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X) {
 		weight *= penalty_weight_mult;
 		
 		REAL new_norm = norm2(X, FLT_MAX);
-		if ( fabs(x_norm - new_norm) <= tol ) 
+		REAL error = fabs(x_norm - new_norm);
+
+		if (from == FLT_MAX) {
+			from = log10(REAL(1)/error);
+			to = log10(REAL(1)/tol);
+			step = (to-from)/REAL(PROGRESS_POINTS+1);
+			prp = 0;
+		}
+
+		REAL prp_pos = (log10(REAL(1)/error)-from)/step;
+		if (prp_pos > prp ) {
+			short new_prp =MIN(PROGRESS_POINTS,short(prp_pos));
+			short prp_cnt;
+			loglevel = prev_loglevel;
+			for (prp_cnt = 0; prp_cnt < new_prp-prp; prp_cnt++)
+				log_printf(".");
+			loglevel = LOG_SILENT;
+			prp = (short)prp_pos;
+		}
+
+		if ( error <= tol ) 
 			ok = true;
 		else
 			x_norm = new_norm;
@@ -238,6 +276,8 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X) {
 	delete T;
 	if (V)
 		V->release();
+	loglevel = prev_loglevel;
+	log_printf(" %s: %d iterations, penalty: %d iterations \n", get_current_solver_short_name(), iters, counter);
 	return true;
 	
 };

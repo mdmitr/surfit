@@ -210,6 +210,13 @@ strvec * area_getName(const char * pos)
 	return qq.res;
 };
 
+const char * area_getNameAt(int pos)
+{
+	if ((size_t)pos > surfit_areas->size())
+		return NULL;
+	return (*surfit_areas)[pos]->getName();
+};
+
 struct match_area_getId
 {
 	match_area_getId(const char * ipos) : pos(ipos), res(NULL) {} ;

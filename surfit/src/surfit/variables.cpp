@@ -62,7 +62,7 @@ int reproject_faults = 1;
 int reproject_undef_areas = 0;
 int process_isolated_areas = 1;
 
-int penalty_max_iter = 150;
+size_t penalty_max_iter = 150;
 REAL penalty_weight = 1;
 REAL penalty_weight_mult = 2;
 

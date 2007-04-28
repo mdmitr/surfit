@@ -34,6 +34,7 @@ surfit::boolvec * hist_from_pnts(const char * pnts_pos = "*", size_t intervs = 6
 surfit::boolvec * surf_histeq(const char * surf_name = "*", const char * hist_name = NULL);
 
 surfit::strvec * hist_getName(const char * pos = "*");
+const char * hist_getNameAt(int pos);
 surfit::boolvec * hist_setName(const char * new_name, const char * pos = "*");
 void hist_del(const char * pos = "*");
 int hist_size();

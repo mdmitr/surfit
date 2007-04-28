@@ -192,7 +192,8 @@ void functional::cond_mark_solved_and_undefined(bitvec * mask_solved, bitvec * m
 	}
 };
 
-bool functional::cond_make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * parent_mask) {
+bool functional::cond_make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * parent_mask) 
+{
 	matrix = NULL;
 	v = NULL;
 	if ( !cond() ) 
@@ -249,15 +250,14 @@ bool functional::cond_solvable(const bitvec * mask_solved,
 	if (functionals_cond->size() == 0)
 		return true;
 
-	bool res = true;
-	bool res2;
 	int i;
 	for (i = 0; i < (int)functionals_cond->size(); i++) {
 		functional * cond = (*functionals_cond)[i];
-		res2 = cond->solvable(mask_solved, mask_undefined, X);
-		res = res && res2;
+		bool res2 = cond->solvable(mask_solved, mask_undefined, X);
+		if (res2 == false) 
+			return false;
 	}
-	return res;
+	return true;
 }
 
 void functional::cond_erase(int pos) {

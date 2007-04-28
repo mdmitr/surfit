@@ -173,6 +173,17 @@ boolvec * mask_apply_to_surf(const char * mask_name = "*", const char * surface_
 strvec * mask_getName(const char * mask_name = "*");
 
 /*! \ingroup tcl_mask_other
+    \fn const char * mask_getNameAt(int pos);
+    
+    \par Tcl syntax:
+    mask_getNameAt position
+
+    \par Description:
+    returns name of \ref d_mask at position "pos"
+*/
+const char * mask_getNameAt(int pos);
+
+/*! \ingroup tcl_mask_other
     \fn const char * mask_getId(const char * mask_name = "*");
 
     \par Tcl syntax:

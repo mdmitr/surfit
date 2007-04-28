@@ -38,8 +38,11 @@ using namespace std;
 
 namespace surfit {
 
-extvec * CG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value) {
+extvec * CG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, size_t & iters, REAL undef_value) 
+{
 	writelog2(LOG_MESSAGE,"cg: (%d) ", b->size());
+
+	iters = 0;
 
 	time_t ltime_begin;
 	time( &ltime_begin );
@@ -198,6 +201,8 @@ extvec * CG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL 
 			log_printf(" iter : %d, error : %12.6G, %d min %G sec\n", iter, error, minutes, sec);
 		else
 			log_printf(" iter : %d, error : %12.6G, %G sec\n", iter, error, sec);
+
+		iters = (size_t)iter;
 		
 		return x;
 #ifdef HAVE_THREADS
@@ -329,6 +334,7 @@ extvec * CG(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL 
 		else
 			log_printf(" iter : %d, error : %12.6G, %G sec\n", iter, error, sec);
 		
+		iters = (size_t)iter;
 		return x;
 
 	}

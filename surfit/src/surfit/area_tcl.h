@@ -119,6 +119,17 @@ boolvec * area_save(const char * filename, const char * area_name = "*");
 strvec * area_getName(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
+    \fn const char * area_getNameAt(int pos);
+    
+    \par Tcl syntax:
+    area_getNameAt position
+
+    \par Description:
+    returns name of \ref d_area at position "pos"
+*/
+const char * area_getNameAt(int pos);
+
+/*! \ingroup tcl_area_other
     \fn int area_getId(const char * area_name = "*");
 
     \par Tcl syntax:

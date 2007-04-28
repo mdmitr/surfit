@@ -158,6 +158,17 @@ boolvec * cntr_div_real(REAL value, const char * cntr_name = "*");
 */
 boolvec * cntr_to_curv(const char * cntr_name = "*");
 
+/*! \ingroup tcl_cntr_conv
+    \fn bool cntr_to_pnts(REAL step, const char * cntr_name = "*");
+    
+    \par Tcl syntax:
+    cntr_to_pnts \ref str "cntr_name" step
+
+    \par Description:
+    makes \ref d_points "points" from \ref d_cntr "contour" 
+*/
+boolvec * cntr_to_pnts(REAL step, const char * cntr_name = "*");
+
 ///////////////
 // other
 
@@ -171,6 +182,17 @@ boolvec * cntr_to_curv(const char * cntr_name = "*");
     returns name of \ref d_cntr "contour"
 */
 strvec * cntr_getName(const char * cntr_name = "*");
+
+/*! \ingroup tcl_cntr_other
+    \fn const char * cntr_getNameAt(int pos);
+    
+    \par Tcl syntax:
+    cntr_getNameAt position
+
+    \par Description:
+    returns name of \ref d_cntr at position "pos"
+*/
+const char * cntr_getNameAt(int pos);
 
 /*! \ingroup tcl_cntr_other
     \fn int cntr_getId(const char * contour_name = "*");

@@ -698,7 +698,12 @@ three_columns_read_failed:
 bool three_columns_write(const char * filename, const char * mask,
 			 const vec * vcol1, const vec * vcol2, const vec * vcol3) 
 {
-	FILE * file = fopen(filename, "w");
+	FILE * file;
+	if (fileio_append)
+		file = fopen(filename, "a");
+	else
+		file = fopen(filename, "w");
+
 	if (!file) {
 		writelog(LOG_WARNING, "Writing three-columns file: NULL pointer to file.");
 		return false;

@@ -73,6 +73,17 @@ boolvec * hist_from_pnts(const char * points_name = "*", size_t intervs = 64, RE
 
 strvec * hist_getName(const char * pos = "*");
 
+/*! \ingroup tcl_hist_other
+    \fn const char * hist_getNameAt(int pos);
+    
+    \par Tcl syntax:
+    hist_getNameAt position
+
+    \par Description:
+    returns name of \ref d_hist at position "pos"
+*/
+const char * hist_getNameAt(int pos);
+
 boolvec * hist_setName(const char * new_name, const char * pos = "*");
 
 void hist_del(const char * pos = "*");

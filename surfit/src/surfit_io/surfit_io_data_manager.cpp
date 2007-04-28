@@ -67,10 +67,9 @@ boolvec * load_ESRI_shape(const char * filename, const char * name) {
 
 bool surfit_io_manager::auto_load(const char * filename, const char * first1024, int readed) const
 {
-	
 	char * ext = get_ext(filename);
 	char * uext = strdup(ext);
-	str_toupper(uext);
+        str_toupper(uext);
 	char * name = get_name(filename);
 	char * uname = strdup(name);
 	str_toupper(uname);

@@ -53,10 +53,11 @@ REAL make_iter(matr * A, const extvec * B, REAL tau, extvec * x_0, extvec * x_1,
 	return err;
 };
 
-extvec * RF(matr * A, const extvec * b, int max_it, REAL tol, extvec * X, REAL undef_value) {
+extvec * RF(matr * A, const extvec * b, int max_it, REAL tol, extvec * X, size_t & iters, REAL undef_value) {
 	
 	writelog2(LOG_MESSAGE,"rf: (%d) ",b->size());
 
+	iters = 0;
 	extvec * x_0 = NULL;
 	if (!X) {
 		x_0 = create_extvec(b->size());
@@ -116,6 +117,7 @@ extvec * RF(matr * A, const extvec * b, int max_it, REAL tol, extvec * X, REAL u
 	
 	log_printf(" error : %lf iter : %d\n", err, iter);
 
+	iters = (size_t)iter;
 	return x_1;
 };
 

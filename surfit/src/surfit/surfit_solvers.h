@@ -37,8 +37,10 @@ struct solver_rf : public solver {
 	~solver_rf() {
 		remove_solver(this);
 	}
-	virtual void solve(matr * T, const extvec * V, extvec *& X) { 
-		X = RF(T,V,V->size()*SOLVER_MAX_ITER,tol,X);
+	virtual size_t solve(matr * T, const extvec * V, extvec *& X) { 
+		size_t iters;
+		X = RF(T,V,V->size()*SOLVER_MAX_ITER,tol,X,iters);
+		return iters;
 	};
 	virtual const char * get_short_name() const { return "rf"; };
 	virtual const char * get_long_name() const { return "Richardson's method with Fixed parameter - Optimally Extrapolated"; };
@@ -53,8 +55,10 @@ struct solver_cg : public solver {
 	~solver_cg() {
 		remove_solver(this);
 	}
-	virtual void solve(matr * T, const extvec * V, extvec *& X) { 
-		X = CG(T,V,V->size()*SOLVER_MAX_ITER,tol,X,FLT_MAX);
+	virtual size_t solve(matr * T, const extvec * V, extvec *& X) { 
+		size_t iters;
+		X = CG(T,V,V->size()*SOLVER_MAX_ITER,tol,X,iters,FLT_MAX);
+		return iters;
 	};
 	virtual const char * get_short_name() const { return "cg"; };
 	virtual const char * get_long_name() const { return "Conjugate Gradients"; };
@@ -67,8 +71,10 @@ struct solver_jacobi : public solver {
 	~solver_jacobi() {
 		remove_solver(this);
 	}
-	virtual void solve(matr * T, const extvec * V, extvec *& X) { 
-		X = J(T,V,V->size()*SOLVER_MAX_ITER,tol,X);
+	virtual size_t solve(matr * T, const extvec * V, extvec *& X) { 
+		size_t iters;
+		X = J(T,V,V->size()*SOLVER_MAX_ITER,tol,X,iters);
+		return iters;
 	};
 	virtual const char * get_short_name() const { return "jacobi"; };
 	virtual const char * get_long_name() const { return "Jacobi"; };
@@ -81,8 +87,10 @@ struct solver_jcg : public solver {
 	~solver_jcg() {
 		remove_solver(this);
 	}
-	virtual void solve(matr * T, const extvec * V, extvec *& X) { 
-		X = JCG(T,V,V->size()*SOLVER_MAX_ITER,tol,X,FLT_MAX);
+	virtual size_t solve(matr * T, const extvec * V, extvec *& X) { 
+		size_t iters;
+		X = JCG(T,V,V->size()*SOLVER_MAX_ITER,tol,X,iters,FLT_MAX);
+		return iters;
 	};
 	virtual const char * get_short_name() const { return "jcg"; };
 	virtual const char * get_long_name() const { return "Jacobi Conjugate Gradients"; };
@@ -95,8 +103,10 @@ struct solver_ssor : public solver {
 	~solver_ssor() {
 		remove_solver(this);
 	}
-	virtual void solve(matr * T, const extvec * V, extvec *& X) { 
-		X = SSOR(T,V,V->size()*SOLVER_MAX_ITER,tol,X);
+	virtual size_t solve(matr * T, const extvec * V, extvec *& X) { 
+		size_t iters;
+		X = SSOR(T,V,V->size()*SOLVER_MAX_ITER,tol,X,iters);
+		return iters;
 	};
 	virtual const char * get_short_name() const { return "ssor"; };
 	virtual const char * get_long_name() const { return "Symmetric Successive OverRelaxation"; };

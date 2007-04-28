@@ -25,6 +25,8 @@
 #include "strvec.h"
 #include "boolvec.h"
 #include "intvec.h"
+#include "grid_user.h"
+#include "points.h"
 
 #include "cntr.h"
 #include "cntr_tcl.h"
@@ -86,7 +88,7 @@ boolvec * cntr_load(const char * filename, const char * cntrname)
 
 struct match_cntr_write
 {
-	match_cntr_write(const char * ifilename, const char * ipos, const char * idelimiter) : filename(ifilename), pos(ipos), delimiter(idelimiter), res(NULL) {};
+	match_cntr_write(const char * ifilename, const char * ipos, const char * idelimiter) : filename(ifilename), pos(ipos), delimiter(idelimiter), res(NULL), first(false) {};
 	void operator()(d_cntr * cntr)
 	{
 		if ( StringMatch(pos, cntr->getName()) )
@@ -99,19 +101,26 @@ struct match_cntr_write
 			strcat( buf, "%lf" );
 			strcat( buf, delimiter );
 			strcat( buf, "%lf\n" );
+			if (first == false)
+				fileio_append = false;
+			else
+				fileio_append = true;
 			res->push_back( _cntr_write(cntr, filename, buf) );
+			first = true;
 		}
 	}
 	const char * filename;
 	const char * pos;
 	const char * delimiter;
 	boolvec * res;
+	bool first;
 };
 
 boolvec * cntr_write(const char * filename, const char * pos, const char * delimiter) 
 {
 	match_cntr_write qq(filename, pos, delimiter);
 	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
+	fileio_append = false;
 	return qq.res;
 };
 
@@ -257,6 +266,28 @@ boolvec * cntr_to_curv(const char * pos)
 	return res;
 };
 
+boolvec * cntr_to_pnts(REAL step, const char * pos) 
+{
+	boolvec * res = create_boolvec();
+	size_t i;
+	for (i = 0; i < surfit_cntrs->size(); i++)
+	{
+		d_cntr * cntr = (*surfit_cntrs)[i];
+		if (StringMatch(pos, cntr->getName()) == false)
+			continue;
+		writelog(LOG_MESSAGE,"converting contour \"%s\" to points", cntr->getName());
+		d_points * pnts = discretize_cntr(cntr, step, cntr->getName());
+		if (pnts) {
+			surfit_pnts->push_back(pnts);
+			res->push_back(true);
+		} else {
+			res->push_back(false);
+		}
+		
+	}
+	return res;
+};
+
 struct match_cntr_setName
 {
 	match_cntr_setName(const char * inew_name, const char * ipos) : new_name(inew_name), pos(ipos), res(NULL) {};
@@ -303,6 +334,13 @@ strvec * cntr_getName(const char * pos)
 	match_cntr_getName qq(pos);
 	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
 	return qq.res;
+};
+
+const char * cntr_getNameAt(int pos)
+{
+	if ((size_t)pos > surfit_cntrs->size())
+		return NULL;
+	return (*surfit_cntrs)[pos]->getName();
 };
 
 struct match_cntr_getId

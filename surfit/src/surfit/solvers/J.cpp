@@ -32,10 +32,11 @@ using namespace std;
 
 namespace surfit {
 
-extvec * J(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL undef_value) {
+extvec * J(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, size_t & iters, REAL undef_value) {
 
 	int flag = 0;                                // initialization
 	int iter = 0;
+	iters = 0;
 	
 	REAL bnrm2 = norm2( b );
 	if  ( bnrm2 == REAL(0) )
@@ -102,6 +103,8 @@ extvec * J(matr * A, const extvec * b, int max_it, REAL tol, extvec *& X, REAL u
 		x_1->release();
 	
 	log_printf("error : %12.6G iter : %d\n", error, iter);
+
+	iters = (size_t)iter;
 
 	return x;
 	

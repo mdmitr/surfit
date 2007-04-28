@@ -50,8 +50,9 @@ char * debug = "Debug: ";
 
 FILE * logfile = NULL;
 char * logfilename = NULL;
-int loglevel = 1;
+int loglevel = LOG_MESSAGE;
 int stop_on_error = 1;
+bool fileio_append = false;
 // 0 - General messages
 // 1 - Error messages
 // 2 - Warning messages
@@ -72,7 +73,8 @@ struct fileio_garbage {
 fileio_garbage garb2;
 
 void log_printf(const char *tmplt, ...) {
-	
+	if (loglevel == LOG_SILENT)
+		return;
 	Tcl_Channel out;
 	if (interp) {
 		out = Tcl_GetStdChannel(TCL_STDOUT);
@@ -105,7 +107,10 @@ void log_printf(const char *tmplt, ...) {
 };
 
 void writelog (int errlevel, const char *tmplt, ...) {
-	if (errlevel > loglevel) return;
+	if (loglevel == LOG_SILENT)
+		return;
+	if (errlevel > loglevel) 
+		return;
 
 	Tcl_Channel out;
 	if (interp) {
@@ -197,6 +202,8 @@ void writelog (int errlevel, const char *tmplt, ...) {
 };
 
 void writelog2 (int errlevel, const char *tmplt, ...) {
+	if (loglevel == LOG_SILENT)
+		return;
 	if (errlevel > loglevel) return;
 
 	Tcl_Channel out;
@@ -286,7 +293,8 @@ void writelog2 (int errlevel, const char *tmplt, ...) {
 };
 
 void Tcl_printf (const char *tmplt, ...) {
-
+	if (loglevel == LOG_SILENT)
+		return;
 	if (!interp)
 		return;
 

@@ -101,6 +101,17 @@ boolvec * curv_save(const char * filename, const char * curv_name = "*");
 */
 strvec * curv_getName(const char * curv_name = "*");
 
+/*! \ingroup tcl_curv_other
+    \fn const char * curv_getNameAt(int pos);
+    
+    \par Tcl syntax:
+    curv_getNameAt position
+
+    \par Description:
+    returns name of \ref d_curv at position "pos"
+*/
+const char * curv_getNameAt(int pos);
+
 /*! \ingroup tcl_surf_other
     \fn int curv_getId(const char * curve_name = "*");
 

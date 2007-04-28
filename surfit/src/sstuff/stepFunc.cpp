@@ -31,6 +31,8 @@ namespace surfit {
 double stepFunc(double StartX, double EndX, int amount) {
 	if (StartX > EndX) return 0.;
 	double step = (EndX - StartX)/(double)amount;
+	if (step == 0)
+		return step;
 
 	int n = 0;
 	double a = log(step)/log(10.);

@@ -30,8 +30,11 @@ namespace surfit {
 #define LOG_ERROR 2
 #define LOG_WARNING 3
 #define LOG_DEBUG 4
+#define LOG_SILENT 5
 
 extern SSTUFF_EXPORT int stop_on_error;
+extern SSTUFF_EXPORT int loglevel;
+extern SSTUFF_EXPORT bool fileio_append;
 
 SSTUFF_EXPORT
 /*! \ingroup internal

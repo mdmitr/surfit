@@ -189,6 +189,13 @@ strvec * curv_getName(const char * pos)
 	return qq.res;
 };
 
+const char * curv_getNameAt(int pos)
+{
+	if ((size_t)pos > surfit_curvs->size())
+		return NULL;
+	return (*surfit_curvs)[pos]->getName();
+};
+
 struct match_curv_getId
 {
 	match_curv_getId(const char * ipos) : pos(ipos), res(NULL) {};

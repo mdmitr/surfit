@@ -213,7 +213,7 @@ boolvec * pnts_read(const char * filename, const char * pntsname, int col1, int 
 
 struct match_pnts_write
 {
-	match_pnts_write(const char * ifilename, const char * ipos, const char * idelimiter) : filename(ifilename), pos(ipos), delimiter(idelimiter), res(NULL) {};
+	match_pnts_write(const char * ifilename, const char * ipos, const char * idelimiter) : filename(ifilename), pos(ipos), delimiter(idelimiter), res(NULL), first(false) {};
 	void operator()(d_points * pnts)
 	{
 		if ( StringMatch(pos, pnts->getName()) )
@@ -228,19 +228,26 @@ struct match_pnts_write
 			strcat( buf, "%lf" );
 			strcat( buf, delimiter );
 			strcat( buf, "\n" );
+			if (first == false)
+				fileio_append = false;
+			else
+				fileio_append = true;
 			res->push_back ( _pnts_write(pnts, filename, buf) );
+			first = true;
 		}
 	}
 	const char * filename;
 	const char * pos;
 	const char * delimiter;
 	boolvec * res;
+	bool first;
 };
 
 boolvec * pnts_write(const char * filename, const char * pos, const char * delimiter) 
 {
 	match_pnts_write qq(filename, pos, delimiter);
 	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+	fileio_append = false;
 	return qq.res;
 };
 
@@ -1257,6 +1264,13 @@ strvec * pnts_getName(const char * pos)
 	match_pnts_getName qq(pos);
 	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
 	return qq.res;
+};
+
+const char * pnts_getNameAt(int pos)
+{
+	if ((size_t)pos > surfit_pnts->size())
+		return NULL;
+	return (*surfit_pnts)[pos]->getName();
 };
 
 struct match_pnts_getId {

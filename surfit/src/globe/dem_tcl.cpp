@@ -992,6 +992,13 @@ strvec * dem_getName(const char * pos)
 	return qq.res;
 };
 
+const char * dem_getNameAt(int pos)
+{
+	if ((size_t)pos > globe_dems->size())
+		return NULL;
+	return (*globe_dems)[pos]->getName();
+};
+
 struct match_dem_getId
 {
 	match_dem_getId(const char * ipos) : pos(ipos), res(NULL) {};

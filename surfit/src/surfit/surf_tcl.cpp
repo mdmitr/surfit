@@ -1659,6 +1659,13 @@ strvec * surf_getName(const char * pos)
 	return qq.res;
 };
 
+const char * surf_getNameAt(int pos)
+{
+	if ((size_t)pos > surfit_surfs->size())
+		return NULL;
+	return (*surfit_surfs)[pos]->getName();
+};
+
 struct match_surf_getId {
 	match_surf_getId(const char * ipos) : pos(ipos), res(NULL) {};
 	void operator()(d_surf * surf)

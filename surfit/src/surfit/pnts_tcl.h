@@ -499,6 +499,17 @@ intvec * pnts_getCount(const char * points_name = "*");
 strvec * pnts_getName(const char * points_name = "*");
 
 /*! \ingroup tcl_pnts_other
+    \fn const char * pnts_getNameAt(int pos);
+    
+    \par Tcl syntax:
+    pnts_getNameAt position
+
+    \par Description:
+    returns name of \ref d_points at position "pos"
+*/
+const char * pnts_getNameAt(int pos);
+
+/*! \ingroup tcl_pnts_other
     \fn int pnts_getId(const char * points_name = "*");
 
     \par Tcl syntax:

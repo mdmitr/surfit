@@ -171,7 +171,7 @@ bool f_area_ineq::solvable_without_cond(const bitvec * mask_solved,
 
 	get_area_mask();
 	if (area_mask == NULL)
-		return false;
+		return true;
 	
 	size_t i;
 		
