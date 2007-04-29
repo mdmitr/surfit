@@ -625,7 +625,7 @@ dems_container * globe_dems = NULL;
 struct dem_garbage : public binman {
 	//! inits \ref globe_dem and \ref globe_dems
 	dem_garbage() {
-		globe_dems = new std::vector<d_dem *>;
+		globe_dems = new dems_container();
 	};
 	//! removes \ref globe_dem and \ref globe_dems
 	~dem_garbage() {
