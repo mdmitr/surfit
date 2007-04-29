@@ -216,7 +216,7 @@ bool _area_load_shp(const char * filename, const char * areaname) {
 	hSHP = SHPOpen(filename, "rb");
 	if( hSHP == NULL ) {
 		writelog(LOG_ERROR, "Unable to open:%s", filename );
-		return NULL;
+		return false;
 	}
 
 	int shpType;
@@ -226,14 +226,14 @@ bool _area_load_shp(const char * filename, const char * areaname) {
 	if (shpType != SHPT_POLYGON) {
 		SHPClose( hSHP );
 		writelog(LOG_ERROR, "%s : Wrong shape type!", filename);
-		return NULL;
+		return false;
 	}
 
 	hDBF = DBFOpen(filename, "rb");
 	if( hDBF == NULL ) {
 		SHPClose(hSHP);
 		writelog(LOG_ERROR, "Unable to open DBF for %s", filename );
-		return NULL;
+		return false;
 	}
 
 	int name_field = DBFGetFieldIndex( hDBF, "NAME" );
@@ -242,7 +242,7 @@ bool _area_load_shp(const char * filename, const char * areaname) {
 		SHPClose( hSHP );
 		DBFClose( hDBF );
 		writelog(LOG_ERROR, "Cannot find parameter \"%s\" in DBF file", "NAME");
-		return NULL;
+		return false;
 	};
 
 	int dbf_records = DBFGetRecordCount( hDBF );
