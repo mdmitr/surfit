@@ -59,19 +59,25 @@ d_points * _surf_to_pnts(const d_surf * srf) {
 		return NULL;
 	}
 
-	vec * Z = create_vec(*(srf->coeff));
-	vec * X = create_vec(srf->coeff->size());
-	vec * Y = create_vec(srf->coeff->size());
+	size_t size = srf->getCountX()*srf->getCountY();
+	vec * Z = create_vec();
+	Z->reserve(size);
+	vec * X = create_vec();
+	X->reserve(size);
+	vec * Y = create_vec();
+	Y->reserve(size);
 	
-	vec::iterator X_ptr = X->begin();
-	vec::iterator Y_ptr = Y->begin();
-
 	size_t i,j;
+	REAL x, y, z;
 	for (j = 0; j < srf->getCountY(); j++) {
 		for (i = 0; i < srf->getCountX(); i++) {
-			srf->getCoordNode(i,j,*X_ptr,*Y_ptr);
-			X_ptr++;
-			Y_ptr++;
+			z = srf->getValueIJ(i,j);
+			if (z == srf->undef_value)
+				continue;
+			srf->getCoordNode(i,j,x,y);
+			X->push_back(x);
+			Y->push_back(y);
+			Z->push_back(z);
 		}
 	}
 
