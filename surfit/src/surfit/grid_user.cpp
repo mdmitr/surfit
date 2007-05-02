@@ -367,6 +367,7 @@ void grid_finish() {
 		return;		
 	}
 
+	// solve problem with undefined values and projections
 	{
 		size_t i;
 		REAL mean = 0;
@@ -473,18 +474,6 @@ void grid_finish() {
 	if (use_fast_project)
 	{
 		project_vector<extvec,extvec::iterator>(method_X, method_grid->getCountX(), method_grid->getCountY(), doubleX, doubleY);
-/*
-		if (projectors->size() > 0) {
-			d_grid * new_grid = create_calc_grd(method_basis_cntX, method_basis_cntY);
-			size_t i;
-			for (i = 0; i < projectors->size(); i++) {
-				projector * proj = (*projectors)[i];
-				proj->modify(method_X, new_grid);
-			}
-			new_grid->release();
-		}
-		*/
-
 	} else {
 		d_surf * current_surf = create_surf(method_X, method_grid, map_name);
 		d_surf * projected_surf = NULL;
@@ -510,18 +499,6 @@ void grid_finish() {
 		method_grid = projected_surf->grd;
 		projected_surf->grd = NULL;
 		projected_surf->release();
-/*
-		if (projectors->size() > 0) {
-			d_grid * new_grid = create_calc_grd(method_basis_cntX, method_basis_cntY);
-			size_t i;
-			for (i = 0; i < projectors->size(); i++) {
-				projector * proj = (*projectors)[i];
-				proj->modify(method_X, new_grid);
-			}
-			new_grid->release();
-		}
-		*/
-
 	}
 		
 	
