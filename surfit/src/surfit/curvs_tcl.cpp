@@ -41,6 +41,7 @@
 #include "f_curv_surf.h"
 #include "f_curv_surf_ineq.h"
 #include "f_completer.h"
+#include "f_fault.h"
 #include "variables_tcl.h"
 #include "interp.h"
 #include "boolvec.h"
@@ -59,28 +60,9 @@ struct match_fault
 			writelog(LOG_MESSAGE,"creating gridding rule fault(\"%s\")",fault->getName());
 			if (res == NULL)
 				res = create_boolvec();
-			if (functionals->size() == 0) {
-				writelog(LOG_WARNING,"No gridding rule modifiable with \"fault\" rule present!");
-				res->push_back(false);
-				return;
-			}
-
-			functional * srf = *(functionals->end()-1);
-
-			if ((srf->getType() & F_FAULT) == 0) {
-				writelog(LOG_WARNING,"\"%s\" rule is not modifiable with \"fault\" rule!", srf->getName());
-				res->push_back(false);
-				return;
-			}
-
-			faultable * f = static_cast<faultable *>(srf);
-			if (f == NULL) {
-				writelog(LOG_WARNING,"No gridding rule modifiable with \"fault\" rule present!");
-				res->push_back(false);
-				return;
-			}
-	
-			f->add_fault(fault);
+			
+			f_fault * f = new f_fault(fault);
+			functionals_push_back(f);
 			res->push_back(true);
 		}
 	}

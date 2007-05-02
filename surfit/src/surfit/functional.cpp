@@ -44,6 +44,7 @@ functional::functional(const char * newname, int itype) {
 	weights = new std::vector<REAL>();
 	functionals_cond = new std::vector<functional *>;
 	type = itype;
+	pos = INT_MAX;
 };
 
 functional::~functional() {
@@ -87,6 +88,12 @@ int functional::getType() const {
 };
 
 void functional::add_functional(functional * isum, REAL iweights) {
+	if (isum->getType() == F_MODIFIER)
+	{
+		assert(0);
+		return;
+	}
+	isum->set_pos(get_pos());
 	functionals_add->push_back(isum);
 	weights->push_back(iweights);
 };
@@ -154,6 +161,8 @@ void functional::info() {
 
 // cond
 void functional::cond_add(functional * icond) {
+	if (icond->getType() == F_MODIFIER)
+		return;
 	functionals_cond->push_back(icond);
 };
 
@@ -319,6 +328,16 @@ bool functional::solvable(const bitvec * mask_solved,
 void functional::drop_private_data() {};
 
 void functional::cleanup() {};
+
+size_t functional::get_pos() const
+{
+	return pos;
+};
+
+void functional::set_pos(size_t ipos)
+{
+	pos = ipos;
+};
 
 //
 // faultable

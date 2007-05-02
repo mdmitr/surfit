@@ -31,7 +31,7 @@
 namespace surfit {
 
 f_mean::f_mean(REAL imean, REAL imult) :
-functional("f_mean", F_CONDI) 
+functional("f_mean", F_CONDITION) 
 {
 	mean = imean;
 	mult = imult;

@@ -6015,6 +6015,10 @@
 							/>
 						</FileConfiguration>
 					</File>
+					<File
+						RelativePath="..\src\surfit\f_fault.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="surfs.cpp"
@@ -7054,6 +7058,10 @@
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_curv_surf_ineq.h"
+						>
+					</File>
+					<File
+						RelativePath="..\src\surfit\f_fault.h"
 						>
 					</File>
 				</Filter>

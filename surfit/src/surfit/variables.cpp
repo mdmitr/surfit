@@ -179,6 +179,7 @@ float get_tol() {
 };
 
 void functionals_push_back(functional * f) {
+	f->set_pos(functionals->size());
 	functionals->push_back(f);
 };
 

@@ -36,7 +36,7 @@ class matr;
     \brief Functional that tells how resulting surface should be in areas 
     of low information density.
 */
-class f_completer : public faultable {
+class f_completer : public functional {
 public:
 
 	//! constructor
@@ -88,6 +88,9 @@ private:
 
 	bitvec * saved_mask_solved;
 	bitvec * saved_mask_undefined;
+
+	//! fault lines projected on \ref d_grid
+	grid_line * gfaults;
 
 };
 

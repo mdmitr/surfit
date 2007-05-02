@@ -33,7 +33,7 @@ class d_grid;
     \brief Functional that looks like \ref f_completer, but uses surface 
     to calculate differences between cells values.
 */
-class SURFIT_EXPORT f_trend : public faultable {
+class SURFIT_EXPORT f_trend : public functional {
 public:
 	//! constructor
 	f_trend(REAL iD1, REAL iD2, const d_surf * isrf);
@@ -82,6 +82,9 @@ protected:
 
 	//! calculates surface for limits
 	void get_tr_srf(size_t & i_from, size_t & i_to, size_t & j_from, size_t & j_to);
+
+	//! fault lines projected on \ref d_grid
+	grid_line * gfaults;
 
 };
 

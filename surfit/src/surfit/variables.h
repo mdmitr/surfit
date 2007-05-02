@@ -41,7 +41,7 @@ namespace surfit {
 	//
 
 	class functional;
-	extern std::vector<functional*> * functionals;
+	extern SURFIT_EXPORT std::vector<functional*> * functionals;
 
 	SURFIT_EXPORT 
 	void functionals_push_back(functional * f);

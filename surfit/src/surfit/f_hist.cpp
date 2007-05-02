@@ -38,7 +38,7 @@
 namespace surfit {
 
 f_hist::f_hist(const d_hist * ihst, REAL imult) :
-functional("f_hist", F_CONDI) 
+functional("f_hist", F_CONDITION) 
 {
 	hist = ihst;
 	mult = imult;

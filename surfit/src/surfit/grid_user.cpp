@@ -474,6 +474,15 @@ void grid_finish() {
 	if (use_fast_project)
 	{
 		project_vector<extvec,extvec::iterator>(method_X, method_grid->getCountX(), method_grid->getCountY(), doubleX, doubleY);
+
+		// check for faults
+		grid_line * faults = NULL;
+		size_t i;
+		for (i = 0; i < functionals->size(); i++)
+		{
+			
+		}
+		
 	} else {
 		d_surf * current_surf = create_surf(method_X, method_grid, map_name);
 		d_surf * projected_surf = NULL;

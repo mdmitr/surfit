@@ -34,7 +34,7 @@
 namespace surfit {
 
 f_surf_ineq::f_surf_ineq(const d_surf * isrf, bool ileq, REAL imult) :
-functional("f_surf_ineq", F_CONDI)
+functional("f_surf_ineq", F_CONDITION)
 {
 	leq = ileq;
 	srf = isrf;

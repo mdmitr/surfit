@@ -31,7 +31,7 @@
 namespace surfit {
 
 f_curv_surf_ineq::f_curv_surf_ineq(const d_surf * isrf, const d_curv * icrv, bool ileq, REAL imult) :
-functional("f_curv_surf_ineq", F_CONDI)
+functional("f_curv_surf_ineq", F_CONDITION)
 {
 	crv = icrv;
 	srf = isrf;

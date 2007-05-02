@@ -28,7 +28,7 @@ class curv;
 class grid_line;
 class bitvec;
 
-class f_lcm_simple : public faultable {
+class f_lcm_simple : public functional {
 public:
 
 	//! constructor
@@ -72,6 +72,9 @@ private:
 
 	//! multiplier coefficient for Darcy law: speed = - permeability/viscosity*multiplier * grad(pressure)
 	REAL multiplier;   
+
+	//! fault lines projected on \ref d_grid
+	grid_line * gfaults;
 
 };
 

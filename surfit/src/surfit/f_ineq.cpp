@@ -33,7 +33,7 @@
 namespace surfit {
 
 f_ineq::f_ineq(REAL ivalue, bool ileq, REAL imult) :
-functional("f_ineq", F_CONDI)
+functional("f_ineq", F_CONDITION)
 {
 	leq = ileq;
 	value = ivalue;

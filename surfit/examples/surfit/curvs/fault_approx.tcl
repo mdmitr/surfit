@@ -46,9 +46,6 @@ grid_get 1 99 1 -50 50 1
 ## create gridding rules
 ##
 
-# resulting surface should tend to be constant or plane 
-completer 0.5 2  
-
 # fault line 
 fault "flt_line1"  
 
@@ -60,6 +57,9 @@ fault "flt_line3"
 
 # fault line 
 fault "flt_line4"  
+
+# resulting surface should tend to be constant or plane 
+completer 0.5 2  
 
 # add "resulting surface at points = points values" with weight 
 points_add 1 "11points" 

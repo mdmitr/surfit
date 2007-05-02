@@ -34,9 +34,9 @@ class intvec;
 class extvec;
 class d_grid;
 
-#define F_USUAL	0x00000001
-#define F_FAULT	0x00000010
-#define F_CONDI 0x00000100  // this is a condition
+#define F_USUAL		0x00000001
+#define F_CONDITION	0x00000010 // this is a condition
+#define F_MODIFIER	0x00000100 // this functional can modify other funcitonals, next in the sequence
 
 /*! \class functional
     \brief abstract concept of functional
@@ -141,6 +141,12 @@ public:
 	//! removes all functionals from \ref functionals_cond array
 	void cond_erase_all();
 
+	//! returns functional position in functionals sequence
+	size_t get_pos() const;
+
+	//! sets functional position in funcitonals sequence
+	void set_pos(size_t ipos);
+
 protected:
 
 	//! returns number of \ref data refered to this functional only
@@ -174,6 +180,9 @@ protected:
 
 	//! functional type
 	int type;
+
+	//! functional number in sequence
+	size_t pos;
 
 };
 

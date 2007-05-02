@@ -35,7 +35,7 @@
 namespace surfit {
 
 f_mask_mean::f_mask_mean(REAL imean, const d_mask * imask, REAL imult) :
-functional("f_mask_mean", F_CONDI) 
+functional("f_mask_mean", F_CONDITION) 
 {
 	mean = imean;
 	mask = imask;

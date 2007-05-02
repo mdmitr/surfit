@@ -41,7 +41,7 @@
 namespace surfit {
 
 f_area_hist::f_area_hist(const d_area * iarea, const d_hist * ihst, REAL imult, bool iinside) :
-functional("f_area_hist", F_CONDI) 
+functional("f_area_hist", F_CONDITION) 
 {
 	hist = ihst;
 	mult = imult;

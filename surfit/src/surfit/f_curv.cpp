@@ -29,7 +29,7 @@
 namespace surfit {
 
 f_curv::f_curv(REAL ivalue, const d_curv * icrv) :
-functional("f_curv", F_CONDI)
+functional("f_curv", F_CONDITION)
 {
 	crv = icrv;
 	value = ivalue;

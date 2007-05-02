@@ -34,7 +34,7 @@
 namespace surfit {
 
 f_mask_ineq::f_mask_ineq(REAL ivalue, const d_mask * imask, bool ileq, REAL imult) :
-functional("f_mask_ineq", F_CONDI)
+functional("f_mask_ineq", F_CONDITION)
 {
 	leq = ileq;
 	value = ivalue;

@@ -36,7 +36,7 @@
 namespace surfit {
 
 f_mask_surf_ineq::f_mask_surf_ineq(const d_surf * ifnc, const d_mask * imask, bool ileq, REAL imult) :
-functional("f_mask_surf_ineq", F_CONDI)
+functional("f_mask_surf_ineq", F_CONDITION)
 {
 	leq = ileq;
 	mult = imult;

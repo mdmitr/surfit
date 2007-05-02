@@ -33,6 +33,8 @@
 #include "variables_tcl.h"
 #include "solvers.h"
 #include "f_completer.h"
+#include "f_fault.h"
+#include "variables.h"
 
 #include "grid_user.h"
 #include "grid_line_user.h"
@@ -40,12 +42,13 @@
 namespace surfit {
 
 f_lcm_simple::f_lcm_simple(REAL ipermeability, REAL iviscosity, REAL imultiplier) :
-faultable("f_lcm_simple", F_USUAL|F_FAULT) 
+functional("f_lcm_simple", F_USUAL) 
 {
 	permeability = ipermeability;
 	viscosity = iviscosity;
 	multiplier = imultiplier;
 	flows = new std::vector<functional *>;
+	gfaults = NULL;
 };
 
 f_lcm_simple::~f_lcm_simple() {
@@ -58,6 +61,9 @@ void f_lcm_simple::cleanup() {
 		delete flows;
 	}
 	flows = NULL;
+	if (gfaults)
+		gfaults->release_private();
+	gfaults = NULL;
 };
 
 int f_lcm_simple::this_get_data_count() const {
@@ -167,17 +173,42 @@ bool f_lcm_simple::minimize() {
 
 	if (gfaults)
 		gfaults->release();
-
 	gfaults = NULL;
-	if (faults->size() > 0) {
-		int q;
-		for (q = 0; q < (int)faults->size(); q++) {
+	size_t q, f_cnt = 0;
+	bool have_faults = false;
+	for (q = 0; q < functionals->size(); q++)
+	{
+		functional * f = (*functionals)[q];
+		if (f->get_pos() >= get_pos())
+			break;
+		if (f->getType() != F_MODIFIER)
+			continue;
+		f_fault * flt = dynamic_cast<f_fault*>(f);
+		if (flt == NULL)
+			continue;
 
-			const d_curv * flt = (*faults)[q];
-			writelog(LOG_MESSAGE,"           : fault %s", flt->getName());
-			gfaults = curv_to_grid_line(gfaults, flt, method_grid);
-		};
-	};
+		const d_curv * fault_crv = flt->get_fault();
+		if (fault_crv == NULL)
+			continue;
+		if (!have_faults) {
+			writelog2(LOG_MESSAGE,"trend_faults: \"%s\"", fault_crv->getName());
+			have_faults = true;
+			f_cnt++;
+		} else {
+			if (f_cnt % 4 != 0) 
+				log_printf(", \"%s\"", fault_crv->getName());
+			else
+				log_printf("\"%s\"", fault_crv->getName());
+			f_cnt++;
+			if (f_cnt % 4 == 0) {
+				log_printf("\n");
+				writelog2(LOG_MESSAGE,"              ");
+			}
+		}
+		gfaults = curv_to_grid_line(gfaults, fault_crv, method_grid);
+	}
+	if (have_faults)
+		log_printf("\n");
 
 	if ( cond() ) {
 
