@@ -1,6 +1,6 @@
 
 /*------------------------------------------------------------------------------
- *	$Id: $
+ *	$Id$
  *
  *	Copyright (c) 2002-2006 by M. V. Dmitrievsky and V. N. Kutrunov
  *	See COPYING file for copying and redistribution conditions.
