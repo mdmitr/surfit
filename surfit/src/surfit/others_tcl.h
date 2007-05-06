@@ -254,6 +254,8 @@ bool geq(REAL value, REAL mult = 0.001);
 */
 boolvec * hist(const char * histogram_name = "*", REAL mult = 0.001);
 
+bool triangulate();
+
 }; // namespace surfit;
 
 #endif

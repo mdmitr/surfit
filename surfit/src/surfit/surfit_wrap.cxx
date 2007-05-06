@@ -4195,6 +4195,33 @@ _wrap_geq(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Ob
 
 
 SWIGINTERN int
+_wrap_triangulate(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  bool result;
+  
+  if (SWIG_GetArgs(interp, objc, objv,":triangulate ") == TCL_ERROR) SWIG_fail;
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (bool)surfit::triangulate();
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  return TCL_OK;
+fail:
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
 _wrap_show_w(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   if (SWIG_GetArgs(interp, objc, objv,":show_w ") == TCL_ERROR) SWIG_fail;
   {
@@ -47704,6 +47731,7 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "wmean", (swig_wrapper_func) _wrap_wmean, NULL},
     { SWIG_prefix "leq", (swig_wrapper_func) _wrap_leq, NULL},
     { SWIG_prefix "geq", (swig_wrapper_func) _wrap_geq, NULL},
+    { SWIG_prefix "triangulate", (swig_wrapper_func) _wrap_triangulate, NULL},
     { SWIG_prefix "show_w", (swig_wrapper_func) _wrap_show_w, NULL},
     { SWIG_prefix "show_c", (swig_wrapper_func) _wrap_show_c, NULL},
     { SWIG_prefix "log_open", (swig_wrapper_func) _wrap_log_open, NULL},

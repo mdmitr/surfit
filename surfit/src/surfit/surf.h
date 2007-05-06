@@ -235,7 +235,7 @@ public:
 	//! grid for basis surface placements
 	d_grid * grd;
 
-	//! coefficients for each basis surface
+	//! coefficients for each basis function
 	extvec * coeff;
 	
 	//! all values in coeff equal to undef_value interprets as undefined

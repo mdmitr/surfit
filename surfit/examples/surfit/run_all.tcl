@@ -133,6 +133,9 @@ if { [source "points_approx.tcl"] == 0 } {
 if { [source "points_exact.tcl"] == 0 } {
 	return 0
 }
+if { [source "points_triangulate.tcl"] == 0 } {
+	return 0
+}
 if { [source "points_ineq.tcl"] == 0 } {
 	return 0
 }

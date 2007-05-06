@@ -104,3 +104,5 @@ Some comments to script:
 \li \ref tol variable is used to manage tolerance of \ref solvers "iterative linear system solver algorithm".
 */
 
+/** \example points_triangulate.tcl
+*/

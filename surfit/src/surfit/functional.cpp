@@ -339,22 +339,4 @@ void functional::set_pos(size_t ipos)
 	pos = ipos;
 };
 
-//
-// faultable
-//
-faultable::faultable(const char * newname, int itype) : functional(newname, itype) {
-	faults = new std::vector<const d_curv *>;
-	gfaults = NULL;
-};
-
-faultable::~faultable() {
-	delete faults;
-	if (gfaults)
-		gfaults->release_private();
-};
-
-void faultable::add_fault(const d_curv * flt) {
-	faults->push_back(flt);
-};
-
 }; // namespace surfit;

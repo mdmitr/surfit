@@ -101,8 +101,8 @@ bool f_value::minimize_alone() {
 	else 
 		writelog(LOG_MESSAGE,"fill_with : undef_value");
 
-	int size = method_mask_solved->size();
-	int i;
+	size_t size = method_mask_solved->size();
+	size_t i;
 	for (i = 0; i < size; i++) {
 		if ( !method_mask_solved->get(i) && !method_mask_undefined->get(i) ) {
 			if (value != undef_value) {

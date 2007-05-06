@@ -35,7 +35,7 @@ class bitvec;
 class SURFIT_EXPORT f_surf : public functional {
 public:
 	//! constructor
-	f_surf(const d_surf * isrf);
+	f_surf(const d_surf * isrf, const char * iname = NULL);
 
 	//! destructor
 	~f_surf();
@@ -55,6 +55,8 @@ public:
 				       bool i_am_cond);
 
 	void cleanup();
+
+	const d_surf * get_surf() const;
 	
 protected:
 
@@ -69,7 +71,12 @@ protected:
 
 	//! mask for functional
 	bitvec * mask;
-	
+
+private:
+
+	//! name for printing
+	char * name;
+
 };
 
 }; // namespace surfit;

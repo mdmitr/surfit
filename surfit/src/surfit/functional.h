@@ -186,26 +186,6 @@ protected:
 
 };
 
-/*! \class faultable
-    \brief fault line functional
-*/
-class SURFIT_EXPORT faultable : public functional {
-public:
-	//! constructor
-	faultable(const char * newname, int itype);
-	//! destructor
-	virtual ~faultable();
-	//! adds fault line to \ref faults array
-	virtual void add_fault(const d_curv * flt);
-
-protected:
-	
-	//! array of fault lines
-	std::vector<const d_curv *> * faults;
-	//! fault lines projected on \ref d_grid
-	grid_line * gfaults;
-};
-
 }; // namespace surfit;
 
 #endif

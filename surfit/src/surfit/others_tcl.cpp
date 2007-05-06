@@ -25,6 +25,7 @@
 #include "f_wmean.h"
 #include "f_ineq.h"
 #include "f_hist.h"
+#include "f_triangulate.h"
 #include "variables.h"
 #include "curv.h"
 #include "curv_internal.h"
@@ -162,6 +163,14 @@ boolvec * hist(const char * pos, REAL mult)
 	match_hist qq(pos, mult);
 	qq = std::for_each(surfit_hists->begin(), surfit_hists->end(), qq);
 	return qq.res;
+};
+
+bool triangulate()
+{
+	writelog(LOG_MESSAGE,"creating gridding rule \"triangulate\"");
+	f_triangulate * f = new f_triangulate();
+	functionals_push_back(f);
+	return true;
 };
 
 }; // namespace surfit;

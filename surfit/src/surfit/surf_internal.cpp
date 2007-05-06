@@ -33,14 +33,18 @@
 #include "variables_internal.h"
 #include "points.h"
 #include "curv.h"
+#include "curv_internal.h"
 #include "mask.h"
 #include "grid_line_internal.h"
 #include "datafile.h"
+#include "area.h"
+#include "geom_alg.h"
 
 #include "sort_alg.h"
 
 #include "grid_line_user.h"
 #include "grid_user.h"
+#include "triangle.h"
 
 #include "threads.h"
 
@@ -1322,6 +1326,192 @@ bool _surf_save_df(const d_surf * srf, datafile * df) {
 	op = srf->writeTags(df);           res = ( op && res );
 	
 	return res;
+};
+
+d_surf * triangulate_points(const d_points * pnts, const d_grid * grid)
+{
+	size_t points_cnt = pnts->size();
+
+	if (points_cnt < 3)
+		return NULL;
+
+	struct triangulateio in, mid;
+	in.numberofpoints = points_cnt;
+	in.numberofpointattributes = 0;
+	in.pointlist = (REAL *) malloc(in.numberofpoints * 2 * sizeof(REAL));
+	in.pointattributelist = NULL;
+	in.pointmarkerlist = NULL;
+	in.numberofsegments = 0;
+	in.numberofholes = 0;
+	in.numberofregions = 0;
+	in.regionlist = NULL;
+
+	size_t cnt = 0;
+	size_t i;
+	for (i = 0; i < points_cnt; i++) {
+		in.pointlist[cnt] = (*(pnts->X))(i); 
+		cnt++;
+		in.pointlist[cnt] = (*(pnts->Y))(i); 
+		cnt++;
+	}
+	
+	/* Make necessary initializations so that Triangle can return a */
+	/*   triangulation in `mid' and a voronoi diagram in `vorout'.  */
+	
+	mid.pointlist = (REAL *) NULL;            /* Not needed if -N switch used. */
+	/* Not needed if -N switch used or number of point attributes is zero: */
+	mid.pointattributelist = (REAL *) NULL;
+	mid.pointmarkerlist = (int *) NULL; /* Not needed if -N or -B switch used. */
+	mid.trianglelist = (int *) NULL;          /* Not needed if -E switch used. */
+	/* Not needed if -E switch used or number of triangle attributes is zero: */
+	mid.triangleattributelist = (REAL *) NULL;
+	mid.neighborlist = (int *) NULL;         /* Needed only if -n switch used. */
+	/* Needed only if segments are output (-p or -c) and -P not used: */
+	mid.segmentlist = (int *) NULL;
+	/* Needed only if segments are output (-p or -c) and -P and -B not used: */
+	mid.segmentmarkerlist = (int *) NULL;
+	mid.edgelist = (int *) NULL;             /* Needed only if -e switch used. */
+	mid.edgemarkerlist = (int *) NULL;   /* Needed if -e used and -B not used. */
+	
+	
+	/* Triangulate the points.  Switches are chosen to read and write a  */
+	/*   PSLG (p), preserve the convex hull (c), number everything from  */
+	/*   zero (z), assign a regional attribute to each element (A), and  */
+	/*   produce an edge list (e), a Voronoi diagram (v), and a triangle */
+	/*   neighbor list (n).                                              */
+	
+	triangulate("pczAen", &in, &mid, (struct triangulateio *) NULL);
+
+	// get surface bound
+
+	vec * x = create_vec(mid.numberofsegments+1);
+	vec * y = create_vec(mid.numberofsegments+1);
+
+	for (i = 0; i < (size_t)mid.numberofsegments; i++)
+	{
+		if (i == 0) {
+			int seg = *(mid.segmentlist + 2*i);
+			(*x)(i) = (*(pnts->X))(seg);
+			(*y)(i) = (*(pnts->Y))(seg);
+		} 
+		int seg = *(mid.segmentlist + 2*i+1);
+		(*x)(i) = (*(pnts->X))(seg);
+		(*y)(i) = (*(pnts->Y))(seg);
+	}
+	(*x)(i) = (*x)(0);
+	(*y)(i) = (*y)(0);
+
+	d_grid * grd = create_grid(grid);
+	d_curv * crv = create_curv(x, y);
+	d_area * area = create_area(crv, true);
+	bitvec * mask = nodes_in_area_mask(area, grd);
+	
+	size_t NN = grd->getCountX();
+	size_t MM = grd->getCountY();
+	size_t size = NN*MM;
+	extvec * coeff = create_extvec(size, undef_value);
+
+	for (i = 0; i < size; i++) {
+		if (mask->get(i) == false) {
+			(*coeff)(i) = undef_value;
+			continue;
+		}
+	}
+
+	// fill from triangles
+	REAL xx[4];
+	REAL yy[4];
+	REAL zz[3];
+	for (i = 0; i < (size_t)mid.numberoftriangles; i++)
+	{
+		int p0 = mid.trianglelist[3*i];
+		int p1 = mid.trianglelist[3*i+1];
+		int p2 = mid.trianglelist[3*i+2];
+		xx[0] = (*(pnts->X))(p0);
+		xx[1] = (*(pnts->X))(p1);
+		xx[2] = (*(pnts->X))(p2);
+		xx[3] = xx[0];
+
+		yy[0] = (*(pnts->Y))(p0);
+		yy[1] = (*(pnts->Y))(p1);
+		yy[2] = (*(pnts->Y))(p2);
+		yy[3] = yy[0];
+
+		zz[0] = (*(pnts->Z))(p0);
+		zz[1] = (*(pnts->Z))(p1);
+		zz[2] = (*(pnts->Z))(p2);
+
+		size_t i_from = INT_MAX, i_to = 0;
+		size_t j_from = INT_MAX, j_to = 0;
+
+		size_t I, J;
+
+		grd->getCoordPoint(xx[0], yy[0], I, J);
+		i_from = MIN(I, i_from);
+		i_to = MAX(I, i_to);
+		j_from = MIN(J, j_from);
+		j_to = MAX(J, j_to);
+
+		grd->getCoordPoint(xx[1], yy[1], I, J);
+		i_from = MIN(I, i_from);
+		i_to = MAX(I, i_to);
+		j_from = MIN(J, j_from);
+		j_to = MAX(J, j_to);
+
+		grd->getCoordPoint(xx[2], yy[2], I, J);
+		i_from = MIN(I, i_from);
+		i_to = MAX(I, i_to);
+		j_from = MIN(J, j_from);
+		j_to = MAX(J, j_to);
+
+		REAL x, y;
+
+		for (J = j_from; J < j_to; J++) {
+			for (I = i_from; I < i_to; I++) {
+				grd->getCoordNode(I, J, x, y);
+				if ( in_region(xx, yy, 3, x, y) ) {
+					size_t pos = two2one(I, J, NN, MM);
+					REAL z = undef_value;
+					// определители
+					REAL d1, d2, d3;
+					d1 = (yy[1]-yy[0])*(zz[2]-zz[0])-(yy[2]-yy[0])*(zz[1]-zz[0]);
+					d2 = -(xx[1]-xx[0])*(zz[2]-zz[0])+(xx[2]-xx[0])*(zz[1]-zz[0]);
+					d3 = (xx[1]-xx[0])*(yy[2]-yy[0])-(yy[1]-yy[0])*(xx[2]-xx[0]);
+	
+					if (d3 == 0) {
+						(*coeff)(pos) = z;
+					}
+	
+					z = zz[0] - ((x-xx[0])*d1 + (y-yy[0])*d2)/d3;
+					(*coeff)(pos) = z;
+				}
+			}
+		}
+	}
+
+	d_surf * srf = create_surf(coeff, grd);
+	srf->undef_value = undef_value;
+
+	mask->release();
+	area->release();
+
+	free(in.pointlist);
+	free(in.pointattributelist);
+	free(in.pointmarkerlist);
+	free(in.regionlist);
+	free(mid.pointlist);
+	free(mid.pointattributelist);
+	free(mid.pointmarkerlist);
+	free(mid.trianglelist);
+	free(mid.triangleattributelist);
+	free(mid.neighborlist);
+	free(mid.segmentlist);
+	free(mid.segmentmarkerlist);
+	free(mid.edgelist);
+	free(mid.edgemarkerlist);
+
+	return srf;
+
 };
 
 }; // namespace surfit;

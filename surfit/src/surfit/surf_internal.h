@@ -193,6 +193,9 @@ int _surf_cells_in_area(const d_surf * srf, const d_area * crv);
 SURFIT_EXPORT
 void _surfit_surf_add(d_surf * srf);
 
+SURFIT_EXPORT
+d_surf * triangulate_points(const d_points * pnts, const d_grid * grd);
+
 }; // namespace surfit;
 
 #endif

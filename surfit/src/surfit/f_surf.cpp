@@ -33,14 +33,20 @@
 
 namespace surfit {
 
-f_surf::f_surf(const d_surf * isrf) :
+f_surf::f_surf(const d_surf * isrf, const char * iname) :
 functional("f_surf", F_USUAL)
 {
 	srf = isrf;
-	if (srf->getName()) {
-		setNameF("f_surf %s", srf->getName());
-	}
+	if (iname == NULL) {
+		if (srf->getName()) {
+			setNameF( srf->getName());
+		}
+	} else
+		setNameF("f_surf %s", iname);
 	mask = NULL;
+	name = NULL;
+	if (iname)
+		name = strdup(iname);
 };
 
 f_surf::~f_surf() {
@@ -51,6 +57,7 @@ void f_surf::cleanup() {
 	if (mask)
 		mask->release();
 	mask = NULL;
+	free(name);
 };
 
 int f_surf::this_get_data_count() const {
@@ -102,7 +109,10 @@ bool f_surf::minimize() {
 
 bool f_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
-	writelog(LOG_MESSAGE,"surf : (%s), size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
+	if (name == NULL)
+		writelog(LOG_MESSAGE,"surf : (%s), size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
+	else
+		writelog(LOG_MESSAGE,"%s, size=(%d x %d)", name, srf->getCountX(), srf->getCountY());
 
 	size_t NN = method_grid->getCountX();
 	size_t MM = method_grid->getCountY();
@@ -181,7 +191,10 @@ void f_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undef
 
 bool f_surf::minimize_only_surf() {
 
-	writelog(LOG_MESSAGE,"surf : (%s), size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
+	if (name == NULL)
+		writelog(LOG_MESSAGE,"surf : (%s), size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
+	else
+		writelog(LOG_MESSAGE,"%s, size=(%d x %d)", name, srf->getCountX(), srf->getCountY());
 
 	size_t from_x, from_y, to_x, to_y;
 	_grid_intersect1(method_grid, srf->grd,
@@ -228,6 +241,11 @@ bool f_surf::solvable_without_cond(const bitvec * mask_solved,
 		      const extvec * X)
 {
 	return true;
+};
+
+const d_surf * f_surf::get_surf() const
+{
+	return srf;
 };
 
 }; // namespace surfit;

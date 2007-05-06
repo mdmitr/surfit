@@ -185,6 +185,7 @@ bool mean(REAL value, REAL mult = 0.001);
 surfit::boolvec * wmean(REAL value, const char * surface_name = "*", REAL mult = 0.001);
 bool leq(REAL value, REAL mult = 1);
 bool geq(REAL value, REAL mult = 1);
+bool triangulate();
 
 // license
 void show_w();
