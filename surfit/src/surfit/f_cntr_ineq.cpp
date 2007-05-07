@@ -88,6 +88,7 @@ void f_cntr_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 	create_f_points_ineq();
 	if (f_pnts_ineq)
 		f_pnts_ineq->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
+	mark_sums(mask_solved, mask_undefined);
 };
 
 bool f_cntr_ineq::solvable_without_cond(const bitvec * mask_solved,

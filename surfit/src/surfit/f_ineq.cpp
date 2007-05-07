@@ -122,11 +122,10 @@ bool f_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	return solvable;
 };
 
-void f_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
-
+void f_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
 	set_solved(mask_solved, mask_undefined);
 	mark_sums(mask_solved, mask_undefined);
-
 };
 
 bool f_ineq::solvable_without_cond(const bitvec * mask_solved,

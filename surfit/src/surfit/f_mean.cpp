@@ -108,11 +108,10 @@ bool f_mean::solvable_without_cond(const bitvec * mask_solved,
 	return true;
 };
 
-void f_mean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
-	
+void f_mean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
 	set_solved(mask_solved, mask_undefined);
 	mark_sums(mask_solved, mask_undefined);
-
 };
 
 bool f_mean::minimize() {

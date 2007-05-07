@@ -208,8 +208,8 @@ bool f_mask_wmean::solvable_without_cond(const bitvec * mask_solved,
 	return true;
 };
 
-void f_mask_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
-	
+void f_mask_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
 	size_t aux_X_from, aux_X_to;
 	size_t aux_Y_from, aux_Y_to;
 	
@@ -260,9 +260,7 @@ void f_mask_wmean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask
 	};
 
 	mark_sums(mask_solved, mask_undefined);
-		
 	return;
-	
 };
 
 bool f_mask_wmean::minimize() {

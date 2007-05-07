@@ -117,10 +117,12 @@ bool f_curv_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	return false;
 };
 
-void f_curv_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+void f_curv_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
 	create_f_approx_points();
 	if (f_pnts)
 		f_pnts->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
+	mark_sums(mask_solved, mask_undefined);
 };
 
 bool f_curv_surf::solvable_without_cond(const bitvec * mask_solved,

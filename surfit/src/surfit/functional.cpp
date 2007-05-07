@@ -254,8 +254,8 @@ bool functional::cond_make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec
 
 bool functional::cond_solvable(const bitvec * mask_solved, 
 			       const bitvec * mask_undefined, 
-			       const extvec * X) {
-
+			       const extvec * X) 
+{
 	if (functionals_cond->size() == 0)
 		return true;
 
@@ -313,14 +313,13 @@ bool functional::solvable(const bitvec * mask_solved,
 			  const bitvec * mask_undefined,
 			  const extvec * X) 
 {
+	if ( cond() )
+		return cond_solvable(mask_solved, mask_undefined, X);
 
 	bool res = solvable_without_cond(mask_solved, mask_undefined, X);
 	
 	if (res == false)
 		return false;
-
-	if ( cond() )
-		return cond_solvable(mask_solved, mask_undefined, X);
 
 	return true;
 };

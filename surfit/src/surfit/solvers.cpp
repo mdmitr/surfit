@@ -268,6 +268,9 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 
 		if ((counter > penalty_max_iter) || (stop_execution == true))
 			ok = true;
+
+		if (stop_execution == true)
+			ok = true;
 	
 	}
 

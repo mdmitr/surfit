@@ -171,7 +171,7 @@ bool f_mask::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 void f_mask::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
 {
-	
+	mark_sums(mask_solved, mask_undefined);
 };
 
 bool f_mask::solvable_without_cond(const bitvec * mask_solved,

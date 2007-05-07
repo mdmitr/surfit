@@ -71,6 +71,7 @@ void f_fault::mark_solved_and_undefined(bitvec * mask_solved,
 				       bitvec * mask_undefined,
 				       bool i_am_cond)
 {
+	mark_sums(mask_solved, mask_undefined);
 	return;
 };
 

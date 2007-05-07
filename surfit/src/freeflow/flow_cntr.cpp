@@ -101,9 +101,11 @@ bool f_flow_cntr::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	return f_points->make_matrix_and_vector(matrix, v);
 };
 
-void f_flow_cntr::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+void f_flow_cntr::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
 	create_f_flow_points();
 	f_points->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
+	mark_sums(mask_solved, mask_undefined);
 };
 
 bool f_flow_cntr::solvable_without_cond(const bitvec * mask_solved,

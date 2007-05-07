@@ -248,8 +248,8 @@ bool f_points::minimize_only_points() {
 	return true;
 };
 
-void f_points::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
-
+void f_points::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
 	if ((functionals_add->size() == 0) && ( !cond() ) && (i_am_cond == false) )
 		return;
 

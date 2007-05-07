@@ -153,8 +153,8 @@ bool f_mask_mean::solvable_without_cond(const bitvec * mask_solved,
 	return true;
 };
 
-void f_mask_mean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
-
+void f_mask_mean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	size_t NN = method_basis_cntX;
 	size_t MM = method_basis_cntY;
@@ -179,8 +179,8 @@ void f_mask_mean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 		
 	}
 	
+	mark_sums(mask_solved, mask_undefined);
 	return;
-
 };
 
 bool f_mask_mean::minimize() {

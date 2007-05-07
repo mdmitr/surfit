@@ -68,6 +68,8 @@ bool f_value::minimize() {
 		matr * A = NULL;
 		extvec * b = NULL;
 		bool solvable = make_matrix_and_vector(A,b);
+		if (solvable == false)
+			return false;
 
 		if ( !cond() ) {
 			if (solvable == false) {
@@ -155,16 +157,16 @@ bool f_value::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 		if (v)
 			v->release();
 		v = NULL;
+		return false;
 	}
 	
 	return true;
 };
 
-void f_value::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
-
+void f_value::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
 	set_solved(mask_solved, mask_undefined);
 	mark_sums(mask_solved, mask_undefined);
-
 };
 
 bool f_value::solvable_without_cond(const bitvec * mask_solved,

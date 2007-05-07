@@ -159,7 +159,8 @@ bool f_dem::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 };
 
-void f_dem::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+void f_dem::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
 	if ((functionals_add->size() == 0) && ( !cond() ) && (i_am_cond == false))
 		return;
 
@@ -170,6 +171,7 @@ void f_dem::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefi
 				mask_solved->set_true(i);
 		}
 	}
+	mark_sums(mask_solved, mask_undefined);
 };
 
 bool f_dem::minimize_only_dem() {

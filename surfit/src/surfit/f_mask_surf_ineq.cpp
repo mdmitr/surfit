@@ -151,7 +151,8 @@ bool f_mask_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	return solvable;
 };
 
-void f_mask_surf_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
+void f_mask_surf_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	size_t NN = method_basis_cntX;
@@ -177,6 +178,8 @@ void f_mask_surf_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * 
 		mask_solved->set_true(i);
 		
 	}
+
+	mark_sums(mask_solved, mask_undefined);
 
 };
 

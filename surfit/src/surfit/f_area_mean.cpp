@@ -148,8 +148,8 @@ bool f_area_mean::solvable_without_cond(const bitvec * mask_solved,
 	return true;
 };
 
-void f_area_mean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
-
+void f_area_mean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
 	get_area_mask();
 	if (area_mask == NULL)
 		return;
@@ -169,9 +169,9 @@ void f_area_mean::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 		mask_solved->set_true(i);
 		
 	}
-	
-	return;
 
+	mark_sums(mask_solved, mask_undefined);
+	return;
 };
 
 bool f_area_mean::minimize() {

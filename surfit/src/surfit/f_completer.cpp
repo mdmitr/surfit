@@ -439,8 +439,8 @@ bool f_completer::minimize() {
 	return res;
 };
 
-void f_completer::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) {
-	
+void f_completer::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
 	if (area) {
 		if (saved_mask_undefined) {
 			saved_mask_undefined->release();
