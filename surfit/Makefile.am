@@ -4,7 +4,7 @@ $(OBJECTS): libtool
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
 
-INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/sstuff/ptypes -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io
+INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/sstuff/ptypes -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io -DANSI_DECLARATORS -DTRILIBRARY
 EXTRA_DIST = vc6/surfit*
 EXTRA_DIST += vc6/freeflow*
 EXTRA_DIST += vc6/globe*
@@ -48,7 +48,7 @@ libsstuff_la_SOURCES =  src/sstuff/bitvec.cpp
 libsstuff_la_SOURCES += src/sstuff/boolvec.cpp      
 libsstuff_la_SOURCES += src/sstuff/datafile.cpp     
 libsstuff_la_SOURCES += src/sstuff/fileio.cpp    
-   libsstuff_la_SOURCES += src/sstuff/findfile.cpp
+libsstuff_la_SOURCES += src/sstuff/findfile.cpp
 libsstuff_la_SOURCES += src/sstuff/geom_alg.cpp     
 libsstuff_la_SOURCES += src/sstuff/interp.cpp       
 libsstuff_la_SOURCES += src/sstuff/intvec.cpp       

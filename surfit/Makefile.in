@@ -166,16 +166,17 @@ am_libsurfit_la_OBJECTS = area.lo area_internal.lo area_tcl.lo \
 	f_hist.lo f_ineq.lo f_mask.lo f_mask_ineq.lo f_mask_surf.lo \
 	f_mask_surf_ineq.lo f_mask_mean.lo f_mask_wmean.lo f_mean.lo \
 	f_points.lo f_points_ineq.lo f_points_tcl.lo f_trend.lo \
-	f_value.lo f_wmean.lo grid.lo grid_internal.lo grid_line.lo \
-	grid_line_internal.lo grid_line_tcl.lo grid_line_user.lo \
-	grid_tcl.lo grid_user.lo hist.lo hist_internal.lo hist_tcl.lo \
-	license.lo mask.lo mask_internal.lo mask_tcl.lo matlab.lo \
-	matr.lo matrD1.lo matrD1_aniso.lo matrD1_rect.lo matrD2.lo \
-	matrD2_rect.lo matr_diag.lo matr_eye.lo matr_onesrow.lo mrf.lo \
-	others_tcl.lo pnts_internal.lo pnts_tcl.lo points.lo \
-	solvers.lo sort_alg.lo surf.lo surfs_tcl.lo surf_internal.lo \
-	surf_tcl.lo surfit.lo surfit_wrap.lo variables.lo CG.lo J.lo \
-	JCG.lo RF.lo SSOR.lo
+	f_value.lo f_wmean.lo f_fault.lo f_method.lo f_triangulate.lo \
+	grid.lo grid_internal.lo grid_line.lo grid_line_internal.lo \
+	grid_line_tcl.lo grid_line_user.lo grid_tcl.lo grid_user.lo \
+	hist.lo hist_internal.lo hist_tcl.lo license.lo mask.lo \
+	mask_internal.lo mask_tcl.lo matlab.lo matr.lo matrD1.lo \
+	matrD1_aniso.lo matrD1_rect.lo matrD2.lo matrD2_rect.lo \
+	matr_diag.lo matr_eye.lo matr_onesrow.lo mrf.lo others_tcl.lo \
+	pnts_internal.lo pnts_tcl.lo points.lo solvers.lo sort_alg.lo \
+	surf.lo surfs_tcl.lo surf_internal.lo surf_tcl.lo surfit.lo \
+	surfit_wrap.lo variables.lo triangle.lo CG.lo J.lo JCG.lo \
+	RF.lo SSOR.lo
 libsurfit_la_OBJECTS = $(am_libsurfit_la_OBJECTS)
 libsurfit_io_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) libsstuff.la libsurfit.la \
@@ -368,7 +369,7 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 AUTOMAKE_OPTIONS = foreign
-INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/sstuff/ptypes -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io
+INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/sstuff/ptypes -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io -DANSI_DECLARATORS -DTRILIBRARY
 EXTRA_DIST = vc6/surfit* vc6/freeflow* vc6/globe* \
 	src/surfit/interface/*.i examples/* src/freeflow/interface/*.i \
 	src/globe/interface/*.i src/surfit_io/interface/*.i \
@@ -426,31 +427,34 @@ libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/f_points.cpp src/surfit/f_points_ineq.cpp \
 	src/surfit/f_points_tcl.cpp src/surfit/f_trend.cpp \
 	src/surfit/f_value.cpp src/surfit/f_wmean.cpp \
-	src/surfit/grid.cpp src/surfit/grid_internal.cpp \
-	src/surfit/grid_line.cpp src/surfit/grid_line_internal.cpp \
-	src/surfit/grid_line_tcl.cpp src/surfit/grid_line_user.cpp \
-	src/surfit/grid_tcl.cpp src/surfit/grid_user.cpp \
-	src/surfit/hist.cpp src/surfit/hist_internal.cpp \
-	src/surfit/hist_tcl.cpp src/surfit/license.cpp \
-	src/surfit/mask.cpp src/surfit/mask_internal.cpp \
-	src/surfit/mask_tcl.cpp src/surfit/matlab.cpp \
-	src/surfit/matr.cpp src/surfit/matrD1.cpp \
-	src/surfit/matrD1_aniso.cpp src/surfit/matrD1_rect.cpp \
-	src/surfit/matrD2.cpp src/surfit/matrD2_rect.cpp \
-	src/surfit/matr_diag.cpp src/surfit/matr_eye.cpp \
-	src/surfit/matr_onesrow.cpp src/surfit/mrf.cpp \
-	src/surfit/others_tcl.cpp src/surfit/pnts_internal.cpp \
-	src/surfit/pnts_tcl.cpp src/surfit/points.cpp \
-	src/surfit/solvers.cpp src/surfit/sort_alg.cpp \
-	src/surfit/surf.cpp src/surfit/surfs_tcl.cpp \
-	src/surfit/surf_internal.cpp src/surfit/surf_tcl.cpp \
-	src/surfit/surfit.cpp src/surfit/surfit_wrap.cxx \
-	src/surfit/variables.cpp src/surfit/solvers/CG.cpp \
+	src/surfit/f_fault.cpp src/surfit/f_method.cpp \
+	src/surfit/f_triangulate.cpp src/surfit/grid.cpp \
+	src/surfit/grid_internal.cpp src/surfit/grid_line.cpp \
+	src/surfit/grid_line_internal.cpp src/surfit/grid_line_tcl.cpp \
+	src/surfit/grid_line_user.cpp src/surfit/grid_tcl.cpp \
+	src/surfit/grid_user.cpp src/surfit/hist.cpp \
+	src/surfit/hist_internal.cpp src/surfit/hist_tcl.cpp \
+	src/surfit/license.cpp src/surfit/mask.cpp \
+	src/surfit/mask_internal.cpp src/surfit/mask_tcl.cpp \
+	src/surfit/matlab.cpp src/surfit/matr.cpp \
+	src/surfit/matrD1.cpp src/surfit/matrD1_aniso.cpp \
+	src/surfit/matrD1_rect.cpp src/surfit/matrD2.cpp \
+	src/surfit/matrD2_rect.cpp src/surfit/matr_diag.cpp \
+	src/surfit/matr_eye.cpp src/surfit/matr_onesrow.cpp \
+	src/surfit/mrf.cpp src/surfit/others_tcl.cpp \
+	src/surfit/pnts_internal.cpp src/surfit/pnts_tcl.cpp \
+	src/surfit/points.cpp src/surfit/solvers.cpp \
+	src/surfit/sort_alg.cpp src/surfit/surf.cpp \
+	src/surfit/surfs_tcl.cpp src/surfit/surf_internal.cpp \
+	src/surfit/surf_tcl.cpp src/surfit/surfit.cpp \
+	src/surfit/surfit_wrap.cxx src/surfit/variables.cpp \
+	src/surfit/triangle.cpp src/surfit/solvers/CG.cpp \
 	src/surfit/solvers/J.cpp src/surfit/solvers/JCG.cpp \
 	src/surfit/solvers/RF.cpp src/surfit/solvers/SSOR.cpp \
 	src/surfit/area_tcl.h src/surfit/cntr_tcl.h \
 	src/surfit/curvs_tcl.h src/surfit/curv_tcl.h \
 	src/surfit/curv_trace.h src/surfit/f_points_tcl.h \
+	src/surfit/f_method.h src/surfit/f_triangulate.h \
 	src/surfit/grid_line_tcl.h src/surfit/grid_tcl.h \
 	src/surfit/hist_tcl.h src/surfit/mask_tcl.h \
 	src/surfit/other_tcl.h src/surfit/others_tcl.h \
@@ -477,22 +481,22 @@ libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/f_mask_wmean.h src/surfit/f_mean.h \
 	src/surfit/f_points.h src/surfit/f_points_ineq.h \
 	src/surfit/f_trend.h src/surfit/f_value.h src/surfit/f_wmean.h \
-	src/surfit/grid.h src/surfit/grid_internal.h \
-	src/surfit/grid_line.h src/surfit/grid_line_internal.h \
-	src/surfit/grid_line_user.h src/surfit/grid_user.h \
-	src/surfit/hist.h src/surfit/hist_internal.h \
-	src/surfit/license.h src/surfit/mask.h \
-	src/surfit/mask_internal.h src/surfit/matfile.h \
-	src/surfit/matlab.h src/surfit/matr.h src/surfit/matrD1.h \
-	src/surfit/matrD1_aniso.h src/surfit/matrD2.h \
-	src/surfit/matr_diag.h src/surfit/matr_eye.h \
-	src/surfit/matr_onesrow.h src/surfit/mrf.h \
-	src/surfit/pnts_internal.h src/surfit/points.h \
-	src/surfit/solvers.h src/surfit/sort_alg.h src/surfit/surfit.h \
-	src/surfit/solvers.h src/surfit/surf.h \
+	src/surfit/f_fault.h src/surfit/grid.h \
+	src/surfit/grid_internal.h src/surfit/grid_line.h \
+	src/surfit/grid_line_internal.h src/surfit/grid_line_user.h \
+	src/surfit/grid_user.h src/surfit/hist.h \
+	src/surfit/hist_internal.h src/surfit/license.h \
+	src/surfit/mask.h src/surfit/mask_internal.h \
+	src/surfit/matfile.h src/surfit/matlab.h src/surfit/matr.h \
+	src/surfit/matrD1.h src/surfit/matrD1_aniso.h \
+	src/surfit/matrD2.h src/surfit/matr_diag.h \
+	src/surfit/matr_eye.h src/surfit/matr_onesrow.h \
+	src/surfit/mrf.h src/surfit/pnts_internal.h \
+	src/surfit/points.h src/surfit/solvers.h src/surfit/sort_alg.h \
+	src/surfit/surfit.h src/surfit/solvers.h src/surfit/surf.h \
 	src/surfit/surf_internal.h src/surfit/surfit_solvers.h \
 	src/surfit/variables.h src/surfit/variables_internal.h \
-	src/surfit/variables_tcl.h
+	src/surfit/variables_tcl.h src/surfit/triangle.h
 libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la 
 libsurfit_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit.dll
 libsurfit_io_ladir = $(prefix)/include/surfit_io
@@ -720,6 +724,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_curv_surf.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_curv_surf_ineq.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_dem.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_fault.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_hist.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_ineq.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_lcm_simple.Plo@am__quote@
@@ -731,12 +736,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_mask_surf_ineq.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_mask_wmean.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_mean.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_method.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_points.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_points_ineq.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_points_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_surf.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_surf_ineq.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_trend.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_triangulate.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_value.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/f_wmean.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fileio.Plo@am__quote@
@@ -840,6 +847,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surfit_wrap.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surfs_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/threads.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/triangle.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unzip.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/variables.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec.Plo@am__quote@
@@ -1622,6 +1630,27 @@ f_wmean.lo: src/surfit/f_wmean.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o f_wmean.lo `test -f 'src/surfit/f_wmean.cpp' || echo '$(srcdir)/'`src/surfit/f_wmean.cpp
 
+f_fault.lo: src/surfit/f_fault.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT f_fault.lo -MD -MP -MF "$(DEPDIR)/f_fault.Tpo" -c -o f_fault.lo `test -f 'src/surfit/f_fault.cpp' || echo '$(srcdir)/'`src/surfit/f_fault.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/f_fault.Tpo" "$(DEPDIR)/f_fault.Plo"; else rm -f "$(DEPDIR)/f_fault.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/f_fault.cpp' object='f_fault.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o f_fault.lo `test -f 'src/surfit/f_fault.cpp' || echo '$(srcdir)/'`src/surfit/f_fault.cpp
+
+f_method.lo: src/surfit/f_method.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT f_method.lo -MD -MP -MF "$(DEPDIR)/f_method.Tpo" -c -o f_method.lo `test -f 'src/surfit/f_method.cpp' || echo '$(srcdir)/'`src/surfit/f_method.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/f_method.Tpo" "$(DEPDIR)/f_method.Plo"; else rm -f "$(DEPDIR)/f_method.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/f_method.cpp' object='f_method.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o f_method.lo `test -f 'src/surfit/f_method.cpp' || echo '$(srcdir)/'`src/surfit/f_method.cpp
+
+f_triangulate.lo: src/surfit/f_triangulate.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT f_triangulate.lo -MD -MP -MF "$(DEPDIR)/f_triangulate.Tpo" -c -o f_triangulate.lo `test -f 'src/surfit/f_triangulate.cpp' || echo '$(srcdir)/'`src/surfit/f_triangulate.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/f_triangulate.Tpo" "$(DEPDIR)/f_triangulate.Plo"; else rm -f "$(DEPDIR)/f_triangulate.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/f_triangulate.cpp' object='f_triangulate.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o f_triangulate.lo `test -f 'src/surfit/f_triangulate.cpp' || echo '$(srcdir)/'`src/surfit/f_triangulate.cpp
+
 grid.lo: src/surfit/grid.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT grid.lo -MD -MP -MF "$(DEPDIR)/grid.Tpo" -c -o grid.lo `test -f 'src/surfit/grid.cpp' || echo '$(srcdir)/'`src/surfit/grid.cpp; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/grid.Tpo" "$(DEPDIR)/grid.Plo"; else rm -f "$(DEPDIR)/grid.Tpo"; exit 1; fi
@@ -1894,6 +1923,13 @@ variables.lo: src/surfit/variables.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/variables.cpp' object='variables.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o variables.lo `test -f 'src/surfit/variables.cpp' || echo '$(srcdir)/'`src/surfit/variables.cpp
+
+triangle.lo: src/surfit/triangle.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT triangle.lo -MD -MP -MF "$(DEPDIR)/triangle.Tpo" -c -o triangle.lo `test -f 'src/surfit/triangle.cpp' || echo '$(srcdir)/'`src/surfit/triangle.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/triangle.Tpo" "$(DEPDIR)/triangle.Plo"; else rm -f "$(DEPDIR)/triangle.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/triangle.cpp' object='triangle.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o triangle.lo `test -f 'src/surfit/triangle.cpp' || echo '$(srcdir)/'`src/surfit/triangle.cpp
 
 CG.lo: src/surfit/solvers/CG.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT CG.lo -MD -MP -MF "$(DEPDIR)/CG.Tpo" -c -o CG.lo `test -f 'src/surfit/solvers/CG.cpp' || echo '$(srcdir)/'`src/surfit/solvers/CG.cpp; \
