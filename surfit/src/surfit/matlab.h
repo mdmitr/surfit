@@ -21,14 +21,13 @@
 #define __surfit_matlab__
 
 #include <stdlib.h>
+#include <vector>
 
 namespace surfit {
 
 SURFIT_EXPORT
-bool matlabWriteVector(const REAL * begin, const REAL * end, const char * filename, const char * name);
-
-template <class V>
-bool matlabWriteVirtualVector(V * vec, const char * filename, const char * name);
+bool matlabWriteVector(const REAL * begin, const REAL * end, const char * filename, const char * name,
+		       const std::vector<int> * zero_rows, bool append_file = true);
 
 /*! \class matlabVector
     \brief vector of this type can be saved to matlab binary format
@@ -40,19 +39,19 @@ file and then loaded in Matlab with "load" command.
 http://www.mathworks.com/access/helpdesk/help/pdf_doc/matlab/matfile_format.pdf
 
 */
+/*
 class SURFIT_EXPORT matlabVector {
 public:
-	/*! \return i-th vector element */	
+	//! \return i-th vector element 
 	virtual REAL operator()(size_t i) const = 0;
-	/*! \returns vector size */
+	//! \returns vector size 
 	virtual long size() const = 0;
-	/*! writes vector to mat-file (matlab binary format)
+	//! writes vector to mat-file (matlab binary format)
 	    \param filename mat-file filename
 	    \param name vector name
-	*/
-	bool writeMAT(const char * filename, const char * name);
-
+	bool writeMAT(const char * filename, const char * name, const std::vector<int> * zero_rows);
 };
+*/
 
 /*! \class matlabSparseMatrix
     \brief matrix of this type can be saved to matlab binary format as 
@@ -73,11 +72,15 @@ public:
 	/*! \return i,j-th matrix element */
 	virtual REAL element_at(size_t i, size_t j, size_t * next_i = NULL) const = 0;
 
+	virtual REAL at(size_t i, size_t j, size_t * next_i = NULL) const = 0;
+
 	/*! writes matrix to mat file (matlab binary format)
 	    \param filename mat-file filename
 	    \param name matrix name
 	*/
-	bool writeMAT(const char * filename, const char * name);
+	bool writeMAT(const char * filename, const char * name, const std::vector<int> * zero_rows, bool append_file = true);
+
+	void get_zero_rows(std::vector<int> & zero_rows); 
 
 };
 
