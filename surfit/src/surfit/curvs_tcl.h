@@ -84,7 +84,7 @@ boolvec * curve(REAL value, const char * curv_name = "*");
 boolvec * curve_add(REAL value, REAL weight = 1, const char * curv_name = "*");
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_leq(REAL value, const char * curv_name = "*", REAL mult = 0.001);
+    \fn bool curve_leq(REAL value, const char * curv_name = "*", REAL mult = 1);
 
     \par Tcl syntax:
     curve_leq value \ref str "curv_name"
@@ -105,10 +105,10 @@ boolvec * curve_add(REAL value, REAL weight = 1, const char * curv_name = "*");
     \f]
     where (i,j) - indices of the cells cross with curve, z - constant value
 */
-boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL mult = 0.001);
+boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL mult = 1);
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_geq(REAL value, const char * curv_name = "*", REAL mult = 0.001);
+    \fn bool curve_geq(REAL value, const char * curv_name = "*", REAL mult = 1);
 
     \par Tcl syntax:
     curve_leq value \ref str "curv_name"
@@ -129,7 +129,7 @@ boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL mult = 0.001)
     \f]
     where (i,j) - indices of the cells cross with curve, z - constant value
 */
-boolvec * curve_geq(REAL value, const char * curv_name = "*", REAL mult = 0.001);
+boolvec * curve_geq(REAL value, const char * curv_name = "*", REAL mult = 1);
 
 /*! \ingroup tcl_rules_curvs
     \fn bool curve_surf(const char * surf_name = "*", const char * curv_name = "*");
@@ -185,7 +185,7 @@ boolvec * curve_surf(const char * surf_name = "*", const char * curv_name = "*")
 boolvec * curve_surf_add(const char * surf_name = "*", REAL weight = 1, const char * curv_name = "*");
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 0.001);
+    \fn bool curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 1);
 
     \par Tcl syntax:
     curve_surf_leq \ref str "surf_name" \ref str "curv_name"
@@ -209,10 +209,10 @@ boolvec * curve_surf_add(const char * surf_name = "*", REAL weight = 1, const ch
     where (i,j) - indices of the cells cross with curve, 
     f(x_i,y_j) - value for curve approximation, calculated as surface value at center of the (i,j) cell.
 */
-boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 0.001);
+boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 1);
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 0.001);
+    \fn bool curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 1);
 
     \par Tcl syntax:
     curve_surf_geq \ref str "surf_name" \ref str "curv_name"
@@ -236,7 +236,7 @@ boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = 
     where (i,j) - indices of the cells cross with curve, 
     f(x_i,y_j) - value for curve approximation, calculated as surface value at center of the (i,j) cell.
 */
-boolvec * curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 0.001);
+boolvec * curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 1);
 
 /*! \ingroup tcl_rules_curvs
     \fn bool fault(const char * curv_name = "*");
@@ -321,7 +321,7 @@ boolvec * area(const char * value="undef", const char * area_name = "*", int ins
 boolvec * area_add(REAL value, REAL weight, const char * area_name = "*", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_leq(REAL value, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+    \fn bool area_leq(REAL value, const char * area_name = "*", REAL mult = 1, int inside = 1);
     
     \par Tcl syntax:
     area_leq value \ref str "area_name" mult inside
@@ -345,10 +345,10 @@ boolvec * area_add(REAL value, REAL weight, const char * area_name = "*", int in
     where (i,j) - indices of the cells in area, z - constant value
 
 */
-boolvec * area_leq(REAL value, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+boolvec * area_leq(REAL value, const char * area_name = "*", REAL mult = 1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_geq(REAL value, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+    \fn bool area_geq(REAL value, const char * area_name = "*", REAL mult = 1, int inside = 1);
     
     \par Tcl syntax:
     area_geq value \ref str "area_name" mult inside
@@ -372,7 +372,7 @@ boolvec * area_leq(REAL value, const char * area_name = "*", REAL mult = 0.001, 
     where (i,j) - indices of the cells in area, z - constant value
 
 */
-boolvec * area_geq(REAL value, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+boolvec * area_geq(REAL value, const char * area_name = "*", REAL mult = 1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
     \fn bool area_surf(const char * surf_name = "*", const char * area_name = "*", int inside = 1);
@@ -431,7 +431,7 @@ boolvec * area_surf(const char * surf_name = "*", const char * area_name = "*", 
 boolvec * area_surf_add(const char * surf_name = "*", REAL weight = 1, const char * area_name = "*", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+    \fn bool area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 1, int inside = 1);
     
     \par Tcl syntax:
     area_surf_leq \ref str "surf_name" \ref str "area_name" mult inside
@@ -449,10 +449,10 @@ boolvec * area_surf_add(const char * surf_name = "*", REAL weight = 1, const cha
     where (i,j) - indices of the cells in area, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
 
 */
-boolvec * area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+boolvec * area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+    \fn bool area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 1, int inside = 1);
     
     \par Tcl syntax:
     area_surf_geq \ref str "surf_name" \ref str "area_name" mult inside
@@ -470,10 +470,10 @@ boolvec * area_surf_leq(const char * surf_name = "*", const char * area_name = "
     where (i,j) - indices of the cells in area, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
 
 */
-boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_mean(REAL mean, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+    \fn bool area_mean(REAL mean, const char * area_name = "*", REAL mult = 1, int inside = 1);
     
     \par Tcl syntax:
     area_mean mean_value \ref str "area_name" mult inside
@@ -491,10 +491,10 @@ boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "
     \f]
     where (i,j) - indices of the cells in area, Q - number of cells in area, m - desired mean value
 */
-boolvec * area_mean(REAL mean, const char * area_name = "*", REAL mult = 0.001, int inside = 1);
+boolvec * area_mean(REAL mean, const char * area_name = "*", REAL mult = 1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL mult = 0.001, int inside = 1);
+    \fn bool area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL mult = 1, int inside = 1);
     
     \par Tcl syntax:
     area_wmean weighted_mean_value \ref str "area_name" \ref str "surf_name" mult inside
@@ -513,7 +513,7 @@ boolvec * area_mean(REAL mean, const char * area_name = "*", REAL mult = 0.001, 
     where (i,j) - indices of the cells in area, \f$z(x_i,y_j)\f$ - weighted surface value for the (i,j) cell,
     m - desired weighted mean value
 */
-boolvec * area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL mult = 0.001, int inside = 1);
+boolvec * area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL mult = 1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
     \fn bool area_completer(const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
@@ -548,7 +548,7 @@ boolvec * area_completer(const char * area_name = "*", REAL D1 = 1, REAL D2 = 2,
 boolvec * area_completer_add(REAL weight = 1, const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL mult = 0.001, int inside = 1);
+    \fn bool area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL mult = 1, int inside = 1);
 
     \par Tcl syntax:
     area_hist \ref str "area_name" \ref str "histogram_name" mult inside
@@ -560,7 +560,7 @@ boolvec * area_completer_add(REAL weight = 1, const char * area_name = "*", REAL
     \param area_name \ref str "name" of the area for histogram fitting
     \param histogram_name \ref str "name" of the desired histogram
 */
-boolvec * area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL mult = 0.001, int inside = 1);
+boolvec * area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL mult = 1, int inside = 1);
 
 //////////////
 //
@@ -618,7 +618,7 @@ boolvec * contour(const char * cntr_name = "*");
 boolvec * contour_add(REAL weight, const char * cntr_name = "*");
 
 /*! \ingroup tcl_rules_cntrs
-    \fn bool contour_leq(const char * cntr_name = "*", REAL mult = 0.001);
+    \fn bool contour_leq(const char * cntr_name = "*", REAL mult = 1);
 
     \par Tcl syntax:
     contour_leq \ref str "cntr_name" mult
@@ -639,10 +639,10 @@ boolvec * contour_add(REAL weight, const char * cntr_name = "*");
     \f]
     where (i,j) - indices of the cells cross with contour, \f$z_{i,j}\f$ - contour mean value for the (i,j) cell
 */
-boolvec * contour_leq(const char * cntr_name = "*", REAL mult = 0.001);
+boolvec * contour_leq(const char * cntr_name = "*", REAL mult = 1);
 
 /*! \ingroup tcl_rules_cntrs
-    \fn bool contour_geq(const char * cntr_name = "*", REAL mult = 0.001);
+    \fn bool contour_geq(const char * cntr_name = "*", REAL mult = 1);
 
     \par Tcl syntax:
     contour_geq \ref str "cntr_name" mult
@@ -663,7 +663,7 @@ boolvec * contour_leq(const char * cntr_name = "*", REAL mult = 0.001);
     \f]
     where (i,j) - indices of the cells cross with contour, \f$z_{i,j}\f$ - contour mean value for the (i,j) cell
 */
-boolvec * contour_geq(const char * cntr_name = "*", REAL mult = 0.001);
+boolvec * contour_geq(const char * cntr_name = "*", REAL mult = 1);
 
 }; // namespace surfit;
 

@@ -63,7 +63,7 @@ int reproject_undef_areas = 0;
 int process_isolated_areas = 1;
 
 size_t penalty_max_iter = 150;
-REAL penalty_weight = 1;
+REAL penalty_weight = 0.1;
 REAL penalty_weight_mult = 2;
 
 REAL sor_omega = REAL(0.6);
