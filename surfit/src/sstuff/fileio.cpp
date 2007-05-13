@@ -406,8 +406,8 @@ int calc_columns(const char * Str, int readed, char * seps) {
 			columns++;
 		else {
 			if (strlen(token) != 0) {
-				if ( (token[0] >= '0') && (token[0] <= '9') )
-					columns++;
+				//if ( (token[0] >= '0') && (token[0] <= '9') )
+				columns++;
 			}
 		}
 		token = strtok( NULL, seps );
