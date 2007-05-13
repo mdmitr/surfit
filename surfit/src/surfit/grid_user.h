@@ -78,7 +78,7 @@ size_t one2one(size_t pos, const d_grid * from, const d_grid * to);
 SURFIT_EXPORT
 void two2two(size_t & n, size_t & m, const d_grid * from, const d_grid * to);
 SURFIT_EXPORT
-void one2two(size_t pos, size_t & i, size_t & j, size_t NN, size_t MM);
+bool one2two(size_t pos, size_t & i, size_t & j, size_t NN, size_t MM);
 
 inline
 size_t two2one(size_t i, size_t j, size_t NN, size_t MM)
