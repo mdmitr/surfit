@@ -179,10 +179,10 @@ char * file_info(const char * filename);
 
 bool completer(REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
-bool value(REAL val = 0);
+bool value(const char * value = "undef");
 bool value_add(REAL weight = 1, REAL val = 0);
-bool mean(REAL value, REAL mult = 0.001);
-surfit::boolvec * wmean(REAL value, const char * surface_name = "*", REAL mult = 0.001);
+bool mean(REAL value, REAL mult = 1);
+surfit::boolvec * wmean(REAL value, const char * surface_name = "*", REAL mult = 1);
 bool leq(REAL value, REAL mult = 1);
 bool geq(REAL value, REAL mult = 1);
 bool triangulate();
