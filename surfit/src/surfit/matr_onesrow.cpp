@@ -74,12 +74,15 @@ REAL matr_onesrow::element_at(size_t i, size_t j, size_t * next_j) const
 		res = val;
 
 	if (next_j) {
+		*next_j = j+1;
+		/*
 		size_t q;
 		for (q = j; q < N; q++) {
 			*next_j = q;
 			if (mask->get(q))
 				break;
 		}
+		*/
 	}
 
 	return res;
@@ -87,11 +90,19 @@ REAL matr_onesrow::element_at(size_t i, size_t j, size_t * next_j) const
 
 REAL matr_onesrow::element_at_transposed(size_t i, size_t j, size_t * next_j) const 
 {
-	return element_at(i, j, next_j);	
+	return at(i, j, next_j);	
 };
 
 REAL matr_onesrow::at(size_t i, size_t j, size_t * next_j) const 
 {
+	bool zero = mask->get(j);
+	
+	if (zero) {
+		if ( next_j )
+			*next_j = UINT_MAX;
+		return REAL(0);
+	}
+
 	return element_at(i,j,next_j);
 };
 
@@ -211,12 +222,20 @@ REAL matr_row::element_at_transposed(size_t i, size_t j, size_t * next_j) const
 
 REAL matr_row::at(size_t i, size_t j, size_t * next_j) const 
 {
+	bool zero = mask->get(j);
+	
+	if (zero) {
+		if ( next_j )
+			*next_j = UINT_MAX;
+		return REAL(0);
+	}
+
 	return element_at(i,j,next_j);
 };
 
 REAL matr_row::at_transposed(size_t i, size_t j, size_t * next_j) const 
 {
-	return element_at(i,j,next_j);
+	return at(i,j,next_j);
 };
 
 REAL matr_row::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end)

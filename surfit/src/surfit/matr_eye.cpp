@@ -92,6 +92,20 @@ REAL matr_eye::element_at_transposed(size_t i, size_t j, size_t * next_j) const
 
 REAL matr_eye::at(size_t i, size_t j, size_t * next_j) const 
 {
+	bool zero = mask_solved->get(i);
+	if (!zero)
+		zero = mask_undefined->get(i);
+	if (!zero)
+		zero = mask_solved->get(j);
+	if (!zero)
+		zero = mask_undefined->get(j);
+
+	if (zero) {
+		if ( next_j )
+			*next_j = UINT_MAX;
+		return REAL(0);
+	}
+
 	return element_at(i,j,next_j);
 };
 
