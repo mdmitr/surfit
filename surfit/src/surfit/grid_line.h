@@ -203,13 +203,13 @@ void fill_all_areas(shortvec *& flood_areas,
 		    const bitvec * mask_undefined);
 
 SURFIT_EXPORT
-bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_undefined = NULL);
+bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, const bitvec * mask_undefined = NULL);
 
 SURFIT_EXPORT
-bitvec * nodes_in_curv_mask(const d_curv * crv, d_grid * grd, bitvec * mask_undefined = NULL);
+bitvec * nodes_in_curv_mask(const d_curv * crv, d_grid * grd, const bitvec * mask_undefined = NULL);
 
 SURFIT_EXPORT
-bitvec * nodes_in_area_mask(const d_area * area, d_grid * grd, bitvec * mask_undefined = NULL);
+bitvec * nodes_in_area_mask(const d_area * area, d_grid * grd, const bitvec * mask_undefined = NULL);
 
 SURFIT_EXPORT
 grid_line * trace_undef_grd_line(const bitvec * mask_undefined, size_t NN);

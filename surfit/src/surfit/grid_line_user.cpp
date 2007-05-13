@@ -231,7 +231,7 @@ void add_val(sizetvec * v, size_t n, size_t m, size_t NN, size_t MM) {
 	if ((n < 0) || (n >= NN))
 		return;
 
-	if ((m < 0) || (m >= MM+1))
+	if ((m < 0) || (m >= MM))
 		return;
 
 	size_t val = n + m*NN;
@@ -469,10 +469,12 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 	for (i = 0; i < nns->size()-1; i++) {
 
 		pos1 = (*nns)(i);
-		one2two(pos1, n1, m1, NN, MM);
+		if (one2two(pos1, n1, m1, NN, MM) == false)
+			continue;
 	
 		pos2 = (*nns)(i+1);
-		one2two(pos2, n2, m2, NN, MM);
+		if (one2two(pos2, n2, m2, NN, MM) == false)
+			continue;
 		
 		size_t max_n = MAX(n1, n2);
 		size_t min_m = MIN(m1, m2);

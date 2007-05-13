@@ -257,6 +257,7 @@ bool grid_line::check_for_node(size_t pos) const {
 	pos_i++;
 	pos_j++;
 	pos = two2one(pos_i, pos_j, NN, MM);
+	assert(pos != UINT_MAX);
 
 	search_cells search_pos1(first, pos);
 
@@ -292,11 +293,13 @@ bool grid_line::check_for_pair(size_t pos1, size_t pos2) const {
 	pos_i++;
 	pos_j++;
 	pos1 = two2one(pos_i, pos_j, NN, MM);
+	assert(pos1 != UINT_MAX);
 
 	one2two(pos2, pos_i, pos_j, NN-2, MM-2);
 	pos_i++;
 	pos_j++;
 	pos2 = two2one(pos_i, pos_j, NN, MM);
+	assert(pos2 != UINT_MAX);
 
 	if (pos1 > pos2) {
 		size_t temp = pos2;
@@ -416,6 +419,8 @@ void fault_points_D1(size_t n, size_t m,
 
 	while (cf.find_next(J2)) {
 		
+		if (J2 == UINT_MAX)
+			continue;
 		diff = abs(int(J - J2));
 		
 		// vertical
@@ -466,6 +471,8 @@ void fault_points_D1_aniso(size_t n, size_t m,
 		grid_line::cell_finder cf = fault->get_cell_finder(pos2find);
 		
 		while (cf.find_next(J2)) {
+			if (J2 == UINT_MAX)
+				continue;
 			if (pos2find > J2)
 				diff = pos2find - J2;
 			else 
@@ -491,7 +498,8 @@ void fault_points_D1_aniso(size_t n, size_t m,
 	
 		grid_line::cell_finder cf = fault->get_cell_finder(pos2find);
 		while (cf.find_next(J2)) {
-			
+			if (J2 == UINT_MAX)
+				continue;
 			if (pos2find > J2)
 				diff = pos2find - J2;
 			else 
@@ -516,7 +524,8 @@ void fault_points_D1_aniso(size_t n, size_t m,
 
 		grid_line::cell_finder cf = fault->get_cell_finder(pos2find);
 		while (cf.find_next(J2)) {
-			
+			if (J2 == UINT_MAX)
+				continue;
 			if (pos2find > J2)
 				diff = pos2find - J2;
 			else 
@@ -580,7 +589,8 @@ void fault_points_D2(size_t n, size_t m, size_t NN, size_t MM,
 		pos2find = J-NN;
 		grid_line::cell_finder cf_J__NN = fault->get_cell_finder(pos2find);
 		while (cf_J__NN.find_next(J2)) {
-			
+			if (J2 == UINT_MAX)
+				continue;
 			if (pos2find > J2)
 				diff = pos2find - J2;
 			else 
@@ -614,7 +624,8 @@ void fault_points_D2(size_t n, size_t m, size_t NN, size_t MM,
 		pos2find = J-1;
 		grid_line::cell_finder cf_J__1 = fault->get_cell_finder(pos2find);
 		while (cf_J__1.find_next(J2)) {
-			
+			if (J2 == UINT_MAX)
+				continue;
 			if (pos2find > J2)
 				diff = pos2find - J2;
 			else 
@@ -647,7 +658,8 @@ void fault_points_D2(size_t n, size_t m, size_t NN, size_t MM,
 		pos2find = J+1;
 		grid_line::cell_finder cf_J_1 = fault->get_cell_finder(pos2find);
 		while (cf_J_1.find_next(J2)) {
-
+			if (J2 == UINT_MAX)
+				continue;
 			if (pos2find > J2)
 				diff = pos2find - J2;
 			else 
@@ -681,7 +693,8 @@ void fault_points_D2(size_t n, size_t m, size_t NN, size_t MM,
 		pos2find = J+NN;
 		grid_line::cell_finder cf_J_NN = fault->get_cell_finder(pos2find);
 		while (cf_J_NN.find_next(J2)) {
-			
+			if (J2 == UINT_MAX)
+				continue;
 			if (pos2find > J2)
 				diff = pos2find - J2;
 			else 
@@ -1185,7 +1198,7 @@ void fill_all_areas(shortvec *& flood_areas,
 
 };
 
-bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, bitvec * mask_undefined) {
+bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, const bitvec * mask_undefined) {
 
 	if (!line)
 		return NULL;
@@ -1419,7 +1432,7 @@ grid_line * trace_undef_grd_line(const bitvec * mask_undefined, size_t NN) {
 	return res;
 };
 
-bitvec * nodes_in_curv_mask(const d_curv * crv, d_grid * grd, bitvec * mask_undefined) {
+bitvec * nodes_in_curv_mask(const d_curv * crv, d_grid * grd, const bitvec * mask_undefined) {
 
 	grid_line * grd_line = NULL;
 	grd_line = curv_to_grid_line(grd_line, crv, method_grid);
@@ -1433,7 +1446,7 @@ bitvec * nodes_in_curv_mask(const d_curv * crv, d_grid * grd, bitvec * mask_unde
 
 };
 
-bitvec * nodes_in_area_mask(const d_area * area, d_grid * grd, bitvec * mask_undefined) {
+bitvec * nodes_in_area_mask(const d_area * area, d_grid * grd, const bitvec * mask_undefined) {
 
 	bitvec * res = create_bitvec(grd->getCountX()*grd->getCountY());
 	res->init_false();
