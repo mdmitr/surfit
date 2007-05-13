@@ -27,6 +27,7 @@
 #include "f_hist.h"
 #include "f_triangulate.h"
 #include "variables.h"
+#include "variables_tcl.h"
 #include "curv.h"
 #include "curv_internal.h"
 #include "surf.h"
@@ -63,10 +64,14 @@ bool completer_add(REAL weight, REAL D1, REAL D2, REAL alpha, REAL w)
 	return true;
 };
 
-bool value(REAL value) 
+bool value(const char * Value) 
 {
-	writelog(LOG_MESSAGE,"creating gridding rule value(%g)",value);
-	f_value * f = new f_value(value);
+	REAL val = undef_value;
+	if (strcmp(Value,"undef") != 0) {
+		val = atof(Value);
+	}
+	writelog(LOG_MESSAGE,"creating gridding rule value(%s)",Value);
+	f_value * f = new f_value(val);
 	functionals_push_back(f);
 	return true;
 };
