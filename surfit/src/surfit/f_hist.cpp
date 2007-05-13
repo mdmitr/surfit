@@ -30,7 +30,6 @@
 #include "grid_user.h"
 #include "sort_alg.h"
 #include "matr_diag.h"
-#include "f_completer.h"
 
 #include <algorithm>
 #include <float.h>
@@ -65,8 +64,8 @@ const data * f_hist::this_get_data(int pos) const {
 	return NULL;
 };
 
-bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	writelog(LOG_MESSAGE,"histogram \"%s\"", hist->getName());
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
@@ -75,9 +74,9 @@ bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	size_t i;
 	for (i = 0; i < matrix_size; i++) {
 		
-		if (method_mask_solved->get(i))
+		if (mask_solved->get(i))
 			continue;
-		if (method_mask_undefined->get(i))
+		if (mask_undefined->get(i))
 			continue;
 
 		REAL val = (*method_X)(i);
@@ -95,8 +94,8 @@ bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	mask = create_bitvec(matrix_size);
 	mask->init_true();
 
-	bitvec * mask_solved_undefined = create_bitvec(method_mask_solved);
-	mask_solved_undefined->OR(method_mask_undefined);
+	bitvec * mask_solved_undefined = create_bitvec(mask_solved);
+	mask_solved_undefined->OR(mask_undefined);
 	size_t solved_or_undefined = mask_solved_undefined->true_size();
 
 	size_t intervs = hist->size();
@@ -119,7 +118,7 @@ bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	REAL dest_maxz = dest_hist->to();
 	
 	for (i = 0; i < matrix_size; i++) {
-		if (method_mask_solved->get(i) == false)
+		if (mask_solved->get(i) == false)
 			continue;
 		
 		REAL val = (*method_X)(i);
@@ -186,7 +185,7 @@ bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = (points > 0);
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;
 
 };

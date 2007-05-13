@@ -55,7 +55,7 @@ bool f_fault::minimize()
 	return false;
 };
 
-bool f_fault::make_matrix_and_vector(matr *& matrix, extvec *& v)
+bool f_fault::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined)
 {
 	return false;
 };

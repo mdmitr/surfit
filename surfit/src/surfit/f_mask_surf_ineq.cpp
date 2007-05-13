@@ -63,14 +63,13 @@ const data * f_mask_surf_ineq::this_get_data(int pos) const {
 	return NULL;
 };
 
-bool f_mask_surf_ineq::minimize() {
-
+bool f_mask_surf_ineq::minimize() 
+{
 	return false;
-
 };
 
-bool f_mask_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_mask_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	size_t points = 0;
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
@@ -100,9 +99,9 @@ bool f_mask_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 		if (mask->getValue(x,y) == false)
 			continue;
 		
-		if (method_mask_solved->get(i))
+		if (mask_solved->get(i))
 			continue;
-		if (method_mask_undefined->get(i))
+		if (mask_undefined->get(i))
 			continue;
 
 		//value = fnc->getMeanValue(x-stepX2, x+stepX2, y-stepY2, y+stepY2);
@@ -147,7 +146,7 @@ bool f_mask_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = true;
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;
 };
 

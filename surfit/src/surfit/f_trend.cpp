@@ -292,7 +292,7 @@ bool f_trend::minimize() {
 	return true;
 };
 
-bool f_trend::make_matrix_and_vector(matr *& matrix, extvec *& v) {
+bool f_trend::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) {
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	size_t NN = method_grid->getCountX();
@@ -307,8 +307,8 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	size_t nn = aux_X_to-aux_X_from+1;
 	size_t mm = aux_Y_to-aux_Y_from+1;
 	
-	trend_mask_solved = create_bitvec(method_mask_solved);
-	trend_mask_undefined = create_bitvec(method_mask_undefined);
+	trend_mask_solved = create_bitvec(mask_solved);
+	trend_mask_undefined = create_bitvec(mask_undefined);
 
 	size_t i,j;
 	for (j = aux_Y_from; j <= aux_Y_to; j++) {
@@ -491,7 +491,7 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = completer_solvable(points, D1, D2);
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;
 };
 
@@ -532,7 +532,7 @@ bool f_trend::minimize_step() {
 	
 	matr * A = NULL;
 	extvec * b = NULL;
-	bool solvable = make_matrix_and_vector(A,b);
+	bool solvable = make_matrix_and_vector(A,b,method_mask_solved,method_mask_undefined);
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 

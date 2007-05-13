@@ -62,7 +62,7 @@ bool f_surf_ineq::minimize() {
 
 };
 
-bool f_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
+bool f_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) {
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_extvec(matrix_size);
@@ -97,9 +97,9 @@ bool f_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 			pos = i + j * method_grid->getCountX();
 			
 			// check for existance
-			if (method_mask_solved->get(pos))
+			if (mask_solved->get(pos))
 				continue;
-			if (method_mask_undefined->get(pos))
+			if (mask_undefined->get(pos))
 				continue;
 			
 			REAL x, y;
@@ -148,7 +148,7 @@ bool f_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = true;
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;
 };
 
@@ -196,7 +196,8 @@ bool f_surf_ineq::solvable_without_cond(const bitvec * mask_solved,
 					const bitvec * mask_undefined,
 					const extvec * X) 
 {
-
+	return true;
+	/*
 	size_t from_x, from_y, to_x, to_y;
 	_grid_intersect1(method_grid, srf->grd,
 		        from_x, to_x,
@@ -211,9 +212,9 @@ bool f_surf_ineq::solvable_without_cond(const bitvec * mask_solved,
 			pos = i + j * method_grid->getCountX();
 			
 			// check for existance
-			if (method_mask_solved->get(pos))
+			if (mask_solved->get(pos))
 				continue;
-			if (method_mask_undefined->get(pos))
+			if (mask_undefined->get(pos))
 				continue;
 			
 			return false;
@@ -223,7 +224,7 @@ bool f_surf_ineq::solvable_without_cond(const bitvec * mask_solved,
 	}
 		
 	return true;
-
+	*/
 };
 
 

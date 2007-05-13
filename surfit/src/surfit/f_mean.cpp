@@ -26,7 +26,6 @@
 #include "bitvec.h"
 #include "matr_onesrow.h"
 #include "grid_user.h"
-#include "f_completer.h"
 
 namespace surfit {
 
@@ -47,12 +46,12 @@ const data * f_mean::this_get_data(int pos) const {
 	return NULL;
 };
 
-bool f_mean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_mean::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	writelog(LOG_MESSAGE,"mean value = %g condition", mean);
 
-	bitvec * mask = create_bitvec(method_mask_solved);
-	mask->OR(method_mask_undefined);
+	bitvec * mask = create_bitvec(mask_solved);
+	mask->OR(mask_undefined);
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	matr_onesrow * T = new matr_onesrow(mult, matrix_size, mask);
@@ -62,12 +61,12 @@ bool f_mean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	size_t i;
 	for (i = 0; i < matrix_size; i++) {
-		if (method_mask_undefined->get(i)) {
+		if (mask_undefined->get(i)) {
 			N--;
 			continue;
 		}
 		
-		if (method_mask_solved->get(i)) 
+		if (mask_solved->get(i)) 
 			sum_values_solved += (*method_X)(i)*mult;
 		
 	}
@@ -78,7 +77,7 @@ bool f_mean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	v = create_extvec(matrix_size, 0, false);
 	for (i = 0; i < matrix_size; i++) {
-		if ( (method_mask_solved->get(i))  || (method_mask_undefined->get(i)) )
+		if ( (mask_solved->get(i))  || (mask_undefined->get(i)) )
 			(*v)(i) = 0;
 		else
 			(*v)(i) = v_val;
@@ -86,7 +85,7 @@ bool f_mean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = false;
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;
 
 };

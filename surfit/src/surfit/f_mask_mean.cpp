@@ -64,8 +64,8 @@ const data * f_mask_mean::this_get_data(int pos) const {
 	return NULL;
 };
 
-bool f_mask_mean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_mask_mean::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	writelog(LOG_MESSAGE,"mask_mean %s value = %g condition", mask->getName(), mean);
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
@@ -92,11 +92,11 @@ bool f_mask_mean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 		else
 			N++;
 		
-		if (method_mask_undefined->get(i)) {
+		if (mask_undefined->get(i)) {
 			N--;
 			continue;
 		}
-		if ( method_mask_solved->get(i) ) {
+		if (mask_solved->get(i) ) {
 			sum_values_solved += (*method_X)(i)*mult;
 			continue;
 		}
@@ -119,7 +119,7 @@ bool f_mask_mean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = false;
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;
 
 };

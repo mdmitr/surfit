@@ -71,7 +71,7 @@ bool f_mask_surf::minimize() {
 		
 		matr * A = NULL;
 		extvec * b = NULL;
-		bool solvable = make_matrix_and_vector(A,b);
+		bool solvable = make_matrix_and_vector(A,b,method_mask_solved,method_mask_undefined);
 		
 		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 		
@@ -101,8 +101,8 @@ bool f_mask_surf::minimize() {
 	return false;
 };
 
-bool f_mask_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_mask_surf::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	writelog(LOG_MESSAGE,"mask_surf (%s+%s)", mask->getName(), srf->getName());
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
@@ -125,12 +125,12 @@ bool f_mask_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 		if (mask->getValue(x,y) == false) 
 			continue;
 				
-		if ( (method_mask_solved->get(i)) ) {
+		if ( (mask_solved->get(i)) ) {
 			matr_mask->set_true(i);
 			continue;
 		}
 
-		if ( (method_mask_undefined->get(i)) ) {
+		if ( (mask_undefined->get(i)) ) {
 			matr_mask->set_true(i);
 			continue;
 		}
@@ -150,7 +150,7 @@ bool f_mask_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = (points > 0);
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	
 	return solvable;
 };

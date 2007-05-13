@@ -84,8 +84,8 @@ bool f_points_ineq::minimize() {
 
 };
 
-bool f_points_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_points_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	if (f_sub_pnts == NULL) {
 		prepare_scattered_points(pnts, f_sub_pnts);
 	}
@@ -125,9 +125,9 @@ bool f_points_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 		sub_points * sub_pnts = (*f_sub_pnts)[i];
 		int num = sub_pnts->cell_number;
 
-		if (method_mask_solved->get(num))
+		if (mask_solved->get(num))
 			continue;
-		if (method_mask_undefined->get(num))
+		if (mask_undefined->get(num))
 			continue;
 		
 		REAL cond_value = sub_pnts->value(pnts);
@@ -170,7 +170,7 @@ bool f_points_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 		v = NULL;
 	}
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;
 };
 
@@ -228,7 +228,8 @@ bool f_points_ineq::solvable_without_cond(const bitvec * mask_solved,
 					  const bitvec * mask_undefined,
 					  const extvec * X) 
 {
-
+	return true;
+	/*
 	if (f_sub_pnts == NULL) {
 		prepare_scattered_points(pnts, f_sub_pnts);
 	}
@@ -264,6 +265,7 @@ bool f_points_ineq::solvable_without_cond(const bitvec * mask_solved,
 	}
 	
 	return true;
+	*/
 };
 
 }; // namespace surfit;

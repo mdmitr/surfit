@@ -80,8 +80,8 @@ const data * f_completer::this_get_data(int pos) const {
 	return NULL;
 };
 
-bool f_completer::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_completer::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	size_t NN = method_grid->getCountX();
 	size_t MM = method_grid->getCountY();
@@ -93,14 +93,14 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	if (area != NULL) {
 		undefined_mask_modified = true;
 		if ( undefined_saved == false ) 
-			saved_mask_undefined = create_bitvec(method_mask_undefined);
+			saved_mask_undefined = create_bitvec(mask_undefined);
 
 		// set "undefined" mask outside area
-		bitvec * area_mask = nodes_in_area_mask(area, method_grid, method_mask_undefined);
+		bitvec * area_mask = nodes_in_area_mask(area, method_grid, mask_undefined);
 		if (area_mask) {
 			if (area_inside != false) 
 				area_mask->invert();
-			method_mask_undefined->OR(area_mask);
+			mask_undefined->OR(area_mask);
 			area_mask->release();
 		}
 	}
@@ -108,12 +108,12 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	if (mask != NULL) {
 		undefined_mask_modified = true;
 		if ( undefined_saved == false ) 
-			saved_mask_undefined = create_bitvec(method_mask_undefined);
+			saved_mask_undefined = create_bitvec(mask_undefined);
 
 		// set "undefined" where mask is false
 		bitvec * mask_mask = mask->get_bitvec_mask(method_grid);
 		if (mask_mask) {
-			method_mask_undefined->OR(mask_mask);
+			mask_undefined->OR(mask_mask);
 			mask_mask->release();
 		}
 	}
@@ -126,24 +126,24 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 		if (D1 > 0)
 			oD1 = new matrD1(matrix_size, NN, 
 					 method_stepX, method_stepY,
-					 method_mask_solved, method_mask_undefined, 
+					 mask_solved, mask_undefined, 
 					 gfaults);
 		if (D2 > 0)
 			oD2 = new matrD2(matrix_size, NN, 
 					 method_stepX, method_stepY,
-					 method_mask_solved, method_mask_undefined, 
+					 mask_solved, mask_undefined, 
 					 gfaults); 
 	} else {
 		if (D1 > 0)
 			oD1 = new matrD1_aniso(matrix_size, NN, 
 					       method_stepX, method_stepY,
-					       method_mask_solved, method_mask_undefined, 
+					       mask_solved, mask_undefined, 
 					       gfaults,
 					       angle, w);
 		if (D2 > 0)
 			oD2 = new matrD2(matrix_size, NN,
 					 method_stepX, method_stepY,
-					 method_mask_solved, method_mask_undefined, 
+					 mask_solved, mask_undefined, 
 					 gfaults);
 	}
 
@@ -162,14 +162,14 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 				 T, 
 				 v, 
 				 NN, MM, 
-				 method_mask_solved, 
-				 method_mask_undefined);
+				 mask_solved, 
+				 mask_undefined);
 
 	matrix = T;
 
 	if (undefined_mask_modified == true) {
 		if (undefined_saved == false) {
-			method_mask_undefined->copy(saved_mask_undefined);
+			mask_undefined->copy(saved_mask_undefined);
 			saved_mask_undefined->release();
 			saved_mask_undefined = NULL;
 		}
@@ -177,7 +177,7 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = completer_solvable(points, D1, D2);
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;
 
 };
@@ -186,7 +186,7 @@ bool f_completer::minimize_step() {
 
 	matr * A = NULL;
 	extvec * b = NULL;
-	bool solvable = make_matrix_and_vector(A,b);
+	bool solvable = make_matrix_and_vector(A,b,method_mask_solved,method_mask_undefined);
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
@@ -713,15 +713,6 @@ bool completer_solvable(int points, REAL D1, REAL D2) {
 	if (D1 != 0)
 		return (points > 0);
 	return (points > 2);
-};
-
-void set_solved(bitvec * mask_solved, bitvec * mask_undefined) {
-	int N = mask_solved->size();
-	int i;
-	for (i = 0; i < N; i++) {
-		if (mask_undefined->get(i) == false)
-			mask_solved->set_true(i);
-	}
 };
 
 }; // namespace surfit;

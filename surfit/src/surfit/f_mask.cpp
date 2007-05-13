@@ -111,7 +111,7 @@ bool f_mask::minimize() {
 	return true;
 };
 
-bool f_mask::make_matrix_and_vector(matr *& matrix, extvec *& v) {
+bool f_mask::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) {
 
 	matrix = NULL;
 	v = NULL;
@@ -139,10 +139,10 @@ bool f_mask::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 		for (i = 0; i < NN; i++) {
 			pos = i + j*NN;
 
-			if (method_mask_solved->get(pos))
+			if (mask_solved->get(pos))
 				continue;
 
-			if (method_mask_undefined->get(pos))
+			if (mask_undefined->get(pos))
 				continue;
 
 			method_grid->getCoordNode(i, j, x, y);
@@ -157,7 +157,7 @@ bool f_mask::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	}
 
 	if (points > 0) {
-		matr_eye * T = new matr_eye(1, NN*MM, mask, method_mask_solved, method_mask_undefined);
+		matr_eye * T = new matr_eye(1, NN*MM, mask, mask_solved, mask_undefined);
 		matrix = T;
 		mask = NULL;
 	} else {

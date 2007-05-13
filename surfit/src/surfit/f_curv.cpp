@@ -95,10 +95,11 @@ bool f_curv::minimize() {
 	return true;
 };
 
-bool f_curv::make_matrix_and_vector(matr *& matrix, extvec *& v) {
+bool f_curv::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	create_f_approx_points();
 	if (f_pnts)
-		return f_pnts->make_matrix_and_vector(matrix, v);
+		return f_pnts->make_matrix_and_vector(matrix, v, mask_solved, mask_undefined);
 	return false;
 };
 

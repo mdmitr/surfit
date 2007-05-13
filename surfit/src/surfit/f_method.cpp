@@ -29,7 +29,6 @@
 #include "points.h"
 #include "matr_eye.h"
 #include "f_surf.h"
-
 #include "f_completer.h"
 
 namespace surfit {
@@ -49,6 +48,10 @@ void f_method::cleanup() {
 	if (method_surf)
 		method_surf->release();
 	method_surf = NULL;
+	if (f_srf) {
+		f_srf->add_erase_all();
+		f_srf->cond_erase_all();
+	}
 	delete f_srf;
 	f_srf = NULL;
 };
@@ -81,6 +84,8 @@ void f_method::create_f_surf()
 
 	if (f_srf) {
 		if (f_srf->get_surf() != method_surf) {
+			f_srf->add_erase_all();
+			f_srf->cond_erase_all();
 			delete f_srf;
 			f_srf = NULL;
 		} else
@@ -91,10 +96,19 @@ void f_method::create_f_surf()
 	if ( cond() ) { 
 		if (f_srf->cond())
 			f_srf->cond_erase_all();
-		int i;
-		for (i = 0; i < (int)functionals_cond->size(); i++) {
+		size_t i;
+		for (i = 0; i < functionals_cond->size(); i++) {
 			functional * cnd = (*functionals_cond)[i];
 			f_srf->cond_add(cnd);
+		}
+	}
+
+	if ( functionals_add->size() > 0 )
+	{
+		size_t i;
+		for (i = 0; i < functionals_add->size(); i++) {
+			functional * add = (*functionals_add)[i];
+			f_srf->add_functional(add, (*weights)[i]);
 		}
 	}
 };
@@ -107,12 +121,12 @@ bool f_method::minimize()
 	return f_srf->minimize();
 };
 
-bool f_method::make_matrix_and_vector(matr *& matrix, extvec *& v) 
+bool f_method::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
 {
 	create_f_surf();
 	if (f_srf == NULL)
 		return false;
-	return f_srf->make_matrix_and_vector(matrix, v);
+	return f_srf->make_matrix_and_vector(matrix, v, mask_solved, mask_undefined);
 };
 
 void f_method::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
@@ -121,7 +135,6 @@ void f_method::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_und
 	if (f_srf == NULL)
 		return;
 	f_srf->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
-	mark_sums(mask_solved, mask_undefined);
 };
 
 bool f_method::solvable_without_cond(const bitvec * mask_solved,

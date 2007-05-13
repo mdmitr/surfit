@@ -73,7 +73,7 @@ boolvec * points(const char * points_name = "*");
 boolvec * points_add(REAL weight = 1, const char * points_name = "*");
 
 /*! \ingroup tcl_rules_points
-    \fn bool points_leq(const char * points_name = "*", REAL mult = REAL(0.001));
+    \fn bool points_leq(const char * points_name = "*", REAL mult = REAL(1));
     
     \par Tcl syntax:
     points_leq \ref str "points_name" mult
@@ -94,10 +94,10 @@ boolvec * points_add(REAL weight = 1, const char * points_name = "*");
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
-boolvec * points_leq(const char * points_name = "*", REAL mult = REAL(0.001));
+boolvec * points_leq(const char * points_name = "*", REAL mult = REAL(1));
 
 /*! \ingroup tcl_rules_points
-    \fn bool points_geq(const char * points_name = "*", REAL mult = REAL(0.001));
+    \fn bool points_geq(const char * points_name = "*", REAL mult = REAL(1));
     
     \par Tcl syntax:
     points_geq \ref str "points_name" mult
@@ -118,7 +118,7 @@ boolvec * points_leq(const char * points_name = "*", REAL mult = REAL(0.001));
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
-boolvec * points_geq(const char * points_name = "*", REAL mult = REAL(0.001));
+boolvec * points_geq(const char * points_name = "*", REAL mult = REAL(1));
 
 }; // namespace surfit;
 

@@ -63,7 +63,7 @@ bool f_mask_ineq::minimize() {
 
 };
 
-bool f_mask_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
+bool f_mask_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) {
 
 	size_t points = 0;
 	
@@ -93,9 +93,9 @@ bool f_mask_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 		if (mask->getValue(x,y) == false)
 			continue;
 		
-		if (method_mask_solved->get(i))
+		if (mask_solved->get(i))
 			continue;
-		if (method_mask_undefined->get(i))
+		if (mask_undefined->get(i))
 			continue;
 		
 		REAL x_value = (*method_X)(i);
@@ -134,7 +134,7 @@ bool f_mask_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = true;
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;
 };
 

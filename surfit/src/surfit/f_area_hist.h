@@ -42,7 +42,7 @@ public:
 
 	bool minimize();
 
-	bool make_matrix_and_vector(matr *& matrix, extvec *& v);
+	bool make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined);
 
 	bool solvable_without_cond(const bitvec * mask_solved, 
 				   const bitvec * mask_undefined,
@@ -63,7 +63,7 @@ protected:
 private:
 
 	//! calculates mask for area
-	void get_area_mask();
+	void get_area_mask(const bitvec * mask_undefined);
 
 	//! area, that defines region
 	const d_area * area;

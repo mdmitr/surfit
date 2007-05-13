@@ -97,10 +97,11 @@ bool f_curv_ineq::minimize() {
 	return true;
 };
 
-bool f_curv_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
+bool f_curv_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	create_f_points_ineq();
 	if (f_pnts_ineq)
-		return f_pnts_ineq->make_matrix_and_vector(matrix, v);
+		return f_pnts_ineq->make_matrix_and_vector(matrix, v, mask_solved, mask_undefined);
 	return false;
 };
 
@@ -116,10 +117,13 @@ bool f_curv_ineq::solvable_without_cond(const bitvec * mask_solved,
 				  const bitvec * mask_undefined,
 				  const extvec * X)
 {
+	return true;
+	/*
 	create_f_points_ineq();
 	if (f_pnts_ineq == NULL)
 		return true;
 	return f_pnts_ineq->solvable_without_cond(mask_solved, mask_undefined, X);
+	*/
 };
 
 void f_curv_ineq::drop_private_data() {};

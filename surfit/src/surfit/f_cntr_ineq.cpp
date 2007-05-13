@@ -75,11 +75,11 @@ bool f_cntr_ineq::minimize() {
 
 };
 
-bool f_cntr_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) 
+bool f_cntr_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
 {
 	create_f_points_ineq();
 	if (f_pnts_ineq)
-		return f_pnts_ineq->make_matrix_and_vector(matrix, v);
+		return f_pnts_ineq->make_matrix_and_vector(matrix, v, mask_solved, mask_undefined);
 	return true;
 };
 

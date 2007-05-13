@@ -39,7 +39,7 @@ public:
 	virtual const char * getManagerName() const { return "surfit"; };
 
 	virtual bool minimize();
-	virtual bool make_matrix_and_vector(matr *& matrix, extvec *& v);
+	virtual bool make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined);
 
 	virtual bool solvable_without_cond(const bitvec * mask_solved, 
 				   const bitvec * mask_undefined,

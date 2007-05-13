@@ -26,7 +26,6 @@
 #include "vec.h"
 #include "matr_diag.h"
 #include "variables_tcl.h"
-#include "f_completer.h"
 
 #include "grid_user.h"
 
@@ -56,8 +55,8 @@ bool f_ineq::minimize() {
 
 };
 
-bool f_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	size_t points = 0;
 	size_t i;
 	
@@ -76,9 +75,9 @@ bool f_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	for (i = 0; i < matrix_size; i++) {
 		
-		if (method_mask_solved->get(i))
+		if (mask_solved->get(i))
 			continue;
-		if (method_mask_undefined->get(i))
+		if (mask_undefined->get(i))
 			continue;
 		
 		REAL x_value = (*method_X)(i);
@@ -118,7 +117,7 @@ bool f_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = true;
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;
 };
 
@@ -132,7 +131,8 @@ bool f_ineq::solvable_without_cond(const bitvec * mask_solved,
 			           const bitvec * mask_undefined,
 			           const extvec * X)
 {
-
+	return true;
+	/*
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
 	size_t i;
@@ -148,6 +148,7 @@ bool f_ineq::solvable_without_cond(const bitvec * mask_solved,
 	}
 
 	return true;
+	*/
 };
 
 

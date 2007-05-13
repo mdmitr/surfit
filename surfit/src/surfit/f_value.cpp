@@ -28,7 +28,6 @@
 #include "bitvec.h"
 #include "matr_eye.h"
 #include "solvers.h"
-#include "f_completer.h"
 
 #include "grid_user.h"
 
@@ -59,19 +58,21 @@ const data * f_value::this_get_data(int pos) const {
 };
 
 bool f_value::minimize() {
-	if ((functionals_add->size() == 0) && ( !cond() )) {
+	if (((functionals_add->size() == 0) && ( !cond() )) || (value == undef_value)) {
 		return minimize_alone();
 	} else {
-		
-		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
+		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 		matr * A = NULL;
 		extvec * b = NULL;
-		bool solvable = make_matrix_and_vector(A,b);
+
+		bool solvable = make_matrix_and_vector(A,b,method_mask_solved,method_mask_undefined);
+
 		if (solvable == false)
 			return false;
 
-		if ( !cond() ) {
+		if ( !cond() ) 
+		{
 			if (solvable == false) {
 				delete A;
 				if (b)
@@ -96,8 +97,8 @@ bool f_value::minimize() {
 	return false;
 };
 
-bool f_value::minimize_alone() {
-
+bool f_value::minimize_alone() 
+{
 	if (value != undef_value)
 		writelog(LOG_MESSAGE,"fill_with : %g", value);
 	else 
@@ -106,22 +107,20 @@ bool f_value::minimize_alone() {
 	size_t size = method_mask_solved->size();
 	size_t i;
 	for (i = 0; i < size; i++) {
-		if ( !method_mask_solved->get(i) && !method_mask_undefined->get(i) ) {
-			if (value != undef_value) {
-				(*method_X)(i) = value;
-				method_mask_solved->set_true(i);
-			} else {
-				method_mask_undefined->set_true(i);
-			};
-		}
+		if (method_mask_solved->get(i))
+			continue;
+		if (method_mask_undefined->get(i))
+			continue;
+		if (value != undef_value)
+			(*method_X)(i) = value;
 	};
 
 	return true;
 };
 
-bool f_value::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
-	size_t matrix_size = method_mask_solved->size();
+bool f_value::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
+	size_t matrix_size = mask_solved->size();
 
 	if (mask)
 		mask->release();
@@ -134,9 +133,9 @@ bool f_value::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	size_t points = 0;
 
 	for (i = 0; i < matrix_size; i++) {
-		if (method_mask_solved->get(i))
+		if (mask_solved->get(i))
 			continue;
-		if (method_mask_undefined->get(i))
+		if (mask_undefined->get(i))
 			continue;
 
 		(*v)(i) = value;
@@ -146,7 +145,7 @@ bool f_value::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	if (points > 0) {
 		
-		matr_eye * T = new matr_eye(1, matrix_size, mask, method_mask_solved, method_mask_undefined);
+		matr_eye * T = new matr_eye(1, matrix_size, mask, mask_solved, mask_undefined);
 		matrix = T;
 		
 	} else {
@@ -165,7 +164,10 @@ bool f_value::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 void f_value::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
 {
-	set_solved(mask_solved, mask_undefined);
+	if (value == undef_value) 
+		set_undefined(mask_solved, mask_undefined);
+	else
+		set_solved(mask_solved, mask_undefined);
 	mark_sums(mask_solved, mask_undefined);
 };
 

@@ -48,7 +48,7 @@ public:
 
 	bool minimize();
 
-	bool make_matrix_and_vector(matr *& matrix, extvec *& v);
+	bool make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined);
 	
 	bool solvable_without_cond(const bitvec * mask_solved, 
 				   const bitvec * mask_undefined,
@@ -108,9 +108,6 @@ size_t calcVecV(size_t size,
 
 SURFIT_EXPORT
 bool completer_solvable(int points, REAL D1, REAL D2);
-
-SURFIT_EXPORT
-void set_solved(bitvec * mask_solved, bitvec * mask_undefined);
 
 }; // namespace surfit;
 

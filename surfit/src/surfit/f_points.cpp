@@ -96,7 +96,7 @@ bool f_points::minimize() {
 
 		matr * A = NULL;
 		extvec * b = NULL;
-		bool solvable = make_matrix_and_vector(A,b);
+		bool solvable = make_matrix_and_vector(A,b,method_mask_solved,method_mask_undefined);
 
 		if ( !cond() ) {
 			if (solvable == false) {
@@ -123,7 +123,7 @@ bool f_points::minimize() {
 	return false;
 };
 
-bool f_points::make_matrix_and_vector(matr *& matrix, extvec *& v) {
+bool f_points::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) {
 
 	if (f_sub_pnts == NULL) {
 		prepare_scattered_points(pnts, f_sub_pnts);
@@ -165,8 +165,8 @@ bool f_points::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 		size_t pos = sub_pnts->cell_number;
 
-		if ( (!method_mask_solved->get(pos)) && 
-		     (!method_mask_undefined->get(pos)) ) 
+		if ( (!mask_solved->get(pos)) && 
+		     (!mask_undefined->get(pos)) ) 
 		{
 			REAL value = sub_pnts->value(pnts);
 			(*v)(sub_pnts->cell_number) = value;
@@ -175,12 +175,12 @@ bool f_points::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 		}
 	}
 
-	matr_eye * T = new matr_eye(1, matrix_size, mask, method_mask_solved, method_mask_undefined);
+	matr_eye * T = new matr_eye(1, matrix_size, mask, mask_solved, mask_undefined);
 	matrix = T;
 
 	bool solvable = (points > 0);
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	
 	return solvable;
 };

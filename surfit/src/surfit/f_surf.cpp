@@ -47,6 +47,7 @@ functional("f_surf", F_USUAL)
 	name = NULL;
 	if (iname)
 		name = strdup(iname);
+	need_complete = true;
 };
 
 f_surf::~f_surf() {
@@ -70,14 +71,15 @@ const data * f_surf::this_get_data(int pos) const {
 	return false;
 };
 
-bool f_surf::minimize() {
+bool f_surf::minimize() 
+{
 	if ((functionals_add->size() == 0) && ( !cond() )) {
 		return minimize_only_surf();
 	} else {
-		
+
 		matr * A = NULL;
 		extvec * b = NULL;
-		bool solvable = make_matrix_and_vector(A,b);
+		bool solvable = make_matrix_and_vector(A,b, method_mask_solved, method_mask_undefined);
 		if (solvable == false)
 			return false;
 		
@@ -109,7 +111,7 @@ bool f_surf::minimize() {
 	return false;
 };
 
-bool f_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
+bool f_surf::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) {
 
 	if (name == NULL)
 		writelog(LOG_MESSAGE,"surf : (%s), size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
@@ -144,9 +146,9 @@ bool f_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 			pos = i + j * method_grid->getCountX();
 
 			// check for existance
-			if (method_mask_solved->get(pos))
+			if (mask_solved->get(pos))
 				continue;
-			if (method_mask_undefined->get(pos))
+			if (mask_undefined->get(pos))
 				continue;
 
 			REAL x, y;
@@ -166,16 +168,15 @@ bool f_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	}
 
 	bitvec * mask_copy = create_bitvec(mask);
-	matr_eye * T = new matr_eye(1, NN*MM, mask, method_mask_solved, method_mask_undefined);
+	matr_eye * T = new matr_eye(1, NN*MM, mask, mask_solved, mask_undefined);
 	mask = mask_copy;
 	matrix = T;
 
 	bool solvable = (points > 0);
 
-	solvable = wrap_sums(matrix, v) || solvable;
-	
-	return solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 
+	return solvable;
 };
 	
 void f_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
@@ -192,10 +193,15 @@ void f_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undef
 	}
 
 	mark_sums(mask_solved, mask_undefined);
+
+	if (need_complete)
+	{
+		set_undefined(mask_solved, mask_undefined);
+	}
 };
 
-bool f_surf::minimize_only_surf() {
-
+bool f_surf::minimize_only_surf() 
+{
 	if (name == NULL)
 		writelog(LOG_MESSAGE,"surf : (%s), size=(%d x %d)", srf->getName(), srf->getCountX(), srf->getCountY());
 	else
@@ -236,6 +242,10 @@ bool f_surf::minimize_only_surf() {
 			method_mask_solved->set_true(pos);
 			
 		}
+	}
+
+	if (need_complete) {
+		set_undefined(method_mask_solved, method_mask_undefined);
 	}
 	
 	return true;

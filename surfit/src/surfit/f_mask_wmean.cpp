@@ -72,8 +72,8 @@ const data * f_mask_wmean::this_get_data(int pos) const {
 	return NULL;
 };
 
-bool f_mask_wmean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_mask_wmean::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	writelog(LOG_MESSAGE,"mask_wmean %s value = %g condition", mask->getName(), mean);
 	
 	size_t aux_X_from, aux_X_to;
@@ -111,7 +111,7 @@ bool f_mask_wmean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 			continue;
 		}
 		
-		if (method_mask_undefined->get(i)) {
+		if (mask_undefined->get(i)) {
 			(*weights)(i) = 0;
 			matr_mask->set_true(i);
 			continue;
@@ -147,10 +147,10 @@ bool f_mask_wmean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 		if (mask->getValue(x,y) == false)
 			continue;
 			
-		if (method_mask_undefined->get(i))
+		if (mask_undefined->get(i))
 			continue;
 		
-		if (method_mask_solved->get(i)) {
+		if (mask_solved->get(i)) {
 			sum_values_solved += (*method_X)(i)*weight;
 			matr_mask->set_true(i);
 		}
@@ -173,7 +173,7 @@ bool f_mask_wmean::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = false;
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;
 
 };

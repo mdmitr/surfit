@@ -31,7 +31,6 @@
 #include "grid_user.h"
 #include "sort_alg.h"
 #include "matr_diag.h"
-#include "f_completer.h"
 #include "grid_line.h"
 #include "grid.h"
 
@@ -76,8 +75,8 @@ const data * f_area_hist::this_get_data(int pos) const {
 	return NULL;
 };
 
-bool f_area_hist::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_area_hist::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	writelog(LOG_MESSAGE,"histogram \"%s\" in area \"%s\"", 
 		hist->getName(),area->getName());
 	
@@ -87,9 +86,9 @@ bool f_area_hist::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	size_t i;
 	for (i = 0; i < matrix_size; i++) {
 		
-		if (method_mask_solved->get(i))
+		if (mask_solved->get(i))
 			continue;
-		if (method_mask_undefined->get(i))
+		if (mask_undefined->get(i))
 			continue;
 
 		REAL val = (*method_X)(i);
@@ -107,10 +106,10 @@ bool f_area_hist::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	mask = create_bitvec(matrix_size);
 	mask->init_true();
 
-	get_area_mask();
+	get_area_mask(mask_undefined);
 
-	bitvec * mask_solved_undefined = create_bitvec(method_mask_solved);
-	mask_solved_undefined->OR(method_mask_undefined);
+	bitvec * mask_solved_undefined = create_bitvec(mask_solved);
+	mask_solved_undefined->OR(mask_undefined);
 	mask_solved_undefined->OR(area_mask);
 	size_t solved_or_undefined = mask_solved_undefined->true_size();
 
@@ -136,7 +135,7 @@ bool f_area_hist::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	for (i = 0; i < matrix_size; i++) {
 		if (area_mask->get(i) == false)
 			continue;
-		if (method_mask_solved->get(i) == false)
+		if (mask_solved->get(i) == false)
 			continue;
 		
 		REAL val = (*method_X)(i);
@@ -203,7 +202,7 @@ bool f_area_hist::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = (points > 0);
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;
 
 };
@@ -214,7 +213,7 @@ bool f_area_hist::solvable_without_cond(const bitvec * mask_solved,
 {
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
-	get_area_mask();
+	get_area_mask(mask_undefined);
 
 	size_t i;
 	for (i = 0; i < matrix_size; i++) {
@@ -244,17 +243,17 @@ bool f_area_hist::minimize() {
 	return false;
 };
 
-void f_area_hist::get_area_mask() {
-
+void f_area_hist::get_area_mask(const bitvec * mask_undefined) 
+{
 	if (area_mask == NULL) {
-		area_mask = nodes_in_area_mask(area, method_grid, method_mask_undefined);
+		area_mask = nodes_in_area_mask(area, method_grid, mask_undefined);
 		if (inside == true)
 			area_mask->invert();
 	} else {
 		if (area_mask->size() != method_grid->getCountX()*method_grid->getCountY()) {
 			if (area_mask)
 				area_mask->release();
-			area_mask = nodes_in_area_mask(area, method_grid, method_mask_undefined);
+			area_mask = nodes_in_area_mask(area, method_grid, mask_undefined);
 			if (inside == true)
 				area_mask->invert();
 		}

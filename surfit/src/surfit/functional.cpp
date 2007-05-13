@@ -98,7 +98,7 @@ void functional::add_functional(functional * isum, REAL iweights) {
 	weights->push_back(iweights);
 };
 
-bool functional::wrap_sums(matr *& matrix, extvec *& v) {
+bool functional::wrap_sums(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) {
 	if (functionals_add->size() == 0)
 		return false;
 
@@ -112,7 +112,7 @@ bool functional::wrap_sums(matr *& matrix, extvec *& v) {
 		functional * f = (*functionals_add)[q];
 		matr * sum_T = NULL;
 		extvec * sum_vector = NULL;
-		solvable = f->make_matrix_and_vector(sum_T, sum_vector) || solvable;
+		solvable = f->make_matrix_and_vector(sum_T, sum_vector, mask_solved, mask_undefined) || solvable;
 
 		(*matrs)[q] = sum_T;
 
@@ -189,6 +189,10 @@ void functional::cond_erase_all() {
 	functionals_cond->resize(0);
 };
 
+void functional::add_erase_all() {
+	functionals_add->resize(0);
+};
+
 bool functional::cond() const {
 	return (functionals_cond->size() > 0);
 };
@@ -201,7 +205,7 @@ void functional::cond_mark_solved_and_undefined(bitvec * mask_solved, bitvec * m
 	}
 };
 
-bool functional::cond_make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * parent_mask) 
+bool functional::cond_make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * parent_mask, bitvec * mask_solved, bitvec * mask_undefined) 
 {
 	matrix = NULL;
 	v = NULL;
@@ -220,7 +224,7 @@ bool functional::cond_make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec
 		functional * cond = (*functionals_cond)[i];
 		matr * P_matr = NULL;
 		extvec * P_v = NULL;
-		res = cond->make_matrix_and_vector(P_matr,P_v) && res;
+		res = cond->make_matrix_and_vector(P_matr,P_v,mask_solved,mask_undefined) && res;
 
 		if (P_matr == NULL)
 			continue;
@@ -243,11 +247,9 @@ bool functional::cond_make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec
 	}
 
 	matr_sums * T = new matr_sums(weights, matrices);
-
-	matr_mask * M = new matr_mask(parent_mask, T);
-
+	matr_mask * M = new matr_mask(parent_mask, T); // !!! 
 	matrix = M;
-
+	
 	return res;
 
 };
@@ -336,6 +338,24 @@ size_t functional::get_pos() const
 void functional::set_pos(size_t ipos)
 {
 	pos = ipos;
+};
+
+void set_solved(bitvec * mask_solved, bitvec * mask_undefined) {
+	size_t N = mask_solved->size();
+	size_t i;
+	for (i = 0; i < N; i++) {
+		if (mask_undefined->get(i) == false)
+			mask_solved->set_true(i);
+	}
+};
+
+void set_undefined(bitvec * mask_solved, bitvec * mask_undefined) {
+	size_t N = mask_solved->size();
+	size_t i;
+	for (i = 0; i < N; i++) {
+		if (mask_solved->get(i) == false)
+			mask_undefined->set_true(i);
+	}
 };
 
 }; // namespace surfit;

@@ -76,7 +76,7 @@ bool f_area_surf::minimize() {
 		
 		matr * A = NULL;
 		extvec * b = NULL;
-		bool solvable = make_matrix_and_vector(A,b);
+		bool solvable = make_matrix_and_vector(A,b,method_mask_solved, method_mask_undefined);
 		
 		size_t matrix_size = method_basis_cntX*method_basis_cntY;
 		
@@ -106,14 +106,14 @@ bool f_area_surf::minimize() {
 	return false;
 };
 
-bool f_area_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_area_surf::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	if (srf->getName())
 		writelog(LOG_MESSAGE,"area_surf (%s+%s)", area->getName(), srf->getName());
 	else
 		writelog(LOG_MESSAGE,"area_surf (%s)", area->getName());
 
-	get_area_mask();
+	get_area_mask(mask_undefined);
 	if (area_mask == NULL)
 		return false;
 	
@@ -134,12 +134,12 @@ bool f_area_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 		if (area_mask->get(i) == false) 
 			continue;
 				
-		if ( (method_mask_solved->get(i)) ) {
+		if ( (mask_solved->get(i)) ) {
 			mask->set_true(i);
 			continue;
 		}
 
-		if ( (method_mask_undefined->get(i)) ) {
+		if ( (mask_undefined->get(i)) ) {
 			mask->set_true(i);
 			continue;
 		}
@@ -157,12 +157,12 @@ bool f_area_surf::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 	
 	}
 
-	matr_eye * T = new matr_eye(1, matrix_size, mask, method_mask_solved, method_mask_undefined);
+	matr_eye * T = new matr_eye(1, matrix_size, mask, mask_solved, mask_undefined);
 	matrix = T;
 
 	bool solvable = (points > 0);
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	
 	return solvable;
 };
@@ -174,7 +174,7 @@ void f_area_surf::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_
 
 	size_t matrix_size = method_basis_cntX * method_basis_cntY;
 
-	get_area_mask();
+	get_area_mask(mask_undefined);
 	if (area_mask == NULL) {
 		mark_sums(mask_solved, mask_undefined);
 		return;
@@ -200,7 +200,7 @@ bool f_area_surf::minimize_only_area_surf() {
 	else
 		writelog(LOG_MESSAGE,"area_surf (%s)", area->getName());
 
-	get_area_mask();
+	get_area_mask(method_mask_undefined);
 	if (area_mask == NULL)
 		return false;
 	
@@ -239,17 +239,17 @@ bool f_area_surf::solvable_without_cond(const bitvec * mask_solved,
 	return true;
 };
 
-void f_area_surf::get_area_mask() {
+void f_area_surf::get_area_mask(bitvec * mask_undefined) {
 
 	if (area_mask == NULL) {
-		area_mask = nodes_in_area_mask(area, method_grid, method_mask_undefined);
+		area_mask = nodes_in_area_mask(area, method_grid, mask_undefined);
 		if (inside == false) 
 			area_mask->invert();
 	} else {
 		if (area_mask->size() != method_grid->getCountX()*method_grid->getCountY()) {
 			if (area_mask)
 				area_mask->release();
-			area_mask = nodes_in_area_mask(area, method_grid, method_mask_undefined);
+			area_mask = nodes_in_area_mask(area, method_grid, mask_undefined);
 			if (inside == false) 
 				area_mask->invert();
 		}

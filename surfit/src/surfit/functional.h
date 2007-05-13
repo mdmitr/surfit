@@ -59,7 +59,7 @@ public:
 	virtual bool minimize() = 0;
 	
 	//! fills matrix and right-side vector of system of linear equations and returns flag of it solvability 
-	virtual bool make_matrix_and_vector(matr *& matrix, extvec *& v) = 0;
+	virtual bool make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) = 0;
 	
 	//! makes changes to mask_solved and mask_undefined
 	virtual void mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) = 0;
@@ -113,7 +113,7 @@ public:
 	void cond_mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined);
 	
 	//! makes one matrix and one right-side vector for all functionals in \ref functionals_cond array
-	bool cond_make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask);
+	bool cond_make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * parent_mask, bitvec * mask_solved, bitvec * mask_undefined);
 
 	//! adds functional to \ref functionals_cond array
 	void cond_add(functional * icond);
@@ -141,6 +141,9 @@ public:
 	//! removes all functionals from \ref functionals_cond array
 	void cond_erase_all();
 
+	//! removes all functionals from \ref functionals_add array
+	void add_erase_all();
+
 	//! returns functional position in functionals sequence
 	size_t get_pos() const;
 
@@ -160,7 +163,7 @@ protected:
 	const data * get_add_data(int pos) const;
 
 	//! modifies system of linear equations with respect to functionals from \ref functionals_add and \ref weights
-	bool wrap_sums(matr *& matrix, extvec *& v);
+	bool wrap_sums(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined);
 	//! calls \ref mark_solved_and_undefined for each functional in \ref functionals_add array
 	void mark_sums(bitvec * mask_solved, bitvec * mask_undefined);
 	
@@ -185,6 +188,12 @@ protected:
 	size_t pos;
 
 };
+
+SURFIT_EXPORT
+void set_solved(bitvec * mask_solved, bitvec * mask_undefined);
+
+SURFIT_EXPORT
+void set_undefined(bitvec * mask_solved, bitvec * mask_undefined);
 
 }; // namespace surfit;
 

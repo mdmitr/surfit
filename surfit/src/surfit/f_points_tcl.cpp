@@ -125,7 +125,7 @@ struct match_points_geq
 		if ( StringMatch( pos, pnts->getName() ) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule points_geq(\"%s\",%g)", pnts->getName(), mult);
-			f_points_ineq * inpnts = new f_points_ineq(pnts, true, mult);
+			f_points_ineq * inpnts = new f_points_ineq(pnts, false, mult);
 			functionals_push_back(inpnts);
 			if (res == NULL)
 				res = create_boolvec();
