@@ -30,37 +30,18 @@
 
 namespace surfit {
 
-int matlabOpenFile(const char * filename, bool & writeHeader, bool append_file) {
-	int file = -1;
+FILE * matlabOpenFile(const char * filename, bool & writeHeader, bool append_file) {
+	FILE * file = NULL;
 	writeHeader = false;
-#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
-	if (append_file)
-		file = open(filename, O_BINARY|O_RDWR|O_APPEND);
-	else 
-		file = open(filename, O_BINARY|O_RDWR);
-#else
-	if (append_file)
-		file = open(filename, O_RDWR|O_APPEND);
-	else
-		file = open(filename, O_RDWR);
-#endif
-	if (file == -1) {
-#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
-		if (append_file)
-			file = open(filename, O_BINARY|O_CREAT|O_APPEND|O_RDWR, S_IREAD|S_IWRITE);
-		else
-			file = open(filename, O_BINARY|O_CREAT|O_RDWR, S_IREAD|S_IWRITE);
-#else 
-		if (append_file)
-			file = open(filename, O_CREAT|O_APPEND|O_RDWR, S_IREAD|S_IWRITE);
-		else
-			file = open(filename, O_CREAT|O_RDWR, S_IREAD|S_IWRITE);
-#endif
+	if (append_file) {
+		file = fopen(filename,"a+b");
+		writeHeader = false;
+	} else {
+		file = fopen(filename,"w+b");
 		writeHeader = true;
 	}
-
-	if (file == -1) {
-		writelog(LOG_ERROR,"Can't open file %s for write MAT-file",filename);
+	if (file == NULL) {
+		writelog(LOG_ERROR,"Can't open file %s for writing MAT-file : %s",filename,strerror(errno));
 	}
 	return file;
 };
@@ -70,7 +51,7 @@ bool matlabWriteVector(const REAL * begin, const REAL * end, const char * filena
 	writelog(LOG_DEBUG,"Writing vector %s to MAT-file %s", name, filename);
 
 	bool writeHeader = false;
-	int file = matlabOpenFile(filename, writeHeader, append_file);
+	FILE * file = matlabOpenFile(filename, writeHeader, append_file);
 
 	char header[124] = "MATLAB 5.0 MAT-file. Creator: surfit";
 #if (defined(_WIN32) || defined(__WIN32__) || defined(WIN32)) && !defined(__CYGWIN__)
@@ -93,47 +74,54 @@ bool matlabWriteVector(const REAL * begin, const REAL * end, const char * filena
 	matrix_size += count*8 + 8; // + 8 for header
 
 	if (writeHeader) {
-		if ( write(file, header, 124) != 124 ) return false;
-		if ( write(file, &version,2) != 2 ) return false;
-		if ( write(file, &endian,2) != 2 ) return false;
+		if ( fwrite(header, 124, 1, file) != 1 ) return false;
+		if ( fwrite(&version, 2, 1, file) != 1 ) return false;
+		if ( fwrite(&endian, 2, 1, file) != 1 ) return false;
 	}
 
 	// tag
 	if ( !mWrite4(file, miMATRIX) ) return false;
 	if ( !mWrite4(file, matrix_size) ) return false;
+	fflush(file);
 
 	// Array Flags
 	if ( !mWrite4(file,miUINT32) ) return false;
 	if ( !mWrite4(file,8) ) return false;
+	fflush(file);
 	
 	if ( !mWrite1(file,mxDOUBLE_CLASS) ) return false;
 	if ( !mWrite1(file,0) ) return false;
 	if ( !mWrite2(file,0) ) return false;
 	if ( !mWrite4(file,count) ) return false; // nzmax
+	fflush(file);
 
 	// Dimensions Array
 	if ( !mWrite4(file,miINT32) ) return false;
 	if ( !mWrite4(file,8) ) return false;
 	if ( !mWrite4(file,count) ) return false;
 	if ( !mWrite4(file,1) ) return false;
+	fflush(file);
 
 	// Array Name
 	mWriteName(file, name);
+	fflush(file);
 
 	double val;
 	if ( !mWrite4(file, miDOUBLE) ) return false;
 	if ( !mWrite4(file, count*sizeof(double) ) ) return false;
 	
 	const REAL * ptr;
+	int written = 0;
 	for (ptr = begin; ptr != end; ptr++) {
 		int i = ptr-begin;
 		if ( std::find(zero_rows->begin(), zero_rows->end(), i) != zero_rows->end() )
 			continue;
 		val = *ptr;
 		if ( !mWriteDouble(file, val) ) return false;
+		written++;
 	}
 	
-	close(file);
+	fclose(file);
 
 	return true;
 
@@ -218,7 +206,7 @@ bool matlabSparseMatrix::writeMAT(const char * filename, const char * name, cons
 	writelog(LOG_DEBUG,"Writing matrix %s to MAT-file %s", name, filename);
 	
 	bool writeHeader = false;
-	int file = matlabOpenFile(filename, writeHeader, append_file);
+	FILE * file = matlabOpenFile(filename, writeHeader, append_file);
 
 	char header[124] = "MATLAB 5.0 MAT-file. Creator: surfit";
 #if (defined(_WIN32) || defined(__WIN32__) || defined(WIN32)) && !defined(__CYGWIN__)
@@ -260,9 +248,9 @@ bool matlabSparseMatrix::writeMAT(const char * filename, const char * name, cons
 	matrix_size += pr + 8; // +8 for header
 
 	if (writeHeader) {
-		if ( write(file, header, 124) != 124 ) return false;
-		if ( write(file, &version,2) != 2 ) return false;
-		if ( write(file, &endian,2) != 2 ) return false;
+		if ( fwrite(header, 124, 1, file) != 1 ) return false;
+		if ( fwrite(&version, 2, 1, file) != 1 ) return false;
+		if ( fwrite(&endian, 2, 1, file) != 1 ) return false;
 	}
 			
 	// tag
@@ -298,8 +286,8 @@ bool matlabSparseMatrix::writeMAT(const char * filename, const char * name, cons
 			index = (int)j;
 			if ( at(i,j,&j) != 0 ) {
 				std::vector<int>::const_iterator it = std::lower_bound(zero_rows->begin(), zero_rows->end(), index);
-				if (it != zero_rows->end())
-					index -= it-zero_rows->begin();
+				//if (it != zero_rows->end())
+				index -= it-zero_rows->begin();
 				if ( !mWrite4(file, index) ) return false;
 				index_count++;
 			}
@@ -354,7 +342,7 @@ bool matlabSparseMatrix::writeMAT(const char * filename, const char * name, cons
 		}
 	}
 	
-	close(file);
+	fclose(file);
 
 	return true;
 

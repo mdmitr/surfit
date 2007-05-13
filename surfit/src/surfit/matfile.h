@@ -62,42 +62,38 @@
 #include <string.h>
 
 #if (defined(_WIN32) || defined(__WIN32__) || defined(WIN32)) && !defined(__CYGWIN__)
-bool mWrite1(int file, __int8 a) {
+bool mWrite1(FILE * file, __int8 a) {
 #else
-bool mWrite1(int file, int8_t a) {
+bool mWrite1(FILE * file, int8_t a) {
 #endif
-	bool res = (write(file, &a, 1) == 1);
-	
+	bool res = (fwrite(&a, 1, 1, file) == 1);
 	return res;
 }
 
 #if (defined(_WIN32) || defined(__WIN32__) || defined(WIN32)) && !defined(__CYGWIN__)
-bool mWrite2(int file, __int16 a) {
+bool mWrite2(FILE * file, __int16 a) {
 #else
-bool mWrite2(int file, int16_t a) {
+bool mWrite2(FILE * file, int16_t a) {
 #endif
-	bool res = (write(file, &a, 2) == 2);
-	
+	bool res = (fwrite(&a, 2, 1, file) == 1);
 	return res;
 }
 
 #if (defined(_WIN32) || defined(__WIN32__) || defined(WIN32)) && !defined(__CYGWIN__)
-bool mWrite4(int file, __int32 a) {
+bool mWrite4(FILE * file, __int32 a) {
 #else
-bool mWrite4(int file, int32_t a) {
+bool mWrite4(FILE * file, int32_t a) {
 #endif
-	bool res = (write(file, &a, 4) == 4);
-	
+	bool res = (fwrite(&a, 4, 1, file) == 1);
 	return res;
 }
 
-bool mWriteDouble(int file, double a) {
-	bool res = (write(file, &a, 8) == 8);
-	
+bool mWriteDouble(FILE * file, double a) {
+	bool res = (fwrite(&a, 8, 1, file) == 1);
 	return res;
 };
 
-bool mWriteName(int file, const char * name) {
+bool mWriteName(FILE * file, const char * name) {
 	int lname = MIN(strlen(name),4);
 	if ( !mWrite2(file,miINT8) ) return false;
 	if ( !mWrite2(file,lname) ) return false;
