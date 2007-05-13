@@ -125,7 +125,62 @@ void solvers_info() {
 	}
 };
 
+#ifdef DEBUG
+static int debug_cnt = 0;
+int get_real_index(std::vector<int> * zero_rows, int pos, int max)
+{
+	int cnt = zero_rows->size();
+	int res = 0;
+	int i;
+	for (i = 0; i < max; i++) {
+		if ( std::find(zero_rows->begin(), zero_rows->end(), i) == zero_rows->end() )
+			pos--;
+		
+		if (pos == 0)
+			break;
+
+		res++;
+
+	}
+	return res;
+}
+#endif
 size_t solve(matr * T, const extvec * V, extvec *& X) {
+
+#ifdef DEBUG
+	/*
+	if (false) {
+		std::vector<int> zero_rows;
+		T->get_zero_rows(zero_rows);
+		T->writeMAT("c:\\matr.mat","A",&zero_rows,false);
+		matlabWriteVector(V->const_begin(), V->const_end(), "c:\\matr.mat","b",&zero_rows);
+	}
+	*/
+	{
+		writelog(LOG_DEBUG,"checking for matrix is symmetric...");
+		size_t i, j;
+		for (i = 0; i < T->rows(); i++) {
+			for (j = i+1; j < T->rows();) {
+				///*
+				REAL val2 = T->at(j,i);
+				REAL val1 = T->at(i,j,&j);
+				assert(val1 == val2);
+				//*/
+				/*
+				REAL val2 = T->at(j,i);
+				REAL val1 = T->at(i,j);
+				if (val1 != val2) {
+					bool stop = true;
+					REAL val2 = T->at(j,i);
+					REAL val1 = T->at(i,j);
+				}
+				j++;
+				*/
+			}
+		}
+	}
+	
+#endif
 
 	if (solver_name == NULL) {
 		writelog(LOG_ERROR,"Solver not found!");
@@ -148,10 +203,9 @@ size_t solve(matr * T, const extvec * V, extvec *& X) {
 	return iters;
 };
 
-bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X) 
+bool penalty_solvable(functional * fnc, const extvec * X)
 {
-	int prev_loglevel = loglevel;
-	loglevel = LOG_SILENT;
+	// create empty masks for testing functionals
 	bitvec * test_mask_solved = create_bitvec(method_mask_solved->size());
 	test_mask_solved->init_false();
 	bitvec * test_mask_undefined = create_bitvec(method_mask_solved->size());
@@ -175,8 +229,19 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 		test_mask_solved->release();
 	if (test_mask_undefined)
 		test_mask_undefined->release();
+	
+	return res2;
+};
 
-	if (res2 == false) {
+bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X) 
+{
+	int prev_loglevel = loglevel;
+	loglevel = LOG_SILENT;
+
+	// check for possibility of applying penalty algorithm
+	bool solvable = penalty_solvable(fnc, X);
+
+	if (solvable == false) {
 		delete T; 
 		if (V)
 			V->release();
@@ -190,8 +255,14 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 
 	bitvec * parent_mask = create_bitvec(method_mask_solved->size());
 	parent_mask->init_false();
-	fnc->mark_solved_and_undefined(parent_mask, parent_mask, false);
-
+	bitvec * fake_mask = create_bitvec(method_mask_solved->size());
+	fake_mask->init_false();
+	fnc->mark_solved_and_undefined(parent_mask, fake_mask, false);
+	fake_mask->copy(method_mask_undefined);
+	bitvec * fake_mask2 = create_bitvec(method_mask_solved);
+	fnc->mark_solved_and_undefined(fake_mask2, fake_mask, false);
+	fake_mask2->release();
+		
 	REAL from = FLT_MAX;
 	REAL to = FLT_MAX;
 	REAL step = FLT_MAX;
@@ -199,13 +270,14 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 	size_t iters = 0;
 
 	bool ok = false;
-	while (!ok) {
-
+	while (!ok) 
+	{
 		matr * P_matrix = NULL;
 		extvec * P_vec = NULL;
 		if (counter == 0) 
 			loglevel = prev_loglevel;
-		fnc->cond_make_matrix_and_vector(P_matrix, P_vec, parent_mask);
+
+		fnc->cond_make_matrix_and_vector(P_matrix, P_vec, parent_mask, method_mask_solved, fake_mask);
 		if (counter == 0) 
 			loglevel = LOG_SILENT;
 
@@ -223,9 +295,13 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 		extvec * S_vec = create_extvec(P_vec->size(),0,0);
 
 		size_t i;
-		for (i = 0; i < matrix_size; i++) {
-			(*S_vec)(i) = (*P_vec)(i)*weight + (*V)(i);
-		};
+		if (V) {
+			for (i = 0; i < matrix_size; i++)
+				(*S_vec)(i) = (*P_vec)(i)*weight + (*V)(i);
+		} else {
+			for (i = 0; i < matrix_size; i++)
+				(*S_vec)(i) = (*P_vec)(i)*weight;
+		}
 		
 		iters += solve(S_matrix, S_vec, X);
 		counter++;
@@ -275,7 +351,9 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 	}
 
 	if (parent_mask)
-		parent_mask->release();
+		parent_mask;
+	if (fake_mask)
+		fake_mask->release();
 	delete T;
 	if (V)
 		V->release();
