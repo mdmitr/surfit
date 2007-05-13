@@ -74,8 +74,8 @@ bool f_flow_points::minimize() {
 	return false;
 };
 
-bool f_flow_points::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_flow_points::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	if (f_sub_tasks == NULL) {
 		prepare_scattered_points(f_task, f_sub_tasks);
 	}
@@ -110,8 +110,8 @@ bool f_flow_points::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 		
 		sub_points * sub_pnts = (*f_sub_tasks)[i];
 		
-		if ( (!method_mask_solved->get(sub_pnts->cell_number)) && 
-		     (!method_mask_undefined->get(sub_pnts->cell_number)) ) 
+		if ( (!mask_solved->get(sub_pnts->cell_number)) && 
+		     (!mask_undefined->get(sub_pnts->cell_number)) ) 
 		{
 			REAL value = sub_pnts->sum_value(f_task);
 			(*v)(sub_pnts->cell_number) = value;
@@ -123,7 +123,7 @@ bool f_flow_points::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = (points > 0);
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	
 	return solvable;
 };

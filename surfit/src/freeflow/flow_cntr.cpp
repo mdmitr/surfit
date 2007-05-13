@@ -96,9 +96,9 @@ bool f_flow_cntr::minimize() {
 	return f_points->minimize();
 };
 
-bool f_flow_cntr::make_matrix_and_vector(matr *& matrix, extvec *& v) {
+bool f_flow_cntr::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) {
 	create_f_flow_points();
-	return f_points->make_matrix_and_vector(matrix, v);
+	return f_points->make_matrix_and_vector(matrix, v, mask_solved, mask_undefined);
 };
 
 void f_flow_cntr::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 

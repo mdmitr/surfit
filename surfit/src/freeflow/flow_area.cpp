@@ -60,15 +60,15 @@ bool f_flow_area::minimize() {
 	return false;
 };
 
-bool f_flow_area::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_flow_area::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	writelog(LOG_MESSAGE,"flow area (%s), value = %g", area->getName(), value);
 	
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	v = create_extvec(matrix_size);
 
 	bitvec * mask = NULL;
-	mask = nodes_in_area_mask(area, method_grid, method_mask_undefined);
+	mask = nodes_in_area_mask(area, method_grid, mask_undefined);
 	if (!mask)
 		return false;
 
@@ -79,7 +79,7 @@ bool f_flow_area::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	for (i = 0; i < matrix_size; i++) {
 		
-		if ( (method_mask_solved->get(i)) ) {
+		if ( (mask_solved->get(i)) ) {
 			mask->set_false(i);
 			continue;
 		}
@@ -96,7 +96,7 @@ bool f_flow_area::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = (points > 0);
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	
 	return solvable;
 };

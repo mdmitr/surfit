@@ -72,7 +72,7 @@ bool f_dem::minimize() {
 
 		matr * A = NULL;
 		extvec * b = NULL;
-		bool solvable = make_matrix_and_vector(A,b);
+		bool solvable = make_matrix_and_vector(A,b,method_mask_solved,method_mask_undefined);
 
 		if (solvable == false) {
 			delete A;
@@ -95,7 +95,7 @@ bool f_dem::minimize() {
 	return false;
 };
 
-bool f_dem::make_matrix_and_vector(matr *& matrix, extvec *& v) {
+bool f_dem::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) {
 
 	writelog(LOG_MESSAGE,"dem : (%s), size=(%d x %d)", dem->getName(), dem->getCountX(), dem->getCountY());
 
@@ -127,9 +127,9 @@ bool f_dem::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 			pos = i + j * method_grid->getCountX();
 
 			// check for existance
-			if (method_mask_solved->get(pos))
+			if (mask_solved->get(pos))
 				continue;
-			if (method_mask_undefined->get(pos))
+			if (mask_undefined->get(pos))
 				continue;
 
 			REAL x, y;
@@ -148,12 +148,12 @@ bool f_dem::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 		}
 	}
 
-	matr_eye * T = new matr_eye(1, NN*MM, mask, method_mask_solved, method_mask_undefined);
+	matr_eye * T = new matr_eye(1, NN*MM, mask, mask_solved, mask_undefined);
 	matrix = T;
 
 	bool solvable = (points > 0);
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	
 	return solvable;
 

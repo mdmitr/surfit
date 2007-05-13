@@ -78,20 +78,20 @@ void f_lcm_simple::add_flow(functional * fnc) {
 	flows->push_back(fnc);
 };
 
-bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, extvec *& v) {
-
+bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 	size_t NN = method_grid->getCountX();
 	size_t MM = method_grid->getCountY();
 
 	matrD1 * oD1 = new matrD1(matrix_size, NN, 
 		method_stepX, method_stepY,
-		method_mask_solved, method_mask_undefined, 
+		mask_solved, mask_undefined, 
 		gfaults); 
 	
 	v = create_extvec(matrix_size);
 
-	size_t points = calcVecV(matrix_size, method_X, oD1, v, NN, MM, method_mask_solved, method_mask_undefined);
+	size_t points = calcVecV(matrix_size, method_X, oD1, v, NN, MM, mask_solved, mask_undefined);
 
 	size_t i;
 	for (i = 0; i < flows->size(); i++) {
@@ -100,7 +100,7 @@ bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 			continue;
 		matr * T = NULL;
 		extvec * V = NULL;
-		if (!ff->make_matrix_and_vector(T, V)) {
+		if (!ff->make_matrix_and_vector(T, V, mask_solved, mask_undefined)) {
 			delete T;
 			if (V)
 				V->release();
@@ -129,7 +129,7 @@ bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, extvec *& v) {
 
 	bool solvable = completer_solvable(points, 1, 0);
 
-	solvable = wrap_sums(matrix, v) || solvable;
+	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;
 
 };
@@ -138,7 +138,7 @@ bool f_lcm_simple::minimize_step() {
 
 	matr * A = NULL;
 	extvec * b = NULL;
-	bool solvable = make_matrix_and_vector(A,b);
+	bool solvable = make_matrix_and_vector(A,b,method_mask_solved,method_mask_undefined);
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
