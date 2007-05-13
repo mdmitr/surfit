@@ -36,6 +36,8 @@ del /Q /S *.grd
 del /Q /S *.log
 del /Q /S *.errlog
 del /Q /S .#*
+del /Q /S *.sbr
+del /Q /S *.pdb
 del *.plg
 del *.stt
 
@@ -80,3 +82,11 @@ cd ..
 del *.o
 del *.lo
 del *.la
+
+cd acmlbooster
+call clean.bat
+cd ..
+
+cd mklbooster
+call clean.bat
+cd ..
