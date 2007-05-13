@@ -3400,21 +3400,22 @@ _wrap_completer_add(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
 
 SWIGINTERN int
 _wrap_value__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  double arg1 ;
+  char *arg1 = (char *) 0 ;
   bool result;
-  double val1 ;
-  int ecode1 = 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:value val ",(void *)0) == TCL_ERROR) SWIG_fail;
-  ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "value" "', argument " "1"" of type '" "double""'");
-  } 
-  arg1 = static_cast<double >(val1);
+  if (SWIG_GetArgs(interp, objc, objv,"o:value value ",(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "value" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (bool)surfit::value(arg1);
+        result = (bool)surfit::value((char const *)arg1);
         
       }
     }
@@ -3427,8 +3428,10 @@ _wrap_value__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
     }
   }
   Tcl_SetObjResult(interp,SWIG_From_bool(static_cast<bool >(result)));
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_OK;
 fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
   return TCL_ERROR;
 }
 
@@ -3469,10 +3472,8 @@ _wrap_value(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_
   }
   if (argc == 1) {
     int _v;
-    {
-      int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_value__SWIG_0(clientData, interp, objc, argv - 1);
     }
