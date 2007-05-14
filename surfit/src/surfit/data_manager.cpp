@@ -599,7 +599,7 @@ void surfit_manager::clear_data() const {
 
 	tol = float(1e-5);
 	penalty_max_iter = 150;
-	penalty_weight = 1;
+	penalty_weight = 0.0001;
 	penalty_weight_mult = 10;
 
 

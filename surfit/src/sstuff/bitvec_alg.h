@@ -270,10 +270,11 @@ void sums_points_D1_aniso(size_t i, size_t j,
 
 	// first_xy
 	if (first_xy) {
+		//first_xy = first_x;
 		if ( (i >= 0) && (i+1 < local_NN) &&  // i=0,\ldots,N-2
 		     (j >= 0) && (j+1 < local_MM) ) { // j=0,\ldots,M-2
 			
-			if ( mask_undefined->get(J) || mask_undefined->get(J+1) )
+			if ( mask_undefined->get(J) || mask_undefined->get(J+1) || mask_undefined->get(J+NN) )
 				first_xy = false;
 			
 		} else {
@@ -283,10 +284,11 @@ void sums_points_D1_aniso(size_t i, size_t j,
 
 	// first_yx
 	if (first_yx) {
+		//first_yx = first_y;
 		if ( (i >= 0) && (i+1 < local_NN) &&  // i=0,\ldots,N-2
 		     (j >= 0) && (j+1 < local_MM) ) { // j=0,\ldots,M-2
 			
-			if ( mask_undefined->get(J) || mask_undefined->get(J+NN) )
+			if ( mask_undefined->get(J) || mask_undefined->get(J+NN) || mask_undefined->get(J+1))
 				first_yx = false;
 			
 		} else {

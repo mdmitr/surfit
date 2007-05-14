@@ -121,6 +121,15 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * m
 	matr * T = NULL;
 	matr * oD1 = NULL;
 	matr * oD2 = NULL;
+
+#ifdef DEBUG
+	FILE * ff = fopen("c:\\mask.m", "w");
+	draw_bitvec_matlab(ff, method_grid, mask_solved, "green");
+	draw_bitvec_matlab(ff, method_grid, mask_undefined, "black");
+	draw_grid_matlab(ff, method_grid);
+	fclose(ff);
+#endif
+
 	if (angle == 0 && w == 1) {
 	//if (false) {
 		if (D1 > 0)

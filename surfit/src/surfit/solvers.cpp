@@ -162,20 +162,18 @@ size_t solve(matr * T, const extvec * V, extvec *& X) {
 		for (i = 0; i < T->rows(); i++) {
 			for (j = i+1; j < T->rows();) {
 				///*
+				size_t next_j;
 				REAL val2 = T->at(j,i);
-				REAL val1 = T->at(i,j,&j);
+				REAL val1 = T->at(i,j,&next_j);
 				assert(val1 == val2);
-				//*/
-				/*
-				REAL val2 = T->at(j,i);
-				REAL val1 = T->at(i,j);
 				if (val1 != val2) {
 					bool stop = true;
-					REAL val2 = T->at(j,i);
-					REAL val1 = T->at(i,j);
+					size_t I, J;
+					one2two(53, I, J, 8,8);
+					REAL val22 = T->at(j,i);
+					REAL val12 = T->at(i,j);
 				}
-				j++;
-				*/
+				j = next_j;
 			}
 		}
 	}

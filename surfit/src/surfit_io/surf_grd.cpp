@@ -413,7 +413,7 @@ d_surf * _surf_load_grd_bin7(const char * filename, const char * surfname)
 				if ( read( file, &blank, sizeof(double) ) != sizeof(double) )
 					goto exit;
 				
-				data = create_vec( nx*ny, 0, 0 ); // don't fill
+				data = create_extvec( nx*ny, 0, 0 ); // don't fill
 				
 				maxx = stepX*(nx-1)+minx;
 				maxy = stepY*(ny-1)+miny;

@@ -688,6 +688,8 @@ REAL matrD2::at(size_t i, size_t j, size_t * next_j) const {
 			return REAL(0);
 		}
 
+		return REAL(0);
+
 	}
 
 	bool b[10];
