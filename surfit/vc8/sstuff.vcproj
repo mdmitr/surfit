@@ -356,7 +356,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Gs /Gs  -DSORT_OPT_PREFETCHING -DUSE_MALLOC_LOCK -DCOUNT_WAIT_TIME -I../../ -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_RTLDLL -DBOOST_LIB_DIAGNOSTIC -DBOOST_ALL_DYN_LINK -DSTXXL_BOOST_TIMESTAMP -DSTXXL_BOOST_CONFIG -DSTXXL_BOOST_FILESYSTEM -DSTXXL_BOOST_THREADS -DSTXXL_BOOST_RANDOM -Ic:\boost /EHsc /EHs /wd4820 /wd4217 /wd4668 /wd4619 /wd4625 /wd4626 /wd4355 /wd4244 /wd4267 /wd4311 /wd4800 /wd4101 /wd4307 /wd4003 -DSTXXL_VERBOSE_LEVEL=0"
+				AdditionalOptions="-DSORT_OPT_PREFETCHING -DUSE_MALLOC_LOCK -DCOUNT_WAIT_TIME -Ix:\develop\libs\stxxl/ -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE /MD /O2 -D_RTLDLL -DBOOST_LIB_DIAGNOSTIC -DSTXXL_BOOST_TIMESTAMP -DSTXXL_BOOST_CONFIG -DSTXXL_BOOST_FILESYSTEM -DSTXXL_BOOST_THREADS -DSTXXL_BOOST_RANDOM -Ix:\develop\libs\boost /EHsc /EHs /wd4820 /wd4217 /wd4668 /wd4619 /wd4625 /wd4626 /wd4355 /wd4996 -D_SCL_SECURE_NO_DEPRECATE "
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
@@ -2567,6 +2567,10 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath="..\src_xxl\sstuff\solvers_xxl.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src_xxl\sstuff\vec_xxl.cpp"
 					>
 					<FileConfiguration
@@ -2713,6 +2717,10 @@
 				</File>
 				<File
 					RelativePath="..\src_xxl\sstuff\sizetvec_xxl.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src_xxl\sstuff\solvers_xxl.h"
 					>
 				</File>
 				<File

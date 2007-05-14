@@ -380,7 +380,7 @@
 				OutputFile="../bin/libfreeflow.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="C:\Tcl\lib;..\..\libs\stxxl\lib80;;..\..\libs\boost\lib"
+				AdditionalLibraryDirectories="..\..\LIBS\TCL8.3.5\WIN\RELEASE;..\..\libs\stxxl\lib80;;..\..\libs\boost\lib"
 				ProgramDatabaseFile=".\../Release/libfreeflow.pdb"
 				ImportLibrary="../bin/libfreeflow.lib"
 				TargetMachine="1"
