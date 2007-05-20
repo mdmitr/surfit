@@ -268,7 +268,7 @@ bool grid_line::check_for_node(size_t pos) const {
 			       search_pos1);
 	
 	if (ptr != sorted_first->const_end())
-		if (*ptr == pos)
+		if ((*first)(*ptr) == pos)
 			return true;
 		
 	search_cells search_pos2(second, pos);
@@ -279,7 +279,7 @@ bool grid_line::check_for_node(size_t pos) const {
 			       search_pos2);
 		
 	if (ptr != sorted_second->const_end())
-		if (*ptr == pos)
+		if ((*second)(*ptr) == pos)
 			return true;
 			
 	return false;
