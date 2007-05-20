@@ -122,14 +122,6 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * m
 	matr * oD1 = NULL;
 	matr * oD2 = NULL;
 
-#ifdef DEBUG
-	FILE * ff = fopen("c:\\mask.m", "w");
-	draw_bitvec_matlab(ff, method_grid, mask_solved, "green");
-	draw_bitvec_matlab(ff, method_grid, mask_undefined, "black");
-	draw_grid_matlab(ff, method_grid);
-	fclose(ff);
-#endif
-
 	if (angle == 0 && w == 1) {
 	//if (false) {
 		if (D1 > 0)
@@ -231,6 +223,7 @@ bool f_completer::minimize() {
 	if (gfaults)
 		gfaults->release();
 	gfaults = NULL;
+	grid_line * old_gfaults = NULL;
 	size_t q, f_cnt = 0;
 	bool have_faults = false;
 	for (q = 0; q < functionals->size(); q++)
@@ -263,6 +256,8 @@ bool f_completer::minimize() {
 			}
 		}
 		gfaults = curv_to_grid_line(gfaults, fault_crv, method_grid);
+		if ((method_prev_grid != NULL) && (reproject_faults))
+			old_gfaults = curv_to_grid_line(old_gfaults, fault_crv, method_prev_grid);
 	}
 	if (have_faults)
 		log_printf("\n");
@@ -273,44 +268,67 @@ bool f_completer::minimize() {
 
 	} else { // use some optimizations
 
-		if (reproject_faults && gfaults) {
-			if (method_prev_grid != NULL) {
-				
-				if (saved_mask_solved) {
-					saved_mask_solved->release();
-					saved_mask_solved = NULL;
-				}
-				saved_mask_solved = create_bitvec(method_mask_solved);
-				method_mask_solved->init_false();
-				
-				int size = method_mask_solved->size();
-				int i;
-				for (i = 0; i < size; i++) {
-					
-					if (gfaults->check_for_node(i) == false) 
-						method_mask_solved->set_true(i);
-					else {
-						if (saved_mask_solved->get(i) == true)
-							method_mask_solved->set_true(i);
-					}
-					
-				};
-				
-				// res = minimize_step() && res;
-				res = minimize_step();
+		if (reproject_faults && old_gfaults && method_prev_grid) 
+		{
+			writelog(LOG_MESSAGE,"solving near fault lines...");
+			if (saved_mask_solved) 
+			{
+				saved_mask_solved->release();
+				saved_mask_solved = NULL;
+			}
+			saved_mask_solved = create_bitvec(method_mask_solved);
 			
-				method_mask_solved->copy(saved_mask_solved);
-				if (saved_mask_solved) {
-					saved_mask_solved->release();
-					saved_mask_solved = NULL;
+			method_mask_solved->init_true();
+			size_t old_NN = method_prev_grid->getCountX();
+			size_t old_MM = method_prev_grid->getCountY();
+			size_t NN = method_grid->getCountX();
+			size_t MM = method_grid->getCountY();
+			size_t i, j;
+			
+			for (j = 0; j < old_MM; j++) {
+				for (i = 0; i < old_NN; i++) {
+					size_t pos = two2one(i, j, old_NN, old_MM);
+					if (old_gfaults->check_for_node(pos) == false)
+						continue;
+					REAL x_from = method_prev_grid->x_from(i);
+					REAL x_to = method_prev_grid->x_to(i);
+					REAL y_from = method_prev_grid->y_from(j);
+					REAL y_to = method_prev_grid->y_to(j);
+					size_t i_from, i_to, j_from, j_to;
+					i_from = MAX(0,method_grid->get_i(x_from));
+					i_to = MIN(NN-1,method_grid->get_i(x_to));
+					j_from = MAX(0,method_grid->get_j(y_from));
+					j_to = MIN(MM-1,method_grid->get_j(y_to));
+					size_t I,J;
+					for (J = j_from; J <= j_to; J++) {
+						for (I = i_from; I <= i_to; I++) {
+							size_t POS = two2one(I, J, NN, MM);
+							if (saved_mask_solved->get(POS) == true)
+								continue;
+							if (method_mask_undefined->get(POS) == true)
+								continue;
+							method_mask_solved->set_false(POS);
+						}
+					}
 				}
 			}
 			
+			res = minimize_step();
+			
+			method_mask_solved->copy(saved_mask_solved);
+			if (saved_mask_solved) {
+				saved_mask_solved->release();
+				saved_mask_solved = NULL;
+			}
+			
+			old_gfaults->release();
+			old_gfaults = NULL;
 		}
+	
 
 		if (reproject_undef_areas) {
 			if (method_prev_grid != NULL) {
-				writelog(LOG_MESSAGE,"reprojecting with undef areas...");
+				writelog(LOG_MESSAGE,"solving near undef areas...");
 											
 				grid_line * undef_grd_line = trace_undef_grd_line(method_mask_undefined, method_grid->getCountX());
 				if (undef_grd_line) {
@@ -445,6 +463,8 @@ bool f_completer::minimize() {
 
 	}
 
+	if (old_gfaults != NULL)
+		old_gfaults->release();
 	return res;
 };
 
