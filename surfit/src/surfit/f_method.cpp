@@ -44,7 +44,8 @@ f_method::~f_method()
 	cleanup();
 };
 
-void f_method::cleanup() {
+void f_method::cleanup() 
+{
 	if (method_surf)
 		method_surf->release();
 	method_surf = NULL;
@@ -56,11 +57,13 @@ void f_method::cleanup() {
 	f_srf = NULL;
 };
 
-int f_method::this_get_data_count() const {
+int f_method::this_get_data_count() const 
+{
 	return 0;
 };
 
-const data * f_method::this_get_data(int pos) const {
+const data * f_method::this_get_data(int pos) const 
+{
 	return NULL;
 };
 

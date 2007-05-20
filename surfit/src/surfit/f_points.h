@@ -80,6 +80,53 @@ private:
 
 };
 
+/*! \class f_points_user
+    \brief parent functional for all other functionals, who use f_points functional
+*/
+class SURFIT_EXPORT f_points_user : public functional
+{
+	public:
+	//! constructor
+	f_points_user(const char * ifunctional_name);
+	//! destructor
+	~f_points_user();
+
+	const char * getManagerName() const { return "surfit"; };
+
+	bool minimize();
+
+	bool make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined);
+
+	bool solvable_without_cond(const bitvec * mask_solved, 
+				   const bitvec * mask_undefined,
+				   const extvec * X);
+
+	void mark_solved_and_undefined(bitvec * mask_solved, 
+				       bitvec * mask_undefined,
+				       bool i_am_cond);
+
+	void cleanup();
+
+	virtual d_points * get_points() = 0;
+	
+protected:
+
+	int this_get_data_count() const = 0;
+	const data * this_get_data(int pos) const = 0;
+
+	//! function for creating f_points functional
+	void create_f_points();
+
+	//! functional for approximation of points (received from contour)
+	f_points * f_pnts;
+
+	//! points for f_points functional
+	d_points * pnts;
+
+	const char * functional_name;
+
+};
+
 }; // namespace surfit
 
 #endif

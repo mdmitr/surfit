@@ -23,99 +23,136 @@
 #include "points.h"
 #include "grid.h"
 #include "cntr.h"
+#include "surf.h"
+#include "surf_internal.h"
 
 #include "grid_user.h"
+
+#include <float.h>
 
 namespace surfit {
 
 f_cntr::f_cntr(const d_cntr * icontour) :
-functional("f_cntr", F_USUAL)
+f_points_user("f_cntr")
 {
 	contour = icontour;
 	if (contour->getName()) {
 		setNameF("f_cntr %s", contour->getName());
 	}
-	f_pnts = NULL;
-	pnts = NULL;
 };
 
-f_cntr::~f_cntr() {
-	cleanup();
+f_cntr::~f_cntr() {};
+
+int f_cntr::this_get_data_count() const 
+{
+	return 1;;
 };
 
-void f_cntr::cleanup() {
-	delete f_pnts;
-	if (pnts)
-		pnts->release_private();
-	f_pnts = NULL;
-	pnts = NULL;
-};
-
-int f_cntr::this_get_data_count() const {
-	return 1;
-};
-
-const data * f_cntr::this_get_data(int pos) const {
+const data * f_cntr::this_get_data(int pos) const 
+{
 	if (pos == 0)
 		return contour;
 	return NULL;
 };
 
-void f_cntr::create_f_approx_points() {
+d_points * f_cntr::get_points() 
+{
+	d_grid * grd = create_last_grd();
+	//pnts = discretize_cntr8(contour, grd, contour->getName());
+	pnts = discretize_cntr(contour, MIN(grd->stepX, grd->stepY)/2., contour->getName());
+	if (grd)
+		grd->release();
+	return pnts;
+};
 
-	if (pnts == NULL) {
-		d_grid * grd = create_last_grd();
-		//pnts = discretize_cntr8(contour, grd, contour->getName());
-		pnts = discretize_cntr(contour, MIN(grd->stepX, grd->stepY)/2., contour->getName());
-		if (grd)
-			grd->release();
-		if (pnts == NULL)
-			return;
-	}
+//
+//
+// f_cntr2
+//
+//
 
-	if (f_pnts == NULL)
-		f_pnts = new f_points(pnts, "contour");
+f_cntr2::f_cntr2() :
+f_points_user("f_cntr2")
+{
+	contours = new std::vector<const d_cntr *>();
+	setNameF("f_contours");
+};
 
-	if ( cond() ) { 
-		if (f_pnts->cond())
-			f_pnts->cond_erase_all();
-		int i;
-		for (i = 0; i < (int)functionals_cond->size(); i++) {
-			functional * cnd = (*functionals_cond)[i];
-			f_pnts->cond_add(cnd);
+f_cntr2::~f_cntr2() {};
+
+int f_cntr2::this_get_data_count() const 
+{
+	return contours->size();
+};
+
+const data * f_cntr2::this_get_data(int pos) const 
+{
+	if (pos == 0)
+		return (*contours)[pos];
+	return NULL;
+};
+
+void f_cntr2::add_contour(const d_cntr * cntr)
+{
+	contours->push_back(cntr);
+};
+
+d_points * f_cntr2::get_points() 
+{
+	d_grid * grd = create_last_grd();
+	// create points for triangulation
+	vec * x = create_vec();
+	vec * y = create_vec();
+	vec * z = create_vec();
+	size_t i,j;
+	for (i = 0; i < contours->size(); i++) {
+		const d_cntr * cntr = (*contours)[i];
+		x->reserve( x->size() + cntr->size() );
+		y->reserve( y->size() + cntr->size() );
+		z->reserve( z->size() + cntr->size() );
+		for (j = 0; j < cntr->size(); j++) {
+			x->push_back( (*(cntr->X))(j) );
+			y->push_back( (*(cntr->Y))(j) );
+			z->push_back( (*(cntr->Z))(j) );
 		}
-		
 	}
-};
+	d_points * tri_pnts = create_points(x, y, z);
 
-bool f_cntr::minimize() {
-	create_f_approx_points();
-	if (f_pnts)
-		return f_pnts->minimize();
-	return true;
-};
+	d_surf * tri_surf = triangulate_points(tri_pnts, grd);
+	tri_pnts->release();
+	tri_pnts = NULL;
+	if (tri_surf == NULL) {
+		grd->release();
+		return NULL;
+	}
 
-bool f_cntr::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
-{
-	create_f_approx_points();
-	if (f_pnts)
-		return f_pnts->make_matrix_and_vector(matrix, v, mask_solved, mask_undefined);
-	return false;
-};
+	x = create_vec();
+	y = create_vec();
+	z = create_vec();
+	for (i = 0; i < contours->size(); i++) {
+		const d_cntr * cntr = (*contours)[i];
+		d_points * pnts = discretize_curv(cntr, grd, FLT_MAX);
+		if (pnts == NULL)
+			continue;
+		x->reserve(x->size() + pnts->size());
+		y->reserve(y->size() + pnts->size());
+		for (j = 0; j < pnts->size(); j++) {
+			REAL X = (*(pnts->X))(j);
+			REAL Y = (*(pnts->Y))(j);
+			REAL Z = tri_surf->getInterpValue(X,Y);
+			if (Z == tri_surf->undef_value)
+				continue;
+			x->push_back( X );
+			y->push_back( Y );
+			z->push_back( Z );
+		}
+	}
 
-void f_cntr::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
-{
-	create_f_approx_points();
-	if (f_pnts)
-		f_pnts->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
-	mark_sums(mask_solved, mask_undefined);
-};
-
-bool f_cntr::solvable_without_cond(const bitvec * mask_solved,
-				   const bitvec * mask_undefined,
-				   const extvec * X)
-{
-	return true;
+	tri_surf->release();
+	if (grd)
+		grd->release();
+	d_points * pnts = create_points(x, y, z);
+	return pnts;
 };
 
 }; // namespace surfit;

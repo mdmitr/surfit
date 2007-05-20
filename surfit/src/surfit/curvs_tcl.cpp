@@ -1006,6 +1006,43 @@ boolvec * contour_add(REAL weight, const char * pos)
 	return qq.res;
 };
 
+struct match_contours
+{
+	match_contours(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_cntr * contour) 
+	{
+		if ( StringMatch(pos, contour->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			writelog(LOG_MESSAGE,"creating gridding rule contours(\"%s\")", contour->getName());
+			if (functionals->size() > 0)
+			{
+				f_cntr2 * f = dynamic_cast<f_cntr2*>( *(functionals->end()-1) );
+				if (f != NULL)
+				{
+					f->add_contour(contour);
+					res->push_back(true);
+					return;
+				}
+			}
+			f_cntr2 * f = new f_cntr2();
+			f->add_contour(contour);
+			functionals_push_back(f);
+			res->push_back(true);
+		}
+	}
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * contours(const char * pos) 
+{
+	match_contours qq(pos);
+	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
+	return qq.res;
+};
+
 struct match_contour_leq
 {
 	match_contour_leq(const char * icntr_pos, REAL imult) : cntr_pos(icntr_pos), mult(imult), res(NULL) {};

@@ -34,7 +34,7 @@ class bitvec;
 /*! \class f_points_ineq
     \brief inequality for points
 */
-class f_points_ineq : public functional {
+class SURFIT_EXPORT f_points_ineq : public functional {
 public:
 	//! constructor
 	f_points_ineq(const d_points * ipnts, bool ileq, REAL imult, const char * iprint_name = NULL);
@@ -79,6 +79,60 @@ private:
 
 	char * print_name;
 };
+
+/*! \class f_points_ineq_user
+    \brief parent functional for all other functionals, who use f_points_ineq functional
+*/
+class SURFIT_EXPORT f_points_ineq_user : public functional
+{
+	public:
+	//! constructor
+	f_points_ineq_user(const char * ifunctional_name, bool ileq, REAL imult);
+	//! destructor
+	~f_points_ineq_user();
+
+	const char * getManagerName() const { return "surfit"; };
+
+	bool minimize();
+
+	bool make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined);
+
+	bool solvable_without_cond(const bitvec * mask_solved, 
+				   const bitvec * mask_undefined,
+				   const extvec * X);
+
+	void mark_solved_and_undefined(bitvec * mask_solved, 
+				       bitvec * mask_undefined,
+				       bool i_am_cond);
+
+	void cleanup();
+
+	virtual d_points * get_points() = 0;
+	
+protected:
+
+	int this_get_data_count() const = 0;
+	const data * this_get_data(int pos) const = 0;
+
+	//! function for creating f_points_ineq functional
+	void create_f_points_ineq();
+
+	//! equation flag
+	bool leq;
+
+	//! parameter for penalty algorithm
+	REAL mult;
+
+	//! functional for approximation of points (received from contour)
+	f_points_ineq * f_pnts_ineq;
+
+	//! points for f_points functional
+	d_points * pnts;
+
+	const char * functional_name;
+
+};
+
 
 }; // namespace surfit;
 

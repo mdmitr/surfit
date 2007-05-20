@@ -166,13 +166,6 @@ size_t solve(matr * T, const extvec * V, extvec *& X) {
 				REAL val2 = T->at(j,i);
 				REAL val1 = T->at(i,j,&next_j);
 				assert(val1 == val2);
-				if (val1 != val2) {
-					bool stop = true;
-					size_t I, J;
-					one2two(53, I, J, 8,8);
-					REAL val22 = T->at(j,i);
-					REAL val12 = T->at(i,j);
-				}
 				j = next_j;
 			}
 		}

@@ -2351,7 +2351,10 @@ struct match_trace
 
 			if (step == FLT_MAX)
 			{
-				step = stepFunc(from, to, 10);
+				step = stepFunc(from, to, 16);
+				from = floor( from/step ) * step;
+				to = floor( to/step ) * step;
+				
 			}
 
 			vec * levels = create_vec();

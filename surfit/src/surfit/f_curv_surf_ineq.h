@@ -21,6 +21,7 @@
 #define __surfit_f_curv_surf_ineq_included__
 
 #include "functional.h"
+#include "f_points_ineq.h"
 
 namespace surfit {
 
@@ -32,29 +33,14 @@ class f_points_ineq;
 /*! \class f_curv_surf_ineq
     \brief functional that sets inequality condition for curv with surface values
 */
-class SURFIT_EXPORT f_curv_surf_ineq : public functional {
+class SURFIT_EXPORT f_curv_surf_ineq : public f_points_ineq_user {
 public:
 	//! constructor
 	f_curv_surf_ineq(const d_surf * isurf, const d_curv * icurv, bool ileq, REAL imult);
 	//! destructor
 	~f_curv_surf_ineq();
 
-	const char * getManagerName() const { return "surfit"; };
-
-	bool minimize();
-
-	bool make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined);
-
-	bool solvable_without_cond(const bitvec * mask_solved, 
-				   const bitvec * mask_undefined,
-				   const extvec * X);
-
-	void mark_solved_and_undefined(bitvec * mask_solved, 
-				       bitvec * mask_undefined,
-				       bool i_am_cond);
-
-	void drop_private_data();
-	void cleanup();
+	d_points * get_points();
 	
 protected:
 
@@ -63,26 +49,11 @@ protected:
 
 private:
 
-	//! function for creating \ref f_points_ineq functional 
-	void create_f_points_ineq();
-
 	//! curve for inequalities
 	const d_curv * crv;
 
-	//! equation flag
-	bool leq;
-
 	//! values for inequalities
 	const d_surf * srf;
-
-	//! parameter for penalty algorithm
-	REAL mult;
-
-	//! functional for points inequalities
-	f_points_ineq * f_pnts_ineq;
-	//! points, received from curve
-	d_points * pnts;
-
 };
 
 }; // namespace surfit

@@ -293,5 +293,92 @@ bool f_points::solvable_without_cond(const bitvec * mask_solved,
 	return true;
 };
 
+//
+//
+// f_points_user
+//
+//
+
+f_points_user::f_points_user(const char * ifunctional_name) :
+functional(ifunctional_name, F_USUAL)
+{
+	f_pnts = NULL;
+	pnts = NULL;
+	functional_name = ifunctional_name;
+};
+
+f_points_user::~f_points_user() {
+	cleanup();
+};
+
+void f_points_user::cleanup() {
+	delete f_pnts;
+	if (pnts)
+		pnts->release_private();
+	f_pnts = NULL;
+	pnts = NULL;
+};
+
+void f_points_user::create_f_points() 
+{
+	if (pnts == NULL) {
+		pnts = get_points();
+		if (pnts == NULL)
+			return;
+	}
+
+	if (f_pnts == NULL)
+		f_pnts = new f_points(pnts, functional_name);
+
+	if ( cond() ) { 
+		if (f_pnts->cond())
+			f_pnts->cond_erase_all();
+		int i;
+		for (i = 0; i < (int)functionals_cond->size(); i++) {
+			functional * cnd = (*functionals_cond)[i];
+			f_pnts->cond_add(cnd);
+		}
+		
+	}
+	if ( functionals_add->size() > 0 )
+	{
+		size_t i;
+		for (i = 0; i < functionals_add->size(); i++) {
+			functional * add = (*functionals_add)[i];
+			f_pnts->add_functional(add, (*weights)[i]);
+		}
+	}
+};
+
+bool f_points_user::minimize() 
+{
+	create_f_points();
+	if (f_pnts)
+		return f_pnts->minimize();
+	return true;
+};
+
+bool f_points_user::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
+	create_f_points();
+	if (f_pnts)
+		return f_pnts->make_matrix_and_vector(matrix, v, mask_solved, mask_undefined);
+	return false;
+};
+
+void f_points_user::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
+	create_f_points();
+	if (f_pnts)
+		f_pnts->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
+};
+
+bool f_points_user::solvable_without_cond(const bitvec * mask_solved,
+				   const bitvec * mask_undefined,
+				   const extvec * X)
+{
+	return true;
+};
+
 }; // namespace surfit;
 

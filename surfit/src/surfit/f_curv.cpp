@@ -19,7 +19,6 @@
 
 #include "surfit_ie.h"
 #include "f_curv.h"
-#include "f_points.h"
 #include "curv.h"
 #include "points.h"
 #include "grid.h"
@@ -29,28 +28,16 @@
 namespace surfit {
 
 f_curv::f_curv(REAL ivalue, const d_curv * icrv) :
-functional("f_curv", F_CONDITION)
+f_points_user("f_curv")
 {
 	crv = icrv;
 	value = ivalue;
 	if (crv->getName()) {
 		setNameF("f_curv %s", crv->getName());
 	}
-	f_pnts = NULL;
-	pnts = NULL;
 };
 
-f_curv::~f_curv() {
-	cleanup();
-};
-
-void f_curv::cleanup() {
-	delete f_pnts;
-	if (pnts)
-		pnts->release_private();
-	f_pnts = NULL;
-	pnts = NULL;
-};
+f_curv::~f_curv() { };
 
 int f_curv::this_get_data_count() const {
 	return 1;
@@ -62,60 +49,13 @@ const data * f_curv::this_get_data(int pos) const {
 	return NULL;
 };
 
-void f_curv::create_f_approx_points() {
-
-	if (pnts == NULL) {
-		d_grid * grd = create_last_grd();
-		pnts = discretize_curv(crv, grd, value, crv->getName());
-		if (grd)
-			grd->release();
-		if (pnts == NULL)
-			return;
-	}
-
-	if (f_pnts == NULL)
-		f_pnts = new f_points(pnts, "curve");
-
-	if ( cond() ) { 
-		if (f_pnts->cond())
-			f_pnts->cond_erase_all();
-		int i;
-		for (i = 0; i < (int)functionals_cond->size(); i++) {
-			functional * cnd = (*functionals_cond)[i];
-			f_pnts->cond_add(cnd);
-		}
-		
-	}
-};
-
-bool f_curv::minimize() {
-	create_f_approx_points();
-	if (f_pnts)
-		return f_pnts->minimize();
-	return true;
-};
-
-bool f_curv::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+d_points * f_curv::get_points()
 {
-	create_f_approx_points();
-	if (f_pnts)
-		return f_pnts->make_matrix_and_vector(matrix, v, mask_solved, mask_undefined);
-	return false;
-};
-
-void f_curv::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
-{
-	create_f_approx_points();
-	if (f_pnts)
-		f_pnts->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
-	mark_sums(mask_solved, mask_undefined);
-};
-
-bool f_curv::solvable_without_cond(const bitvec * mask_solved,
-				  const bitvec * mask_undefined,
-				  const extvec * X)
-{
-	return true;
+	d_grid * grd = create_last_grd();
+	pnts = discretize_curv(crv, grd, value, crv->getName());
+	if (grd)
+		grd->release();
+	return pnts;
 };
 
 }; // namespace surfit;

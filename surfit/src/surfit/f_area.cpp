@@ -19,7 +19,6 @@
 
 #include "surfit_ie.h"
 #include "f_area.h"
-#include "f_points.h"
 #include "area.h"
 #include "grid.h"
 #include "vec.h"

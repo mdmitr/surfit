@@ -617,6 +617,8 @@ boolvec * contour(const char * cntr_name = "*");
 */
 boolvec * contour_add(REAL weight, const char * cntr_name = "*");
 
+boolvec * contours(const char * cntr_name = "*");
+
 /*! \ingroup tcl_rules_cntrs
     \fn bool contour_leq(const char * cntr_name = "*", REAL mult = 1);
 

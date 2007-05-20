@@ -21,6 +21,7 @@
 #define __surfit_f_curv_surf_included__
 
 #include "functional.h"
+#include "f_points.h"
 
 namespace surfit {
 
@@ -32,46 +33,25 @@ class bitvec;
 /*! \class f_curv_surf
     \brief functional for approximating curve with surface values
 */
-class SURFIT_EXPORT f_curv_surf : public functional {
+class SURFIT_EXPORT f_curv_surf : public f_points_user {
 public:
 	//! constructor
 	f_curv_surf(const d_surf * isrf, const d_curv * icrv);
 	//! destructor
 	~f_curv_surf();
 
-	const char * getManagerName() const { return "surfit"; };
-
-	bool minimize();
-
-	bool make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined);
-
-	bool solvable_without_cond(const bitvec * mask_solved, 
-				   const bitvec * mask_undefined,
-				   const extvec * X);
-
-	void mark_solved_and_undefined(bitvec * mask_solved, 
-				       bitvec * mask_undefined,
-				       bool i_am_cond);
-
-	void cleanup();
+	d_points * get_points();
 	
 protected:
 
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
 
-	//! function for converting curve to points and creating \ref f_points functional
-	void create_f_approx_points();
-
 	//! curve for approximation
 	const d_curv * crv;
 	//! values for curve approximation
 	const d_surf * srf;
 
-	//! functional for points approximation
-	f_points * f_pnts;
-	//! points, received from curve and surface
-	d_points * pnts;
 };
 
 }; // namespace surfit

@@ -268,5 +268,95 @@ bool f_points_ineq::solvable_without_cond(const bitvec * mask_solved,
 	*/
 };
 
+//
+//
+// f_points_ineq_user
+//
+//
+
+f_points_ineq_user::f_points_ineq_user(const char * ifunctional_name, bool ileq, REAL imult) :
+functional(ifunctional_name, F_USUAL)
+{
+	f_pnts_ineq = NULL;
+	pnts = NULL;
+	functional_name = ifunctional_name;
+	leq = ileq;
+	mult = imult;
+};
+
+f_points_ineq_user::~f_points_ineq_user() {
+	cleanup();
+};
+
+void f_points_ineq_user::cleanup() {
+	delete f_pnts_ineq;
+	if (pnts)
+		pnts->release_private();
+	f_pnts_ineq = NULL;
+	pnts = NULL;
+};
+
+void f_points_ineq_user::create_f_points_ineq() 
+{
+	if (pnts == NULL) {
+		pnts = get_points();
+		if (pnts == NULL)
+			return;
+	}
+
+	if (f_pnts_ineq == NULL)
+		f_pnts_ineq = new f_points_ineq(pnts, leq, mult, functional_name);
+
+	if ( cond() ) { 
+		if (f_pnts_ineq->cond())
+			f_pnts_ineq->cond_erase_all();
+		int i;
+		for (i = 0; i < (int)functionals_cond->size(); i++) {
+			functional * cnd = (*functionals_cond)[i];
+			f_pnts_ineq->cond_add(cnd);
+		}
+		
+	}
+	if ( functionals_add->size() > 0 )
+	{
+		size_t i;
+		for (i = 0; i < functionals_add->size(); i++) {
+			functional * add = (*functionals_add)[i];
+			f_pnts_ineq->add_functional(add, (*weights)[i]);
+		}
+	}
+};
+
+bool f_points_ineq_user::minimize() 
+{
+	create_f_points_ineq();
+	if (f_pnts_ineq)
+		return f_pnts_ineq->minimize();
+	return true;
+};
+
+bool f_points_ineq_user::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
+{
+	create_f_points_ineq();
+	if (f_pnts_ineq)
+		return f_pnts_ineq->make_matrix_and_vector(matrix, v, mask_solved, mask_undefined);
+	return false;
+};
+
+void f_points_ineq_user::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
+{
+	create_f_points_ineq();
+	if (f_pnts_ineq)
+		f_pnts_ineq->mark_solved_and_undefined(mask_solved, mask_undefined, i_am_cond);
+};
+
+bool f_points_ineq_user::solvable_without_cond(const bitvec * mask_solved,
+				   const bitvec * mask_undefined,
+				   const extvec * X)
+{
+	return true;
+};
+
+
 }; // namespace surfit;
 
