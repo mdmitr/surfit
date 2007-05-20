@@ -748,6 +748,45 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\src\surfit\triangle.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions="NO_TIMER;TRILIBRARY;ANSI_DECLARATORS"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions="NO_TIMER;TRILIBRARY;ANSI_DECLARATORS"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="XXL_Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions="NO_TIMER;TRILIBRARY;ANSI_DECLARATORS"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="XXL_Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions="NO_TIMER;TRILIBRARY;ANSI_DECLARATORS"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions="NO_TIMER;TRILIBRARY;ANSI_DECLARATORS"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release_SSE2|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions="NO_TIMER;TRILIBRARY;ANSI_DECLARATORS"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="..\src\surfit\variables.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -2326,7 +2365,7 @@
 								Name="VCCLCompilerTool"
 								Optimization="0"
 								AdditionalIncludeDirectories=""
-								PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;DEBUG;$(NoInherit)"
+								PreprocessorDefinitions="NO_TIMER;TRILIBRARY;ANSI_DECLARATORS"
 								BasicRuntimeChecks="3"
 								BrowseInformation="1"/>
 						</FileConfiguration>
@@ -2336,7 +2375,7 @@
 								Name="VCCLCompilerTool"
 								Optimization="2"
 								AdditionalIncludeDirectories=""
-								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								PreprocessorDefinitions="NO_TIMER;TRILIBRARY;ANSI_DECLARATORS"
 								BrowseInformation="1"/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -2345,6 +2384,7 @@
 								Name="VCCLCompilerTool"
 								Optimization="0"
 								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="NO_TIMER;TRILIBRARY;ANSI_DECLARATORS"
 								BasicRuntimeChecks="3"
 								BrowseInformation="1"/>
 						</FileConfiguration>
@@ -2354,6 +2394,7 @@
 								Name="VCCLCompilerTool"
 								Optimization="2"
 								AdditionalIncludeDirectories=""
+								PreprocessorDefinitions="NO_TIMER;TRILIBRARY;ANSI_DECLARATORS"
 								BrowseInformation="1"/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -2362,7 +2403,7 @@
 								Name="VCCLCompilerTool"
 								Optimization="2"
 								AdditionalIncludeDirectories=""
-								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								PreprocessorDefinitions="NO_TIMER;TRILIBRARY;ANSI_DECLARATORS"
 								BrowseInformation="1"/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -2371,7 +2412,7 @@
 								Name="VCCLCompilerTool"
 								Optimization="2"
 								AdditionalIncludeDirectories=""
-								PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
+								PreprocessorDefinitions="NO_TIMER;TRILIBRARY;ANSI_DECLARATORS"
 								BrowseInformation="1"/>
 						</FileConfiguration>
 					</File>
@@ -4186,6 +4227,12 @@
 						</FileConfiguration>
 					</File>
 					<File
+						RelativePath="..\src\surfit\f_method.cpp">
+					</File>
+					<File
+						RelativePath="..\src\surfit\f_triangulate.cpp">
+					</File>
+					<File
 						RelativePath="..\src\surfit\f_value.cpp">
 						<FileConfiguration
 							Name="Debug|Win32">
@@ -5104,6 +5151,9 @@
 								BrowseInformation="1"/>
 						</FileConfiguration>
 					</File>
+					<File
+						RelativePath="..\src\surfit\f_fault.cpp">
+					</File>
 				</Filter>
 				<Filter
 					Name="surfs.cpp"
@@ -5699,6 +5749,9 @@
 			<File
 				RelativePath="..\src\surfit\surfit.h">
 			</File>
+			<File
+				RelativePath="..\src\surfit\triangle.h">
+			</File>
 			<Filter
 				Name="solvers"
 				Filter="">
@@ -5924,6 +5977,12 @@
 						RelativePath="..\src\surfit\f_mean.h">
 					</File>
 					<File
+						RelativePath="..\src\surfit\f_method.h">
+					</File>
+					<File
+						RelativePath="..\src\surfit\f_triangulate.h">
+					</File>
+					<File
 						RelativePath="..\src\surfit\f_value.h">
 					</File>
 					<File
@@ -5977,6 +6036,9 @@
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_curv_surf_ineq.h">
+					</File>
+					<File
+						RelativePath="..\src\surfit\f_fault.h">
 					</File>
 				</Filter>
 				<Filter

@@ -237,6 +237,7 @@ SOURCE=..\src\surfit\surf.cpp
 # Begin Source File
 
 SOURCE=..\src\surfit\surf_internal.cpp
+# ADD CPP /D "NO_TIMER" /D "TRILIBRARY" /D "ANSI_DECLARATORS"
 # End Source File
 # Begin Source File
 
@@ -401,6 +402,14 @@ SOURCE=..\src\surfit\f_mean.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\surfit\f_method.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_triangulate.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\surfit\f_value.cpp
 # End Source File
 # Begin Source File
@@ -470,6 +479,10 @@ SOURCE=..\src\surfit\f_curv_surf.cpp
 # Begin Source File
 
 SOURCE=..\src\surfit\f_curv_surf_ineq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_fault.cpp
 # End Source File
 # End Group
 # Begin Group "surfs.cpp"
@@ -559,6 +572,11 @@ SOURCE=.\..\src\surfit\surfit_wrap.cxx
 
 !ENDIF 
 
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\triangle.cpp
+# ADD CPP /D "NO_TIMER" /D "TRILIBRARY" /D "ANSI_DECLARATORS"
 # End Source File
 # Begin Source File
 
@@ -844,6 +862,14 @@ SOURCE=..\src\surfit\f_mean.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\surfit\f_method.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_triangulate.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\surfit\f_value.h
 # End Source File
 # Begin Source File
@@ -913,6 +939,10 @@ SOURCE=..\src\surfit\f_curv_surf.h
 # Begin Source File
 
 SOURCE=..\src\surfit\f_curv_surf_ineq.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_fault.h
 # End Source File
 # End Group
 # Begin Group "surfs.h"
@@ -1003,6 +1033,10 @@ SOURCE=..\src\surfit\sort_alg.h
 # Begin Source File
 
 SOURCE=.\..\src\surfit\surfit.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\triangle.h
 # End Source File
 # End Group
 # Begin Group "Interface"
