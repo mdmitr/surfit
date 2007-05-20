@@ -38,6 +38,7 @@ del /Q /S *.errlog
 del /Q /S .#*
 del /Q /S *.sbr
 del /Q /S *.pdb
+del /Q /S *.pgc
 del *.plg
 del *.stt
 
