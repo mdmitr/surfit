@@ -28,6 +28,10 @@
 
 #include <typeinfo>
 
+#if _MSC_VER == 1200
+#pragma warning(disable : 4275)
+#endif
+
 namespace surfit {
 
 /*! \class data
@@ -145,7 +149,7 @@ public:
 
 	void resize(typename std::vector<T*>::size_type _Newsize)
 	{
-		return data->resize(_Newsize);
+		data->resize(_Newsize);
 	};
 
 	virtual void push_back(T * elem) = 0;
