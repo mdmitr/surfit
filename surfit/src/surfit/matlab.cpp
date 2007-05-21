@@ -27,6 +27,7 @@
 #include <sys/stat.h>
 #include <algorithm>
 #include <assert.h>
+#include <errno.h>
 
 namespace surfit {
 
