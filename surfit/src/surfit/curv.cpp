@@ -431,7 +431,7 @@ d_points * discretize_curv(const d_curv * crv, d_grid * grd, REAL value, const c
 
 };
 
-void draw_curv_matlab(FILE * ff, const d_curv * crv, const char * color, short width)
+void draw_curv_matlab(FILE * ff, const d_curv * crv, const char * color, short width, const char * symb)
 {
 #ifndef DEBUG
 	return;
@@ -445,8 +445,8 @@ void draw_curv_matlab(FILE * ff, const d_curv * crv, const char * color, short w
 		y1 = *(crv->Y->begin()+i);
 		y2 = *(crv->Y->begin()+i+1);
 		fprintf(ff,"plot([%lf %lf],[%lf %lf],'color','%s','LineWidth',%d);\n",x1,x2,y1,y2,color,width);
-		fprintf(ff,"plot(%lf, %lf,'o');\n",x1,y1);
-		fprintf(ff,"plot(%lf, %lf,'o');\n",x2,y2);
+		fprintf(ff,"plot(%lf, %lf,'%s');\n",x1,y1,symb);
+		fprintf(ff,"plot(%lf, %lf,'%s');\n",x2,y2,symb);
 	}
 	fflush(ff);
 };
