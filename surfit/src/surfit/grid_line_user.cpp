@@ -264,17 +264,136 @@ void add_val_pair(sizetvec * v1, size_t n1, size_t m1,
 		
 };
 
-grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_grid * grd) {
+void add_sect(sizetvec * nns, 
+	      REAL X1, REAL Y1, REAL X2, REAL Y2,
+	      d_grid * grd2)
+{
+	int dx, dy, i1, i2, i, kx, ky;
+	int d;      // "residual" 
+	size_t x, y;
+	int flag;
 
-	d_curv * crv = NULL;
-	if (in_crv->is_closed())
-		crv = _curv_intersect_grid(in_crv, grd);
-	else 
-		crv = create_curv(in_crv);
+	size_t NN = grd2->getCountX();
+	size_t MM = grd2->getCountY();
 
-	if (!crv)
-		return grd_line;
-		
+	size_t x1 = grd2->get_i(X1);
+	size_t x2 = grd2->get_i(X2);
+	size_t y1 = grd2->get_j(Y1);
+	size_t y2 = grd2->get_j(Y2);
+
+	dy = y2 - y1;
+	dx = x2 - x1;
+	REAL DY = Y2-Y1;
+	REAL DX = X2-X1;
+
+	if (dx == 0 && dy == 0) { // only one point
+		add_val(nns, x1, y1, NN, MM);
+		return;
+	}
+
+	kx = 1; // step by OX
+	ky = 1; // step by OY
+
+	// Selection of the main direction 
+	if ( dx < 0 ) { 
+		dx = -dx; 
+		kx = -1;       // Y
+	} else {
+		if(dx == 0)
+			kx = 0;    // X 
+	}
+
+	if (dy < 0) { 
+		dy = -dy; 
+		ky = -1; 
+	}
+
+	if (dx < dy) { 
+		flag = 0; 
+		d = dx; 
+		dx = dy; 
+		dy = d; 
+	}
+	else         
+		flag = 1;
+
+	i1 = dy + dy; d = i1 - dx; i2 = d - dx;
+	x = x1; y = y1;
+
+	REAL p_x, p_y;
+
+	for ( i = 0; i < dx; i++ ) {
+
+		grd2->getCoordNode(x,y,p_x,p_y);
+		add_val(nns, x, y, NN, MM);
+
+		if (flag) 
+			x += kx; // step by main direction
+		else     
+			y += ky;
+
+		if( d < 0 ) {// horizontal step
+			d += i1;
+		} else {       // diagonal step
+
+			int x_0;
+			int x_1;
+			int y_0;
+			int y_1;
+
+			if (flag) {
+				x_0 = x-kx;
+				x_1 = x;
+				y_0 = y;
+				y_1 = y+ky;
+			} else {
+				y_0 = y-ky;
+				y_1 = y;
+				x_0 = x;
+				x_1 = x+kx;
+			}
+			REAL X_0 = grd2->getCoordNodeX(x_0);
+			REAL X_1 = grd2->getCoordNodeX(x_1);
+			REAL Y_0 = grd2->getCoordNodeY(y_0);
+			REAL Y_1 = grd2->getCoordNodeY(y_1);
+
+			if (flag) {
+
+				if (fabs( DY*(X_0-X1) + DX*(Y1-Y_1) ) - fabs( DY*(X_1-X1) + DX*(Y1-Y_0)) < 0) {
+					x -= kx;
+					y += ky;
+					grd2->getCoordNode(x,y,p_x,p_y);
+					add_val(nns, x, y, NN, MM);
+					x += kx;
+				} else {
+					grd2->getCoordNode(x,y,p_x,p_y);
+					add_val(nns, x, y, NN, MM);
+					y += ky; 
+				}
+
+			} else {
+
+				if (fabs( DX*(Y_0-Y1) + DY*(X1-X_1) ) - fabs( DX*(Y_1-Y1) + DY*(X1-X_0)) < 0) {
+					y -= ky;
+					x += kx;
+					grd2->getCoordNode(x,y,p_x,p_y);
+					add_val(nns, x, y, NN, MM);
+					y += ky;
+				} else {
+					grd2->getCoordNode(x,y,p_x,p_y);
+					add_val(nns, x, y, NN, MM);
+					x += kx;
+				}
+			}
+
+			d += i2;
+		}
+	}
+	add_val(nns, x2, y2, NN, MM); // last point
+};
+
+sizetvec * curv_to_nns(const d_curv * crv, d_grid * grd)
+{
 	size_t NN = grd->getCountX();
 	size_t MM = grd->getCountY();
 	sizetvec * nns = create_sizetvec(); // ?
@@ -316,135 +435,9 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 		Y1 = (*(crv->Y))(qq);
 		Y2 = (*(crv->Y))(qq + 1);
 		
-		size_t x1 = grd2->get_i(X1);
-		size_t x2 = grd2->get_i(X2);
-		size_t y1 = grd2->get_j(Y1);
-		size_t y2 = grd2->get_j(Y2);
-			
-		int dx, dy, i1, i2, i, kx, ky;
-		int d;      // "residual" 
-		size_t x, y;
-		int flag;
-			
-		dy = y2 - y1;
-		dx = x2 - x1;
-		REAL DY = Y2-Y1;
-		REAL DX = X2-X1;
+		add_sect(nns, X1, Y1, X2, Y2, grd2);
 		
-		if (dx == 0 && dy == 0) { // only one point
-			add_val(nns, x1, y1, NN, MM);
-			continue;
-		}
 		
-		kx = 1; // step by OX
-		ky = 1; // step by OY
-			
-		// Selection of the main direction 
-		if ( dx < 0 ) { 
-			dx = -dx; 
-			kx = -1;       // Y
-		} else {
-			if(dx == 0)
-				kx = 0;    // X 
-		}
-			
-		if (dy < 0) { 
-			dy = -dy; 
-			ky = -1; 
-		}
-		
-		if (dx < dy) { 
-			flag = 0; 
-			d = dx; 
-			dx = dy; 
-			dy = d; 
-		}
-		else         
-			flag = 1;
-		
-		i1 = dy + dy; d = i1 - dx; i2 = d - dx;
-		x = x1; y = y1;
-		
-		REAL p_x, p_y;
-				
-		for ( i = 0; i < dx; i++ ) {
-			
-			grd2->getCoordNode(x,y,p_x,p_y);
-			add_val(nns, x, y, NN, MM);
-			
-			if (flag) 
-				x += kx; // step by main direction
-			else     
-				y += ky;
-			
-			if( d < 0 ) {// horizontal step
-				d += i1;
-			} else {       // diagonal step
-				
-				int x_0;
-				int x_1;
-				int y_0;
-				int y_1;
-				
-				if (flag) {
-					x_0 = x-kx;
-					x_1 = x;
-					y_0 = y;
-					y_1 = y+ky;
-				} else {
-					y_0 = y-ky;
-					y_1 = y;
-					x_0 = x;
-					x_1 = x+kx;
-				}
-				REAL X_0 = grd2->getCoordNodeX(x_0);
-				REAL X_1 = grd2->getCoordNodeX(x_1);
-				REAL Y_0 = grd2->getCoordNodeY(y_0);
-				REAL Y_1 = grd2->getCoordNodeY(y_1);
-				
-				if (flag) {
-					
-					if (fabs( DY*(X_0-X1) + DX*(Y1-Y_1) ) - fabs( DY*(X_1-X1) + DX*(Y1-Y_0)) < 0) {
-						x -= kx;
-						y += ky;
-						grd2->getCoordNode(x,y,p_x,p_y);
-						add_val(nns, x, y, NN, MM);
-						x += kx;
-					} else {
-						grd2->getCoordNode(x,y,p_x,p_y);
-						add_val(nns, x, y, NN, MM);
-						y += ky; 
-					}
-					
-				} else {
-					
-					if (fabs( DX*(Y_0-Y1) + DY*(X1-X_1) ) - fabs( DX*(Y_1-Y1) + DY*(X1-X_0)) < 0) {
-						y -= ky;
-						x += kx;
-						grd2->getCoordNode(x,y,p_x,p_y);
-						add_val(nns, x, y, NN, MM);
-						y += ky;
-					} else {
-						grd2->getCoordNode(x,y,p_x,p_y);
-						add_val(nns, x, y, NN, MM);
-						x += kx;
-					}
-				}
-				
-				d += i2;
-			}
-		}
-
-		grd2->getCoordNode(x,y,p_x,p_y);
-		add_val(nns, x, y, NN, MM); // last point
-		
-	}
-
-	if (nns->size() == 0) {
-		nns->release();
-		if (crv)
-			crv->release();
-		return grd_line;
 	}
 
 	// repeats deletions
@@ -457,6 +450,34 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 		}
 	}
 	nns->resize(write_pos+1);
+
+	grd2->release();
+	return nns;
+}
+
+grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_grid * grd) {
+
+	d_curv * crv = NULL;
+	if (in_crv->is_closed())
+		crv = _curv_intersect_grid(in_crv, grd);
+	else 
+		crv = create_curv(in_crv);
+
+	if (!crv)
+		return grd_line;
+		
+	size_t NN = grd->getCountX()+3;
+	size_t MM = grd->getCountY()+3;
+	size_t NNN = NN-1;
+	size_t MMM = MM-1;
+	sizetvec * nns = curv_to_nns(crv, grd);
+	
+	if (nns->size() == 0) {
+		nns->release();
+		if (crv)
+			crv->release();
+		return grd_line;
+	}
 
 	sizetvec * cells1 = create_sizetvec();
 	sizetvec * cells2 = create_sizetvec();
@@ -528,7 +549,6 @@ grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * in_crv, d_gri
 
 	if (crv)
 		crv->release();
-	grd2->release();
 	return grd_line;
 
 };

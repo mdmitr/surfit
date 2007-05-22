@@ -123,7 +123,7 @@ bool one2two(size_t pos, size_t & i, size_t & j, size_t NN, size_t MM)
 
 	i = UINT_MAX;
 	j = UINT_MAX;
-	assert(0);
+	//assert(0);
 	return false;
 };
 
@@ -556,6 +556,8 @@ void draw_grid_matlab(FILE * ff, const d_grid * grd, const char * color)
 #ifndef DEBUG
 	return;
 #endif
+
+	fprintf(ff,"hold on; \n");
 
 	size_t i;
 	REAL x0, y0;

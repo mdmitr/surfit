@@ -27,6 +27,7 @@ class d_curv;
 class d_grid;
 class bitvec;
 class shortvec;
+class sizetvec;
 
 /*! \ingroup surfit_data_variables
     \var surfit_grid_line
@@ -37,6 +38,14 @@ class shortvec;
 
 */
 extern SURFIT_EXPORT grid_line * surfit_grid_line;
+
+SURFIT_EXPORT
+void add_sect(sizetvec * nns, 
+	      REAL X1, REAL Y1, REAL X2, REAL Y2,
+	      d_grid * grd2);
+
+SURFIT_EXPORT
+sizetvec * curv_to_nns(const d_curv * crv, d_grid * grd);
 
 SURFIT_EXPORT
 grid_line * curv_to_grid_line(grid_line * grd_line, const d_curv * crv, d_grid * grd);
