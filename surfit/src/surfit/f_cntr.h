@@ -51,16 +51,38 @@ protected:
 	const d_cntr * contour;
 };
 
-class SURFIT_EXPORT f_cntr2 : public f_points_user {
+struct sect
+{
+	REAL x0, x1, x;
+	REAL y;
+	size_t pos1;
+	bool orient;
+	// X(1) = ((-y1-y0+2*y)*x+x0*y0+x1*y1-y*x0-y*x1)/((2*y-x0-x1)*x-y*x0-y*x1+x0^2+y0^2)
+	// X(2) = -y*((x0+x1-y1-y0)*x-x0^2+x0*y0+x1*y1-y0^2)/((2*y-x0-x1)*x-y*x0-y*x1+x0^2+y0^2)
+};
+
+class SURFIT_EXPORT f_cntr2 : public functional {
 public:
 	//! constructor
 	f_cntr2();
 	//! destructor
 	~f_cntr2();
 
-	void add_contour(const d_cntr * cntr);
+	const char * getManagerName() const { return "surfit"; };
 
-	d_points * get_points();
+	bool minimize();
+	bool make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined);
+	void mark_solved_and_undefined(bitvec * mask_solved, 
+				       bitvec * mask_undefined,
+				       bool i_am_cond);
+	
+	bool solvable_without_cond(const bitvec * mask_solved, 
+				   const bitvec * mask_undefined,
+				   const extvec * X);
+
+	virtual void cleanup();
+
+	void add_contour(const d_cntr * cntr);
 	
 protected:
 
@@ -69,6 +91,9 @@ protected:
 
 	//! contour for approximation
 	std::vector<const d_cntr *> * contours;
+
+private:
+	std::vector<sect> * get_sects(const bitvec * mask_solved, const bitvec * mask_undefined);
 };
 
 }; // namespace surfit

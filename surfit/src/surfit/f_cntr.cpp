@@ -25,8 +25,11 @@
 #include "cntr.h"
 #include "surf.h"
 #include "surf_internal.h"
+#include "sizetvec.h"
+#include "geom_alg.h"
 
 #include "grid_user.h"
+#include "grid_line_user.h"
 
 #include <float.h>
 
@@ -71,14 +74,16 @@ d_points * f_cntr::get_points()
 //
 //
 
-f_cntr2::f_cntr2() :
-f_points_user("f_cntr2")
+
+
+f_cntr2::f_cntr2() : functional("f_cntr2", F_CONDITION)
 {
 	contours = new std::vector<const d_cntr *>();
-	setNameF("f_contours");
 };
 
 f_cntr2::~f_cntr2() {};
+
+void f_cntr2::cleanup() {};
 
 int f_cntr2::this_get_data_count() const 
 {
@@ -97,62 +102,114 @@ void f_cntr2::add_contour(const d_cntr * cntr)
 	contours->push_back(cntr);
 };
 
-d_points * f_cntr2::get_points() 
+bool f_cntr2::minimize()
 {
-	d_grid * grd = create_last_grd();
-	// create points for triangulation
-	vec * x = create_vec();
-	vec * y = create_vec();
-	vec * z = create_vec();
-	size_t i,j;
-	for (i = 0; i < contours->size(); i++) {
-		const d_cntr * cntr = (*contours)[i];
-		x->reserve( x->size() + cntr->size() );
-		y->reserve( y->size() + cntr->size() );
-		z->reserve( z->size() + cntr->size() );
-		for (j = 0; j < cntr->size(); j++) {
-			x->push_back( (*(cntr->X))(j) );
-			y->push_back( (*(cntr->Y))(j) );
-			z->push_back( (*(cntr->Z))(j) );
-		}
-	}
-	d_points * tri_pnts = create_points(x, y, z);
+	return false;
+};
 
-	d_surf * tri_surf = triangulate_points(tri_pnts, grd);
-	tri_pnts->release();
-	tri_pnts = NULL;
-	if (tri_surf == NULL) {
-		grd->release();
-		return NULL;
-	}
+bool f_cntr2::solvable_without_cond(const bitvec * mask_solved, 
+				    const bitvec * mask_undefined,
+				    const extvec * X)
+{
+	return true;
+};
 
-	x = create_vec();
-	y = create_vec();
-	z = create_vec();
-	for (i = 0; i < contours->size(); i++) {
+bool f_cntr2::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined)
+{
+	std::vector<sect> * sects = get_sects(mask_solved, mask_undefined);
+	return false;
+};
+	
+void f_cntr2::mark_solved_and_undefined(bitvec * mask_solved, 
+				        bitvec * mask_undefined,
+				        bool i_am_cond)
+{
+};
+
+std::vector<sect> * f_cntr2::get_sects(const bitvec * mask_solved, const bitvec * mask_undefined)
+{
+	std::vector<sect> * res = new std::vector<sect>();
+#ifdef DEBUG
+	FILE * ff = fopen("c:\\sects.m","w");
+	draw_grid_matlab(ff, method_grid);
+#endif
+
+	size_t NN = method_grid->getCountX();
+	size_t MM = method_grid->getCountY();
+	REAL stepX = method_grid->stepX;
+	REAL stepY = method_grid->stepY;
+	REAL stepX2 = method_grid->stepX/REAL(2);
+	REAL stepY2 = method_grid->stepY/REAL(2);
+
+	size_t i;
+	for (i = 0; i < contours->size(); i++) 
+	{
+#ifdef DEBUG
+		draw_curv_matlab(ff, (*contours)[i], "blue", 1, ".");
+#endif
 		const d_cntr * cntr = (*contours)[i];
-		d_points * pnts = discretize_curv(cntr, grd, FLT_MAX);
-		if (pnts == NULL)
-			continue;
-		x->reserve(x->size() + pnts->size());
-		y->reserve(y->size() + pnts->size());
-		for (j = 0; j < pnts->size(); j++) {
-			REAL X = (*(pnts->X))(j);
-			REAL Y = (*(pnts->Y))(j);
-			REAL Z = tri_surf->getInterpValue(X,Y);
-			if (Z == tri_surf->undef_value)
+		size_t j;
+		for (j = 0; j < cntr->size()-1; j++) {
+			REAL x0, y0;
+			REAL x1, y1;
+			size_t i0, j0;
+			size_t i1, j1;
+			x0 = (*(cntr->X))(j);
+			x1 = (*(cntr->X))(j+1);
+			y0 = (*(cntr->Y))(j);
+			y1 = (*(cntr->Y))(j+1);
+			method_grid->getCoordPoint(x0, y0, i0, j0);
+			method_grid->getCoordPoint(x1, y1, i1, j1);
+			if ((i0 == i1) && (j0 == j1))
 				continue;
-			x->push_back( X );
-			y->push_back( Y );
-			z->push_back( Z );
+
+			sizetvec * nns = create_sizetvec();
+			add_sect(nns, x0, y0, x1, y1, method_grid);
+
+			size_t q;
+			for (q = 0; q < nns->size()-1; q++) {
+				size_t pos1 = (*nns)(q);
+				size_t pos2 = (*nns)(q+1);
+				REAL X0, Y0, X1, Y1, px, py;
+				size_t I, J;
+				if (one2two(pos1, I, J, NN, MM) == false)
+					continue;
+				method_grid->getCoordNode(I, J, X0, Y0);
+				int diff = pos2-pos1;
+				if (diff == 1) {
+
+					X0 += stepX2;
+					X1 = X0;
+					Y0 -= stepY2;
+					Y1 = Y0 + stepY;
+
+					bool bingo = intersect(x0, y0, x1, y1,
+							       X0, Y0, X1, Y1,
+							       px, py);
+
+					//assert(bingo);
+					if (bingo == false)
+						continue;
+
+					bool stop = true;
+				}
+				if (diff == -1) {
+				}
+				if (diff == NN) {
+				}
+				if (diff+NN == 0) {
+				}
+			}
+
+			nns->release();
+
 		}
 	}
 
-	tri_surf->release();
-	if (grd)
-		grd->release();
-	d_points * pnts = create_points(x, y, z);
-	return pnts;
+#ifdef DEBUG
+	fclose(ff);
+#endif
+	return res;
 };
 
 }; // namespace surfit;
