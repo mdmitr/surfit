@@ -126,6 +126,62 @@ void f_cntr2::mark_solved_and_undefined(bitvec * mask_solved,
 {
 };
 
+#define DIRECTION_UNDEF    0
+#define DIRECTION_UP	   1
+#define DIRECTION_RIGHT    2
+#define DIRECTION_DOWN     3
+#define DIRECTION_LEFT     4
+
+bool moving(size_t i, size_t j, REAL x0, REAL y0, REAL x1, REAL y1, REAL & x, REAL & y, int & direction)
+{
+	REAL X0, Y0;
+
+	method_grid->getCoordNode(i, j, X0, Y0);
+	X0 -= method_grid->stepX/REAL(2);
+	Y0 -= method_grid->stepY/REAL(2);
+	REAL X1 = X0 + method_grid->stepX;
+	REAL Y1 = Y0;
+	REAL X2 = X1;
+	REAL Y2 = Y0 + method_grid->stepY;
+	REAL X3 = X0;
+	REAL Y3 = Y2;
+
+	if (direction != DIRECTION_DOWN) {
+		bool res = intersect(x0, y0, x1, y1, X2, Y2, X3, Y3, x, y);
+		if (res) {
+			direction = DIRECTION_UP;
+			return true;
+		}
+	}
+
+	if (direction != DIRECTION_LEFT) {
+		bool res = intersect(x0, y0, x1, y1, X1, Y1, X2, Y2, x, y);
+		if (res) {
+			direction = DIRECTION_RIGHT;
+			return true;
+		}
+	}
+
+	if (direction != DIRECTION_UP) {
+		bool res = intersect(x0, y0, x1, y1, X0, Y0, X1, Y1, x, y);
+		if (res) {
+			direction = DIRECTION_DOWN;
+			return true;
+		}
+	}
+
+	if (direction != DIRECTION_RIGHT) {
+		bool res = intersect(x0, y0, x1, y1, X0, Y0, X3, Y3, x, y);
+		if (res) {
+			direction = DIRECTION_LEFT;
+			return true;
+		}
+	}
+
+	direction = DIRECTION_UNDEF;
+	return false;
+};
+
 std::vector<sect> * f_cntr2::get_sects(const bitvec * mask_solved, const bitvec * mask_undefined)
 {
 	std::vector<sect> * res = new std::vector<sect>();
@@ -163,45 +219,29 @@ std::vector<sect> * f_cntr2::get_sects(const bitvec * mask_solved, const bitvec 
 			if ((i0 == i1) && (j0 == j1))
 				continue;
 
-			sizetvec * nns = create_sizetvec();
-			add_sect(nns, x0, y0, x1, y1, method_grid);
+			int direction = DIRECTION_UNDEF;
+			REAL x = x0, y = y0;
 
-			size_t q;
-			for (q = 0; q < nns->size()-1; q++) {
-				size_t pos1 = (*nns)(q);
-				size_t pos2 = (*nns)(q+1);
-				REAL X0, Y0, X1, Y1, px, py;
-				size_t I, J;
-				if (one2two(pos1, I, J, NN, MM) == false)
-					continue;
-				method_grid->getCoordNode(I, J, X0, Y0);
-				int diff = pos2-pos1;
-				if (diff == 1) {
-
-					X0 += stepX2;
-					X1 = X0;
-					Y0 -= stepY2;
-					Y1 = Y0 + stepY;
-
-					bool bingo = intersect(x0, y0, x1, y1,
-							       X0, Y0, X1, Y1,
-							       px, py);
-
-					//assert(bingo);
-					if (bingo == false)
-						continue;
-
-					bool stop = true;
+			while ( moving( i0, j0, x, y, x1, y1, x, y, direction ) )
+			{
+				switch (direction) {
+					case DIRECTION_UP:
+						j0++;
+						break;
+					case DIRECTION_RIGHT:
+						i0++;
+						break;
+					case DIRECTION_DOWN:
+						j0--;
+						break;
+					case DIRECTION_LEFT:
+						i0--;
+						break;
 				}
-				if (diff == -1) {
-				}
-				if (diff == NN) {
-				}
-				if (diff+NN == 0) {
-				}
+#ifdef DEBUG
+				fprintf(ff,"plot(%g,%g,'.','color','red');\n",x,y);
+#endif
 			}
-
-			nns->release();
 
 		}
 	}
