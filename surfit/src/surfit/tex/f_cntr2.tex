@@ -1,0 +1,103 @@
+\documentclass{article}
+
+\usepackage[dvips]{graphicx}
+\usepackage[cp1251]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{indentfirst}  % для красной строки
+\usepackage{graphicx}
+\usepackage{float}
+
+
+\renewcommand{\labelenumi}{$\bullet$}
+
+\begin{document}
+
+$$
+\Phi(k, b) = \sum_i ( kX_i + b - Y_i )^2 \rightarrow \min
+$$
+
+$$
+\frac { \partial \Phi } { \partial k } =
+%
+2 \sum_i(kX_i + b - Y_i)X_i = 0
+$$
+
+$$
+\frac { \partial \Phi } { \partial b } =
+%
+2 \sum_i(kX_i + b - Y_i) = 0
+$$
+
+$$
+\sum_i X_i^2 \quad k + \sum_i X_i \quad b = \sum_i X_iY_i
+$$
+$$
+\sum_i X_i \quad k + Nb = \sum_i Y_i
+$$
+
+$$
+\left(
+\begin{matrix}
+\sum_i X_i^2 & \sum_i X_i \\
+\sum_i X_i & N
+\end{matrix}
+\right)
+\left(
+\begin{matrix}
+k \\ b
+\end{matrix}
+\right) =
+\left(
+\begin{matrix}
+\sum_i X_iY_i \\ \sum_i Y_i
+\end{matrix}
+\right)
+$$
+
+\newpage
+
+$$
+\left( f(x_0) - y_0 \right)^2 + \left( f(x_1) - y_1 \right)^2
+\rightarrow \min, \qquad f(x) = y
+$$
+
+$$
+f(x) = kx + b
+$$
+
+$$
+\Phi(k,b,\lambda) = (kx_0 + b - y_0)^2 + (kx_1 + b - y_1)^2 +
+\lambda(kx + b - y) \rightarrow \min
+$$
+
+$$
+\frac{\partial \Phi}{\partial k} = 2(kx_0 + b - y_0)x_0 + 2(kx_1 +
+b - y_1)x_1 + \lambda x = 0
+$$
+$$
+= 2x_0^2 k + 2x_0 b - 2x_0 y_0 + 2x_1^2k + 2x_1b - 2x_1y_1 +
+\lambda x = 0
+$$
+$$
+(x_0^2 + x_1^2)k + (x_0 + x_1)b + x/2 \lambda = x_0y_0 + x_1y_1
+$$
+
+$$
+\frac{\partial \Phi}{\partial b} = 2(kx_0 + b - y_0) + 2(kx_1 + b
+- y_1) + \lambda = 0
+$$
+$$
+=2x_0k + 2b - 2y_0 + 2x_1k +2b -2y_1 + \lambda = 0
+$$
+$$
+(x_0 + x_1)k + 2b + 0.5\lambda = y0 + y1
+$$
+
+
+$$
+\frac{\partial \Phi}{\partial \lambda} = kx + b - y = 0
+$$
+
+
+\end{document}
