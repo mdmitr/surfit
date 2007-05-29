@@ -82,11 +82,14 @@ public:
 	//! returns functional name 
 	const char * getName() const;
 
-	//! returns manager name; manager, that serves this functional
-	virtual const char * getManagerName() const = 0;
-
 	//! returns functional type
 	int getType() const;
+
+	//! sets functional type
+	void setType(int itype);
+
+	//! returns manager name; manager, that serves this functional
+	virtual const char * getManagerName() const = 0;
 
 	//! frees some private data
 	virtual void drop_private_data();

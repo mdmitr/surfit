@@ -87,6 +87,11 @@ int functional::getType() const {
 	return type;
 };
 
+void functional::setType(int itype) 
+{
+	type = itype;
+};
+
 void functional::add_functional(functional * isum, REAL iweights) {
 	if (isum->getType() == F_MODIFIER)
 	{
