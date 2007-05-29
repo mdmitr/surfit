@@ -481,7 +481,7 @@ struct match_area_leq
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule area_leq(%g,\"%s\",%g,%d)", 
 				 value, area->getName(), mult, inside);
-			f_area_ineq * f = new f_area_ineq(value, area, true, (inside == 1));
+			f_area_ineq * f = new f_area_ineq(value, area, true, mult, (inside == 1));
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -1021,12 +1021,45 @@ struct match_contours
 				f_cntr2 * f = dynamic_cast<f_cntr2*>( *(functionals->end()-1) );
 				if (f != NULL)
 				{
-					f->add_contour(contour);
-					res->push_back(true);
-					return;
+					if (f->get_flag() == true) {
+						f->add_contour(contour);
+						res->push_back(true);
+						return;
+					}
 				}
 			}
-			f_cntr2 * f = new f_cntr2();
+			f_cntr2 * f = new f_cntr2(true);
+			f->add_contour(contour);
+			functionals_push_back(f);
+			res->push_back(true);
+		}
+	}
+	const char * pos;
+	boolvec * res;
+};
+
+struct match_contours2
+{
+	match_contours2(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_cntr * contour) 
+	{
+		if ( StringMatch(pos, contour->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			if (functionals->size() > 0)
+			{
+				f_cntr2 * f = dynamic_cast<f_cntr2*>( *(functionals->end()-1) );
+				if (f != NULL)
+				{
+					if (f->get_flag() == false) {
+						f->add_contour(contour);
+						res->push_back(true);
+						return;
+					}
+				}
+			}
+			f_cntr2 * f = new f_cntr2(false);
 			f->add_contour(contour);
 			functionals_push_back(f);
 			res->push_back(true);
@@ -1040,6 +1073,8 @@ boolvec * contours(const char * pos)
 {
 	match_contours qq(pos);
 	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
+	match_contours2 qq2(pos);
+	qq2 = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq2);
 	return qq.res;
 };
 

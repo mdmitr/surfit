@@ -13,6 +13,8 @@
 
 \begin{document}
 
+$N > 1$, $z_i$ and $z_{i+1}$ are unsolved.
+
 $$
 \Phi(k, b) = \sum_i ( kX_i + b - Y_i )^2 \rightarrow \min
 $$
@@ -57,6 +59,12 @@ $$
 
 \newpage
 
+$N > 1$, $z_i$ or $z_{i+1}$ is already solved.
+
+\newpage
+
+$N = 1$, $z_i$ and $z_{i+1}$ are unsolved.
+
 $$
 \left( f(x_0) - y_0 \right)^2 + \left( f(x_1) - y_1 \right)^2
 \rightarrow \min, \qquad f(x) = y
@@ -94,10 +102,20 @@ $$
 (x_0 + x_1)k + 2b + 0.5\lambda = y0 + y1
 $$
 
-
 $$
 \frac{\partial \Phi}{\partial \lambda} = kx + b - y = 0
 $$
 
+$$
+\left(\begin{matrix}
+x_0^2 + x_1^2 & x_0 + x_1 & x/2 \\
+x_0 + x_1 & 2 & 0.5 \\
+x/2 & 0.5 & 0
+\end{matrix}\right)
+\left( \begin{matrix} k \\ b \\ \lambda
+\end{matrix}\right)
+= \left( \begin{matrix} x_0y_0 + x_1y_1 \\ y_0 + y_1 \\ y/2
+\end{matrix}\right)
+$$
 
 \end{document}
