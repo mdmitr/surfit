@@ -23,12 +23,23 @@
 #include "functional.h"
 #include "f_points.h"
 
+#include <set>
+
 namespace surfit {
+
+struct cell_record
+{
+	cell_record() : sum_value(0), cnt(0) {};
+	REAL sum_value;
+	size_t cnt;
+};
 
 class d_points;
 class f_points;
 class d_cntr;
 class bitvec;
+class vec;
+class sizetvec;
 
 /*! \class f_cntr
     \brief functional for approximating contour
@@ -53,18 +64,24 @@ protected:
 
 struct sect
 {
-	REAL x0, x1, x;
-	REAL y;
+	//! distance to neighbour cell
+	REAL d; 
+	
+	//! desired value
+	REAL z; 
+	
+	//! lower cell number
 	size_t pos1;
-	bool orient;
-	// X(1) = ((-y1-y0+2*y)*x+x0*y0+x1*y1-y*x0-y*x1)/((2*y-x0-x1)*x-y*x0-y*x1+x0^2+y0^2)
-	// X(2) = -y*((x0+x1-y1-y0)*x-x0^2+x0*y0+x1*y1-y0^2)/((2*y-x0-x1)*x-y*x0-y*x1+x0^2+y0^2)
+
+	//! higher cell number
+	size_t pos2;
+
 };
 
 class SURFIT_EXPORT f_cntr2 : public functional {
 public:
 	//! constructor
-	f_cntr2();
+	f_cntr2(bool iflag, REAL imult = 1);
 	//! destructor
 	~f_cntr2();
 
@@ -83,6 +100,7 @@ public:
 	virtual void cleanup();
 
 	void add_contour(const d_cntr * cntr);
+	bool get_flag() const;
 	
 protected:
 
@@ -93,7 +111,14 @@ protected:
 	std::vector<const d_cntr *> * contours;
 
 private:
-	std::vector<sect> * get_sects(const bitvec * mask_solved, const bitvec * mask_undefined);
+	void calc_sects(bitvec * mask_solved, bitvec * mask_undefined);
+	d_grid * sects_grid;
+	std::vector<sect> * sects;
+	REAL mult;
+	bool flag;
+
+	std::set<size_t, cell_record> recs;
+
 };
 
 }; // namespace surfit
