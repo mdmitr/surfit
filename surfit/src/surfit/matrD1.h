@@ -154,11 +154,11 @@ protected:
 	//! matrix size 2
 	size_t N_rows; 
 
-	//! cols in matrix
-	size_t matrNN; 
+	//! cols in rect matrix
+	size_t rectNN; 
 
-	//! rows in matrix
-	size_t matrMM; 
+	//! rows in rect matrix
+	size_t rectMM; 
 
 };
 

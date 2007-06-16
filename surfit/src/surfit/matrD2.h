@@ -159,10 +159,10 @@ protected:
 	size_t N_rows; 
 
 	//! cols in matrix
-	size_t matrNN; 
+	size_t rectNN; 
 
 	//! rows in matrix
-	size_t matrMM; 
+	size_t rectMM; 
 
 };
 

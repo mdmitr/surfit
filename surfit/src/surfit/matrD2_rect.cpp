@@ -60,8 +60,8 @@ matrD2_rect::matrD2_rect(size_t iN, size_t iNN,
 	fault = ifault;
 	N_cols = N;
 	N_rows = N;
-	matrNN = x_to - x_from + 1;
-	matrMM = y_to - y_from + 1;
+	rectNN = x_to - x_from + 1;
+	rectMM = y_to - y_from + 1;
 	hx4 = ihx*ihx*ihx*ihx;
 	hy4 = ihy*ihy*ihy*ihy;
 	_hx4 = (ihy*ihy)/(ihx*ihx);
@@ -71,24 +71,24 @@ matrD2_rect::matrD2_rect(size_t iN, size_t iNN,
 };
 
 void matrD2_rect::make_mask(const bitvec * imask_solved, const bitvec * imask_undefined) {
-	mask = create_bitvec(matrNN*matrMM*10);
+	mask = create_bitvec(rectNN*rectMM*10);
 	size_t j;
 	bool first_x, second_x, third_x;
 	bool first_xx, second_xx;
 	bool first_yy, second_yy;
 	bool first_y, second_y, third_y;
 
-	for (j = 0; j < matrNN*matrMM; j++) {
+	for (j = 0; j < rectNN*rectMM; j++) {
 		first_x = second_x = third_x = true;
 		first_xx = second_xx = true;
 		first_yy = second_yy = true;
 		first_y = second_y = third_y = true;
 		
-		size_t n = j % matrNN;
-		size_t m = (j - n)/matrNN;
+		size_t n = j % rectNN;
+		size_t m = (j - n)/rectNN;
 		
 		sums_points_D2(n, m, 
-			NN, MM, matrNN, matrMM,
+			NN, MM, rectNN, rectMM,
 			imask_undefined,
 			first_x, second_x, third_x,
 			first_xx, second_xx,
@@ -129,7 +129,7 @@ REAL matrD2_rect::element_at(size_t i, size_t j, size_t * next_j) const {
 
 	if (m < y_from) {
 		if (next_j)
-			*next_j = y_from;
+			*next_j = UINT_MAX;//*next_j = y_from;
 		return res;
 	}
 
@@ -141,7 +141,7 @@ REAL matrD2_rect::element_at(size_t i, size_t j, size_t * next_j) const {
 
 	n -= x_from;
 	m -= y_from;
-	size_t local_i = n + m*matrNN;
+	size_t local_i = n + m*rectNN;
 
 	size_t next_j_dx2  = UINT_MAX;
 	size_t next_j_dxdy = UINT_MAX;
@@ -173,7 +173,7 @@ REAL matrD2_rect::at(size_t i, size_t j, size_t * next_j) const {
 
 	if (m < y_from) {
 		if (next_j)
-			*next_j = y_from;
+			*next_j = UINT_MAX;//*next_j = y_from;
 		return res;
 	}
 
@@ -243,7 +243,7 @@ REAL matrD2_rect::at(size_t i, size_t j, size_t * next_j) const {
 	n -= x_from;
 	m -= y_from;
 
-	size_t local_i = n + m*matrNN;
+	size_t local_i = n + m*rectNN;
 
 	size_t next_j_dx2  = UINT_MAX;
 	size_t next_j_dxdy = UINT_MAX;
@@ -277,7 +277,7 @@ REAL matrD2_rect::mult_line(size_t J, extvec::const_iterator b_begin, extvec::co
 		return REAL(0);
 	
 	bool b[10];
-	size_t local_J = n-x_from + (m-y_from)*matrNN;
+	size_t local_J = n-x_from + (m-y_from)*rectNN;
 
 	mask->get10(local_J, b);
 

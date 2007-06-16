@@ -92,13 +92,21 @@ REAL matr_eye::element_at_transposed(size_t i, size_t j, size_t * next_j) const
 
 REAL matr_eye::at(size_t i, size_t j, size_t * next_j) const 
 {
-	bool zero = mask_solved->get(i);
-	if (!zero)
-		zero = mask_undefined->get(i);
-	if (!zero)
-		zero = mask_solved->get(j);
-	if (!zero)
-		zero = mask_undefined->get(j);
+	bool zero = false;
+	if (mask_solved)
+		zero = mask_solved->get(i);
+	if (!zero) {
+		if (mask_undefined)
+			zero = mask_undefined->get(i);
+	}
+	if (!zero) {
+		if (mask_solved)
+			zero = mask_solved->get(j);
+	}
+	if (!zero) {
+		if (mask_undefined)
+			zero = mask_undefined->get(j);
+	}
 
 	if (zero) {
 		if ( next_j )
@@ -111,16 +119,18 @@ REAL matr_eye::at(size_t i, size_t j, size_t * next_j) const
 
 REAL matr_eye::at_transposed(size_t i, size_t j, size_t * next_j) const 
 {
-	return element_at(i,j,next_j);
+	return at(i,j,next_j);
 };
 
 REAL matr_eye::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) 
 {
-	if (mask_solved->get(J))
-		return REAL(0);
+	if (mask_solved)
+		if (mask_solved->get(J))
+			return REAL(0);
 
-	if (mask_undefined->get(J))
-		return REAL(0);
+	if (mask_undefined)
+		if (mask_undefined->get(J))
+			return REAL(0);
 
 	if (mask->get(J))
 		return val * *(b_begin+J);

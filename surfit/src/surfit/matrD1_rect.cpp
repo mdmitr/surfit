@@ -55,8 +55,8 @@ matrD1_rect::matrD1_rect(size_t iN, size_t iNN,
 	fault = ifault;
 	N_cols = N;
 	N_rows = N;
-	matrNN = x_to - x_from + 1;
-	matrMM = y_to - y_from + 1;
+	rectNN = x_to - x_from + 1;
+	rectMM = y_to - y_from + 1;
 	hx2 = ihx*ihx;
 	hy2 = ihy*ihy;
 	_hx2 = REAL(1)/hx2;
@@ -65,19 +65,19 @@ matrD1_rect::matrD1_rect(size_t iN, size_t iNN,
 };
 
 void matrD1_rect::make_mask(const bitvec * imask_solved, const bitvec * imask_undefined) {
-	mask = create_bitvec(matrMM*matrNN*4);
+	mask = create_bitvec(rectMM*rectNN*4);
 	size_t j;
 	bool first_x, second_x, first_y, second_y;
-	for (j = 0; j < matrMM*matrNN; j++) {
+	for (j = 0; j < rectMM*rectNN; j++) {
 		first_x = true;
 		second_x = true;
 		first_y = true;
 		second_y = true;
-		size_t n = j % matrNN;
-		size_t m = (j - n)/matrNN;
+		size_t n = j % rectNN;
+		size_t m = (j - n)/rectNN;
 	
 		sums_points_D1(n, m, 
-			NN, MM, matrNN, matrMM,
+			NN, MM, rectNN, rectMM,
 			imask_undefined,
 			first_x, second_x, 
 			first_y, second_y,
@@ -110,7 +110,7 @@ REAL matrD1_rect::element_at(size_t i, size_t j, size_t * next_j) const {
 
 	if (m < y_from) {
 		if (next_j)
-			*next_j = y_from;
+			*next_j = UINT_MAX;//*next_j = y_from;
 		return res;
 	}
 
@@ -122,7 +122,7 @@ REAL matrD1_rect::element_at(size_t i, size_t j, size_t * next_j) const {
 
 	n -= x_from;
 	m -= y_from;
-	size_t local_i = n + m*matrNN;
+	size_t local_i = n + m*rectNN;
 	bool b[4];
 
 	mask->get4(local_i, b);
@@ -149,7 +149,7 @@ REAL matrD1_rect::at(size_t i, size_t j, size_t * next_j) const {
 
 	if (m < y_from) {
 		if (next_j)
-			*next_j = y_from;
+			*next_j = UINT_MAX;//*next_j = y_from;
 		return res;
 	}
 
@@ -194,7 +194,7 @@ REAL matrD1_rect::at(size_t i, size_t j, size_t * next_j) const {
 
 	n -= x_from;
 	m -= y_from;
-	size_t local_i = n + m*matrNN;
+	size_t local_i = n + m*rectNN;
 	bool b[4];
 
 	mask->get4(local_i, b);
@@ -222,7 +222,7 @@ REAL matrD1_rect::mult_line(size_t J, extvec::const_iterator b_begin, extvec::co
 	if  (!( (n >= x_from) && (n <= x_to) && (m >= y_from) && (m <= y_to) ))
 		return REAL(0);
 	
-	size_t local_J = n-x_from + (m-y_from)*matrNN;
+	size_t local_J = n-x_from + (m-y_from)*rectNN;
 	bool b[4];
 	mask->get4(local_J, b);
 
