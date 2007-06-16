@@ -1226,6 +1226,10 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath="..\src\surfit\matr_cntrs.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\surfit\matr_diag.cpp"
 					>
 					<FileConfiguration
@@ -5810,6 +5814,10 @@
 						</FileConfiguration>
 					</File>
 					<File
+						RelativePath="..\src\surfit\f_cntr_smooth.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\src\surfit\f_curv.cpp"
 						>
 						<FileConfiguration
@@ -6836,6 +6844,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\surfit\matr_cntrs.h"
+					>
+				</File>
+				<File
 					RelativePath="..\src\surfit\matr_diag.h"
 					>
 				</File>
@@ -7140,6 +7152,10 @@
 					</File>
 					<File
 						RelativePath="..\src\surfit\f_cntr_ineq.h"
+						>
+					</File>
+					<File
+						RelativePath="..\src\surfit\f_cntr_smooth.h"
 						>
 					</File>
 					<File

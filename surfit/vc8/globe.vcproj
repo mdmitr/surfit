@@ -59,6 +59,7 @@
 				ObjectFile=".\../Debug/"
 				ProgramDataBaseFileName=".\../Debug/"
 				BrowseInformation="1"
+				BrowseInformationFile=".\../Debug/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -83,7 +84,9 @@
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="..\..\libs\ZLIB123-DLL\LIB,..\..\LIBS\TCL8.3.5\WIN\DEBUG"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\../Debug/libglobe.pdb"
+				ProgramDatabaseFile="$(TargetDir)$(TargetName).pdb"
+				GenerateMapFile="true"
+				MapFileName=".\../Debug/libglobet.map"
 				ImportLibrary="../bin/libglobe.lib"
 				TargetMachine="1"
 			/>

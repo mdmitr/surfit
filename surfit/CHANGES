@@ -22,6 +22,7 @@ New:
 	+ regexp and wildcards support for commands and gridding rules
 	+ added new parameter to surf_load_xyz function. Allows to force binding points 
           to grid cells.
+	+ new gridding rule - "contours" for smooth contours approximation and interpolation
 
 Other changes:
 	- removed curvs_load_shp, use curv_load_shp instead

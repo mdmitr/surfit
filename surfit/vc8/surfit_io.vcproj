@@ -163,6 +163,7 @@
 				ObjectFile=".\../Debug/"
 				ProgramDataBaseFileName=".\../Debug/"
 				BrowseInformation="1"
+				BrowseInformationFile=".\../Debug/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -188,7 +189,7 @@
 				AdditionalLibraryDirectories="..\..\libs\jpeg-6b,..\..\libs\NETCDF\LIBSRC,..\..\LIBS\TCL8.3.5\WIN\DEBUG,..\..\libs\jpeg-6b\"
 				IgnoreDefaultLibraryNames="LIBC,MSVCRT"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\../Debug/libsurfit_io.pdb"
+				ProgramDatabaseFile="$(TargetDir)$(TargetName).pdb"
 				ImportLibrary="../bin/libsurfit_io.lib"
 				TargetMachine="1"
 			/>

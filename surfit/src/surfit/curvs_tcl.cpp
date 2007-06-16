@@ -35,6 +35,7 @@
 #include "f_area_wmean.h"
 #include "f_area_hist.h"
 #include "f_cntr.h"
+#include "f_cntr_smooth.h"
 #include "f_cntr_ineq.h"
 #include "f_curv.h"
 #include "f_curv_ineq.h"
@@ -1018,48 +1019,15 @@ struct match_contours
 			writelog(LOG_MESSAGE,"creating gridding rule contours(\"%s\")", contour->getName());
 			if (functionals->size() > 0)
 			{
-				f_cntr2 * f = dynamic_cast<f_cntr2*>( *(functionals->end()-1) );
+				f_cntr_smooth * f = dynamic_cast<f_cntr_smooth*>( *(functionals->end()-1) );
 				if (f != NULL)
 				{
-					if (f->get_flag() == true) {
-						f->add_contour(contour);
-						res->push_back(true);
-						return;
-					}
+					f->add_contour(contour);
+					res->push_back(true);
+					return;
 				}
 			}
-			f_cntr2 * f = new f_cntr2(true);
-			f->add_contour(contour);
-			functionals_push_back(f);
-			res->push_back(true);
-		}
-	}
-	const char * pos;
-	boolvec * res;
-};
-
-struct match_contours2
-{
-	match_contours2(const char * ipos) : pos(ipos), res(NULL) {};
-	void operator()(d_cntr * contour) 
-	{
-		if ( StringMatch(pos, contour->getName()) )
-		{
-			if (res == NULL)
-				res = create_boolvec();
-			if (functionals->size() > 0)
-			{
-				f_cntr2 * f = dynamic_cast<f_cntr2*>( *(functionals->end()-1) );
-				if (f != NULL)
-				{
-					if (f->get_flag() == false) {
-						f->add_contour(contour);
-						res->push_back(true);
-						return;
-					}
-				}
-			}
-			f_cntr2 * f = new f_cntr2(false);
+			f_cntr_smooth * f = new f_cntr_smooth();
 			f->add_contour(contour);
 			functionals_push_back(f);
 			res->push_back(true);
@@ -1073,8 +1041,47 @@ boolvec * contours(const char * pos)
 {
 	match_contours qq(pos);
 	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
-	match_contours2 qq2(pos);
-	qq2 = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq2);
+	return qq.res;
+};
+
+struct match_contours_add
+{
+	match_contours_add(REAL iweight, const char * ipos) : weight(iweight), pos(ipos), res(NULL) {};
+	void operator()(d_cntr * contour) 
+	{
+		if ( StringMatch(pos, contour->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			functional * srf = get_modifiable_functional();
+			if (srf == NULL) {
+				res->push_back(false);
+				return;
+			}
+			functional * ff = srf->get_last_added();
+			if (ff != NULL) {
+				f_cntr_smooth * f = dynamic_cast<f_cntr_smooth*>(ff);
+				if (f != NULL) {
+					f->add_contour(contour);
+					res->push_back(true);
+					return;
+				}
+			}
+			f_cntr_smooth * f = new f_cntr_smooth();
+			f->add_contour(contour);
+			srf->add_functional(f, weight);
+			res->push_back(true);
+		}
+	}
+	REAL weight;
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * contours_add(REAL weight, const char * pos)
+{
+	match_contours_add qq(weight, pos);
+	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
 	return qq.res;
 };
 
