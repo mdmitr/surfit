@@ -149,27 +149,38 @@ size_t solve(matr * T, const extvec * V, extvec *& X) {
 
 #ifdef DEBUG
 	/*
-	if (false) {
+	if (true) {
 		std::vector<int> zero_rows;
 		T->get_zero_rows(zero_rows);
 		T->writeMAT("c:\\matr.mat","A",&zero_rows,false);
 		matlabWriteVector(V->const_begin(), V->const_end(), "c:\\matr.mat","b",&zero_rows);
 	}
-	*/
+	//*/
+	///*
 	{
-		writelog(LOG_DEBUG,"checking for matrix is symmetric...");
+		writelog(LOG_DEBUG,"checking for matrix symmety...");
 		size_t i, j;
 		for (i = 0; i < T->rows(); i++) {
-			for (j = i+1; j < T->rows();) {
+			for (j = i; j < T->rows();) {
 				///*
 				size_t next_j;
 				REAL val2 = T->at(j,i);
 				REAL val1 = T->at(i,j,&next_j);
+				if (val1 != val2) {
+					val2 = T->at(j,i);
+					val1 = T->at(i,j,&next_j);
+				}
 				assert(val1 == val2);
+				if (j == next_j) {
+					bool stop = true;
+					T->at(i,j,&next_j);
+				}
+				assert(j != next_j);
 				j = next_j;
 			}
 		}
 	}
+	//*/
 	
 #endif
 
@@ -260,15 +271,18 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 	short prp = 0;
 	size_t iters = 0;
 
+	REAL penalty_tol = tol;
+
 	bool ok = false;
 	while (!ok) 
 	{
+		matr * S_matrix = NULL;
+		extvec * S_vec = NULL;
 		matr * P_matrix = NULL;
 		extvec * P_vec = NULL;
 		if (counter == 0) 
 			loglevel = prev_loglevel;
 
-		fnc->cond_make_matrix_and_vector(P_matrix, P_vec, parent_mask, method_mask_solved, fake_mask);
 		if (counter == 0) 
 			loglevel = LOG_SILENT;
 
@@ -277,33 +291,46 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 			writelog2(LOG_MESSAGE,"processing with penalties");
 			loglevel = LOG_SILENT;
 		}
+
+		bool res = fnc->cond_make_matrix_and_vector(P_matrix, P_vec, parent_mask, method_mask_solved, fake_mask);
+		if (res == false)
+			break;
 					
 		size_t matrix_size = X->size();
 			
-		matr_sum * S_matrix = new matr_sum(1, T, weight, P_matrix);
-		S_matrix->set_const(); // leave matrix T undeleted
+		if (P_matrix != NULL) {
+			matr_sum * S_matr = new matr_sum(1, T, weight, P_matrix);
+			S_matr->set_const(); // leave matrix T undeleted
+			S_matrix = S_matr;
 
-		extvec * S_vec = create_extvec(P_vec->size(),0,0);
+			S_vec = create_extvec(P_vec->size(),0,0);
 
-		size_t i;
-		if (V) {
-			for (i = 0; i < matrix_size; i++)
-				(*S_vec)(i) = (*P_vec)(i)*weight + (*V)(i);
+			size_t i;
+			if (V) {
+				for (i = 0; i < matrix_size; i++)
+					(*S_vec)(i) = (*P_vec)(i)*weight + (*V)(i);
+			} else {
+				for (i = 0; i < matrix_size; i++)
+					(*S_vec)(i) = (*P_vec)(i)*weight;
+			}
 		} else {
-			for (i = 0; i < matrix_size; i++)
-				(*S_vec)(i) = (*P_vec)(i)*weight;
+			S_matrix = T;
+			S_vec = V;
+			ok = true;
 		}
 		
 		iters += solve(S_matrix, S_vec, X);
 		counter++;
 		
-		delete S_matrix;
-		if (S_vec)
-			S_vec->release();
+		if (P_matrix != NULL) {
+			delete S_matrix;
+			if (S_vec)
+				S_vec->release();
 
-		delete P_matrix;
-		if (P_vec)
-			P_vec->release();
+			delete P_matrix;
+			if (P_vec)
+				P_vec->release();
+		}
 				
 		weight *= penalty_weight_mult;
 		
@@ -312,7 +339,7 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 
 		if (from == FLT_MAX) {
 			from = log10(REAL(1)/error);
-			to = log10(REAL(1)/tol);
+			to = log10(REAL(1)/penalty_tol);
 			step = (to-from)/REAL(PROGRESS_POINTS+1);
 			prp = 0;
 		}
@@ -328,7 +355,7 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 			prp = (short)prp_pos;
 		}
 
-		if ( error <= tol ) 
+		if ( error <= penalty_tol ) 
 			ok = true;
 		else
 			x_norm = new_norm;
