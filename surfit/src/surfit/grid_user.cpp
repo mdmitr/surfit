@@ -67,25 +67,25 @@ struct grid_garbage : public binman {
 
 grid_garbage gird_garb;
 
-d_grid * method_grid;
-d_grid * method_sub_grid;
-d_grid * method_prev_grid;
-extvec * method_X;
-bool method_ok;
-bitvec * method_mask_solved;
-bitvec * method_mask_undefined;
+d_grid * method_grid = NULL;
+d_grid * method_sub_grid = NULL;
+d_grid * method_prev_grid = NULL;
+extvec * method_X = NULL;
+bool method_ok = false;
+bitvec * method_mask_solved = NULL;
+bitvec * method_mask_undefined = NULL;
 size_t basis_cnt = 8;
-size_t method_basis_cntX;
-size_t method_basis_cntY;
-size_t method_phase_counter;
-REAL method_scaleX;
-REAL method_shiftX;
-REAL method_scaleY;
-REAL method_shiftY;
-REAL method_stepX;
-REAL method_stepY;
-bool doubleX;
-bool doubleY;
+size_t method_basis_cntX = 8;
+size_t method_basis_cntY = 8;
+size_t method_phase_counter = 0;
+REAL method_scaleX = FLT_MAX;
+REAL method_shiftX = FLT_MAX;
+REAL method_scaleY = FLT_MAX;
+REAL method_shiftY = FLT_MAX;
+REAL method_stepX = FLT_MAX;
+REAL method_stepY = FLT_MAX;
+bool doubleX = false;
+bool doubleY = false;
 
 /////////////////////////////////////////////////
 //
@@ -546,6 +546,7 @@ void grid_release() {
 	res_surf->setName(map_name);
 	
 	surfit_surfs->push_back(res_surf);	
+
 	//surf_project();
 
 };
