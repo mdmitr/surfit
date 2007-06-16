@@ -547,7 +547,8 @@ void f_trend::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_unde
 		}
 	}
 
-	trend_mask_undefined->release();
+	if (trend_mask_undefined)
+		trend_mask_undefined->release();
 	trend_mask_undefined = NULL;
 	
 	mark_sums(mask_solved, mask_undefined);
@@ -647,7 +648,6 @@ void f_trend::drop_private_data() {
 		tr_srf->release_private();
 	tr_srf = NULL;
 };
-
 
 }; // namespace surfit;
 
