@@ -99,6 +99,9 @@ public:
 
 	//! adds functional to \ref functionals_add array
 	void add_functional(functional * isum, REAL weight);
+	
+	//! returns the last functional from \ref functionals_add array
+	functional * get_last_added() const;
 
 	//! prints some info about functional
 	void info();

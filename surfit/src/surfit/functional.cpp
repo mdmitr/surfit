@@ -251,7 +251,24 @@ bool functional::cond_make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec
 
 	}
 
-	matr_sums * T = new matr_sums(weights, matrices);
+	if (weights->size() == 0) {
+		delete matrices;
+		delete weights;
+		matrix = NULL;
+		v->release();
+		v = NULL;
+		return false;
+	}
+
+	matr * T = NULL;
+	if (weights->size() > 1)
+		T = new matr_sums(weights, matrices);
+	if (weights->size() == 1) {
+		T = (*matrices)[0];
+		delete matrices;
+		delete weights;
+	}
+			
 	matr_mask * M = new matr_mask(parent_mask, T); // !!! 
 	matrix = M;
 	
@@ -343,6 +360,12 @@ size_t functional::get_pos() const
 void functional::set_pos(size_t ipos)
 {
 	pos = ipos;
+};
+
+functional * functional::get_last_added() const {
+	if (functionals_add->size() == 0)
+		return NULL;
+	return (*functionals_add)[functionals_add->size()-1];
 };
 
 void set_solved(bitvec * mask_solved, bitvec * mask_undefined) {
