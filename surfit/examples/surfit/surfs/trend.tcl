@@ -46,14 +46,14 @@ grid_get -10 10 0.2 -10 10 0.2
 # resulting surface at points = points values 
 points "7points" 
 
-# resulting surface looks like trend surface 
-trend 1 0.2 "test_func" 
-
 # fault line 
 fault "1fault"  
 
 # fault line 
 fault "1fault2"  
+
+# resulting surface looks like trend surface 
+trend 1 0.2 "test_func" 
 
 ##
 ## run gridding algorithm
