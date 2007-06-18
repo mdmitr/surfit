@@ -308,7 +308,7 @@ ret_true:
 };
 
 inline
-bool sect_cmp(sect & s1, sect & s2)
+bool sect_cmp(const sect & s1, const sect & s2)
 {
 	if (s1.pos1 == s2.pos1)
 		return (s1.pos2 < s2.pos2);
@@ -316,7 +316,7 @@ bool sect_cmp(sect & s1, sect & s2)
 };
 
 inline
-bool sect_cmp_z(sect & s1, sect & s2)
+bool sect_cmp_z(const sect & s1, const sect & s2)
 {
 	return (s1.z < s2.z);
 };
