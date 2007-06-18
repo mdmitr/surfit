@@ -33,10 +33,10 @@ curve 21.4 "VNK2"
 curve 21.4 "VNK3"
 area undef "ZAM1"
 area undef "ZAM5"
+fault "ZAM2"
 lcm_simple 16.4 0.5 1e-6
 contour_add 1 "P_2001_236_ver"
 flow_points "debits2001"
-fault "ZAM2"
 flow_curve -0.000467413 "frac_236_ver"
 
 surfit
