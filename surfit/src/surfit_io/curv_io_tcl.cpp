@@ -126,9 +126,9 @@ boolvec * curv_load_shp(const char * filename, const char * curvname)
 	return res;
 };
 
-struct regexp_curv_save_bln
+struct match_curv_save_bln
 {
-	regexp_curv_save_bln(const char * ifilename, const char * icurv_pos, FILE * ifile)
+	match_curv_save_bln(const char * ifilename, const char * icurv_pos, FILE * ifile)
 	{
 		filename = ifilename;
 		curv_pos = icurv_pos;
@@ -168,16 +168,16 @@ boolvec * curv_save_bln(const char * filename, const char * curv_pos)
 		return NULL;
 	}
 
-	regexp_curv_save_bln saver(filename, curv_pos, file);
+	match_curv_save_bln saver(filename, curv_pos, file);
 	saver = std::for_each(surfit_curvs->begin(), surfit_curvs->end(), saver);
 
 	fclose(file);
 	return saver.res;
 };
 
-struct regexp_curv_save_shp
+struct match_curv_save_shp
 {
-	regexp_curv_save_shp(const char * ifilename, const char * icurv_pos)
+	match_curv_save_shp(const char * ifilename, const char * icurv_pos)
 	{
 		filename = ifilename;
 		curv_pos = icurv_pos;
@@ -202,7 +202,7 @@ struct regexp_curv_save_shp
 
 
 boolvec * curv_save_shp(const char * filename, const char * curv_pos) {
-	regexp_curv_save_shp saver(filename, curv_pos);
+	match_curv_save_shp saver(filename, curv_pos);
 	saver = std::for_each(surfit_curvs->begin(), surfit_curvs->end(), saver);
 	return saver.res;
 };
