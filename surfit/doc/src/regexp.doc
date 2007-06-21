@@ -1,9 +1,0 @@
-/*! \page regexp Regular Expression Syntax
-
-Starting from version 2.2 surfit supports regular expressions (regexp). You can use
-regular expressions for specifying set of data objects, gridding rules and etc.
-
-Here you can find regexp syntax:
-http://www.tcl.tk/man/tcl8.3/TclCmd/re_syntax.htm
-
-*/
