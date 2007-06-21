@@ -104,6 +104,10 @@ SOURCE=..\src\surfit\matr.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\surfit\matr_cntrs.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\surfit\matr_diag.cpp
 # End Source File
 # Begin Source File
@@ -466,6 +470,10 @@ SOURCE=..\src\surfit\f_cntr_ineq.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\surfit\f_cntr_smooth.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\surfit\f_curv.cpp
 # End Source File
 # Begin Source File
@@ -612,6 +620,10 @@ SOURCE=.\..\src\surfit\matlab.h
 # Begin Source File
 
 SOURCE=..\src\surfit\matr.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\matr_cntrs.h
 # End Source File
 # Begin Source File
 
@@ -923,6 +935,10 @@ SOURCE=..\src\surfit\f_cntr.h
 # Begin Source File
 
 SOURCE=..\src\surfit\f_cntr_ineq.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\f_cntr_smooth.h
 # End Source File
 # Begin Source File
 

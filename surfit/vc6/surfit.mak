@@ -25,6 +25,10 @@ NULL=
 NULL=nul
 !ENDIF 
 
+CPP=cl.exe
+MTL=midl.exe
+RSC=rc.exe
+
 !IF  "$(CFG)" == "surfit - Win32 Release"
 
 OUTDIR=.\../Release
@@ -96,6 +100,8 @@ CLEAN :
 	-@erase "$(INTDIR)\f_cntr.sbr"
 	-@erase "$(INTDIR)\f_cntr_ineq.obj"
 	-@erase "$(INTDIR)\f_cntr_ineq.sbr"
+	-@erase "$(INTDIR)\f_cntr_smooth.obj"
+	-@erase "$(INTDIR)\f_cntr_smooth.sbr"
 	-@erase "$(INTDIR)\f_completer.obj"
 	-@erase "$(INTDIR)\f_completer.sbr"
 	-@erase "$(INTDIR)\f_curv.obj"
@@ -106,6 +112,8 @@ CLEAN :
 	-@erase "$(INTDIR)\f_curv_surf.sbr"
 	-@erase "$(INTDIR)\f_curv_surf_ineq.obj"
 	-@erase "$(INTDIR)\f_curv_surf_ineq.sbr"
+	-@erase "$(INTDIR)\f_fault.obj"
+	-@erase "$(INTDIR)\f_fault.sbr"
 	-@erase "$(INTDIR)\f_hist.obj"
 	-@erase "$(INTDIR)\f_hist.sbr"
 	-@erase "$(INTDIR)\f_ineq.obj"
@@ -124,6 +132,8 @@ CLEAN :
 	-@erase "$(INTDIR)\f_mask_wmean.sbr"
 	-@erase "$(INTDIR)\f_mean.obj"
 	-@erase "$(INTDIR)\f_mean.sbr"
+	-@erase "$(INTDIR)\f_method.obj"
+	-@erase "$(INTDIR)\f_method.sbr"
 	-@erase "$(INTDIR)\f_points.obj"
 	-@erase "$(INTDIR)\f_points.sbr"
 	-@erase "$(INTDIR)\f_points_ineq.obj"
@@ -136,6 +146,8 @@ CLEAN :
 	-@erase "$(INTDIR)\f_surf_ineq.sbr"
 	-@erase "$(INTDIR)\f_trend.obj"
 	-@erase "$(INTDIR)\f_trend.sbr"
+	-@erase "$(INTDIR)\f_triangulate.obj"
+	-@erase "$(INTDIR)\f_triangulate.sbr"
 	-@erase "$(INTDIR)\f_value.obj"
 	-@erase "$(INTDIR)\f_value.sbr"
 	-@erase "$(INTDIR)\f_wmean.obj"
@@ -182,6 +194,8 @@ CLEAN :
 	-@erase "$(INTDIR)\matlab.sbr"
 	-@erase "$(INTDIR)\matr.obj"
 	-@erase "$(INTDIR)\matr.sbr"
+	-@erase "$(INTDIR)\matr_cntrs.obj"
+	-@erase "$(INTDIR)\matr_cntrs.sbr"
 	-@erase "$(INTDIR)\matr_diag.obj"
 	-@erase "$(INTDIR)\matr_diag.sbr"
 	-@erase "$(INTDIR)\matr_eye.obj"
@@ -228,6 +242,8 @@ CLEAN :
 	-@erase "$(INTDIR)\surfit_wrap.sbr"
 	-@erase "$(INTDIR)\surfs_tcl.obj"
 	-@erase "$(INTDIR)\surfs_tcl.sbr"
+	-@erase "$(INTDIR)\triangle.obj"
+	-@erase "$(INTDIR)\triangle.sbr"
 	-@erase "$(INTDIR)\variables.obj"
 	-@erase "$(INTDIR)\variables.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
@@ -239,42 +255,8 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP=cl.exe
 CPP_PROJ=/nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
-
-.c{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.c{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-MTL=midl.exe
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
-RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\surfit.bsc" 
 BSC32_SBRS= \
@@ -335,6 +317,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_hist.sbr" \
 	"$(INTDIR)\f_ineq.sbr" \
 	"$(INTDIR)\f_mean.sbr" \
+	"$(INTDIR)\f_method.sbr" \
+	"$(INTDIR)\f_triangulate.sbr" \
 	"$(INTDIR)\f_value.sbr" \
 	"$(INTDIR)\f_wmean.sbr" \
 	"$(INTDIR)\others_tcl.sbr" \
@@ -352,6 +336,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_curv_ineq.sbr" \
 	"$(INTDIR)\f_curv_surf.sbr" \
 	"$(INTDIR)\f_curv_surf_ineq.sbr" \
+	"$(INTDIR)\f_fault.sbr" \
 	"$(INTDIR)\f_mask.sbr" \
 	"$(INTDIR)\f_mask_ineq.sbr" \
 	"$(INTDIR)\f_mask_mean.sbr" \
@@ -368,7 +353,10 @@ BSC32_SBRS= \
 	"$(INTDIR)\sort_alg.sbr" \
 	"$(INTDIR)\surfit.sbr" \
 	"$(INTDIR)\surfit_wrap.sbr" \
-	"$(INTDIR)\variables.sbr"
+	"$(INTDIR)\triangle.sbr" \
+	"$(INTDIR)\variables.sbr" \
+	"$(INTDIR)\matr_cntrs.sbr" \
+	"$(INTDIR)\f_cntr_smooth.sbr"
 
 "$(OUTDIR)\surfit.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -435,6 +423,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_hist.obj" \
 	"$(INTDIR)\f_ineq.obj" \
 	"$(INTDIR)\f_mean.obj" \
+	"$(INTDIR)\f_method.obj" \
+	"$(INTDIR)\f_triangulate.obj" \
 	"$(INTDIR)\f_value.obj" \
 	"$(INTDIR)\f_wmean.obj" \
 	"$(INTDIR)\others_tcl.obj" \
@@ -452,6 +442,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_curv_ineq.obj" \
 	"$(INTDIR)\f_curv_surf.obj" \
 	"$(INTDIR)\f_curv_surf_ineq.obj" \
+	"$(INTDIR)\f_fault.obj" \
 	"$(INTDIR)\f_mask.obj" \
 	"$(INTDIR)\f_mask_ineq.obj" \
 	"$(INTDIR)\f_mask_mean.obj" \
@@ -468,7 +459,10 @@ LINK32_OBJS= \
 	"$(INTDIR)\sort_alg.obj" \
 	"$(INTDIR)\surfit.obj" \
 	"$(INTDIR)\surfit_wrap.obj" \
+	"$(INTDIR)\triangle.obj" \
 	"$(INTDIR)\variables.obj" \
+	"$(INTDIR)\matr_cntrs.obj" \
+	"$(INTDIR)\f_cntr_smooth.obj" \
 	"..\bin\libsstuff.lib"
 
 "..\bin\libsurfit.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -547,6 +541,8 @@ CLEAN :
 	-@erase "$(INTDIR)\f_cntr.sbr"
 	-@erase "$(INTDIR)\f_cntr_ineq.obj"
 	-@erase "$(INTDIR)\f_cntr_ineq.sbr"
+	-@erase "$(INTDIR)\f_cntr_smooth.obj"
+	-@erase "$(INTDIR)\f_cntr_smooth.sbr"
 	-@erase "$(INTDIR)\f_completer.obj"
 	-@erase "$(INTDIR)\f_completer.sbr"
 	-@erase "$(INTDIR)\f_curv.obj"
@@ -557,6 +553,8 @@ CLEAN :
 	-@erase "$(INTDIR)\f_curv_surf.sbr"
 	-@erase "$(INTDIR)\f_curv_surf_ineq.obj"
 	-@erase "$(INTDIR)\f_curv_surf_ineq.sbr"
+	-@erase "$(INTDIR)\f_fault.obj"
+	-@erase "$(INTDIR)\f_fault.sbr"
 	-@erase "$(INTDIR)\f_hist.obj"
 	-@erase "$(INTDIR)\f_hist.sbr"
 	-@erase "$(INTDIR)\f_ineq.obj"
@@ -575,6 +573,8 @@ CLEAN :
 	-@erase "$(INTDIR)\f_mask_wmean.sbr"
 	-@erase "$(INTDIR)\f_mean.obj"
 	-@erase "$(INTDIR)\f_mean.sbr"
+	-@erase "$(INTDIR)\f_method.obj"
+	-@erase "$(INTDIR)\f_method.sbr"
 	-@erase "$(INTDIR)\f_points.obj"
 	-@erase "$(INTDIR)\f_points.sbr"
 	-@erase "$(INTDIR)\f_points_ineq.obj"
@@ -587,6 +587,8 @@ CLEAN :
 	-@erase "$(INTDIR)\f_surf_ineq.sbr"
 	-@erase "$(INTDIR)\f_trend.obj"
 	-@erase "$(INTDIR)\f_trend.sbr"
+	-@erase "$(INTDIR)\f_triangulate.obj"
+	-@erase "$(INTDIR)\f_triangulate.sbr"
 	-@erase "$(INTDIR)\f_value.obj"
 	-@erase "$(INTDIR)\f_value.sbr"
 	-@erase "$(INTDIR)\f_wmean.obj"
@@ -633,6 +635,8 @@ CLEAN :
 	-@erase "$(INTDIR)\matlab.sbr"
 	-@erase "$(INTDIR)\matr.obj"
 	-@erase "$(INTDIR)\matr.sbr"
+	-@erase "$(INTDIR)\matr_cntrs.obj"
+	-@erase "$(INTDIR)\matr_cntrs.sbr"
 	-@erase "$(INTDIR)\matr_diag.obj"
 	-@erase "$(INTDIR)\matr_diag.sbr"
 	-@erase "$(INTDIR)\matr_eye.obj"
@@ -679,6 +683,8 @@ CLEAN :
 	-@erase "$(INTDIR)\surfit_wrap.sbr"
 	-@erase "$(INTDIR)\surfs_tcl.obj"
 	-@erase "$(INTDIR)\surfs_tcl.sbr"
+	-@erase "$(INTDIR)\triangle.obj"
+	-@erase "$(INTDIR)\triangle.sbr"
 	-@erase "$(INTDIR)\variables.obj"
 	-@erase "$(INTDIR)\variables.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
@@ -692,42 +698,8 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP=cl.exe
 CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DEBUG" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
-
-.c{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.c{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-MTL=midl.exe
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
-RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\surfit.bsc" 
 BSC32_SBRS= \
@@ -788,6 +760,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_hist.sbr" \
 	"$(INTDIR)\f_ineq.sbr" \
 	"$(INTDIR)\f_mean.sbr" \
+	"$(INTDIR)\f_method.sbr" \
+	"$(INTDIR)\f_triangulate.sbr" \
 	"$(INTDIR)\f_value.sbr" \
 	"$(INTDIR)\f_wmean.sbr" \
 	"$(INTDIR)\others_tcl.sbr" \
@@ -805,6 +779,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_curv_ineq.sbr" \
 	"$(INTDIR)\f_curv_surf.sbr" \
 	"$(INTDIR)\f_curv_surf_ineq.sbr" \
+	"$(INTDIR)\f_fault.sbr" \
 	"$(INTDIR)\f_mask.sbr" \
 	"$(INTDIR)\f_mask_ineq.sbr" \
 	"$(INTDIR)\f_mask_mean.sbr" \
@@ -821,7 +796,10 @@ BSC32_SBRS= \
 	"$(INTDIR)\sort_alg.sbr" \
 	"$(INTDIR)\surfit.sbr" \
 	"$(INTDIR)\surfit_wrap.sbr" \
-	"$(INTDIR)\variables.sbr"
+	"$(INTDIR)\triangle.sbr" \
+	"$(INTDIR)\variables.sbr" \
+	"$(INTDIR)\matr_cntrs.sbr" \
+	"$(INTDIR)\f_cntr_smooth.sbr"
 
 "$(OUTDIR)\surfit.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -888,6 +866,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_hist.obj" \
 	"$(INTDIR)\f_ineq.obj" \
 	"$(INTDIR)\f_mean.obj" \
+	"$(INTDIR)\f_method.obj" \
+	"$(INTDIR)\f_triangulate.obj" \
 	"$(INTDIR)\f_value.obj" \
 	"$(INTDIR)\f_wmean.obj" \
 	"$(INTDIR)\others_tcl.obj" \
@@ -905,6 +885,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_curv_ineq.obj" \
 	"$(INTDIR)\f_curv_surf.obj" \
 	"$(INTDIR)\f_curv_surf_ineq.obj" \
+	"$(INTDIR)\f_fault.obj" \
 	"$(INTDIR)\f_mask.obj" \
 	"$(INTDIR)\f_mask_ineq.obj" \
 	"$(INTDIR)\f_mask_mean.obj" \
@@ -921,7 +902,10 @@ LINK32_OBJS= \
 	"$(INTDIR)\sort_alg.obj" \
 	"$(INTDIR)\surfit.obj" \
 	"$(INTDIR)\surfit_wrap.obj" \
+	"$(INTDIR)\triangle.obj" \
 	"$(INTDIR)\variables.obj" \
+	"$(INTDIR)\matr_cntrs.obj" \
+	"$(INTDIR)\f_cntr_smooth.obj" \
 	"..\bin\libsstuff.lib"
 
 "..\bin\libsurfit.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -930,6 +914,36 @@ LINK32_OBJS= \
 <<
 
 !ENDIF 
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
 
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
@@ -951,6 +965,12 @@ SOURCE=.\..\src\surfit\matlab.cpp
 SOURCE=..\src\surfit\matr.cpp
 
 "$(INTDIR)\matr.obj"	"$(INTDIR)\matr.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\matr_cntrs.cpp
+
+"$(INTDIR)\matr_cntrs.obj"	"$(INTDIR)\matr_cntrs.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1107,9 +1127,27 @@ SOURCE=..\src\surfit\surf.cpp
 
 SOURCE=..\src\surfit\surf_internal.cpp
 
-"$(INTDIR)\surf_internal.obj"	"$(INTDIR)\surf_internal.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+!IF  "$(CFG)" == "surfit - Win32 Release"
 
+CPP_SWITCHES=/nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "NO_TIMER" /D "TRILIBRARY" /D "ANSI_DECLARATORS" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
+
+"$(INTDIR)\surf_internal.obj"	"$(INTDIR)\surf_internal.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) @<<
+  $(CPP_SWITCHES) $(SOURCE)
+<<
+
+
+!ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
+
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DEBUG" /D "NO_TIMER" /D "TRILIBRARY" /D "ANSI_DECLARATORS" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+
+"$(INTDIR)\surf_internal.obj"	"$(INTDIR)\surf_internal.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) @<<
+  $(CPP_SWITCHES) $(SOURCE)
+<<
+
+
+!ENDIF 
 
 SOURCE=..\src\surfit\surf_tcl.cpp
 
@@ -1303,6 +1341,18 @@ SOURCE=..\src\surfit\f_mean.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\src\surfit\f_method.cpp
+
+"$(INTDIR)\f_method.obj"	"$(INTDIR)\f_method.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\f_triangulate.cpp
+
+"$(INTDIR)\f_triangulate.obj"	"$(INTDIR)\f_triangulate.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\src\surfit\f_value.cpp
 
 "$(INTDIR)\f_value.obj"	"$(INTDIR)\f_value.sbr" : $(SOURCE) "$(INTDIR)"
@@ -1381,6 +1431,12 @@ SOURCE=..\src\surfit\f_cntr_ineq.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\src\surfit\f_cntr_smooth.cpp
+
+"$(INTDIR)\f_cntr_smooth.obj"	"$(INTDIR)\f_cntr_smooth.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\src\surfit\f_curv.cpp
 
 "$(INTDIR)\f_curv.obj"	"$(INTDIR)\f_curv.sbr" : $(SOURCE) "$(INTDIR)"
@@ -1402,6 +1458,12 @@ SOURCE=..\src\surfit\f_curv_surf.cpp
 SOURCE=..\src\surfit\f_curv_surf_ineq.cpp
 
 "$(INTDIR)\f_curv_surf_ineq.obj"	"$(INTDIR)\f_curv_surf_ineq.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\f_fault.cpp
+
+"$(INTDIR)\f_fault.obj"	"$(INTDIR)\f_fault.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1530,6 +1592,30 @@ CPP_SWITCHES=/nologo /MT /W3 /GR /GX /Op /Oy- /Ob2 /I "../src/sstuff" /I "../src
 CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DEBUG" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\surfit_wrap.obj"	"$(INTDIR)\surfit_wrap.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) @<<
+  $(CPP_SWITCHES) $(SOURCE)
+<<
+
+
+!ENDIF 
+
+SOURCE=..\src\surfit\triangle.cpp
+
+!IF  "$(CFG)" == "surfit - Win32 Release"
+
+CPP_SWITCHES=/nologo /MT /W3 /GR /GX /O2 /Op /Ob2 /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "NO_TIMER" /D "TRILIBRARY" /D "ANSI_DECLARATORS" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /Gs /Gs /c 
+
+"$(INTDIR)\triangle.obj"	"$(INTDIR)\triangle.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) @<<
+  $(CPP_SWITCHES) $(SOURCE)
+<<
+
+
+!ELSEIF  "$(CFG)" == "surfit - Win32 Debug"
+
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../src/sstuff" /I "../src/sstuff/ptypes" /I "../../libs/tcl8.3.5/generic" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DEBUG" /D "NO_TIMER" /D "TRILIBRARY" /D "ANSI_DECLARATORS" /Fr"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+
+"$(INTDIR)\triangle.obj"	"$(INTDIR)\triangle.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
   $(CPP_SWITCHES) $(SOURCE)
 <<
