@@ -2385,7 +2385,7 @@ struct match_trace
 #if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
 			int tick1 = GetTickCount();
 #endif
-			std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM, surf->undef_value, true);
+			std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM, surf->undef_value, false);
 #if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
 			int tick2 = GetTickCount();
 			writelog(LOG_MESSAGE, "%d miliseconds elapsed", tick2-tick1);
