@@ -136,6 +136,9 @@ bool ptr_sub_points_less(sub_points * it1, sub_points * it2);
 SURFIT_EXPORT
 void _surfit_pnts_add(d_points * pnts);
 
+SURFIT_EXPORT
+bool _pnts_to_cntrs(const d_points * pnts);
+
 }; // namespace surfit;
 
 #endif

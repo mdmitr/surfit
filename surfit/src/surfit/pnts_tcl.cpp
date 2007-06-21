@@ -1470,5 +1470,31 @@ void pnts_info() {
 	}
 };
 
+struct match_pnts_to_cntrs
+{
+	match_pnts_to_cntrs(const char * ipos) : pos(ipos), res(NULL) {};
+	void operator()(d_points * pnts)
+	{
+		if ( StringMatch(pos, pnts->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back ( _pnts_to_cntrs(pnts) );
+		}
+	}
+	REAL centerX;
+	REAL centerY;
+	REAL angle;
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * pnts_to_cntrs(const char * pos) 
+{
+	match_pnts_to_cntrs qq(pos);
+	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
+	return qq.res;
+};
+
 }; // namespace surfit;
 

@@ -614,6 +614,15 @@ void _surfit_pnts_add(d_points * pnts) {
 	surfit_pnts->push_back(pnts);
 };
 
+bool _pnts_to_cntrs(const d_points * input_pnts) 
+{
+	d_points * pnts = create_points(input_pnts);
+	REAL minx = pnts->minx();
+	REAL miny = pnts->miny();
+
+	pnts->release();
+	return false;
+};
 
 }; // namespace surfit;
 

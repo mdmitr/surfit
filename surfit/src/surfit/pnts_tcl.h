@@ -474,6 +474,20 @@ boolvec * pnts_div_surf(const char * points_name = "*", const char * surf_name =
 boolvec * pnts_set_surf(const char * points_name = "*", const char * surf_name = "*");
 
 //////////////
+// convert
+
+/*! \ingroup tcl_pnts_other
+    \fn bool pnts_to_cntrst(const char * points_name = "*");
+    
+    \par Tcl syntax:
+    pnts_to_cntrs "points_name"
+
+    \par Description:
+    converts points to contours
+*/
+boolvec * pnts_to_cntrs(const char * points_name = "*");
+
+//////////////
 // other
 
 /*! \ingroup tcl_pnts_other

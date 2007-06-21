@@ -80,6 +80,7 @@ surfit::boolvec * pnts_set_surf(const char * points_name = "*", const char * sur
 surfit::boolvec * pnts_concat(const char * points_name1, const char * points_name2);
 
 // other
+surfit::boolvec * pnts_to_cntrs(const char * points_name = "*");
 surfit::intvec * pnts_getCount(const char * points_name = "*");
 surfit::strvec * pnts_getName(const char * points_name = "*");
 const char * pnts_getNameAt(int pos);
