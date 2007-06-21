@@ -397,6 +397,11 @@ int calc_columns(const char * Str, int readed, char * seps) {
 		*pos = '\0';
 	}
 
+	pos = strchr(str, '\r');
+	if (pos != NULL) {
+		*pos = '\0';
+	}
+
 	int columns = 0;
 
 	char * token = strtok( str, seps );
