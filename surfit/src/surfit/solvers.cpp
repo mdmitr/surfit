@@ -156,7 +156,7 @@ size_t solve(matr * T, const extvec * V, extvec *& X) {
 		matlabWriteVector(V->const_begin(), V->const_end(), "c:\\matr.mat","b",&zero_rows);
 	}
 	//*/
-	///*
+	/*
 	{
 		writelog(LOG_DEBUG,"checking for matrix symmety...");
 		size_t i, j;
@@ -293,8 +293,6 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 		}
 
 		bool res = fnc->cond_make_matrix_and_vector(P_matrix, P_vec, parent_mask, method_mask_solved, fake_mask);
-		if (res == false)
-			break;
 					
 		size_t matrix_size = X->size();
 			
@@ -318,6 +316,9 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 			S_vec = V;
 			ok = true;
 		}
+
+		if (S_matrix == NULL)
+			break;
 		
 		iters += solve(S_matrix, S_vec, X);
 		counter++;
