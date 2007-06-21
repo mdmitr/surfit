@@ -201,6 +201,9 @@ void set_solved(bitvec * mask_solved, bitvec * mask_undefined);
 SURFIT_EXPORT
 void set_undefined(bitvec * mask_solved, bitvec * mask_undefined);
 
+SURFIT_EXPORT
+REAL get_mult(REAL speed);
+
 }; // namespace surfit;
 
 #endif

@@ -386,4 +386,11 @@ void set_undefined(bitvec * mask_solved, bitvec * mask_undefined) {
 	}
 };
 
+REAL get_mult(REAL speed)
+{
+	// 0 - average speed, mult == 1
+	REAL res = pow(10., (double)speed);
+	return res;
+};
+
 }; // namespace surfit;

@@ -98,8 +98,6 @@ bool f_cntr_smooth::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec *
 	std::vector<REAL> D;
 	std::vector<REAL> Z;
 
-	REAL mega_mult = 1;
-
 	sect prev_s = (*sects)[0];
 
 	std::vector<cntr_rec> * matr_data = new std::vector<cntr_rec>();
@@ -191,7 +189,7 @@ bool f_cntr_smooth::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec *
 		assert(0);
 	}
 
-	matr_cntrs * T = new matr_cntrs(mega_mult, matr_data, matrix_size, mask, NN, MM);
+	matr_cntrs * T = new matr_cntrs(mult, matr_data, matrix_size, mask, NN, MM);
 	T->fill_vector(v);
 	matrix = T;
 

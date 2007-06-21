@@ -89,55 +89,56 @@ bool value_add(REAL weight, REAL value)
 	return true;
 };
 
-bool mean(REAL value, REAL mult) 
+bool mean(REAL value, REAL penalty_factor) 
 {
-	writelog(LOG_MESSAGE,"creating gridding rule mean(%g,%g)",value,mult);
-	f_mean * f = new f_mean(value, mult);
+	writelog(LOG_MESSAGE,"creating gridding rule mean(%g,%g)",value,get_mult(penalty_factor));
+	f_mean * f = new f_mean(value, get_mult(penalty_factor));
 	functionals_push_back(f);
 	return true;
 };
 
 struct match_wmean
 {
-	match_wmean(REAL ivalue, const char * isurf_pos, REAL imult) : value(ivalue), surf_pos(isurf_pos), mult(imult), res(NULL) {};
+	match_wmean(REAL ivalue, const char * isurf_pos, REAL ipenalty_factor) : 
+	value(ivalue), surf_pos(isurf_pos), penalty_factor(ipenalty_factor), res(NULL) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch( surf_pos, surf->getName() ) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule wmean(%g,\"%s\",%g)",
-				value, surf->getName(), mult);
+				value, surf->getName(), get_mult(penalty_factor));
 			if (res == NULL)
 				res = create_boolvec();
-			f_wmean * f = new f_wmean(value, surf, mult);
+			f_wmean * f = new f_wmean(value, surf, get_mult(penalty_factor));
 			functionals_push_back(f);
 			res->push_back(true);
 		}
 	}
 	REAL value;
 	const char * surf_pos;
-	REAL mult;
+	REAL penalty_factor;
 	boolvec * res;
 };
 
-boolvec * wmean(REAL value, const char * surf_pos, REAL mult) 
+boolvec * wmean(REAL value, const char * surf_pos, REAL penalty_factor) 
 {
-	match_wmean qq(value, surf_pos, mult);
+	match_wmean qq(value, surf_pos, penalty_factor);
 	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
 	return qq.res;
 };
 
-bool leq(REAL value, REAL mult) 
+bool leq(REAL value, REAL penalty_factor) 
 {
-	writelog(LOG_MESSAGE,"creating gridding rule leq(%g,%g)",value,mult);
-	f_ineq * f = new f_ineq(value, true, mult);
+	writelog(LOG_MESSAGE,"creating gridding rule leq(%g,%g)",value,get_mult(penalty_factor));
+	f_ineq * f = new f_ineq(value, true, get_mult(penalty_factor));
 	functionals_push_back(f);
 	return true;
 };
 
-bool geq(REAL value, REAL mult) 
+bool geq(REAL value, REAL penalty_factor) 
 {
-	writelog(LOG_MESSAGE,"creating gridding rule geq(%g,%g)",value,mult);
-	f_ineq * f = new f_ineq(value, false, mult);
+	writelog(LOG_MESSAGE,"creating gridding rule geq(%g,%g)",value,get_mult(penalty_factor));
+	f_ineq * f = new f_ineq(value, false, get_mult(penalty_factor));
 	functionals_push_back(f);
 	return true;
 };

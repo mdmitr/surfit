@@ -16,8 +16,7 @@ set map_name "map_wmean"
 set_solver "cg" 
 
 # set tolerance for solver
-set tol 1e-005 
-
+set tol 1e-006
 ##
 ## load initial data 
 ##
@@ -31,7 +30,7 @@ surf_load "func.func" "test_func"
 ##
 ## construct grid 
 ##
-grid_get -10 10 0.2 -10 10 0.2 
+grid_get -10 10 0.1 -10 10 0.1 
  
 ##
 ## create gridding rules
@@ -41,7 +40,7 @@ grid_get -10 10 0.2 -10 10 0.2
 points "7points" 
 
 # resulting surface weighted mean value = value... 
-wmean 30 "test_func" 
+wmean 30 "test_func" -2
 
 # resulting surface should tend to be constant or plane 
 completer 

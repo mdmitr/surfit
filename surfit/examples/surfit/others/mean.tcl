@@ -16,7 +16,7 @@ set map_name "map_mean"
 set_solver "cg" 
 
 # set tolerance for solver
-set tol 1e-005 
+set tol 1e-005
 
 ##
 ## load initial data 
@@ -28,7 +28,7 @@ pnts_read "7points.txt" "7points"
 ##
 ## construct grid 
 ##
-grid_get -10 10 0.2 -10 10 0.2 
+grid_get -10 10 0.1 -10 10 0.1 
  
 ##
 ## create gridding rules

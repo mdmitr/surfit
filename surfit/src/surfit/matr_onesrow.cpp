@@ -35,7 +35,8 @@ mutex matr_onesrow_mutex;
 #endif
 
 matr_onesrow::matr_onesrow(REAL ival, size_t iN,
-			   bitvec * imask) {
+			   bitvec * imask) 
+{
 	val = ival;
 	N = iN;
 	
@@ -75,14 +76,6 @@ REAL matr_onesrow::element_at(size_t i, size_t j, size_t * next_j) const
 
 	if (next_j) {
 		*next_j = j+1;
-		/*
-		size_t q;
-		for (q = j; q < N; q++) {
-			*next_j = q;
-			if (mask->get(q))
-				break;
-		}
-		*/
 	}
 
 	return res;
