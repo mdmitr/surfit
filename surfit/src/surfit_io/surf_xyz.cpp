@@ -69,8 +69,9 @@ bool _surf_save_xyz(const d_surf * srf, const char * filename) {
 		for(ix=0; ix<nx; ix++)	{
 			srf->getCoordNode(ix, iy, x_coord, y_coord);
 			val = (*(srf->coeff))( ix + nx*iy );
+			if (val == srf->undef_value)
+				continue;
 			fprintf(f,"%lf %lf %lf \n", x_coord, y_coord, val);
-			
 		}
 	}
 
