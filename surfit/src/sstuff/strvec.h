@@ -29,6 +29,9 @@ class strvec;
 SSTUFF_EXPORT
 strvec * create_strvec(size_t size = 0, size_t grow_by = 250);
 
+SSTUFF_EXPORT
+strvec * create_strvec(const strvec & in);
+
 /*! \class vec
     \brief surfit vector of REAL 
 */

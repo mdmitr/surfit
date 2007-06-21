@@ -32,7 +32,7 @@ strvec * create_strvec(size_t size, size_t grow_by)
 	return new strvec(size, grow_by);
 };
 
-strvec * create_strvec(const strvec &in) {
+strvec * create_strvec(const strvec & in) {
 	return new strvec(in);
 };
 
