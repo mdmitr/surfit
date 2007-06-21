@@ -57,6 +57,13 @@ d_points * create_points(vec *& iX, vec *& iY, vec *& iZ,
 			 strvec *& names,
 			 const char * points_name = NULL);
 
+SURFIT_EXPORT
+/*! \ingroup internal
+    \fn d_points * create_points(const d_points * ipnts);
+    \brief constructs \ref d_points from another \ref d_points
+*/
+d_points * create_points(const d_points * ipnts);
+
 /*! \class d_points
     \brief scattered points in 3D 
 */
@@ -104,6 +111,10 @@ public:
 	d_points * create_points(vec *& iX, vec *& iY, vec *& iZ,
 				 strvec *& names,
 				 const char * points_name);
+
+	friend SURFIT_EXPORT
+	//! creates d_points from another d_points
+	d_points * create_points(const d_points * ipnts);
 
 	// from surfit_data
 	bool bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const;

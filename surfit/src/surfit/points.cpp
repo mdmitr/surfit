@@ -54,6 +54,17 @@ d_points * create_points(vec *& iX, vec *& iY, vec *& iZ,
 	return new d_points(iX, iY, iZ, inames, ipoints_name);
 };
 
+d_points * create_points(const d_points * ipnts)
+{
+	vec * X = create_vec(*(ipnts->X));
+	vec * Y = create_vec(*(ipnts->Y));
+	vec * Z = create_vec(*(ipnts->Z));
+	strvec * names = NULL;
+	if (ipnts->names)
+		names = create_strvec(*(ipnts->names));
+	return new d_points(X, Y, Z, names, ipnts->getName());
+};
+
 d_points::d_points() : data("pnts") {
 	X = NULL;
 	Y = NULL;
