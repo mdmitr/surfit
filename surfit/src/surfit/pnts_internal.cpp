@@ -35,6 +35,9 @@
 #include "sort_alg.h"
 #include "free_elements.h"
 #include "grid.h"
+#include "cntr.h"
+
+#include <float.h>
 
 #include <algorithm>
 
@@ -614,11 +617,235 @@ void _surfit_pnts_add(d_points * pnts) {
 	surfit_pnts->push_back(pnts);
 };
 
+struct point_with_neighbours
+{
+	point_with_neighbours()
+	{
+		point_pos = UINT_MAX;
+		neighbour1_pos = UINT_MAX;
+		neighbour2_pos = UINT_MAX;
+		neighbour3_pos = UINT_MAX;
+		dist1 = dist2 = dist3 = FLT_MAX;
+		used = false;
+	};
+	// point position
+	size_t point_pos;
+
+	// position on the first closest point
+	size_t neighbour1_pos;
+	// distance to neighbour point number 1
+	REAL dist1;
+
+	// position on the second closest point
+	size_t neighbour2_pos;
+	// distance to neighbour point number 2
+	REAL dist2;
+
+	// position on the third closest point
+	size_t neighbour3_pos;
+	// distance to neighbour point number 3
+	REAL dist3;
+
+	bool used;
+};
+
+point_with_neighbours find_nearest_point(const d_points * pnts, size_t pos)
+{
+	point_with_neighbours res;
+	res.point_pos = pos;
+	REAL px = (*(pnts->X))(pos);
+	REAL py = (*(pnts->Y))(pos);
+	// using stupid brute force algorithm
+	size_t i;
+	for (i = 0; i < pnts->size(); i++) {
+		if (i == pos)
+			continue;
+		REAL cx, cy;
+		cx = (*(pnts->X))(i);
+		cy = (*(pnts->Y))(i);
+		REAL dist = (cx-px)*(cx-px) + (cy-py)*(cy-py);
+		if (dist < res.dist1)
+		{
+			res.dist3 = res.dist2;
+			res.neighbour3_pos = res.neighbour2_pos;
+			res.dist2 = res.dist1;
+			res.neighbour2_pos = res.neighbour1_pos;
+			res.dist1 = dist;
+			res.neighbour1_pos = i;
+			continue;
+		}
+		if (dist < res.dist2)
+		{
+			res.dist3 = res.dist2;
+			res.neighbour3_pos = res.neighbour2_pos;
+			res.dist2 = dist;
+			res.neighbour2_pos = i;
+			continue;
+		}
+		if (dist < res.dist3)
+		{
+			res.dist3 = dist;
+			res.neighbour3_pos = i;
+			continue;
+		}
+	}
+	return res;
+};
+
+bool neighbour_sorter(const point_with_neighbours & p1, const point_with_neighbours & p2)
+{
+	if ( p1.dist1 == p2.dist1 )
+		return p1.dist2 < p2.dist2;
+	return p1.dist1 < p2.dist1;
+};
+
+bool edge_point(const point_with_neighbours * p, REAL max_dist)
+{
+	if (p->used)
+		return true;
+	if ((p->dist1 == p->dist2) && (p->dist1 == p->dist3))
+		return true;
+	if (p->dist1 == UINT_MAX)
+		return true;
+	if (p->dist2 == UINT_MAX)
+		return true;
+	if (p->dist2 > max_dist*1.05)
+		return true;
+	//if (p->dist1*3 < p->dist2)
+	//	return true;
+	//REAL div1 = p->dist2/p->dist1;
+	//REAL div2 = p->dist3/p->dist2;
+	//if (div1/div2 > 0.5)
+		//return true;
+	return false;
+};
+
+size_t move_in_dist1_direction(std::vector<point_with_neighbours> & npnts, size_t pos, size_t & prev_pos, REAL max_dist)
+{
+	std::vector<size_t> saw;
+	saw.push_back(pos);
+	point_with_neighbours * n = &(npnts[ pos ]);
+	if (edge_point(n, max_dist)) {
+		prev_pos = n->neighbour2_pos;
+		return n->point_pos;
+	}
+	prev_pos = n->point_pos;
+	point_with_neighbours * m = &(npnts[ n->neighbour1_pos ]);
+	while (!edge_point(m, max_dist)) {
+		if ( std::find(saw.begin(), saw.end(), m->point_pos) != saw.end() )
+			break;
+		saw.push_back(m->point_pos);
+	
+		if (m->point_pos == pos)
+			break;
+		// check dist1 direction
+		if (m->neighbour1_pos != prev_pos) {
+			prev_pos = m->point_pos;
+			m = &(npnts[ m->neighbour1_pos ]);
+			continue;
+		}
+		// check dist2 direction 
+		if (m->neighbour2_pos != prev_pos) {
+			prev_pos = m->point_pos;
+			m = &(npnts[ m->neighbour2_pos ]);
+			continue;
+		}
+		break;
+	}
+	
+	if (prev_pos == m->neighbour1_pos)
+		prev_pos = m->neighbour2_pos;
+	else
+		prev_pos = m->neighbour1_pos;
+	return m->point_pos;
+};
+
 bool _pnts_to_cntrs(const d_points * input_pnts) 
 {
+	writelog(LOG_MESSAGE,"converting points \"%s\" to contours", input_pnts->getName());
 	d_points * pnts = create_points(input_pnts);
 	REAL minx = pnts->minx();
 	REAL miny = pnts->miny();
+
+	std::vector<point_with_neighbours> npnts(pnts->size());
+	size_t i;
+	REAL max_dist = -FLT_MAX;
+	for (i = 0; i < pnts->size(); i++) {
+		point_with_neighbours nps = find_nearest_point(pnts, i);
+		max_dist = MAX(nps.dist1,max_dist);
+		npnts[i] = nps;
+	}
+
+	writelog(LOG_MESSAGE,"converting points \"%s\" to contours 2", input_pnts->getName());
+	//std::sort(npnts.begin(), npnts.end(), neighbour_sorter);
+
+	vec * X = create_vec();
+	vec * Y = create_vec();
+	vec * Z = create_vec();
+	int cnt = 0;
+
+	size_t prev_point = UINT_MAX;
+
+	// here we start making contours
+	for (i = 0; i < npnts.size(); i++) {
+		if (cnt == 45)
+			bool stop = true;
+		point_with_neighbours * nps = &(npnts[i]);
+		if (nps->used)
+			continue;
+
+		size_t prev_pos = UINT_MAX;
+		size_t j = move_in_dist1_direction(npnts, i, prev_pos, max_dist);
+		nps = &(npnts[j]);
+	
+		nps->used = true;
+
+		while (true) {
+			REAL px, py, pz;
+			px = (*(pnts->X))(nps->point_pos);
+			py = (*(pnts->Y))(nps->point_pos);
+			pz = (*(pnts->Z))(nps->point_pos);
+
+			X->push_back(px);
+			Y->push_back(py);
+			Z->push_back(pz);
+
+			if ((Z->size() != 1) && ( edge_point(nps, max_dist) )) {
+				nps->used = true;
+				break;
+			}
+
+			if (prev_pos == UINT_MAX) {
+				prev_pos = nps->point_pos;
+				nps->used = true;
+				nps = &(npnts[ nps->neighbour2_pos ]);
+			} else {
+				if ( nps->neighbour1_pos != prev_pos ) {
+					prev_pos = nps->point_pos;
+					nps->used = true;
+					nps = &(npnts[ nps->neighbour1_pos ]);
+					continue;
+				}
+				if ( nps->neighbour2_pos != prev_pos ) {
+					prev_pos = nps->point_pos;
+					nps->used = true;
+					nps = &(npnts[ nps->neighbour2_pos ]);
+					continue;
+				}
+			}
+		}
+
+		d_cntr * cntr = create_cntr(X, Y, Z);
+		surfit_cntrs->push_back(cntr);
+		cnt++;
+		X = create_vec();
+		Y = create_vec();
+		Z = create_vec();
+	}
+
+	X->release();
+	Y->release();
+	Z->release();
 
 	pnts->release();
 	return false;
