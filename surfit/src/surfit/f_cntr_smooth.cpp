@@ -321,8 +321,6 @@ bool sect_cmp_z(const sect & s1, const sect & s2)
 
 bool add_sect(std::vector<sect> * sects, sect & s)
 {
-	if (sects->size() > 1000000)
-		bool stop = true;
 	sects->push_back(s);
 	return true;
 };
