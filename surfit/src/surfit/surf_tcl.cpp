@@ -1197,7 +1197,7 @@ struct surf_val_oper_area_mult : public surf_val_oper_area
 		if (mask == NULL)
 			return false;
 
-		surf->minus_mask(val, mask);
+		surf->mult_mask(val, mask);
 		if (mask)
 			mask->release();
 		return true;
@@ -1223,7 +1223,7 @@ struct surf_val_oper_area_div : public surf_val_oper_area
 		if (mask == NULL)
 			return false;
 
-		surf->minus_mask(val, mask);
+		surf->div_mask(val, mask);
 		if (mask)
 			mask->release();
 		return true;
@@ -1249,7 +1249,7 @@ struct surf_val_oper_area_set : public surf_val_oper_area
 		if (mask == NULL)
 			return false;
 
-		surf->minus_mask(val, mask);
+		surf->set_mask(val, mask);
 		if (mask)
 			mask->release();
 		return true;
