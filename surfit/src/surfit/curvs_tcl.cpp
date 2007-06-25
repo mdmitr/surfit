@@ -744,14 +744,14 @@ boolvec * area_surf_geq(const char * surf_pos, const char * area_pos, REAL mult,
 
 struct match_area_mean
 {
-	match_area_mean(REAL imean, const char * ipos, REAL imult, int iinside) : mean(imean), pos(ipos), mult(imult), inside(iinside), res(NULL) {};
+	match_area_mean(REAL imean, const char * ipos, REAL ipenalty_factor, int iinside) : mean(imean), pos(ipos), penalty_factor(ipenalty_factor), inside(iinside), res(NULL) {};
 	void operator()(d_area * area) 
 	{
 		if ( StringMatch(pos, area->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule area_mean(%g,\"%s\",%g,%d)",
-				mean,area->getName(),mult, inside);
-			f_area_mean * f = new f_area_mean(mean, area, mult, (inside == 1) );
+				mean,area->getName(), get_mult(penalty_factor), inside);
+			f_area_mean * f = new f_area_mean(mean, area, get_mult(penalty_factor), (inside == 1) );
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -760,14 +760,14 @@ struct match_area_mean
 	}
 	REAL mean;
 	const char * pos;
-	REAL mult;
+	REAL penalty_factor;
 	int inside;
 	boolvec * res;
 };
 
-boolvec * area_mean(REAL mean, const char * pos, REAL mult, int inside) 
+boolvec * area_mean(REAL mean, const char * pos, REAL penalty_factor, int inside) 
 {
-	match_area_mean qq(mean, pos, mult, inside);
+	match_area_mean qq(mean, pos, penalty_factor, inside);
 	qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
 	return qq.res;
 };

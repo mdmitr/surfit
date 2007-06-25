@@ -40,7 +40,7 @@ grid_get -10 10 0.1 -10 10 0.1
 points "7points" 
 
 # resulting surface weighted mean value = value... 
-wmean 30 "test_func" -2
+wmean 30 "test_func" 
 
 # resulting surface should tend to be constant or plane 
 completer 

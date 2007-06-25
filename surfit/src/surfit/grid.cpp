@@ -46,8 +46,8 @@ d_grid * create_grid(const d_grid * igrid, const char * iname)
 
 d_grid::d_grid(REAL istartX, REAL iendX, REAL istepX,
 	       REAL istartY, REAL iendY, REAL istepY,
-	       const char * iname) {
-
+	       const char * iname) 
+{
 	startX = istartX;
 	endX = iendX;
 	stepX = istepX;
@@ -61,7 +61,8 @@ d_grid::d_grid(REAL istartX, REAL iendX, REAL istepX,
 		writelog(LOG_ERROR,"Wrong grid");
 };
 
-d_grid::d_grid(const d_grid * igrid, const char * iname) {
+d_grid::d_grid(const d_grid * igrid, const char * iname) 
+{
 	startX = igrid->startX;
 	endX   = igrid->endX;
 	stepX  = igrid->stepX;

@@ -185,8 +185,8 @@ bool f_points::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask
 	return solvable;
 };
 
-bool f_points::minimize_only_points() {
-
+bool f_points::minimize_only_points() 
+{
 	if (f_sub_pnts == NULL) {
 		prepare_scattered_points(pnts, f_sub_pnts);
 	}

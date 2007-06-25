@@ -46,7 +46,7 @@ surfit::boolvec * area_surf(const char * surf_name = "*", const char * area_name
 surfit::boolvec * area_surf_add(const char * surf_name = "*", REAL weight = 1, const char * area_name = "*", int inside = 1);
 surfit::boolvec * area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 1, int inside = 1);
 surfit::boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 1, int inside = 1);
-surfit::boolvec * area_mean(REAL mean, const char * area_name = "*", REAL mult = 1, int inside = 1);
+surfit::boolvec * area_mean(REAL mean, const char * area_name = "*", REAL mult = -1, int inside = 1);
 surfit::boolvec * area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL mult = 1, int inside = 1);
 surfit::boolvec * area_completer(const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
 surfit::boolvec * area_completer_add(REAL weight = 1, const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);

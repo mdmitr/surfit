@@ -473,16 +473,17 @@ boolvec * area_surf_leq(const char * surf_name = "*", const char * area_name = "
 boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_mean(REAL mean, const char * area_name = "*", REAL mult = 1, int inside = 1);
+    \fn bool area_mean(REAL mean, const char * area_name = "*", REAL penalty_factor = -1, int inside = 1);
     
     \par Tcl syntax:
-    area_mean mean_value \ref str "area_name" mult inside
+    area_mean mean_value \ref str "area_name" penalty_factor inside
 
     \par Description:
     This rule adds the surface condition - "the resulting surface mean value in area should be 
-    equal to real number". In case of the \ref penalty algorithm bad convergence or unexpected 
+    equal to real number". 
+    In case of the \ref penalty bad convergence or unexpected 
     (wrong) result, you should carefully review your conditions and if they are correct, try 
-    to change "mult" parameter.
+    to change \ref penalty_factor "penalty_factor" parameter.
 
     \par Math:
     This command adds the condition:
@@ -491,7 +492,7 @@ boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "
     \f]
     where (i,j) - indices of the cells in area, Q - number of cells in area, m - desired mean value
 */
-boolvec * area_mean(REAL mean, const char * area_name = "*", REAL mult = 1, int inside = 1);
+boolvec * area_mean(REAL mean, const char * area_name = "*", REAL penalty_factor = -1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
     \fn bool area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL mult = 1, int inside = 1);

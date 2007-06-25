@@ -6,6 +6,8 @@
 # 
 load libsurfit[info sharedlibextension]
 
+init_threads 1
+
 # remove all previous data and gridding rules
 clear_data 
 
@@ -16,7 +18,7 @@ set map_name "map_mean"
 set_solver "cg" 
 
 # set tolerance for solver
-set tol 1e-005
+set tol 1e-006
 
 ##
 ## load initial data 
@@ -28,7 +30,7 @@ pnts_read "7points.txt" "7points"
 ##
 ## construct grid 
 ##
-grid_get -10 10 0.1 -10 10 0.1 
+grid_get -10 10 0.1 -10 10 0.1
  
 ##
 ## create gridding rules
@@ -38,7 +40,7 @@ grid_get -10 10 0.1 -10 10 0.1
 points "7points" 
 
 # resulting surface mean value = value... 
-mean 30  
+mean 30
 
 # resulting surface should tend to be constant or plane 
 completer 

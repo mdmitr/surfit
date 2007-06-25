@@ -142,7 +142,7 @@ bool value(const char * value = "undef");
 bool value_add(REAL weight = 1, REAL val = 0);
 
 /*! \ingroup tcl_rules_other
-    \fn bool mean(REAL value, REAL penalty_factor = -3);
+    \fn bool mean(REAL value, REAL penalty_factor = -1);
 
     \par Tcl syntax:
     mean value penalty_factor
@@ -160,10 +160,10 @@ bool value_add(REAL weight = 1, REAL val = 0);
     \f]
     where (i,j) - indices of the cells, Q - total number of cells, m - desired mean value
 */
-bool mean(REAL value, REAL penalty_factor = -3);
+bool mean(REAL value, REAL penalty_factor = -1);
 
 /*! \ingroup tcl_rules_other
-    \fn bool wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = -3);
+    \fn bool wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = -1);
 
     \par Tcl syntax:
     wmean value "surface_name" penalty_factor
@@ -182,7 +182,7 @@ bool mean(REAL value, REAL penalty_factor = -3);
     where (i,j) - indices of the cells, \f$z(x_i,y_j)\f$ - weighted surface value for the (i,j) cell,
     m - desired weighted mean value
 */
-boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = -3);
+boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = -1);
 
 /*! \ingroup tcl_rules_other
     \fn bool leq(REAL value, REAL penalty_factor = -1);

@@ -13,7 +13,7 @@ clear_data
 set map_name "map_area_mean" 
 
 # set tolerance for cg solver
-set tol 5.01187e-006 
+set tol 1e-006 
 
 ##
 ## load initial data 
@@ -40,7 +40,7 @@ area_read "area6.txt" "area6"
 ##
 ## construct grid 
 ##
-grid_get -12 12 0.2 -12 12 0.2 
+grid_get -12 12 0.1 -12 12 0.1 
  
 ##
 ## create gridding rules

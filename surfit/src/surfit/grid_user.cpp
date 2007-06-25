@@ -187,11 +187,11 @@ void project_vector(VEC * A, size_t NN, size_t MM,
 	 	
 };
 
-d_grid * create_calc_grd(size_t basis_cntX, size_t basis_cntY) {
-
-	REAL grid_lengthX = surfit_grid->endX+surfit_grid->stepX - surfit_grid->startX;
+d_grid * create_calc_grd(size_t basis_cntX, size_t basis_cntY) 
+{
+	REAL grid_lengthX = surfit_grid->endX + surfit_grid->stepX - surfit_grid->startX;
 	size_t grid_nodesX = surfit_grid->getCountX();
-	REAL grid_lengthY = surfit_grid->endY+surfit_grid->stepY - surfit_grid->startY;
+	REAL grid_lengthY = surfit_grid->endY + surfit_grid->stepY - surfit_grid->startY;
 	size_t grid_nodesY = surfit_grid->getCountY();
 
 	REAL grd_startX = surfit_grid->startX-surfit_grid->stepX/REAL(2);
