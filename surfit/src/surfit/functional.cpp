@@ -269,8 +269,11 @@ bool functional::cond_make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec
 		delete weights;
 	}
 			
-	matr_mask * M = new matr_mask(parent_mask, T); // !!! 
-	matrix = M;
+	if (parent_mask->true_size() != parent_mask->size()) {
+		matr_mask * M = new matr_mask(parent_mask, T); // !!! 
+		matrix = M;
+	} else
+		matrix = T;
 	
 	return res;
 
