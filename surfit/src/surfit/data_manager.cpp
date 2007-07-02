@@ -598,7 +598,7 @@ void surfit_manager::clear_data() const {
 	grid_line_unload();
 
 	tol = float(1e-5);
-	penalty_max_iter = 150;
+	penalty_max_iter = 99;
 	penalty_weight = 1; //0.0001;
 	penalty_weight_mult = 10;
 
