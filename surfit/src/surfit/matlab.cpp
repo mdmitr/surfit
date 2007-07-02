@@ -65,7 +65,9 @@ bool matlabWriteVector(const REAL * begin, const REAL * end, const char * filena
 
 	long matrix_size = 0;
 
-	int count = end-begin-zero_rows->size();
+	int count = end-begin;
+	if (zero_rows)
+		count -= zero_rows->size();
 
 	matrix_size += 8;  // for array flags
 	matrix_size += 8;  // for DOUBLE_CLASS
@@ -115,8 +117,9 @@ bool matlabWriteVector(const REAL * begin, const REAL * end, const char * filena
 	int written = 0;
 	for (ptr = begin; ptr != end; ptr++) {
 		int i = ptr-begin;
-		if ( std::find(zero_rows->begin(), zero_rows->end(), i) != zero_rows->end() )
-			continue;
+		if (zero_rows)
+			if ( std::find(zero_rows->begin(), zero_rows->end(), i) != zero_rows->end() )
+				continue;
 		val = *ptr;
 		if ( !mWriteDouble(file, val) ) return false;
 		written++;
