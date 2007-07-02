@@ -215,8 +215,11 @@ bool penalty_solvable(functional * fnc, const extvec * X)
 
 	fnc->cond_mark_solved_and_undefined(test_mask_solved, test_mask_undefined);
 	bool res = fnc->solvable_without_cond(test_mask_solved, test_mask_undefined, X);
-	if (res == false)
+	if (res == false) {
+		test_mask_solved->init_false();
+		test_mask_undefined->init_false();
 		fnc->mark_solved_and_undefined(test_mask_solved, test_mask_undefined, false);
+	}
 
 	bool res2 = res || fnc->solvable(test_mask_solved, test_mask_undefined, X);
 
@@ -271,7 +274,10 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 	short prp = 0;
 	size_t iters = 0;
 
-	REAL penalty_tol = tol;
+	REAL penalty_tol = tol;//*10000000;
+
+	std::vector<REAL> norms;
+	norms.reserve(penalty_max_iter);
 
 	bool ok = false;
 	while (!ok) 
@@ -336,7 +342,14 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 		weight *= penalty_weight_mult;
 		
 		REAL new_norm = norm2(X, FLT_MAX);
-		REAL error = fabs(x_norm - new_norm);
+		REAL error = FLT_MAX;
+		size_t q;
+		for (q = 0; q < norms.size(); q++) {
+			REAL old_norm = norms[q];
+			REAL err = fabs(new_norm - old_norm);
+			error = MIN(err, error);
+		}
+		norms.push_back(new_norm);
 
 		if (from == FLT_MAX) {
 			from = log10(REAL(1)/error);
@@ -565,4 +578,5 @@ REAL threaded_times(const extvec * a, const extvec * b)
 #endif // HAVE_THREADS
 
 }; // namespace surfit;
+
 
