@@ -162,7 +162,7 @@ bool f_area::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_s
 void f_area::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mask_undefined, bool i_am_cond) 
 {
 	if ((functionals_add->size() == 0) && ( !cond() ) && (i_am_cond == false) )
-		return;	
+		return;	// already marked!!!
 
 	size_t matrix_size = method_basis_cntX * method_basis_cntY;
 
