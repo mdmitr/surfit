@@ -65,6 +65,8 @@ struct grid_garbage : public binman {
 	};
 };
 
+#define GRID_START_SIZE 8
+
 grid_garbage gird_garb;
 
 d_grid * method_grid = NULL;
@@ -74,9 +76,9 @@ extvec * method_X = NULL;
 bool method_ok = false;
 bitvec * method_mask_solved = NULL;
 bitvec * method_mask_undefined = NULL;
-size_t basis_cnt = 8;
-size_t method_basis_cntX = 8;
-size_t method_basis_cntY = 8;
+size_t basis_cnt = GRID_START_SIZE;
+size_t method_basis_cntX = GRID_START_SIZE;
+size_t method_basis_cntY = GRID_START_SIZE;
 size_t method_phase_counter = 0;
 REAL method_scaleX = FLT_MAX;
 REAL method_shiftX = FLT_MAX;
