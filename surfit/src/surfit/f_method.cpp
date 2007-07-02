@@ -33,10 +33,11 @@
 
 namespace surfit {
 
-f_method::f_method(const char * method_name) : functional(method_name, F_USUAL) 
+f_method::f_method(const char * method_name, REAL imult) : functional(method_name, F_USUAL) 
 {
 	f_srf = NULL;
 	method_surf = NULL;
+	mult = imult;
 };
 
 f_method::~f_method()
@@ -94,7 +95,7 @@ void f_method::create_f_surf()
 		} else
 			return;
 	}
-	f_srf = new f_surf(method_surf, get_method_name());
+	f_srf = new f_surf(method_surf, mult, get_method_name());
 	
 	if ( cond() ) { 
 		if (f_srf->cond())
@@ -144,6 +145,8 @@ bool f_method::solvable_without_cond(const bitvec * mask_solved,
 					  const bitvec * mask_undefined,
 					  const extvec * X)
 {
+	if (getType() == F_CONDITION)
+		return true;
 	create_f_surf();
 	if (f_srf == NULL)
 		return false;

@@ -33,7 +33,7 @@
 
 namespace surfit {
 
-f_surf::f_surf(const d_surf * isrf, const char * iname) :
+f_surf::f_surf(const d_surf * isrf, REAL imult, const char * iname) :
 functional("f_surf", F_USUAL)
 {
 	srf = isrf;
@@ -48,6 +48,7 @@ functional("f_surf", F_USUAL)
 	if (iname)
 		name = strdup(iname);
 	need_complete = true;
+	mult = imult;
 };
 
 f_surf::~f_surf() {
@@ -160,7 +161,7 @@ bool f_surf::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_s
 			if (value == srf->undef_value)
 				continue;
 
-			(*v)(pos) = value;
+			(*v)(pos) = value*mult;
 			mask->set_true(pos);
 			points++;
 			
@@ -168,7 +169,7 @@ bool f_surf::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_s
 	}
 
 	bitvec * mask_copy = create_bitvec(mask);
-	matr_eye * T = new matr_eye(1, NN*MM, mask, mask_solved, mask_undefined);
+	matr_eye * T = new matr_eye(mult, NN*MM, mask, mask_solved, mask_undefined);
 	mask = mask_copy;
 	matrix = T;
 

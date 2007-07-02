@@ -32,7 +32,7 @@ class f_method : public functional
 {
 public:
 	//! constructor
-	f_method(const char * method_name);
+	f_method(const char * method_name, REAL imult = 1);
 	//! destructor
 	~f_method();
 
@@ -63,6 +63,7 @@ private:
 	f_surf * f_srf;
 	void create_f_surf();
 	d_surf * method_surf;
+	REAL mult;
 
 };
 

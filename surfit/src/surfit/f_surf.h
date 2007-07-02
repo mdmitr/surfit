@@ -35,7 +35,7 @@ class bitvec;
 class SURFIT_EXPORT f_surf : public functional {
 public:
 	//! constructor
-	f_surf(const d_surf * isrf, const char * iname = NULL);
+	f_surf(const d_surf * isrf, REAL imult = 1, const char * iname = NULL);
 
 	//! destructor
 	~f_surf();
@@ -79,6 +79,8 @@ private:
 
 	//! flag to complete solution - mark all unsolved cells as undefined
 	bool need_complete;
+
+	REAL mult;
 
 };
 
