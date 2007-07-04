@@ -22,29 +22,27 @@ set tol 1e-007
 # load points from text file 
 pnts_read "points.txt" "points"  
 
-#hist_from_pnts "points" 10
-#hist_write "sou_hist.txt"
-#hist_delall
 hist_read "hist.txt" 1548.97 1749.34
+hist_write "hist_src.txt"
  
 ##
 ## construct grid 
 ##
 grid  150 150
+grid 50 50
  
 ##
 ## create gridding rules
 ##
-points
-hist "hist"
+
 # resulting surface at points = points values
+points
 
-
-
+hist * 0.1 5
 
 # resulting surface should tend to be constant or plane 
-completer 1 20  
-#points_add 75 "points" 
+completer 0 1  
+
 ##
 ## run gridding algorithm
 ##
@@ -62,4 +60,4 @@ surf_save "points_hist.dat" "map_points_hist"
 
 hist_del
 hist_from_surf "map_points_hist" 10 
-hist_write "res_hist.txt"
+hist_write "hist_result.txt"

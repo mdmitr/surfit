@@ -13,7 +13,7 @@ clear_data
 set map_name "map_area_hist" 
 
 # set tolerance for cg solver
-set tol 1e-006
+set tol 1e-007
 
 ##
 ## load initial data 
@@ -38,7 +38,8 @@ area_read "area5.txt" "area5"
 area_read "area6.txt" "area6"  
 
 # load histogram from text file
-hist_read "eq.txt" 35 60
+hist_read "eq10.txt" 10 40
+hist_write "hist_src.txt"
  
 ##
 ## construct grid 
@@ -55,20 +56,25 @@ area 10 "area1"
 # resulting surface in area = value... 
 area 30 "area3"  
 
+area 20 "area2"
+
+area 40 "area4"
+
 # resulting surface in area = value... 
 area undef "area5"  
 
 # resulting surface histogram in area = histogram
-area_hist "area6" "eq"
+#area_hist "area6" "eq"
+hist "*" 
 
 # resulting surface should tend to be constant or plane 
-completer 1 1.6  
+completer 0 1 
 
 # add "resulting surface in area = value..." with weight 
-area_add 20 0.07 "area2"  
+#area_add 20 0.07 "area2"  
 
 # add "resulting surface in area = value..." with weight 
-area_add 40 0.07 "area4"  
+#area_add 40 0.07 "area4"  
 
 ##
 ## run gridding algorithm
@@ -84,3 +90,8 @@ grid_unload
 
 # save surface to surfit datafile 
 surf_save "area_hist.dat" "map_area_hist" 
+
+hist_del
+
+hist_from_surf * 10
+hist_write hist_result.txt

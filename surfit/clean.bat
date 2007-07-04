@@ -31,6 +31,14 @@ del libacml*.*
 del surfit.chm
 cd ..
 
+mkdir examples
+cd examples
+del /Q /S *.jpg
+del /Q /S *.bmp
+del /Q /S hist_src.txt
+del /Q /S hist_result.txt
+cd ..
+
 del /Q /S *.dat
 del /Q /S *.grd
 del /Q /S *.log
