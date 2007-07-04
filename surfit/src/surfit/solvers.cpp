@@ -22,6 +22,7 @@
 #include "surfit_solvers.h"
 #include "variables.h"
 #include "variables_tcl.h"
+#include "variables_internal.h"
 #include "fileio.h"
 
 #include "grid_user.h"
@@ -256,8 +257,7 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 					
 	REAL weight = penalty_weight;
 	REAL x_norm = norm2(X, FLT_MAX);
-	size_t counter = 0;
-
+	
 	bitvec * parent_mask = create_bitvec(method_mask_solved->size());
 	parent_mask->init_false();
 	bitvec * fake_mask = create_bitvec(method_mask_solved->size());
@@ -279,6 +279,8 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 	std::vector<REAL> norms;
 	norms.reserve(penalty_max_iter);
 
+	penalty_iter_counter = 0;
+
 	bool ok = false;
 	while (!ok) 
 	{
@@ -286,13 +288,13 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 		extvec * S_vec = NULL;
 		matr * P_matrix = NULL;
 		extvec * P_vec = NULL;
-		if (counter == 0) 
+		if (penalty_iter_counter == 0) 
 			loglevel = prev_loglevel;
 
-		if (counter == 0) 
+		if (penalty_iter_counter == 0) 
 			loglevel = LOG_SILENT;
 
-		if (counter == 0) {
+		if (penalty_iter_counter == 0) {
 			loglevel = prev_loglevel;
 			writelog2(LOG_MESSAGE,"processing with penalties");
 			loglevel = LOG_SILENT;
@@ -327,7 +329,7 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 			break;
 		
 		iters += solve(S_matrix, S_vec, X);
-		counter++;
+		penalty_iter_counter++;
 		
 		if (P_matrix != NULL) {
 			delete S_matrix;
@@ -374,7 +376,7 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 		else
 			x_norm = new_norm;
 
-		if ((counter > penalty_max_iter) || (stop_execution == true))
+		if ((penalty_iter_counter > penalty_max_iter) || (stop_execution == true))
 			ok = true;
 
 		if (stop_execution == true)
@@ -390,7 +392,8 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 	if (V)
 		V->release();
 	loglevel = prev_loglevel;
-	log_printf(" %s: %d iterations, penalty: %d iterations \n", get_current_solver_short_name(), iters, counter);
+	log_printf(" %s: %d iterations, penalty: %d iterations \n", get_current_solver_short_name(), iters, penalty_iter_counter);
+	penalty_iter_counter = 0;
 	return true;
 	
 };

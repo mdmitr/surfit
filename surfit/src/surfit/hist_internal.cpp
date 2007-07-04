@@ -30,6 +30,7 @@
 #include "hist_internal.h"
 #include "surf.h"
 #include "points.h"
+#include "variables_tcl.h"
 
 #include <float.h>
 #include <algorithm>
@@ -110,66 +111,13 @@ REAL get_eq_value(const vec * T, const vec * Z, REAL val,
 	return val;
 };
 
-bool _surf_histeq(d_surf * srf, const d_hist * ihist)
+bool _surf_adj_hist(d_surf * srf, const d_hist * ihist)
 {
-
-	d_hist * hist = NULL;
-	if (ihist)
-		hist = _hist_from_surf(srf, ihist->size());
-	else 
-		hist = _hist_from_surf(srf, 100);
-	hist->normalize();
-
-	size_t i;
-	REAL surf_minz, surf_maxz;
-	size_t surf_size = srf->getCountX()*srf->getCountY();
-	srf->getMinMaxZ(surf_minz, surf_maxz);
-
-	vec * T = hist->get_cumulative_hist();
-	
-	// transfort to equal histogram
-	if (ihist == NULL) 
-	{
-		for (i = 0; i < surf_size; i++) {
-			REAL val = srf->getValue(i);
-			if (val == srf->undef_value)
-				continue;
-
-			val = get_eq_value(T, NULL, val,
-					   surf_minz, surf_maxz,
-					   FLT_MAX, FLT_MAX);
-			
-			srf->setValue(i, val);
-		}
-		T->release();
-		hist->release();
-		return true;
-	}
-
-	d_hist * dest_hist = create_hist(ihist);
-	dest_hist->normalize();
-	
-	vec * Z = dest_hist->get_cumulative_hist();
-
-	// transform to destination histogram
-	{
-		for (i = 0; i < surf_size; i++) {
-			REAL val = srf->getValue(i);
-			if (val == srf->undef_value)
-				continue;
-			
-			val = get_eq_value(T, Z, val,
-					   surf_minz, surf_maxz,
-					   dest_hist->from(), dest_hist->to());
-			
-			srf->setValue(i, val);
-		}
-	}
-	
-	Z->release();
-	dest_hist->release();
-	hist->release();
-	T->release();
+	extvec * new_coeff = _extvec_adj_hist(srf->coeff, ihist, NULL, NULL, srf->undef_value);
+	if (new_coeff == NULL)
+		return false;
+	srf->coeff->release();
+	srf->coeff = new_coeff;
 	return true;
 };
 
@@ -223,12 +171,14 @@ d_hist * _hist_read(const char * filename, REAL minz, REAL maxz, const char * hi
 		res->setName(name);
 		sstuff_free_char(name);
 	}
+
+	res->normalize();
 	
 	return res;
 };
 
 d_hist * _hist_from_vec(const vec * data, REAL minz, REAL maxz, size_t intervs,
-			REAL undef_value, const bitvec * mask)
+			REAL undef_value, const bitvec * mask, const bitvec * mask_undef)
 {
 	vec * Z = create_vec(intervs);
 
@@ -244,6 +194,10 @@ d_hist * _hist_from_vec(const vec * data, REAL minz, REAL maxz, size_t intervs,
 	for (i = 0; i < data->size(); i++) {
 		if (mask) {
 			if (mask->get(i) == true)
+				continue;
+		}
+		if (mask_undef) {
+			if (mask_undef->get(i) == true)
 				continue;
 		}
 		REAL z = (*data)(i);
@@ -261,7 +215,7 @@ d_hist * _hist_from_vec(const vec * data, REAL minz, REAL maxz, size_t intervs,
 };
 
 d_hist * _hist_from_extvec(const extvec * data, REAL minz, REAL maxz, size_t intervs,
-			REAL undef_value, const bitvec * mask)
+			   REAL undef_value, const bitvec * mask, const bitvec * mask_undef)
 {
 	vec * Z = create_vec(intervs);
 
@@ -279,6 +233,11 @@ d_hist * _hist_from_extvec(const extvec * data, REAL minz, REAL maxz, size_t int
 			if (mask->get(i) == true)
 				continue;
 		}
+		if (mask_undef) {
+			if (mask_undef->get(i) == true)
+				continue;
+		}
+
 		REAL z = (*data)(i);
 		if (z == undef_value)
 			continue;
@@ -321,6 +280,150 @@ d_hist * _hist_from_points(const d_points * pnts, size_t intervs, REAL from, REA
 		to = maxz;
 
 	return _hist_from_vec( pnts->Z, from, to, intervs );
+};
+
+extvec * _extvec_adj_hist(const extvec * X, const d_hist * dest, const bitvec * mask, const bitvec * mask_undef, REAL uval)
+{
+	size_t intervs = dest->size();
+	size_t i;
+
+	d_hist * dhst = create_hist(dest);
+	dhst->normalize();
+
+	size_t X_size = X->size();
+
+	//
+	//  modify destination histogram with respect to solved cells
+	//
+
+	for (i = 0; i < X->size(); i++) {
+		if (mask_undef) {
+			if (mask_undef->get(i) == false)
+				continue;
+		}
+
+		REAL val = (*X)(i);
+		if (val == uval)
+			continue;
+
+		X_size--;
+	}
+	
+	REAL elem = REAL(1)/X_size;
+	REAL dest_minz = dhst->from();
+	REAL dest_maxz = dhst->to();
+	
+	for (i = 0; i < X->size(); i++) {
+		if (mask->get(i) == false)
+			continue;
+		
+		REAL val = (*X)(i);
+
+		if (val > dest_maxz)
+			continue;
+		if (val < dest_minz)
+			continue;
+
+		size_t pos = (*dhst)(val);
+		
+		(*dhst)[pos] = MAX(0, (*dhst)(pos)-elem);
+	}
+
+	dhst->normalize();
+	vec * Z = dhst->get_cumulative_hist();
+
+	size_t q;
+	extvec * res = create_extvec(*X);
+
+	REAL prev_err = FLT_MAX;
+
+	for (q = 0; q < 5; q++) 
+	{
+
+		//
+		// calculating minimum and maximum values if vector X with respect to mask
+		//
+		REAL minz = FLT_MAX, maxz = -FLT_MAX;
+		for (i = 0; i < res->size(); i++) {
+
+			if (mask->get(i))
+				continue;
+
+			if (mask_undef) {
+				if (mask_undef->get(i))
+					continue;
+			}
+
+			REAL val = (*res)(i);
+			if (val == FLT_MAX)
+				continue;
+			minz = MIN(minz, val);
+			maxz = MAX(maxz, val);
+		}
+
+		d_hist * hst = _hist_from_extvec(res, minz, maxz, intervs, FLT_MAX, mask, mask_undef);
+
+		if (hst->get_step() == 0) {
+			hst->release();
+			goto failed_exit;
+		}
+
+		// histogram normalization
+		hst->normalize();
+
+		// calculate cumulative histogram
+		vec * T = hst->get_cumulative_hist();
+
+		extvec * new_res = create_vec(*res);
+
+		size_t j;
+		for (j = 0; j < X->size(); j++) 
+		{
+			if (mask->get(j) == true)
+				continue;
+			if (mask_undef) {
+				if (mask_undef->get(j) == true)
+					continue;
+			}
+			REAL val = (*res)(j);
+			REAL eqval = get_eq_value(T, Z, val,
+						  minz, maxz,
+						  dest_minz, dest_maxz);
+
+			if (val == eqval)
+				continue;
+
+			(*new_res)(j) = eqval;
+		}
+
+		REAL max_err = -FLT_MAX;
+		for (j = 0; j < res->size(); j++)
+		{
+			max_err = MAX(max_err, fabs((*res)(j) - (*new_res)(j)));
+		}
+
+		if ((max_err > prev_err) || (max_err < tol*100)) {
+			new_res->release();
+			T->release();
+			hst->release();
+			break;
+		}
+
+		prev_err = max_err;
+		res->release();
+		res = new_res;
+		
+		T->release();
+		hst->release();
+	}
+
+	return res;
+
+failed_exit:
+	res->release();
+	dhst->release();
+	Z->release();
+	return NULL;
 };
 
 }; // namespace surfit;

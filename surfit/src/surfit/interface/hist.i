@@ -22,7 +22,7 @@
 
 namespace surfit {
 
-surfit::boolvec * hist(const char * hist_pos = "*", REAL mult = 1);
+surfit::boolvec * hist(const char * hist_pos = "*", REAL mult = 0.1, size_t threshold = 5);
 
 // hist
 surfit::boolvec * hist_read(const char * filename, REAL minz, REAL maxz, const char * histname = NULL, 
@@ -31,7 +31,7 @@ surfit::boolvec * hist_write(const char * filename, const char * hist_name = "*"
 
 surfit::boolvec * hist_from_surf(const char * surf_pos = "*", size_t intervs = 64, REAL from = FLT_MAX, REAL to = FLT_MAX, const char * histname = NULL);
 surfit::boolvec * hist_from_pnts(const char * pnts_pos = "*", size_t intervs = 64, REAL from = FLT_MAX, REAL to = FLT_MAX, const char * histname = NULL);
-surfit::boolvec * surf_histeq(const char * surf_name = "*", const char * hist_name = NULL);
+surfit::boolvec * surf_adj_hist(const char * surf_name = "*", const char * hist_name = NULL);
 
 surfit::strvec * hist_getName(const char * pos = "*");
 const char * hist_getNameAt(int pos);

@@ -42,6 +42,9 @@ namespace surfit {
 
 	extern char bigbuffer[1024*30];
 
+	SURFIT_EXPORT
+	extern size_t penalty_iter_counter;
+
 };
 
 #endif

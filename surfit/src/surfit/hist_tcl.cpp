@@ -202,16 +202,16 @@ boolvec * hist_from_pnts(const char * pnts_pos, size_t intervs, REAL from, REAL 
 	return qq.res;
 };
 
-struct match_surf_histeq2
+struct match_surf_adj_hist2
 {
-	match_surf_histeq2(d_surf * isurf, const char * ihist_pos) : surf(isurf), hist_pos(ihist_pos), res(NULL) {};
+	match_surf_adj_hist2(d_surf * isurf, const char * ihist_pos) : surf(isurf), hist_pos(ihist_pos), res(NULL) {};
 	void operator()(d_hist * hist)
 	{
 		if ( StringMatch(hist_pos, hist->getName()) )
 		{
 			if (res == NULL)
 				res = create_boolvec();
-			res->push_back( _surf_histeq(surf, hist) );
+			res->push_back( _surf_adj_hist(surf, hist) );
 		}
 	}
 	d_surf * surf;
@@ -219,14 +219,14 @@ struct match_surf_histeq2
 	boolvec * res;
 };
 
-struct match_surf_histeq
+struct match_surf_adj_hist
 {
-	match_surf_histeq(const char * isurf_pos, const char * ihist_pos) : surf_pos(isurf_pos), hist_pos(ihist_pos), res(NULL) {};
+	match_surf_adj_hist(const char * isurf_pos, const char * ihist_pos) : surf_pos(isurf_pos), hist_pos(ihist_pos), res(NULL) {};
 	void operator()(d_surf * surf)
 	{
 		if ( StringMatch(surf_pos, surf->getName()) )
 		{
-			match_surf_histeq2 qq(surf, hist_pos);
+			match_surf_adj_hist2 qq(surf, hist_pos);
 			qq = std::for_each(surfit_hists->begin(), surfit_hists->end(), qq);
 			if (res == NULL)
 				res = create_boolvec();
@@ -238,9 +238,9 @@ struct match_surf_histeq
 	boolvec * res;
 };
 
-boolvec * surf_histeq(const char * surf_pos, const char * hist_pos)
+boolvec * surf_adj_hist(const char * surf_pos, const char * hist_pos)
 {
-	match_surf_histeq qq(surf_pos, hist_pos);
+	match_surf_adj_hist qq(surf_pos, hist_pos);
 	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
 	return qq.res;
 };

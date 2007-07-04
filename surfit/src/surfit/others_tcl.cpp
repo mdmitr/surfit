@@ -145,14 +145,14 @@ bool geq(REAL value, REAL penalty_factor)
 
 struct match_hist 
 {
-	match_hist(const char * ipos, REAL imult) : pos(ipos), mult(imult), res(NULL) {};
+	match_hist(const char * ipos, REAL imult, size_t itreshold) : pos(ipos), mult(imult), res(NULL), treshold(itreshold) {};
 	void operator()(d_hist * hist) 
 	{
 		if ( StringMatch( pos, hist->getName() ) ) 
 		{
 			writelog(LOG_MESSAGE, "creating gridding rule hist(\"%s\",%g)",
 				hist->getName(), mult);
-			f_hist * f = new f_hist(hist, mult);
+			f_hist * f = new f_hist(hist, mult, treshold);
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -162,11 +162,12 @@ struct match_hist
 	const char * pos;
 	REAL mult;
 	boolvec * res;
+	size_t treshold;
 };
 
-boolvec * hist(const char * pos, REAL mult) 
+boolvec * hist(const char * pos, REAL mult, size_t treshold) 
 {
-	match_hist qq(pos, mult);
+	match_hist qq(pos, mult, treshold);
 	qq = std::for_each(surfit_hists->begin(), surfit_hists->end(), qq);
 	return qq.res;
 };

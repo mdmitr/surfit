@@ -74,6 +74,8 @@ REAL undef_value = FLT_MAX;
 data_manager *  surfit_data_manager = NULL;
 std::vector<functional *> * functionals = NULL;
 
+size_t penalty_iter_counter = 0;
+
 char * map_name = NULL;
 
 /*! \struct garbage

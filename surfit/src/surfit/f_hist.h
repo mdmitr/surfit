@@ -31,7 +31,7 @@ class f_hist : public functional {
 public:
 
 	//! constructor
-	f_hist(const d_hist * ihst, REAL imult);
+	f_hist(const d_hist * ihst, REAL imult, size_t itrshold );
 	//! destructor
 	~f_hist();
 
@@ -63,6 +63,7 @@ private:
 	const d_hist * hist;
 	REAL mult;
 	bitvec * mask;
+	size_t trshold;
 };
 
 }; // namespace surfit;

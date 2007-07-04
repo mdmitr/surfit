@@ -30,18 +30,20 @@
 #include "grid_user.h"
 #include "sort_alg.h"
 #include "matr_diag.h"
+#include "variables_internal.h"
 
 #include <algorithm>
 #include <float.h>
 
 namespace surfit {
 
-f_hist::f_hist(const d_hist * ihst, REAL imult) :
+f_hist::f_hist(const d_hist * ihst, REAL imult, size_t itrshold) :
 functional("f_hist", F_CONDITION) 
 {
 	hist = ihst;
 	mult = imult;
 	mask = NULL;
+	trshold = itrshold;
 };
 
 f_hist::~f_hist() {
@@ -67,9 +69,54 @@ const data * f_hist::this_get_data(int pos) const {
 bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
 {
 	writelog(LOG_MESSAGE,"histogram \"%s\"", hist->getName());
-	
+
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
+	///*
+	
+	v = _extvec_adj_hist(method_X, hist, mask_solved, mask_undefined, FLT_MAX);
+	if (v == NULL) {
+		return false;
+	}
+	extvec * diag = create_extvec(matrix_size);
+
+	if (mask)
+		mask->release();
+	mask = create_bitvec(matrix_size);
+	mask->init_true();
+
+	size_t i;
+	for (i = 0; i < matrix_size; i++) {
+		if (mask_solved->get(i) == true) {
+			(*v)(i) = 0;
+			mask->set_false(i);
+			continue;
+		}
+		if (mask_undefined->get(i) == true) {
+			(*v)(i) = 0;
+			mask->set_false(i);
+			continue;
+		}
+		if ((*v)(i) == (*method_X)(i)) {
+			(*v)(i) = 0;
+			mask->set_false(i);
+			continue;
+		}
+		(*diag)(i) = mult;
+		REAL val1 = (*method_X)(i);
+		REAL val2 = (*v)(i);
+		REAL prc = (trshold-MIN(trshold,penalty_iter_counter))/REAL(trshold);
+		REAL val = val1*(1-prc) + val2*prc;
+		(*v)(i) = val*mult;
+	}
+
+	matr_diag * M = new matr_diag(diag, matrix_size, mask);
+	matrix = M;
+
+	bool solvable = true;
+	//*/
+
+	/*
 	REAL minz = FLT_MAX, maxz = -FLT_MAX;
 	size_t i;
 	for (i = 0; i < matrix_size; i++) {
@@ -182,8 +229,8 @@ bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_s
 		surf_hist->release();
 	if (dest_hist)
 		dest_hist->release();
-
 	bool solvable = (points > 0);
+	//*/
 
 	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;

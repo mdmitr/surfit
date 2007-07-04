@@ -64,15 +64,15 @@ SURFIT_EXPORT
 void _add_surfit_hists(d_hist * hist);
 
 SURFIT_EXPORT
-bool _surf_histeq(d_surf * srf, const d_hist * hist);
+bool _surf_adj_hist(d_surf * srf, const d_hist * hist);
 
 SURFIT_EXPORT
 d_hist * _hist_from_vec(const vec * data, REAL minz, REAL maxz, size_t intervs,
-			REAL undef_value = FLT_MAX, const bitvec * mask = NULL);
+			REAL undef_value = FLT_MAX, const bitvec * mask = NULL, const bitvec * mask_undef = NULL);
 
 SURFIT_EXPORT
 d_hist * _hist_from_extvec(const extvec * data, REAL minz, REAL maxz, size_t intervs,
-			   REAL undef_value = FLT_MAX, const bitvec * mask = NULL);
+			   REAL undef_value = FLT_MAX, const bitvec * mask = NULL, const bitvec * mask_undef = NULL);
 
 SURFIT_EXPORT
 d_hist * _hist_from_surf(const d_surf * srf, size_t intervs, REAL from = FLT_MAX, REAL to = FLT_MAX);
@@ -84,6 +84,9 @@ SURFIT_EXPORT
 REAL get_eq_value(const vec * T, const vec * Z, REAL val,
 		  REAL surf_minz, REAL surf_maxz,
 		  REAL dest_minz, REAL dest_maxz);
+
+SURFIT_EXPORT
+extvec * _extvec_adj_hist(const extvec * X, const d_hist * hst, const bitvec * mask, const bitvec * mask_undef, REAL uval);
 
 }; // namespace surfit;
 

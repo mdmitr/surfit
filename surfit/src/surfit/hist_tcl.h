@@ -92,7 +92,7 @@ int hist_size();
 
 void hists_info();
 
-boolvec * surf_histeq(const char * surface_name = "*", const char * histogram_name = NULL);
+boolvec * surf_adj_hist(const char * surface_name = "*", const char * histogram_name = NULL);
 
 }; // namespace surfit;
 

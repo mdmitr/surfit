@@ -231,10 +231,10 @@ bool leq(REAL value, REAL penalty_factor = -1);
 bool geq(REAL value, REAL penalty_factor = -1);
 
 /*! \ingroup tcl_rules_other
-    \fn bool hist(const char * histogram_name = "*", REAL mult = 1);
+    \fn bool hist(const char * histogram_name = "*", REAL mult = 0.1, size_t treshold = 5);
 
     \par Tcl syntax:
-    hist "histogram_name" mult
+    hist "histogram_name" mult threshold
 
     \par Description:
     This rule adds the surface condition - "the resulting surface histogram should be equal to given histogram".
@@ -253,7 +253,7 @@ bool geq(REAL value, REAL penalty_factor = -1);
     R. Gonzalez and R. Woods Digital Image Processing, Addison-Wesley Publishing Company, 1992, Chap. 4.
     
 */
-boolvec * hist(const char * histogram_name = "*", REAL mult = 1);
+boolvec * hist(const char * histogram_name = "*", REAL mult = 0.1, size_t treshold = 5);
 
 bool triangulate();
 
