@@ -34,7 +34,11 @@ bool StringMatch(const char * match, const char * str)
 {
 	char * reg = strdup(match);
 	char * s = strdup(str);
-	int res = Tcl_StringMatch(s, reg);
+	int res = 0;
+	if (reg)
+		res = Tcl_StringMatch(s, reg);
+	else 
+		res = Tcl_StringMatch(s, "*");
 	free(reg);
 	free(s);
 	if (res == -1) 

@@ -26,14 +26,22 @@ namespace surfit {
 
 class strvec;
 
+/*! \ingroup sstuff_internal
+    \fn strvec * create_strvec(size_t size = 0, size_t grow_by = 250);
+    \brief creates strvec object
+*/
 SSTUFF_EXPORT
 strvec * create_strvec(size_t size = 0, size_t grow_by = 250);
 
+/*! \ingroup sstuff_internal
+    \fn strvec * create_strvec(const strvec & in);
+    \brief creates strvec object
+*/
 SSTUFF_EXPORT
 strvec * create_strvec(const strvec & in);
 
-/*! \class vec
-    \brief surfit vector of REAL 
+/*! \class strvec
+    \brief vector of strings
 */
 class SSTUFF_EXPORT strvec {
 public:
@@ -54,14 +62,13 @@ protected:
 
 	/*! A consturtor
 	    \param size vector size
-            \param default_value initial value for fill vector
-	    \param fill_default use initial value filling
-	    \param grow_by value for resizing vector
+            \param grow_by value for resizing vector
     	*/
 	strvec(size_t size = 0, size_t grow_by = 250);
 	
 public:
 
+	//! constructor
 	friend SSTUFF_EXPORT
 	strvec * create_strvec(size_t size, size_t grow_by);
 
@@ -70,6 +77,8 @@ private:
 	~strvec();
 
 public:
+
+	//! destructor
 	void release();
 
 	//! returns pointer to begin of REAL-array

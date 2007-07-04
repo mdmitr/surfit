@@ -43,7 +43,7 @@
 
 namespace surfit {
 
-intvec * create_intvec(size_t size, int default_value, int fill_default, size_t grow_by) {
+intvec * create_intvec(size_t size, int default_value, bool fill_default, size_t grow_by) {
 	return new intvec(size, default_value, fill_default, grow_by);
 }
 
@@ -71,7 +71,7 @@ intvec::intvec(const intvec &in) {
 	}
 };
 
-intvec::intvec(size_t newsize, int default_value, int fill_default, size_t igrow_by) {
+intvec::intvec(size_t newsize, int default_value, bool fill_default, size_t igrow_by) {
 	grow_by = igrow_by;
 	if (newsize == 0) {
 		data = NULL;
@@ -84,7 +84,7 @@ intvec::intvec(size_t newsize, int default_value, int fill_default, size_t igrow
 		datasize = newsize;
 		int_datasize = newsize;
 		// init
-		if (fill_default == 1) {
+		if (fill_default == true) {
 			size_t i;
 			for (i = 0; i < size(); i++) {
 				operator()(i) = default_value;
@@ -109,7 +109,7 @@ void intvec::release() {
 	delete this;
 };
 
-void intvec::resize(size_t newsize, int default_value, int fill_default) {
+void intvec::resize(size_t newsize, int default_value, bool fill_default) {
 	if (datasize == newsize)
 		return;
 	if ((newsize == 0) && (data = NULL)) {
@@ -124,7 +124,7 @@ void intvec::resize(size_t newsize, int default_value, int fill_default) {
 		datasize = newsize;
 		int_datasize = datasize;
 		if (oldsize < newsize) {
-			if (fill_default == 1) {
+			if (fill_default == true) {
 				size_t i;
 				for (i = oldsize; i < newsize; i++) {
 					operator()(i) = default_value;

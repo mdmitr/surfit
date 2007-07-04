@@ -27,14 +27,22 @@ namespace surfit {
 
 class intvec;
 
+/*! \ingroup sstuff_internal
+    \fn intvec * create_intvec(size_t size = 0, int default_value = int(0), bool fill_default = true, size_t grow_by = 250);
+    \brief creates intvec object
+*/
 SSTUFF_EXPORT
-intvec * create_intvec(size_t size = 0, int default_value = int(0), int fill_default = 1, size_t grow_by = 250);
+intvec * create_intvec(size_t size = 0, int default_value = int(0), bool fill_default = true, size_t grow_by = 250);
 
+/*! \ingroup sstuff_internal
+    \fn intvec * create_intvec(const intvec &in);
+    \brief creates intvec object (makes a copy)
+*/
 SSTUFF_EXPORT
 intvec * create_intvec(const intvec &in);
 
 /*! \class intvec
-    \brief surfit vector class for integers
+    \brief vector for integers
 */
 class SSTUFF_EXPORT intvec {
 public:
@@ -59,7 +67,7 @@ protected:
 	    \param fill_default use initial value filling
 	    \param grow_by value for resizing vector
 	*/
-	intvec(size_t size = 0, int default_value = int(0), int fill_default = 1, size_t grow_by = 250);
+	intvec(size_t size = 0, int default_value = int(0), bool fill_default = true, size_t grow_by = 250);
 	
 	//! Copy constructor
 	intvec(const intvec &in);
@@ -70,42 +78,45 @@ private:
 
 public:
 
+	//! constructor
 	friend SSTUFF_EXPORT
-	intvec * create_intvec(size_t size, int default_value, int fill_default, size_t grow_by);
+	intvec * create_intvec(size_t size, int default_value, bool fill_default, size_t grow_by);
 
+	//! copy constructor
 	friend SSTUFF_EXPORT
 	intvec * create_intvec(const intvec &in);
 
+	//! destructor
 	void release();
 
-	//! return pointer to begin of int-array
+	//! returns pointer to begin of int-array
 	int* begin() { return data; };
 
-	//! return reference-pointer to begin of int-array
+	//! returns reference-pointer to begin of int-array
 	int *& ref_begin() { return data; };
 
-	//! return const pointer to begin of int-array
+	//! returns const pointer to begin of int-array
 	const int* begin() const { return data; };
 
-	//! return pointer to end of int-array
+	//! returns pointer to end of int-array
 	int* end() { return data+datasize; };
 
-	//! return const pointer to end of int-array
+	//! returns const pointer to end of int-array
 	const int* end() const { return data+datasize; };
 
-	//! delete element by pointer
+	//! deletes element by pointer
 	void erase(int*);
 
-	//! delete element by index
+	//! deletes element by index
 	void erase(size_t index);
 		
-	//! resize vector
-	void resize(size_t newsize, int default_value = int(0), int fill_default = 1);
+	//! resizes vector
+	void resize(size_t newsize, int default_value = int(0), bool fill_default = 1);
 
-	//! return vector size
+	//! returns vector size
 	size_t size() const { return datasize; };
 
-	//! return reference to i'th element
+	//! returns reference to i'th element
 	int& operator()(size_t i) {
 #ifdef LSS_BOUNDS_CHECK
 		if ((i < 0) || (i >= size()))
@@ -115,7 +126,7 @@ public:
 		return *(data+i);
 	};
 		
-	//! return const reference to i'th element
+	//! returns const reference to i'th element
 	const int& operator()(size_t i) const {
 #ifdef LSS_BOUNDS_CHECK
 		if ((i < 0) || (i >= size()))
@@ -125,25 +136,25 @@ public:
 		return res;
 	};
 
-	//! add one element at the end of array
+	//! adds one element at the end of array
 	void push_back(const int&);
 	
-	//! add vector at the end of array
+	//! adds vector at the end of array
 	void push_back(intvec * v);
 
-	//! set currently allocated vector size to reserve_size
+	//! sets currently allocated vector size to reserve_size
 	void reserve(size_t reserve_size);
 
-	//! set vector's grow factor
+	//! sets vector's grow factor
 	void set_grow(size_t grow_by);
 
-	//! swap two elements
+	//! swaps two elements
 	void swap(size_t i, size_t j);
 
-	//! forget all allocated memory
+	//! forgets all allocated memory
 	void drop_data();
 
-	//! return void* to begin of vector-array
+	//! returns void* to begin of vector-array
 	void* getPointer() const { return (void*)data; };
 	
 protected:

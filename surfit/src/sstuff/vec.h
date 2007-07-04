@@ -18,35 +18,66 @@ namespace surfit {
 
 class vec;
 #ifndef XXL
+/*! \typedef vec extvec 
+    \brief vector that can be saved on hard drive (external vector)
+*/
 typedef vec extvec;
 #endif
 
-SSTUFF_EXPORT
-/*! \ingroup internal
-    \fn vec * create_vec(size_t size = 0, REAL default_value = REAL(0), int fill_default = 1, size_t grow_by = 250);
-    \brief creates \ref vec object
-*/
-vec * create_vec(size_t size = 0, REAL default_value = REAL(0), int fill_default = 1, size_t grow_by = 250);
+/*! \ingroup sstuff_internal
+    \fn vec * create_vec(size_t size = 0, REAL default_value = REAL(0), bool fill_default = true, size_t grow_by = 250);
+    \brief creates vec object
 
-SSTUFF_EXPORT
-/*! \ingroup internal
-    \fn vec * create_vec(const vec &in);
-    \brief creates \ref vec object
+    \param size size of the vector
+    \param default_value value for filling vector by default
+    \param fill_default flag for perfoming filling vector with default value
+    \param grow_by amount of elements for extending vector
 */
+SSTUFF_EXPORT
+vec * create_vec(size_t size = 0, REAL default_value = REAL(0), bool fill_default = true, size_t grow_by = 250);
+
+/*! \ingroup sstuff_internal
+    \fn vec * create_vec(const vec &in);
+    \brief creates vec object
+
+    This function is a copy constructor
+*/
+SSTUFF_EXPORT
 vec * create_vec(const vec &in);
 
+/*! \ingroup sstuff_internal
+    \fn vec * create_vec(const extvec &in);
+    \brief creates vec object
+
+    This function is a copy constructor
+*/
 SSTUFF_EXPORT
 vec * create_vec(const extvec &in);
 
-SSTUFF_EXPORT
-extvec * create_extvec(size_t size = 0, REAL default_value = REAL(0), int fill_default = 1, size_t grow_by = 250);
+/*! \ingroup sstuff_internal
+    \fn extvec * create_extvec(size_t size = 0, REAL default_value = REAL(0), bool fill_default = true, size_t grow_by = 250);
+    \brief creates extvec object
 
+    \param size size of the vector
+    \param default_value value for filling vector by default
+    \param fill_default flag for perfoming filling vector with default value
+    \param grow_by amount of elements for extending vector
+*/
+SSTUFF_EXPORT
+extvec * create_extvec(size_t size = 0, REAL default_value = REAL(0), bool fill_default = true, size_t grow_by = 250);
+
+/*! \ingroup sstuff_internal
+    \fn extvec * create_extvec(const extvec &in);
+    \brief creates extvec object
+
+    This function is a copy constructor
+*/
 SSTUFF_EXPORT
 extvec * create_extvec(const extvec &in);
 
 
 /*! \class vec
-    \brief surfit vector of REAL 
+    \brief vector of REAL's
 */
 #ifdef XXL
 #include "../../src_xxl/sstuff/vec_xxl.h"
@@ -81,7 +112,7 @@ protected:
 	    \param fill_default use initial value filling
 	    \param grow_by value for resizing vector
     	*/
-	vec (size_t size = 0, REAL default_value = REAL(0), int fill_default = 1, size_t grow_by = 250);
+	vec (size_t size = 0, REAL default_value = REAL(0), bool fill_default = true, size_t grow_by = 250);
 	
 	//! Copy constructor
 	vec(const vec &in);
@@ -93,13 +124,26 @@ protected:
 	//! Destructor
 	~vec();
 public:
+	
+	/*!
+	\fn vec * create_vec(size_t size = 0, REAL default_value = REAL(0), bool fill_default = true, size_t grow_by = 250);
+	\brief creates vec object
 
+	\param size size of the vector
+	\param default_value value for filling vector by default
+	\param fill_default flag for perfoming filling vector with default value
+	\param grow_by amount of elements for extending vector
+	*/	
 	friend SSTUFF_EXPORT
-	//! constructor
-	vec * create_vec (size_t size, REAL default_value, int fill_default, size_t grow_by);
+	vec * create_vec (size_t size, REAL default_value, bool fill_default, size_t grow_by);
 
+	/*! 
+	\fn vec * create_vec(const vec &in);
+	\brief creates vec object
+
+	This function is a copy constructor
+	*/
 	friend SSTUFF_EXPORT
-	//! copy constructor
 	vec * create_vec(const vec &in);
 
 #ifdef XXL
@@ -131,7 +175,7 @@ public:
 	void erase(size_t index);
 		
 	//! changes vector size
-	void resize(size_t newsize, REAL default_value = REAL(0), int fill_default = 1);
+	void resize(size_t newsize, REAL default_value = REAL(0), bool fill_default = true);
 
 	//! returns vector size
 	size_t size() const { return datasize; };
@@ -177,10 +221,9 @@ public:
 	//! forgets all allocated memory
 	void drop_data();
 
-	//! returns void* to begin of vector-array
-	//void* getPointer() const { return (void*)data; };
-
+	//! writes vector content to the file
 	size_t write_file(int file, size_t size) const;
+	//! reads vector content from the file
 	size_t read_file(int file, size_t size);
 	
 private:

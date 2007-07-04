@@ -39,7 +39,7 @@ namespace surfit {
 
 #ifndef XXL
 
-shortvec * create_shortvec(size_t size, short default_value, int fill_default, size_t grow_by) {
+shortvec * create_shortvec(size_t size, short default_value, bool fill_default, size_t grow_by) {
 	return new shortvec(size, default_value, fill_default, grow_by);
 };
 
@@ -66,7 +66,7 @@ shortvec::shortvec(const shortvec &in) {
 	}
 };
 
-shortvec::shortvec(size_t newsize, short default_value, int fill_default, size_t igrow_by) {
+shortvec::shortvec(size_t newsize, short default_value, bool fill_default, size_t igrow_by) {
 	grow_by = igrow_by;
 	if (newsize == 0) {
 		data = NULL;
@@ -79,7 +79,7 @@ shortvec::shortvec(size_t newsize, short default_value, int fill_default, size_t
 		datasize = newsize;
 		short_datasize = newsize;
 		// init
-		if (fill_default == 1) {
+		if (fill_default == true) {
 			size_t i;
 			for (i = 0; i < size(); i++) {
 				operator()(i) = default_value;
@@ -103,7 +103,7 @@ void shortvec::release() {
 	delete this;
 };
 
-void shortvec::resize(size_t newsize, short default_value, int fill_default) {
+void shortvec::resize(size_t newsize, short default_value, bool fill_default) {
 	if (datasize == newsize)
 		return;
 	if ((newsize == 0) && (data = NULL)) {
@@ -118,7 +118,7 @@ void shortvec::resize(size_t newsize, short default_value, int fill_default) {
 		datasize = newsize;
 		short_datasize = datasize;
 		if (oldsize < newsize) {
-			if (fill_default == 1) {
+			if (fill_default == true) {
 				size_t i;
 				for (i = oldsize; i < newsize; i++) {
 					operator()(i) = default_value;

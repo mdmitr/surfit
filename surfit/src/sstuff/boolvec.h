@@ -33,14 +33,22 @@ namespace surfit {
 
 class boolvec;
 
+/*! \ingroup sstuff_internal
+    \fn boolvec * create_boolvec(size_t size = 0, bool default_value = false, int fill_default = 1, size_t grow_by = 250);
+    \brief creates boolvec object
+*/
 SSTUFF_EXPORT
 boolvec * create_boolvec(size_t size = 0, bool default_value = false, int fill_default = 1, size_t grow_by = 250);
 
+/*! \ingroup sstuff_internal
+    \fn boolvec * create_boolvec(const boolvec &in);
+    \brief creates boolvec object (makes a copy)
+*/
 SSTUFF_EXPORT
 boolvec * create_boolvec(const boolvec &in);
 
 /*! \class boolvec
-    \brief vector of bool type
+    \brief A boolean vector
 */
 class SSTUFF_EXPORT boolvec {
 public:
@@ -75,27 +83,30 @@ private:
 
 public:
 
+	//! constructor
 	friend SSTUFF_EXPORT
 	boolvec * create_boolvec(size_t size, bool default_value, int fill_default, size_t grow_by);
 
+	//! copy constructor
 	friend SSTUFF_EXPORT
 	boolvec * create_boolvec(const boolvec &in);
 
+	//! destructor
 	void release();
 	
-	//! returns pointer to begin of bool-array
+	//! returns pointer to the begining of bool-array
 	bool* begin() { return data; };
 
-	//! returns reference-pointer to begin of bool-array
+	//! returns reference-pointer to the begining of bool-array
 	bool *& ref_begin() { return data; }
 
-	//! returns const pointer to begin of bool-array
+	//! returns const pointer to the begining of bool-array
 	const bool* begin() const { return data;}
 	
-	//! returns pointer to end of bool-array
+	//! returns pointer to the end of bool-array
 	bool* end() { return data+datasize; }
 
-	//! returns const pointer to end of bool-array
+	//! returns const pointer to the end of bool-array
 	const bool* end() const { return data+datasize; }
 	
 	//! removes element by pointer
@@ -141,7 +152,7 @@ public:
 	//! sets vector's grow factor
 	void set_grow(size_t grow_by);
 	
-	//! exchanges two elements values
+	//! changes two elements values
 	void swap(size_t i, size_t j);
 		
 	//! frees all allocated memory

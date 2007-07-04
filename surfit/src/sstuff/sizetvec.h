@@ -30,8 +30,16 @@ namespace surfit {
 
 class sizetvec;
 
-SSTUFF_EXPORT sizetvec * create_sizetvec(size_t size = 0);
+/*! \ingroup sstuff_internal
+    \fn sizetvec * create_sizetvec(size_t size = 0);
+    \brief creates sizetvec object
+*/
+SSTUFF_EXPORT 
+sizetvec * create_sizetvec(size_t size = 0);
 
+/*! \class sizetvec
+    \brief A vector of size_t type values
+*/
 class SSTUFF_EXPORT sizetvec
 {
 public:
@@ -46,9 +54,11 @@ public:
 	//! const_reference type for vec
 	typedef  std::vector<size_t>::const_reference const_reference;
 
+	//! constructor
 	friend SSTUFF_EXPORT
 	sizetvec * create_sizetvec(size_t size);
 
+	//! destructor
 	virtual void release();
 
 	//! returns pointer to begin of REAL-array
@@ -100,9 +110,14 @@ public:
 	inline void set_grow(size_t grow_by) {};
 	
 private:
+
+	//! private constructor
 	sizetvec(size_t size = 0);
+
+	//! private destructor
 	virtual ~sizetvec();
 
+	//! vector data
 	std::vector<size_t> * data;
 };
 

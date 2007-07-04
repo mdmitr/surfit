@@ -39,9 +39,17 @@ namespace surfit {
 
 class bitvec;
 
+/*! \ingroup sstuff_internal
+    \fn bitvec * create_bitvec(size_t size = 0);
+    \brief creates bitvec object
+*/
 SSTUFF_EXPORT
 bitvec * create_bitvec(size_t size = 0);
 
+/*! \ingroup sstuff_internal
+    \fn bitvec * create_bitvec(const bitvec * src);
+    \brief creates bitvec object (makes a copy)
+*/
 SSTUFF_EXPORT
 bitvec * create_bitvec(const bitvec * src);
 
@@ -63,9 +71,11 @@ protected:
 
 public:
 
+	//! constructor
 	friend SSTUFF_EXPORT
 	bitvec * create_bitvec(size_t size);
 
+	//! copy constructor
 	friend SSTUFF_EXPORT
 	bitvec * create_bitvec(const bitvec * src);
 
@@ -77,20 +87,20 @@ public:
 	//! destructor
 	virtual void release();
 
-	//! returns value at a specified location
+	//! returns value at the specified location
 	bool get(size_t pos) const {
 		assert( (pos >= 0) && (pos < datasize) );
 		//return ( *(data + (pos >> offset)) & (1 <<(pos - ((pos >> offset)<<offset)))) != 0;
 		return ( *(data + (pos >> 5)) & (1 <<(pos & ((1 << 5) - 1)))) != 0;
 	};
 
-	//! sets value of element at a specified location to true
+	//! sets value of element at the specified location to true
 	void set_true(size_t pos) {
 		assert( (pos >= 0) && (pos < datasize) );
 		*(data + (pos >> 5)) |= (1 <<(pos - ((pos >> 5)<<5)));
 	};
 
-	//! sets value of element at a specified location to false
+	//! sets value of element at the specified location to false
 	void set_false(size_t pos) {
 		assert( (pos >= 0) && (pos < datasize) );
 		*(data + (pos >> 5)) &=~ (1 <<(pos - ((pos >> 5)<<5)));
@@ -105,16 +115,16 @@ public:
 	//! fills vector with true values
 	void init_true();
 
-	//! true becomes false and false becomes true
+	//! true values become false values and false values become true values
 	void invert();
 	
-	//! returns size of the vector
+	//! returns number of elements in the vector
 	size_t size() const;
 
-	//! returns amount of "int"'s for save vector in memory
+	//! returns number of "int"'s for save vector in memory
 	size_t int_size() const;
 
-	//! returns size of "true" elements
+	//! returns number of "true" elements
 	size_t true_size() const;
 
 	//! returs true if half of elements are true (need for optimization)
@@ -143,15 +153,24 @@ public:
 	//! reads 10 values, starting from pos
 	void get10(size_t pos, bool * b) const;
 
+	//! makes AND logical operation
 	void AND(const bitvec * b);
+	//! makes OR logical operation
 	void OR(const bitvec * b);
+	//! makes XOR logical operation
 	void XOR(const bitvec * b);
+	//! makes NOT logical operation
 	void NOT();
 
+	//! returns const pointer to the begining of the vector
 	const surfit_int32 * const_begin() const { return data; };
+	//! returns pointer to the begining of the vector
 	surfit_int32 * begin() { return data; };
 
+	//! writes bitvec content to the file
 	size_t write_file(int file) const;
+
+	//! reads bitvec content from the file
 	size_t read_file(int file, size_t size);
 
 protected:
@@ -161,9 +180,9 @@ protected:
 
 	//! amount of bits in bitvec
 	size_t datasize;
+
 	//! bitvec size in bytes
 	size_t byte_size;
-	
 };
 
 }; // namespace surfit;
