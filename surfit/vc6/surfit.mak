@@ -70,6 +70,8 @@ CLEAN :
 	-@erase "$(INTDIR)\cntr_tcl.sbr"
 	-@erase "$(INTDIR)\cntr_trace.obj"
 	-@erase "$(INTDIR)\cntr_trace.sbr"
+	-@erase "$(INTDIR)\CreEPS.obj"
+	-@erase "$(INTDIR)\CreEPS.sbr"
 	-@erase "$(INTDIR)\curv.obj"
 	-@erase "$(INTDIR)\curv.sbr"
 	-@erase "$(INTDIR)\curv_internal.obj"
@@ -262,6 +264,7 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\surfit.bsc"
 BSC32_SBRS= \
 	"$(INTDIR)\matlab.sbr" \
 	"$(INTDIR)\matr.sbr" \
+	"$(INTDIR)\matr_cntrs.sbr" \
 	"$(INTDIR)\matr_diag.sbr" \
 	"$(INTDIR)\matr_eye.sbr" \
 	"$(INTDIR)\matr_onesrow.sbr" \
@@ -332,6 +335,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_area_wmean.sbr" \
 	"$(INTDIR)\f_cntr.sbr" \
 	"$(INTDIR)\f_cntr_ineq.sbr" \
+	"$(INTDIR)\f_cntr_smooth.sbr" \
 	"$(INTDIR)\f_curv.sbr" \
 	"$(INTDIR)\f_curv_ineq.sbr" \
 	"$(INTDIR)\f_curv_surf.sbr" \
@@ -355,8 +359,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\surfit_wrap.sbr" \
 	"$(INTDIR)\triangle.sbr" \
 	"$(INTDIR)\variables.sbr" \
-	"$(INTDIR)\matr_cntrs.sbr" \
-	"$(INTDIR)\f_cntr_smooth.sbr"
+	"$(INTDIR)\CreEPS.sbr"
 
 "$(OUTDIR)\surfit.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -368,6 +371,7 @@ LINK32_FLAGS=tcl83.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\libsurfit.pd
 LINK32_OBJS= \
 	"$(INTDIR)\matlab.obj" \
 	"$(INTDIR)\matr.obj" \
+	"$(INTDIR)\matr_cntrs.obj" \
 	"$(INTDIR)\matr_diag.obj" \
 	"$(INTDIR)\matr_eye.obj" \
 	"$(INTDIR)\matr_onesrow.obj" \
@@ -438,6 +442,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_area_wmean.obj" \
 	"$(INTDIR)\f_cntr.obj" \
 	"$(INTDIR)\f_cntr_ineq.obj" \
+	"$(INTDIR)\f_cntr_smooth.obj" \
 	"$(INTDIR)\f_curv.obj" \
 	"$(INTDIR)\f_curv_ineq.obj" \
 	"$(INTDIR)\f_curv_surf.obj" \
@@ -461,8 +466,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\surfit_wrap.obj" \
 	"$(INTDIR)\triangle.obj" \
 	"$(INTDIR)\variables.obj" \
-	"$(INTDIR)\matr_cntrs.obj" \
-	"$(INTDIR)\f_cntr_smooth.obj" \
+	"$(INTDIR)\CreEPS.obj" \
 	"..\bin\libsstuff.lib"
 
 "..\bin\libsurfit.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -511,6 +515,8 @@ CLEAN :
 	-@erase "$(INTDIR)\cntr_tcl.sbr"
 	-@erase "$(INTDIR)\cntr_trace.obj"
 	-@erase "$(INTDIR)\cntr_trace.sbr"
+	-@erase "$(INTDIR)\CreEPS.obj"
+	-@erase "$(INTDIR)\CreEPS.sbr"
 	-@erase "$(INTDIR)\curv.obj"
 	-@erase "$(INTDIR)\curv.sbr"
 	-@erase "$(INTDIR)\curv_internal.obj"
@@ -705,6 +711,7 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\surfit.bsc"
 BSC32_SBRS= \
 	"$(INTDIR)\matlab.sbr" \
 	"$(INTDIR)\matr.sbr" \
+	"$(INTDIR)\matr_cntrs.sbr" \
 	"$(INTDIR)\matr_diag.sbr" \
 	"$(INTDIR)\matr_eye.sbr" \
 	"$(INTDIR)\matr_onesrow.sbr" \
@@ -775,6 +782,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_area_wmean.sbr" \
 	"$(INTDIR)\f_cntr.sbr" \
 	"$(INTDIR)\f_cntr_ineq.sbr" \
+	"$(INTDIR)\f_cntr_smooth.sbr" \
 	"$(INTDIR)\f_curv.sbr" \
 	"$(INTDIR)\f_curv_ineq.sbr" \
 	"$(INTDIR)\f_curv_surf.sbr" \
@@ -798,8 +806,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\surfit_wrap.sbr" \
 	"$(INTDIR)\triangle.sbr" \
 	"$(INTDIR)\variables.sbr" \
-	"$(INTDIR)\matr_cntrs.sbr" \
-	"$(INTDIR)\f_cntr_smooth.sbr"
+	"$(INTDIR)\CreEPS.sbr"
 
 "$(OUTDIR)\surfit.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -811,6 +818,7 @@ LINK32_FLAGS=tcl83d.lib /nologo /dll /pdb:none /map:"$(INTDIR)\libsurfit.map" /d
 LINK32_OBJS= \
 	"$(INTDIR)\matlab.obj" \
 	"$(INTDIR)\matr.obj" \
+	"$(INTDIR)\matr_cntrs.obj" \
 	"$(INTDIR)\matr_diag.obj" \
 	"$(INTDIR)\matr_eye.obj" \
 	"$(INTDIR)\matr_onesrow.obj" \
@@ -881,6 +889,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_area_wmean.obj" \
 	"$(INTDIR)\f_cntr.obj" \
 	"$(INTDIR)\f_cntr_ineq.obj" \
+	"$(INTDIR)\f_cntr_smooth.obj" \
 	"$(INTDIR)\f_curv.obj" \
 	"$(INTDIR)\f_curv_ineq.obj" \
 	"$(INTDIR)\f_curv_surf.obj" \
@@ -904,8 +913,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\surfit_wrap.obj" \
 	"$(INTDIR)\triangle.obj" \
 	"$(INTDIR)\variables.obj" \
-	"$(INTDIR)\matr_cntrs.obj" \
-	"$(INTDIR)\f_cntr_smooth.obj" \
+	"$(INTDIR)\CreEPS.obj" \
 	"..\bin\libsstuff.lib"
 
 "..\bin\libsurfit.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -1530,6 +1538,12 @@ SOURCE=..\src\surfit\surfs_tcl.cpp
 SOURCE=..\src\surfit\functional.cpp
 
 "$(INTDIR)\functional.obj"	"$(INTDIR)\functional.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\creeps\CreEPS.cpp
+
+"$(INTDIR)\CreEPS.obj"	"$(INTDIR)\CreEPS.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

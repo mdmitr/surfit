@@ -51,6 +51,7 @@ surfit::boolvec * mask_completer_add(REAL weight = 1, const char * mask_name = "
 // save_load
 surfit::boolvec * surf_load(const char * filename, const char * surfname = NULL);
 surfit::boolvec * surf_save(const char * filename, const char * surface_name = "*");
+surfit::boolvec * surf_plot(const char * filename, const char * surface_name = "*");
 // MATH OPERATIONS
 surfit::vec * surf_getValue(REAL x, REAL y, const char * surface_name = "*");
 surfit::vec * surf_getValueIJ(int I, int J, const char * surface_name = "*");

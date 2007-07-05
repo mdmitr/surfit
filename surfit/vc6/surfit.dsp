@@ -544,6 +544,10 @@ SOURCE=..\src\surfit\functional.cpp
 # End Group
 # Begin Source File
 
+SOURCE=..\src\surfit\creeps\CreEPS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\surfit\data_manager.cpp
 # End Source File
 # Begin Source File
@@ -1033,6 +1037,10 @@ SOURCE=.\..\src\surfit\grid_user.h
 # Begin Source File
 
 SOURCE=..\src\surfit\cmofs.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\surfit\creeps\CreEPS.h
 # End Source File
 # Begin Source File
 

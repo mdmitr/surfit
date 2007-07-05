@@ -643,6 +643,10 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
+				RelativePath="..\src\surfit\creeps\CreEPS.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\surfit\data_manager.cpp"
 				>
 				<FileConfiguration
@@ -6794,6 +6798,10 @@
 			>
 			<File
 				RelativePath="..\src\surfit\cmofs.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\surfit\creeps\CreEPS.h"
 				>
 			</File>
 			<File

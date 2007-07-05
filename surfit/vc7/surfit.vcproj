@@ -463,6 +463,9 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
+				RelativePath="..\src\surfit\creeps\CreEPS.cpp">
+			</File>
+			<File
 				RelativePath="..\src\surfit\data_manager.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -5742,6 +5745,9 @@
 			Filter="h;hpp;hxx;hm;inl">
 			<File
 				RelativePath="..\src\surfit\cmofs.h">
+			</File>
+			<File
+				RelativePath="..\src\surfit\creeps\CreEPS.h">
 			</File>
 			<File
 				RelativePath="..\src\surfit\data_manager.h">

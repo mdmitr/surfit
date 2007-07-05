@@ -16052,6 +16052,121 @@ _wrap_surf_save(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
 
 
 SWIGINTERN int
+_wrap_surf_plot__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  surfit::boolvec *result = 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oo:surf_plot filename surface_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_plot" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "surf_plot" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = buf2;
+  result = (surfit::boolvec *)surfit::surf_plot((char const *)arg1,(char const *)arg2);
+  
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_plot__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
+  surfit::boolvec *result = 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"o:surf_plot filename ",(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "surf_plot" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  result = (surfit::boolvec *)surfit::surf_plot((char const *)arg1);
+  
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_surf_plot(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  Tcl_Obj *CONST *argv = objv+1;
+  int argc = objc-1;
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_surf_plot__SWIG_1(clientData, interp, objc, argv - 1);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_surf_plot__SWIG_0(clientData, interp, objc, argv - 1);
+      }
+    }
+  }
+  
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'surf_plot'", TCL_STATIC);
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
 _wrap_surf_getValue__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   double arg1 ;
   double arg2 ;
@@ -39289,6 +39404,7 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "mask_completer_add", (swig_wrapper_func) _wrap_mask_completer_add, NULL},
     { SWIG_prefix "surf_load", (swig_wrapper_func) _wrap_surf_load, NULL},
     { SWIG_prefix "surf_save", (swig_wrapper_func) _wrap_surf_save, NULL},
+    { SWIG_prefix "surf_plot", (swig_wrapper_func) _wrap_surf_plot, NULL},
     { SWIG_prefix "surf_getValue", (swig_wrapper_func) _wrap_surf_getValue, NULL},
     { SWIG_prefix "surf_getValueIJ", (swig_wrapper_func) _wrap_surf_getValueIJ, NULL},
     { SWIG_prefix "surf_resid", (swig_wrapper_func) _wrap_surf_resid, NULL},

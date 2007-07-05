@@ -374,7 +374,7 @@ extvec * _extvec_adj_hist(const extvec * X, const d_hist * dest, const bitvec * 
 		// calculate cumulative histogram
 		vec * T = hst->get_cumulative_hist();
 
-		extvec * new_res = create_vec(*res);
+		extvec * new_res = create_extvec(*res);
 
 		size_t j;
 		for (j = 0; j < X->size(); j++) 

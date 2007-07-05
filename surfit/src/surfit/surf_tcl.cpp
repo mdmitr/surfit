@@ -105,6 +105,31 @@ boolvec * surf_save(const char * filename, const char * pos)
 	return qq.res;
 };
 
+struct match_surf_plot
+{
+	match_surf_plot(const char * ifilename, const char * ipos) : filename(ifilename), pos(ipos), res(NULL) {};
+	void operator()(d_surf * surf)
+	{
+		if ( StringMatch(pos, surf->getName()) )
+		{
+			bool r = _surf_plot(surf, filename);
+			if (res == NULL)
+				res = create_boolvec();
+			res->push_back(r);
+		}
+	}
+	const char * filename;
+	const char * pos;
+	boolvec * res;
+};
+
+boolvec * surf_plot(const char * filename, const char * pos) 
+{
+	match_surf_plot qq(filename, pos);
+	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
+	return qq.res;
+};
+
 struct match_surf_resid2
 {
 	match_surf_resid2(const char * ifilename, d_surf * isurf, const char * ipnts_pos)

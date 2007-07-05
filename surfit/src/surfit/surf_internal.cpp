@@ -48,6 +48,8 @@
 
 #include "threads.h"
 
+#include "creeps/CreEps.h"
+
 #include <math.h>
 #include <float.h>
 #include <errno.h>
@@ -1513,6 +1515,112 @@ d_surf * triangulate_points(const d_points * pnts, const d_grid * grid)
 	return srf;
 
 };
+
+class projection
+{
+public:
+	projection(double ix0, double iy0, double ix1, double iy1,
+		   double ix_0, double iy_0, double ix_1, double iy_1)
+	{
+		x0 = ix0;
+		y0 = iy0;
+		x1 = ix1;
+		y1 = iy1;
+		x_0 = ix_0;
+		y_0 = iy_0;
+		x_1 = ix_1;
+		y_1 = iy_1;
+		lx = x1 - x0;
+		ly = y1 - y0;
+		l_x = x_1 - x_0;
+		l_y = y_1 - y_0;
+	}
+
+        void operator()(double & x, double & y)
+	{
+		double px = (x-x0)/lx;
+		double py = (y-y0)/ly;
+		x = x_0 + double(px*l_x);
+		y = y_0 + double(py*l_y);
+	};
+
+	float get_x(double x) {
+		double px = (x-x0)/lx;
+		x = x_0 + double(px*l_x);
+		return (float)floor(x + 0.5);
+	}
+
+	float get_y(double y) {
+		double py = (y-y0)/ly;
+		y = y_0 + double(py*l_y);
+		return (float)floor(y + 0.5);
+	}
+
+private:
+	double x0, y0, x1, y1;
+	double lx, ly;
+	double x_0, y_0, x_1, y_1;
+	double l_x, l_y;
+};
+
+bool _surf_plot(const d_surf * srf, const char * filename) 
+{
+	if (srf == NULL)
+		return false;
+
+	writelog(LOG_MESSAGE,"Plotting surface \"%s\" to file \"%s\"", srf->getName(), filename);
+	float minx, maxx, miny, maxy;
+	minx = (float)srf->getMinX();
+	maxx = (float)srf->getMaxX();
+	miny = (float)srf->getMinY();
+	maxy = (float)srf->getMaxY();
+
+	float max_len = MAX(maxx-minx, maxy-miny);
+
+	projection p(minx, miny, minx+max_len, miny+max_len, 10, 10, 200, 200);
+
+	REAL minz, maxz;
+	srf->getMinMaxZ(minz, maxz);
+
+	REAL stepX2 = srf->getStepX()/REAL(2);
+	REAL stepY2 = srf->getStepY()/REAL(2);
+
+	REAL stepX = srf->getStepX();
+	REAL stepY = srf->getStepY();
+
+	float STEPX = float((200-10)*stepX/(max_len));
+	float STEPY = float((200-10)*stepY/(max_len));
+
+	CreEPS ps(filename, 210, 297); // A4
+	
+	size_t i, j;
+	double y0;
+	float Y0;
+	double x0; 
+	float X0;	
+	float EPS=0.2f;
+	y0 = float(srf->getCoordNodeY(0) - stepY2);
+	Y0 = p.get_y(y0);
+	for (j = 0; j < srf->getCountY(); j++) {
+		x0 = srf->getCoordNodeX(0) - stepX2;
+		X0 = p.get_x(x0);
+		for (i = 0; i < srf->getCountX(); i++) {
+			REAL z = srf->getValueIJ(i,j);
+			if (z == srf->undef_value) {
+				X0 += STEPX;
+				continue;
+			}
+
+			float color = float((z-minz)/(maxz-minz)*4./5.);
+			ps.rectFill( X0-EPS, Y0-EPS, STEPX+EPS, STEPY+EPS, CAtColor(color, color, color) );
+			X0 += STEPX;
+		}
+		Y0 += STEPY;
+	}
+
+	return true;
+};
+
 
 }; // namespace surfit;
 

@@ -62,6 +62,15 @@ bool _surf_save(const d_surf * srf, const char * filename);
 
 SURFIT_EXPORT
 /*! \ingroup internal_surf
+    \fn bool _surf_plot(const d_surf * srf, const char * filename);
+    \brief plots surface to PostScript file
+    \param srf surf class to save
+    \param filename PostScript file 
+*/
+bool _surf_plot(const d_surf * srf, const char * filename);
+
+SURFIT_EXPORT
+/*! \ingroup internal_surf
     \fn bool _surf_save_df(const d_surf * srf, datafile * df);
     \brief writes surf tags to \ref datafile
 */
