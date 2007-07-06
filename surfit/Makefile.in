@@ -371,7 +371,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 AUTOMAKE_OPTIONS = foreign
 INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/sstuff/ptypes -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io -DANSI_DECLARATORS -DTRILIBRARY
-EXTRA_DIST = vc6/surfit* vc6/freeflow* vc6/globe* \
+EXTRA_DIST = vc6/surfit* vc6/freeflow* vc6/globe* vc7/* vc8/* \
 	src/surfit/interface/*.i examples/* src/freeflow/interface/*.i \
 	src/globe/interface/*.i src/surfit_io/interface/*.i \
 	doc/gallery/* doc/src/* doc/html/* doc/surfit.cfg \
@@ -455,14 +455,14 @@ libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/solvers/RF.cpp src/surfit/solvers/SSOR.cpp \
 	src/surfit/creeps/CreEPS.cpp src/surfit/area_tcl.h \
 	src/surfit/cntr_tcl.h src/surfit/curvs_tcl.h \
-	src/surfit/curv_tcl.h src/surfit/curv_trace.h \
-	src/surfit/f_points_tcl.h src/surfit/f_method.h \
-	src/surfit/f_triangulate.h src/surfit/grid_line_tcl.h \
-	src/surfit/grid_tcl.h src/surfit/hist_tcl.h \
-	src/surfit/mask_tcl.h src/surfit/other_tcl.h \
-	src/surfit/others_tcl.h src/surfit/pnts_tcl.h \
-	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h \
-	src/surfit/surfit_ie.h src/surfit/creeps/CreEPS.h
+	src/surfit/curv_tcl.h src/surfit/f_points_tcl.h \
+	src/surfit/f_method.h src/surfit/f_triangulate.h \
+	src/surfit/grid_line_tcl.h src/surfit/grid_tcl.h \
+	src/surfit/hist_tcl.h src/surfit/mask_tcl.h \
+	src/surfit/other_tcl.h src/surfit/others_tcl.h \
+	src/surfit/pnts_tcl.h src/surfit/surfs_tcl.h \
+	src/surfit/surf_tcl.h src/surfit/surfit_ie.h \
+	src/surfit/creeps/CreEPS.h
 #libsurfit_la_HEADERS += src/surfit/matrD2_aniso.h
 libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/cmofs.h src/surfit/cntr.h \
@@ -2350,7 +2350,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/doc $(distdir)/doc/gallery $(distdir)/doc/html $(distdir)/doc/src $(distdir)/examples $(distdir)/src/freeflow $(distdir)/src/freeflow/interface $(distdir)/src/globe $(distdir)/src/globe/interface $(distdir)/src/sstuff $(distdir)/src/sstuff/ptypes $(distdir)/src/surfit $(distdir)/src/surfit/interface $(distdir)/src/surfit_io $(distdir)/src/surfit_io/interface $(distdir)/vc6
+	$(mkdir_p) $(distdir)/doc $(distdir)/doc/gallery $(distdir)/doc/html $(distdir)/doc/src $(distdir)/examples $(distdir)/src/freeflow $(distdir)/src/freeflow/interface $(distdir)/src/globe $(distdir)/src/globe/interface $(distdir)/src/sstuff $(distdir)/src/sstuff/ptypes $(distdir)/src/surfit $(distdir)/src/surfit/interface $(distdir)/src/surfit_io $(distdir)/src/surfit_io/interface $(distdir)/vc6 $(distdir)/vc7 $(distdir)/vc8
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -2603,6 +2603,7 @@ dist-hook:
 
 	chmod ugo+x install-sh
 	rm -rf `find $(distdir) -name CVS`; \
+	rm -rf `find $(distdir) -name .svn`; \
 	rm -rf `find $(distdir) -name "*.log"`; \
 	rm -rf `find $(distdir) -name "*.dat"`; \
 	rm -rf `find $(distdir) -name "core*"` 

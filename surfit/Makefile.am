@@ -8,6 +8,8 @@ INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/sstuff/ptypes -Isrc
 EXTRA_DIST = vc6/surfit*
 EXTRA_DIST += vc6/freeflow*
 EXTRA_DIST += vc6/globe*
+EXTRA_DIST += vc7/*
+EXTRA_DIST += vc8/*
 EXTRA_DIST += src/surfit/interface/*.i
 EXTRA_DIST += examples/*
 EXTRA_DIST += src/freeflow/interface/*.i
@@ -229,7 +231,6 @@ libsurfit_la_HEADERS += src/surfit/curv.h
 libsurfit_la_SOURCES += src/surfit/curvs_tcl.h         
 libsurfit_la_HEADERS += src/surfit/curv_internal.h     
 libsurfit_la_SOURCES += src/surfit/curv_tcl.h          
-libsurfit_la_SOURCES += src/surfit/curv_trace.h          
 libsurfit_la_HEADERS += src/surfit/surfit_data.h              
 libsurfit_la_HEADERS += src/surfit/data_manager.h      
 libsurfit_la_HEADERS += src/surfit/free_elements.h     
@@ -465,6 +466,7 @@ dist-hook:
 
 	chmod ugo+x install-sh
 	rm -rf `find $(distdir) -name CVS`; \
+	rm -rf `find $(distdir) -name .svn`; \
 	rm -rf `find $(distdir) -name "*.log"`; \
 	rm -rf `find $(distdir) -name "*.dat"`; \
 	rm -rf `find $(distdir) -name "core*"` 
