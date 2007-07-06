@@ -108,7 +108,7 @@ endif
 
 
 libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB)
-libsstuff_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsstuff.dll
+libsstuff_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libsstuff.dll
 
 if HAVE_PTHREAD_INSTALLED
 libsstuff_la_LIBADD += -lpthread 
@@ -215,6 +215,7 @@ libsurfit_la_SOURCES += src/surfit/solvers/J.cpp
 libsurfit_la_SOURCES += src/surfit/solvers/JCG.cpp
 libsurfit_la_SOURCES += src/surfit/solvers/RF.cpp
 libsurfit_la_SOURCES += src/surfit/solvers/SSOR.cpp
+libsurfit_la_SOURCES += src/surfit/creeps/CreEPS.cpp
 
 
 libsurfit_la_HEADERS  = src/surfit/area.h              
@@ -314,10 +315,10 @@ libsurfit_la_HEADERS += src/surfit/variables.h
 libsurfit_la_HEADERS += src/surfit/variables_internal.h
 libsurfit_la_HEADERS += src/surfit/variables_tcl.h  
 libsurfit_la_HEADERS += src/surfit/triangle.h   
-
+libsurfit_la_SOURCES += src/surfit/creeps/CreEPS.h
 
 libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la 
-libsurfit_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit.dll
+libsurfit_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libsurfit.dll
 
 
 libsurfit_io_ladir = $(prefix)/include/surfit_io
@@ -384,7 +385,7 @@ libsurfit_io_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) libsstuff.la libs
 if HAVE_JPEG_INSTALLED
 libsurfit_io_la_LIBADD += -ljpeg
 endif
-libsurfit_io_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit_io.dll
+libsurfit_io_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libsurfit_io.dll
 
 
 libfreeflow_ladir = $(prefix)/include/freeflow
@@ -458,7 +459,7 @@ libglobe_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la libsurfit.la
 if HAVE_ZLIB_INSTALLED
 libglobe_la_LIBADD += -lz
 endif 
-libglobe_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libglobe.dll
+libglobe_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libglobe.dll
 
 dist-hook:
 

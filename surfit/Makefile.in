@@ -177,7 +177,7 @@ am_libsurfit_la_OBJECTS = area.lo area_internal.lo area_tcl.lo \
 	others_tcl.lo pnts_internal.lo pnts_tcl.lo points.lo \
 	solvers.lo sort_alg.lo surf.lo surfs_tcl.lo surf_internal.lo \
 	surf_tcl.lo surfit.lo surfit_wrap.lo variables.lo triangle.lo \
-	CG.lo J.lo JCG.lo RF.lo SSOR.lo
+	CG.lo J.lo JCG.lo RF.lo SSOR.lo CreEPS.lo
 libsurfit_la_OBJECTS = $(am_libsurfit_la_OBJECTS)
 libsurfit_io_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) libsstuff.la libsurfit.la \
@@ -401,7 +401,7 @@ libsstuff_la_HEADERS = src/sstuff/bitvec.h src/sstuff/bitvec_alg.h \
 	src/sstuff/stepFunc.h src/sstuff/vec.h src/sstuff/vec_alg.h \
 	src/sstuff/threads.h $(am__append_5)
 libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(am__append_6)
-libsstuff_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsstuff.dll
+libsstuff_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libsstuff.dll
 libsurfit_ladir = $(prefix)/include/surfit
 #libsurfit_la_SOURCES += src/surfit/matrD2_aniso.cpp
 libsurfit_la_SOURCES = src/surfit/area.cpp \
@@ -453,15 +453,16 @@ libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/triangle.cpp src/surfit/solvers/CG.cpp \
 	src/surfit/solvers/J.cpp src/surfit/solvers/JCG.cpp \
 	src/surfit/solvers/RF.cpp src/surfit/solvers/SSOR.cpp \
-	src/surfit/area_tcl.h src/surfit/cntr_tcl.h \
-	src/surfit/curvs_tcl.h src/surfit/curv_tcl.h \
-	src/surfit/curv_trace.h src/surfit/f_points_tcl.h \
-	src/surfit/f_method.h src/surfit/f_triangulate.h \
-	src/surfit/grid_line_tcl.h src/surfit/grid_tcl.h \
-	src/surfit/hist_tcl.h src/surfit/mask_tcl.h \
-	src/surfit/other_tcl.h src/surfit/others_tcl.h \
-	src/surfit/pnts_tcl.h src/surfit/surfs_tcl.h \
-	src/surfit/surf_tcl.h src/surfit/surfit_ie.h
+	src/surfit/creeps/CreEPS.cpp src/surfit/area_tcl.h \
+	src/surfit/cntr_tcl.h src/surfit/curvs_tcl.h \
+	src/surfit/curv_tcl.h src/surfit/curv_trace.h \
+	src/surfit/f_points_tcl.h src/surfit/f_method.h \
+	src/surfit/f_triangulate.h src/surfit/grid_line_tcl.h \
+	src/surfit/grid_tcl.h src/surfit/hist_tcl.h \
+	src/surfit/mask_tcl.h src/surfit/other_tcl.h \
+	src/surfit/others_tcl.h src/surfit/pnts_tcl.h \
+	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h \
+	src/surfit/surfit_ie.h src/surfit/creeps/CreEPS.h
 #libsurfit_la_HEADERS += src/surfit/matrD2_aniso.h
 libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/cmofs.h src/surfit/cntr.h \
@@ -501,7 +502,7 @@ libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/variables.h src/surfit/variables_internal.h \
 	src/surfit/variables_tcl.h src/surfit/triangle.h
 libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la 
-libsurfit_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit.dll
+libsurfit_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libsurfit.dll
 libsurfit_io_ladir = $(prefix)/include/surfit_io
 # shapelib
 # EasyBmp
@@ -539,7 +540,7 @@ libsurfit_io_la_HEADERS = src/surfit_io/area_io.h \
 	src/surfit_io/surfit_io_variables.h src/surfit_io/surf_io.h
 libsurfit_io_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) \
 	libsstuff.la libsurfit.la $(am__append_7)
-libsurfit_io_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libsurfit_io.dll
+libsurfit_io_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libsurfit_io.dll
 libfreeflow_ladir = $(prefix)/include/freeflow
 libfreeflow_la_SOURCES = src/freeflow/flow_data_manager.cpp \
 	src/freeflow/flow_surf_internal.cpp \
@@ -575,7 +576,7 @@ libglobe_la_HEADERS = src/globe/dem.h src/globe/dem_internal.h \
 	src/globe/globe_variables.h src/globe/shortmrf.h
 libglobe_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la \
 	libsurfit.la $(am__append_9)
-libglobe_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libglobe.dll
+libglobe_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libglobe.dll
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -676,6 +677,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CG.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CreEPS.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/EasyBMP.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/J.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/JCG.Plo@am__quote@
@@ -1984,6 +1986,13 @@ SSOR.lo: src/surfit/solvers/SSOR.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/solvers/SSOR.cpp' object='SSOR.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o SSOR.lo `test -f 'src/surfit/solvers/SSOR.cpp' || echo '$(srcdir)/'`src/surfit/solvers/SSOR.cpp
+
+CreEPS.lo: src/surfit/creeps/CreEPS.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT CreEPS.lo -MD -MP -MF "$(DEPDIR)/CreEPS.Tpo" -c -o CreEPS.lo `test -f 'src/surfit/creeps/CreEPS.cpp' || echo '$(srcdir)/'`src/surfit/creeps/CreEPS.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/CreEPS.Tpo" "$(DEPDIR)/CreEPS.Plo"; else rm -f "$(DEPDIR)/CreEPS.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/creeps/CreEPS.cpp' object='CreEPS.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o CreEPS.lo `test -f 'src/surfit/creeps/CreEPS.cpp' || echo '$(srcdir)/'`src/surfit/creeps/CreEPS.cpp
 
 area_bln.lo: src/surfit_io/area_bln.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT area_bln.lo -MD -MP -MF "$(DEPDIR)/area_bln.Tpo" -c -o area_bln.lo `test -f 'src/surfit_io/area_bln.cpp' || echo '$(srcdir)/'`src/surfit_io/area_bln.cpp; \

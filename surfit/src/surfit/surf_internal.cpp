@@ -48,7 +48,7 @@
 
 #include "threads.h"
 
-#include "creeps/CreEps.h"
+#include "creeps/CreEPS.h"
 
 #include <math.h>
 #include <float.h>
