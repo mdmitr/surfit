@@ -86,6 +86,8 @@ bool f_cntr_smooth::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec *
 	calc_sects(sects_grid, sects, contours, mask_solved, mask_undefined);
 	if (sects == NULL)
 		return false;
+	if (sects->size() == 0)
+		return false;
 	size_t NN = method_grid->getCountX();
 	size_t MM = method_grid->getCountY();
 	

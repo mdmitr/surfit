@@ -50,7 +50,7 @@ surfit::surfit_init_variables(interp);
 %}
 
 namespace surfit {
-/*
+///*
 %exception {
         try {
 		if (surfit::stop_execution == 0) {
