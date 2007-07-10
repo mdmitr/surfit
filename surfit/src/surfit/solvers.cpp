@@ -296,11 +296,18 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 
 		if (penalty_iter_counter == 0) {
 			loglevel = prev_loglevel;
-			writelog2(LOG_MESSAGE,"processing with penalties");
+			writelog(LOG_MESSAGE,"processing with penalties : ");
 			loglevel = LOG_SILENT;
 		}
 
-		bool res = fnc->cond_make_matrix_and_vector(P_matrix, P_vec, parent_mask, method_mask_solved, fake_mask);
+		bool res = false;
+		
+		if (penalty_iter_counter == 0) {
+			loglevel = prev_loglevel;
+			res = fnc->cond_make_matrix_and_vector(P_matrix, P_vec, parent_mask, method_mask_solved, fake_mask);
+			writelog2(LOG_MESSAGE,"penalty algorithm progress : ");
+			loglevel = LOG_SILENT;
+		}
 					
 		size_t matrix_size = X->size();
 			
