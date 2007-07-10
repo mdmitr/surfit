@@ -72,8 +72,6 @@ bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_s
 
 	size_t matrix_size = method_basis_cntX*method_basis_cntY;
 
-	///*
-	
 	v = _extvec_adj_hist(method_X, hist, mask_solved, mask_undefined, FLT_MAX);
 	if (v == NULL) {
 		return false;
@@ -84,6 +82,8 @@ bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_s
 		mask->release();
 	mask = create_bitvec(matrix_size);
 	mask->init_true();
+
+	REAL prc = (trshold-MIN(trshold,penalty_iter_counter))/REAL(trshold);
 
 	size_t i;
 	for (i = 0; i < matrix_size; i++) {
@@ -105,7 +105,6 @@ bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_s
 		(*diag)(i) = mult;
 		REAL val1 = (*method_X)(i);
 		REAL val2 = (*v)(i);
-		REAL prc = (trshold-MIN(trshold,penalty_iter_counter))/REAL(trshold);
 		REAL val = val1*(1-prc) + val2*prc;
 		(*v)(i) = val*mult;
 	}
@@ -114,124 +113,7 @@ bool f_hist::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_s
 	matrix = M;
 
 	bool solvable = true;
-	//*/
-
-	/*
-	REAL minz = FLT_MAX, maxz = -FLT_MAX;
-	size_t i;
-	for (i = 0; i < matrix_size; i++) {
-		
-		if (mask_solved->get(i))
-			continue;
-		if (mask_undefined->get(i))
-			continue;
-
-		REAL val = (*method_X)(i);
-		if (val == FLT_MAX)
-			continue;
-		minz = MIN(minz, val);
-		maxz = MAX(maxz, val);
-	}
-
-	if ((minz == FLT_MAX) || (maxz == -FLT_MAX))
-		return false;
-
-	if (mask)
-		mask->release();
-	mask = create_bitvec(matrix_size);
-	mask->init_true();
-
-	bitvec * mask_solved_undefined = create_bitvec(mask_solved);
-	mask_solved_undefined->OR(mask_undefined);
-	size_t solved_or_undefined = mask_solved_undefined->true_size();
-
-	size_t intervs = hist->size();
-
-	d_hist * surf_hist = _hist_from_extvec(method_X, minz, maxz, intervs, FLT_MAX, mask_solved_undefined);
-
-	if (surf_hist->get_step() == 0) {
-		mask_solved_undefined->release();
-		surf_hist->release();
-		return false;
-	}
 	
-	surf_hist->normalize();
-	vec * T = surf_hist->get_cumulative_hist();
-
-	d_hist * dest_hist = create_hist(hist);
-	dest_hist->normalize();
-	REAL elem = REAL(1)/matrix_size;
-	REAL dest_minz = dest_hist->from();
-	REAL dest_maxz = dest_hist->to();
-	
-	for (i = 0; i < matrix_size; i++) {
-		if (mask_solved->get(i) == false)
-			continue;
-		
-		REAL val = (*method_X)(i);
-
-		if (val > dest_maxz)
-			continue;
-		if (val < dest_minz)
-			continue;
-
-		size_t pos = (*dest_hist)(val);
-		
-		(*dest_hist)[pos] = MAX(0, (*dest_hist)(pos)-elem);
-	}
-
-	dest_hist->normalize();
-
-	vec * Z = dest_hist->get_cumulative_hist();
-
-	size_t points = 0;
-
-	v = create_extvec(matrix_size);
-	extvec * diag = create_extvec(matrix_size);
-
-	for (i = 0; i < matrix_size; i++) {
-		if (mask_solved_undefined->get(i) == true) {
-			mask->set_false(i);
-			continue;
-		}
-		REAL val = (*method_X)(i);
-		REAL eqval = get_eq_value(T, Z, val,
-					  minz, maxz,
-					  dest_minz, dest_maxz);
-
-		if (val != eqval) {
-			REAL dist = fabs(eqval - val);
-			(*v)(i) = eqval*mult;
-			(*diag)(i) = mult;
-			points++;
-		}
-	}
-
-	mask_solved_undefined->release();
-
-	matr_diag * M = new matr_diag(diag, matrix_size, mask);
-	matrix = M;
-	
-	if (points == 0) {
-		delete M;
-		M = NULL;
-		matrix = NULL;
-		if (v)
-			v->release();
-		v = NULL;
-	}
-	
-	if (T)
-		T->release();
-	if (Z)
-		Z->release();
-	if (surf_hist)
-		surf_hist->release();
-	if (dest_hist)
-		dest_hist->release();
-	bool solvable = (points > 0);
-	//*/
-
 	solvable = wrap_sums(matrix, v, mask_solved, mask_undefined) || solvable;
 	return solvable;
 

@@ -83,6 +83,8 @@ bool f_cntr_smooth::solvable_without_cond(const bitvec * mask_solved,
 
 bool f_cntr_smooth::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined)
 {
+	
+	writelog(LOG_MESSAGE,"contours : (%d items)", contours->size());
 	calc_sects(sects_grid, sects, contours, mask_solved, mask_undefined);
 	if (sects == NULL)
 		return false;
@@ -228,13 +230,13 @@ void f_cntr_smooth::mark_solved_and_undefined(bitvec * mask_solved,
 #define DIRECTION_LEFT     4
 
 inline
-bool eq_points(REAL x0, REAL y0, REAL x1, REAL y1) 
+bool eq_points(REAL x0, REAL y0, REAL x1, REAL y1, REAL eps = 1e-12) 
 {
-	if (x0 != x1)
-		return false;
-	if (y0 != y1)
-		return false;
-	return true;
+	if (fabs(x0-x1) < eps)
+		return true;
+	if (fabs(y0-y1) < eps)
+		return true;
+	return false;
 };
 
 bool moving(size_t i, size_t j, 
