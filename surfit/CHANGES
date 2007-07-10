@@ -5,8 +5,8 @@ Bugfixes:
 	* bugfix in functions nodes_in_curv and nodes_in_curv_mask
 	* problem with loading modules more than one time
 	* bugfix in area_save_bln - rewriting file now tuned off :)
-	* bugfix in completer functional. Now it works correctly with undefined areas
-	* bugfix in trend functional.
+	* bugfix in completer gridding rule. Now it works correctly with undefined areas
+	* bugfix in trend gridding rule.
 
 New:
 	+ 64-bit platform support
@@ -18,11 +18,14 @@ New:
 	+ added surf_swapxy
 	+ cntr_load_shp syntax extended. Now you can load contours with constant Z value
 	  from shapefiles of SHPYT_ARC type.
-
 	+ regexp and wildcards support for commands and gridding rules
 	+ added new parameter to surf_load_xyz function. Allows to force binding points 
           to grid cells.
 	+ new gridding rule - "contours" for smooth contours approximation and interpolation
+	+ new gridding rule - "hist" for making surface with desired histogram
+	+ new gridding rule - "triangulate" for making surface using triangulation algorithm
+	+ new command surf_plot. Plots surface to PostScript file.
+	
 
 Other changes:
 	- removed curvs_load_shp, use curv_load_shp instead
