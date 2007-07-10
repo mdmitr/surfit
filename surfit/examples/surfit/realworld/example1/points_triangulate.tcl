@@ -13,7 +13,7 @@ clear_data
 set map_name "map_points_triangulate" 
 
 # set tolerance for cg solver
-set tol 1.99526e-006 
+set tol 1e-006 
 
 ##
 ## load initial data 
@@ -25,7 +25,7 @@ pnts_read "points.txt" "points"
 ##
 ## construct grid 
 ##
-grid 150 150
+grid 50 50
  
 ##
 ## create gridding rules
@@ -35,6 +35,7 @@ grid 150 150
 points "points" 
 
 triangulate 
+completer_add 0.1 1 5
 
 ##
 ## run gridding algorithm

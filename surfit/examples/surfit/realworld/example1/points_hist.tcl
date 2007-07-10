@@ -28,7 +28,6 @@ hist_write "hist_src.txt"
 ##
 ## construct grid 
 ##
-grid  150 150
 grid 50 50
  
 ##

@@ -25,7 +25,7 @@ pnts_read "points.txt" "points"
 ##
 ## construct grid 
 ##
-grid 150 150 
+grid 50 50 
  
 ##
 ## create gridding rules
