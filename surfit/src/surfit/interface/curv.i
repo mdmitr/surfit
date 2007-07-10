@@ -116,6 +116,7 @@ surfit::boolvec * cntr_setName(const char * new_name, const char * cntr_name = "
 void cntr_del(const char * cntr_name_or_position);
 int cntr_size();
 void cntrs_info();
+surfit::boolvec * cntr_smooth(const char * cntr_name = "*", size_t cnt = 1);
 
 //
 // areas

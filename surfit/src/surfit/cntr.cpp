@@ -101,7 +101,51 @@ void d_cntr::div(REAL value) {
 		*ptr /= value;
 };
 
+void d_cntr::normalize(REAL eps)
+{
+	if (size() < 1)
+		return;
 
+	vec * newX = create_vec();
+	newX->reserve(size());
+	vec * newY = create_vec();
+	newY->reserve(size());
+	vec * newZ = create_vec();
+	newZ->reserve(size());
+
+	newX->push_back( (*X)(0) );
+	newY->push_back( (*Y)(0) );
+	newZ->push_back( (*Z)(0) );
+
+	REAL prev_x = (*X)(0);
+	REAL prev_y = (*Y)(0);
+	REAL prev_z = (*Z)(0);
+
+	size_t i;
+	for (i = 1; i < size(); i++) {
+		REAL x1 = (*X)(i);
+		REAL y1 = (*Y)(i);
+		REAL z1 = (*Z)(i);
+
+		REAL dist = (x1-prev_x)*(x1-prev_x) + (y1-prev_y)*(y1-prev_y) + (z1-prev_z)*(z1-prev_z);
+		if (dist < eps)
+			continue;
+
+		newX->push_back(x1);
+		newY->push_back(y1);
+		newZ->push_back(z1);
+		prev_x = x1;
+		prev_y = y1;
+		prev_z = z1;
+	}
+
+	X->release();
+	Y->release();
+	Z->release();
+	X = newX;
+	Y = newY;
+	Z = newZ;
+};
 
 
 

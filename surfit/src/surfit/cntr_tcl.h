@@ -249,6 +249,8 @@ int cntr_size();
 */
 void cntrs_info();
 
+boolvec * cntr_smooth(const char * cntr_name = "*", size_t cnt = 1);
+
 }; // namespace surfit;
 
 #endif

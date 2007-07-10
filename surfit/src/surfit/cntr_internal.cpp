@@ -260,6 +260,162 @@ void _add_surfit_cntrs(d_cntr * contour) {
 	surfit_cntrs->push_back(contour);
 };
 
+vec * _vec_smooth(const vec * data, const vec * mask, bool closed)
+{
+	bool interp_scheme = true; // leave source points unmodified
+	size_t mask_size = mask->size();
+	size_t mask_half = mask_size/2;
+	size_t size = data->size();
+	if (size < mask_size)
+		return create_vec(*data);
+	
+	size_t res_size = size*2-1;
+	if (closed == true)
+		res_size--;
+
+	//
+	// Doubling vector
+	//
+	vec * res = create_vec(res_size, 0, false);
+	size_t i;
+	for (i = 0; i < res_size; i+=2) 
+		(*res)(i) = (*data)(i/2);
+
+	for (i = 1; i < res_size; i+=2) {
+		if (closed && (i+1 > res_size-1))
+			(*res)(i) = ((*res)(i-1) + (*res)(0))/REAL(2);
+		else
+			(*res)(i) = ((*res)(i-1) + (*res)(i+1))/REAL(2);
+	}
+
+	//
+	//
+	//  convolve res with mask
+	//
+	//
+
+	size_t j;
+	
+	vec * buf = create_vec(mask_size, 0, 0);
+	vec * res2 = create_vec(*res);
+	
+	for (i = 0; i < res_size; i++)
+	{
+		if (interp_scheme) // leave source points unmodified
+		{
+			if (i % 2 == 0)
+				continue;
+		}
+
+		for (j = 0; j < mask_size; j++) 
+		{
+			// find element for convolving
+			size_t pos = i+j-mask_half;
+			if (closed == false)
+			{
+				if (i+j < mask_half)
+					pos = 0;
+				pos = MIN(res_size-1,pos);
+			} else {
+				if (i+j < mask_half) {
+					pos = res_size+i+j-mask_half;
+				}
+				while (pos > res_size-1)
+					pos -= res_size;
+			}
+
+			(*buf)(j) = (*res)( pos );
+		}
+		
+		REAL val = 0;
+		for (j = 0; j < mask_size; j++) 
+			val += (*buf)(j)*(*mask)(j);
+
+		(*res2)(i) = val;
+	}
+
+	if (closed) {
+		REAL val = (*res2)(0);
+		res2->push_back( val );
+	}
+
+	buf->release();
+	res->release();
+	return res2;
+};
+
+bool _cntr_smooth(d_cntr * contour)
+{
+	vec * X = contour->X, * Y = contour->Y, * Z = contour->Z;
+	vec * newX = NULL, * newY = NULL, * newZ = NULL;
+
+	vec * mask = create_vec();
+	
+	// this is DLG mask!
+	mask->push_back(-2);
+	mask->push_back( 5);
+	mask->push_back(10);
+	mask->push_back( 5);
+	mask->push_back(-2);
+	
+
+	REAL mask_sum = 0;
+	size_t i;
+	for (i = 0; i < mask->size(); i++)
+		mask_sum += (*mask)(i);
+	for (i = 0; i < mask->size(); i++)
+		(*mask)(i) /= mask_sum;
+
+
+	bool closed = contour->is_closed();
+
+	newX =_vec_smooth(X, mask, closed);
+	if (newX == NULL)
+		goto failed;
+
+	newY =_vec_smooth(Y, mask, closed);
+	if (newY == NULL)
+		goto failed;
+
+	newZ =_vec_smooth(Z, mask, closed);
+	if (newZ == NULL)
+		goto failed;
+
+	contour->X->release();
+	contour->Y->release();
+	contour->Z->release();
+
+	contour->X = newX;
+	contour->Y = newY;
+	contour->Z = newZ;
+
+	mask->release();
+
+	REAL minx, maxx, miny, maxy;
+	contour->bounds(minx, maxx, miny, maxy);
+
+	return true;
+
+failed:
+
+	if (X)
+		X->release();
+	if (Y)
+		Y->release();
+	if (Z)
+		Z->release();
+
+	if (newX)
+		newX->release();
+	if (newY)
+		newY->release();
+	if (newZ)
+		newZ->release();
+
+	mask->release();
+
+	return false;
+};
 
 }; // namespace surfit;
 

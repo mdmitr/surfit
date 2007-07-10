@@ -83,6 +83,9 @@ SURFIT_EXPORT
 */
 void _add_surfit_cntrs(d_cntr * contour);
 
+SURFIT_EXPORT
+bool _cntr_smooth(d_cntr * contour);
+
 }; // namespace surfit;
 
 #endif

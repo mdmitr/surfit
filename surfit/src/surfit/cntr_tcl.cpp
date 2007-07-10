@@ -397,5 +397,40 @@ void cntrs_info() {
 	}
 };
 
+struct match_cntr_smooth
+{
+	match_cntr_smooth(const char * ipos, size_t icnt) : pos(ipos), res(NULL), cnt(icnt) {};
+	void operator()(d_cntr * cntr)
+	{
+		if ( StringMatch(pos, cntr->getName()) )
+		{
+			if (res == NULL)
+				res = create_boolvec();
+			writelog(LOG_MESSAGE,"Smoothing contour \"%s\"", cntr->getName());
+			size_t i;
+			bool r = true;
+
+			// first remove dupe points
+			cntr->normalize();
+
+			// now call 'cnt' times _cntr_smooth
+			for (i = 0; i < cnt; i++) {
+				r = _cntr_smooth(cntr) && r;
+			}
+			res->push_back( r );
+		}
+	}
+	const char * pos;
+	boolvec * res;
+	size_t cnt;
+};
+
+boolvec * cntr_smooth(const char * pos, size_t cnt) 
+{
+	match_cntr_smooth qq(pos, cnt);
+	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
+	return qq.res;
+};
+
 }; // namespace surfit;
 

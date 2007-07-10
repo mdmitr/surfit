@@ -70,6 +70,9 @@ public:
 	//! pointer to the first element of line values vector
 	vec * Z;
 
+	//! removes dupe points
+	void normalize(REAL eps = 1e-8);
+
 };
 
 class d_points;
