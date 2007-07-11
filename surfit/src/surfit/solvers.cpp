@@ -34,6 +34,7 @@
 #include "intvec.h"
 #include "threads.h"
 
+#include <time.h>
 #include <vector>
 #include <algorithm>
 
@@ -274,7 +275,10 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 	short prp = 0;
 	size_t iters = 0;
 
-	REAL penalty_tol = tol;//*10000000;
+	time_t ltime_begin;
+	time( &ltime_begin );
+
+	REAL penalty_tol = tol;
 
 	std::vector<REAL> norms;
 	norms.reserve(penalty_max_iter);
@@ -307,7 +311,9 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 			res = fnc->cond_make_matrix_and_vector(P_matrix, P_vec, parent_mask, method_mask_solved, fake_mask);
 			writelog2(LOG_MESSAGE,"penalty algorithm progress : ");
 			loglevel = LOG_SILENT;
-		}
+		} else
+			res = fnc->cond_make_matrix_and_vector(P_matrix, P_vec, parent_mask, method_mask_solved, fake_mask);
+	
 					
 		size_t matrix_size = X->size();
 			
@@ -398,8 +404,16 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 	delete T;
 	if (V)
 		V->release();
+
+	time_t ltime_end;
+	time( &ltime_end );
+
+	double sec = difftime(ltime_end,ltime_begin);
+	int minutes = (int)(sec/REAL(60));
+	sec -= minutes*60;
+
 	loglevel = prev_loglevel;
-	log_printf(" %s: %d iterations, penalty: %d iterations \n", get_current_solver_short_name(), iters, penalty_iter_counter);
+	log_printf(" %s: %d iterations, penalty: %d iterations, %d min %G sec\n", get_current_solver_short_name(), iters, penalty_iter_counter, minutes, sec);
 	penalty_iter_counter = 0;
 	return true;
 	
