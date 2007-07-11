@@ -56,8 +56,7 @@ void data::setName(const char * newname) {
 		name = NULL;
 	}
 
-	name = (char *)malloc(strlen(newname) + 1);
-	strcpy(name, newname);
+	name = strdup(newname);
 };
 
 void data::setType(const char * newtype) {
