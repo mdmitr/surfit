@@ -258,7 +258,11 @@ bool _cntr_load_shp(const char * filename, const char * cntrname, const char * z
 				(*Z)(j) = *(shpObject->padfZ + j);
 		}
 		
-		d_cntr * res = create_cntr(X, Y, Z, name);
+		d_cntr * res = NULL;
+		if (strcmp(name,"") == 0)
+			res = create_cntr(X, Y, Z, "noname");
+		else 
+			res = create_cntr(X, Y, Z, name);
 		surfit_cntrs->push_back(res);
 		SHPDestroyObject(shpObject);
 	}

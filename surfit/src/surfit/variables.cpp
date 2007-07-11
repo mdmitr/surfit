@@ -96,6 +96,8 @@ struct garbage : public binman {
 			delete functionals;
 			functionals = NULL;
 		}
+		free(map_name);
+		free(solver_name);
 	};
 };
 

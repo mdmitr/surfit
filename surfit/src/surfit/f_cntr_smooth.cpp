@@ -83,7 +83,6 @@ bool f_cntr_smooth::solvable_without_cond(const bitvec * mask_solved,
 
 bool f_cntr_smooth::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined)
 {
-	
 	writelog(LOG_MESSAGE,"contours : (%d items)", contours->size());
 	calc_sects(sects_grid, sects, contours, mask_solved, mask_undefined);
 	if (sects == NULL)
@@ -344,6 +343,8 @@ bool calc_sects(d_grid *& sects_grid,
 		sects_grid->release();
 	}
 	sects_grid = create_grid(method_grid);
+	if (sects)
+		delete sects;
 	sects = new std::vector<sect>();
 	
 #ifdef DEBUG

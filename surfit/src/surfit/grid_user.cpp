@@ -545,7 +545,6 @@ void grid_release() {
 	method_X = NULL;
 
 	res_surf->undef_value = surfit::undef_value;
-	res_surf->setName(map_name);
 	
 	surfit_surfs->push_back(res_surf);	
 

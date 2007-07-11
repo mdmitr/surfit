@@ -69,6 +69,8 @@ d_cntr * _cntr_load_bln(FILE * file, int & orient)
 				pos2 = strchr(pos1,'"');
 				if (pos2) {
 					pos2--;
+					if (name)
+						free(name);
 					name = (char *)malloc( sizeof(char)*(pos2-pos1+2) );
 					strncpy(name, pos1, pos2-pos1+1);
 					name[pos2-pos1+1] = '\0';
@@ -108,6 +110,8 @@ d_cntr * _cntr_load_bln(FILE * file, int & orient)
 		goto bad_file;
 
 	res = create_cntr(X, Y, Z, name);
+	if (name)
+		free(name);
 	return res;
 
 
