@@ -142,14 +142,14 @@ boolvec * curve_add(REAL value, REAL weight, const char * pos)
 
 struct match_curve_leq
 {
-	match_curve_leq(const char * ipos, REAL ival, REAL imult) : pos(ipos), val(ival), mult(imult), res(NULL) {};
+	match_curve_leq(const char * ipos, REAL ival, REAL ipenalty_factor) : pos(ipos), val(ival), penalty_factor(ipenalty_factor), res(NULL) {};
 	void operator()(d_curv * crv) 
 	{
 		if ( StringMatch(pos, crv->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule curve_leq(%g,\"%s\",%g)", 
-				 val, crv->getName()), mult;
-			f_curv_ineq * f = new f_curv_ineq(val, crv, true, mult);
+				 val, crv->getName(), get_mult(penalty_factor));
+			f_curv_ineq * f = new f_curv_ineq(val, crv, true, get_mult(penalty_factor));
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -158,27 +158,27 @@ struct match_curve_leq
 	}
 	const char * pos;
 	REAL val;
-	REAL mult;
+	REAL penalty_factor;
 	boolvec * res;
 };
 
-boolvec * curve_leq(REAL value, const char * curve_pos, REAL mult) 
+boolvec * curve_leq(REAL value, const char * curve_pos, REAL penalty_factor) 
 {
-	match_curve_leq qq(curve_pos, value, mult);
+	match_curve_leq qq(curve_pos, value, penalty_factor);
 	qq = std::for_each(surfit_curvs->begin(), surfit_curvs->end(), qq);
 	return qq.res;
 };
 
 struct match_curve_geq
 {
-	match_curve_geq(const char * ipos, REAL ival, REAL imult) : pos(ipos), val(ival), mult(imult), res(NULL) {};
+	match_curve_geq(const char * ipos, REAL ival, REAL ipenalty_factor) : pos(ipos), val(ival), penalty_factor(ipenalty_factor), res(NULL) {};
 	void operator()(d_curv * crv) 
 	{
 		if ( StringMatch(pos, crv->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule curve_geq(%g,\"%s\",%g)", 
-				 val, crv->getName(), mult);
-			f_curv_ineq * f = new f_curv_ineq(val, crv, false, mult);
+				 val, crv->getName(), get_mult(penalty_factor));
+			f_curv_ineq * f = new f_curv_ineq(val, crv, false, get_mult(penalty_factor));
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -187,13 +187,13 @@ struct match_curve_geq
 	}
 	const char * pos;
 	REAL val;
-	REAL mult;
+	REAL penalty_factor;
 	boolvec * res;
 };
 
-boolvec * curve_geq(REAL value, const char * curve_pos, REAL mult) 
+boolvec * curve_geq(REAL value, const char * curve_pos, REAL penalty_factor) 
 {
-	match_curve_geq qq(curve_pos, value, mult);
+	match_curve_geq qq(curve_pos, value, penalty_factor);
 	qq = std::for_each(surfit_curvs->begin(), surfit_curvs->end(), qq);
 	return qq.res;
 };
@@ -303,14 +303,14 @@ boolvec * curve_surf_add(const char * surf_pos, REAL weight, const char * curv_p
 
 struct match_curve_surf_leq2
 {
-	match_curve_surf_leq2(const char * isurf_pos, d_curv * icrv, REAL imult) : surf_pos(isurf_pos), crv(icrv), mult(imult), res(NULL) {};
+	match_curve_surf_leq2(const char * isurf_pos, d_curv * icrv, REAL ipenalty_factor) : surf_pos(isurf_pos), crv(icrv), penalty_factor(ipenalty_factor), res(NULL) {};
 	void operator()(d_surf * srf)
 	{
 		if ( StringMatch(surf_pos, srf->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule curve_surf_leq(\"%s\",\"%s\",%g)", 
-				 srf->getName(),crv->getName(),mult);
-			f_curv_surf_ineq * f = new f_curv_surf_ineq(srf, crv, true, mult);
+				 srf->getName(),crv->getName(), get_mult(penalty_factor));
+			f_curv_surf_ineq * f = new f_curv_surf_ineq(srf, crv, true, get_mult(penalty_factor));
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -320,18 +320,18 @@ struct match_curve_surf_leq2
 
 	const char * surf_pos;
 	d_curv * crv;
-	REAL mult;
+	REAL penalty_factor;
 	boolvec * res;
 };
 
 struct match_curve_surf_leq
 {
-	match_curve_surf_leq(const char * isurf_pos, const char * icurv_pos, REAL imult) : surf_pos(isurf_pos), curv_pos(icurv_pos), mult(imult), res(NULL) {};
+	match_curve_surf_leq(const char * isurf_pos, const char * icurv_pos, REAL ipenalty_factor) : surf_pos(isurf_pos), curv_pos(icurv_pos), penalty_factor(ipenalty_factor), res(NULL) {};
 	void operator()(d_curv * crv) 
 	{
 		if ( StringMatch(curv_pos, crv->getName()) )
 		{
-			match_curve_surf_leq2 qq(surf_pos, crv, mult);
+			match_curve_surf_leq2 qq(surf_pos, crv, penalty_factor);
 			qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
 			if (res == NULL)
 				res = create_boolvec();
@@ -340,28 +340,28 @@ struct match_curve_surf_leq
 	}
 	const char * surf_pos;
 	const char * curv_pos;
-	REAL mult;
+	REAL penalty_factor;
 	boolvec * res;
 };
 
-boolvec * curve_surf_leq(const char * surf_pos, const char * curv_pos, REAL mult) 
+boolvec * curve_surf_leq(const char * surf_pos, const char * curv_pos, REAL penalty_factor) 
 {
-	match_curve_surf_leq qq(surf_pos, curv_pos, mult);
+	match_curve_surf_leq qq(surf_pos, curv_pos, penalty_factor);
 	qq = std::for_each(surfit_curvs->begin(), surfit_curvs->end(), qq);	
 	return qq.res;
 };
 
 struct match_curve_surf_geq2
 {
-	match_curve_surf_geq2(const char * isurf_pos, d_curv * icrv, REAL imult) : surf_pos(isurf_pos), crv(icrv), mult(imult), res(NULL) {};
+	match_curve_surf_geq2(const char * isurf_pos, d_curv * icrv, REAL ipenalty_factor) : surf_pos(isurf_pos), crv(icrv), penalty_factor(ipenalty_factor), res(NULL) {};
 
 	void operator()(d_surf * srf)
 	{
 		if ( StringMatch(surf_pos, srf->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule curve_surf_geq(\"%s\",\"%s\",%g)", 
-				 srf->getName(),crv->getName(),mult);
-			f_curv_surf_ineq * f = new f_curv_surf_ineq(srf, crv, false, mult);
+				 srf->getName(),crv->getName(),get_mult(penalty_factor));
+			f_curv_surf_ineq * f = new f_curv_surf_ineq(srf, crv, false, get_mult(penalty_factor));
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -371,18 +371,18 @@ struct match_curve_surf_geq2
 
 	const char * surf_pos;
 	d_curv * crv;
-	REAL mult;
+	REAL penalty_factor;
 	boolvec * res;
 };
 
 struct match_curve_surf_geq
 {
-	match_curve_surf_geq(const char * isurf_pos, const char * icurv_pos, REAL imult) : surf_pos(isurf_pos), curv_pos(icurv_pos), mult(imult), res(NULL) {};
+	match_curve_surf_geq(const char * isurf_pos, const char * icurv_pos, REAL ipenalty_factor) : surf_pos(isurf_pos), curv_pos(icurv_pos), penalty_factor(ipenalty_factor), res(NULL) {};
 	void operator()(d_curv * crv) 
 	{
 		if ( StringMatch(curv_pos, crv->getName()) )
 		{
-			match_curve_surf_geq2 qq(surf_pos, crv, mult);
+			match_curve_surf_geq2 qq(surf_pos, crv, penalty_factor);
 			qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
 			if (res == NULL)
 				res = create_boolvec();
@@ -391,13 +391,13 @@ struct match_curve_surf_geq
 	}
 	const char * surf_pos;
 	const char * curv_pos;
-	REAL mult;
+	REAL penalty_factor;
 	boolvec * res;
 };
 
-boolvec * curve_surf_geq(const char * surf_pos, const char * curv_pos, REAL mult) 
+boolvec * curve_surf_geq(const char * surf_pos, const char * curv_pos, REAL penalty_factor) 
 {
-	match_curve_surf_geq qq(surf_pos, curv_pos, mult);
+	match_curve_surf_geq qq(surf_pos, curv_pos, penalty_factor);
 	qq = std::for_each(surfit_curvs->begin(), surfit_curvs->end(), qq);	
 	return qq.res;
 };
@@ -1009,7 +1009,7 @@ boolvec * contour_add(REAL weight, const char * pos)
 
 struct match_contours
 {
-	match_contours(const char * ipos) : pos(ipos), res(NULL) {};
+	match_contours(const char * ipos, REAL imult) : pos(ipos), res(NULL), mult(imult) {};
 	void operator()(d_cntr * contour) 
 	{
 		if ( StringMatch(pos, contour->getName()) )
@@ -1027,19 +1027,20 @@ struct match_contours
 					return;
 				}
 			}
-			f_cntr_smooth * f = new f_cntr_smooth();
+			f_cntr_smooth * f = new f_cntr_smooth(mult);
 			f->add_contour(contour);
 			functionals_push_back(f);
 			res->push_back(true);
 		}
 	}
+	REAL mult;
 	const char * pos;
 	boolvec * res;
 };
 
-boolvec * contours(const char * pos) 
+boolvec * contours(const char * pos, REAL mult) 
 {
-	match_contours qq(pos);
+	match_contours qq(pos, mult);
 	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
 	return qq.res;
 };

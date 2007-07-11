@@ -31,12 +31,12 @@ surfit::boolvec * fault(const char * curv_name = "*");
 
 surfit::boolvec * curve(REAL value, const char * curv_name = "*");
 surfit::boolvec * curve_add(REAL value, REAL weight, const char * curv_name = "*");
-surfit::boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL mult = 1);
-surfit::boolvec * curve_geq(REAL value, const char * curv_name = "*", REAL mult = 1);
+surfit::boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL penalty_factor = 0);
+surfit::boolvec * curve_geq(REAL value, const char * curv_name = "*", REAL penalty_factor = 0);
 surfit::boolvec * curve_surf(const char * surf_name = "*", const char * curv_name = "*");
 surfit::boolvec * curve_surf_add(const char * surf_name = "*", REAL weight = 1, const char * curv_name = "*");
-surfit::boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 1);
-surfit::boolvec * curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 1);
+surfit::boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL penalty_factor = 0);
+surfit::boolvec * curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL penalty_factor = 0);
 
 surfit::boolvec * area(const char * value = "undef", const char * area_name = "*", int inside = 1);
 surfit::boolvec * area_add(REAL value, REAL weight, const char * area_name = "*", int inside = 1);
@@ -56,7 +56,7 @@ surfit::boolvec * contour(const char * cntr_name = "*");
 surfit::boolvec * contour_add(REAL weight, const char * cntr_name = "*");
 surfit::boolvec * contour_leq(const char * cntr_name = "*", REAL mult = 1);
 surfit::boolvec * contour_geq(const char * cntr_name = "*", REAL mult = 1);
-surfit::boolvec * contours(const char * cntr_name = "*");
+surfit::boolvec * contours(const char * cntr_name = "*", REAL mult = 0.001);
 surfit::boolvec * contours_add(REAL weight = 50, const char * cntr_name = "*");
 //
 // 2D

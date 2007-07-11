@@ -84,19 +84,20 @@ boolvec * curve(REAL value, const char * curv_name = "*");
 boolvec * curve_add(REAL value, REAL weight = 1, const char * curv_name = "*");
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_leq(REAL value, const char * curv_name = "*", REAL mult = 1);
+    \fn bool curve_leq(REAL value, const char * curv_name = "*", REAL penalty_factor = 0);
 
     \par Tcl syntax:
-    curve_leq value \ref str "curv_name"
+    curve_leq value \ref str "curv_name" penalty_factor
 
     \par Description:
     This rule adds the surface condition - "the resulting surface at curve should be lower than or equal to value".
-    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
-    your conditions and if they are correct, try to change "mult" parameter.
+    In case of the \ref penalty bad convergence or unexpected 
+    (wrong) result, you should carefully review your conditions and if they are correct, try 
+    to change \ref penalty_factor "penalty_factor" parameter.
 
     \param value surface should be lower than or equal to this real number
     \param curv_name \ref d_curv "curve" \ref str "name"
-    \param mult multiplier parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty algorithm
 
     \par Math:
     This command adds the condition:
@@ -105,22 +106,23 @@ boolvec * curve_add(REAL value, REAL weight = 1, const char * curv_name = "*");
     \f]
     where (i,j) - indices of the cells cross with curve, z - constant value
 */
-boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL mult = 1);
+boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_geq(REAL value, const char * curv_name = "*", REAL mult = 1);
+    \fn bool curve_geq(REAL value, const char * curv_name = "*", REAL penalty_factor = 0);
 
     \par Tcl syntax:
-    curve_leq value \ref str "curv_name"
+    curve_leq value \ref str "curv_name" penalty_factor
 
     \par Description:
     This rule adds the surface condition - "the resulting surface at curve should be greater than or equal to value".
-    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
-    your conditions and if they are correct, try to change "mult" parameter.
+    In case of the \ref penalty bad convergence or unexpected 
+    (wrong) result, you should carefully review your conditions and if they are correct, try 
+    to change \ref penalty_factor "penalty_factor" parameter.
     
     \param value surface should be greater than or equal to this real number
     \param curv_name \ref d_curv "curve" \ref str "name"
-    \param mult multiplier parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty algorithm
     
     \par Math:
     This command adds the condition:
@@ -129,7 +131,7 @@ boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL mult = 1);
     \f]
     where (i,j) - indices of the cells cross with curve, z - constant value
 */
-boolvec * curve_geq(REAL value, const char * curv_name = "*", REAL mult = 1);
+boolvec * curve_geq(REAL value, const char * curv_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_curvs
     \fn bool curve_surf(const char * surf_name = "*", const char * curv_name = "*");
@@ -185,21 +187,22 @@ boolvec * curve_surf(const char * surf_name = "*", const char * curv_name = "*")
 boolvec * curve_surf_add(const char * surf_name = "*", REAL weight = 1, const char * curv_name = "*");
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 1);
+    \fn bool curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL penalty_factor = 0);
 
     \par Tcl syntax:
-    curve_surf_leq \ref str "surf_name" \ref str "curv_name"
+    curve_surf_leq \ref str "surf_name" \ref str "curv_name" penalty_factor
 
     \par Description:
     This rule adds the surface condition - "the resulting surface at curve should be lower than or equal 
     to other surface values". 
-    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should 
-    carefully review your conditions and if they are correct, try to change "mult" parameter.
+    In case of the \ref penalty bad convergence or unexpected 
+    (wrong) result, you should carefully review your conditions and if they are correct, try 
+    to change \ref penalty_factor "penalty_factor" parameter.
 
     \param surf_name \ref str "name" of \ref d_surf "surface". The
     resulting surface should be lower than or equal to this surface values at curve.
     \param curv_name \ref d_curv "curve" \ref str "name"
-    \param mult multiplier parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty algorithm
 
     \par Math:
     This command adds the condition:
@@ -209,24 +212,25 @@ boolvec * curve_surf_add(const char * surf_name = "*", REAL weight = 1, const ch
     where (i,j) - indices of the cells cross with curve, 
     f(x_i,y_j) - value for curve approximation, calculated as surface value at center of the (i,j) cell.
 */
-boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 1);
+boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 1);
+    \fn bool curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL penalty_factor = 0);
 
     \par Tcl syntax:
-    curve_surf_geq \ref str "surf_name" \ref str "curv_name"
+    curve_surf_geq \ref str "surf_name" \ref str "curv_name" penalty_factor
 
     \par Description:
     This rule adds the surface condition - "the resulting surface at curve should be greater 
     than or equal to other surface values".
-    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you 
-    should carefully review your conditions and if they are correct, try to change "mult" parameter.
+    In case of the \ref penalty bad convergence or unexpected 
+    (wrong) result, you should carefully review your conditions and if they are correct, try 
+    to change \ref penalty_factor "penalty_factor" parameter.
 
     \param surf_name \ref str "name" of \ref d_surf "surface". The
     resulting surface should be greater than or equal to this surface values at curve.
     \param curv_name \ref d_curv "curve" \ref str "name"
-    \param mult multiplier parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty algorithm
 
     \par Math:
     This command adds the condition:
@@ -236,7 +240,7 @@ boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = 
     where (i,j) - indices of the cells cross with curve, 
     f(x_i,y_j) - value for curve approximation, calculated as surface value at center of the (i,j) cell.
 */
-boolvec * curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL mult = 1);
+boolvec * curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_curvs
     \fn bool fault(const char * curv_name = "*");
@@ -618,7 +622,7 @@ boolvec * contour(const char * cntr_name = "*");
 */
 boolvec * contour_add(REAL weight, const char * cntr_name = "*");
 
-boolvec * contours(const char * cntr_name = "*");
+boolvec * contours(const char * cntr_name = "*", REAL mult = 0.001);
 boolvec * contours_add(REAL weight = 50, const char * cntr_name = "*");
 
 /*! \ingroup tcl_rules_cntrs

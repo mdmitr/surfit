@@ -31554,7 +31554,7 @@ _wrap_curve_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_leq value curv_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_leq value curv_name penalty_factor ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "curve_leq" "', argument " "1"" of type '" "double""'");
@@ -31779,7 +31779,7 @@ _wrap_curve_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_geq value curv_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_geq value curv_name penalty_factor ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "curve_geq" "', argument " "1"" of type '" "double""'");
@@ -32457,7 +32457,7 @@ _wrap_curve_surf_leq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_surf_leq surf_name curv_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_surf_leq surf_name curv_name penalty_factor ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curve_surf_leq" "', argument " "1"" of type '" "char const *""'");
@@ -32727,7 +32727,7 @@ _wrap_curve_surf_geq__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_surf_geq surf_name curv_name mult ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:curve_surf_geq surf_name curv_name penalty_factor ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "curve_surf_geq" "', argument " "1"" of type '" "char const *""'");
@@ -38666,6 +38666,64 @@ _wrap_contour_geq(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
 SWIGINTERN int
 _wrap_contours__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
+  double arg2 ;
+  surfit::boolvec *result = 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  
+  if (SWIG_GetArgs(interp, objc, objv,"oo:contours cntr_name mult ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "contours" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = buf1;
+  ecode2 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[2], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "contours" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast<double >(val2);
+  {
+    try {
+      if (surfit::stop_execution == 0) {
+        result = (surfit::boolvec *)surfit::contours((char const *)arg1,arg2);
+        
+      }
+    }
+    catch ( const char * str ) {
+      surfit::writelog(LOG_ERROR_TCL,"%s",str);
+      return TCL_ERROR;
+    }
+    catch(...) {
+      return TCL_ERROR;
+    }
+  }
+  {
+    Tcl_Obj * res_obj = Tcl_NewListObj(0,0);
+    Tcl_SetObjResult(interp, res_obj);
+    if (result) {
+      size_t i;
+      for (i = 0; i < (result)->size(); i++)
+      {
+        bool val = (bool)(*(result))(i);
+        Tcl_ListObjAppendElement(interp, res_obj, Tcl_NewBooleanObj(val));
+      }
+      (result)->release();
+    }
+  }
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_OK;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return TCL_ERROR;
+}
+
+
+SWIGINTERN int
+_wrap_contours__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  char *arg1 = (char *) 0 ;
   surfit::boolvec *result = 0 ;
   int res1 ;
   char *buf1 = 0 ;
@@ -38714,7 +38772,7 @@ fail:
 
 
 SWIGINTERN int
-_wrap_contours__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_contours__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   surfit::boolvec *result = 0 ;
   
   if (SWIG_GetArgs(interp, objc, objv,":contours ") == TCL_ERROR) SWIG_fail;
@@ -38757,14 +38815,28 @@ _wrap_contours(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, T
   Tcl_Obj *CONST *argv = objv+1;
   int argc = objc-1;
   if (argc == 0) {
-    return _wrap_contours__SWIG_1(clientData, interp, objc, argv - 1);
+    return _wrap_contours__SWIG_2(clientData, interp, objc, argv - 1);
   }
   if (argc == 1) {
     int _v;
     int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_contours__SWIG_0(clientData, interp, objc, argv - 1);
+      return _wrap_contours__SWIG_1(clientData, interp, objc, argv - 1);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_contours__SWIG_0(clientData, interp, objc, argv - 1);
+      }
     }
   }
   
@@ -45722,7 +45794,7 @@ _wrap_hist__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   size_t val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:hist hist_pos mult threshold ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:hist hist_pos penalty_factor threshold ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "hist" "', argument " "1"" of type '" "char const *""'");
@@ -45785,7 +45857,7 @@ _wrap_hist__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:hist hist_pos mult ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:hist hist_pos penalty_factor ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "hist" "', argument " "1"" of type '" "char const *""'");

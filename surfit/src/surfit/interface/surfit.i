@@ -67,16 +67,6 @@ namespace surfit {
 };
 //*/
 
-/*
-%typemap(in) const char * {
-	Tcl_Encoding enc = Tcl_GetEncoding(interp, NULL);
-	Tcl_DString str;
-	$1 = Tcl_GetStringFromObj($input,NULL);
-	char * qq = Tcl_UtfToExternalDString(enc, $1, strlen($1), &str);
-	$1 = strdup(qq);
-};
-*/
-
 %typemap(out) char * {
    Tcl_SetObjResult(interp,Tcl_NewStringObj($1,-1));
    free($1);
@@ -181,10 +171,10 @@ bool completer(REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 bool value(const char * value = "undef");
 bool value_add(REAL weight = 1, REAL val = 0);
-bool mean(REAL value, REAL penalty_factor = -1);
-surfit::boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = -1);
-bool leq(REAL value, REAL penalty_factor = -1);
-bool geq(REAL value, REAL penalty_factor = -1);
+bool mean(REAL value, REAL penalty_factor = 0);
+surfit::boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = 0);
+bool leq(REAL value, REAL penalty_factor = 0);
+bool geq(REAL value, REAL penalty_factor = 0);
 bool triangulate();
 
 // license

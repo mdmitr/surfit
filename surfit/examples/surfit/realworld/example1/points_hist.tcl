@@ -37,7 +37,8 @@ grid 50 50
 # resulting surface at points = points values
 points
 
-hist * 0.1 5
+#historgram of resulting surface = desired histogram
+hist
 
 # resulting surface should tend to be constant or plane 
 completer 0 1  

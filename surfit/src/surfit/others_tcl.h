@@ -142,7 +142,7 @@ bool value(const char * value = "undef");
 bool value_add(REAL weight = 1, REAL val = 0);
 
 /*! \ingroup tcl_rules_other
-    \fn bool mean(REAL value, REAL penalty_factor = -1);
+    \fn bool mean(REAL value, REAL penalty_factor = 0);
 
     \par Tcl syntax:
     mean value penalty_factor
@@ -160,10 +160,10 @@ bool value_add(REAL weight = 1, REAL val = 0);
     \f]
     where (i,j) - indices of the cells, Q - total number of cells, m - desired mean value
 */
-bool mean(REAL value, REAL penalty_factor = -1);
+bool mean(REAL value, REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_other
-    \fn bool wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = -1);
+    \fn bool wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = 0);
 
     \par Tcl syntax:
     wmean value "surface_name" penalty_factor
@@ -182,10 +182,10 @@ bool mean(REAL value, REAL penalty_factor = -1);
     where (i,j) - indices of the cells, \f$z(x_i,y_j)\f$ - weighted surface value for the (i,j) cell,
     m - desired weighted mean value
 */
-boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = -1);
+boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_other
-    \fn bool leq(REAL value, REAL penalty_factor = -1);
+    \fn bool leq(REAL value, REAL penalty_factor = 0);
 
     \par Tcl syntax:
     leq value penalty_factor
@@ -197,6 +197,7 @@ boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor
     to change \ref penalty_factor "penalty_factor" parameter.
 
     \param value resulting surface values should be lower than or equal to this real number
+    \param penalty_factor parameter for \ref penalty algorithm
     
     \par Math:
     This command adds the condition:
@@ -205,10 +206,10 @@ boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor
     \f]
     where (i,j) - indices of the cells, z - constant value
 */
-bool leq(REAL value, REAL penalty_factor = -1);
+bool leq(REAL value, REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_other
-    \fn bool geq(REAL value, REAL penalty_factor = -1);
+    \fn bool geq(REAL value, REAL penalty_factor = 0);
 
     \par Tcl syntax:
     geq value penalty_factor
@@ -220,6 +221,7 @@ bool leq(REAL value, REAL penalty_factor = -1);
     to change \ref penalty_factor "penalty_factor" parameter.
 
     \param value resulting surface values should be lower than or equal to this real number
+    \param penalty_factor parameter for \ref penalty algorithm
     
     \par Math:
     This command adds the condition:
@@ -228,22 +230,24 @@ bool leq(REAL value, REAL penalty_factor = -1);
     \f]
     where (i,j) - indices of the cells, z - constant value
 */
-bool geq(REAL value, REAL penalty_factor = -1);
+bool geq(REAL value, REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_other
-    \fn bool hist(const char * histogram_name = "*", REAL mult = 0.1, size_t treshold = 5);
+    \fn bool hist(const char * histogram_name = "*", REAL penalty_factor = -1, size_t treshold = 5);
 
     \par Tcl syntax:
-    hist "histogram_name" mult threshold
+    hist "histogram_name" penalty_factor threshold
 
     \par Description:
     This rule adds the surface condition - "the resulting surface histogram should be equal to given histogram".
-    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
-    your conditions and if they are correct, try to change "mult" parameter.
+    In case of the \ref penalty bad convergence or unexpected 
+    (wrong) result, you should carefully review your conditions and if they are correct, try 
+    to change \ref penalty_factor "penalty_factor" parameter.
 
     \param histogram_name desired \ref d_hist "histogram"
-    \param mult multiplier parameter for \ref penalty algorithm
-
+    \param penalty_factor parameter for \ref penalty algorithm
+    \param threshold another parameter for changing if something going wrong :)
+    
     \par Math:
     This command adds the condition:
     \f[
@@ -253,7 +257,7 @@ bool geq(REAL value, REAL penalty_factor = -1);
     R. Gonzalez and R. Woods Digital Image Processing, Addison-Wesley Publishing Company, 1992, Chap. 4.
     
 */
-boolvec * hist(const char * histogram_name = "*", REAL mult = 0.1, size_t treshold = 5);
+boolvec * hist(const char * histogram_name = "*", REAL penalty_factor = -1, size_t treshold = 5);
 
 bool triangulate();
 
