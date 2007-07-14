@@ -111,6 +111,7 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname, bool force
 	size_t I, J;
 
 	REAL qq = undef_value;
+	
 	// loading all points
 
 	if (!three_columns_read(filename, 
@@ -304,7 +305,6 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname, bool force
 		z = (*Z)(i);
 		I = grd->get_i(x);
 		J = grd->get_j(y);
-		//grd->getCoordPoint(x, y, I, J);
 		
 		REAL test_x, test_y;
 		grd->getCoordNode(I, J, test_x, test_y);
@@ -331,8 +331,10 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname, bool force
 	}
 
 	res = create_surf(coeff, grd);
+	coeff = NULL;
+	grd = NULL;
 	res->set_undef_value(undef_value);
-
+	
 	if (surfname)
 		res->setName(surfname);
 	else {
@@ -341,11 +343,17 @@ d_surf * _surf_load_xyz(const char * filename, const char * surfname, bool force
 		sstuff_free_char(name);
 	}
 
+	if (X)
+		X->release();
+	if (Y)
+		Y->release();
+	if (Z)
+		Z->release();
+
 	return res;
 
 exit:
-	writelog(LOG_ERROR, "surf_load_xyz : Wrong file format %s", filename);
-	
+		
 	if (res)
 		res->release();
 	if (grd)
@@ -358,6 +366,8 @@ exit:
 		Z->release();
 	if (coeff)
 		coeff->release();
+
+	//writelog(LOG_ERROR, "surf_load_xyz : Wrong file format %s", filename);
 
 	return NULL;
 };

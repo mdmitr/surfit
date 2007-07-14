@@ -639,8 +639,11 @@ bool three_columns_read_with_names(const char * filename,
 			}
 
 			if (current_column+1 == col4) {
-				if (strlen(token) > 0)
+				if (strlen(token) > 0) {
+					if (sval)
+						free(sval);
 					sval = strdup(token);
+				}
 			}
 								
 			current_column++;
@@ -658,7 +661,7 @@ bool three_columns_read_with_names(const char * filename,
 			vcol2->push_back(val2);
 			vcol3->push_back(val3);
 			names->push_back(sval);
-			
+			free(sval);
 		}
 		val1 = FLT_MAX;
 		val2 = FLT_MAX;
@@ -689,9 +692,12 @@ three_columns_read_failed:
 		vcol2->release();
 	if (vcol3)
 		vcol3->release();
+	if (names)
+		names->release();
 	vcol1 = NULL;
 	vcol2 = NULL;
 	vcol3 = NULL;
+	names = NULL;
 	return false;
 };
 

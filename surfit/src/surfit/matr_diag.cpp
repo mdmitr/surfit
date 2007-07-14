@@ -31,15 +31,18 @@ namespace surfit {
 
 matr_diag::matr_diag(extvec * ival, 
 		     size_t iN,
-		     const bitvec * imask) {
+		     bitvec *& imask) {
 	val = ival;
 	N = iN;
 	mask = imask;
+	imask = NULL;
 };
 
 matr_diag::~matr_diag() {
 	if (val)
 		val->release();
+	if (mask)
+		mask->release();
 };
 
 REAL matr_diag::norm() const {

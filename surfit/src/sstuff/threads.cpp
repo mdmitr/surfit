@@ -32,6 +32,23 @@ size_t cpu = 1;
 
 std::vector<slavethread *> slaves;
 std::vector<job *> jobs;
+
+struct garbage_slaves
+{
+	garbage_slaves() {};
+	~garbage_slaves() {
+		size_t i;
+		for (i = 0; i < slaves.size(); i++) {
+			slavethread * s = slaves[i];
+			slaves[i] = NULL;
+			delete s;
+		}
+		for (i = 0; i < jobs.size(); i++)
+			delete jobs[i];
+	};
+};
+garbage_slaves garb_slaves;
+
 #endif
 
 void sstuff_init_threads(size_t cnt) {

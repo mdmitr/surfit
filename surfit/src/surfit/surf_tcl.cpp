@@ -107,12 +107,15 @@ boolvec * surf_save(const char * filename, const char * pos)
 
 struct match_surf_plot
 {
-	match_surf_plot(const char * ifilename, const char * ipos) : filename(ifilename), pos(ipos), res(NULL) {};
+	match_surf_plot(const char * ifilename, const char * ipos, 
+			bool idraw_isos, size_t inumber_of_levels ) : 
+	filename(ifilename), pos(ipos), res(NULL), 
+	draw_isos(idraw_isos), number_of_levels(inumber_of_levels) {};
 	void operator()(d_surf * surf)
 	{
 		if ( StringMatch(pos, surf->getName()) )
 		{
-			bool r = _surf_plot(surf, filename);
+			bool r = _surf_plot(surf, filename, draw_isos, number_of_levels);
 			if (res == NULL)
 				res = create_boolvec();
 			res->push_back(r);
@@ -121,11 +124,13 @@ struct match_surf_plot
 	const char * filename;
 	const char * pos;
 	boolvec * res;
+	bool draw_isos;
+	size_t number_of_levels;
 };
 
-boolvec * surf_plot(const char * filename, const char * pos) 
+boolvec * surf_plot(const char * filename, const char * pos, bool draw_isos, size_t number_of_levels) 
 {
-	match_surf_plot qq(filename, pos);
+	match_surf_plot qq(filename, pos, draw_isos, number_of_levels);
 	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
 	return qq.res;
 };
@@ -2184,6 +2189,7 @@ struct match_sfa_by_area
 				}
 			}	
 			res->push_back(true);
+			area_mask->release();
 		}
 	};
 
@@ -2309,7 +2315,8 @@ struct match_swapxy
 		if ( StringMatch(pos, surf->getName()) )
 		{
 			writelog(LOG_MESSAGE,"changing axes for surface \"%s\"",surf->getName());
-			boolvec * res = create_boolvec();
+			if (res == NULL)
+				res = create_boolvec();
 			
 			if (surf->coeff == NULL) {
 				res->push_back(false);
@@ -2369,124 +2376,11 @@ struct match_trace
 		{
 			if (res == NULL)
 				res = create_boolvec();
-			if (from == FLT_MAX)
-				surf->getMinMaxZ(from, to);	
-			if (to == FLT_MAX)
-				to = from;
-
-			if (step == FLT_MAX)
-			{
-				step = stepFunc(from, to, 16);
-				from = floor( from/step ) * step;
-				to = floor( to/step ) * step;
-				
-			}
-
-			vec * levels = create_vec();
-			REAL level;
-			for (level = from; level <= to; level += step)
-				levels->push_back(level);
-
-			size_t levels_count = levels->size();
-			size_t NN = surf->getCountX(), MM = surf->getCountY();
-			size_t q,p;
-			REAL x,y;
-			
-			vec * x_coords = create_vec(NN,0,0);
-			for (q = 0; q < NN; q++) {
-				surf->getCoordNode(q,0,x,y);
-				(*x_coords)(q) = x;
-			}
-
-			vec * y_coords = create_vec(MM,0,0);
-			for (q = 0; q < MM; q++) {
-				surf->getCoordNode(0,q,x,y);
-				(*y_coords)(q) = y;
-			}
-
-			extvec * data = create_extvec(*(surf->coeff)); // don't fill;
-			
-			writelog(LOG_MESSAGE,"tracing %d contours from surface \"%s\"", levels_count, surf->getName());
-#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-			int tick1 = GetTickCount();
-#endif
-			std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM, surf->undef_value, false);
-#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-			int tick2 = GetTickCount();
-			writelog(LOG_MESSAGE, "%d miliseconds elapsed", tick2-tick1);
-#endif
-
-			levels->release();
-			x_coords->release();
-			y_coords->release();
-			data->release();
-
-			std::vector<int> cnts(levels_count);
-			char buf[512];
-						
-			for (q = 0; q < isos->size(); q++)
-			{
-				fiso * iso = (*isos)[q];
-				size_t level_num = iso->get_level_number();
-				bool prev_visible = false;
-				d_cntr * cntr = NULL;
-				vec * x = NULL;
-				vec * y = NULL;
-				vec * z = NULL;
-				REAL iso_level = iso->get_level();
-				for (p = 0; p < iso->size(); p++) {
-
-					double px, py;
-					bool visible;
-					iso->get_point(p, px, py, visible);
-					if (visible != prev_visible) {
-						if (prev_visible == false) {
-							if (cntr) {
-								if (cntr->size() > 0)
-									surfit_cntrs->push_back(cntr);
-								else {
-									if (x)
-										x->release();
-									if (y)
-										y->release();
-									if (z)
-										z->release();
-								}
-							}
-							cnts[level_num]++;
-							if (cnts[level_num] == 1)
-								sprintf(buf,"%s_%g",surf->getName(), iso->get_level());
-							else
-								sprintf(buf,"%s_%g_%d",surf->getName(), iso->get_level(), cnts[level_num]);
-							x = create_vec();
-							y = create_vec();
-							z = create_vec();
-							cntr = create_cntr(x, y, z, buf);
-						}
-					}
-					if (visible) {
-						x->push_back(px);
-						y->push_back(py);
-						z->push_back(iso_level);
-					}
-					prev_visible = visible;
-				}
-				if (cntr) {
-					if (cntr->size() > 0)
-						surfit_cntrs->push_back(cntr);
-					else {
-						if (x)
-							x->release();
-						if (y)
-							y->release();
-						if (z)
-							z->release();
-					}
-				}
-				
-			}
-
-			delete isos;
+			std::vector<d_cntr*> * cntrs = _surf_trace_cntrs(surf, from, to, step);
+			size_t i;
+			for (i = 0; i < cntrs->size(); i++)
+				surfit_cntrs->push_back( (*cntrs)[i] );
+			delete cntrs;
 			res->push_back(true);
 		}
 	};

@@ -132,7 +132,6 @@ bool f_mask_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v, bitve
 	}
 
 	matr_diag * T = new matr_diag(diag, matrix_size, matr_mask);
-	matr_mask = NULL;
 	matrix = T;
 
 	if (points == 0) {

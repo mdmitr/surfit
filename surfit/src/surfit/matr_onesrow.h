@@ -29,8 +29,7 @@ class bitvec;
 class SURFIT_EXPORT matr_onesrow : public matr {
 public:
 	//! constructor
-	matr_onesrow(REAL ival, size_t iN,
-		     bitvec * imask);
+	matr_onesrow(REAL ival, size_t iN, bitvec *& imask);
 
 	//! A destructor
 	virtual ~matr_onesrow();

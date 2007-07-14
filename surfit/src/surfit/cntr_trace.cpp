@@ -117,8 +117,12 @@ REAL fiso::get_fill_level() const
 	return fill_level; 
 };
 
-void fiso::set_fill_level(REAL ival) 
+void fiso::set_fill_level(REAL ival, bool force) 
 { 
+	if (force) {
+		fill_level = ival;
+		return;
+	}
 	if ( level < FLT_MAX/2. )
 		fill_level = ival; 
 };
@@ -727,7 +731,7 @@ fiso * trace_bound_rect(trace_info & info)
 	level = *it;
 	level_number = it - info.levels->begin();
         iso = new fiso(level, UINT_MAX, info.levels->size(), info.checks, info.nn, info.mm);
-	iso->set_fill_level(val);
+	iso->set_fill_level(val, true);
 
 	add_bottom_edge(iso, 0, info.nn-1, info);
 	add_right_edge(iso, 0, info.mm-1, info);

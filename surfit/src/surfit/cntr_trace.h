@@ -41,7 +41,7 @@ struct fiso
 	void get_point(size_t pos, REAL & px, REAL & py, bool & visible) const;
 	size_t size() const;
 	REAL get_fill_level() const;
-	void set_fill_level(REAL ival);
+	void set_fill_level(REAL ival, bool force = false);
 	int get_checksum() const;
 
 	vec::iterator x_begin() const;
@@ -51,6 +51,7 @@ struct fiso
 	
 	vec * x;
 	vec * y;
+	
 private:
 	std::vector<bool> * flags;
 	bitvec * checks;

@@ -68,7 +68,7 @@ d_points * _pnts_read(const char * filename, const char * pntsname, int col1, in
 						   skip_lines, delimiter, grow_by, 
 						   vcol1, vcol2, vcol3, names))
 			return NULL;
-		
+
 		res = create_points(vcol1, vcol2, vcol3, names, pntsname);
 	}
 

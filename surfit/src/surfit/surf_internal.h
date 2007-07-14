@@ -21,6 +21,7 @@
 #define __surfit__surf_internal__
 
 #include <vector>
+#include <float.h>
 
 namespace surfit {
 
@@ -34,6 +35,7 @@ class d_curv;
 class grid_line;
 class d_area;
 class d_mask;
+class d_cntr;
 
 SURFIT_EXPORT
 /*! \ingroup internal_surf
@@ -62,12 +64,12 @@ bool _surf_save(const d_surf * srf, const char * filename);
 
 SURFIT_EXPORT
 /*! \ingroup internal_surf
-    \fn bool _surf_plot(const d_surf * srf, const char * filename);
+    \fn bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos = true, size_t number_of_levels = 16);
     \brief plots surface to PostScript file
     \param srf surf class to save
     \param filename PostScript file 
 */
-bool _surf_plot(const d_surf * srf, const char * filename);
+bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos = true, size_t number_of_levels = 16);
 
 SURFIT_EXPORT
 /*! \ingroup internal_surf
@@ -204,6 +206,9 @@ void _surfit_surf_add(d_surf * srf);
 
 SURFIT_EXPORT
 d_surf * triangulate_points(const d_points * pnts, const d_grid * grd);
+
+SURFIT_EXPORT
+std::vector<d_cntr *> * _surf_trace_cntrs(const d_surf * surf, REAL from = FLT_MAX, REAL to = FLT_MAX, REAL step = FLT_MAX, bool closed = false);
 
 }; // namespace surfit;
 

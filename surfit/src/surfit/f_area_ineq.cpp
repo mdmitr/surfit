@@ -123,7 +123,6 @@ bool f_area_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * m
 	}
 
 	matr_diag * T = new matr_diag(diag, matrix_size, mask);
-	mask = NULL;
 	matrix = T;
 
 	if (points == 0) {

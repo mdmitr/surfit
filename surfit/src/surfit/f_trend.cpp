@@ -287,11 +287,13 @@ bool f_trend::minimize() {
 						}
 					}
 				} else {
+					/*
 					for (pos = 0; pos < f_size; pos++) {
 						if ( (*flood_areas)(pos) == color ) {
 							saved_mask_undefined->set_true(pos);
 						}
 					}
+					*/
 				}	
 				
 			};
@@ -314,6 +316,9 @@ bool f_trend::minimize() {
 		res = minimize_step(); // && res;
 
 	}
+
+	if (old_gfaults)
+		old_gfaults->release();
 
 	return true;
 };

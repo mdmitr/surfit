@@ -43,7 +43,7 @@ protected:
 	    \param icoeff coefficients a_i
 	    \param funcname name
 	*/
-	d_mask(bitvec *icoeff, d_grid *igrd, const char * funcname = 0);
+	d_mask(bitvec *icoeff, d_grid *igrd, const char * newname = 0);
 
 	//! destructor
 	~d_mask();
@@ -52,7 +52,7 @@ public:
 
 	//! constructor
 	friend SURFIT_EXPORT
-	d_mask * create_mask(bitvec *icoeff, d_grid *igrd, const char * funcname);
+	d_mask * create_mask(bitvec *icoeff, d_grid *igrd, const char * newname);
 
 	bool bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const;
 	bool getMinMaxZ(REAL & minz, REAL & maxz) const;
@@ -126,9 +126,6 @@ public:
 
 	//! coefficients for each basis function
 	bitvec * coeff;
-
-	//! drawing flag
-	bool show_smooth;
 
 };
 

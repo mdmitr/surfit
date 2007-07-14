@@ -67,6 +67,11 @@ struct fileio_garbage {
 		free(logfilename);
 		if (logfile)
 			fclose(logfile);
+#ifdef _MSC_VER
+#ifdef DEBUG
+		_CrtDumpMemoryLeaks();
+#endif
+#endif
 	};
 };
 
@@ -327,11 +332,7 @@ int log_open(int level, const char * logname) {
 		logfilename = (char*)realloc(logfilename, strlen(logname)+1);
 		strcpy(logfilename,logname);
 	} else {
-		logfilename = (char*)realloc(logfilename, strlen("surfit.log")+1);
-		if (logfilename)
-			strcpy(logfilename,"surfit.log");
-		else 
-			return 0;
+		logfilename = strdup("surfit.log");
 	}
 	
 	logfile = fopen(logfilename, "a");

@@ -73,8 +73,9 @@ d_mask * _mask_load_df(datafile * df, const char * maskname) {
 					if (!df->readWord()) goto exit;
 					if ( df->isWord("name") ) {
 						if ( !df->readWord() ) goto exit;
-						name = (char*)malloc(strlen(df->getWord())+1);
-						strcpy(name,df->getWord());
+						if (name)
+							free(name);
+						name = strdup(df->getWord());
 						if (!df->readWord()) goto exit;
 						continue;
 					}
@@ -150,10 +151,8 @@ cont:
 		if (!maskname) {
 			return msk;
 		} else {
-			if (msk->getName()) {
-				if (strcmp(msk->getName(),maskname) == 0) {
-					return msk;
-				}
+			if (strcmp(msk->getName(),maskname) == 0) {
+				return msk;
 			}
 			if (msk)
 				msk->release();

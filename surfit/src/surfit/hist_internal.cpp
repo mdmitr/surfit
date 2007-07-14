@@ -314,6 +314,7 @@ extvec * _extvec_adj_hist(const extvec * X, const d_hist * dest, const bitvec * 
 	REAL dest_maxz = dhst->to();
 	
 	for (i = 0; i < X->size(); i++) {
+		
 		if (mask->get(i) == false)
 			continue;
 		
@@ -416,6 +417,11 @@ extvec * _extvec_adj_hist(const extvec * X, const d_hist * dest, const bitvec * 
 		T->release();
 		hst->release();
 	}
+
+	if (dhst)
+		dhst->release();
+	if (Z)
+		Z->release();
 
 	return res;
 

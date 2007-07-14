@@ -103,10 +103,6 @@ bool f_mask_mean::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * m
 		matr_mask->set_false(i);
 	}
 
-	matr_onesrow * T = new matr_onesrow(mult, matrix_size, matr_mask);
-	
-	matrix = T;
-
 	REAL v_val = (mean*mult)*N - sum_values_solved;
 
 	v = create_extvec(matrix_size, 0, false);
@@ -116,6 +112,9 @@ bool f_mask_mean::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * m
 		else
 			(*v)(i) = v_val;
 	}
+
+	matr_onesrow * T = new matr_onesrow(mult, matrix_size, matr_mask);
+	matrix = T;
 
 	bool solvable = false;
 

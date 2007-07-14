@@ -63,7 +63,7 @@ boolvec * surf_load(const char * filename, const char * surfname = NULL);
 boolvec * surf_save(const char * filename, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_plot(const char * filename, const char * surface_name = "*");
+    \fn bool surf_plot(const char * filename, const char * surface_name = "*", bool draw_isos = true, size_t number_of_levels = 16);
 
     \par Tcl syntax:
     surf_plot \ref file "filename" \ref str "surface_name" 
@@ -71,7 +71,7 @@ boolvec * surf_save(const char * filename, const char * surface_name = "*");
     \par Description:
     plots surface to PostScript file
 */
-boolvec * surf_plot(const char * filename, const char * surface_name = "*");
+boolvec * surf_plot(const char * filename, const char * surface_name = "*", bool draw_isos = true, size_t number_of_levels = 16);
 
 //
 // MATH OPERATIONS

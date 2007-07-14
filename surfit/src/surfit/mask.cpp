@@ -33,15 +33,15 @@
 
 namespace surfit {
 
-d_mask * create_mask(bitvec *icoeff, d_grid *igrd, const char * funcname) {
-	return new d_mask(icoeff, igrd, funcname);
+d_mask * create_mask(bitvec *icoeff, d_grid *igrd, const char * newname) {
+	return new d_mask(icoeff, igrd, newname);
 };
 
-d_mask::d_mask(bitvec *icoeff, d_grid *igrd, const char * newname) : data("mask") {
+d_mask::d_mask(bitvec *icoeff, d_grid *igrd, const char * newname) : data("mask") 
+{
 	grd = igrd;
 	coeff = icoeff;
 	setName(newname);
-	show_smooth = true;
 };
 
 d_mask::~d_mask() {

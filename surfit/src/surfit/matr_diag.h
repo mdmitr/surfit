@@ -30,7 +30,7 @@ class bitvec;
 class SURFIT_EXPORT matr_diag : public matr {
 public:
 	//! constructor
-	matr_diag(extvec * ival, size_t iN, const bitvec * imask);
+	matr_diag(extvec * ival, size_t iN, bitvec *& imask);
 
 	//! A destructor
 	virtual ~matr_diag();
@@ -52,7 +52,7 @@ protected:
 
 	size_t N;
 	extvec * val;
-	const bitvec * mask;
+	bitvec * mask;
 	
 };
 

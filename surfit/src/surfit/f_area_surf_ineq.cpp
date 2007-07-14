@@ -68,10 +68,9 @@ const data * f_area_surf_ineq::this_get_data(int pos) const {
 	return NULL;
 };
 
-bool f_area_surf_ineq::minimize() {
-
+bool f_area_surf_ineq::minimize() 
+{
 	return false;
-
 };
 
 bool f_area_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_solved, bitvec * mask_undefined) 
@@ -147,9 +146,10 @@ bool f_area_surf_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v, bitve
 			v->release();
 		if (diag)
 			diag->release();
+		if (mask)
+			mask->release();
 	} else {
 		matr_diag * T = new matr_diag(diag, matrix_size, mask);
-		mask = NULL;
 		matrix = T;
 	}
 
@@ -216,8 +216,7 @@ void f_area_surf_ineq::get_area_mask(const bitvec * mask_undefined)
 			area_mask->invert();
 	} else {
 		if (area_mask->size() != method_grid->getCountX()*method_grid->getCountY()) {
-			if (area_mask)
-				area_mask->release();
+			area_mask->release();
 			area_mask = nodes_in_area_mask(area, method_grid, mask_undefined);
 			if (inside == false)
 				area_mask->invert();

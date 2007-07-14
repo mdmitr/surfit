@@ -26,6 +26,14 @@
 #define REAL_NAME "double"
 //*/
 
+#ifdef _MSC_VER
+#ifdef DEBUG
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif
+#endif
+
 /*
 #undef REAL
 #define REAL float

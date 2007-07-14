@@ -247,7 +247,7 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 
 	// check for possibility of applying penalty algorithm
 	bool solvable = penalty_solvable(fnc, X);
-
+	
 	if (solvable == false) {
 		delete T; 
 		if (V)
@@ -398,10 +398,12 @@ bool solve_with_penalties(functional * fnc, matr * T, extvec * V, extvec *& X)
 	}
 
 	if (parent_mask)
-		parent_mask;
+		parent_mask->release();
 	if (fake_mask)
 		fake_mask->release();
+
 	delete T;
+
 	if (V)
 		V->release();
 

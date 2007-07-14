@@ -35,23 +35,26 @@ mutex matr_onesrow_mutex;
 #endif
 
 matr_onesrow::matr_onesrow(REAL ival, size_t iN,
-			   bitvec * imask) 
+			   bitvec *& imask) 
 {
 	val = ival;
 	N = iN;
 	
 	mask = imask;
+	imask = NULL;
 
 	prev_b_begin = NULL;
 	prev_val = 0;
 
 };
 
-matr_onesrow::~matr_onesrow() {
+matr_onesrow::~matr_onesrow() 
+{
 	if (mask)
 		mask->release();
 	if (prev_b_begin)
 		delete prev_b_begin;
+	prev_b_begin = NULL;
 };
 
 REAL matr_onesrow::norm() const {
@@ -112,14 +115,18 @@ REAL matr_onesrow::mult_line(size_t J, extvec::const_iterator b_begin, extvec::c
 #ifdef HAVE_THREADS
 	matr_onesrow_mutex.enter();
 #endif
-	if (prev_b_begin)
-	if (*prev_b_begin == b_begin) {
-		REAL res = prev_val;
+	if (prev_b_begin) {
+		if (*prev_b_begin == b_begin) {
+			REAL res = prev_val;
 #ifdef HAVE_THREADS
-		matr_onesrow_mutex.leave();
+			matr_onesrow_mutex.leave();
 #endif
-		return res;
+			return res;
+		}
 	}
+#ifdef HAVE_THREADS
+	matr_onesrow_mutex.leave();
+#endif
 		
 	size_t i;
 	REAL res = REAL(0);
@@ -130,6 +137,11 @@ REAL matr_onesrow::mult_line(size_t J, extvec::const_iterator b_begin, extvec::c
 	}
 
 	prev_val = res;
+#ifdef HAVE_THREADS
+	matr_onesrow_mutex.enter();
+#endif
+	if (prev_b_begin)
+		delete prev_b_begin;
 	prev_b_begin = new extvec::const_iterator(b_begin);
 
 #ifdef HAVE_THREADS
@@ -145,6 +157,8 @@ REAL matr_onesrow::mult_transposed_line(size_t J, extvec::const_iterator b_begin
 };
 
 void matr_onesrow::call_after_mult() {
+	if (prev_b_begin)
+		delete prev_b_begin;
 	prev_b_begin = NULL;
 };
 
@@ -172,7 +186,9 @@ matr_row::~matr_row() {
 		mask->release();
 	if (values)
 		values->release();
-	delete prev_b_begin;
+	if (prev_b_begin)
+		delete prev_b_begin;
+	prev_b_begin = NULL;
 };
 
 REAL matr_row::norm() const {
@@ -231,14 +247,29 @@ REAL matr_row::at_transposed(size_t i, size_t j, size_t * next_j) const
 	return at(i,j,next_j);
 };
 
+
+#ifdef HAVE_THREADS
+mutex matr_row_alloc_prev_b_begin;
+#endif
 REAL matr_row::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end)
 {
 	if (mask->get(J))
 		return REAL(0);
 
-	if (prev_b_begin)
-	if (*prev_b_begin == b_begin)
-		return prev_val*(*values)(J);
+#ifdef HAVE_THREADS
+	matr_row_alloc_prev_b_begin.enter();
+#endif
+	if (prev_b_begin) {
+		if (*prev_b_begin == b_begin) {
+#ifdef HAVE_THREADS
+			matr_row_alloc_prev_b_begin.leave();
+#endif
+			return prev_val*(*values)(J);
+		}
+	}
+#ifdef HAVE_THREADS
+	matr_row_alloc_prev_b_begin.leave();
+#endif
 	
 	size_t i;
 	REAL res = REAL(0);
@@ -249,7 +280,16 @@ REAL matr_row::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const
 	}
 
 	prev_val = res;
+
+#ifdef HAVE_THREADS
+	matr_row_alloc_prev_b_begin.enter();
+#endif
+	if (prev_b_begin)
+		delete prev_b_begin;
 	prev_b_begin = new extvec::const_iterator(b_begin);
+#ifdef HAVE_THREADS
+	matr_row_alloc_prev_b_begin.leave();
+#endif
 		
 	return res*(*values)(J);
 };
@@ -260,6 +300,8 @@ REAL matr_row::mult_transposed_line(size_t J, extvec::const_iterator b_begin, ex
 };
 
 void matr_row::call_after_mult() {
+	if (prev_b_begin)
+		delete prev_b_begin;
 	prev_b_begin = NULL;
 };
 

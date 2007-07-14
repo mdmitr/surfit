@@ -73,10 +73,10 @@ bool f_mean::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_s
 	
 	matrix = T;
 
-	//REAL v_val = (mean*N - sum_values_solved)*mult;
 	REAL v_val = (mean*mult)*N - sum_values_solved;
 
 	v = create_extvec(matrix_size, 0, false);
+
 	for (i = 0; i < matrix_size; i++) {
 		if ( (mask_solved->get(i))  || (mask_undefined->get(i)) )
 			(*v)(i) = 0;

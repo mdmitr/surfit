@@ -23,6 +23,7 @@
 #include "real.h"
 #include "bitvec.h"
 #include "vec.h"
+#include "free_elements.h"
 
 #include "surf.h"
 #include "surf_internal.h"
@@ -38,9 +39,13 @@
 #include "grid_line_internal.h"
 #include "datafile.h"
 #include "area.h"
+#include "cntr.h"
+#include "cntr_trace.h"
 #include "geom_alg.h"
+#include "colorscale.h"
 
 #include "sort_alg.h"
+#include "stepFunc.h"
 
 #include "grid_line_user.h"
 #include "grid_user.h"
@@ -1516,6 +1521,138 @@ d_surf * triangulate_points(const d_points * pnts, const d_grid * grid)
 
 };
 
+std::vector<d_cntr *> * _surf_trace_cntrs(const d_surf * surf, REAL from, REAL to, REAL step, bool closed)
+{
+	std::vector<d_cntr *> * res = new std::vector<d_cntr *>();
+	
+	if (from == FLT_MAX)
+		surf->getMinMaxZ(from, to);	
+	if (to == FLT_MAX)
+		to = from;
+
+	if (step == FLT_MAX)
+	{
+		step = stepFunc(from, to, 16);
+		from = floor( from/step ) * step;
+		to = floor( to/step ) * step;
+	}
+
+	vec * levels = create_vec();
+	REAL level;
+	for (level = from; level <= to; level += step)
+		levels->push_back(level);
+
+	size_t levels_count = levels->size();
+	size_t NN = surf->getCountX(), MM = surf->getCountY();
+	size_t q,p;
+	REAL x,y;
+
+	vec * x_coords = create_vec(NN,0,0);
+	for (q = 0; q < NN; q++) {
+		surf->getCoordNode(q,0,x,y);
+		(*x_coords)(q) = x;
+	}
+
+	vec * y_coords = create_vec(MM,0,0);
+	for (q = 0; q < MM; q++) {
+		surf->getCoordNode(0,q,x,y);
+		(*y_coords)(q) = y;
+	}
+
+	extvec * data = create_extvec(*(surf->coeff)); // don't fill;
+
+	writelog(LOG_MESSAGE,"tracing %d contours from surface \"%s\"", levels_count, surf->getName());
+#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+	int tick1 = GetTickCount();
+#endif
+	std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM, surf->undef_value, closed);
+#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+	int tick2 = GetTickCount();
+	writelog(LOG_MESSAGE, "%d miliseconds elapsed", tick2-tick1);
+#endif
+
+	levels->release();
+	x_coords->release();
+	y_coords->release();
+	data->release();
+
+	std::vector<int> cnts(levels_count);
+	char buf[512];
+
+	for (q = 0; q < isos->size(); q++)
+	{
+		fiso * iso = (*isos)[q];
+		size_t level_num = iso->get_level_number();
+		if (level_num == levels_count)
+			level_num = UINT_MAX;
+		bool prev_visible = false;
+		d_cntr * cntr = NULL;
+		vec * x = NULL;
+		vec * y = NULL;
+		vec * z = NULL;
+		REAL iso_level = iso->get_level();
+		REAL fill_level = iso->get_fill_level();
+		for (p = 0; p < iso->size(); p++) {
+
+			double px, py;
+			bool visible;
+			iso->get_point(p, px, py, visible);
+			if (visible != prev_visible) {
+				if (prev_visible == false) {
+					if (cntr) {
+						if (cntr->size() > 0)
+							res->push_back(cntr);
+						else {
+							if (x)
+								x->release();
+							if (y)
+								y->release();
+							if (z)
+								z->release();
+						}
+					}
+					if (level_num != UINT_MAX) {
+						cnts[level_num]++;
+						if (cnts[level_num] == 1)
+							sprintf(buf,"%s_%g",surf->getName(), iso->get_level());
+						else
+							sprintf(buf,"%s_%g_%d",surf->getName(), iso->get_level(), cnts[level_num]);
+					} else
+						sprintf(buf, "%s_undef", surf->getName());
+					x = create_vec();
+					y = create_vec();
+					z = create_vec();
+					cntr = create_cntr(x, y, z, buf);
+				}
+			}
+			if (visible) {
+				x->push_back(px);
+				y->push_back(py);
+				z->push_back(iso_level);
+			}
+			prev_visible = visible;
+		}
+		if (cntr) {
+			if (cntr->size() > 0)
+				res->push_back(cntr);
+			else {
+				if (x)
+					x->release();
+				if (y)
+					y->release();
+				if (z)
+					z->release();
+			}
+		}
+
+	}
+
+	delete isos;
+
+
+	return res;
+};
+
 class projection
 {
 public:
@@ -1536,24 +1673,16 @@ public:
 		l_y = y_1 - y_0;
 	}
 
-        void operator()(double & x, double & y)
-	{
-		double px = (x-x0)/lx;
-		double py = (y-y0)/ly;
-		x = x_0 + double(px*l_x);
-		y = y_0 + double(py*l_y);
-	};
-
 	float get_x(double x) {
 		double px = (x-x0)/lx;
 		x = x_0 + double(px*l_x);
-		return (float)floor(x + 0.5);
+		return (float)x;
 	}
 
 	float get_y(double y) {
 		double py = (y-y0)/ly;
 		y = y_0 + double(py*l_y);
-		return (float)floor(y + 0.5);
+		return (float)y;
 	}
 
 private:
@@ -1563,10 +1692,59 @@ private:
 	double l_x, l_y;
 };
 
-bool _surf_plot(const d_surf * srf, const char * filename) 
+bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_t number_of_levels) 
 {
 	if (srf == NULL)
 		return false;
+	
+	REAL from, to, step;
+
+	srf->getMinMaxZ(from, to);	
+	
+	step = stepFunc(from, to, number_of_levels);
+	from = floor( from/step ) * step;
+	to = floor( to/step ) * step;
+	
+	vec * levels = create_vec();
+	REAL level;
+	for (level = from; level <= to; level += step)
+		levels->push_back(level);
+
+	size_t levels_count = levels->size();
+	size_t NN = srf->getCountX(), MM = srf->getCountY();
+	size_t q;
+	REAL x,y;
+
+	vec * x_coords = create_vec(NN,0,0);
+	for (q = 0; q < NN; q++) {
+		srf->getCoordNode(q,0,x,y);
+		(*x_coords)(q) = x;
+	}
+
+	vec * y_coords = create_vec(MM,0,0);
+	for (q = 0; q < MM; q++) {
+		srf->getCoordNode(0,q,x,y);
+		(*y_coords)(q) = y;
+	}
+
+	extvec * data = create_extvec(*(srf->coeff)); // don't fill;
+
+	writelog(LOG_MESSAGE,"tracing %d contours from surface \"%s\"", levels_count, srf->getName());
+#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+	int tick1 = GetTickCount();
+#endif
+	std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM, srf->undef_value, true);
+#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+	int tick2 = GetTickCount();
+	writelog(LOG_MESSAGE, "%d miliseconds elapsed", tick2-tick1);
+#endif
+
+	levels->release();
+	x_coords->release();
+	y_coords->release();
+	data->release();
+	
+	color_scale cs(from, to, step, DEFAULT_COLORS);
 
 	writelog(LOG_MESSAGE,"Plotting surface \"%s\" to file \"%s\"", srf->getName(), filename);
 	float minx, maxx, miny, maxy;
@@ -1577,46 +1755,79 @@ bool _surf_plot(const d_surf * srf, const char * filename)
 
 	float max_len = MAX(maxx-minx, maxy-miny);
 
-	projection p(minx, miny, minx+max_len, miny+max_len, 10, 10, 200, 200);
-
-	REAL minz, maxz;
-	srf->getMinMaxZ(minz, maxz);
-
-	REAL stepX2 = srf->getStepX()/REAL(2);
-	REAL stepY2 = srf->getStepY()/REAL(2);
-
-	REAL stepX = srf->getStepX();
-	REAL stepY = srf->getStepY();
-
-	float STEPX = float((200-10)*stepX/(max_len));
-	float STEPY = float((200-10)*stepY/(max_len));
+	projection prj(minx, miny, minx+max_len, miny+max_len, 10, 10, 200, 200);
 
 	CreEPS ps(filename, 210, 297); // A4
-	
-	size_t i, j;
-	double y0;
-	float Y0;
-	double x0; 
-	float X0;	
-	float EPS=0.2f;
-	y0 = float(srf->getCoordNodeY(0) - stepY2);
-	Y0 = p.get_y(y0);
-	for (j = 0; j < srf->getCountY(); j++) {
-		x0 = srf->getCoordNodeX(0) - stepX2;
-		X0 = p.get_x(x0);
-		for (i = 0; i < srf->getCountX(); i++) {
-			REAL z = srf->getValueIJ(i,j);
-			if (z == srf->undef_value) {
-				X0 += STEPX;
-				continue;
-			}
 
-			float color = float((z-minz)/(maxz-minz)*4./5.);
-			ps.rectFill( X0-EPS, Y0-EPS, STEPX+EPS, STEPY+EPS, CAtColor(color, color, color) );
-			X0 += STEPX;
+	ps.setAttributes( CAtLineThickness(0.1f) );
+
+	REAL added_level = to + FLT_MAX/REAL(2);
+
+	size_t i, j;
+	for (i = 0; i < isos->size(); i++) {
+		fiso * iso = (*isos)[i];
+ 		for (j = 0; j < iso->size(); j++)
+		{
+			double x,y;
+			bool vis;
+			iso->get_point(j, x, y, vis);
+			if ((x == 10) && (y == 10))
+				bool stop = true;
+			float X = prj.get_x(x);
+			float Y = prj.get_y(y);
+			if (j == 0) {
+				ps.startPath(X, Y);
+			} else {
+				ps.addLine(X, Y);
+			}
 		}
-		Y0 += STEPY;
+
+		int r,g,b;
+		if ((iso->get_fill_level() == srf->undef_value) && (iso->get_level() == added_level))
+		{
+			ps.setAttributes( CAtLineThickness(0.2f) );
+			ps.usePath( CreEPS::STROKE, CAtColor(1,1,1));
+			ps.setAttributes( CAtLineThickness(0.1f) );
+			ps.endPath( CreEPS::FILL, CAtColor(1, 1, 1));
+		} else {
+			cs.get_value(iso->get_fill_level(),r,g,b);
+			ps.endPath( CreEPS::FILL, CAtColor(r/255.f, g/255.f, b/255.f) );
+		}
+
+		if (draw_isos == false)
+			continue;
+
+		bool prev_vis = false;
+		for (j = 0; j < iso->size(); j++)
+		{
+			double x,y;
+			bool vis;
+			iso->get_point(j, x, y, vis);
+			float X = prj.get_x(x);
+			float Y = prj.get_y(y);
+			if (j == 0) {
+				ps.startPath(X, Y);
+			} else {
+				if ((prev_vis == false) && (vis == false))
+					ps.addMove(X, Y);
+				else
+					ps.addLine(X, Y);
+			}
+			prev_vis = vis;
+		}
+
+		if ((iso->get_fill_level() == srf->undef_value) && (iso->get_level() == added_level))
+		{
+			ps.endPath( CreEPS::STROKE, CAtColor( 1, 1, 1) );
+		} else {
+			cs.get_value(iso->get_fill_level(),r,g,b);
+			ps.endPath( CreEPS::STROKE, CAtColor( 0, 0, 0) );
+		}
+				
 	}
+	
+	free_elements(isos->begin(), isos->end());
+	delete isos;
 
 	return true;
 };
