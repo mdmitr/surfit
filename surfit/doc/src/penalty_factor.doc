@@ -6,4 +6,8 @@ regular expressions for specifying set of data objects, gridding rules and etc.
 Here you can find regexp syntax:
 http://www.tcl.tk/man/tcl8.3/TclCmd/re_syntax.htm
 
+In case of the \ref penalty bad convergence or unexpected 
+(wrong) result, you should carefully review your conditions and if they are correct, try 
+to change \ref penalty_factor "penalty_factor" parameter.
+
 */
