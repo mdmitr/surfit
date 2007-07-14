@@ -52,6 +52,7 @@ points "wells_D51"
 # fault lines 
 fault *  
 
+# resulting surface should tend to be constant or plane 
 completer 1 25
 
 ##
@@ -63,9 +64,8 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to Surfer-ASCII grid file 
 surf_save_grd "top_D5_wo_trend.grd" $map_name 
-surf_plot "top_D5_wo_trend.ps" $map_name
+
+# plot resulting surface in EPS
+surf_plot "top_D5_wo_trend.eps" $map_name

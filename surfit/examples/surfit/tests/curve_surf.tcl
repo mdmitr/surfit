@@ -58,11 +58,8 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to surfit datafile 
 surf_save "curve_surf.dat" "map_curv_surf" 
 
-# plot resulting surface in PostScript
-surf_plot "curve_surf.ps" $map_name
+# plot resulting surface in EPS
+surf_plot "curve_surf.eps" $map_name

@@ -6,8 +6,6 @@
 # 
 load libsurfit[info sharedlibextension]
 
-init_threads 1
-
 # remove all previous data and gridding rules
 clear_data 
 
@@ -40,7 +38,7 @@ grid_get -10 10 0.1 -10 10 0.1
 points "7points" 
 
 # resulting surface mean value = value... 
-mean 30
+mean 30 0
 
 # resulting surface should tend to be constant or plane 
 completer 
@@ -54,14 +52,11 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to surfit datafile 
 surf_save "mean.dat" "map_mean"
 
 set mean_value [surf_mean map_mean]
 puts "surface mean value is $mean_value"
                          
-# plot resulting surface in PostScript
-surf_plot "mean.ps" $map_name
+# plot resulting surface in EPS
+surf_plot "mean.eps" $map_name

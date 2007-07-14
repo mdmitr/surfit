@@ -32,3 +32,5 @@ surf_filter_in_area "top_D4" "filter*"
 # save surface to surfit datafile 
 surf_save "top_D4.dat" "top_D4" 
 
+# plot resulting surface in EPS
+surf_plot "top_D4.eps" "top_D4"

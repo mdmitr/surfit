@@ -55,11 +55,8 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to surfit datafile 
 surf_save "mask.dat" "map_mask" 
 
-# plot resulting surface in PostScript
-surf_plot "mask.ps" $map_name
+# plot resulting surface in EPS
+surf_plot "mask.eps" $map_name

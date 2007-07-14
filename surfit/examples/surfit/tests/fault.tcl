@@ -40,7 +40,7 @@ curv_read "data/flt_line4.txt" "flt_line4"
 ##
 ## construct grid 
 ##
-grid_get 1 99 1 -50 50 1 
+grid_get 1 99 0.5 -50 50 0.5 
  
 ##
 ## create gridding rules
@@ -73,11 +73,8 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to surfit datafile 
 surf_save "fault.dat" "map_faults" 
 
-# plot resulting surface in PostScript
-surf_plot "fault.ps" $map_name
+# plot resulting surface in EPS
+surf_plot "fault.eps" $map_name

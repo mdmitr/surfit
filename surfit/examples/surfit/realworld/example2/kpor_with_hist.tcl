@@ -74,5 +74,5 @@ hist_from_surf $map_name 10
 # write histogram to the file
 hist_write "hist_result.txt"
 
-# plot resulting surface in PostScript
-surf_plot "kpor_with_hist.ps" $map_name
+# plot resulting surface in EPS
+surf_plot "kpor_with_hist.eps" $map_name

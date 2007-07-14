@@ -58,13 +58,10 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to surfit datafile 
 surf_save "mask_wmean.dat" "map_mask_wmean" 
 
 puts [concat "Surface weighted mean value for test_mask : " [surf_mask_wmean "test_mask" "test_func" "map_mask_wmean"]]
 
-# plot resulting surface in PostScript
-surf_plot "mask_wmean.ps" $map_name
+# plot resulting surface in EPS
+surf_plot "mask_wmean.eps" $map_name

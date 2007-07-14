@@ -46,8 +46,8 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to surfit datafile 
 surf_save "points_triangulate.dat" $map_name
+
+# plot resulting surface in EPS
+surf_plot "ponts_triangulate.eps" $map_name

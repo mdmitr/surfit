@@ -54,11 +54,10 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to surfit datafile 
 surf_save "peaks.dat" $map_name 
-surf_plot "peaks.ps"
+
+# plot resulting surface in EPS
+surf_plot "peaks.eps"
 
 

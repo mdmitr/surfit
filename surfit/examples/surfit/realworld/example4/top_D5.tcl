@@ -18,7 +18,7 @@ set map_name "top_D5"
 set_solver "cg" 
 
 # set tolerance for solver
-set tol 5e-007
+set tol 1e-007
 
 ##
 ## load initial data 
@@ -52,6 +52,7 @@ fault "fault*"
 # resulting surface looks like trend surface 
 trend 1 2 "top_D4" 
 
+# resulting surface should tend to be constant or plane 
 completer 1 5
 
 ##
@@ -63,9 +64,8 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to Surfer-ASCII grid file 
 surf_save_grd "top_D5.grd" "top_D5" 
-surf_plot "top_D5.ps" $map_name
+
+# plot resulting surface in EPS
+surf_plot "top_D5.eps" $map_name

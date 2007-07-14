@@ -40,7 +40,7 @@ grid_get -10 10 0.1 -10 10 0.1
 points "7points" 
 
 # resulting surface weighted mean value = value... 
-wmean 30 "test_func" 
+wmean 30 "test_func" 0
 
 # resulting surface should tend to be constant or plane 
 completer 
@@ -54,14 +54,11 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to surfit datafile 
 surf_save "wmean.dat" "map_wmean"
 
 set mean_value [surf_wmean test_func map_wmean]
 puts "surface weighted mean value is $mean_value"
 
-# plot resulting surface in PostScript
-surf_plot "wmean.ps" $map_name
+# plot resulting surface in EPS
+surf_plot "wmean.eps" $map_name

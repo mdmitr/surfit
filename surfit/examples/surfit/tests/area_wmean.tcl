@@ -16,7 +16,7 @@ set map_name "map_area_wmean"
 set_solver "cg" 
 
 # set tolerance for solver
-set tol 1e-005 
+set tol 1e-006 
 
 ##
 ## load initial data 
@@ -46,7 +46,7 @@ surf_load "data/func.func" "test_func"
 ##
 ## construct grid 
 ##
-grid_get -12 12 0.2 -12 12 0.2 
+grid_get -12 12 0.1 -12 12 0.1 
  
 ##
 ## create gridding rules
@@ -82,13 +82,10 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to surfit datafile 
 surf_save "area_wmean.dat" "map_area_wmean" 
 
 puts [concat "Surface weighted mean value in area6 : " [surf_area_wmean "area6" "test_func" "map_area_wmean"]]
 
-# plot resulting surface in PostScript
-surf_plot "area_wmean.ps" $map_name
+# plot resulting surface in EPS
+surf_plot "area_wmean.eps" $map_name

@@ -46,8 +46,8 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to surfit datafile 
 surf_save "points_exact.dat" "map_points_exact" 
+
+# plot resulting surface in EPS
+surf_plot "ponits_exact.eps" "map_points_exact" 

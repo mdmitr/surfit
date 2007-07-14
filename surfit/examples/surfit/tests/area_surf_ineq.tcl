@@ -46,7 +46,7 @@ area_read "data/area5.txt" "area5"
 ##
 ## construct grid 
 ##
-grid_get -12 12 0.2 -12 12 0.2 
+grid_get -12 12 0.1 -12 12 0.1 
  
 ##
 ## create gridding rules
@@ -82,11 +82,8 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to surfit datafile 
 surf_save "area_surf_ineq.dat" "map_area_surf_ineq" 
 
-# plot resulting surface in PostScript
-surf_plot "area_surf_ineq.ps" $map_name
+# plot resulting surface in EPS
+surf_plot "area_surf_ineq.eps" $map_name

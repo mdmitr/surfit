@@ -56,9 +56,8 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to surfit datafile 
 surf_save "saratov.dat" $map_name 
-surf_plot "saratov.ps"
+
+# plot resulting surface in EPS
+surf_plot "saratov.eps"

@@ -80,9 +80,6 @@ surfit
 ## save results 
 ##
 
-# unload grid from memory
-grid_unload 
-
 # save surface to surfit datafile 
 surf_save "area_hist.dat" "map_area_hist" 
 
@@ -91,5 +88,5 @@ hist_del
 hist_from_surf * 10
 hist_write "area_hist_result.txt"
 
-# plot resulting surface in PostScript
-surf_plot "area_hist.ps" $map_name
+# plot resulting surface in EPS
+surf_plot "area_hist.eps" $map_name
