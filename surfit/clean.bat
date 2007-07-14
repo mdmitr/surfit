@@ -42,6 +42,7 @@ cd ..
 del /Q /S *.dat
 del /Q /S *.grd
 del /Q /S *.ps
+del /Q /S *.eps
 del /Q /S *.log
 del /Q /S *.errlog
 del /Q /S .#*
