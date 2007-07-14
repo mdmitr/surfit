@@ -236,6 +236,10 @@ SOURCE=..\src\surfit\mask_tcl.cpp
 # End Group
 # Begin Source File
 
+SOURCE=..\src\surfit\colorscale.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\surfit\surf.cpp
 # End Source File
 # Begin Source File
@@ -712,6 +716,10 @@ SOURCE=..\src\surfit\mask_internal.h
 SOURCE=..\src\surfit\mask_tcl.h
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=..\src\surfit\colorscale.h
+# End Source File
 # Begin Source File
 
 SOURCE=..\src\surfit\surf.h

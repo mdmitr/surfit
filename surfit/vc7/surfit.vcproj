@@ -2307,6 +2307,9 @@
 					Name="surf_cpp"
 					Filter="">
 					<File
+						RelativePath="..\src\surfit\colorscale.cpp">
+					</File>
+					<File
 						RelativePath="..\src\surfit\surf.cpp">
 						<FileConfiguration
 							Name="Debug|Win32">
@@ -5849,6 +5852,9 @@
 				<Filter
 					Name="surf_h"
 					Filter="">
+					<File
+						RelativePath="..\src\surfit\colorscale.h">
+					</File>
 					<File
 						RelativePath="..\src\surfit\surf.h">
 					</File>

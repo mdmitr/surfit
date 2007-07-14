@@ -483,6 +483,7 @@
 				BrowseInformationFile=".\../Release_SSE2/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
+				DebugInformationFormat="0"
 				CompileAs="0"
 			/>
 			<Tool
@@ -503,6 +504,7 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="..\..\LIBS\TCL8.3.5\WIN\RELEASE"
+				GenerateDebugInformation="false"
 				ProgramDatabaseFile=".\../Release/libsstuff.pdb"
 				ImportLibrary="..\bin\libsstuff.lib"
 				TargetMachine="1"

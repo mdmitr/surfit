@@ -70,6 +70,8 @@ CLEAN :
 	-@erase "$(INTDIR)\cntr_tcl.sbr"
 	-@erase "$(INTDIR)\cntr_trace.obj"
 	-@erase "$(INTDIR)\cntr_trace.sbr"
+	-@erase "$(INTDIR)\colorscale.obj"
+	-@erase "$(INTDIR)\colorscale.sbr"
 	-@erase "$(INTDIR)\CreEPS.obj"
 	-@erase "$(INTDIR)\CreEPS.sbr"
 	-@erase "$(INTDIR)\curv.obj"
@@ -352,6 +354,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_trend.sbr" \
 	"$(INTDIR)\surfs_tcl.sbr" \
 	"$(INTDIR)\functional.sbr" \
+	"$(INTDIR)\CreEPS.sbr" \
 	"$(INTDIR)\data_manager.sbr" \
 	"$(INTDIR)\mrf.sbr" \
 	"$(INTDIR)\sort_alg.sbr" \
@@ -359,7 +362,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\surfit_wrap.sbr" \
 	"$(INTDIR)\triangle.sbr" \
 	"$(INTDIR)\variables.sbr" \
-	"$(INTDIR)\CreEPS.sbr"
+	"$(INTDIR)\colorscale.sbr"
 
 "$(OUTDIR)\surfit.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -459,6 +462,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_trend.obj" \
 	"$(INTDIR)\surfs_tcl.obj" \
 	"$(INTDIR)\functional.obj" \
+	"$(INTDIR)\CreEPS.obj" \
 	"$(INTDIR)\data_manager.obj" \
 	"$(INTDIR)\mrf.obj" \
 	"$(INTDIR)\sort_alg.obj" \
@@ -466,7 +470,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\surfit_wrap.obj" \
 	"$(INTDIR)\triangle.obj" \
 	"$(INTDIR)\variables.obj" \
-	"$(INTDIR)\CreEPS.obj" \
+	"$(INTDIR)\colorscale.obj" \
 	"..\bin\libsstuff.lib"
 
 "..\bin\libsurfit.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -515,6 +519,8 @@ CLEAN :
 	-@erase "$(INTDIR)\cntr_tcl.sbr"
 	-@erase "$(INTDIR)\cntr_trace.obj"
 	-@erase "$(INTDIR)\cntr_trace.sbr"
+	-@erase "$(INTDIR)\colorscale.obj"
+	-@erase "$(INTDIR)\colorscale.sbr"
 	-@erase "$(INTDIR)\CreEPS.obj"
 	-@erase "$(INTDIR)\CreEPS.sbr"
 	-@erase "$(INTDIR)\curv.obj"
@@ -799,6 +805,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\f_trend.sbr" \
 	"$(INTDIR)\surfs_tcl.sbr" \
 	"$(INTDIR)\functional.sbr" \
+	"$(INTDIR)\CreEPS.sbr" \
 	"$(INTDIR)\data_manager.sbr" \
 	"$(INTDIR)\mrf.sbr" \
 	"$(INTDIR)\sort_alg.sbr" \
@@ -806,7 +813,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\surfit_wrap.sbr" \
 	"$(INTDIR)\triangle.sbr" \
 	"$(INTDIR)\variables.sbr" \
-	"$(INTDIR)\CreEPS.sbr"
+	"$(INTDIR)\colorscale.sbr"
 
 "$(OUTDIR)\surfit.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -906,6 +913,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\f_trend.obj" \
 	"$(INTDIR)\surfs_tcl.obj" \
 	"$(INTDIR)\functional.obj" \
+	"$(INTDIR)\CreEPS.obj" \
 	"$(INTDIR)\data_manager.obj" \
 	"$(INTDIR)\mrf.obj" \
 	"$(INTDIR)\sort_alg.obj" \
@@ -913,7 +921,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\surfit_wrap.obj" \
 	"$(INTDIR)\triangle.obj" \
 	"$(INTDIR)\variables.obj" \
-	"$(INTDIR)\CreEPS.obj" \
+	"$(INTDIR)\colorscale.obj" \
 	"..\bin\libsstuff.lib"
 
 "..\bin\libsurfit.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -1124,6 +1132,12 @@ SOURCE=..\src\surfit\mask_internal.cpp
 SOURCE=..\src\surfit\mask_tcl.cpp
 
 "$(INTDIR)\mask_tcl.obj"	"$(INTDIR)\mask_tcl.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\src\surfit\colorscale.cpp
+
+"$(INTDIR)\colorscale.obj"	"$(INTDIR)\colorscale.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

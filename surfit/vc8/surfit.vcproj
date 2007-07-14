@@ -478,6 +478,7 @@
 				BrowseInformationFile=".\../Release_SSE2/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
+				DebugInformationFormat="0"
 				CompileAs="0"
 			/>
 			<Tool
@@ -499,6 +500,7 @@
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="..\..\LIBS\TCL8.3.5\WIN\RELEASE"
 				IgnoreDefaultLibraryNames="LIBC"
+				GenerateDebugInformation="false"
 				ProgramDatabaseFile=".\../Release/libsurfit.pdb"
 				ImportLibrary="..\bin\libsurfit.lib "
 				TargetMachine="1"
@@ -2780,6 +2782,10 @@
 				<Filter
 					Name="surf_cpp"
 					>
+					<File
+						RelativePath="..\src\surfit\colorscale.cpp"
+						>
+					</File>
 					<File
 						RelativePath="..\src\surfit\surf.cpp"
 						>
@@ -6930,6 +6936,10 @@
 				<Filter
 					Name="surf_h"
 					>
+					<File
+						RelativePath="..\src\surfit\colorscale.h"
+						>
+					</File>
 					<File
 						RelativePath="..\src\surfit\surf.h"
 						>
