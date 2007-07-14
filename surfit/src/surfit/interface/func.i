@@ -27,20 +27,20 @@ namespace surfit {
 
 surfit::boolvec * surface(const char * surface_name = "*");
 surfit::boolvec * surface_add(REAL weight, const char * surface_name = "*");
-surfit::boolvec * surface_leq(const char * surface_name = "*", REAL mult = 1);
-surfit::boolvec * surface_geq(const char * surface_name = "*", REAL mult = 1);
+surfit::boolvec * surface_leq(const char * surface_name = "*", REAL penalty_factor = 0);
+surfit::boolvec * surface_geq(const char * surface_name = "*", REAL penalty_factor = 0);
 surfit::boolvec * trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name = "*");
 surfit::boolvec * trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_name = "*");
 surfit::boolvec * mask(const char * val, const char * mask_name = "*");
 surfit::boolvec * mask_add(REAL val, REAL weigh = 1, const char * mask_name = "*");
-surfit::boolvec * mask_leq(REAL value, const char * mask_name = "*", REAL mult = 1);
-surfit::boolvec * mask_geq(REAL value, const char * mask_name = "*", REAL mult = 1);
+surfit::boolvec * mask_leq(REAL value, const char * mask_name = "*", REAL penalty_factor = 0);
+surfit::boolvec * mask_geq(REAL value, const char * mask_name = "*", REAL penalty_factor = 0);
 surfit::boolvec * mask_surf(const char * surf_name = "*", const char * mask_name = "*");
 surfit::boolvec * mask_surf_add(const char * surf_name = "*", REAL weight = 1, const char * mask_name = "*");
-surfit::boolvec * mask_surf_leq(const char * surf_name = "*", const char * mask_name = "*", REAL mult = 1);
-surfit::boolvec * mask_surf_geq(const char * surf_name = "*", const char * mask_name = "*", REAL mult = 1);
-surfit::boolvec * mask_mean(REAL mean, const char * mask_name = "*", REAL mult = 1);
-surfit::boolvec * mask_wmean(REAL mean, const char * mask_name = "*", const char * surf_name = "*", REAL mult = 1);
+surfit::boolvec * mask_surf_leq(const char * surf_name = "*", const char * mask_name = "*", REAL penalty_factor = 0);
+surfit::boolvec * mask_surf_geq(const char * surf_name = "*", const char * mask_name = "*", REAL penalty_factor = 0);
+surfit::boolvec * mask_mean(REAL mean, const char * mask_name = "*", REAL penalty_factor = -2);
+surfit::boolvec * mask_wmean(REAL mean, const char * mask_name = "*", const char * surf_name = "*", REAL penalty_factor = -2);
 surfit::boolvec * mask_completer(const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 surfit::boolvec * mask_completer_add(REAL weight = 1, const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
@@ -51,7 +51,7 @@ surfit::boolvec * mask_completer_add(REAL weight = 1, const char * mask_name = "
 // save_load
 surfit::boolvec * surf_load(const char * filename, const char * surfname = NULL);
 surfit::boolvec * surf_save(const char * filename, const char * surface_name = "*");
-surfit::boolvec * surf_plot(const char * filename, const char * surface_name = "*");
+surfit::boolvec * surf_plot(const char * filename, const char * surface_name = "*", bool draw_isos = true, size_t number_of_levels = 16);
 // MATH OPERATIONS
 surfit::vec * surf_getValue(REAL x, REAL y, const char * surface_name = "*");
 surfit::vec * surf_getValueIJ(int I, int J, const char * surface_name = "*");

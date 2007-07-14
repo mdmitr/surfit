@@ -475,14 +475,14 @@ boolvec * area_add(REAL value, REAL weight, const char * pos, int inside)
 
 struct match_area_leq
 {
-	match_area_leq(const char * ipos, REAL ivalue, REAL imult, int iinside) : pos(ipos), value(ivalue), mult(imult), inside(iinside), res(NULL) {};
+	match_area_leq(const char * ipos, REAL ivalue, REAL ipenalty_factor, int iinside) : pos(ipos), value(ivalue), penalty_factor(ipenalty_factor), inside(iinside), res(NULL) {};
 	void operator()(d_area * area) 
 	{
 		if ( StringMatch(pos, area->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule area_leq(%g,\"%s\",%g,%d)", 
-				 value, area->getName(), mult, inside);
-			f_area_ineq * f = new f_area_ineq(value, area, true, mult, (inside == 1));
+				 value, area->getName(), get_mult(penalty_factor), inside);
+			f_area_ineq * f = new f_area_ineq(value, area, true, get_mult(penalty_factor), (inside == 1));
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -491,28 +491,28 @@ struct match_area_leq
 	}
 	const char * pos;
 	REAL value;
-	REAL mult;
+	REAL penalty_factor;
 	int inside;
 	boolvec * res;
 };
 
-boolvec * area_leq(REAL value, const char * area_pos, REAL mult, int inside) 
+boolvec * area_leq(REAL value, const char * area_pos, REAL penalty_factor, int inside) 
 {
-	match_area_leq qq(area_pos, value, mult, inside);
+	match_area_leq qq(area_pos, value, penalty_factor, inside);
 	qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
 	return qq.res;
 };
 
 struct match_area_geq
 {
-	match_area_geq(const char * ipos, REAL ivalue, REAL imult, int iinside) : pos(ipos), value(ivalue), mult(imult), inside(iinside), res(NULL) {};
+	match_area_geq(const char * ipos, REAL ivalue, REAL ipenalty_factor, int iinside) : pos(ipos), value(ivalue), penalty_factor(ipenalty_factor), inside(iinside), res(NULL) {};
 	void operator()(d_area * area) 
 	{
 		if ( StringMatch(pos, area->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule area_geq(%g,\"%s\",%g,%d)", 
-				 value, area->getName(), mult, inside);
-			f_area_ineq * f = new f_area_ineq(value, area, false, (inside == 1));
+				 value, area->getName(), get_mult(penalty_factor), inside);
+			f_area_ineq * f = new f_area_ineq(value, area, false, get_mult(penalty_factor), (inside==1));
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -521,14 +521,14 @@ struct match_area_geq
 	}
 	const char * pos;
 	REAL value;
-	REAL mult;
+	REAL penalty_factor;
 	int inside;
 	boolvec * res;
 };
 
-boolvec * area_geq(REAL value, const char * area_pos, REAL mult, int inside) 
+boolvec * area_geq(REAL value, const char * area_pos, REAL penalty_factor, int inside) 
 {
-	match_area_geq qq(area_pos, value, mult, inside);
+	match_area_geq qq(area_pos, value, penalty_factor, inside);
 	qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
 	return qq.res;
 };
@@ -642,14 +642,14 @@ boolvec * area_surf_add(const char * surf_pos, REAL weight, const char * area_po
 
 struct match_area_surf_leq2
 {
-	match_area_surf_leq2(const char * isurf_pos, d_area * iarea, REAL imult, int iinside) : surf_pos(isurf_pos), area(iarea), mult(imult), inside(iinside), res(NULL) {};
+	match_area_surf_leq2(const char * isurf_pos, d_area * iarea, REAL ipenalty_factor, int iinside) : surf_pos(isurf_pos), area(iarea), penalty_factor(ipenalty_factor), inside(iinside), res(NULL) {};
 	void operator()(d_surf * surf)
 	{
 		if ( StringMatch(surf_pos, surf->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule area_surf_leq(\"%s\",\"%s\",%g,%d)",
-				surf->getName(),area->getName(),mult, inside);
-			f_area_surf_ineq * f = new f_area_surf_ineq(surf, area, true, mult, (inside == 1) );
+				surf->getName(),area->getName(), get_mult(penalty_factor), inside);
+			f_area_surf_ineq * f = new f_area_surf_ineq(surf, area, true, get_mult(penalty_factor), (inside == 1) );
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -659,18 +659,18 @@ struct match_area_surf_leq2
 	const char * surf_pos;
 	d_area * area;
 	int inside;
-	REAL mult;
+	REAL penalty_factor;
 	boolvec * res;
 };
 
 struct match_area_surf_leq
 {
-	match_area_surf_leq(const char * isurf_pos, const char * iarea_pos, REAL imult, int iinside) : surf_pos(isurf_pos), area_pos(iarea_pos), mult(imult), inside(iinside), res(NULL) {};
+	match_area_surf_leq(const char * isurf_pos, const char * iarea_pos, REAL ipenalty_factor, int iinside) : surf_pos(isurf_pos), area_pos(iarea_pos), penalty_factor(ipenalty_factor), inside(iinside), res(NULL) {};
 	void operator()(d_area * area) 
 	{
 		if ( StringMatch(area_pos, area->getName()) )
 		{
-			match_area_surf_leq2 qq(surf_pos, area, mult, inside);
+			match_area_surf_leq2 qq(surf_pos, area, penalty_factor, inside);
 			qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
 			if (res == NULL)
 				res = create_boolvec();
@@ -679,28 +679,28 @@ struct match_area_surf_leq
 	}
 	const char * surf_pos;
 	const char * area_pos;
-	REAL mult;
+	REAL penalty_factor;
 	int inside;
 	boolvec * res;
 };
 
-boolvec * area_surf_leq(const char * surf_pos, const char * area_pos, REAL mult, int inside) 
+boolvec * area_surf_leq(const char * surf_pos, const char * area_pos, REAL penalty_factor, int inside) 
 {
-	match_area_surf_leq qq(surf_pos, area_pos, mult, inside);
+	match_area_surf_leq qq(surf_pos, area_pos, penalty_factor, inside);
 	qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
 	return qq.res;
 };
 
 struct match_area_surf_geq2
 {
-	match_area_surf_geq2(const char * isurf_pos, d_area * iarea, REAL imult, int iinside) : surf_pos(isurf_pos), area(iarea), mult(imult), inside(iinside), res(NULL) {};
+	match_area_surf_geq2(const char * isurf_pos, d_area * iarea, REAL ipenalty_factor, int iinside) : surf_pos(isurf_pos), area(iarea), penalty_factor(ipenalty_factor), inside(iinside), res(NULL) {};
 	void operator()(d_surf * surf)
 	{
 		if ( StringMatch(surf_pos, surf->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule area_surf_geq(\"%s\",\"%s\",%g,%d)",
-				surf->getName(),area->getName(),mult, inside);
-			f_area_surf_ineq * f = new f_area_surf_ineq(surf, area, false, mult, (inside == 1) );
+				surf->getName(),area->getName(), get_mult(penalty_factor), inside);
+			f_area_surf_ineq * f = new f_area_surf_ineq(surf, area, false, get_mult(penalty_factor), (inside == 1) );
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -710,18 +710,18 @@ struct match_area_surf_geq2
 	const char * surf_pos;
 	d_area * area;
 	int inside;
-	REAL mult;
+	REAL penalty_factor;
 	boolvec * res;
 };
 
 struct match_area_surf_geq
 {
-	match_area_surf_geq(const char * isurf_pos, const char * iarea_pos, REAL imult, int iinside) : surf_pos(isurf_pos), area_pos(iarea_pos), mult(imult), inside(iinside), res(NULL) {};
+	match_area_surf_geq(const char * isurf_pos, const char * iarea_pos, REAL ipenalty_factor, int iinside) : surf_pos(isurf_pos), area_pos(iarea_pos), penalty_factor(ipenalty_factor), inside(iinside), res(NULL) {};
 	void operator()(d_area * area) 
 	{
 		if ( StringMatch(area_pos, area->getName()) )
 		{
-			match_area_surf_geq2 qq(surf_pos, area, mult, inside);
+			match_area_surf_geq2 qq(surf_pos, area, penalty_factor, inside);
 			qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
 			if (res == NULL)
 				res = create_boolvec();
@@ -730,14 +730,14 @@ struct match_area_surf_geq
 	}
 	const char * surf_pos;
 	const char * area_pos;
-	REAL mult;
+	REAL penalty_factor;
 	int inside;
 	boolvec * res;
 };
 
-boolvec * area_surf_geq(const char * surf_pos, const char * area_pos, REAL mult, int inside) 
+boolvec * area_surf_geq(const char * surf_pos, const char * area_pos, REAL penalty_factor, int inside) 
 {
-	match_area_surf_geq qq(surf_pos, area_pos, mult, inside);
+	match_area_surf_geq qq(surf_pos, area_pos, penalty_factor, inside);
 	qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
 	return qq.res;
 };
@@ -774,14 +774,14 @@ boolvec * area_mean(REAL mean, const char * pos, REAL penalty_factor, int inside
 
 struct match_area_wmean2
 {
-	match_area_wmean2(REAL imean, d_area * iarea, const char * isurf_pos, REAL imult, int iinside) : mean(imean), area(iarea), surf_pos(isurf_pos), mult(imult), inside(iinside), res(NULL) {};
+	match_area_wmean2(REAL imean, d_area * iarea, const char * isurf_pos, REAL ipenalty_factor, int iinside) : mean(imean), area(iarea), surf_pos(isurf_pos), penalty_factor(ipenalty_factor), inside(iinside), res(NULL) {};
 	void operator()(d_surf * surf) 
 	{
 		if ( StringMatch(surf_pos, surf->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule area_wmean(%g,\"%s\",\"%s\",%g,%d)",
-				mean, area->getName(), surf->getName(), mult, inside);
-			f_area_wmean * f = new f_area_wmean(mean, surf, area, mult, (inside == 1) );
+				mean, area->getName(), surf->getName(), get_mult(penalty_factor), inside);
+			f_area_wmean * f = new f_area_wmean(mean, surf, area, get_mult(penalty_factor), (inside == 1) );
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -791,19 +791,19 @@ struct match_area_wmean2
 	REAL mean;
 	d_area * area;
 	const char * surf_pos;
-	REAL mult;
+	REAL penalty_factor;
 	int inside;
 	boolvec * res;
 };
 
 struct match_area_wmean
 {
-	match_area_wmean(REAL imean, const char * iarea_pos, const char * isurf_pos, REAL imult, int iinside) : mean(imean), area_pos(iarea_pos), surf_pos(isurf_pos), mult(imult), inside(iinside), res(NULL) {};
+	match_area_wmean(REAL imean, const char * iarea_pos, const char * isurf_pos, REAL ipenalty_factor, int iinside) : mean(imean), area_pos(iarea_pos), surf_pos(isurf_pos), penalty_factor(ipenalty_factor), inside(iinside), res(NULL) {};
 	void operator()(d_area * area) 
 	{
 		if ( StringMatch(area_pos, area->getName()) )
 		{
-			match_area_wmean2 qq(mean, area, surf_pos, mult, inside);
+			match_area_wmean2 qq(mean, area, surf_pos, penalty_factor, inside);
 			qq = std::for_each(surfit_surfs->begin(),surfit_surfs->end(), qq);
 			if (res == NULL)
 				res = create_boolvec();
@@ -813,14 +813,14 @@ struct match_area_wmean
 	REAL mean;
 	const char * area_pos;
 	const char * surf_pos;
-	REAL mult;
+	REAL penalty_factor;
 	int inside;
 	boolvec * res;
 };
 
-boolvec * area_wmean(REAL mean, const char * area_pos, const char * surf_pos, REAL mult, int inside) 
+boolvec * area_wmean(REAL mean, const char * area_pos, const char * surf_pos, REAL penalty_factor, int inside) 
 {
-	match_area_wmean qq(mean, area_pos, surf_pos, mult, inside);
+	match_area_wmean qq(mean, area_pos, surf_pos, penalty_factor, inside);
 	qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
 	return qq.res;
 };
@@ -899,14 +899,14 @@ boolvec * area_completer_add(REAL weight, const char * area_pos, REAL D1, REAL D
 
 struct match_area_hist2
 {
-	match_area_hist2(d_area * iarea, const char * ihist_pos, REAL imult, int iinside) : area(iarea), hist_pos(ihist_pos), mult(imult), inside(iinside), res(NULL) {};
+	match_area_hist2(d_area * iarea, const char * ihist_pos, REAL ipenalty_factor, int iinside) : area(iarea), hist_pos(ihist_pos), penalty_factor(ipenalty_factor), inside(iinside), res(NULL) {};
 	void operator()(d_hist * hist) 
 	{
 		if ( StringMatch(hist_pos, hist->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating functional area_hist(\"%s\",\"%s\",%g,%d)",
-				area->getName(), hist->getName(), mult, inside);
-			f_area_hist * f = new f_area_hist(area, hist, mult, (inside==1));
+				area->getName(), hist->getName(), get_mult(penalty_factor), inside);
+			f_area_hist * f = new f_area_hist(area, hist, get_mult(penalty_factor), (inside==1));
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -915,19 +915,19 @@ struct match_area_hist2
 	}
 	d_area * area;
 	const char * hist_pos;
-	REAL mult; 
+	REAL penalty_factor; 
 	int inside;
 	boolvec * res;
 };
 
 struct match_area_hist
 {
-	match_area_hist(const char * iarea_pos, const char * ihist_pos, REAL imult, int iinside) : area_pos(iarea_pos), hist_pos(ihist_pos), mult(imult), inside(iinside), res(NULL) {};
+	match_area_hist(const char * iarea_pos, const char * ihist_pos, REAL ipenalty_factor, int iinside) : area_pos(iarea_pos), hist_pos(ihist_pos), penalty_factor(ipenalty_factor), inside(iinside), res(NULL) {};
 	void operator()(d_area * area) 
 	{
 		if ( StringMatch(area_pos, area->getName()) )
 		{
-			match_area_hist2 qq(area, hist_pos, mult, inside);
+			match_area_hist2 qq(area, hist_pos, penalty_factor, inside);
 			qq = std::for_each(surfit_hists->begin(), surfit_hists->end(), qq);
 			if (res == NULL)
 				res = create_boolvec();
@@ -936,14 +936,14 @@ struct match_area_hist
 	}
 	const char * area_pos;
 	const char * hist_pos;
-	REAL mult; 
+	REAL penalty_factor; 
 	int inside;
 	boolvec * res;
 };
 
-boolvec * area_hist(const char * area_pos, const char * hist_pos, REAL mult, int inside) 
+boolvec * area_hist(const char * area_pos, const char * hist_pos, REAL penalty_factor, int inside) 
 {
-	match_area_hist qq(area_pos, hist_pos, mult, inside);
+	match_area_hist qq(area_pos, hist_pos, penalty_factor, inside);
 	qq = std::for_each(surfit_areas->begin(), surfit_areas->end(), qq);
 	return qq.res;
 };
@@ -1009,14 +1009,14 @@ boolvec * contour_add(REAL weight, const char * pos)
 
 struct match_contours
 {
-	match_contours(const char * ipos, REAL imult) : pos(ipos), res(NULL), mult(imult) {};
+	match_contours(const char * ipos, REAL ipenalty_factor) : pos(ipos), res(NULL), penalty_factor(ipenalty_factor) {};
 	void operator()(d_cntr * contour) 
 	{
 		if ( StringMatch(pos, contour->getName()) )
 		{
 			if (res == NULL)
 				res = create_boolvec();
-			writelog(LOG_MESSAGE,"creating gridding rule contours(\"%s\")", contour->getName());
+			writelog(LOG_MESSAGE,"creating gridding rule contours(\"%s\",%g)", contour->getName(), get_mult(penalty_factor));
 			if (functionals->size() > 0)
 			{
 				f_cntr_smooth * f = dynamic_cast<f_cntr_smooth*>( *(functionals->end()-1) );
@@ -1027,20 +1027,20 @@ struct match_contours
 					return;
 				}
 			}
-			f_cntr_smooth * f = new f_cntr_smooth(mult);
+			f_cntr_smooth * f = new f_cntr_smooth(get_mult(penalty_factor));
 			f->add_contour(contour);
 			functionals_push_back(f);
 			res->push_back(true);
 		}
 	}
-	REAL mult;
+	REAL penalty_factor;
 	const char * pos;
 	boolvec * res;
 };
 
-boolvec * contours(const char * pos, REAL mult) 
+boolvec * contours(const char * pos, REAL penalty_factor) 
 {
-	match_contours qq(pos, mult);
+	match_contours qq(pos, penalty_factor);
 	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
 	return qq.res;
 };
@@ -1088,14 +1088,14 @@ boolvec * contours_add(REAL weight, const char * pos)
 
 struct match_contour_leq
 {
-	match_contour_leq(const char * icntr_pos, REAL imult) : cntr_pos(icntr_pos), mult(imult), res(NULL) {};
+	match_contour_leq(const char * icntr_pos, REAL ipenalty_factor) : cntr_pos(icntr_pos), penalty_factor(ipenalty_factor), res(NULL) {};
 	void operator()(d_cntr * contour)
 	{
 		if ( StringMatch(cntr_pos, contour->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule contour_leq(\"%s\",%g)",
-				contour->getName(), mult);
-			f_cntr_ineq * f = new f_cntr_ineq(contour, true, mult);
+				contour->getName(), get_mult(penalty_factor));
+			f_cntr_ineq * f = new f_cntr_ineq(contour, true, get_mult(penalty_factor));
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -1103,27 +1103,27 @@ struct match_contour_leq
 		}
 	}
 	const char * cntr_pos;
-	REAL mult;
+	REAL penalty_factor;
 	boolvec * res;
 };
 
-boolvec * contour_leq(const char * cntr_pos, REAL mult) 
+boolvec * contour_leq(const char * cntr_pos, REAL penalty_factor) 
 {
-	match_contour_leq qq(cntr_pos, mult);
+	match_contour_leq qq(cntr_pos, penalty_factor);
 	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
 	return qq.res;
 };
 
 struct match_contour_geq
 {
-	match_contour_geq(const char * icntr_pos, REAL imult) : cntr_pos(icntr_pos), mult(imult), res(NULL) {};
+	match_contour_geq(const char * icntr_pos, REAL ipenalty_factor) : cntr_pos(icntr_pos), penalty_factor(ipenalty_factor), res(NULL) {};
 	void operator()(d_cntr * contour)
 	{
 		if ( StringMatch(cntr_pos, contour->getName()) )
 		{
 			writelog(LOG_MESSAGE,"creating gridding rule contour_geq(\"%s\",%g)",
-				contour->getName(), mult);
-			f_cntr_ineq * f = new f_cntr_ineq(contour, false, mult);
+				contour->getName(), get_mult(penalty_factor));
+			f_cntr_ineq * f = new f_cntr_ineq(contour, false, get_mult(penalty_factor));
 			functionals_push_back(f);
 			if (res == NULL)
 				res = create_boolvec();
@@ -1131,13 +1131,13 @@ struct match_contour_geq
 		}
 	}
 	const char * cntr_pos;
-	REAL mult;
+	REAL penalty_factor;
 	boolvec * res;
 };
 
-boolvec * contour_geq(const char * cntr_pos, REAL mult) 
+boolvec * contour_geq(const char * cntr_pos, REAL penalty_factor) 
 {
-	match_contour_geq qq(cntr_pos, mult);
+	match_contour_geq qq(cntr_pos, penalty_factor);
 	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
 	return qq.res;
 };

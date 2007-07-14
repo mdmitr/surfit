@@ -92,40 +92,40 @@ boolvec * points_add(REAL weight, const char * pos)
 
 struct match_points_leq
 {
-	match_points_leq(const char * ipos, REAL imult) : pos(ipos), mult(imult), res(NULL) {};
+	match_points_leq(const char * ipos, REAL ipenalty_factor) : pos(ipos), penalty_factor(ipenalty_factor), res(NULL) {};
 	void operator()(d_points * pnts) 
 	{
 		if ( StringMatch( pos, pnts->getName() ) )
 		{
-			writelog(LOG_MESSAGE,"creating gridding rule points_leq(\"%s\",%g)", pnts->getName(), mult);
+			writelog(LOG_MESSAGE,"creating gridding rule points_leq(\"%s\",%g)", pnts->getName(), get_mult(penalty_factor));
 			if (res == NULL)
 				res = create_boolvec();
-			f_points_ineq * inpnts = new f_points_ineq(pnts, true, mult);
+			f_points_ineq * inpnts = new f_points_ineq(pnts, true, get_mult(penalty_factor));
 			functionals_push_back(inpnts);
 			res->push_back(true);
 		}
 	}
 	const char * pos;
-	REAL mult;
+	REAL penalty_factor;
 	boolvec * res;
 };
 
-boolvec * points_leq(const char * pos, REAL mult) 
+boolvec * points_leq(const char * pos, REAL penalty_factor) 
 {
-	match_points_leq qq(pos, mult);
+	match_points_leq qq(pos, penalty_factor);
 	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
 	return qq.res;
 };
 
 struct match_points_geq
 {
-	match_points_geq(const char * ipos, REAL imult) : pos(ipos), mult(imult), res(NULL) {};
+	match_points_geq(const char * ipos, REAL ipenalty_factor) : pos(ipos), penalty_factor(ipenalty_factor), res(NULL) {};
 	void operator()(d_points * pnts) 
 	{
 		if ( StringMatch( pos, pnts->getName() ) )
 		{
-			writelog(LOG_MESSAGE,"creating gridding rule points_geq(\"%s\",%g)", pnts->getName(), mult);
-			f_points_ineq * inpnts = new f_points_ineq(pnts, false, mult);
+			writelog(LOG_MESSAGE,"creating gridding rule points_geq(\"%s\",%g)", pnts->getName(), get_mult(penalty_factor));
+			f_points_ineq * inpnts = new f_points_ineq(pnts, false, get_mult(penalty_factor));
 			functionals_push_back(inpnts);
 			if (res == NULL)
 				res = create_boolvec();
@@ -133,13 +133,13 @@ struct match_points_geq
 		}
 	}
 	const char * pos;
-	REAL mult;
+	REAL penalty_factor;
 	boolvec * res;
 };
 
-boolvec * points_geq(const char * pos, REAL mult) 
+boolvec * points_geq(const char * pos, REAL penalty_factor) 
 {
-	match_points_geq qq(pos, mult);
+	match_points_geq qq(pos, penalty_factor);
 	qq = std::for_each(surfit_pnts->begin(), surfit_pnts->end(), qq);
 	return qq.res;
 };

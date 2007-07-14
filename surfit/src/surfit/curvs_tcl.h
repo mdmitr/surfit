@@ -91,9 +91,6 @@ boolvec * curve_add(REAL value, REAL weight = 1, const char * curv_name = "*");
 
     \par Description:
     This rule adds the surface condition - "the resulting surface at curve should be lower than or equal to value".
-    In case of the \ref penalty bad convergence or unexpected 
-    (wrong) result, you should carefully review your conditions and if they are correct, try 
-    to change \ref penalty_factor "penalty_factor" parameter.
 
     \param value surface should be lower than or equal to this real number
     \param curv_name \ref d_curv "curve" \ref str "name"
@@ -116,9 +113,6 @@ boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL penalty_facto
 
     \par Description:
     This rule adds the surface condition - "the resulting surface at curve should be greater than or equal to value".
-    In case of the \ref penalty bad convergence or unexpected 
-    (wrong) result, you should carefully review your conditions and if they are correct, try 
-    to change \ref penalty_factor "penalty_factor" parameter.
     
     \param value surface should be greater than or equal to this real number
     \param curv_name \ref d_curv "curve" \ref str "name"
@@ -195,10 +189,7 @@ boolvec * curve_surf_add(const char * surf_name = "*", REAL weight = 1, const ch
     \par Description:
     This rule adds the surface condition - "the resulting surface at curve should be lower than or equal 
     to other surface values". 
-    In case of the \ref penalty bad convergence or unexpected 
-    (wrong) result, you should carefully review your conditions and if they are correct, try 
-    to change \ref penalty_factor "penalty_factor" parameter.
-
+    
     \param surf_name \ref str "name" of \ref d_surf "surface". The
     resulting surface should be lower than or equal to this surface values at curve.
     \param curv_name \ref d_curv "curve" \ref str "name"
@@ -223,10 +214,7 @@ boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = 
     \par Description:
     This rule adds the surface condition - "the resulting surface at curve should be greater 
     than or equal to other surface values".
-    In case of the \ref penalty bad convergence or unexpected 
-    (wrong) result, you should carefully review your conditions and if they are correct, try 
-    to change \ref penalty_factor "penalty_factor" parameter.
-
+    
     \param surf_name \ref str "name" of \ref d_surf "surface". The
     resulting surface should be greater than or equal to this surface values at curve.
     \param curv_name \ref d_curv "curve" \ref str "name"
@@ -325,19 +313,17 @@ boolvec * area(const char * value="undef", const char * area_name = "*", int ins
 boolvec * area_add(REAL value, REAL weight, const char * area_name = "*", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_leq(REAL value, const char * area_name = "*", REAL mult = 1, int inside = 1);
+    \fn bool area_leq(REAL value, const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
     
     \par Tcl syntax:
-    area_leq value \ref str "area_name" mult inside
+    area_leq value \ref str "area_name" penalty_factor inside
 
     \par Description:
     This rule adds the surface condition - "the resulting surface in area should be lower than or equal to value".
-    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
-    your conditions and if they are correct, try to change "mult" parameter.
-
+    
     \param value resulting surface values should be lower than or equal to this real number
     \param area_name \ref str "name" of \ref d_area "area" dataset
-    \param mult multiplier parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty algorithm
     \param inside if inside is equal to 1, then surface values should be lower than or equal to value 
     inside area, else outside
     
@@ -349,22 +335,20 @@ boolvec * area_add(REAL value, REAL weight, const char * area_name = "*", int in
     where (i,j) - indices of the cells in area, z - constant value
 
 */
-boolvec * area_leq(REAL value, const char * area_name = "*", REAL mult = 1, int inside = 1);
+boolvec * area_leq(REAL value, const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_geq(REAL value, const char * area_name = "*", REAL mult = 1, int inside = 1);
+    \fn bool area_geq(REAL value, const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
     
     \par Tcl syntax:
-    area_geq value \ref str "area_name" mult inside
+    area_geq value \ref str "area_name" penalty_factor inside
 
     \par Description:
     This rule adds the surface condition - "the resulting surface in area should be greater than or equal to value".
-    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
-    your conditions and if they are correct, try to change "mult" parameter.
-
+    
     \param value resulting surface values should be greater than or equal to this real number
     \param area_name \rf str "name" of \ref d_area "area" dataset
-    \param mult multiplier parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty algorithm
     \param inside if inside is equal to 1, then surface values should be greater than or equal to value 
     inside area, else outside
 
@@ -376,7 +360,7 @@ boolvec * area_leq(REAL value, const char * area_name = "*", REAL mult = 1, int 
     where (i,j) - indices of the cells in area, z - constant value
 
 */
-boolvec * area_geq(REAL value, const char * area_name = "*", REAL mult = 1, int inside = 1);
+boolvec * area_geq(REAL value, const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
     \fn bool area_surf(const char * surf_name = "*", const char * area_name = "*", int inside = 1);
@@ -435,16 +419,14 @@ boolvec * area_surf(const char * surf_name = "*", const char * area_name = "*", 
 boolvec * area_surf_add(const char * surf_name = "*", REAL weight = 1, const char * area_name = "*", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 1, int inside = 1);
+    \fn bool area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
     
     \par Tcl syntax:
-    area_surf_leq \ref str "surf_name" \ref str "area_name" mult inside
+    area_surf_leq \ref str "surf_name" \ref str "area_name" penalty_factor inside
 
     \par Description:
     This rule adds the surface condition - "the resulting surface in area should be lower than or equal to other surface".
-    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
-    your conditions and if they are correct, try to change "mult" parameter.
-
+    
     \par Math:
     This command adds the condition:
     \f[
@@ -453,19 +435,17 @@ boolvec * area_surf_add(const char * surf_name = "*", REAL weight = 1, const cha
     where (i,j) - indices of the cells in area, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
 
 */
-boolvec * area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 1, int inside = 1);
+boolvec * area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 1, int inside = 1);
+    \fn bool area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
     
     \par Tcl syntax:
-    area_surf_geq \ref str "surf_name" \ref str "area_name" mult inside
+    area_surf_geq \ref str "surf_name" \ref str "area_name" penalty_factor inside
 
     \par Description:
     This rule adds the surface condition - "the resulting surface in area should be greater than or equal to other surface".
-    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
-    your conditions and if they are correct, try to change "mult" parameter.
-
+    
     \par Math:
     This command adds the condition:
     \f[
@@ -474,10 +454,10 @@ boolvec * area_surf_leq(const char * surf_name = "*", const char * area_name = "
     where (i,j) - indices of the cells in area, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
 
 */
-boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL mult = 1, int inside = 1);
+boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_mean(REAL mean, const char * area_name = "*", REAL penalty_factor = -1, int inside = 1);
+    \fn bool area_mean(REAL mean, const char * area_name = "*", REAL penalty_factor = -2, int inside = 1);
     
     \par Tcl syntax:
     area_mean mean_value \ref str "area_name" penalty_factor inside
@@ -485,10 +465,7 @@ boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "
     \par Description:
     This rule adds the surface condition - "the resulting surface mean value in area should be 
     equal to real number". 
-    In case of the \ref penalty bad convergence or unexpected 
-    (wrong) result, you should carefully review your conditions and if they are correct, try 
-    to change \ref penalty_factor "penalty_factor" parameter.
-
+    
     \par Math:
     This command adds the condition:
     \f[
@@ -496,19 +473,17 @@ boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "
     \f]
     where (i,j) - indices of the cells in area, Q - number of cells in area, m - desired mean value
 */
-boolvec * area_mean(REAL mean, const char * area_name = "*", REAL penalty_factor = -1, int inside = 1);
+boolvec * area_mean(REAL mean, const char * area_name = "*", REAL penalty_factor = -2, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL mult = 1, int inside = 1);
+    \fn bool area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL penalty_factor = -2, int inside = 1);
     
     \par Tcl syntax:
-    area_wmean weighted_mean_value \ref str "area_name" \ref str "surf_name" mult inside
+    area_wmean weighted_mean_value \ref str "area_name" \ref str "surf_name" penalty_factor inside
 
     \par Description:
     This rule adds the surface condition - "the resulting surface weighted mean value in 
-    area should be equal to real number". In case of the \ref penalty algorithm bad 
-    convergence or unexpected (wrong) result, you should carefully review your conditions 
-    and if they are correct, try to change "mult" parameter.
+    area should be equal to real number". 
 
     \par Math:
     This command adds the condition:
@@ -518,7 +493,7 @@ boolvec * area_mean(REAL mean, const char * area_name = "*", REAL penalty_factor
     where (i,j) - indices of the cells in area, \f$z(x_i,y_j)\f$ - weighted surface value for the (i,j) cell,
     m - desired weighted mean value
 */
-boolvec * area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL mult = 1, int inside = 1);
+boolvec * area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL penalty_factor = -2, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
     \fn bool area_completer(const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
@@ -553,19 +528,19 @@ boolvec * area_completer(const char * area_name = "*", REAL D1 = 1, REAL D2 = 2,
 boolvec * area_completer_add(REAL weight = 1, const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL mult = 1, int inside = 1);
+    \fn bool area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL penalty_factor = -1, int inside = 1);
 
     \par Tcl syntax:
-    area_hist \ref str "area_name" \ref str "histogram_name" mult inside
+    area_hist \ref str "area_name" \ref str "histogram_name" penalty_factor inside
 
     \par Description
     This rule adds the following condition: histogram of the resulting surface should be equal
-    to the desired histogram inside (or outside) the area
-
+    to the desired histogram inside (or outside) the area. 
+    
     \param area_name \ref str "name" of the area for histogram fitting
     \param histogram_name \ref str "name" of the desired histogram
 */
-boolvec * area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL mult = 1, int inside = 1);
+boolvec * area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL penalty_factor = -1, int inside = 1);
 
 //////////////
 //
@@ -622,23 +597,21 @@ boolvec * contour(const char * cntr_name = "*");
 */
 boolvec * contour_add(REAL weight, const char * cntr_name = "*");
 
-boolvec * contours(const char * cntr_name = "*", REAL mult = 0.001);
+boolvec * contours(const char * cntr_name = "*", REAL penalty_factor = 0);
 boolvec * contours_add(REAL weight = 50, const char * cntr_name = "*");
 
 /*! \ingroup tcl_rules_cntrs
-    \fn bool contour_leq(const char * cntr_name = "*", REAL mult = 1);
+    \fn bool contour_leq(const char * cntr_name = "*", REAL penalty_factor = 0);
 
     \par Tcl syntax:
-    contour_leq \ref str "cntr_name" mult
+    contour_leq \ref str "cntr_name" penalty_factor
 
     \par Description:
     This rule adds the surface condition - "the resulting surface at contour should be lower than 
-    or equal to the contour values". In case of the \ref penalty algorithm bad convergence or 
-    unexpected (wrong) result, you should carefully review your conditions and if they are 
-    correct, try to change "mult" parameter.
+    or equal to the contour values". 
 
     \param cntr_name \ref d_cntr "contour" \ref str "name", or contour position number.
-    \param mult multiplier parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty algorithm
 
     \par Math:
     This command adds the condition:
@@ -647,22 +620,20 @@ boolvec * contours_add(REAL weight = 50, const char * cntr_name = "*");
     \f]
     where (i,j) - indices of the cells cross with contour, \f$z_{i,j}\f$ - contour mean value for the (i,j) cell
 */
-boolvec * contour_leq(const char * cntr_name = "*", REAL mult = 1);
+boolvec * contour_leq(const char * cntr_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_cntrs
-    \fn bool contour_geq(const char * cntr_name = "*", REAL mult = 1);
+    \fn bool contour_geq(const char * cntr_name = "*", REAL penalty_factor = 0);
 
     \par Tcl syntax:
-    contour_geq \ref str "cntr_name" mult
+    contour_geq \ref str "cntr_name" penalty_factor
 
     \par Description:
     This rule adds the surface condition - "the resulting surface at contour should be greater than 
-    or equal to contour values". In case of the \ref penalty algorithm bad convergence or unexpected 
-    (wrong) result, you should carefully review your conditions and if they are correct, try to 
-    change "mult" parameter.
+    or equal to contour values". 
 
     \param cntr_name \ref d_cntr "contour" \ref str "name", or contour position number.
-    \param mult multiplier parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty algorithm
 
     \par Math:
     This command adds the condition:
@@ -671,7 +642,7 @@ boolvec * contour_leq(const char * cntr_name = "*", REAL mult = 1);
     \f]
     where (i,j) - indices of the cells cross with contour, \f$z_{i,j}\f$ - contour mean value for the (i,j) cell
 */
-boolvec * contour_geq(const char * cntr_name = "*", REAL mult = 1);
+boolvec * contour_geq(const char * cntr_name = "*", REAL penalty_factor = 0);
 
 }; // namespace surfit;
 

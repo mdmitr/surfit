@@ -142,16 +142,14 @@ bool value(const char * value = "undef");
 bool value_add(REAL weight = 1, REAL val = 0);
 
 /*! \ingroup tcl_rules_other
-    \fn bool mean(REAL value, REAL penalty_factor = 0);
+    \fn bool mean(REAL value, REAL penalty_factor = -2);
 
     \par Tcl syntax:
     mean value penalty_factor
 
     \par Description:
     This rule adds the surface condition - "the resulting surface mean value should be 
-    equal to real number". In case of the \ref penalty bad convergence or unexpected 
-    (wrong) result, you should carefully review your conditions and if they are correct, try 
-    to change \ref penalty_factor "penalty_factor" parameter.
+    equal to real number". 
 
     \par Math:
     This command adds the condition:
@@ -160,19 +158,17 @@ bool value_add(REAL weight = 1, REAL val = 0);
     \f]
     where (i,j) - indices of the cells, Q - total number of cells, m - desired mean value
 */
-bool mean(REAL value, REAL penalty_factor = 0);
+bool mean(REAL value, REAL penalty_factor = -2);
 
 /*! \ingroup tcl_rules_other
-    \fn bool wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = 0);
+    \fn bool wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = -2);
 
     \par Tcl syntax:
     wmean value "surface_name" penalty_factor
 
     \par Description:
     This rule adds the surface condition - "the resulting surface weighted mean value 
-    should be equal to real number". In case of the \ref penalty bad convergence or unexpected 
-    (wrong) result, you should carefully review your conditions and if they are correct, try 
-    to change \ref penalty_factor "penalty_factor" parameter.
+    should be equal to real number". 
 
     \par Math:
     This command adds the condition:
@@ -182,7 +178,7 @@ bool mean(REAL value, REAL penalty_factor = 0);
     where (i,j) - indices of the cells, \f$z(x_i,y_j)\f$ - weighted surface value for the (i,j) cell,
     m - desired weighted mean value
 */
-boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = 0);
+boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = -2);
 
 /*! \ingroup tcl_rules_other
     \fn bool leq(REAL value, REAL penalty_factor = 0);
@@ -192,10 +188,7 @@ boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor
 
     \par Description:
     This rule adds the surface condition - "the resulting surface should be lower than or equal to value".
-    In case of the \ref penalty bad convergence or unexpected 
-    (wrong) result, you should carefully review your conditions and if they are correct, try 
-    to change \ref penalty_factor "penalty_factor" parameter.
-
+    
     \param value resulting surface values should be lower than or equal to this real number
     \param penalty_factor parameter for \ref penalty algorithm
     
@@ -216,10 +209,7 @@ bool leq(REAL value, REAL penalty_factor = 0);
 
     \par Description:
     This rule adds the surface condition - "the resulting surface should be greater than or equal to value".
-    In case of the \ref penalty bad convergence or unexpected 
-    (wrong) result, you should carefully review your conditions and if they are correct, try 
-    to change \ref penalty_factor "penalty_factor" parameter.
-
+    
     \param value resulting surface values should be lower than or equal to this real number
     \param penalty_factor parameter for \ref penalty algorithm
     
@@ -240,10 +230,7 @@ bool geq(REAL value, REAL penalty_factor = 0);
 
     \par Description:
     This rule adds the surface condition - "the resulting surface histogram should be equal to given histogram".
-    In case of the \ref penalty bad convergence or unexpected 
-    (wrong) result, you should carefully review your conditions and if they are correct, try 
-    to change \ref penalty_factor "penalty_factor" parameter.
-
+    
     \param histogram_name desired \ref d_hist "histogram"
     \param penalty_factor parameter for \ref penalty algorithm
     \param threshold another parameter for changing if something going wrong :)

@@ -30,8 +30,8 @@ class points;
 //
 surfit::boolvec * points(const char * points_name = "*");
 surfit::boolvec * points_add(REAL weight = 1, const char * points_name = "*");
-surfit::boolvec * points_leq(const char * points_name = "*", REAL mult = 1);
-surfit::boolvec * points_geq(const char * points_name = "*", REAL mult = 1);
+surfit::boolvec * points_leq(const char * points_name = "*", REAL penalty_factor = 0);
+surfit::boolvec * points_geq(const char * points_name = "*", REAL penalty_factor = 0);
 
 
 //

@@ -17,8 +17,8 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#ifndef __surfit_approx_points_tcl_included__
-#define __surfit_approx_points_tcl_included__
+#ifndef __surfit_f_points_tcl_included__
+#define __surfit_f_points_tcl_included__
 
 namespace surfit {
 
@@ -73,18 +73,16 @@ boolvec * points(const char * points_name = "*");
 boolvec * points_add(REAL weight = 1, const char * points_name = "*");
 
 /*! \ingroup tcl_rules_points
-    \fn bool points_leq(const char * points_name = "*", REAL mult = REAL(1));
+    \fn bool points_leq(const char * points_name = "*", REAL penalty_factor = 0);
     
     \par Tcl syntax:
-    points_leq \ref str "points_name" mult
+    points_leq \ref str "points_name" penalty_factor
 
     \par Description:
     This rule adds the surface condition - "the surface should be lower than equal to points".
-    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
-    your conditions and if they are correct, try to change "mult" parameter
-
+    
     \param points_name \ref str "name" of \ref d_points "points" dataset, or points position number.
-    \param mult multiplier parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty algorithm
 
     \par Math:
     This command adds the condition:
@@ -94,21 +92,19 @@ boolvec * points_add(REAL weight = 1, const char * points_name = "*");
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
-boolvec * points_leq(const char * points_name = "*", REAL mult = REAL(1));
+boolvec * points_leq(const char * points_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_points
-    \fn bool points_geq(const char * points_name = "*", REAL mult = REAL(1));
+    \fn bool points_geq(const char * points_name = "*", REAL penalty_factor = 0);
     
     \par Tcl syntax:
-    points_geq \ref str "points_name" mult
+    points_geq \ref str "points_name" penalty_factor
 
     \par Description:
     This rule adds the surface condition - "the surface should be greater than equal to points".
-    In case of the \ref penalty algorithm bad convergence or unexpected (wrong) result, you should carefully review
-    your conditions and if they are correct, try to change "mult" parameter
-
+    
     \param points_name \ref str "name" of \ref d_points "points" dataset, or points position number.
-    \param mult multiplier parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty algorithm
 
     \par Math:
     This command adds the condition:
@@ -118,7 +114,7 @@ boolvec * points_leq(const char * points_name = "*", REAL mult = REAL(1));
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
-boolvec * points_geq(const char * points_name = "*", REAL mult = REAL(1));
+boolvec * points_geq(const char * points_name = "*", REAL penalty_factor = 0);
 
 }; // namespace surfit;
 
