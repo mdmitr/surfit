@@ -1755,7 +1755,7 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 
 	float max_len = MAX(maxx-minx, maxy-miny);
 
-	projection prj(minx, miny, minx+max_len, miny+max_len, 10, 10, 200, 200);
+	projection prj(minx, miny, minx+max_len, miny+max_len, 0, 0, 200, 200);
 
 	//CreEPS ps(filename, 210, 297); // A4
 	CreEPS ps(filename, 200, 200); 
@@ -1763,6 +1763,8 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 	ps.setAttributes( CAtLineThickness(0.1f) );
 
 	REAL added_level = to + FLT_MAX/REAL(2);
+
+	std::vector<fiso *> white_bounds;
 
 	size_t i, j;
 	if (isos)
@@ -1773,8 +1775,6 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 			double x,y;
 			bool vis;
 			iso->get_point(j, x, y, vis);
-			if ((x == 10) && (y == 10))
-				bool stop = true;
 			float X = prj.get_x(x);
 			float Y = prj.get_y(y);
 			if (j == 0) {
@@ -1787,16 +1787,19 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 		int r,g,b;
 		if ((iso->get_fill_level() == srf->undef_value) && (iso->get_level() == added_level))
 		{
-			ps.setAttributes( CAtLineThickness(0.2f) );
-			ps.usePath( CreEPS::STROKE, CAtColor(1,1,1));
-			ps.setAttributes( CAtLineThickness(0.1f) );
 			ps.endPath( CreEPS::FILL, CAtColor(1, 1, 1));
+			white_bounds.push_back(iso);
 		} else {
 			cs.get_value(iso->get_fill_level(),r,g,b);
 			ps.endPath( CreEPS::FILL, CAtColor(r/255.f, g/255.f, b/255.f) );
 		}
 
+		//continue;
+
 		if (draw_isos == false)
+			continue;
+
+		if ((iso->get_fill_level() == srf->undef_value) && (iso->get_level() == added_level))
 			continue;
 
 		bool prev_vis = false;
@@ -1820,12 +1823,33 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 
 		if ((iso->get_fill_level() == srf->undef_value) && (iso->get_level() == added_level))
 		{
+			ps.setAttributes( CAtLineThickness(0.2f) );
 			ps.endPath( CreEPS::STROKE, CAtColor( 1, 1, 1) );
+			ps.setAttributes( CAtLineThickness(0.1f) );
 		} else {
 			cs.get_value(iso->get_fill_level(),r,g,b);
 			ps.endPath( CreEPS::STROKE, CAtColor( 0, 0, 0) );
 		}
 				
+	}
+
+	ps.setAttributes( CAtLineThickness(0.3f) );
+	for (i = 0; i < white_bounds.size(); i++) {
+		fiso * iso = (white_bounds)[i];
+ 		for (j = 0; j < iso->size(); j++)
+		{
+			double x,y;
+			bool vis;
+			iso->get_point(j, x, y, vis);
+			float X = prj.get_x(x);
+			float Y = prj.get_y(y);
+			if (j == 0) {
+				ps.startPath(X, Y);
+			} else {
+				ps.addLine(X, Y);
+			}
+		}
+		ps.endPath( CreEPS::STROKE, CAtColor(1, 1, 1));
 	}
 	
 	free_elements(isos->begin(), isos->end());
