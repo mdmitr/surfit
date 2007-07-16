@@ -58,5 +58,5 @@ surf_save "mean.dat" "map_mean"
 set mean_value [surf_mean map_mean]
 puts "surface mean value is $mean_value"
                          
-# plot resulting surface in EPS
-surf_plot "mean.eps" $map_name
+# plot resulting surface in PostScript
+surf_plot "mean.ps" $map_name

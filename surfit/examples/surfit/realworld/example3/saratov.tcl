@@ -59,5 +59,5 @@ surfit
 # save surface to surfit datafile 
 surf_save "saratov.dat" $map_name 
 
-# plot resulting surface in EPS
-surf_plot "saratov.eps"
+# plot resulting surface in PostScript
+surf_plot "saratov.ps"

@@ -57,7 +57,7 @@ surfit
 # save surface to surfit datafile 
 surf_save "peaks.dat" $map_name 
 
-# plot resulting surface in EPS
-surf_plot "peaks.eps"
+# plot resulting surface in PostScript
+surf_plot "peaks.ps"
 
 

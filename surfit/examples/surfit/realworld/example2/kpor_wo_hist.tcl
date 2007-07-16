@@ -56,5 +56,5 @@ surfit
 # save surface to surfit datafile 
 surf_save "kpor_wo_hist.dat" $map_name
 
-# plot resulting surface in EPS
-surf_plot "kpor_wo_hist.eps" $map_name
+# plot resulting surface in PostScript
+surf_plot "kpor_wo_hist.ps" $map_name

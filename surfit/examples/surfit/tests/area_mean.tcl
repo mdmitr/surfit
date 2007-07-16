@@ -85,5 +85,5 @@ surf_save "area_mean.dat" "map_area_mean"
 puts [concat "Surface mean value in area6 : " [surf_area_mean "area6" "map_area_mean"]]
 puts [concat "Surface mean value : " [surf_mean "map_area_mean"]]
 
-# plot resulting surface in EPS
-surf_plot "area_mean.eps" $map_name
+# plot resulting surface in PostScript
+surf_plot "area_mean.ps" $map_name

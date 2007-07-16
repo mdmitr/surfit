@@ -52,5 +52,5 @@ surfit
 # save surface to surfit datafile 
 surf_save "aniso.dat" "map_aniso" 
 
-# plot resulting surface in EPS
-surf_plot "aniso.eps" $map_name
+# plot resulting surface in PostScript
+surf_plot "aniso.ps" $map_name

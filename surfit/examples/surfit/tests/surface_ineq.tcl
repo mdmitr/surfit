@@ -65,5 +65,5 @@ surfit
 # save surface to surfit datafile 
 surf_save "surface_ineq.dat" "map_surface_ineq" 
 
-# plot resulting surface in EPS
-surf_plot "surface_ineq.eps" $map_name
+# plot resulting surface in PostScript
+surf_plot "surface_ineq.ps" $map_name

@@ -58,5 +58,5 @@ surfit
 # save surface to surfit datafile 
 surf_save "mask_add.dat" "map_mask_add" 
 
-# plot resulting surface in EPS
-surf_plot "mask_add.eps" $map_name
+# plot resulting surface in PostScript
+surf_plot "mask_add.ps" $map_name

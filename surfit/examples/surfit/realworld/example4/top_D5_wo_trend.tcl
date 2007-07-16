@@ -67,5 +67,5 @@ surfit
 # save surface to Surfer-ASCII grid file 
 surf_save_grd "top_D5_wo_trend.grd" $map_name 
 
-# plot resulting surface in EPS
-surf_plot "top_D5_wo_trend.eps" $map_name
+# plot resulting surface in PostScript
+surf_plot "top_D5_wo_trend.ps" $map_name

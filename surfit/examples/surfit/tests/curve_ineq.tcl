@@ -70,5 +70,5 @@ surfit
 # save surface to surfit datafile 
 surf_save "curve_ineq.dat" "map_curve_ineq" 
 
-# plot resulting surface in EPS
-surf_plot "curve_ineq.eps" $map_name
+# plot resulting surface in PostScript
+surf_plot "curve_ineq.ps" $map_name

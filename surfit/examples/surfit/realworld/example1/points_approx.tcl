@@ -49,5 +49,5 @@ surfit
 # save surface to surfit datafile 
 surf_save "points_approx.dat" "map_points_approx" 
 
-# plot resulting surface in EPS
-surf_plot "points_approx.eps" "map_points_approx" 
+# plot resulting surface in PostScript
+surf_plot "points_approx.ps" "map_points_approx" 

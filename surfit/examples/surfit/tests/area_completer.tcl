@@ -58,5 +58,5 @@ surfit
 # save surface to surfit datafile 
 surf_save "area_completer.dat" "map_area_completer" 
 
-# plot resulting surface in EPS
-surf_plot "area_completer.eps" $map_name
+# plot resulting surface in PostScript
+surf_plot "area_completer.ps" $map_name

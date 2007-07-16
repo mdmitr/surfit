@@ -87,5 +87,5 @@ surf_save "area_wmean.dat" "map_area_wmean"
 
 puts [concat "Surface weighted mean value in area6 : " [surf_area_wmean "area6" "test_func" "map_area_wmean"]]
 
-# plot resulting surface in EPS
-surf_plot "area_wmean.eps" $map_name
+# plot resulting surface in PostScript
+surf_plot "area_wmean.ps" $map_name

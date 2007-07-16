@@ -55,8 +55,8 @@ surfit
 # save surface to surfit datafile 
 surf_save "points_hist.dat" "map_points_hist" 
 
-# plot resulting surface in EPS
-surf_plot "points_hist.eps" "map_points_hist" 
+# plot resulting surface in PostScript
+surf_plot "points_hist.ps" "map_points_hist" 
 
 hist_del
 hist_from_surf "map_points_hist" 10 

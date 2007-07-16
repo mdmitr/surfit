@@ -49,5 +49,5 @@ surfit
 # save surface to surfit datafile 
 surf_save "points_triangulate.dat" $map_name
 
-# plot resulting surface in EPS
-surf_plot "ponts_triangulate.eps" $map_name
+# plot resulting surface in PostScript
+surf_plot "ponts_triangulate.ps" $map_name

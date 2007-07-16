@@ -49,5 +49,5 @@ surfit
 # save surface to surfit datafile 
 surf_save "points_exact.dat" "map_points_exact" 
 
-# plot resulting surface in EPS
-surf_plot "ponits_exact.eps" "map_points_exact" 
+# plot resulting surface in PostScript
+surf_plot "ponits_exact.ps" "map_points_exact" 
