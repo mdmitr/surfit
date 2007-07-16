@@ -778,6 +778,8 @@ std::vector<fiso *> * trace_isos(vec * levels,
 				 REAL uval,
 				 bool close_on_bound)
 {
+	if (levels->size() == 0)
+		return NULL;
 	size_t pos;
 	size_t i,j; // for navigating inside matrix
 	size_t l; // for levels

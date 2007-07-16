@@ -1757,13 +1757,15 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 
 	projection prj(minx, miny, minx+max_len, miny+max_len, 10, 10, 200, 200);
 
-	CreEPS ps(filename, 210, 297); // A4
+	//CreEPS ps(filename, 210, 297); // A4
+	CreEPS ps(filename, 200, 200); 
 
 	ps.setAttributes( CAtLineThickness(0.1f) );
 
 	REAL added_level = to + FLT_MAX/REAL(2);
 
 	size_t i, j;
+	if (isos)
 	for (i = 0; i < isos->size(); i++) {
 		fiso * iso = (*isos)[i];
  		for (j = 0; j < iso->size(); j++)

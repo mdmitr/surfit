@@ -25,13 +25,13 @@ set tol 1e-007
 ##
  
 # load points from text file 
-pnts_read "data\\wells_D51.txt" "wells_D51" 2 3 4 1 " 	" 0  
+pnts_read "data/wells_D51.txt" "wells_D51" 2 3 4 1 " 	" 0  
  
 # load surface from surfit datafile 
 surf_load "top_D4.dat" "top_D4"  
  
 # load curves from text files 
-curv_read "data\\faults\\fault*.ctr" 
+curv_read "data/faults/fault*.ctr" 
  
 ##
 ## construct grid 
