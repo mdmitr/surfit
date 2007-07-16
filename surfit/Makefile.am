@@ -388,6 +388,9 @@ libsurfit_io_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) libsstuff.la libs
 if HAVE_JPEG_INSTALLED
 libsurfit_io_la_LIBADD += -ljpeg
 endif
+if HAVE_GFORTRAN_INSTALLED
+libsurfit_io_la_LIBADD += -lgfortran
+endif
 libsurfit_io_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libsurfit_io.dll
 
 
@@ -517,6 +520,10 @@ uninstall-hook:
 	fi
 
 install-exec-hook:
+
+	if test -f $(DESTDIR)$(libdir)/libsurfit_io.so; then \
+		chcon $(DESTDIR)$(libdir)/libsurfit_io.so -t textrel_shlib_t; \
+	fi
 
 	if test -f $(DESTDIR)$(bindir)/cygsstuff-2.dll; then \
 		rm -f $(DESTDIR)$(bindir)/libsstuff.dll; \

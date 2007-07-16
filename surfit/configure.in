@@ -15,6 +15,9 @@ AC_SUBST(LIBTOOL_DEPS)
 # check for pthread 
 AC_CHECK_LIB(pthread, main, [PTHREAD_INSTALLED="YES"], PTHREAD_INSTALLED="")
 
+# check for gfortran
+AC_CHECK_LIB(gfortran, main, [GFORTRAN_INSTALLED="YES"], GFORTRAN_INSTALLED="")
+
 AH_TEMPLATE([HAVE_THREADS],["Define if you want to compile with multithreading support"])
 AH_TEMPLATE([HAVE_NETCDF],["Define if you want to compile with GMT maps format support"])
 AH_TEMPLATE([HAVE_LIBJPEG],["Define if you want to compile with JPEG import/export support"])
@@ -236,6 +239,7 @@ AC_SUBST(NETCDFLIB)
 AC_CONFIG_HEADER(config.h:config.h.in)
 
 AM_CONDITIONAL(HAVE_PTHREAD_INSTALLED, [test "x$PTHREAD_INSTALLED" != "x"])
+AM_CONDITIONAL(HAVE_GFORTRAN_INSTALLED, [test "x$GFORTRAN_INSTALLED" != "x"])
 AM_CONDITIONAL(HAVE_ZLIB_INSTALLED, [test "x$ZLIB_INSTALLED" != "x"])
 AM_CONDITIONAL(HAVE_JPEG_INSTALLED, [test "x$JPEG_INSTALLED" != "x"])
 AM_CONDITIONAL(MAKE_SURFIT_IO,  [test "x$BUILD_SURFIT_IO" != "x"])
