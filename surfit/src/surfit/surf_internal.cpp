@@ -1833,7 +1833,7 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 				
 	}
 
-	ps.setAttributes( CAtLineThickness(0.3f) );
+	ps.setAttributes( CAtLineThickness(0.1f) );
 	for (i = 0; i < white_bounds.size(); i++) {
 		fiso * iso = (white_bounds)[i];
  		for (j = 0; j < iso->size(); j++)
@@ -1849,7 +1849,7 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 				ps.addLine(X, Y);
 			}
 		}
-		ps.endPath( CreEPS::STROKE, CAtColor(1, 1, 1));
+		ps.endPath( CreEPS::STROKE, CAtColor(0, 0, 0));
 	}
 	
 	free_elements(isos->begin(), isos->end());
