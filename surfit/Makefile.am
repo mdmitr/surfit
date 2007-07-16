@@ -521,8 +521,8 @@ uninstall-hook:
 
 install-exec-hook:
 
-	if test -f $(DESTDIR)$(libdir)/libsurfit_io.so; then \
-		chcon $(DESTDIR)$(libdir)/libsurfit_io.so -t textrel_shlib_t; \
+	if test -f $(DESTDIR)$(libdir)libsurfit_io.so; then \
+		chcon $(DESTDIR)$(libdir)libsurfit_io.so textrel_shlib_t; \
 	fi
 
 	if test -f $(DESTDIR)$(bindir)/cygsstuff-2.dll; then \
