@@ -121,7 +121,7 @@ const char * curv_getNameAt(int pos);
     \par Description:
     returns unique curve identificator 
 */
-surfit::intvec * curv_getId(const char * curv_name = "*");
+intvec * curv_getId(const char * curv_name = "*");
 
 /*! \ingroup tcl_curv_other
     \fn bool curv_setName(const char * new_name, const char * curv_name = "*");
