@@ -501,6 +501,17 @@ install-data-hook:
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.log"`; \
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.dat"` 
 
+        if test -x /usr/bin/chcon -a "`id -u`" -eq 0; then \
+	  list='$(lib_LTLIBRARIES)'; \
+	  if test -n "$$list" ; then \
+	    for p in $$list; do \
+	      p="`echo $$p | sed -e 's/\.la$$/\.so/g;s|^.*/||'`"; \
+	      echo " chcon system_u:object_r:texrel_shlib_t $(DESTDIR)$(libdir)/$$p"; \
+	      chcon system_u:object_r:texrel_shlib_t $(DESTDIR)$(libdir)/$$p || :; \
+	    done; \
+	  fi; \
+	fi
+
 uninstall-hook:
 
 	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)"; then \
@@ -520,10 +531,6 @@ uninstall-hook:
 	fi
 
 install-exec-hook:
-
-	if test -f $(DESTDIR)$(libdir)libsurfit_io.so; then \
-		chcon $(DESTDIR)$(libdir)libsurfit_io.so textrel_shlib_t; \
-	fi
 
 	if test -f $(DESTDIR)$(bindir)/cygsstuff-2.dll; then \
 		rm -f $(DESTDIR)$(bindir)/libsstuff.dll; \
