@@ -491,7 +491,7 @@ install-data-hook:
 	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples"; then \
 		rm -rf $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples; \
 	fi; \
-	mkdir $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples
+	mkdir $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples;\
 	cp -r examples/surfit/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/surfit; \
 	cp -r examples/freeflow $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/freeflow; \
 	cp -r examples/globe $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/globe; \
@@ -499,17 +499,9 @@ install-data-hook:
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name .svn`; \
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "core*"`; \
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.log"`; \
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.dat"` 
-
-        if test -x /usr/bin/chcon -a "`id -u`" -eq 0; then \
-	  list='$(lib_LTLIBRARIES)'; \
-	  if test -n "$$list" ; then \
-	    for p in $$list; do \
-	      p="`echo $$p | sed -e 's/\.la$$/\.so/g;s|^.*/||'`"; \
-	      echo " chcon system_u:object_r:texrel_shlib_t $(DESTDIR)$(libdir)/$$p"; \
-	      chcon system_u:object_r:texrel_shlib_t $(DESTDIR)$(libdir)/$$p || :; \
-	    done; \
-	  fi; \
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.dat"` ;\
+	if test -f /usr/bin/chcon; then \
+	chcon system_u:object_r:texrel_shlib_t $(DESTDIR)$(libdir)/libsurfit_io.so; \
 	fi
 
 uninstall-hook:

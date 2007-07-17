@@ -2648,7 +2648,7 @@ install-data-hook:
 	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples"; then \
 		rm -rf $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples; \
 	fi; \
-	mkdir $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples
+	mkdir $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples;\
 	cp -r examples/surfit/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/surfit; \
 	cp -r examples/freeflow $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/freeflow; \
 	cp -r examples/globe $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/globe; \
@@ -2656,7 +2656,10 @@ install-data-hook:
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name .svn`; \
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "core*"`; \
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.log"`; \
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.dat"` 
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.dat"` ;\
+	if test -f /usr/bin/chcon; then \
+	chcon system_u:object_r:texrel_shlib_t $(DESTDIR)$(libdir)/libsurfit_io.so; \
+	fi
 
 uninstall-hook:
 
@@ -2677,10 +2680,6 @@ uninstall-hook:
 	fi
 
 install-exec-hook:
-
-	if test -f $(DESTDIR)$(libdir)libsurfit_io.so; then \
-		chcon $(DESTDIR)$(libdir)libsurfit_io.so textrel_shlib_t; \
-	fi
 
 	if test -f $(DESTDIR)$(bindir)/cygsstuff-2.dll; then \
 		rm -f $(DESTDIR)$(bindir)/libsstuff.dll; \
