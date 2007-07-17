@@ -231,7 +231,7 @@ boolvec * trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_
     where (i,j) - indices of the cells where mask is true, z - constant real number.
 
 */
-surfit::boolvec * mask(const char * val, const char * mask_name = "*");
+boolvec * mask(const char * val, const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
     \fn bool mask_add(REAL val, REAL weight = 1, const char * mask_name = "*");
@@ -246,7 +246,7 @@ surfit::boolvec * mask(const char * val, const char * mask_name = "*");
     \param weight informational weight for \ref mask rule
     \param mask_name name of \ref d_mask "mask" dataset, or mask position number
 */
-surfit::boolvec * mask_add(REAL val, REAL weight = 1, const char * mask_name = "*");
+boolvec * mask_add(REAL val, REAL weight = 1, const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
     \fn bool mask_leq(REAL value, const char * mask_name = "*", REAL penalty_factor = 0);
@@ -269,7 +269,7 @@ surfit::boolvec * mask_add(REAL val, REAL weight = 1, const char * mask_name = "
     where (i,j) - indices of the cells where mask is true, z - constant value
 
 */
-surfit::boolvec * mask_leq(REAL value, const char * mask_name = "*", REAL penalty_factor = 0);
+boolvec * mask_leq(REAL value, const char * mask_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_masks
     \fn bool mask_geq(REAL value, const char * mask_name = "*", REAL penalty_factor = 0);
@@ -294,7 +294,7 @@ surfit::boolvec * mask_leq(REAL value, const char * mask_name = "*", REAL penalt
     \sa mask_leq area_leq area_geq
 
 */
-surfit::boolvec * mask_geq(REAL value, const char * mask_name = "*", REAL penalty_factor = 0);
+boolvec * mask_geq(REAL value, const char * mask_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_masks
     \fn bool mask_surf(const char * surf_name = "*", const char * mask_name = "*");
@@ -317,7 +317,7 @@ surfit::boolvec * mask_geq(REAL value, const char * mask_name = "*", REAL penalt
     where (i,j) - indices of the cells, where mask is "true", \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 
 */
-surfit::boolvec * mask_surf(const char * surf_name = "*", const char * mask_name = "*");
+boolvec * mask_surf(const char * surf_name = "*", const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
     \fn bool mask_surf_add(const char * surf_name = "*", REAL weight = 1, const char * mask_name = "*");
@@ -346,7 +346,7 @@ surfit::boolvec * mask_surf(const char * surf_name = "*", const char * mask_name
     where (i,j) - indices of the cells where mask is "true", \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 
 */
-surfit::boolvec * mask_surf_add(const char * surf_name = "*", REAL weight = 1, const char * mask_name = "*");
+boolvec * mask_surf_add(const char * surf_name = "*", REAL weight = 1, const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
     \fn bool mask_surf_leq(const char * surf_name = "*", const char * mask_name = "*", REAL penalty_factor = 0);
@@ -365,7 +365,7 @@ surfit::boolvec * mask_surf_add(const char * surf_name = "*", REAL weight = 1, c
     where (i,j) - indices of the cells where mask is true, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
 
 */
-surfit::boolvec * mask_surf_leq(const char * surf_name = "*", const char * mask_name = "*", REAL penalty_factor = 0);
+boolvec * mask_surf_leq(const char * surf_name = "*", const char * mask_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_masks
     \fn bool mask_surf_geq(const char * surf_name = "*", const char * mask_name = "*", REAL penalty_factor = 0);
@@ -384,7 +384,7 @@ surfit::boolvec * mask_surf_leq(const char * surf_name = "*", const char * mask_
     where (i,j) - indices of the cells where mask is true, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
 
 */
-surfit::boolvec * mask_surf_geq(const char * surf_name = "*", const char * mask_name = "*", REAL penalty_factor = 0);
+boolvec * mask_surf_geq(const char * surf_name = "*", const char * mask_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_masks
     \fn bool mask_mean(REAL mean, const char * mask_name = "*", REAL penalty_factor = -2);
@@ -403,7 +403,7 @@ surfit::boolvec * mask_surf_geq(const char * surf_name = "*", const char * mask_
     \f]
     where (i,j) - indices of the cells where mask is true, Q - number of cells in mask, m - desired mean value
 */
-surfit::boolvec * mask_mean(REAL mean, const char * mask_name = "*", REAL penalty_factor = -2);
+boolvec * mask_mean(REAL mean, const char * mask_name = "*", REAL penalty_factor = -2);
 
 /*! \ingroup tcl_rules_masks
     \fn bool mask_wmean(REAL mean, const char * mask_name = "*", const char * surf_name = "*", REAL penalty_factor = -2);
@@ -423,7 +423,7 @@ surfit::boolvec * mask_mean(REAL mean, const char * mask_name = "*", REAL penalt
     where (i,j) - indices of the cells where mask is true, \f$z(x_i,y_j)\f$ - weighted surface value for the (i,j) cell,
     m - desired weighted mean value
 */
-surfit::boolvec * mask_wmean(REAL mean, const char * mask_name = "*", const char * surf_name = "*", REAL penalty_factor = -2);
+boolvec * mask_wmean(REAL mean, const char * mask_name = "*", const char * surf_name = "*", REAL penalty_factor = -2);
 
 /*! \ingroup tcl_rules_masks
     \fn bool mask_completer(const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
@@ -439,7 +439,7 @@ surfit::boolvec * mask_wmean(REAL mean, const char * mask_name = "*", const char
     \param alpha anisotropy angle (degrees)
     \param w anisotropy factor
 */
-surfit::boolvec * mask_completer(const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
+boolvec * mask_completer(const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
 /*! \ingroup tcl_rules_masks
     \fn bool mask_completer_add(REAL weight = 1,const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
@@ -455,7 +455,7 @@ surfit::boolvec * mask_completer(const char * mask_name = "*", REAL D1 = 1, REAL
     \param alpha anisotropy angle (degrees)
     \param w anisotropy factor
 */
-surfit::boolvec * mask_completer_add(REAL weight = 1, const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);	
+boolvec * mask_completer_add(REAL weight = 1, const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);	
 
 }; // namespace surfit;
 
