@@ -228,7 +228,8 @@ libsurfit_la_HEADERS += src/surfit/cmofs.h
 libsurfit_la_HEADERS += src/surfit/cntr.h              
 libsurfit_la_HEADERS += src/surfit/cntr_internal.h     
 libsurfit_la_SOURCES += src/surfit/cntr_tcl.h          
-libsurfit_la_HEADERS += src/surfit/colorscale.cpp                                                  
+libsurfit_la_HEADERS += src/surfit/cntr_trace.h
+libsurfit_la_HEADERS += src/surfit/colorscale.h                                                  
 libsurfit_la_HEADERS += src/surfit/curv.h              
 libsurfit_la_SOURCES += src/surfit/curvs_tcl.h         
 libsurfit_la_HEADERS += src/surfit/curv_internal.h     
@@ -500,6 +501,8 @@ install-data-hook:
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "core*"`; \
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.log"`; \
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.dat"` ;\
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.grd"` ;\
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.ps"` ;\
 	if test -f /usr/bin/chcon; then \
 	chcon system_u:object_r:texrel_shlib_t $(DESTDIR)$(libdir)/libsurfit_io.so; \
 	fi

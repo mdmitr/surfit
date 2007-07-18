@@ -104,6 +104,7 @@ fi
 if test x"${TCLCONFIG}" = x ; then
     for i in `ls -d ${prefix}/lib 2>/dev/null` \
              `ls -d /usr/lib 2>/dev/null` \
+             `ls -d /usr/lib/tcl* 2>/dev/null` \
 	     `ls -d /usr/local/lib 2>/dev/null` ; do
 	if test -f "$i/tclConfig.sh" ; then
 	    TCLCONFIG=`(cd $i; pwd)`
@@ -116,7 +117,7 @@ if test x"${TCLCONFIG}" = x ; then
 else
     AC_MSG_RESULT(found $TCLCONFIG/tclConfig.sh)
     . $TCLCONFIG/tclConfig.sh
-    TCLINCLUDE=-I$TCL_PREFIX/include
+    TCLINCLUDE=$TCL_INCLUDE_SPEC
     TCLLIB=$TCL_LIB_SPEC
 fi
 

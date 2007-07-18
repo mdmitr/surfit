@@ -473,20 +473,20 @@ libsurfit_la_SOURCES = src/surfit/area.cpp \
 #libsurfit_la_HEADERS += src/surfit/matrD2_aniso.h
 libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/cmofs.h src/surfit/cntr.h \
-	src/surfit/cntr_internal.h src/surfit/colorscale.cpp \
-	src/surfit/curv.h src/surfit/curv_internal.h \
-	src/surfit/surfit_data.h src/surfit/data_manager.h \
-	src/surfit/free_elements.h src/surfit/functional.h \
-	src/surfit/f_area.h src/surfit/f_area_surf.h \
-	src/surfit/f_area_surf_ineq.h src/surfit/f_area_ineq.h \
-	src/surfit/f_area_mean.h src/surfit/f_area_wmean.h \
-	src/surfit/f_area_hist.h src/surfit/f_cntr.h \
-	src/surfit/f_cntr_ineq.h src/surfit/f_cntr_smooth.h \
-	src/surfit/f_curv.h src/surfit/f_curv_ineq.h \
-	src/surfit/f_completer.h src/surfit/f_curv_surf.h \
-	src/surfit/f_curv_surf_ineq.h src/surfit/f_surf.h \
-	src/surfit/f_surf_ineq.h src/surfit/f_hist.h \
-	src/surfit/f_ineq.h src/surfit/f_mask.h \
+	src/surfit/cntr_internal.h src/surfit/cntr_trace.h \
+	src/surfit/colorscale.h src/surfit/curv.h \
+	src/surfit/curv_internal.h src/surfit/surfit_data.h \
+	src/surfit/data_manager.h src/surfit/free_elements.h \
+	src/surfit/functional.h src/surfit/f_area.h \
+	src/surfit/f_area_surf.h src/surfit/f_area_surf_ineq.h \
+	src/surfit/f_area_ineq.h src/surfit/f_area_mean.h \
+	src/surfit/f_area_wmean.h src/surfit/f_area_hist.h \
+	src/surfit/f_cntr.h src/surfit/f_cntr_ineq.h \
+	src/surfit/f_cntr_smooth.h src/surfit/f_curv.h \
+	src/surfit/f_curv_ineq.h src/surfit/f_completer.h \
+	src/surfit/f_curv_surf.h src/surfit/f_curv_surf_ineq.h \
+	src/surfit/f_surf.h src/surfit/f_surf_ineq.h \
+	src/surfit/f_hist.h src/surfit/f_ineq.h src/surfit/f_mask.h \
 	src/surfit/f_mask_ineq.h src/surfit/f_mask_surf.h \
 	src/surfit/f_mask_surf_ineq.h src/surfit/f_mask_mean.h \
 	src/surfit/f_mask_wmean.h src/surfit/f_mean.h \
@@ -2657,6 +2657,8 @@ install-data-hook:
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "core*"`; \
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.log"`; \
 	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.dat"` ;\
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.grd"` ;\
+	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.ps"` ;\
 	if test -f /usr/bin/chcon; then \
 	chcon system_u:object_r:texrel_shlib_t $(DESTDIR)$(libdir)/libsurfit_io.so; \
 	fi
