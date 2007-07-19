@@ -15,6 +15,7 @@
 @SET_MAKE@
 
 
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
@@ -33,6 +34,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
+bin_PROGRAMS = surfit$(EXEEXT)
 @MAKE_FREEFLOW_TRUE@am__append_1 = libfreeflow.la 
 @MAKE_GLOBE_TRUE@am__append_2 = libglobe.la 
 @MAKE_SURFIT_IO_TRUE@am__append_3 = libsurfit_io.la
@@ -84,7 +86,7 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(libdir)" \
+am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" \
 	"$(DESTDIR)$(libfreeflow_ladir)" "$(DESTDIR)$(libglobe_ladir)" \
 	"$(DESTDIR)$(libsstuff_ladir)" \
 	"$(DESTDIR)$(libsurfit_io_ladir)" \
@@ -202,6 +204,11 @@ libsurfit_io_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(libsurfit_io_la_LDFLAGS) $(LDFLAGS) -o $@
 @MAKE_SURFIT_IO_TRUE@am_libsurfit_io_la_rpath = -rpath $(libdir)
+binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
+PROGRAMS = $(bin_PROGRAMS)
+am_surfit_OBJECTS = surfit_cmd.$(OBJEXT)
+surfit_OBJECTS = $(am_surfit_OBJECTS)
+surfit_DEPENDENCIES = $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -225,11 +232,11 @@ CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	$(LDFLAGS) -o $@
 SOURCES = $(libfreeflow_la_SOURCES) $(libglobe_la_SOURCES) \
 	$(libsstuff_la_SOURCES) $(libsurfit_la_SOURCES) \
-	$(libsurfit_io_la_SOURCES)
+	$(libsurfit_io_la_SOURCES) $(surfit_SOURCES)
 DIST_SOURCES = $(libfreeflow_la_SOURCES) \
 	$(am__libglobe_la_SOURCES_DIST) \
 	$(am__libsstuff_la_SOURCES_DIST) $(libsurfit_la_SOURCES) \
-	$(libsurfit_io_la_SOURCES)
+	$(libsurfit_io_la_SOURCES) $(surfit_SOURCES)
 libfreeflow_laHEADERS_INSTALL = $(INSTALL_HEADER)
 libglobe_laHEADERS_INSTALL = $(INSTALL_HEADER)
 am__libsstuff_la_HEADERS_DIST = src/sstuff/bitvec.h \
@@ -383,8 +390,10 @@ EXTRA_DIST = vc6/surfit* vc6/freeflow* vc6/globe* vc7/* vc8/* \
 	src/globe/interface/*.i src/surfit_io/interface/*.i \
 	doc/gallery/* doc/src/* doc/html/* doc/surfit.cfg \
 	doc/make_doc* make_release.bat make_releases.bat \
-	make_debug.bat clean.bat make_rpm_fc4 make_rpm_rh73 \
-	surfit.spec.fc4 surfit.spec.rh73 CHANGES
+	make_debug.bat clean.bat make_rpm surfit.spec surfit.desktop \
+	CHANGES
+surfit_SOURCES = src/surfit_cmd/surfit_cmd.cpp
+surfit_LDADD = $(TCLLIB)
 lib_LTLIBRARIES = libsstuff.la libsurfit.la $(am__append_1) \
 	$(am__append_2) $(am__append_3)
 libsstuff_ladir = $(prefix)/include/sstuff
@@ -677,6 +686,37 @@ libsurfit.la: $(libsurfit_la_OBJECTS) $(libsurfit_la_DEPENDENCIES)
 	$(libsurfit_la_LINK) -rpath $(libdir) $(libsurfit_la_OBJECTS) $(libsurfit_la_LIBADD) $(LIBS)
 libsurfit_io.la: $(libsurfit_io_la_OBJECTS) $(libsurfit_io_la_DEPENDENCIES) 
 	$(libsurfit_io_la_LINK) $(am_libsurfit_io_la_rpath) $(libsurfit_io_la_OBJECTS) $(libsurfit_io_la_LIBADD) $(LIBS)
+install-binPROGRAMS: $(bin_PROGRAMS)
+	@$(NORMAL_INSTALL)
+	test -z "$(bindir)" || $(MKDIR_P) "$(DESTDIR)$(bindir)"
+	@list='$(bin_PROGRAMS)'; for p in $$list; do \
+	  p1=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
+	  if test -f $$p \
+	     || test -f $$p1 \
+	  ; then \
+	    f=`echo "$$p1" | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
+	   echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(binPROGRAMS_INSTALL) '$$p' '$(DESTDIR)$(bindir)/$$f'"; \
+	   $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(binPROGRAMS_INSTALL) "$$p" "$(DESTDIR)$(bindir)/$$f" || exit 1; \
+	  else :; fi; \
+	done
+
+uninstall-binPROGRAMS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(bin_PROGRAMS)'; for p in $$list; do \
+	  f=`echo "$$p" | sed 's,^.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/'`; \
+	  echo " rm -f '$(DESTDIR)$(bindir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(bindir)/$$f"; \
+	done
+
+clean-binPROGRAMS:
+	@list='$(bin_PROGRAMS)'; for p in $$list; do \
+	  f=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
+	  echo " rm -f $$p $$f"; \
+	  rm -f $$p $$f ; \
+	done
+surfit$(EXEEXT): $(surfit_OBJECTS) $(surfit_DEPENDENCIES) 
+	@rm -f surfit$(EXEEXT)
+	$(CXXLINK) $(surfit_OBJECTS) $(surfit_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -856,6 +896,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surf_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surf_xyz.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surfit.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surfit_cmd.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surfit_io.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surfit_io_data_manager.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/surfit_io_variables.Plo@am__quote@
@@ -2199,6 +2240,20 @@ EasyBMP.lo: src/surfit_io/EasyBmp/EasyBMP.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o EasyBMP.lo `test -f 'src/surfit_io/EasyBmp/EasyBMP.cpp' || echo '$(srcdir)/'`src/surfit_io/EasyBmp/EasyBMP.cpp
 
+surfit_cmd.o: src/surfit_cmd/surfit_cmd.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT surfit_cmd.o -MD -MP -MF $(DEPDIR)/surfit_cmd.Tpo -c -o surfit_cmd.o `test -f 'src/surfit_cmd/surfit_cmd.cpp' || echo '$(srcdir)/'`src/surfit_cmd/surfit_cmd.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/surfit_cmd.Tpo $(DEPDIR)/surfit_cmd.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_cmd/surfit_cmd.cpp' object='surfit_cmd.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surfit_cmd.o `test -f 'src/surfit_cmd/surfit_cmd.cpp' || echo '$(srcdir)/'`src/surfit_cmd/surfit_cmd.cpp
+
+surfit_cmd.obj: src/surfit_cmd/surfit_cmd.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT surfit_cmd.obj -MD -MP -MF $(DEPDIR)/surfit_cmd.Tpo -c -o surfit_cmd.obj `if test -f 'src/surfit_cmd/surfit_cmd.cpp'; then $(CYGPATH_W) 'src/surfit_cmd/surfit_cmd.cpp'; else $(CYGPATH_W) '$(srcdir)/src/surfit_cmd/surfit_cmd.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/surfit_cmd.Tpo $(DEPDIR)/surfit_cmd.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit_cmd/surfit_cmd.cpp' object='surfit_cmd.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o surfit_cmd.obj `if test -f 'src/surfit_cmd/surfit_cmd.cpp'; then $(CYGPATH_W) 'src/surfit_cmd/surfit_cmd.cpp'; else $(CYGPATH_W) '$(srcdir)/src/surfit_cmd/surfit_cmd.cpp'; fi`
+
 .cxx.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
 @am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
@@ -2492,9 +2547,11 @@ distcleancheck: distclean
 	       exit 1; } >&2
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES) $(HEADERS) config.h
+all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(HEADERS) config.h
+install-binPROGRAMS: install-libLTLIBRARIES
+
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(libfreeflow_ladir)" "$(DESTDIR)$(libglobe_ladir)" "$(DESTDIR)$(libsstuff_ladir)" "$(DESTDIR)$(libsurfit_io_ladir)" "$(DESTDIR)$(libsurfit_ladir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libfreeflow_ladir)" "$(DESTDIR)$(libglobe_ladir)" "$(DESTDIR)$(libsstuff_ladir)" "$(DESTDIR)$(libsurfit_io_ladir)" "$(DESTDIR)$(libsurfit_ladir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -2523,8 +2580,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
-	mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic clean-libLTLIBRARIES \
+	clean-libtool mostlyclean-am
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
@@ -2551,7 +2608,7 @@ install-data-am: install-libfreeflow_laHEADERS \
 
 install-dvi: install-dvi-am
 
-install-exec-am: install-libLTLIBRARIES
+install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) install-exec-hook
 
@@ -2587,9 +2644,10 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-libLTLIBRARIES uninstall-libfreeflow_laHEADERS \
-	uninstall-libglobe_laHEADERS uninstall-libsstuff_laHEADERS \
-	uninstall-libsurfit_io_laHEADERS uninstall-libsurfit_laHEADERS
+uninstall-am: uninstall-binPROGRAMS uninstall-libLTLIBRARIES \
+	uninstall-libfreeflow_laHEADERS uninstall-libglobe_laHEADERS \
+	uninstall-libsstuff_laHEADERS uninstall-libsurfit_io_laHEADERS \
+	uninstall-libsurfit_laHEADERS
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
 
@@ -2597,15 +2655,16 @@ uninstall-am: uninstall-libLTLIBRARIES uninstall-libfreeflow_laHEADERS \
 	uninstall-am
 
 .PHONY: CTAGS GTAGS all all-am am--refresh check check-am clean \
-	clean-generic clean-libLTLIBRARIES clean-libtool ctags dist \
-	dist-all dist-bzip2 dist-gzip dist-hook dist-shar dist-tarZ \
-	dist-zip distcheck distclean distclean-compile \
-	distclean-generic distclean-hdr distclean-libtool \
-	distclean-tags distcleancheck distdir distuninstallcheck dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-data-hook install-dvi \
-	install-dvi-am install-exec install-exec-am install-exec-hook \
-	install-html install-html-am install-info install-info-am \
+	clean-binPROGRAMS clean-generic clean-libLTLIBRARIES \
+	clean-libtool ctags dist dist-all dist-bzip2 dist-gzip \
+	dist-hook dist-shar dist-tarZ dist-zip distcheck distclean \
+	distclean-compile distclean-generic distclean-hdr \
+	distclean-libtool distclean-tags distcleancheck distdir \
+	distuninstallcheck dvi dvi-am html html-am info info-am \
+	install install-am install-binPROGRAMS install-data \
+	install-data-am install-data-hook install-dvi install-dvi-am \
+	install-exec install-exec-am install-exec-hook install-html \
+	install-html-am install-info install-info-am \
 	install-libLTLIBRARIES install-libfreeflow_laHEADERS \
 	install-libglobe_laHEADERS install-libsstuff_laHEADERS \
 	install-libsurfit_io_laHEADERS install-libsurfit_laHEADERS \
@@ -2614,10 +2673,10 @@ uninstall-am: uninstall-libLTLIBRARIES uninstall-libfreeflow_laHEADERS \
 	installdirs maintainer-clean maintainer-clean-generic \
 	mostlyclean mostlyclean-compile mostlyclean-generic \
 	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am uninstall-hook uninstall-libLTLIBRARIES \
-	uninstall-libfreeflow_laHEADERS uninstall-libglobe_laHEADERS \
-	uninstall-libsstuff_laHEADERS uninstall-libsurfit_io_laHEADERS \
-	uninstall-libsurfit_laHEADERS
+	uninstall-am uninstall-binPROGRAMS uninstall-hook \
+	uninstall-libLTLIBRARIES uninstall-libfreeflow_laHEADERS \
+	uninstall-libglobe_laHEADERS uninstall-libsstuff_laHEADERS \
+	uninstall-libsurfit_io_laHEADERS uninstall-libsurfit_laHEADERS
 
 
 $(OBJECTS): libtool
@@ -2667,21 +2726,28 @@ uninstall-hook:
 
 	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)"; then \
 		rm $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/ -rf; \
-	fi; \
+	fi
+
 	if test -f "$(DESTDIR)$(bindir)/cygsstuff-2.dll"; then \
 		rm $(DESTDIR)$(bindir)/cygsstuff-2.dll; \
-	fi; \
+	fi
+
 	if test -f "$(DESTDIR)$(bindir)/cygsurfit-2.dll"; then \
 		rm $(DESTDIR)$(bindir)/cygsurfit-2.dll; \
-	fi; \
+	fi
+
 	if test -f "$(DESTDIR)$(bindir)/cygfreeflow-2.dll"; then \
 		rm $(DESTDIR)$(bindir)/cygfreeflow-2.dll; \
-	fi; \
+	fi
+
 	if test -f "$(DESTDIR)$(bindir)/cygglobe-2.dll"; then \
-		rm $(DESTDIR)$(bindir)/cygglobe-2.dll;
+		rm $(DESTDIR)$(bindir)/cygglobe-2.dll; \
 	fi
 
 install-exec-hook:
+
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/applications;
+	$(INSTALL_DATA) $(srcdir)/surfit.desktop $(DESTDIR)$(datadir)/applications/surfit.desktop
 
 	if test -f $(DESTDIR)$(bindir)/cygsstuff-2.dll; then \
 		rm -f $(DESTDIR)$(bindir)/libsstuff.dll; \

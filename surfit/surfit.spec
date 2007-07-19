@@ -1,7 +1,7 @@
 
 %define name surfit
-%define version 2.1
-%define release fc4
+%define version 2.2
+%define release fc7
 
 Summary: freeware gridding software
 Name: %{name}
@@ -14,6 +14,7 @@ License: GPL
 Url: http://surfit.sourceforge.net
 Prefix: %{_prefix}
 BuildRoot: %{_builddir}/%{name}-%{version}-buildroot
+requires: netcdf >= 3.6.2-5
 
 %description
 surfit is a computer program which enables to recalculate scattered data to regular grid (gridding). surfit implements the original gridding method CMOFS, which can deal with various data of different extent of truth.
@@ -22,18 +23,25 @@ surfit is a computer program which enables to recalculate scattered data to regu
 %setup -q
 
 %build
-./configure --prefix %{_prefix} --disable-debug
+./configure --prefix %{_prefix}
 make 
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
 make DESTDIR=${RPM_BUILD_ROOT} install
 
+%post
+if test -x /usr/bin/chcon; then
+  /usr/bin/chcon system_u:object_r:texrel_shlib_t %{_prefix}/lib/libsurfit_io.so
+fi
+
 %clean
 rm -rf ${RPM_BUILD_ROOT}
 
 %files
 %defattr(-,root,root)
+%dir %{_prefix}/bin
+%{_prefix}/bin/surfit
 %dir %{_prefix}/lib
 %{_prefix}/lib/libsstuff*
 %{_prefix}/lib/libsurfit*
@@ -52,4 +60,6 @@ rm -rf ${RPM_BUILD_ROOT}
 %{_prefix}/include/surfit_io/*.h
 %dir %{_prefix}/share/%{name}-%{version}
 %{_prefix}/share/%{name}-%{version}/*
+%dir %{_prefix}/share/applications
+%{_prefix}/share/applications/surfit.desktop
 

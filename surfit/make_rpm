@@ -1,0 +1,15 @@
+#! /bin/sh
+rm `find -name "core*"`
+rm `find -name "*.dat"`
+rm `find -name "*.log"`
+cd doc
+sh make_docs
+cd ..
+make dist
+cp surfit-2.2.tar.gz $HOME/rpm/SOURCES/
+cat rpmmacros > $HOME/.rpmmacros
+rpmbuild -ba surfit.spec
+cp $HOME/rpm/SRPMS/surfit-2.2-fc7.src.rpm surfit-2.2-fc7.src.rpm
+cp $HOME/rpm/RPMS/i386/surfit-2.2-fc7.i386.rpm surfit-2.2-fc7.i386.rpm
+
+

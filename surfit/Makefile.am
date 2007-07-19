@@ -24,11 +24,14 @@ EXTRA_DIST += make_release.bat
 EXTRA_DIST += make_releases.bat
 EXTRA_DIST += make_debug.bat
 EXTRA_DIST += clean.bat
-EXTRA_DIST += make_rpm_fc4
-EXTRA_DIST += make_rpm_rh73
-EXTRA_DIST += surfit.spec.fc4
-EXTRA_DIST += surfit.spec.rh73
+EXTRA_DIST += make_rpm
+EXTRA_DIST += surfit.spec
+EXTRA_DIST += surfit.desktop
 EXTRA_DIST += CHANGES
+
+bin_PROGRAMS = surfit
+surfit_SOURCES = src/surfit_cmd/surfit_cmd.cpp
+surfit_LDADD = $(TCLLIB)
 
 lib_LTLIBRARIES = libsstuff.la 
 lib_LTLIBRARIES += libsurfit.la 
@@ -511,21 +514,28 @@ uninstall-hook:
 
 	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)"; then \
 		rm $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/ -rf; \
-	fi; \
+	fi
+
 	if test -f "$(DESTDIR)$(bindir)/cygsstuff-2.dll"; then \
 		rm $(DESTDIR)$(bindir)/cygsstuff-2.dll; \
-	fi; \
+	fi
+
 	if test -f "$(DESTDIR)$(bindir)/cygsurfit-2.dll"; then \
 		rm $(DESTDIR)$(bindir)/cygsurfit-2.dll; \
-	fi; \
+	fi
+
 	if test -f "$(DESTDIR)$(bindir)/cygfreeflow-2.dll"; then \
 		rm $(DESTDIR)$(bindir)/cygfreeflow-2.dll; \
-	fi; \
+	fi
+
 	if test -f "$(DESTDIR)$(bindir)/cygglobe-2.dll"; then \
-		rm $(DESTDIR)$(bindir)/cygglobe-2.dll;
+		rm $(DESTDIR)$(bindir)/cygglobe-2.dll; \
 	fi
 
 install-exec-hook:
+
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/applications;
+	$(INSTALL_DATA) $(srcdir)/surfit.desktop $(DESTDIR)$(datadir)/applications/surfit.desktop
 
 	if test -f $(DESTDIR)$(bindir)/cygsstuff-2.dll; then \
 		rm -f $(DESTDIR)$(bindir)/libsstuff.dll; \
