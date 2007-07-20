@@ -7,6 +7,7 @@ del libfreeflow.*
 del libsurfit_io.*
 del libacml*.*
 del surfit.chm
+del surfit.exe
 cd ..
 
 mkdir bin_SSE
