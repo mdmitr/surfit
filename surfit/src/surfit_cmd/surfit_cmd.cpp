@@ -9,10 +9,19 @@ int AppInit(Tcl_Interp *interp) {
 	char buf[256];
 	sprintf(buf, "load libsurfit%s", res);
 	Tcl_Eval(interp, buf);
+	
+	Tcl_Eval(interp, "info sharedlibextension");
+	res = Tcl_GetStringResult(interp);
 	sprintf(buf, "load libsurfit_io%s", res);
 	Tcl_Eval(interp, buf);
+	
+	Tcl_Eval(interp, "info sharedlibextension");
+	res = Tcl_GetStringResult(interp);
 	sprintf(buf, "load libglobe%s", res);
 	Tcl_Eval(interp, buf);
+
+	Tcl_Eval(interp, "info sharedlibextension");
+	res = Tcl_GetStringResult(interp);
 	sprintf(buf, "load libfreeflow%s", res);
 	Tcl_Eval(interp, buf);
 	return TCL_OK;
