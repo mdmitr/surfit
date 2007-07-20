@@ -195,7 +195,9 @@ Section "binaries" SecBinary
     
 	    ;Create shortcuts
 	    CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
+	    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\surfit.lnk" "$INSTDIR\bin\surfit.exe"
 	    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
+
   
 	  !insertmacro MUI_STARTMENU_WRITE_END
 
@@ -237,6 +239,7 @@ usual_install:
 
 binary_done:
 
+	  File "..\bin\surfit.exe"
 	  File "..\..\libs\vc8_redist\msvcr80.dll"
 	  File "..\..\libs\vc8_redist\msvcp80.dll"
 	  File "..\..\libs\vc8_redist\Microsoft.VC80.CRT.manifest"
@@ -247,7 +250,7 @@ binary_done:
 
 	  File /r "..\..\libs\tcl8.3.5\win\Release\tcl83.dll"
 	  File /r "..\..\libs\tcl8.3.5\win\Release\tclsh83.exe"
-	  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\tclsh83.lnk" "$INSTDIR\bin\tclsh83.exe"
+;	  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\tclsh83.lnk" "$INSTDIR\bin\tclsh83.exe"
           SetOutPath "$INSTDIR\library"
 	  File /r "..\..\libs\tcl8.3.5\library\*"
  
@@ -302,7 +305,7 @@ Section "documentation" SecDocs
   SetOutPath "$INSTDIR\doc\"
   File /x .svn "..\bin\surfit.chm"
   CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
-  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\surfit.lnk" "$INSTDIR\doc\surfit.chm"
+  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\surfit_docs.lnk" "$INSTDIR\doc\surfit.chm"
 SectionEnd
 
 
@@ -340,7 +343,7 @@ Section "Uninstall"
   !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
     
   Delete "$SMPROGRAMS\$MUI_TEMP\Uninstall.lnk"
-  Delete "$SMPROGRAMS\$MUI_TEMP\doc.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\surfit_docs.lnk"
   Delete "$SMPROGRAMS\$MUI_TEMP\surfit_examples.lnk"
   Delete "$SMPROGRAMS\$MUI_TEMP\freeflow_examples.lnk"
   Delete "$SMPROGRAMS\$MUI_TEMP\globe_examples.lnk"

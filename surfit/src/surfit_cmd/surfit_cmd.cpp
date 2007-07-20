@@ -4,10 +4,17 @@
 int AppInit(Tcl_Interp *interp) {
 	if(Tcl_Init(interp) == TCL_ERROR) 
 		return TCL_ERROR;
-	Tcl_Eval(interp, "load libsurfit[info sharedlibextension]");
-	Tcl_Eval(interp, "load libsurfit_io[info sharedlibextension]");
-	Tcl_Eval(interp, "load libglobe[info sharedlibextension]");
-	Tcl_Eval(interp, "load libfreeflow[info sharedlibextension]");
+	Tcl_Eval(interp, "info sharedlibextension");
+	char * res = Tcl_GetStringResult(interp);
+	char buf[256];
+	sprintf(buf, "load libsurfit%s", res);
+	Tcl_Eval(interp, buf);
+	sprintf(buf, "load libsurfit_io%s", res);
+	Tcl_Eval(interp, buf);
+	sprintf(buf, "load libglobe%s", res);
+	Tcl_Eval(interp, buf);
+	sprintf(buf, "load libfreeflow%s", res);
+	Tcl_Eval(interp, buf);
 	return TCL_OK;
 }
 
