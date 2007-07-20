@@ -108,14 +108,14 @@ boolvec * surf_save(const char * filename, const char * pos)
 struct match_surf_plot
 {
 	match_surf_plot(const char * ifilename, const char * ipos, 
-			bool idraw_isos, size_t inumber_of_levels ) : 
+			size_t inumber_of_levels, bool idraw_isos, bool idraw_colorscale) : 
 	filename(ifilename), pos(ipos), res(NULL), 
-	draw_isos(idraw_isos), number_of_levels(inumber_of_levels) {};
+	draw_isos(idraw_isos), draw_colorscale(idraw_colorscale), number_of_levels(inumber_of_levels) {};
 	void operator()(d_surf * surf)
 	{
 		if ( StringMatch(pos, surf->getName()) )
 		{
-			bool r = _surf_plot(surf, filename, draw_isos, number_of_levels);
+			bool r = _surf_plot(surf, filename, number_of_levels, draw_isos, draw_colorscale);
 			if (res == NULL)
 				res = create_boolvec();
 			res->push_back(r);
@@ -125,12 +125,13 @@ struct match_surf_plot
 	const char * pos;
 	boolvec * res;
 	bool draw_isos;
+	bool draw_colorscale;
 	size_t number_of_levels;
 };
 
-boolvec * surf_plot(const char * filename, const char * pos, bool draw_isos, size_t number_of_levels) 
+boolvec * surf_plot(const char * filename, const char * pos, size_t number_of_levels, bool draw_isos, bool draw_colorscale) 
 {
-	match_surf_plot qq(filename, pos, draw_isos, number_of_levels);
+	match_surf_plot qq(filename, pos, number_of_levels, draw_isos, draw_colorscale);
 	qq = std::for_each(surfit_surfs->begin(), surfit_surfs->end(), qq);
 	return qq.res;
 };

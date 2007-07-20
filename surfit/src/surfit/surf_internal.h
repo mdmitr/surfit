@@ -64,12 +64,12 @@ bool _surf_save(const d_surf * srf, const char * filename);
 
 SURFIT_EXPORT
 /*! \ingroup internal_surf
-    \fn bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos = true, size_t number_of_levels = 16);
+    \fn bool _surf_plot(const d_surf * srf, const char * filename, size_t number_of_levels = 16, bool draw_isos = true, bool draw_colorscale = true);
     \brief plots surface to PostScript file
     \param srf surf class to save
     \param filename PostScript file 
 */
-bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos = true, size_t number_of_levels = 16);
+bool _surf_plot(const d_surf * srf, const char * filename, size_t number_of_levels = 16, bool draw_isos = true, bool draw_colorscale = true);
 
 SURFIT_EXPORT
 /*! \ingroup internal_surf

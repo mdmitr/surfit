@@ -1692,17 +1692,37 @@ private:
 	double l_x, l_y;
 };
 
-bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_t number_of_levels) 
+float calc_label_width(const char * label, float digit_w, float period_w)
+{
+	float res = 0;
+	size_t i;
+	for (i = 0; i < strlen(label); i++) {
+		char c = *(label+i);
+		if ((c == '.') || (c == ',')) {
+			res += period_w;
+			continue;
+		}
+		res += digit_w;
+	}
+	return res;
+};
+
+bool _surf_plot(const d_surf * srf, const char * filename, size_t number_of_levels, bool draw_isos, bool draw_colorscale ) 
 {
 	if (srf == NULL)
 		return false;
+
+	size_t font_size = 8;
+	REAL digit_w = REAL(500)/REAL(1000)*font_size/2.834645669291;
+	REAL digit_h = font_size/2.834645669291/1.5;
+	REAL period_w = REAL(250)/REAL(1000)*font_size/2.834645669291;
 	
 	REAL from, to, step;
 
 	srf->getMinMaxZ(from, to);	
 	
 	step = stepFunc(from, to, number_of_levels);
-	from = floor( from/step ) * step;
+	from = ceil( from/step ) * step;
 	to = floor( to/step ) * step;
 	
 	vec * levels = create_vec();
@@ -1755,21 +1775,45 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 
 	float max_len = MAX(maxx-minx, maxy-miny);
 
-	projection prj(minx, miny, minx+max_len, miny+max_len, 0, 0, 200, 200);
+	char buf[256];
+	size_t i, j;
+	REAL added_level = to + FLT_MAX/REAL(2);
+
+	float max_label_width = 0;
+	if (draw_colorscale) {
+		if (isos)
+		for (i = 0; i < isos->size(); i++) {
+			fiso * iso = (*isos)[i];
+			REAL val = iso->get_level();
+			if ((val == added_level) || (val == FLT_MAX))
+				continue;
+			sprintf(buf,"%g",val);
+			max_label_width = MAX(max_label_width, calc_label_width(buf, (float)digit_w, (float)period_w));
+		}
+	}
+
+	float width = 200;
+	if (draw_colorscale)
+		width -= max_label_width+20;
+
+	projection prj(minx, miny, minx+max_len, miny+max_len, 0, 0, width, width);
+
+	float MAXX = prj.get_x(maxx);
+	float MAXY = prj.get_y(maxy);
 
 	//CreEPS ps(filename, 210, 297); // A4
 	CreEPS ps(filename, 200, 200); 
-
+	ps.setAttributes( CAtFont((float)font_size) );
 	ps.setAttributes( CAtLineThickness(0.1f) );
-
-	REAL added_level = to + FLT_MAX/REAL(2);
 
 	std::vector<fiso *> white_bounds;
 
-	size_t i, j;
+	int r,g,b;
+
 	if (isos)
 	for (i = 0; i < isos->size(); i++) {
 		fiso * iso = (*isos)[i];
+
  		for (j = 0; j < iso->size(); j++)
 		{
 			double x,y;
@@ -1784,7 +1828,6 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 			}
 		}
 
-		int r,g,b;
 		if ((iso->get_fill_level() == srf->undef_value) && (iso->get_level() == added_level))
 		{
 			ps.endPath( CreEPS::FILL, CAtColor(1, 1, 1));
@@ -1793,8 +1836,12 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 			cs.get_value(iso->get_fill_level(),r,g,b);
 			ps.endPath( CreEPS::FILL, CAtColor(r/255.f, g/255.f, b/255.f) );
 		}
+	}
 
-		//continue;
+	if (isos)
+	for (i = 0; i < isos->size(); i++) {
+
+		fiso * iso = (*isos)[i];
 
 		if (draw_isos == false)
 			continue;
@@ -1802,7 +1849,9 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 		if ((iso->get_fill_level() == srf->undef_value) && (iso->get_level() == added_level))
 			continue;
 
-		bool prev_vis = false;
+		// convert isoline to centimeters
+		std::vector<float> XX, YY;
+		std::vector<bool> VIS;
 		for (j = 0; j < iso->size(); j++)
 		{
 			double x,y;
@@ -1810,15 +1859,26 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 			iso->get_point(j, x, y, vis);
 			float X = prj.get_x(x);
 			float Y = prj.get_y(y);
-			if (j == 0) {
+			XX.push_back(X);
+			YY.push_back(Y);
+			VIS.push_back(vis);
+		}
+
+		// plot isoline
+		for (j = 0; j < XX.size(); j++) {
+			float X = XX[j];
+			float Y = YY[j];
+			bool V = VIS[j];
+			bool prev_V = true;
+			if (j == 0)
 				ps.startPath(X, Y);
-			} else {
-				if ((prev_vis == false) && (vis == false))
+			else {
+				if ((V == false) && (prev_V == false))
 					ps.addMove(X, Y);
-				else
+				else 
 					ps.addLine(X, Y);
 			}
-			prev_vis = vis;
+			prev_V = V;
 		}
 
 		if ((iso->get_fill_level() == srf->undef_value) && (iso->get_level() == added_level))
@@ -1830,6 +1890,7 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 			cs.get_value(iso->get_fill_level(),r,g,b);
 			ps.endPath( CreEPS::STROKE, CAtColor( 0, 0, 0) );
 		}
+
 				
 	}
 
@@ -1854,6 +1915,36 @@ bool _surf_plot(const d_surf * srf, const char * filename, bool draw_isos, size_
 	
 	free_elements(isos->begin(), isos->end());
 	delete isos;
+
+	if (draw_colorscale) {
+		int q;
+		float y_pos = 5;
+		float rect_w = 10;
+		float rect_h = 10;
+		int cs_size = cs.size();
+
+		rect_h = MIN(10, (width-10)/float(cs_size));
+
+		for (q = 0; q < cs_size; q++) {
+			cs.get_color(q, r, g, b);
+			ps.rectFill(MAXX+5, y_pos, rect_w, rect_h, CAtColor(r/255.f, g/255.f, b/255.f));
+			y_pos += rect_h;
+		}
+		const std::vector<double> * vals = cs.get_values();
+		y_pos = 5;
+		ps.setAttributes(CAtLineThickness(0.3f));
+		ps.setAttributes(CAtColor(0,0,0));
+		for (q = 0; q < cs.size(); q++) {
+			cs.get_color(q, r, g, b);
+			ps.rectStroke(MAXX+5, y_pos, rect_w, rect_h);
+			y_pos += rect_h;
+			if (q != cs_size-1) {
+				ps.line(MAXX+5+rect_w, y_pos, MAXX+5+rect_w+3, y_pos);
+				sprintf(buf, "%g", (*vals)[q]);
+				ps.print(MAXX+10+rect_w, y_pos-float(digit_h)/2.f, buf);
+			}
+		}
+	}
 
 	return true;
 };

@@ -116,15 +116,15 @@ void color_scale::set(double from, double to, double step,
 	if (size <= 0)
 		return;
 
-	r_values = new std::vector<int>(size);
-	g_values = new std::vector<int>(size);
-	b_values = new std::vector<int>(size);
+	r_values = new std::vector<int>(size+1);
+	g_values = new std::vector<int>(size+1);
+	b_values = new std::vector<int>(size+1);
 	values   = new std::vector<double>(size);
 	
 	int i;
-	double r_step = (r_to-r_from)/double(size-1);
-	double g_step = (g_to-g_from)/double(size-1);
-	double b_step = (b_to-b_from)/double(size-1);
+	double r_step = (r_to-r_from)/double(size);
+	double g_step = (g_to-g_from)/double(size);
+	double b_step = (b_to-b_from)/double(size);
 	double r_val, g_val, b_val;
 
 	for (i = 0; i < size; i++) {
@@ -136,6 +136,9 @@ void color_scale::set(double from, double to, double step,
 		(*g_values)[i] = (int)g_val;
 		(*b_values)[i] = (int)b_val;
 	};
+	(*r_values)[i] = (int)r_to;
+	(*g_values)[i] = (int)g_to;
+	(*b_values)[i] = (int)b_to;
 	default_cs = false;
 }
 
@@ -150,9 +153,9 @@ void color_scale::get_value(double value, int & r, int & g, int & b) const
 	std::vector<double>::const_iterator it = std::lower_bound(values->begin(), values->end(), value);
 	
 	if (it == values->end()) {
-		r = (*r_values)[size-1];
-		g = (*g_values)[size-1];
-		b = (*b_values)[size-1];
+		r = (*r_values)[size];
+		g = (*g_values)[size];
+		b = (*b_values)[size];
 		return;
 	} else {
 		size_t pos = it-values->begin();
@@ -166,23 +169,6 @@ void color_scale::get_value(double value, int & r, int & g, int & b) const
 			b = (*b_values)[pos];
 			return;
 		}
-		double val1 = (*values)[pos2];
-		double val2 = (*values)[pos];
-		double dist = val2-val1;
-		double dist1 = value-val1;
-		double dist2 = val2-value;
-
-		int r1 = (*r_values)[pos2];
-		int g1 = (*g_values)[pos2];
-		int b1 = (*b_values)[pos2];
-
-		int r2 = (*r_values)[pos];
-		int g2 = (*g_values)[pos];
-		int b2 = (*b_values)[pos];
-
-		r = (int)( (r1*dist2 + r2*dist1)/dist );
-		g = (int)( (g1*dist2 + g2*dist1)/dist );
-		b = (int)( (b1*dist2 + b2*dist1)/dist );
 	}
 
 	return;
