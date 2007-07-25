@@ -576,7 +576,7 @@ libfreeflow_la_HEADERS = src/freeflow/flow_data_manager.h \
 	src/freeflow/flow_area.h src/freeflow/flow_cntr.h \
 	src/freeflow/flow_curv.h src/freeflow/flow_points.h
 libfreeflow_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la libsurfit.la
-libfreeflow_la_LDFLAGS = -version-info 2:1:0 -no-undefined --dllname libfreeflow.dll
+libfreeflow_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libfreeflow.dll
 libglobe_ladir = $(prefix)/include/globe
 libglobe_la_SOURCES = src/globe/dem.cpp src/globe/dems_tcl.cpp \
 	src/globe/dem_internal.cpp src/globe/dem_tcl.cpp \
@@ -2694,32 +2694,37 @@ dist-hook:
 
 install-data-hook:
 
-	if ! test -d "$(DESTDIR)$(prefix)/share"; then \
-		mkdir $(DESTDIR)$(prefix)/share; \
-	fi; \
-	if ! test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)"; then \
-		mkdir $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION); \
-	fi; \
-	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc"; then \
-		rm -rf $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc; \
-	fi; \
-	cp -r doc/html $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/doc ; \
-	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples"; then \
-		rm -rf $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples; \
-	fi; \
-	mkdir $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples;\
-	cp -r examples/surfit/ $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/surfit; \
-	cp -r examples/freeflow $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/freeflow; \
-	cp -r examples/globe $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/examples/globe; \
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name CVS`; \
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name .svn`; \
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "core*"`; \
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.log"`; \
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.dat"` ;\
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.grd"` ;\
-	rm -rf `find $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION) -name "*.ps"` ;\
+	$(mkinstalldirs) $(DESTDIR)$(docdir)-$(VERSION)
+
+	echo "cp $(srcdir)/README $(DESTDIR)/$(docdir)-$(VERSION)"
+	cp $(srcdir)/README $(DESTDIR)/$(docdir)-$(VERSION)
+
+	echo "cp $(srcdir)/COPYING $(DESTDIR)/$(docdir)-$(VERSION)"
+	cp $(srcdir)/COPYING $(DESTDIR)/$(docdir)-$(VERSION)
+
+	for file in $(srcdir)/doc/html/*.* ; do \
+	  echo "cp  $$file $(DESTDIR)$(docdir)-$(VERSION)" ; \
+	  cp "$$file" $(DESTDIR)$(docdir)-$(VERSION) ; \
+	done
+
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/$(PACKAGE)-$(VERSION)
+
+	echo "$(INSTALL_DATA) $(srcdir)/README $(DESTDIR)$(datadir)/$(PACKAGE)-$(VERSION)"
+	$(INSTALL_DATA) $(srcdir)/README $(DESTDIR)$(datadir)/$(PACKAGE)-$(VERSION)
+
+	cp -r $(srcdir)/examples/* $(DESTDIR)/$(datadir)/$(PACKAGE)-$(VERSION)
+
+	rm -rf `find $(DESTDIR)$(datadir)/$(PACKAGE)-$(VERSION) -name CVS`
+	rm -rf `find $(DESTDIR)$(datadir)/$(PACKAGE)-$(VERSION) -name .svn`
+	rm -rf `find $(DESTDIR)$(datadir)/$(PACKAGE)-$(VERSION) -name "core*"`
+	rm -rf `find $(DESTDIR)$(datadir)/$(PACKAGE)-$(VERSION) -name "*.log"`
+	rm -rf `find $(DESTDIR)$(datadir)/$(PACKAGE)-$(VERSION) -name "*.dat"`
+	rm -rf `find $(DESTDIR)$(datadir)/$(PACKAGE)-$(VERSION) -name "*.grd"`
+	rm -rf `find $(DESTDIR)$(datadir)/$(PACKAGE)-$(VERSION) -name "*.ps"`
+	rm -rf `find $(DESTDIR)$(docdir)-${VERSION} -name .svn`
+
 	if test -f /usr/bin/chcon; then \
-	chcon system_u:object_r:texrel_shlib_t $(DESTDIR)$(libdir)/libsurfit_io.so; \
+	  chcon system_u:object_r:texrel_shlib_t $(DESTDIR)$(libdir)/libsurfit_io.so; \
 	fi
 
 uninstall-hook:
@@ -2727,6 +2732,8 @@ uninstall-hook:
 	if test -d "$(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)"; then \
 		rm $(DESTDIR)$(prefix)/share/$(PACKAGE)-$(VERSION)/ -rf; \
 	fi
+
+	rm $(DESTDIR)$(docdir)-${VERSION} -rf
 
 	if test -f "$(DESTDIR)$(bindir)/cygsstuff-2.dll"; then \
 		rm $(DESTDIR)$(bindir)/cygsstuff-2.dll; \
@@ -2746,8 +2753,12 @@ uninstall-hook:
 
 install-exec-hook:
 
-	$(mkinstalldirs) $(DESTDIR)$(datadir)/applications;
-	$(INSTALL_DATA) $(srcdir)/surfit.desktop $(DESTDIR)$(datadir)/applications/surfit.desktop
+#	$(mkinstalldirs) $(DESTDIR)$(datadir)/applications
+#	if test -f /usr/bin/desktop-file-install; then \
+#		/usr/bin/desktop-file-install $(srcdir)/surfit.desktop ; \
+#	else \
+#		$(INSTALL_DATA) $(srcdir)/surfit.desktop $(DESTDIR)$(datadir)/applications/surfit.desktop ; \
+#	fi 
 
 	if test -f $(DESTDIR)$(bindir)/cygsstuff-2.dll; then \
 		rm -f $(DESTDIR)$(bindir)/libsstuff.dll; \
@@ -2759,15 +2770,21 @@ install-exec-hook:
 		ln $(DESTDIR)$(bindir)/cygsurfit-2.dll $(DESTDIR)$(bindir)/libsurfit.dll; \
 	fi
 
+	rm -f $(DESTDIR)$(libdir)/libsstuff.la
+	rm -f $(DESTDIR)$(libdir)/libsurfit.la
+	rm -f $(DESTDIR)$(libdir)/libsurfit_io.la
+
 @MAKE_FREEFLOW_TRUE@	if test -f $(DESTDIR)$(bindir)/cygfreeflow-2.dll; then \
 @MAKE_FREEFLOW_TRUE@		rm -f $(DESTDIR)$(bindir)/libfreeflow.dll; \
 @MAKE_FREEFLOW_TRUE@		ln $(DESTDIR)$(bindir)/cygfreeflow-2.dll $(DESTDIR)$(bindir)/libfreeflow.dll; \
 @MAKE_FREEFLOW_TRUE@	fi
+@MAKE_FREEFLOW_TRUE@	rm -f $(DESTDIR)$(libdir)/libfreeflow.la
 
 @MAKE_GLOBE_TRUE@	if test -f $(DESTDIR)$(bindir)/cygglobe-2.dll; then \
 @MAKE_GLOBE_TRUE@		rm -f $(DESTDIR)$(bindir)/libglobe.dll; \
 @MAKE_GLOBE_TRUE@		ln $(DESTDIR)$(bindir)/cygglobe-2.dll $(DESTDIR)$(bindir)/libglobe.dll; \
 @MAKE_GLOBE_TRUE@	fi
+@MAKE_GLOBE_TRUE@	rm -f $(DESTDIR)$(libdir)/libglobe.la
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

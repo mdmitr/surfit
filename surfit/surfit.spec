@@ -1,65 +1,105 @@
 
 %define name surfit
 %define version 2.2
-%define release fc7
+%define group Applications/Engineering
 
-Summary: freeware gridding software
+Summary: Gridding software
 Name: %{name}
 Version: %{version}
-Release: %{release}
+Release: 0%{?dist}
 Epoch: 1
 Source: %{_sourcedir}/%{name}-%{version}.tar.gz
-Group: Applications/Math
+Group: %{group}
 License: GPL
 Url: http://surfit.sourceforge.net
-Prefix: %{_prefix}
 BuildRoot: %{_builddir}/%{name}-%{version}-buildroot
-requires: netcdf >= 3.6.2-5
+Requires: netcdf >= 3.6.2-5
+BuildRequires: zlib-devel, libpng-devel, tcl-devel
+#BuildRequires: netcdf-devel
+%{!?_without_freedesktop:Requires: desktop-file-utils}
+Packager: Mikhail Dmitrievsky <mishadm@mail.ru>
 
 %description
-surfit is a computer program which enables to recalculate scattered data to regular grid (gridding). surfit implements the original gridding method CMOFS, which can deal with various data of different extent of truth.
+surfit is a computer program which enables to recalculate scattered data 
+to regular grid (gridding). surfit implements the original gridding method 
+CMOFS, which can deal with various data of different extent of truth.
+
+%package devel
+Summary: Development files for %{name}
+Group: %{group}
+
+%description devel
+Development files for %{name}
+
+%package html
+Summary: Documentation in html format for %{name}
+Group: %{group}
+
+%package examples
+Summary: Examples for %{name}
+Group: %{group}
+
+%description examples
+Examples data and scripts for %{name}
+
+%description html
+Documentation in html format for %{name}
 
 %prep
 %setup -q
 
 %build
-./configure --prefix %{_prefix}
+./configure --prefix=%{_prefix}
 make 
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
 make DESTDIR=${RPM_BUILD_ROOT} install
 
-%post
+%if %{?_without_freedesktop:1}0
+	%{__install} -Dp -m0644 surfit.desktop
+%endif
+
+%post 
+/sbin/ldconfig
 if test -x /usr/bin/chcon; then
-  /usr/bin/chcon system_u:object_r:texrel_shlib_t %{_prefix}/lib/libsurfit_io.so
+  /usr/bin/chcon system_u:object_r:texrel_shlib_t %{_libdir}/libsurfit_io.so*
 fi
+
+%postun -p /sbin/ldconfig
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
 
 %files
 %defattr(-,root,root)
-%dir %{_prefix}/bin
-%{_prefix}/bin/surfit
-%dir %{_prefix}/lib
-%{_prefix}/lib/libsstuff*
-%{_prefix}/lib/libsurfit*
-%{_prefix}/lib/libfreeflow*
-%{_prefix}/lib/libglobe*
-%{_prefix}/lib/libsurfit_io*
-%dir %{_prefix}/include/sstuff
-%{_prefix}/include/sstuff/*.h
-%dir %{_prefix}/include/surfit
-%{_prefix}/include/surfit/*.h
-%dir %{_prefix}/include/freeflow
-%{_prefix}/include/freeflow/*.h
-%dir %{_prefix}/include/globe
-%{_prefix}/include/globe/*.h
-%dir %{_prefix}/include/surfit_io
-%{_prefix}/include/surfit_io/*.h
-%dir %{_prefix}/share/%{name}-%{version}
-%{_prefix}/share/%{name}-%{version}/*
-%dir %{_prefix}/share/applications
-%{_prefix}/share/applications/surfit.desktop
+%{_bindir}/surfit
+%{_libdir}/libsstuff.so*
+%{_libdir}/libsurfit.so*
+%{_libdir}/libsurfit_io.so*
+%{_libdir}/libfreeflow.so*
+%{_libdir}/libglobe.so*
+%doc %{_docdir}/%{name}-%{version}/README
+%doc %{_docdir}/%{name}-%{version}/COPYING
+
+%files devel
+%defattr(-,root,root)
+%{_includedir}/*
+%{_libdir}/*.a
+#%{_libdir}/*.la
+%{_libdir}/*.so
+
+%files html
+%defattr(-,root,root)
+%doc %{_docdir}/%{name}-%{version}/*.h*
+%doc %{_docdir}/%{name}-%{version}/*.css
+%doc %{_docdir}/%{name}-%{version}/*.gif
+%doc %{_docdir}/%{name}-%{version}/*.jpg
+%doc %{_docdir}/%{name}-%{version}/*.png
+%doc %{_docdir}/%{name}-%{version}/*.r*
+
+
+%files examples
+%defattr(-,root,root)
+%{_datadir}/%{name}-%{version}/*
 
