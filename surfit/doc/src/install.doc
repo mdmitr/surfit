@@ -1,7 +1,7 @@
 /*! \page install Install instructions
 
 <H2>Use installer (Windows only):</H2>
-It's very simple! :) Just run surfit-2.2-setup.exe.
+It's very simple! :) Just run surfit-3.0-setup.exe.
 
 <H2>Building surfit from sources:</H2>
 
@@ -11,8 +11,8 @@ First of all you must have installed :
 <H3>WINDOWS:</H3>
 
 Under Windows surfit can be built with Microsoft VC++ 6.0, vc7 or vc8:
-\li extract archive surfit-2.2.tar.gz
-\li examine directories surfit-2.2/vc6, vc7 and vc8 
+\li extract archive surfit-3.0.tar.gz
+\li examine directories surfit-3.0/vc6, vc7 and vc8 
 
 Before building make shure that you have TCL library installed!
 May be you'll want to install netCDF library to build libsurfit_io with GMT import/export.
@@ -26,9 +26,9 @@ Also you may want to download all libraries necessary for building surfit from
 <TR>
 <TD>
 <pre>
-$ gunzip surfit-2.2.tar.gz
-$ tar xvf surfit-2.2.tar
-$ cd surfit-2.2
+$ gunzip surfit-3.0.tar.gz
+$ tar xvf surfit-3.0.tar
+$ cd surfit-3.0
 $ ./configure
 $ make
 $ make install

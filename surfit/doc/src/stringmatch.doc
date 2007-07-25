@@ -1,6 +1,6 @@
 /*! \page str String Expression Syntax
 
-Starting from version 2.2 surfit supports Tcl string matching functionality. You can use
+Starting from version 3.0 surfit supports Tcl string matching functionality. You can use
 this feature for specifying set of data objects, gridding rules and etc. It works like 
 pattern for filenames. For example, if you want to see names of all surfaces in memory you
 should use command

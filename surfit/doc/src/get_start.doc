@@ -55,7 +55,7 @@ If libsurfit was succesfully loaded into memory, you would see the license text:
 <TR>
 <TD>
 <TT><PRE>
-surfit version 2.2, Copyright (c) 2002-2007 M.V.Dmitrievsky & V.N.Kutrunov
+surfit version 3.0, Copyright (c) 2002-2007 M.V.Dmitrievsky & V.N.Kutrunov
 surfit comes with ABSOLUTELY NO WARRANTY; for details type `show_w'.
 This is free software, and you are welcome to redistribute it
 under certain conditions; type `show_c' for details.
@@ -118,9 +118,9 @@ text editor. Find the line in your autoexec.bat that looks
 similar to the following:
 <BR><TT>PATH C:\\DOS;C:\\WINDOWS;C:\\NETWORK;C:\\NAV<BR></TT>
 \li At the end of this line add the following:
-<BR><TT>;"c:\program files\surfit-2.2\bin"<BR></TT>
+<BR><TT>;"c:\program files\surfit-3.0\bin"<BR></TT>
 This assumes that you have installed surfit
-(libsurfit.dll) in the c:\\program files\\surfit-2.2\\bin
+(libsurfit.dll) in the c:\\program files\\surfit-3.0\\bin
 directory. If you have installed it in another directory,
 verify that you have entered an appropriate path. The
 leading semicolon is only necessary if there is not
@@ -146,7 +146,7 @@ are unable to locate the PATH variable, enter the following in the Variable box:
 <TT>path</TT><BR>
 Enter something similar to the following in the Value box:
 <BR>
-<TT>"c:\program files\surfit-2.2\bin"</TT><BR>
+<TT>"c:\program files\surfit-3.0\bin"</TT><BR>
 
 <H2><A NAME="loading">Loading data to surfit</A></H2>
 
