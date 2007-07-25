@@ -16,7 +16,7 @@ BuildRoot: %{_builddir}/%{name}-%{version}-buildroot
 Requires: netcdf >= 3.6.2-5
 BuildRequires: zlib-devel, libpng-devel, tcl-devel
 #BuildRequires: netcdf-devel
-%{!?_without_freedesktop:Requires: desktop-file-utils}
+Requires: desktop-file-utils
 Packager: Mikhail Dmitrievsky <mishadm@mail.ru>
 
 %description
@@ -56,9 +56,8 @@ make
 rm -rf ${RPM_BUILD_ROOT}
 make DESTDIR=${RPM_BUILD_ROOT} install
 
-%if %{?_without_freedesktop:1}0
-	%{__install} -Dp -m0644 surfit.desktop
-%endif
+desktop-file-install surfit.desktop
+
 
 %post 
 /sbin/ldconfig
@@ -81,6 +80,7 @@ rm -rf ${RPM_BUILD_ROOT}
 %{_libdir}/libglobe.so*
 %doc %{_docdir}/%{name}-%{version}/README
 %doc %{_docdir}/%{name}-%{version}/COPYING
+%{_datadir}/applications/surfit.desktop
 
 %files devel
 %defattr(-,root,root)
@@ -102,4 +102,8 @@ rm -rf ${RPM_BUILD_ROOT}
 %files examples
 %defattr(-,root,root)
 %{_datadir}/%{name}-%{version}/*
+
+%changelog
+* Mon Jul 23 2007 Mikhail Dmitrievsky <mishadm@mail.ru> 2.2-0
+- first packaging for Fedora 7
 

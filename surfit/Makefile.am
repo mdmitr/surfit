@@ -541,12 +541,8 @@ uninstall-hook:
 
 install-exec-hook:
 
-#	$(mkinstalldirs) $(DESTDIR)$(datadir)/applications
-#	if test -f /usr/bin/desktop-file-install; then \
-#		/usr/bin/desktop-file-install $(srcdir)/surfit.desktop ; \
-#	else \
-#		$(INSTALL_DATA) $(srcdir)/surfit.desktop $(DESTDIR)$(datadir)/applications/surfit.desktop ; \
-#	fi 
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/applications
+	$(INSTALL_DATA) $(srcdir)/surfit.desktop $(DESTDIR)$(datadir)/applications/surfit.desktop 
 
 	if test -f $(DESTDIR)$(bindir)/cygsstuff-2.dll; then \
 		rm -f $(DESTDIR)$(bindir)/libsstuff.dll; \
