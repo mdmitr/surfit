@@ -25,7 +25,7 @@ struct Tcl_Interp;
 
 namespace surfit {
 
-#define SURFIT_IO_VERSION "2.2"
+#define SURFIT_IO_VERSION "3.0"
 
 SURFIT_IO_EXPORT
 void surfit_io_init_variables(Tcl_Interp * interp);

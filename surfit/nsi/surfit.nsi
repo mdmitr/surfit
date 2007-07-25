@@ -18,10 +18,10 @@ ReserveFile "surfit.ini"
 
   ;Name and file
   Name "surfit"
-  OutFile "surfit-2.2-setup.exe"
+  OutFile "surfit-3.0-setup.exe"
 
   ;Default installation folder
-  InstallDir "$PROGRAMFILES\surfit-2.2"
+  InstallDir "$PROGRAMFILES\surfit-3.0"
   
   ;Get installation folder from registry if available
   InstallDirRegKey HKCU "Software\surfit" ""
@@ -88,7 +88,7 @@ Function .onInit
 
   StrCmp $SURFIT_VERSION "" can_continue_install
 
-  ${VersionCompare} "2.2" $SURFIT_VERSION" $R0
+  ${VersionCompare} "3.0" $SURFIT_VERSION" $R0
 
   StrCmp $R0 "0" can_continue_install
 
@@ -97,8 +97,8 @@ Function .onInit
 
 can_continue_install:
 
-  StrCpy $STARTMENU_FOLDER "surfit-2.2"
-  StrCpy $VERSION "2.2"
+  StrCpy $STARTMENU_FOLDER "surfit-3.0"
+  StrCpy $VERSION "3.0"
 
   InitPluginsDir
 
