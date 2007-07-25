@@ -1,6 +1,6 @@
 
 %define name surfit
-%define version 2.2
+%define version 3.0
 %define group Applications/Engineering
 
 Summary: Gridding software

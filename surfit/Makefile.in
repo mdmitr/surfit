@@ -417,7 +417,7 @@ libsstuff_la_HEADERS = src/sstuff/bitvec.h src/sstuff/bitvec_alg.h \
 	src/sstuff/stepFunc.h src/sstuff/vec.h src/sstuff/vec_alg.h \
 	src/sstuff/threads.h $(am__append_5)
 libsstuff_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(am__append_6)
-libsstuff_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libsstuff.dll
+libsstuff_la_LDFLAGS = -version-info 3:0:0 -no-undefined --dllname libsstuff.dll
 libsurfit_ladir = $(prefix)/include/surfit
 #libsurfit_la_SOURCES += src/surfit/matrD2_aniso.cpp
 libsurfit_la_SOURCES = src/surfit/area.cpp \
@@ -519,7 +519,7 @@ libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/variables.h src/surfit/variables_internal.h \
 	src/surfit/variables_tcl.h src/surfit/triangle.h
 libsurfit_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la 
-libsurfit_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libsurfit.dll
+libsurfit_la_LDFLAGS = -version-info 3:0:0 -no-undefined --dllname libsurfit.dll
 libsurfit_io_ladir = $(prefix)/include/surfit_io
 # shapelib
 # EasyBmp
@@ -557,7 +557,7 @@ libsurfit_io_la_HEADERS = src/surfit_io/area_io.h \
 	src/surfit_io/surfit_io_variables.h src/surfit_io/surf_io.h
 libsurfit_io_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) $(NETCDFLIB) \
 	libsstuff.la libsurfit.la $(am__append_7) $(am__append_8)
-libsurfit_io_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libsurfit_io.dll
+libsurfit_io_la_LDFLAGS = -version-info 3:0:0 -no-undefined --dllname libsurfit_io.dll
 libfreeflow_ladir = $(prefix)/include/freeflow
 libfreeflow_la_SOURCES = src/freeflow/flow_data_manager.cpp \
 	src/freeflow/flow_surf_internal.cpp \
@@ -576,7 +576,7 @@ libfreeflow_la_HEADERS = src/freeflow/flow_data_manager.h \
 	src/freeflow/flow_area.h src/freeflow/flow_cntr.h \
 	src/freeflow/flow_curv.h src/freeflow/flow_points.h
 libfreeflow_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la libsurfit.la
-libfreeflow_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libfreeflow.dll
+libfreeflow_la_LDFLAGS = -version-info 3:0:0 -no-undefined --dllname libfreeflow.dll
 libglobe_ladir = $(prefix)/include/globe
 libglobe_la_SOURCES = src/globe/dem.cpp src/globe/dems_tcl.cpp \
 	src/globe/dem_internal.cpp src/globe/dem_tcl.cpp \
@@ -593,7 +593,7 @@ libglobe_la_HEADERS = src/globe/dem.h src/globe/dem_internal.h \
 	src/globe/globe_variables.h src/globe/shortmrf.h
 libglobe_la_LIBADD = $(LIBS_SURFIT) $(TCLLIB) libsstuff.la \
 	libsurfit.la $(am__append_10)
-libglobe_la_LDFLAGS = -version-info 2:2:0 -no-undefined --dllname libglobe.dll
+libglobe_la_LDFLAGS = -version-info 3:0:0 -no-undefined --dllname libglobe.dll
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
