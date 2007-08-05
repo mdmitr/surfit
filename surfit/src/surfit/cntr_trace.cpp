@@ -862,8 +862,10 @@ std::vector<fiso *> * trace_isos(vec * levels,
 	
 	// trace isolines starting from bounds
         
+	size_t isos_cnt = isos->size();
 	// bottom
 	j = 0;
+try_again:
 	for (i = 0; i < nn-1; i++) 
 	{
 		update_vals(vals, i, j, info);
@@ -902,6 +904,12 @@ std::vector<fiso *> * trace_isos(vec * levels,
 				}
 			}
 		}
+	}
+	
+	if (isos->size() == isos_cnt) { // no isolines was added by the whole matrix row
+		j++;
+		if (j < mm)
+			goto try_again;
 	}
 
 	// left
