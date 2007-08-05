@@ -20,33 +20,44 @@
 #ifndef __sstuff_geom_alg__
 #define __sstuff_geom_alg__
 
+/*! \file
+    \brief declaration of various geometrical functions
+*/
+
 #include <float.h>
 #include <math.h>
 
 namespace surfit {
 
+/*! \brief fills coeffs of line equations
+    fills coeffs of line equation Ax + By + C by two points
+*/
 SSTUFF_EXPORT
 void line_equation(REAL x1, REAL y1,
 		   REAL x2, REAL y2,
 		   REAL & A, REAL & B, REAL & C);
 
+//! calculates intersection point of two sects
 SSTUFF_EXPORT
-bool intersect(REAL x1, REAL y1, REAL x2, REAL y2,        // первый отрезок
-               REAL a1, REAL b1, REAL a2, REAL b2,        // второй отрезок
-               REAL &secx, REAL &secy,                    // точка пересечения
+bool intersect(REAL x1, REAL y1, REAL x2, REAL y2,        // first section
+               REAL a1, REAL b1, REAL a2, REAL b2,        // second section
+               REAL &secx, REAL &secy,                    // intersection point
                REAL eps = 1e-6);
 
+//! returns true if point is inside rect and false otherwise
 SSTUFF_EXPORT
 bool point_in_rect(REAL rx1, REAL ry1,
                    REAL rx2, REAL ry2,
 		   REAL px, REAL py);
 
+//! calculates intersection of rect and section
 SSTUFF_EXPORT
 bool get_line_in_rect(REAL rx1, REAL ry1,
 		      REAL rx2, REAL ry2,
 		      REAL & lx1, REAL & ly1,
 		      REAL & lx2, REAL & ly2);
 
+//! rotates points
 template<class iter>
 bool rotate(REAL center_x, REAL center_y, REAL angle,
 	    iter x_begin, iter x_end,
@@ -74,6 +85,7 @@ bool rotate(REAL center_x, REAL center_y, REAL angle,
 	return true;
 };
 
+//! returns true if point is inside polygonal region and false otherwise
 SSTUFF_EXPORT
 bool in_region(REAL * p_x, REAL * p_y, int np, REAL x, REAL y);
 

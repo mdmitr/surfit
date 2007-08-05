@@ -28,72 +28,40 @@ class d_mask;
 class boolvec;
 class datafile;
 
+//! saves \ref d_mask to surfit \ref datafile 
 SURFIT_EXPORT
-/*! \ingroup internal_mask
-    \fn bool _mask_save(const d_mask * msk, const char * filename);
-    \brief saves mskearea to ROFF file (see \ref datafile for details) in current \ref rw_mode
-    \param msk \ref mask class to save
-    \param filename data file
-*/
 bool _mask_save(const d_mask * msk, const char * filename);
 
+//! writes \ref d_mask tags to \ref datafile
 SURFIT_EXPORT
-/*! \ingroup internal_mask
-    \fn bool _mask_save_df(d_mask * msk, datafile * df);
-    \brief writes mask tags to \ref datafile
-*/
 bool _mask_save_df(const d_mask * msk, datafile * df);
 
+//! loads \ref d_mask from surfit \ref datafile 
 SURFIT_EXPORT
-/*! \ingroup internal_mask
-    \fn d_mask * _mask_load(const char * filename, const char * mskname);
-    \brief loads mask from data ROFF file (see \ref datafile for details) 
-    \param filename data file
-    \param mskname name
-    \param mskname name for mask
-*/
 d_mask * _mask_load(const char * filename, const char * mskname);
 
+//! loads \ref d_mask named 'maskname' from \ref datafile 
 SURFIT_EXPORT
-/*! \ingroup internal_mask
-    \fn d_mask * _mask_load_df(datafile * df, const char * maskname);
-    \brief loads mask named 'maskname' from \ref datafile 
-*/
 d_mask * _mask_load_df(datafile * df, const char * maskname);
 
+//! loads \ref d_mask from SURFER grd file (ASCII format)
 SURFIT_EXPORT
-/*! \ingroup internal_mask
-    \fn bool _mask_load_grd(const char * filename, const char * maskname)
-    \brief loads mask from SURFER grd file (ASCII format)
-*/
 d_mask * _mask_load_grd(const char * filename, const char * maskname); 
 
+//! makes \ref d_mask by \ref d_surf using undefined values
 SURFIT_EXPORT
-/*! \ingroup internal_mask
-    \fn d_mask * _mask_by_surf(const d_surf * srf);
-    \brief makes \ref mask by \ref surf using unmskined values
-*/
 d_mask * _mask_by_surf(const d_surf * srf);
 
+//! sets \ref d_surf coefficients to \ref undef_value using \ref d_mask
 SURFIT_EXPORT
-/*! \ingroup internal_mask
-    \fn bool _mask_apply_to_surf(const d_mask * msk, d_surf * srf);
-    \brief sets srf coefficients to \ref unmsk_value using mask
-*/
 bool _mask_apply_to_surf(const d_mask * msk, d_surf * srf);
 
+//! prints some info about \ref d_mask
 SURFIT_EXPORT
-/*! \ingroup internal_mask
-    \fn void _mask_info(const d_mask * msk);
-    \brief prints some info about mskinition area
-*/
 void _mask_info(const d_mask * msk);
 
+//! adds d_mask into \ref surfit_masks
 SURFIT_EXPORT
-/*! \ingroup tcl_masks
-    \fn void surfit_mask_add(d_mask * msk)
-    \brief adds d_mask into \ref surfit_masks
-*/
 void _surfit_mask_add(d_mask * msk);
 
 }; // namespace surfit

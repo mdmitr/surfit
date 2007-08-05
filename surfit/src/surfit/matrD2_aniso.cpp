@@ -21,7 +21,7 @@
 #include "matrD2_aniso.h"
 #include "grid_line.h"
 #include "bitvec.h"
-#include "bitvec_alg.h"
+#include "matrD_incr_ptr.h"
 
 #include <float.h>
 #include <assert.h>

@@ -53,10 +53,6 @@ char * logfilename = NULL;
 int loglevel = LOG_MESSAGE;
 int stop_on_error = 1;
 bool fileio_append = false;
-// 0 - General messages
-// 1 - Error messages
-// 2 - Warning messages
-// 3 - Debug messages
 
 /*! \struct fileio_garbage
     \brief struct for log-file-around pointers deletions
@@ -77,7 +73,8 @@ struct fileio_garbage {
 
 fileio_garbage garb2;
 
-void log_printf(const char *tmplt, ...) {
+void log_printf(const char *tmplt, ...) 
+{
 	if (loglevel == LOG_SILENT)
 		return;
 	Tcl_Channel out;
@@ -89,8 +86,8 @@ void log_printf(const char *tmplt, ...) {
 
 	va_list ap;
 	va_start (ap, tmplt);
-	// console output
 
+	// console output
 	if (interp) {
 
 		char buf[2048];
@@ -103,6 +100,7 @@ void log_printf(const char *tmplt, ...) {
 		Tcl_Flush(out);
 	}
 
+	// logfile output
 	if ( (logfile) && (ferror(logfile) == 0) ) 
 		vfprintf (logfile, tmplt, ap);
 	
@@ -111,9 +109,13 @@ void log_printf(const char *tmplt, ...) {
 
 };
 
-void writelog (int errlevel, const char *tmplt, ...) {
+void writelog (int errlevel, const char *tmplt, ...) 
+{
+	// don't print any messages in LOG_SILENT mode
 	if (loglevel == LOG_SILENT)
 		return;
+
+	// don't print messages with higher loglevel
 	if (errlevel > loglevel) 
 		return;
 
@@ -132,15 +134,15 @@ void writelog (int errlevel, const char *tmplt, ...) {
 	time( &aclock );   // Get time in seconds
 	newtime = localtime( &aclock );   // Convert time to struct tm form 
 
-	/* Print local time as a string */
+	// Print local time as a string
 	char tmpbuf[128];
 	strftime(tmpbuf, 128, "%d/%m/%y %H:%M:%S : ", newtime);
 	Tcl_printf("%s", tmpbuf);
 	
 	va_list ap;
 	va_start (ap, tmplt);
+	
 	// console output
-
 	if (interp) {
 
 		switch (errlevel) {
@@ -171,6 +173,7 @@ void writelog (int errlevel, const char *tmplt, ...) {
 
 	}
 
+	// logfile output
 	if ( (logfile) && (ferror(logfile) == 0) ) {
 		
 		time_t ltime;
@@ -206,10 +209,15 @@ void writelog (int errlevel, const char *tmplt, ...) {
 	}
 };
 
-void writelog2 (int errlevel, const char *tmplt, ...) {
+void writelog2 (int errlevel, const char *tmplt, ...) 
+{
+	// don't print any messages in LOG_SILENT mode
 	if (loglevel == LOG_SILENT)
 		return;
-	if (errlevel > loglevel) return;
+
+	// don't print messages with higher loglevel
+	if (errlevel > loglevel) 
+		return;
 
 	Tcl_Channel out;
 	if (interp) {
@@ -225,15 +233,15 @@ void writelog2 (int errlevel, const char *tmplt, ...) {
 	time( &aclock );   // Get time in seconds
 	newtime = localtime( &aclock );   // Convert time to struct tm form 
 
-	/* Print local time as a string */
+	// Print local time as a string 
 	char tmpbuf[128];
 	strftime(tmpbuf, 128, "%d/%m/%y %H:%M:%S : ", newtime);
 	Tcl_printf("%s", tmpbuf);
 	
 	va_list ap;
 	va_start (ap, tmplt);
-	// console output
 
+	// console output
 	if (interp) {
 
 		switch (errlevel) {
@@ -263,6 +271,7 @@ void writelog2 (int errlevel, const char *tmplt, ...) {
 
 	}
 
+	// logfile output
 	if ( (logfile) && (ferror(logfile) == 0) ) {
 		
 		time_t ltime;
@@ -297,9 +306,12 @@ void writelog2 (int errlevel, const char *tmplt, ...) {
 	}
 };
 
-void Tcl_printf (const char *tmplt, ...) {
+void Tcl_printf (const char *tmplt, ...) 
+{
+	// don't print any messages in LOG_SILENT mode
 	if (loglevel == LOG_SILENT)
 		return;
+
 	if (!interp)
 		return;
 
@@ -309,8 +321,8 @@ void Tcl_printf (const char *tmplt, ...) {
 	
 	va_list ap;
 	va_start (ap, tmplt);
-	// console output
-		
+
+	// console output		
 	char buf[2048];
 	int written = vsprintf(buf,tmplt, ap);
 	if (written > 2048) 
@@ -321,16 +333,17 @@ void Tcl_printf (const char *tmplt, ...) {
 
 };
 
-int log_open(int level, const char * logname) {
-	
+int log_open(int level, const char * logname) 
+{	
 	loglevel = level;
+
+	// close log if it already opened
 	if (logfile) {
 		fclose(logfile);
 	};
 	
 	if (logname) {
-		logfilename = (char*)realloc(logfilename, strlen(logname)+1);
-		strcpy(logfilename,logname);
+		logfilename = strdup(logname);
 	} else {
 		logfilename = strdup("surfit.log");
 	}
@@ -349,7 +362,8 @@ int log_open(int level, const char * logname) {
 	return 1;
 };
 
-int log_clear() {
+int log_clear() 
+{
 	if (!logfile) {
 		perror("Log file not opened!");
 		return 0;
@@ -361,7 +375,8 @@ int log_clear() {
 	return (logfile != NULL);
 };
 
-void putlog(const char * str) {
+void putlog(const char * str) 
+{
 	writelog(LOG_MESSAGE, str);
 };
 
@@ -389,8 +404,8 @@ char * read_first1024(const char * filename, int & readed)
 	
 };
 
-int calc_columns(const char * Str, int readed, char * seps) {
-
+int calc_columns(const char * Str, int readed, char * seps) 
+{
 	char * str = strdup(Str);
 
 	char * pos = strchr(str, '\n');
@@ -423,8 +438,8 @@ int calc_columns(const char * Str, int readed, char * seps) {
 	return columns;
 };
 
-int calc_rows(const char * Str, int readed) {
-
+int calc_rows(const char * Str, int readed) 
+{
 	char * str = strdup(Str);
 	char seps[] = "\n";
 
@@ -440,8 +455,8 @@ int calc_rows(const char * Str, int readed) {
 	return rows;
 };
 
-char * get_name(const char * filename) {
-
+char * get_name(const char * filename) 
+{
 	const char * posLastDot = strrchr(filename, '.');
 
 	// check whether this dot occurs at the very beginning of a path component
@@ -476,8 +491,8 @@ char * get_name(const char * filename) {
 
 };
 
-char * get_full_ext(const char * filename) {
-
+char * get_full_ext(const char * filename) 
+{
 	const char * search_from = filename;
 	const char * posFirstDot = NULL;
 	int len = strlen(filename);
@@ -516,7 +531,8 @@ char * get_full_ext(const char * filename) {
 	return res;
 };
 
-char * get_ext(const char * filename) {
+char * get_ext(const char * filename) 
+{
 	const char * posLastDot = strrchr(filename, '.');
 
 	// check whether this dot occurs at the very beginning of a path component

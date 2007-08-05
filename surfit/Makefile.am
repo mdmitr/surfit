@@ -6,6 +6,7 @@ libtool: $(LIBTOOL_DEPS)
 
 INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/sstuff/ptypes -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io -DANSI_DECLARATORS -DTRILIBRARY
 EXTRA_DIST = vc6/surfit*
+EXTRA_DIST = vc6/sstuff*
 EXTRA_DIST += vc6/freeflow*
 EXTRA_DIST += vc6/globe*
 EXTRA_DIST += vc7/*
@@ -83,7 +84,6 @@ endif
 
 
 libsstuff_la_HEADERS =  src/sstuff/bitvec.h       
-libsstuff_la_HEADERS += src/sstuff/bitvec_alg.h   
 libsstuff_la_HEADERS += src/sstuff/boolvec.h      
 libsstuff_la_HEADERS += src/sstuff/byteswap_alg.h 
 libsstuff_la_HEADERS += src/sstuff/config.h       
@@ -296,7 +296,8 @@ libsurfit_la_HEADERS += src/surfit/matlab.h
 libsurfit_la_HEADERS += src/surfit/matr.h              
 libsurfit_la_HEADERS += src/surfit/matrD1.h            
 libsurfit_la_HEADERS += src/surfit/matrD1_aniso.h            
-libsurfit_la_HEADERS += src/surfit/matrD2.h            
+libsurfit_la_HEADERS += src/surfit/matrD2.h       
+libsurfit_la_HEADERS += src/surfit/matrD_incr_ptr.h     
 #libsurfit_la_HEADERS += src/surfit/matrD2_aniso.h
 libsurfit_la_HEADERS += src/surfit/matr_diag.h         
 libsurfit_la_HEADERS += src/surfit/matr_eye.h          

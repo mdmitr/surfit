@@ -20,6 +20,10 @@
 #ifndef __surfit__intvec__
 #define __surfit__intvec__
 
+/*! \file
+    \brief intvec class (array of int values) declaration
+*/
+
 #include <stdio.h>
 #include "vec.h"
 
@@ -27,17 +31,11 @@ namespace surfit {
 
 class intvec;
 
-/*! \ingroup sstuff_internal
-    \fn intvec * create_intvec(size_t size = 0, int default_value = int(0), bool fill_default = true, size_t grow_by = 250);
-    \brief creates intvec object
-*/
+//! creates intvec object
 SSTUFF_EXPORT
 intvec * create_intvec(size_t size = 0, int default_value = int(0), bool fill_default = true, size_t grow_by = 250);
 
-/*! \ingroup sstuff_internal
-    \fn intvec * create_intvec(const intvec &in);
-    \brief creates intvec object (makes a copy)
-*/
+//! creates intvec object (makes a copy)
 SSTUFF_EXPORT
 intvec * create_intvec(const intvec &in);
 

@@ -26,17 +26,11 @@ namespace surfit {
 
 class strvec;
 
-/*! \ingroup sstuff_internal
-    \fn strvec * create_strvec(size_t size = 0, size_t grow_by = 250);
-    \brief creates strvec object
-*/
+//! creates strvec object
 SSTUFF_EXPORT
 strvec * create_strvec(size_t size = 0, size_t grow_by = 250);
 
-/*! \ingroup sstuff_internal
-    \fn strvec * create_strvec(const strvec & in);
-    \brief creates strvec object
-*/
+//! creates strvec object
 SSTUFF_EXPORT
 strvec * create_strvec(const strvec & in);
 

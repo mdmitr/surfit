@@ -51,8 +51,6 @@
 
 namespace surfit {
 
-char bigbuffer[1024*30];
-
 float tol = float(1e-5);
 char * solver_name = NULL;
 bool write_mat = false;

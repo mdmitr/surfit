@@ -20,7 +20,8 @@
 #include "surfit_ie.h"
 #include "matrD2.h"
 #include "grid_line.h"
-#include "bitvec_alg.h"
+#include "bitvec.h"
+#include "matrD_incr_ptr.h"
 
 #include <assert.h>
 

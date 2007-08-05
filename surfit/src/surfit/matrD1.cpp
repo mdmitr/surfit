@@ -22,7 +22,7 @@
 #include "matrD1.h"
 #include "grid_line.h"
 #include "bitvec.h"
-#include "bitvec_alg.h"
+#include "matrD_incr_ptr.h"
 
 #include <float.h>
 #include <assert.h>
@@ -461,6 +461,70 @@ size_t matrD1::rows() const {
 void matrD1::skip(size_t i, size_t j) {
 	mask_solved_undefined->set_true(i + j*NN);
 };
+
+
+void sums_points_D1(size_t i, size_t j, 
+		    size_t NN, size_t MM, 
+		    size_t local_NN, size_t local_MM,
+		    const bitvec * mask_undefined,
+		    bool & first_x, bool & second_x,
+		    bool & first_y, bool & second_y,
+		    size_t offset_x, size_t offset_y) {
+
+	size_t J = (i+offset_x) + (j+offset_y)*NN;
+
+	// first_x
+	if (first_x)
+	if ( (i >= 0) && (i+1 < local_NN) ) { // i = 0 ... N-2
+		
+		if ( mask_undefined->get(J) || 
+		     mask_undefined->get(J+1) )
+			first_x = false;
+		
+	} else {
+		first_x = false;
+	}
+
+	// second_x
+	if (second_x)
+	if ( (i > 0) && (i < local_NN) ) { // i = 1 .. N-1
+		
+		if ( mask_undefined->get(J-1) || 
+		     mask_undefined->get(J) )
+			second_x = false;
+		
+	} else {
+		second_x = false;
+	}
+	
+	// first_y
+	if (first_y)
+	if ( (j >= 0) && (j+1 < local_MM) ) {  // j = 0 ... M-2
+		
+		if ( mask_undefined->get(J) || 
+		     mask_undefined->get(J+NN) ) 
+			first_y = false;
+		
+	} else {
+		first_y = false;
+	}
+	
+	// second_y
+	if (second_y)
+	if ( (j > 0) && (j < local_MM) ) { // j = 1 ... M-1
+		
+		if ( mask_undefined->get(J-NN) || 
+		     mask_undefined->get(J) )
+			second_y = false;
+		
+	} else {
+		second_y = false;
+	}
+	
+	return;
+
+};
+
 
 }; // namespace surfit;
 

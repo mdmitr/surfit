@@ -20,6 +20,9 @@
 #ifndef __surfit__vec_alg__
 #define __surfit__vec_alg__
 
+/*! \file
+    \brief declares some math functions for working with vec class
+*/
 #include <math.h>
 
 #include "fileio.h"
@@ -29,6 +32,7 @@
 
 namespace surfit {
 
+//! calculates L2 norm
 template <class V>
 REAL norm2(const V * x, REAL undef = FLT_MAX) {
 	REAL res = REAL(0);
@@ -43,6 +47,7 @@ REAL norm2(const V * x, REAL undef = FLT_MAX) {
 	return (REAL)sqrt(res);
 };
 
+//! calculates L2 norm
 template <class iter>
 REAL norm2(iter x_begin, iter x_end, REAL undef = FLT_MAX) {
 	REAL res = REAL(0);
@@ -58,6 +63,7 @@ REAL norm2(iter x_begin, iter x_end, REAL undef = FLT_MAX) {
 	return (REAL)sqrt(res);
 };
 
+//! calculates times of two vectors
 template <class V>
 REAL times(const V * x, const V * y) {
 	REAL res = REAL(0);
@@ -68,6 +74,7 @@ REAL times(const V * x, const V * y) {
 	return res;
 };
 
+//! calculates sum of all vector values
 template<class iter>
 REAL sum_value(iter begin, iter end, REAL undef)
 {
@@ -83,6 +90,7 @@ REAL sum_value(iter begin, iter end, REAL undef)
 	return res;
 };
 
+//! calculates mean of all vector values
 template<class iter>
 REAL mean_value(iter begin, iter end, REAL undef) {
 	REAL res = REAL(0);
@@ -99,6 +107,7 @@ REAL mean_value(iter begin, iter end, REAL undef) {
 	return res/REAL(total);
 };
 
+//! calculates standart deviation from given mean_value for all vector values
 template<class iter>
 REAL std_value(REAL mean_value, iter begin, iter end, REAL undef) {
 
@@ -118,7 +127,7 @@ REAL std_value(REAL mean_value, iter begin, iter end, REAL undef) {
 
 };
 
-
+//! calculates minimum and maximum values for all vector values
 template<class iter, class val>
 void minmax_value(iter begin, iter end, val & min_value, val & max_value, val undef_value) {
 	
@@ -145,6 +154,7 @@ void minmax_value(iter begin, iter end, val & min_value, val & max_value, val un
 	return;
 };
 
+//! calculates minimum and maximum values for all vector values
 template<class iter, class val>
 void minmax_value(iter begin, iter end, val & min_value, val & max_value) {
 	max_value = *begin;

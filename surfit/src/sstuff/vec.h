@@ -2,6 +2,11 @@
 #ifndef __surfit__vec__
 #define __surfit__vec__
 
+
+/*! \file
+    \brief vec class (array of REAL type values) declaration
+*/
+
 #include <stdio.h>
 
 #ifdef _DEBUG
@@ -18,15 +23,11 @@ namespace surfit {
 
 class vec;
 #ifndef XXL
-/*! \typedef vec extvec 
-    \brief vector that can be saved on hard drive (external vector)
-*/
+//! vector that can be saved on hard drive (external vector)
 typedef vec extvec;
 #endif
 
-/*! \ingroup sstuff_internal
-    \fn vec * create_vec(size_t size = 0, REAL default_value = REAL(0), bool fill_default = true, size_t grow_by = 250);
-    \brief creates vec object
+/*! \brief creates vec object
 
     \param size size of the vector
     \param default_value value for filling vector by default
@@ -36,27 +37,14 @@ typedef vec extvec;
 SSTUFF_EXPORT
 vec * create_vec(size_t size = 0, REAL default_value = REAL(0), bool fill_default = true, size_t grow_by = 250);
 
-/*! \ingroup sstuff_internal
-    \fn vec * create_vec(const vec &in);
-    \brief creates vec object
-
-    This function is a copy constructor
-*/
+//! creates vec object
 SSTUFF_EXPORT
 vec * create_vec(const vec &in);
 
-/*! \ingroup sstuff_internal
-    \fn vec * create_vec(const extvec &in);
-    \brief creates vec object
-
-    This function is a copy constructor
-*/
 SSTUFF_EXPORT
 vec * create_vec(const extvec &in);
 
-/*! \ingroup sstuff_internal
-    \fn extvec * create_extvec(size_t size = 0, REAL default_value = REAL(0), bool fill_default = true, size_t grow_by = 250);
-    \brief creates extvec object
+/*! \brief creates extvec object
 
     \param size size of the vector
     \param default_value value for filling vector by default
@@ -66,10 +54,7 @@ vec * create_vec(const extvec &in);
 SSTUFF_EXPORT
 extvec * create_extvec(size_t size = 0, REAL default_value = REAL(0), bool fill_default = true, size_t grow_by = 250);
 
-/*! \ingroup sstuff_internal
-    \fn extvec * create_extvec(const extvec &in);
-    \brief creates extvec object
-
+/*! \brief creates extvec object
     This function is a copy constructor
 */
 SSTUFF_EXPORT
@@ -84,7 +69,9 @@ extvec * create_extvec(const extvec &in);
 #endif
 
 #ifndef XXL
+//! vector that can be saved on hard drive (external vector)
 #define extvec vec
+//! function for extvec class construction
 #define create_extvec create_vec
 #endif
 

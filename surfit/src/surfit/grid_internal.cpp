@@ -183,66 +183,6 @@ d_grid * _grid_get_for_surf_step(d_surf * srf, REAL stepX, REAL stepY, const cha
 
 };
 
-d_grid * _grid_get_for_pnts_and_geom(const d_grid * grd, const d_points * pnts) {
-	if (pnts == NULL)
-		return NULL;
-	if (grd == NULL)
-		return NULL;
-
-	if (pnts->size() == 0)
-		return NULL;
-
-	size_t countX = grd->getCountX();
-	size_t countY = grd->getCountY();
-
-	REAL grd_startX, grd_endX;
-	REAL grd_startY, grd_endY;
-
-	grd->getCoordNode(0,0, grd_startX, grd_startY);
-	grd->getCoordNode(countX-1, countY-1, grd_endX, grd_endY);
-
-	REAL pnts_startX, pnts_endX;
-	REAL pnts_startY, pnts_endY;
-
-	minmax_value(pnts->X->begin(), pnts->X->end(), pnts_startX, pnts_endX);
-	minmax_value(pnts->Y->begin(), pnts->Y->end(), pnts_startY, pnts_endY);
-
-	size_t newgrd_X_from, newgrd_X_to;
-	size_t newgrd_Y_from, newgrd_Y_to;
-	size_t temp_int;
-
-	if (pnts_startX < grd_startX)
-		newgrd_X_from = 0;
-	else
-		grd->getCoordPoint(pnts_startX, grd_startY, newgrd_X_from, temp_int);
-
-	if (pnts_endX > grd_endX)
-		newgrd_X_to = countX;
-	else
-		grd->getCoordPoint(pnts_endX, grd_endY, newgrd_X_to, temp_int);
-
-	
-	if (pnts_startY < grd_startY)
-		newgrd_Y_from = 0;
-	else
-		grd->getCoordPoint(grd_startX, pnts_startY, temp_int, newgrd_Y_from);
-
-	if (pnts_endY > grd_endY)
-		newgrd_Y_to = countY;
-	else
-		grd->getCoordPoint(grd_endX, pnts_endY, temp_int, newgrd_Y_to);
-
-	REAL g_startX, g_endX, g_stepX;
-	REAL g_startY, g_endY, g_stepY;
-	grd->getCoordNode(newgrd_X_from, newgrd_Y_from, g_startX, g_startY);
-	grd->getCoordNode(newgrd_X_to, newgrd_Y_to, g_endX, g_endY);
-	g_stepX = grd->stepX;
-	g_stepY = grd->stepY;
-
-	return create_grid(g_startX, g_endX, g_stepX, g_startY, g_endY, g_stepY);
-
-};
-
 bool _grid_load_df_tag_readed(datafile * df, d_grid *& geom) {
 	
 	REAL startX = 0;

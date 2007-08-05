@@ -20,6 +20,10 @@
 #ifndef __surfit__boolvec__
 #define __surfit__boolvec__
 
+/*! \file
+    \brief boolvec class (array of bool values) declaration
+*/
+
 #include <stdio.h>
 #include "vec.h"
 
@@ -33,17 +37,11 @@ namespace surfit {
 
 class boolvec;
 
-/*! \ingroup sstuff_internal
-    \fn boolvec * create_boolvec(size_t size = 0, bool default_value = false, int fill_default = 1, size_t grow_by = 250);
-    \brief creates boolvec object
-*/
+//! creates boolvec object
 SSTUFF_EXPORT
 boolvec * create_boolvec(size_t size = 0, bool default_value = false, int fill_default = 1, size_t grow_by = 250);
 
-/*! \ingroup sstuff_internal
-    \fn boolvec * create_boolvec(const boolvec &in);
-    \brief creates boolvec object (makes a copy)
-*/
+//! creates boolvec object (makes a copy)
 SSTUFF_EXPORT
 boolvec * create_boolvec(const boolvec &in);
 

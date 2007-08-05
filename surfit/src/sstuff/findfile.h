@@ -20,14 +20,20 @@
 #ifndef __sstuff__findfile__
 #define __sstuff__findfile__
 
+/*! \file
+    \brief declaration of functions find_first, find_next and find_close
+*/
 namespace surfit {
 
+//! returns first filename matching pattern
 SSTUFF_EXPORT
 const char * find_first(const char * pattern);
 
+//! returns next filename matching pattern
 SSTUFF_EXPORT
 const char * find_next();
 
+//! call this function after find_first and find_next
 SSTUFF_EXPORT
 void find_close();
 

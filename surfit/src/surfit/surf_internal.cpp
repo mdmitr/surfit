@@ -846,67 +846,6 @@ d_surf * _surf_gradient(const d_surf * srf) {
 
 };
 
-d_grid * adopt_surf_grid(const d_surf * srf, d_grid * grd,
-			 size_t & from_x, size_t & to_x,
-			 size_t & from_y, size_t & to_y) {
-
-	REAL g_x0, g_xn, g_y0, g_yn; // Начало и конец геометрии
-	REAL f_x0, f_xn, f_y0, f_yn; // Начало и конец функции
-	REAL x0, xn, y0, yn;     // Реальные начало и конец
-
-	grd->getCoordNode(0,0, g_x0, g_y0);
-	grd->getCoordNode(grd->getCountX()-1, grd->getCountY()-1, g_xn, g_yn);
-
-	srf->getCoordNode(0,0, f_x0, f_y0);
-	srf->getCoordNode(srf->getCountX()-1,srf->getCountY()-1, f_xn, f_yn);
-	
-	
-	x0 = MAX(g_x0, f_x0);
-	xn = MIN(g_xn, f_xn);
-	y0 = MAX(g_y0, f_y0);
-	yn = MIN(g_yn, f_yn);
-
-	if (x0 >= xn)
-		return NULL;
-	
-	if (y0 >= yn)
-		return NULL;
-
-	REAL grd_x, grd_y;
-	
-	int i0 = grd->get_i(x0);
-	grd->getCoordNode(i0, 0, grd_x, grd_y);
-	if (grd_x < x0)
-		i0++;
-
-	int in = grd->get_i(xn);
-	grd->getCoordNode(in, 0, grd_x, grd_y);
-	if (grd_x > xn)
-		in--;
-
-	int j0 = grd->get_j(y0);
-	grd->getCoordNode(0, j0, grd_x, grd_y);
-	if (grd_y < y0)
-		j0++;
-
-	int jn = grd->get_j(yn);
-	grd->getCoordNode(0, jn, grd_x, grd_y);
-	if (grd_y > yn)
-		jn--;
-
-	from_x = i0;
-	to_x = in;
-	from_y = j0;
-	to_y = jn;
-
-	grd->getCoordNode(i0,j0,x0,y0);
-	grd->getCoordNode(in,jn,xn,yn);
-	
-	d_grid * new_geom = create_grid(x0, xn, grd->stepX, y0, yn, grd->stepY);
-	return new_geom;
-
-};
-
 REAL _surf_mean_area(const d_surf * srf, const d_area * area) {
 	
 	bitvec * mask = nodes_in_area_mask(area, srf->grd);

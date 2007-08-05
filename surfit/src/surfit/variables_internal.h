@@ -26,22 +26,15 @@ struct Tcl_Interp;
 
 namespace surfit {
 
-	/*! \ingroup internal
-	    \fn void surfit_init_all();
-	    \brief inits all variables
-	*/
+	//! inits all variables
 	SURFIT_EXPORT
 	void surfit_init_all();
 
-	/*! \ingroup internal
-	    \fn void surfit_init_variables(Tcl_Interp * interp);
-	    \brief inits surfit variables 
-	*/
+	//! inits surfit variables 
 	SURFIT_EXPORT
 	void surfit_init_variables(Tcl_Interp * interp);
 
-	extern char bigbuffer[1024*30];
-
+	//! contains number of iteration made by penalty algorithm
 	SURFIT_EXPORT
 	extern size_t penalty_iter_counter;
 

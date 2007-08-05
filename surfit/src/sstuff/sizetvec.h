@@ -20,6 +20,11 @@
 #ifndef __surfit_sizetvec__
 #define __surfit_sizetvec__
 
+
+/*! \file
+    \brief sizetvec class (array of size_t values) declaration
+*/
+
 #ifdef XXL
 #include "../../src_xxl/sstuff/sizetvec_xxl.h"
 #else
@@ -30,10 +35,7 @@ namespace surfit {
 
 class sizetvec;
 
-/*! \ingroup sstuff_internal
-    \fn sizetvec * create_sizetvec(size_t size = 0);
-    \brief creates sizetvec object
-*/
+//! creates sizetvec object
 SSTUFF_EXPORT 
 sizetvec * create_sizetvec(size_t size = 0);
 

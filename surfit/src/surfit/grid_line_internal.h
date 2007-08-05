@@ -26,59 +26,35 @@ class grid_line;
 class d_curv;
 class datafile;
 
+//! checks for \ref surfit_grid_line existance
 SURFIT_EXPORT
-/*! \ingroup internal_grid_line
-    \fn bool _grid_line_check();
-    \brief checks for \ref surfit_grid_line existance
-*/
 bool _grid_line_check();
 
+//! unloads \ref surfit_grid_line from memory
 SURFIT_EXPORT
-/*! \ingroup internal_grid_line
-    \fn bool _grid_line_unload();
-    \brief unloads \ref surfit_grid_line from memory
-*/
 bool _grid_line_unload();
 
+//! writes \ref grid_line to formatted text file. 
 SURFIT_EXPORT
-/*! \ingroup internal_grid_line
-    \fn bool _grid_line_write(const grid_line * contour, grid * grd, const char * filename, const char * mask);
-    \brief writes \ref grid_line to formatted text file. 
-*/
 bool _grid_line_write(const grid_line * contour, d_grid * grd, const char * filename, const char * mask);
 
+//! writes \ref grid_line to surfit datafile (see \ref datafile for details)
 SURFIT_EXPORT
-/*! \ingroup internal_grid_line
-    \fn bool _grid_line_save(const grid_line * contour, grid * grd, const char * filename);
-    \brief writes \ref grid_line to ROFF file (see \ref datafile for details)
-*/
 bool _grid_line_save(const grid_line * contour, d_grid * grd, const char * filename);
 
+//! prints some info about \ref grid_line
 SURFIT_EXPORT
-/*! \ingroup internal_grid_line
-    \fn void _grid_line_info(const grid_line * contour);
-    \brief prints some info about \ref grid_line
-*/
 void _grid_line_info(const grid_line * contour);
 
+//! returns \ref surfit_grid_line
 SURFIT_EXPORT
-/*! \ingroup internal_grid_line
-    \fn grid_line * _get_surfit_grid_line();
-    \brief returns \ref surfit_grid_line
-*/
 grid_line * _get_surfit_grid_line();
 
+//! sets \ref surfit_grid_line
 SURFIT_EXPORT
-/*! \ingroup internal_grid_line
-    \fn void _set_surfit_grid_line(grid_line * contour);
-    \brief sets \ref surfit_grid_line
-*/
 void _set_surfit_grid_line(grid_line * contour);
 
-/*! \ingroup internal_grid_line
-    \fn d_curv * _grid_line_to_curv(const grid_line * gline, const grd * grd);
-    \brief converts \ref grid_line to \ref curv
-*/
+//! converts \ref grid_line to \ref curv
 SURFIT_EXPORT
 d_curv * _grid_line_to_curv(const grid_line * gline, const d_grid * grd);
 

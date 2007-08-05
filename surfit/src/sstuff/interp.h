@@ -20,17 +20,20 @@
 #ifndef __sstuff_interp_included__
 #define __sstuff_interp_included__
 
+/*! \file
+    \brief declaration of functions connected with using of Tcl interpretator
+*/
+
 struct Tcl_Interp;
 
-/*! \ingroup internal
-    \var interp
-    \brief Tcl scripting language interpretator
-*/
+//! Tcl scripting language interpretator
 extern SSTUFF_EXPORT Tcl_Interp * interp;
 
+//! initializes interp variable
 SSTUFF_EXPORT
 void init_interp(Tcl_Interp * iinterp);
 
+//! Compares two strings, where the first is a string mask
 SSTUFF_EXPORT
 bool StringMatch(const char * match, const char * str);
 

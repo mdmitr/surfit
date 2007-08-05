@@ -22,10 +22,16 @@
 
 #include <algorithm>
 
+/*! \file 
+    \brief Declaration of ByteSwapFunc function and ByteSwap macro
+*/
 namespace surfit {
 
+//! Macro for calling ByteSwapFunc
 #define ByteSwap(x) ByteSwapFunc((unsigned char *) &x,sizeof(x))
 
+//! Swaps byte order
+inline
 void ByteSwapFunc(unsigned char * b, int n)
 {
    register int i = 0;

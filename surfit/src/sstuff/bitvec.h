@@ -20,6 +20,11 @@
 #ifndef __surfit_bitvec_included__
 #define __surfit_bitvec_included__
 
+/*! \file
+    \brief bitvec class declaration
+*/
+
+//! special type with length of 32 bytes
 #if (defined(_WIN32) || defined(__WIN32__) || defined(WIN32)) && !defined(__CYGWIN__)
 #define surfit_int32 unsigned __int32
 #else
@@ -39,17 +44,11 @@ namespace surfit {
 
 class bitvec;
 
-/*! \ingroup sstuff_internal
-    \fn bitvec * create_bitvec(size_t size = 0);
-    \brief creates bitvec object
-*/
+//! creates bitvec object
 SSTUFF_EXPORT
 bitvec * create_bitvec(size_t size = 0);
 
-/*! \ingroup sstuff_internal
-    \fn bitvec * create_bitvec(const bitvec * src);
-    \brief creates bitvec object (makes a copy)
-*/
+//! creates bitvec object (makes a copy)
 SSTUFF_EXPORT
 bitvec * create_bitvec(const bitvec * src);
 

@@ -6889,6 +6889,10 @@
 					RelativePath="..\src\surfit\matrD2_aniso.h"
 					>
 				</File>
+				<File
+					RelativePath="..\src\surfit\matrD_incr_ptr.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="common_h"

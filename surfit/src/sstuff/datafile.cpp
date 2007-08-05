@@ -53,7 +53,6 @@
 namespace surfit {
 
 int datafile_modE = 1; // 1 - create new file, 0 - create or append if file already exists
-int rw_mode = 0;
 
 void add_word(char * contents, const char * word) {
 	int old_len = strlen(contents);

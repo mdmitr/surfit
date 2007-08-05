@@ -37,176 +37,116 @@ class d_area;
 class d_mask;
 class d_cntr;
 
+
+//! loads \ref d_surf named 'surfname' from surfit \ref datafile
 SURFIT_EXPORT
-/*! \ingroup internal_surf
-    \fn d_surf * _surf_load(const char * filename, const char * surfname);
-    \brief loads surf named 'surfname' from ROFF file (see \ref datafile for details)
-    \param filename data file
-    \param surfname name
-*/
 d_surf * _surf_load(const char * filename, const char * surfname);
 
+//! loads \ref d_surf named 'surfname' from surfit \ref datafile 
 SURFIT_EXPORT
-/*! \ingroup internal_surf
-    \fn d_surf * _surf_load_df(datafile * df, const char * surfname);
-    \brief loads surf named 'surfname' from \ref datafile 
-*/
 d_surf * _surf_load_df(datafile * df, const char * surfname);
 
+//! saves \ref d_surf to surfit \ref datafile 
 SURFIT_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_save(const d_surf * srf, const char * filename);
-    \brief saves surf to ROFF file (see \ref datafile for details) in active \ref rw_mode
-    \param srf surf class to save
-    \param filename data file
-*/
 bool _surf_save(const d_surf * srf, const char * filename);
 
+//! plots \ref d_surf to PostScript file
 SURFIT_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_plot(const d_surf * srf, const char * filename, size_t number_of_levels = 16, bool draw_isos = true, bool draw_colorscale = true);
-    \brief plots surface to PostScript file
-    \param srf surf class to save
-    \param filename PostScript file 
-*/
 bool _surf_plot(const d_surf * srf, const char * filename, size_t number_of_levels = 16, bool draw_isos = true, bool draw_colorscale = true);
 
+//! writes \ref d_surf tags to \ref datafile
 SURFIT_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_save_df(const d_surf * srf, datafile * df);
-    \brief writes surf tags to \ref datafile
-*/
 bool _surf_save_df(const d_surf * srf, datafile * df);
 
+//! converts \ref d_surf to \ref d_points
 SURFIT_EXPORT
-/*! \ingroup internal_surf
-    \fn d_points * _surf_to_pnts(const d_surf * srf)
-    \brief converts \ref surf to \ref d_points
-*/
 d_points * _surf_to_pnts(const d_surf * srf);
 
+//! adds normally-distributed noise with parameters N(0,std) to \ref d_surf::coeff
 SURFIT_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_add_noise(d_surf * srf, REAL std);
-    \brief adds normally-distributed noise with parameters N(0,std) to \ref surf::coeff
-*/
 bool _surf_add_noise(d_surf * srf, REAL std);
 
+//! prints some info about \ref d_surf
 SURFIT_EXPORT
-/*! \ingroup internal_surf
-    \fn void _surf_info(const d_surf * srf);
-    \brief prints some info about surface
-*/
 void _surf_info(const d_surf * srf);
 
+//! calculates residuals between values set at points in \ref d_points and \ref d_surf 
 SURFIT_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_resid(const d_surf * srf, const d_points * pnts, const char * filename);
-    \brief calculates residuals between values set at points in \ref d_points and \ref surf "srf". 
-    Saves result to text file.
-*/
 bool _surf_resid(const d_surf * srf, const d_points * pnts, const char * filename);
 
+//! recalculates \ref d_surf to new \ref d_grid using bilinear interpolation algorithm
 SURFIT_EXPORT
-/*! \ingroup internal_surf
-    \fn d_surf * _surf_project(const d_surf * srf, grid * grd);
-    \brief recalculates \ref surf "srf" to new \ref grid "grd" using bilinear interpolation algorithm
-*/
 d_surf * _surf_project(const d_surf * srf, d_grid * grd);
 
+//! calculates value of \f$ \int\limits_\Omega \left[ f_x^2 + f_y^2 \right] dx dy \f$ for \ref d_surf
 SURFIT_EXPORT
-/*! \ingroup internal_surf
-    \fn REAL _surf_D1(const d_surf * srf);
-    \brief calculates value of 
-    \f$ \int\limits_\Omega \left[ f_x^2 + f_y^2 \right] dx dy \f$ 
-    for surface "srf"
-*/
 REAL _surf_D1(const d_surf * srf);
 
+//! calculates value of \f$ \int\limits_\Omega \left[ f_{xx}^2 + 2f_{xy}^2 + f_{yy}^2 \right] dx dy \f$ for \ref d_surf
 SURFIT_EXPORT
-/*! \ingroup internal_surf
-    \fn REAL _surf_D2(const d_surf * srf);
-    \brief calculates value of 
-    \f$ \int\limits_\Omega \left[ f_{xx}^2 + 2f_{xy}^2 + f_{yy}^2 \right] dx dy \f$ 
-    for surface "srf"
-*/
 REAL _surf_D2(const d_surf * srf);
 
+//! adds \ref d_surf to \ref surfit_surfs
 SURFIT_EXPORT
-/*! \ingroup internal_surf
-    \fn void _add_surfit_surfs(d_surf * srf);
-    \brief adds srf to \ref surfit_surfs
-*/
 void _add_surfit_surfs(d_surf * srf);
 
+//! calculates "map of gradients lengths"
 SURFIT_EXPORT
-/*! \ingroup internal_surf
-    \fn d_surf * _surf_gradient(const d_surf * srf);
-    \brief calculates "map of gradients lengths"
-*/
 d_surf * _surf_gradient(const d_surf * srf);
 
 //
 // wavelets section
 //
 
+//! makes one wavelet-decomposition 
 SURFIT_EXPORT
-/*! \ingroup int_surf_wavan
-    \fn bool _surf_decomp(d_surf * srf);
-    \brief makes one wavelet-decomposition 
-*/
 bool _surf_decomp(d_surf * srf);
 
+//! calls _surf_decomp() while difference between calc_approx_norm() are lower than eps
 SURFIT_EXPORT
-/*! \ingroup int_surf_wavan
-    \fn bool _surf_auto_decomp(d_surf * srf, REAL eps);
-    \brief calls _surf_decomp() while difference between calc_approx_norm() are lower than eps
-*/
 bool _surf_auto_decomp(d_surf * srf, REAL eps);
 
+//! makes one wavelet-reconstruction
 SURFIT_EXPORT
-/*! \ingroup int_surf_wavan
-    \fn bool _surf_recons(d_surf * srf);
-    \brief makes one wavelet-reconstruction
-*/
 bool _surf_recons(d_surf * srf);
 
+//! makes all possible wavelet-reconstruction (recontructs original surface)
 SURFIT_EXPORT
-/*! \ingroup int_surf_wavan
-    \fn bool _surf_full_recons(d_surf * srf);
-    \brief makes all possible wavelet-reconstruction (recontructs original surface)
-*/
 bool _surf_full_recons(d_surf * srf);
 
-SURFIT_EXPORT
-d_grid * adopt_surf_grid(const d_surf * srf, d_grid * grd,
-		         size_t & from_x, size_t & to_x,
-		         size_t & from_y, size_t & to_y);
-
+//! calculates \ref d_surf mean value inside \ref d_area
 SURFIT_EXPORT
 REAL _surf_mean_area(const d_surf * srf, const d_area * area);
 
+//! calculates \ref d_surf mean value where \ref d_mask is true
 SURFIT_EXPORT
 REAL _surf_mean_mask(const d_surf * srf, const d_mask * mask);
 
+//! calculates \ref d_surf weighted mean value inside \ref d_area
 SURFIT_EXPORT
 REAL _surf_wmean_area(const d_surf * srf, const d_surf * wsrf, const d_area * area);
 
+//! calculates \ref d_surf weighted mean value where \ref d_mask is true
 SURFIT_EXPORT
 REAL _surf_wmean_mask(const d_surf * srf, const d_surf * wsrf, const d_mask * mask);
 
+//! calculates sum of all cells, which are inside \ref d_area
 SURFIT_EXPORT
-REAL _surf_sum_area(const d_surf * srf, const d_area * crv);
+REAL _surf_sum_area(const d_surf * srf, const d_area * area);
 
+//! calculates number of cells inside \ref d_area
 SURFIT_EXPORT
 int _surf_cells_in_area(const d_surf * srf, const d_area * crv);
 
+//! adds \ref d_surf to \ref surfit_surfs
 SURFIT_EXPORT
 void _surfit_surf_add(d_surf * srf);
 
+//! calculates \ref d_surf from \ref d_points using triangulation algorithm
 SURFIT_EXPORT
 d_surf * triangulate_points(const d_points * pnts, const d_grid * grd);
 
+//! traces contours from \ref d_surf
 SURFIT_EXPORT
 std::vector<d_cntr *> * _surf_trace_cntrs(const d_surf * surf, REAL from = FLT_MAX, REAL to = FLT_MAX, REAL step = FLT_MAX, bool closed = false);
 

@@ -20,6 +20,10 @@
 #ifndef __sstuff__datafile__
 #define __sstuff__datafile__
 
+/*! \file
+    \brief declares datafile class
+*/
+
 #include <stdio.h>
 #include "vec.h"
 
@@ -31,13 +35,19 @@ class bitvec;
 class boolvec;
 class strvec;
 
+//! 1 - create new file, 0 - create or append if file already exists
 extern SSTUFF_EXPORT int datafile_modE;
-extern SSTUFF_EXPORT int rw_mode;
 
+//! buffer size for reading
 #define BUFFER 2048
+
+//! maximum length of tag name
 #define TAG_WORD_SIZE 512
 
+//! datafile class should work in write mode
 #define DF_MODE_WRITE      0
+
+//! datafile class should work in read mode
 #define DF_MODE_READ       1
 
 /*! \class datafile

@@ -25,64 +25,41 @@ namespace surfit {
 class d_cntr;
 class datafile;
 
+//! reads \ref d_cntr from formatted text file
 SURFIT_EXPORT
-/*! \ingroup internal_cntr
-    \fn d_cntr * _cntr_read(const char * filename, const char * cntrname, int columns, int col1, int col2, int col3, int skip_lines, int grow_by, const char * mask);
-    \brief reads \ref cntr from formatted text file
-*/
 d_cntr * _cntr_read(const char * filename, const char * cntrname,
 		  int col1, int col2, int col3, int skip_lines,
 		  int grow_by, const char * mask);
 
+//! loads \ref d_cntr from surfit datafile
 SURFIT_EXPORT
-/*! \ingroup internal_cntr
-    \fn d_cntr * _cntr_load(const char * filename, const char * cntrname);
-    \brief loads \ref cntr from surfit datafile
-*/
 d_cntr * _cntr_load(const char * filename, const char * cntrname);
 
+//! writes \ref d_cntr to formatted text file. 
 SURFIT_EXPORT
-/*! \ingroup internal_cntr
-    \fn bool _cntr_write(const d_cntr * contour, const char * filename, const char * mask);
-    \brief writes \ref cntr to formatted text file. 
-*/
 bool _cntr_write(const d_cntr * contour, const char * filename, const char * mask);
 
+//! writes \ref d_cntr to surfit datafile (see \ref datafile for details)
 SURFIT_EXPORT
-/*! \ingroup internal_cntr
-    \fn bool _cntr_save(const d_cntr * contour, const char * filename);
-    \brief writes \ref cntr to ROFF file (see \ref datafile for details)
-*/
 bool _cntr_save(const d_cntr * contour, const char * filename);
 
+//! writes \ref d_cntr tags to \ref datafile
 SURFIT_EXPORT
-/*! \ingroup internal_cntr
-    \fn bool _cntr_save_df(const d_cntr * contour, datafile * df);
-    \brief writes \ref cntr tags to \ref datafile
-*/
 bool _cntr_save_df(const d_cntr * contour, datafile * df);
 
+//! reads \ref d_cntr tags from \ref datafile
 SURFIT_EXPORT
-/*! \ingroup internal_cntr
-    \fn d_cntr * _cntr_load_df(datafile * df, const char * cntrname);
-    \brief reads \ref cntr tags from \ref datafile
-*/
 d_cntr * _cntr_load_df(datafile * df, const char * cntrname);
 
+//! prints some info about \ref d_cntr
 SURFIT_EXPORT
-/*! \ingroup internal_cntr
-    \fn void _cntr_info(const d_cntr * contour);
-    \brief prints some info about \ref cntr "contour"
-*/
 void _cntr_info(const d_cntr * contour);
 
+//! adds d_cntr to \ref surfit_cntr collection
 SURFIT_EXPORT
-/*! \ingroup internal_cntr
-    \fn void _add_surfit_cntrs(d_cntr * contour);
-    \brief adds contour to \ref surfit_cntr collection
-*/
 void _add_surfit_cntrs(d_cntr * contour);
 
+//! smooths \ref d_cntr by adding points
 SURFIT_EXPORT
 bool _cntr_smooth(d_cntr * contour);
 

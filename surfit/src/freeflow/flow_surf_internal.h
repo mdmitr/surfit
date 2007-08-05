@@ -25,17 +25,11 @@ namespace surfit {
 class d_surf;
 
 FLOW_EXPORT
-/*!  \ingroup internal_psurf
-     \fn REAL _surf_debit(d_surf * srf, REAL x, REAL y, REAL perm, REAL visc, REAL mult);
-     \brief calculates debit at point (x,y), using four neighbour cells
-*/
+//! calculates debit at point (x,y), using four neighbour cells
 REAL _surf_debit(d_surf * srf, REAL x, REAL y, REAL perm, REAL visc, REAL mult);
 
 FLOW_EXPORT
-/*! \ingroup internal_psurf
-    \fn REAL _surf_debit_rect(d_surf * srf, REAL x1, REAL y1, REAL x2, REAL y2, REAL perm, REAL visc, REAL mult);
-    \brief calculates debit in rect
-*/
+//! calculates debit in rect
 REAL _surf_debit_rect(d_surf * srf, REAL x1, REAL y1, REAL x2, REAL y2, REAL perm, REAL visc, REAL mult);
 
 }; // namespace surfit;

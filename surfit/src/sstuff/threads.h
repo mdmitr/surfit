@@ -20,6 +20,10 @@
 #ifndef __sstuff_threads_included__
 #define __sstuff_threads_included__
 
+/*! \file
+    \brief declarations of functions and classes for multithreading support
+*/
+
 #ifdef HAVE_THREADS
 
 #define MAX_CPU 16

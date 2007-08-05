@@ -166,6 +166,17 @@ protected:
 
 };
 
+inline
+void sums_points_D2(size_t i, size_t j, 
+		    size_t NN, size_t MM,
+		    size_t local_NN, size_t local_MM,
+		    const bitvec * mask_undefined,
+		    bool & first_x,  bool & second_x, bool & third_x,
+		    bool & first_xx, bool & second_xx,
+		    bool & first_yy, bool & second_yy,
+		    bool & first_y,  bool & second_y, bool & third_y,
+		    size_t offset_x = 0, size_t offset_y = 0);
+
 }; // namespace surfit
 
 #endif

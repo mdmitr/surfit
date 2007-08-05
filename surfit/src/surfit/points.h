@@ -30,38 +30,23 @@ class vec;
 class strvec;
 class d_points;
 
+//! constructs default \ref d_points object
 SURFIT_EXPORT
-/*! \ingroup internal
-    \fn d_points * create_points_default();
-    \brief constructs default \ref d_points object
-*/
 d_points * create_points_default();
 
+//! constructs \ref d_points from \ref vec "vectors"
 SURFIT_EXPORT
-/*! \ingroup internal
-    \fn d_points * create_points(vec *& iX, vec *& iY, vec *& iZ,
-			 const char * points_name = NULL);
-    \brief constructs \ref d_points from \ref vec "vectors"
-*/
 d_points * create_points(vec *& iX, vec *& iY, vec *& iZ,
 			 const char * points_name = NULL);
 
+//! constructs \ref d_points from \ref vec "vectors" and strvec with names
 SURFIT_EXPORT
-/*! \ingroup internal
-    \fn d_points * create_points(vec *& iX, vec *& iY, vec *& iZ,
-			 strvec *& names,
-			 const char * points_name = NULL);
-    \brief constructs \ref d_points from \ref vec "vectors" and with names
-*/
 d_points * create_points(vec *& iX, vec *& iY, vec *& iZ,
 			 strvec *& names,
 			 const char * points_name = NULL);
 
+//! constructs \ref d_points from another \ref d_points
 SURFIT_EXPORT
-/*! \ingroup internal
-    \fn d_points * create_points(const d_points * ipnts);
-    \brief constructs \ref d_points from another \ref d_points
-*/
 d_points * create_points(const d_points * ipnts);
 
 /*! \class d_points
@@ -197,10 +182,7 @@ public:
 
 };
 
-/*! \ingroup internal
-    \var std::vector<d_points *> * surfit_pnts
-    \brief collection of \ref d_points objects (scattered data-points)
-*/
+//! collection of \ref d_points objects (scattered data-points)
 class SURFIT_EXPORT pnts_container : public objects_container<d_points>
 {
 public:
@@ -244,30 +226,21 @@ public:
 
 typedef std::vector<sub_points *> sub_pnts;
 
+//! performs points sorting
 SURFIT_EXPORT
-/*! \ingroup internal_points
-    \fn void _sort_points(const d_points * pnts, std::vector<size_t> * nums, REAL **& sortx_begin, REAL **& sortx_end, REAL **& sorty_begin, REAL **& sorty_end);
-    \brief performs points sorting
-*/
 void _sort_points(const d_points * pnts, 
 		  std::vector<size_t> * nums,
 		  std::vector<size_t> & sortx,
 		  std::vector<size_t> & sorty);
 
+//! makes geometrical transform on \ref d_points (shifting and scaling)
 SURFIT_EXPORT
-/*! \ingroup internal_points
-    \fn void _points_transform(vec * X, vec * Y, REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY);
-    \brief makes geometrical transform on \ref points class (shifting and scaling)
-*/
 void _points_transform(vec * X, vec * Y, 
 		       REAL shiftX, REAL scaleX, 
 		       REAL shiftY, REAL scaleY);
 
+//! makes inverse to \ref _points_transform operation
 SURFIT_EXPORT
-/*! \ingroup internal_points
-    \fn void _inverse_points_transform(d_points * pnts, REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY);
-    \brief makes inverse to \ref _points_transform operation
-*/
 void _inverse_points_transform(d_points * pnts, 
 			       REAL shiftX, REAL scaleX, 
 			       REAL shiftY, REAL scaleY);

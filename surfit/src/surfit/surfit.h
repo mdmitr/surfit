@@ -29,17 +29,6 @@ bool init_surfit_lib(Tcl_Interp * interp);
 
 };// namespace surfit;
 
-
-//////
-//
-//  Internal functions and variables
-//
-//////
-
-/*!
-\defgroup internal C/C++ functions and variables reference
-*/
-
 #endif
 
 

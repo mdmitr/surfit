@@ -20,10 +20,14 @@
 #ifndef __surfit_stepFunc__
 #define __surfit_stepFunc__
 
+/*! \file
+    \brief declares stepFunc function
+*/
 #include <vector>
 
 namespace surfit {
 
+//! Calculates "beautiful" step between StartX and EndX
 SSTUFF_EXPORT
 double stepFunc(double StartX, double EndX, int amount);
 

@@ -20,9 +20,19 @@
 #ifndef __sstuff__included__
 #define __sstuff__included__
 
+/*! \namespace surfit
+    \brief namespace where all surfit functions and classes are placed
+*/
+
+/*! \file
+    \brief declaration of sstuff_free_char and str_to_upper
+*/
+
+//! function for freeing memory allocated by libsstuff library
 SSTUFF_EXPORT
 void sstuff_free_char(char * ptr);
 
+//! converts string to uppercase
 SSTUFF_EXPORT
 void str_toupper(char * str);
 

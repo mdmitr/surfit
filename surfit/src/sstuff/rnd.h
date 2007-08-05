@@ -20,11 +20,17 @@
 #ifndef __rnd_included__
 #define __rnd_included__
 
+/*! \file
+    \brief declaration of functions for working with random numbers
+*/
+	
 namespace surfit {
 
+//! randomization function 
 SSTUFF_EXPORT
 void randomize();
 
+//! returns random number with normal distribution N(0,std)
 SSTUFF_EXPORT
 REAL norm_rand(REAL std);
 

@@ -19,7 +19,8 @@
 
 #include "surfit_ie.h"
 #include "matrD1.h"
-#include "bitvec_alg.h"
+#include "bitvec.h"
+#include "matrD_incr_ptr.h"
 #include "grid_line.h"
 
 #include <float.h>

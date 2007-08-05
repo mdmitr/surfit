@@ -20,9 +20,13 @@
 #ifndef __real_included__
 #define __real_included__
 
+/*! \file
+    \brief definition of REAL type
+*/
 ///*
 #undef REAL
 #define REAL double
+//! name for REAL type
 #define REAL_NAME "double"
 //*/
 

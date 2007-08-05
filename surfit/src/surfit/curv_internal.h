@@ -26,65 +26,45 @@ class d_curv;
 class datafile;
 class d_grid;
 
+//! reads \ref d_curv from formatted text file
 SURFIT_EXPORT
-/*! \ingroup internal_curv
-    \fn d_curv * _curv_read(const char * filename, const char * curvname, int col1, int col2, int skip_lines, int grow_by, const char * mask);
-    \brief reads \ref curv from formatted text file
-*/
 d_curv * _curv_read(const char * filename, const char * curvname,
 		    int col1, int col2, int skip_lines,
 		    int grow_by, const char * mask);
 
+//! loads \ref d_curv from surfit \ref datafile
 SURFIT_EXPORT
-/*! \ingroup internal_curv
-    \fn d_curv * _curv_load(const char * filename, const char * curvname);
-    \brief loads \ref curv from surfit datafile
-*/
 d_curv * _curv_load(const char * filename, const char * curvname);
 
+//! reads \ref d_curv tags from \ref datafile. 
 SURFIT_EXPORT
-/*! \ingroup internal_curv
-    \fn d_curv * _curv_load_df(datafile * df, const char * curvname);
-    \brief reads \ref curv tags from \ref datafile. 
-*/
 d_curv * _curv_load_df(datafile * df, const char * curvname);
+
+//! continues to read \ref d_curv from datafile if tag is already read
+SURFIT_EXPORT
 bool _curv_load_df_tag_readed(datafile * df, d_curv *& crv);
 
+//! writes \ref d_curv to formatted text file. 
 SURFIT_EXPORT
-/*! \ingroup internal_curv
-    \fn bool _curv_write(const d_curv * contour, const char * filename, const char * mask);
-    \brief writes \ref curv to formatted text file. 
-*/
 bool _curv_write(const d_curv * contour, const char * filename, const char * mask);
 
+//! writes \ref d_curv to surfit \ref datafile
 SURFIT_EXPORT
-/*! \ingroup internal_curv
-    \fn bool _curv_save(const d_curv * contour, const char * filename);
-    \brief writes \ref curv to surfit datafile
-*/
 bool _curv_save(const d_curv * contour, const char * filename);
 
+//! writes \ref d_curv tags to \ref datafile. 
 SURFIT_EXPORT
-/*! \ingroup internal_curv
-    \fn bool _curv_save_df(const d_curv * contour, datafile * df);
-    \brief writes \ref curv tags to \ref datafile. 
-*/
 bool _curv_save_df(const d_curv * contour, datafile * df);
 
+//! prints some info about \ref d_curv
 SURFIT_EXPORT
-/*! \ingroup internal_curv
-    \fn void _curv_info(const d_curv * contour);
-    \brief prints some info about contour
-*/
 void _curv_info(const d_curv * contour);
 
+//! adds \ref d_curv to \ref surfit_curv collection
 SURFIT_EXPORT
-/*! \ingroup internal_curv
-    \fn void _add_surfit_curvs(d_curv * contour);
-    \brief adds contour to \ref surfit_curv collection
-*/
 void _add_surfit_curvs(d_curv * contour);
 
+//! bounds \ref d_curv with rect 
 SURFIT_EXPORT
 d_curv * _curv_intersect_grid(const d_curv * crv, const d_grid * grd);
 

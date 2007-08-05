@@ -21,7 +21,7 @@
 #include "matrD2.h"
 #include "grid_line.h"
 #include "bitvec.h"
-#include "bitvec_alg.h"
+#include "matrD_incr_ptr.h"
 
 #include <float.h>
 #include <assert.h>
@@ -1129,6 +1129,162 @@ size_t matrD2::rows() const {
 
 void matrD2::skip(size_t i, size_t j) {
 	mask_solved_undefined->set_true(i + j*NN);
+};
+
+void sums_points_D2(size_t i, size_t j, 
+		    size_t NN, size_t MM,
+		    size_t local_NN, size_t local_MM,
+		    const bitvec * mask_undefined,
+		    bool & first_x,  bool & second_x, bool & third_x,
+		    bool & first_xx, bool & second_xx,
+		    bool & first_yy, bool & second_yy,
+		    bool & first_y,  bool & second_y, bool & third_y,
+		    size_t offset_x, size_t offset_y) {
+
+	size_t J = (i+offset_x) + (j+offset_y)*NN;
+
+	// first_x
+	if ( (i >= 0) && (i+2 < local_NN) ) { // i = 0 ... N-3
+		
+		if ( mask_undefined->get(J)   || 
+			 mask_undefined->get(J+1) ||
+			 mask_undefined->get(J+2) )
+			first_x = false;
+		
+	} else {
+		first_x = false;
+	}
+
+	// second_x
+	if ( (i > 0) && (i+1 < local_NN) ) { // i = 1 ... N-2
+		
+		if ( mask_undefined->get(J-1) || 
+			 mask_undefined->get(J)   || 
+			 mask_undefined->get(J+1) )
+		    second_x = false;
+		
+	} else {
+		second_x = false;
+	}
+
+	// third_x
+	if ( (i > 1) && (i < local_NN) ) { // i = 2 ... N-1
+		
+		if ( mask_undefined->get(J-2) || 
+			 mask_undefined->get(J-1) || 
+			 mask_undefined->get(J) )
+		    third_x = false;
+		
+	} else {
+		third_x = false;
+	}
+	
+	// first_y
+	if ( (j >= 0) && (j+2 < local_MM) ) { // j = 0 ... M-3
+		
+		if ( mask_undefined->get(J)    || 
+			 mask_undefined->get(J+NN) ||
+			 mask_undefined->get(J+2*NN) )
+			first_y = false;
+		
+	} else {
+		first_y = false;
+	}
+
+	// second_y
+	if ( (j > 0) && (j+1 < local_MM) ) { // j = 1 ... M-2
+		
+		if ( mask_undefined->get(J-NN) || 
+			 mask_undefined->get(J)    || 
+			 mask_undefined->get(J+NN) )
+		    second_y = false;
+		
+	} else {
+		second_y = false;
+	}
+
+	// third_y
+	if ( (j > 1) && (j < local_MM) ) { // j = 2 ... M-1
+		
+		if ( mask_undefined->get(J-2*NN) || 
+			 mask_undefined->get(J-NN)   || 
+			 mask_undefined->get(J) )
+		    third_y = false;
+		
+	} else {
+		third_y = false;
+	}
+
+	// first_xx
+	if (
+		( (i >= 0) && (i+1 < local_NN) ) &&  // i = 0 ... N-2
+		( (j >= 0) && (j+1 < local_MM) )     // j = 0 ... M-2
+	   )
+	{
+		if ( 
+			 mask_undefined->get(J)      || 
+			 mask_undefined->get(J+1)    ||
+			 mask_undefined->get(J+NN)   ||
+			 mask_undefined->get(J+NN+1) 
+		   )
+			first_xx = false;
+	} else {
+		first_xx = false;
+	}
+
+	// second_xx
+	if (
+		( (i > 0) && (i < local_NN) )    &&  // i = 1 ... N-1
+		( (j >= 0) && (j+1 < local_MM) )     // j = 0 ... M-2
+	   )
+	{
+		if ( 
+			 mask_undefined->get(J-1)      || 
+			 mask_undefined->get(J)        ||
+			 mask_undefined->get(J+NN-1)   ||
+			 mask_undefined->get(J+NN) 
+		   )
+			second_xx = false;
+	} else {
+		second_xx = false;
+	}
+
+	// first_yy
+	if (
+		( (i >= 0) && (i+1 < local_NN) ) &&  // i = 0 ... N-2
+		( (j > 0) && (j < local_MM) )        // j = 1 ... M-1
+	   )
+	{
+		if ( 
+			 mask_undefined->get(J-NN)      || 
+			 mask_undefined->get(J-NN+1)    ||
+			 mask_undefined->get(J)         ||
+			 mask_undefined->get(J+1) 
+		   )
+			first_yy = false;
+	} else {
+		first_yy = false;
+	}
+
+	// second_yy
+	if (
+		( (i > 0) && (i < local_NN) )    &&  // i = 1 ... N-1
+		( (j > 0) && (j < local_MM) )        // j = 1 ... M-1
+	   )
+	{
+		if ( 
+			 mask_undefined->get(J-NN-1)      || 
+			 mask_undefined->get(J-NN)        ||
+			 mask_undefined->get(J-1)         ||
+			 mask_undefined->get(J) 
+		   )
+			second_yy = false;
+	} else {
+		second_yy = false;
+	}
+	
+	return;
+
 };
 
 }; // namespace surfit;
