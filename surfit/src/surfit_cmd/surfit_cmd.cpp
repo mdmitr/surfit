@@ -1,6 +1,11 @@
 
 #include <tcl.h>
 
+#ifdef _MSC_VER
+#pragma warning(disable : 4786)
+#pragma warning(disable : 4996)
+#endif
+
 int AppInit(Tcl_Interp *interp) {
 	if(Tcl_Init(interp) == TCL_ERROR) 
 		return TCL_ERROR;
