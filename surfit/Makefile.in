@@ -240,9 +240,8 @@ DIST_SOURCES = $(libfreeflow_la_SOURCES) \
 libfreeflow_laHEADERS_INSTALL = $(INSTALL_HEADER)
 libglobe_laHEADERS_INSTALL = $(INSTALL_HEADER)
 am__libsstuff_la_HEADERS_DIST = src/sstuff/bitvec.h \
-	src/sstuff/bitvec_alg.h src/sstuff/boolvec.h \
-	src/sstuff/byteswap_alg.h src/sstuff/config.h \
-	src/sstuff/datafile.h src/sstuff/fileio.h \
+	src/sstuff/boolvec.h src/sstuff/byteswap_alg.h \
+	src/sstuff/config.h src/sstuff/datafile.h src/sstuff/fileio.h \
 	src/sstuff/findfile.h src/sstuff/geom_alg.h \
 	src/sstuff/interp.h src/sstuff/intvec.h src/sstuff/read_txt.h \
 	src/sstuff/real.h src/sstuff/rnd.h src/sstuff/shortvec.h \
@@ -385,13 +384,13 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign
 INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/sstuff/ptypes -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io -DANSI_DECLARATORS -DTRILIBRARY
-EXTRA_DIST = vc6/surfit* vc6/freeflow* vc6/globe* vc7/* vc8/* \
-	src/surfit/interface/*.i examples/* src/freeflow/interface/*.i \
-	src/globe/interface/*.i src/surfit_io/interface/*.i \
-	doc/gallery/* doc/src/* doc/html/* doc/surfit.cfg \
-	doc/make_doc* make_release.bat make_releases.bat \
-	make_debug.bat clean.bat make_rpm surfit.spec surfit.desktop \
-	CHANGES
+EXTRA_DIST = vc6/surfit* vc6/sstuff* vc6/freeflow* vc6/globe* vc7/* \
+	vc8/* src/surfit/interface/*.i examples/* \
+	src/freeflow/interface/*.i src/globe/interface/*.i \
+	src/surfit_io/interface/*.i doc/gallery/* doc/src/* doc/html/* \
+	doc/surfit.cfg doc/make_doc* make_release.bat \
+	make_releases.bat make_debug.bat clean.bat make_rpm \
+	surfit.spec surfit.desktop CHANGES
 surfit_SOURCES = src/surfit_cmd/surfit_cmd.cpp
 surfit_LDADD = $(TCLLIB)
 lib_LTLIBRARIES = libsstuff.la libsurfit.la $(am__append_1) \
@@ -407,9 +406,9 @@ libsstuff_la_SOURCES = src/sstuff/bitvec.cpp src/sstuff/boolvec.cpp \
 	src/sstuff/stepFunc.cpp src/sstuff/vec.cpp \
 	src/sstuff/vec_alg.cpp src/sstuff/threads.cpp $(am__append_4) \
 	src/sstuff/sstuff_ie.h
-libsstuff_la_HEADERS = src/sstuff/bitvec.h src/sstuff/bitvec_alg.h \
-	src/sstuff/boolvec.h src/sstuff/byteswap_alg.h \
-	src/sstuff/config.h src/sstuff/datafile.h src/sstuff/fileio.h \
+libsstuff_la_HEADERS = src/sstuff/bitvec.h src/sstuff/boolvec.h \
+	src/sstuff/byteswap_alg.h src/sstuff/config.h \
+	src/sstuff/datafile.h src/sstuff/fileio.h \
 	src/sstuff/findfile.h src/sstuff/geom_alg.h \
 	src/sstuff/interp.h src/sstuff/intvec.h src/sstuff/read_txt.h \
 	src/sstuff/real.h src/sstuff/rnd.h src/sstuff/shortvec.h \
@@ -509,12 +508,12 @@ libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/mask.h src/surfit/mask_internal.h \
 	src/surfit/matfile.h src/surfit/matlab.h src/surfit/matr.h \
 	src/surfit/matrD1.h src/surfit/matrD1_aniso.h \
-	src/surfit/matrD2.h src/surfit/matr_diag.h \
-	src/surfit/matr_eye.h src/surfit/matr_onesrow.h \
-	src/surfit/matr_cntrs.h src/surfit/mrf.h \
-	src/surfit/pnts_internal.h src/surfit/points.h \
-	src/surfit/solvers.h src/surfit/sort_alg.h src/surfit/surfit.h \
-	src/surfit/solvers.h src/surfit/surf.h \
+	src/surfit/matrD2.h src/surfit/matrD_incr_ptr.h \
+	src/surfit/matr_diag.h src/surfit/matr_eye.h \
+	src/surfit/matr_onesrow.h src/surfit/matr_cntrs.h \
+	src/surfit/mrf.h src/surfit/pnts_internal.h \
+	src/surfit/points.h src/surfit/solvers.h src/surfit/sort_alg.h \
+	src/surfit/surfit.h src/surfit/solvers.h src/surfit/surf.h \
 	src/surfit/surf_internal.h src/surfit/surfit_solvers.h \
 	src/surfit/variables.h src/surfit/variables_internal.h \
 	src/surfit/variables_tcl.h src/surfit/triangle.h

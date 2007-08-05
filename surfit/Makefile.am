@@ -6,7 +6,7 @@ libtool: $(LIBTOOL_DEPS)
 
 INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/sstuff/ptypes -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io -DANSI_DECLARATORS -DTRILIBRARY
 EXTRA_DIST = vc6/surfit*
-EXTRA_DIST = vc6/sstuff*
+EXTRA_DIST += vc6/sstuff*
 EXTRA_DIST += vc6/freeflow*
 EXTRA_DIST += vc6/globe*
 EXTRA_DIST += vc7/*
