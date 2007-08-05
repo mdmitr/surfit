@@ -28,7 +28,7 @@ class boolvec;
 // CONVERTING
 //
 
-/*! \ingroup tcl_globe_surf_conv
+/*! \ingroup tcl_surf_conv
     \fn bool surf_to_dem(const char * surface_name = "*");
 
     \par Tcl syntax:
@@ -36,6 +36,9 @@ class boolvec;
 
     \par Description:
     transforms \ref d_surf "surface" to \ref d_dem "DEM".
+
+    \par Implemented in library:
+    libglobe
 */
 boolvec * surf_to_dem(const char * surface_name_or_position = "0");
 

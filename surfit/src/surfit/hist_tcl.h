@@ -28,10 +28,6 @@ namespace surfit {
 // save/load
 
 /*! \ingroup tcl_hist_save_load
-    \fn bool hist_read(const char * filename, REAL minz, REAL maxz, 
-		       const char * histname, int col1,  
-		       const char * delimiter, int skip_lines, int grow_by);
-    
     \par Tcl syntax:
     hist_read \ref file "filename" minz maxz "histname" col1 "delimiter" skip_lines grow_by
 
@@ -54,8 +50,6 @@ boolvec * hist_read(const char * filename, REAL minz, REAL maxz, const char * hi
 		int col1 = 1, const char * delimiter = " \t", int skip_lines = 0, int grow_by = 250);
 
 /*! \ingroup tcl_hist_save_load
-    \fn bool hist_write(const char * filename, const char * hist_name = "*", bool three_columns = true);
-    
     \par Tcl syntax:
     hist_write "filename" \ref str "hist_name" value
 
@@ -74,8 +68,6 @@ boolvec * hist_from_pnts(const char * points_name = "*", size_t intervs = 64, RE
 strvec * hist_getName(const char * pos = "*");
 
 /*! \ingroup tcl_hist_other
-    \fn const char * hist_getNameAt(int pos);
-    
     \par Tcl syntax:
     hist_getNameAt position
 

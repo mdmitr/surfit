@@ -31,8 +31,6 @@ class boolvec;
 //////////////
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve(REAL value, const char * curv_name = "*");
-
     \par Tcl syntax:
     curve value \ref str "curve_name"
 
@@ -40,7 +38,7 @@ class boolvec;
     Using this rule the resulting surface approximates the curve with constant real number.
 
     \param value real number for surface approximation at curve
-    \param curv_name \ref d_curv "curve" \ref "str" name
+    \param curv_name \ref d_curv "curve" \ref str "name"
 
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -54,8 +52,6 @@ class boolvec;
 boolvec * curve(REAL value, const char * curv_name = "*");
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_add(REAL value, REAL weight = 1, const char * curv_name = "*");
-    
     \par Tcl syntax:
     curve_add value weight \ref str "curv_name"
 
@@ -66,7 +62,7 @@ boolvec * curve(REAL value, const char * curv_name = "*");
     account a previous (modifiable) rule.
 
     \param value real number for surface approximation at curve
-    \param weight informational weight for this rule
+    \param weight informational weight for \ref curve gridding rule
     \param curv_name \ref d_curv "curve" \ref str "name"
 
     \par Math:
@@ -84,8 +80,6 @@ boolvec * curve(REAL value, const char * curv_name = "*");
 boolvec * curve_add(REAL value, REAL weight = 1, const char * curv_name = "*");
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_leq(REAL value, const char * curv_name = "*", REAL penalty_factor = 0);
-
     \par Tcl syntax:
     curve_leq value \ref str "curv_name" penalty_factor
 
@@ -106,8 +100,6 @@ boolvec * curve_add(REAL value, REAL weight = 1, const char * curv_name = "*");
 boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_geq(REAL value, const char * curv_name = "*", REAL penalty_factor = 0);
-
     \par Tcl syntax:
     curve_leq value \ref str "curv_name" penalty_factor
 
@@ -128,8 +120,6 @@ boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL penalty_facto
 boolvec * curve_geq(REAL value, const char * curv_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_surf(const char * surf_name = "*", const char * curv_name = "*");
-
     \par Tcl syntax:
     curve_surf \ref str "surf_name" \ref str "curv_name"
 
@@ -151,8 +141,6 @@ boolvec * curve_geq(REAL value, const char * curv_name = "*", REAL penalty_facto
 boolvec * curve_surf(const char * surf_name = "*", const char * curv_name = "*");
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_surf_add(const char * surf_name = "*", REAL weight = 1, const char * curv_name = "*");
-    
     \par Tcl syntax:
     curve_surf_add \ref str "surf_name" weight \ref str "curv_name"
 
@@ -181,8 +169,6 @@ boolvec * curve_surf(const char * surf_name = "*", const char * curv_name = "*")
 boolvec * curve_surf_add(const char * surf_name = "*", REAL weight = 1, const char * curv_name = "*");
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL penalty_factor = 0);
-
     \par Tcl syntax:
     curve_surf_leq \ref str "surf_name" \ref str "curv_name" penalty_factor
 
@@ -206,8 +192,6 @@ boolvec * curve_surf_add(const char * surf_name = "*", REAL weight = 1, const ch
 boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL penalty_factor = 0);
-
     \par Tcl syntax:
     curve_surf_geq \ref str "surf_name" \ref str "curv_name" penalty_factor
 
@@ -231,8 +215,6 @@ boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = 
 boolvec * curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_curvs
-    \fn bool fault(const char * curv_name = "*");
-
     \par Tcl syntax:
     fault \ref str "curv_name"
 
@@ -259,8 +241,6 @@ boolvec * fault(const char * curv_name = "*");
 ////////////
 
 /*! \ingroup tcl_rules_areas
-    \fn bool bool area(const char * value="undef", const char * area_name = "*", int inside = 1);
-    
     \par Tcl syntax:
     area value \ref str "area_name" inside
 
@@ -283,8 +263,6 @@ boolvec * fault(const char * curv_name = "*");
 boolvec * area(const char * value="undef", const char * area_name = "*", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_add(REAL value, REAL weight, const char * area_name = "*", int inside = 1);
-    
     \par Tcl syntax:
     area_add value weight \ref str "area_name" inside
 
@@ -313,8 +291,6 @@ boolvec * area(const char * value="undef", const char * area_name = "*", int ins
 boolvec * area_add(REAL value, REAL weight, const char * area_name = "*", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_leq(REAL value, const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
-    
     \par Tcl syntax:
     area_leq value \ref str "area_name" penalty_factor inside
 
@@ -338,8 +314,6 @@ boolvec * area_add(REAL value, REAL weight, const char * area_name = "*", int in
 boolvec * area_leq(REAL value, const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_geq(REAL value, const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
-    
     \par Tcl syntax:
     area_geq value \ref str "area_name" penalty_factor inside
 
@@ -347,7 +321,7 @@ boolvec * area_leq(REAL value, const char * area_name = "*", REAL penalty_factor
     This rule adds the surface condition - "the resulting surface in area should be greater than or equal to value".
     
     \param value resulting surface values should be greater than or equal to this real number
-    \param area_name \rf str "name" of \ref d_area "area" dataset
+    \param area_name \ref str "name" of \ref d_area "area" dataset
     \param penalty_factor parameter for \ref penalty algorithm
     \param inside if inside is equal to 1, then surface values should be greater than or equal to value 
     inside area, else outside
@@ -363,8 +337,6 @@ boolvec * area_leq(REAL value, const char * area_name = "*", REAL penalty_factor
 boolvec * area_geq(REAL value, const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_surf(const char * surf_name = "*", const char * area_name = "*", int inside = 1);
-
     \par Tcl syntax:
     area_surf \ref str "surf_name" mult inside
 
@@ -388,8 +360,6 @@ boolvec * area_geq(REAL value, const char * area_name = "*", REAL penalty_factor
 boolvec * area_surf(const char * surf_name = "*", const char * area_name = "*", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_surf_add(const char * surf_name = "*", REAL weight = 1, const char * area_name = "*", int inside = 1);
-
     \par Tcl syntax:
     area_surf_add \ref str "surf_name" weight \ref str "area_name" inside
 
@@ -419,8 +389,6 @@ boolvec * area_surf(const char * surf_name = "*", const char * area_name = "*", 
 boolvec * area_surf_add(const char * surf_name = "*", REAL weight = 1, const char * area_name = "*", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
-    
     \par Tcl syntax:
     area_surf_leq \ref str "surf_name" \ref str "area_name" penalty_factor inside
 
@@ -438,8 +406,6 @@ boolvec * area_surf_add(const char * surf_name = "*", REAL weight = 1, const cha
 boolvec * area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
-    
     \par Tcl syntax:
     area_surf_geq \ref str "surf_name" \ref str "area_name" penalty_factor inside
 
@@ -457,8 +423,6 @@ boolvec * area_surf_leq(const char * surf_name = "*", const char * area_name = "
 boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_mean(REAL mean, const char * area_name = "*", REAL penalty_factor = -2, int inside = 1);
-    
     \par Tcl syntax:
     area_mean mean_value \ref str "area_name" penalty_factor inside
 
@@ -476,8 +440,6 @@ boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "
 boolvec * area_mean(REAL mean, const char * area_name = "*", REAL penalty_factor = -2, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL penalty_factor = -2, int inside = 1);
-    
     \par Tcl syntax:
     area_wmean weighted_mean_value \ref str "area_name" \ref str "surf_name" penalty_factor inside
 
@@ -496,40 +458,39 @@ boolvec * area_mean(REAL mean, const char * area_name = "*", REAL penalty_factor
 boolvec * area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL penalty_factor = -2, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_completer(const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
-
     \par Tcl syntax:
     area_completer \ref str "area_name" D1 D2 alpha w inside
 
     \par Description
     This rule implements \ref completer rule inside or outside \ref d_area "area"
 
+    \param area_name \ref d_area "area" \ref str "name"
     \param D1 weight coefficient for rule that the resulting surface should tend to constant surface
     \param D2 weight coefficient for rule that the resulting surface should tend to plane surface
     \param alpha anisotropy angle (degrees)
     \param w anisotropy factor
+    \param inside if inside is equal to 1, then area_completer will work inside area, else outside
 */
 boolvec * area_completer(const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_completer_add(REAL weight = 1, const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
-
     \par Tcl syntax:
     area_completer_add weight \ref str "area_name" D1 D2 alpha w inside
 
     \par Description
     This rule adds rule \ref area_completer with informational "weight" to the previous rule.
 
+    \param weight weight coefficient. This gridding rule will be added with this weight coefficient to previous gridding rule.
+    \param area_name \ref d_area "area" \ref str "name"
     \param D1 weight coefficient for rule that the resulting surface should tend to constant surface
     \param D2 weight coefficient for rule that the resulting surface should tend to plane surface
     \param alpha anisotropy angle (degrees)
     \param w anisotropy factor
+    \param inside if inside is equal to 1, then area_completer will work inside area, else outside
 */
 boolvec * area_completer_add(REAL weight = 1, const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
-    \fn bool area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL penalty_factor = -1, int inside = 1);
-
     \par Tcl syntax:
     area_hist \ref str "area_name" \ref str "histogram_name" penalty_factor inside
 
@@ -539,6 +500,8 @@ boolvec * area_completer_add(REAL weight = 1, const char * area_name = "*", REAL
     
     \param area_name \ref str "name" of the area for histogram fitting
     \param histogram_name \ref str "name" of the desired histogram
+    \param penalty_factor parameter for \ref penalty algorithm
+    \param inside if inside is equal to 1, then area_hist will work inside area, else outside
 */
 boolvec * area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL penalty_factor = -1, int inside = 1);
 
@@ -549,8 +512,6 @@ boolvec * area_hist(const char * area_name = "*", const char * histogram_name = 
 //////////////
 
 /*! \ingroup tcl_rules_cntrs
-    \fn bool contour(const char * cntr_name = "*");
-    
     \par Tcl syntax:
     contour \ref str "cntr_name"
 
@@ -570,8 +531,6 @@ boolvec * area_hist(const char * area_name = "*", const char * histogram_name = 
 boolvec * contour(const char * cntr_name = "*");
 
 /*! \ingroup tcl_rules_cntrs
-    \fn bool contour_add(REAL weight, const char * cntr_name = "*");
-    
     \par Tcl syntax:
     contour_add weight \ref str "cntr_name"
 
@@ -601,8 +560,6 @@ boolvec * contours(const char * cntr_name = "*", REAL penalty_factor = 0);
 boolvec * contours_add(REAL weight = 50, const char * cntr_name = "*");
 
 /*! \ingroup tcl_rules_cntrs
-    \fn bool contour_leq(const char * cntr_name = "*", REAL penalty_factor = 0);
-
     \par Tcl syntax:
     contour_leq \ref str "cntr_name" penalty_factor
 
@@ -623,8 +580,6 @@ boolvec * contours_add(REAL weight = 50, const char * cntr_name = "*");
 boolvec * contour_leq(const char * cntr_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_cntrs
-    \fn bool contour_geq(const char * cntr_name = "*", REAL penalty_factor = 0);
-
     \par Tcl syntax:
     contour_geq \ref str "cntr_name" penalty_factor
 

@@ -6,7 +6,7 @@
 \defgroup tcl_globe_rules globe gridding rules
 \ingroup globe_commands
 
-\defgroup tcl_rules_dems gridding rules for DEMs
+\defgroup tcl_rules_dems for DEMs
 \ingroup tcl_globe_rules
 */
 
@@ -14,21 +14,18 @@
 \defgroup tcl_dem commands for DEMs
 \ingroup globe_commands
 
-\defgroup tcl_dem_save_load commands for DEMs saving and loading
+\defgroup tcl_dem_save_load save/load
 \ingroup tcl_dem
 
-\defgroup tcl_dem_math mathematical commands for DEMs
+\defgroup tcl_dem_math mathematical operations
 \ingroup tcl_dem
 
-\defgroup tcl_dem_math_wavan wavelet commands for DEMs
+\defgroup tcl_dem_math_wavan wavelets analysis
 \ingroup tcl_dem_math
 
-\defgroup tcl_dem_conv commands for converting DEMs
+\defgroup tcl_dem_conv convert
 \ingroup tcl_dem
 
-\defgroup tcl_dem_other other commands for DEMs
+\defgroup tcl_dem_other other 
 \ingroup tcl_dem
-
-\defgroup tcl_globe_surf_conv commands for converting surfaces
-\ingroup globe_commands
 */

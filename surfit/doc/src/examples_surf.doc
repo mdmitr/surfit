@@ -125,9 +125,6 @@ This result was obtained with <TT>"examples/surfit/surfs/mask_ineq.tcl"</TT> scr
 /*! \example mask_completer.tcl
 */
 
-/*! \example mask_ineq.tcl
-*/
-
 /*! \example mask_mean.tcl
 */
 

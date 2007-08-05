@@ -33,21 +33,18 @@ class strvec;
 //
 
 /*! \ingroup tcl_mask_save_load
-    \fn bool mask_load(const char * filename, const char * mask_name = NULL);
-    
     \par Tcl syntax:
     mask_load \ref file "filename" \ref str "mask_name"
 
     \par Description:
     loads \ref d_mask "mask" from surfit datafile. If no mask_name specified, then first mask will be loaded.
+    \param mask_name \ref str "name" of the \ref d_mask "mask" object
     \param filename surfit datafile
-    \param maskname name for mask (optional)
+    \param mask_name name for mask (optional)
 */
 boolvec * mask_load(const char * filename, const char * mask_name = NULL);
 
 /*! \ingroup tcl_mask_save_load
-    \fn bool mask_save(const char * filename, const char * mask_name = "*");
-
     \par Tcl syntax:
     mask_save \ref file "filename" \ref str "mask_name"
 
@@ -61,8 +58,6 @@ boolvec * mask_save(const char * filename, const char * mask_name = "*");
 //
 
 /*! \ingroup tcl_mask_math
-    \fn bool mask_getValue(REAL x, REAL y, const char * mask_name = "*");
-
     \par Tcl syntax:
     mask_getValue x y \ref str "mask_name"
 
@@ -72,8 +67,6 @@ boolvec * mask_save(const char * filename, const char * mask_name = "*");
 boolvec * mask_getValue(REAL x, REAL y, const char * mask_name = "*");
 
 /*! \ingroup tcl_mask_math
-    \fn void mask_and(const char * mask1_name = "*", const char * mask2_name = "*");
-
     \par Tcl syntax:
     mask_and \ref str "mask1_name" \ref str "mask2_name"
 
@@ -84,8 +77,6 @@ boolvec * mask_getValue(REAL x, REAL y, const char * mask_name = "*");
 void mask_and(const char * mask1_name = "*", const char * mask2_name = "*");
 
 /*! \ingroup tcl_mask_math
-    \fn void mask_not(const char * mask1_name = "*", const char * mask2_name = "*");
-
     \par Tcl syntax:
     mask_not \ref str "mask1_name" \ref str "mask2_name"
     
@@ -96,8 +87,6 @@ void mask_and(const char * mask1_name = "*", const char * mask2_name = "*");
 void mask_not(const char * mask1_name = "*", const char * mask2_name = "*");
 
 /*! \ingroup tcl_mask_math
-    \fn void mask_or(const char * mask1_name = "*", const char * mask2_name = "*");
-
     \par Tcl syntax:
     mask_or \ref str "mask1_name" \ref str "mask2_name"
     
@@ -108,8 +97,6 @@ void mask_not(const char * mask1_name = "*", const char * mask2_name = "*");
 void mask_or(const char * mask1_name = "*", const char * mask2_name = "*");
 
 /*! \ingroup tcl_mask_math
-    \fn void mask_xor(const char * mask1_name = "*", const char * mask2_name = "*");
-    
     \par Tcl syntax:
     mask_xor \ref str "mask1_name" \ref str "mask2_name"
       
@@ -124,8 +111,6 @@ void mask_xor(const char * mask1_name = "*", const char * mask2_name = "*");
 //
 
 /*! \ingroup tcl_mask_conv
-    \fn bool mask_to_surf(const char * mask_name = "*");
-
     \par Tcl syntax:
     mask_to_surf \ref str "mask_name"
 
@@ -139,8 +124,6 @@ void mask_to_surf(const char * mask_name = "*");
 //
 
 /*! \ingroup tcl_mask_other
-    \fn void mask_from_surf(const char * surface_name = "*");
-
     \par Tcl syntax:
     mask_from_surf \ref str "surface_name"
 
@@ -151,8 +134,6 @@ void mask_to_surf(const char * mask_name = "*");
 void mask_from_surf(const char * surface_name = "*");
 
 /*! \ingroup tcl_mask_other
-    \fn bool mask_apply_to_surf(const char * mask_name = "*", const char * surface_name = "*");
-
     \par Tcl syntax:
     mask_apply_to_surf \ref str "mask_name" \ref str "surface_name"
 
@@ -162,8 +143,6 @@ void mask_from_surf(const char * surface_name = "*");
 boolvec * mask_apply_to_surf(const char * mask_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_mask_other
-    \fn const char * mask_getName(const char * mask_name = "*");
-
     \par Tcl syntax:
     mask_getName \ref str "mask_name"
 
@@ -173,8 +152,6 @@ boolvec * mask_apply_to_surf(const char * mask_name = "*", const char * surface_
 strvec * mask_getName(const char * mask_name = "*");
 
 /*! \ingroup tcl_mask_other
-    \fn const char * mask_getNameAt(int pos);
-    
     \par Tcl syntax:
     mask_getNameAt position
 
@@ -184,8 +161,6 @@ strvec * mask_getName(const char * mask_name = "*");
 const char * mask_getNameAt(int pos);
 
 /*! \ingroup tcl_mask_other
-    \fn const char * mask_getId(const char * mask_name = "*");
-
     \par Tcl syntax:
     mask_getId \ref str "mask_name"
 
@@ -195,8 +170,6 @@ const char * mask_getNameAt(int pos);
 intvec * mask_getId(const char * mask_name = "*");
 
 /*! \ingroup tcl_mask_other
-    \fn void mask_setName(const char * new_name, const char * mask_name = "*");
-    
     \par Tcl syntax:
     mask_setName "new_name" \ref str "mask_name"
 
@@ -206,8 +179,6 @@ intvec * mask_getId(const char * mask_name = "*");
 void mask_setName(const char * new_name, const char * mask_name = "*");
 
 /*! \ingroup tcl_mask_other
-    \fn void mask_del(const char * mask_name = "*");
-
     \par Tcl syntax:
     mask_del \ref str "mask_name"
 
@@ -217,8 +188,6 @@ void mask_setName(const char * new_name, const char * mask_name = "*");
 void mask_del(const char * mask_name = "*");
 
 /*! \ingroup tcl_mask_other
-    \fn int mask_size();
-
     \par Tcl syntax:
     mask_size
 
@@ -228,8 +197,6 @@ void mask_del(const char * mask_name = "*");
 int mask_size();
 
 /*! \ingroup tcl_mask_other
-    \fn void masks_info(const char * mask_name = "*");
-
     \par Tcl syntax:
     masks_info \ref str "mask_name"
 

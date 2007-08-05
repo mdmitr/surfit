@@ -30,8 +30,6 @@ class intvec;
 // saving and loading
 
 /*! \ingroup tcl_curv_save_load
-    \fn bool curv_read(const char * filename, const char * curvname, int col1, int col2, const char * delimiter, int skip_lines, int grow_by);
-    
     \par Tcl syntax:
     curv_read \ref file "filename" "curvname" 1st_column 2nd_column "delimiters" number_of_lines_to_skip
 
@@ -55,8 +53,6 @@ boolvec * curv_read(const char * filename, const char * curvname=NULL	,
 		    const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
 
 /*! \ingroup tcl_curv_save_load
-    \fn bool curv_load(const char * filename, const char * curvname = NULL);
-    
     \par Tcl syntax:
     curv_load \ref file "filename" "curvname"
 
@@ -66,8 +62,6 @@ boolvec * curv_read(const char * filename, const char * curvname=NULL	,
 boolvec * curv_load(const char * filename, const char * curvname = NULL);
 
 /*! \ingroup tcl_curv_save_load
-    \fn bool curv_write(const char * filename, const char * curv_name = "*", const char * delimiter = "\t");
-    
     \par Tcl syntax:
     curv_write "filename" \ref str "curv_name" "delimiter"
 
@@ -77,8 +71,6 @@ boolvec * curv_load(const char * filename, const char * curvname = NULL);
 boolvec * curv_write(const char * filename, const char * curv_name = "*", const char * delimiter = "\t");
 
 /*! \ingroup tcl_curv_save_load
-    \fn bool curv_save(const char * filename, const char * curv_name = "*");
-    
     \par Tcl syntax:
     curv_save "filename" \ref str "curv_name"
 
@@ -91,8 +83,6 @@ boolvec * curv_save(const char * filename, const char * curv_name = "*");
 // other
 
 /*! \ingroup tcl_curv_other
-    \fn const char * curv_getName(const char * curv_position = "*");
-    
     \par Tcl syntax:
     curv_getName position_number
 
@@ -102,8 +92,6 @@ boolvec * curv_save(const char * filename, const char * curv_name = "*");
 strvec * curv_getName(const char * curv_name = "*");
 
 /*! \ingroup tcl_curv_other
-    \fn const char * curv_getNameAt(int pos);
-    
     \par Tcl syntax:
     curv_getNameAt position
 
@@ -113,8 +101,6 @@ strvec * curv_getName(const char * curv_name = "*");
 const char * curv_getNameAt(int pos);
 
 /*! \ingroup tcl_surf_other
-    \fn int curv_getId(const char * curve_name = "*");
-
     \par Tcl syntax:
     curv_getId \ref str "curve_name"
     
@@ -124,8 +110,6 @@ const char * curv_getNameAt(int pos);
 intvec * curv_getId(const char * curv_name = "*");
 
 /*! \ingroup tcl_curv_other
-    \fn bool curv_setName(const char * new_name, const char * curv_name = "*");
-    
     \par Tcl syntax:
     curv_setName "new_name" \ref str "curv_name"
 
@@ -135,8 +119,6 @@ intvec * curv_getId(const char * curv_name = "*");
 boolvec * curv_setName(const char * new_name, const char * curv_name = "*");
 
 /*! \ingroup tcl_curv_other
-    \fn void curv_del(const char * curv_name = "*");
-    
     \par Tcl syntax:
     curv_del "curv_name
 
@@ -149,8 +131,6 @@ boolvec * curv_setName(const char * new_name, const char * curv_name = "*");
 void curv_del(const char * curv_name = "*");
 
 /*! \ingroup tcl_curv_other
-    \fn int curv_size();
-    
     \par Tcl syntax:
     curv_size
 
@@ -160,8 +140,6 @@ void curv_del(const char * curv_name = "*");
 int curv_size();
 
 /*! \ingroup tcl_curv_other
-    \fn void curvs_info();
-    
     \par Tcl syntax:
     curvs_info
 

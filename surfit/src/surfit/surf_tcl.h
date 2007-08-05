@@ -38,8 +38,6 @@ class strvec;
 //
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_load(const char * filename, const char * surfname = NULL);
-
     \par Tcl syntax:
     surf_load \ref file "filename" \ref str "surfname"
     
@@ -52,8 +50,6 @@ class strvec;
 boolvec * surf_load(const char * filename, const char * surfname = NULL);
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save(const char * filename, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_save \ref file "filename" \ref str "surface_name" 
 
@@ -63,8 +59,6 @@ boolvec * surf_load(const char * filename, const char * surfname = NULL);
 boolvec * surf_save(const char * filename, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_plot(const char * filename, const char * surface_name = "*", size_t number_of_levels = 16, bool draw_isos = true, bool draw_colorscale = true);
-
     \par Tcl syntax:
     surf_plot \ref file "filename" \ref str "surface_name" number_of_levels draw_isos draw_colorscale
 
@@ -78,8 +72,6 @@ boolvec * surf_plot(const char * filename, const char * surface_name = "*", size
 //
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_getValue(REAL x, REAL y, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_getValue x y \ref str "surface_name"
 
@@ -89,8 +81,6 @@ boolvec * surf_plot(const char * filename, const char * surface_name = "*", size
 vec * surf_getValue(REAL x, REAL y, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_getValueIJ(int I, int J, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_getValueIJ I J \ref str "surface_name"
 
@@ -99,12 +89,11 @@ vec * surf_getValue(REAL x, REAL y, const char * surface_name = "*");
 
     \param I node number in X direction
     \param J node number in Y direction
+    \param surface_name \ref str "name" of the \ref d_surf "surface" object
 */
 vec * surf_getValueIJ(int I, int J, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_resid(const char * filename, const char * surface_name = "*", const char * points_name = "*")
-
     \par Tcl syntax:
     surf_resid \ref file "filename" \ref str "surface_name" \ref str "points_name"
 
@@ -115,8 +104,6 @@ vec * surf_getValueIJ(int I, int J, const char * surface_name = "*");
 boolvec * surf_resid(const char * filename, const char * surface_name = "*", const char * points_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_D1(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_D1 \ref str "surface_name"
 
@@ -127,8 +114,6 @@ boolvec * surf_resid(const char * filename, const char * surface_name = "*", con
 vec * surf_D1(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_D2(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_D2 \ref str "surface_name"
 
@@ -140,8 +125,6 @@ vec * surf_D1(const char * surface_name = "*");
 vec * surf_D2(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_gradient(const char * newname, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_gradient \ref str "surface_name" "newname"
 
@@ -151,8 +134,6 @@ vec * surf_D2(const char * surface_name = "*");
 boolvec * surf_gradient(const char * surface_name = "*", const char * newname = NULL);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_project(const char * surface_name = "*", const char * newname);
-
     \par Tcl syntax:
     surf_project \ref str "surface_name" "newname"
 
@@ -162,21 +143,18 @@ boolvec * surf_gradient(const char * surface_name = "*", const char * newname = 
 boolvec * surf_project(const char * surface_name = "*", const char * newname = NULL);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_add_noise(REAL std, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_add_noise std \ref str "surface_name"
 
     \par Description:
     adds normally-distributed noise with parameters N(0,std) to coeff
 
+    \param surface_name \ref str "name" of the \ref d_surf "surface" object
     \param std standart deviation
 */
 void surf_add_noise(REAL std, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_minz(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_minz \ref str "surface_name"
 
@@ -186,8 +164,6 @@ void surf_add_noise(REAL std, const char * surface_name = "*");
 vec * surf_minz(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_area_minz(const char * area_name = "*", const char * surface_name = "*");
-	
     \par Tcl syntax:
     surf_area_minz \ref str "area_name" \ref str "surface_name"
 
@@ -197,8 +173,6 @@ vec * surf_minz(const char * surface_name = "*");
 vec * surf_area_minz(const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_maxz(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_maxz \ref str "surface_name"
      
@@ -208,8 +182,6 @@ vec * surf_area_minz(const char * area_name = "*", const char * surface_name = "
 vec * surf_maxz(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_area_maxz(const char * area_name = "*", const char * surface_name = "*");
-	
     \par Tcl syntax:
     surf_area_maxz \ref str "area_name" \ref str "surface_name"
 
@@ -219,8 +191,6 @@ vec * surf_maxz(const char * surface_name = "*");
 vec * surf_area_maxz(const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_mean(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_mean \ref str "surface_name"
 
@@ -230,8 +200,6 @@ vec * surf_area_maxz(const char * area_name = "*", const char * surface_name = "
 vec * surf_mean(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_area_mean(const char * area_name = "*", const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_area_mean \ref str "area_name" \ref str "surface_name"
 
@@ -241,8 +209,6 @@ vec * surf_mean(const char * surface_name = "*");
 vec * surf_area_mean(const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_mask_mean(const char * mask_name = "*", const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_mask_mean \ref str "mask_name" \ref str "surface_name"
 
@@ -252,8 +218,6 @@ vec * surf_area_mean(const char * area_name = "*", const char * surface_name = "
 vec * surf_mask_mean(const char * mask_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_wmean(const char * wsurface_name = "*", const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_wmean \ref str "wsurface_name" \ref str "surface_name"
 
@@ -263,8 +227,6 @@ vec * surf_mask_mean(const char * mask_name = "*", const char * surface_name = "
 vec * surf_wmean(const char * wsurface_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_area_wmean(const char * area_name = "*", const char * wsurface_name = "*", const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_area_wmean \ref str "area_name" \ref str "wsurface_name" \ref str "surface_name"
 
@@ -274,8 +236,6 @@ vec * surf_wmean(const char * wsurface_name = "*", const char * surface_name = "
 vec * surf_area_wmean(const char * area_name = "*", const char * wsurface_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_mask_wmean(const char * mask_name = "*", const char * wsurface_name = "*", const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_mask_wmean \ref str "mask_name" \ref str "wsurface_name" \ref str "surface_name"
 
@@ -285,8 +245,6 @@ vec * surf_area_wmean(const char * area_name = "*", const char * wsurface_name =
 vec * surf_mask_wmean(const char * mask_name = "*", const char * wsurface_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_sum(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_sum \ref str "surface_name"
 
@@ -296,8 +254,6 @@ vec * surf_mask_wmean(const char * mask_name = "*", const char * wsurface_name =
 vec * surf_sum(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_sum_area(const char * area_name = "*",  const char * surface_name = "*");
-     
     \par Tcl syntax:
     surf_sum_area \ref str "area_name" \ref str "surface_name"
 
@@ -307,8 +263,6 @@ vec * surf_sum(const char * surface_name = "*");
 vec * surf_sum_area(const char * area_name = "*",  const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn int surf_cells_in_area(const char * area_name = "*",  const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_cells_in_area \ref str "area_name" \ref str "surface_name"
 
@@ -318,8 +272,6 @@ vec * surf_sum_area(const char * area_name = "*",  const char * surface_name = "
 intvec * surf_cells_in_area(const char * area_name = "*",  const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn REAL surf_std(REAL mean, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_std mean \ref str "surface_name"
 
@@ -329,8 +281,6 @@ intvec * surf_cells_in_area(const char * area_name = "*",  const char * surface_
 vec * surf_std(REAL mean, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_plus(const char * surface1_name, const char * surface2_name);
-
     \par Tcl syntax:
     surf_plus \ref str "surface1_name" \ref str "surface2_name"
 
@@ -353,8 +303,6 @@ boolvec * surf_plus(const char * surface1_name, const char * surface2_name);
 boolvec * surf_plus_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_minus(const char * surface1_name, const char * surface2_name);
-
     \par Tcl syntax:
     surf_minus \ref str "surface1_name" \ref str "surface2_name"
     
@@ -365,8 +313,6 @@ boolvec * surf_plus_area(const char * surface1_name, const char * area_name, con
 boolvec * surf_minus(const char * surface1_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_minus_area(const char * surface1_name, const char * area_name, const char * surface2_name);
-
     \par Tcl syntax:
     surf_minus_area \ref str "surface1_name" \ref str "area_name" \ref str "surface2_name"
     
@@ -377,8 +323,6 @@ boolvec * surf_minus(const char * surface1_name, const char * surface2_name);
 boolvec * surf_minus_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_mult(const char * surface1_name, const char * surface2_name);
-
     \par Tcl syntax:
     surf_mult \ref str "surface1_name" \ref str "surface2_name"
 
@@ -389,8 +333,6 @@ boolvec * surf_minus_area(const char * surface1_name, const char * area_name, co
 boolvec * surf_mult(const char * surface1_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_mult_area(const char * surface1_name, const char * area_name, const char * surface2_name);
-    
     \par Tcl syntax:
     surf_mult_area \ref str "surface1_name" \ref str "area_name" \ref str "surface2_name"
 
@@ -401,8 +343,6 @@ boolvec * surf_mult(const char * surface1_name, const char * surface2_name);
 boolvec * surf_mult_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_div(const char * surface1_name, const char * surface2_name);
-    
     \par Tcl syntax:
     surf_mult \ref str "surface1_name" \ref str "surface2_name"
 
@@ -413,8 +353,6 @@ boolvec * surf_mult_area(const char * surface1_name, const char * area_name, con
 boolvec * surf_div(const char * surface1_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_div_area(const char * surface1_name, const char * area_name, const char * surface2_name);
-    
     \par Tcl syntax:
     surf_div_area \ref str "surface1_name" \ref str "area_name" \ref str "surface2_name"
 
@@ -425,8 +363,6 @@ boolvec * surf_div(const char * surface1_name, const char * surface2_name);
 boolvec * surf_div_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_set(const char * surface1_name, const char * surface2_name);
-    
     \par Tcl syntax:
     surf_set \ref str "surface1_name" \ref str "surface2_name"
 
@@ -437,8 +373,6 @@ boolvec * surf_div_area(const char * surface1_name, const char * area_name, cons
 boolvec * surf_set(const char * surface1_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_set_area(const char * surface1_name, const char * area_name, const char * surface2_name);
-    
     \par Tcl syntax:
     surf_set_area \ref str "surface1_name" \ref str "area_name" \ref str "surface2_name"
 
@@ -449,8 +383,6 @@ boolvec * surf_set(const char * surface1_name, const char * surface2_name);
 boolvec * surf_set_area(const char * surface1_name, const char * area_name, const char * surface2_name);
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_plus_value(REAL val, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_plus_value val \ref str "surface_name"
 
@@ -461,8 +393,6 @@ boolvec * surf_set_area(const char * surface1_name, const char * area_name, cons
 boolvec * surf_plus_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_plus_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
-    
     \par Tcl syntax:
     surf_plus_value_area val \ref str "area_name" \ref str "surface_name"
       
@@ -473,8 +403,6 @@ boolvec * surf_plus_value(REAL val, const char * surface_name = "*");
 boolvec * surf_plus_value_area(REAL val, const char * surface_name = "*", const char * area_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_minus_value(REAL val, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_minus_value val \ref str "surface_name"
 
@@ -485,8 +413,6 @@ boolvec * surf_plus_value_area(REAL val, const char * surface_name = "*", const 
 boolvec * surf_minus_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_minus_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
-    
     \par Tcl syntax:
     surf_minus_value_area val \ref str "area_name" \ref str "surface_name"
       
@@ -497,8 +423,6 @@ boolvec * surf_minus_value(REAL val, const char * surface_name = "*");
 boolvec * surf_minus_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_mult_value(REAL val, const char * surface_name = "*");
-    
     \par Tcl syntax:
     surf_mult_value val \ref str "surface_name"
 
@@ -509,8 +433,6 @@ boolvec * surf_minus_value_area(REAL val, const char * area_name = "*", const ch
 boolvec * surf_mult_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_mult_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
-    
     \par Tcl syntax:
     surf_mult_value_area val \ref str "area_name" \ref str "surface_name"
       
@@ -521,8 +443,6 @@ boolvec * surf_mult_value(REAL val, const char * surface_name = "*");
 boolvec * surf_mult_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_div_value(REAL val, const char * surface_name = "*");
-    
     \par Tcl syntax:
     surf_div_value val \ref str "surface_name"
 
@@ -533,8 +453,6 @@ boolvec * surf_mult_value_area(REAL val, const char * area_name = "*", const cha
 boolvec * surf_div_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_div_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
-    
     \par Tcl syntax:
     surf_div_value_area val \ref str "area_name" \ref str "surface_name"
       
@@ -545,8 +463,6 @@ boolvec * surf_div_value(REAL val, const char * surface_name = "*");
 boolvec * surf_div_value_area(REAL val, const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_set_value(REAL val, const char * surface_name = "*");
-    
     \par Tcl syntax:
     surf_set_value val \ref str "surface_name"
 
@@ -557,8 +473,6 @@ boolvec * surf_div_value_area(REAL val, const char * area_name = "*", const char
 boolvec * surf_set_value(REAL val, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_set_value_area(const char * val, const char * area_name = "*", const char * surface_name = "*");
-    
     \par Tcl syntax:
     surf_set_value_area val \ref str "area_name" \ref str "surface_name"
       
@@ -569,8 +483,6 @@ boolvec * surf_set_value(REAL val, const char * surface_name = "*");
 boolvec * surf_set_value_area(const char * val, const char * area_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_filter_by_mask(const char * surface_name = "*", const char * mask_name = "*");
-    
     \par Tcl syntax:
     surf_filter_by_mask \ref str "surface_name" \ref str "mask_name"
 
@@ -580,8 +492,6 @@ boolvec * surf_set_value_area(const char * val, const char * area_name = "*", co
 boolvec * surf_filter_by_mask(const char * surface_name = "*", const char * mask_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn void surf_filter_in_area(const char * surface_name = "*", const char * area_name = "*");
-    
     \par Tcl syntax:
     surf_filter_in_area \ref str "surface_name" \ref str "area_name"
 
@@ -591,8 +501,6 @@ boolvec * surf_filter_by_mask(const char * surface_name = "*", const char * mask
 boolvec * surf_filter_in_area(const char * surface_name = "*", const char * area_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn void surf_filter_out_area(const char * surface_name = "*", const char * area_name = "*");
-    
     \par Tcl syntax:
     surf_filter_out_area \ref str "surface_name" \ref str "area_name"
 
@@ -602,8 +510,6 @@ boolvec * surf_filter_in_area(const char * surface_name = "*", const char * area
 boolvec * surf_filter_out_area(const char * surface_name = "*", const char * area_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_filter_by_surf(REAL eps, const char * surface1_name = "*", const char * surface2_name = "*")
-    
     \par Tcl syntax:
     surf_filter_by_surf eps \ref str "surface1_name" \ref str "surface2_name"
 
@@ -614,8 +520,6 @@ boolvec * surf_filter_out_area(const char * surface_name = "*", const char * are
 boolvec * surf_filter_by_surf(REAL eps, const char * surface1_name = "*", const char * surface2_name = "*");
 
 /*! \ingroup tcl_surf_math
-    \fn bool surf_swapxy(const char * surface_name = "*")
-    
     \par Tcl syntax:
     surf_swapxy \ref str "surface_name" 
 
@@ -629,8 +533,6 @@ boolvec * surf_swapxy(const char * surface_name = "*");
 //
 
 /*! \ingroup tcl_surf_math_wavan
-    \fn int surf_get_details_level(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_get_details_level \ref str "surface_name"
 
@@ -640,8 +542,6 @@ boolvec * surf_swapxy(const char * surface_name = "*");
 intvec * surf_get_details_level(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math_wavan
-    \fn bool surf_decomp(const char * surface_name = "*");
-
     \par Tcl syntax: 
     surf_decomp \ref str "surface_name"
 
@@ -651,8 +551,6 @@ intvec * surf_get_details_level(const char * surface_name = "*");
 boolvec * surf_decomp(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math_wavan
-    \fn bool surf_auto_decomp(REAL eps, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_auto_decomp eps \ref str "surface_name"
 
@@ -663,8 +561,6 @@ boolvec * surf_decomp(const char * surface_name = "*");
 boolvec * surf_auto_decomp(REAL eps, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math_wavan
-    \fn bool surf_recons(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_recons \ref str "surface_name"
 
@@ -674,8 +570,6 @@ boolvec * surf_auto_decomp(REAL eps, const char * surface_name = "*");
 boolvec * surf_recons(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_math_wavan
-    \fn bool surf_full_recons(const char * surface_name = "*");
-
     \par Tcl syntax: 
     surf_full_recons \ref str "surface_name"
 
@@ -689,8 +583,6 @@ boolvec * surf_full_recons(const char * surface_name = "*");
 //
 
 /*! \ingroup tcl_surf_conv
-    \fn bool surf_to_pnts(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_to_pnts \ref str "surface_name"
 
@@ -700,8 +592,6 @@ boolvec * surf_full_recons(const char * surface_name = "*");
 boolvec * surf_to_pnts(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_conv
-    \fn bool surf_to_mask(REAL true_from, REAL true_to, const char * surface_name = "*");
-    
     \par Tcl syntax:
     surf_to_mask true_from true_to \ref str "surface_name"
       
@@ -711,13 +601,25 @@ boolvec * surf_to_pnts(const char * surface_name = "*");
 */
 boolvec * surf_to_mask(REAL true_from, REAL true_to, const char * surface_name = "*");
 
+/*! \ingroup tcl_surf_conv
+    \par Tcl syntax:
+    surf_trace_cntr \ref str "surface_name" step from to 
+
+    \par Description:
+    Converts surface to contours using isoline tracing algorithm.
+    \param surface_name \ref str "name" of surfaces for converting
+    \param from starting value for isolines. If not set then determines automatically.
+    \param step step between isolines values. If not set then determines automatically.
+    \param to ending value for isolines. If not set then determines automatically.
+*/
+boolvec * surf_trace_cntr(const char * surface_name = "*", REAL step = FLT_MAX, REAL from = FLT_MAX, REAL to = FLT_MAX);
+
+
 //
 // OTHER
 //
 
 /*! \ingroup tcl_surf_other
-    \fn int surf_getCountX(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_getCountX \ref str "surface_name"
 
@@ -727,8 +629,6 @@ boolvec * surf_to_mask(REAL true_from, REAL true_to, const char * surface_name =
 intvec * surf_getCountX(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn int surf_getCountY(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_getCountY \ref str "surface_name"
 
@@ -738,8 +638,6 @@ intvec * surf_getCountX(const char * surface_name = "*");
 intvec * surf_getCountY(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn REAL surf_getStepX(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_getStepX \ref str "surface_name"
     
@@ -749,8 +647,6 @@ intvec * surf_getCountY(const char * surface_name = "*");
 vec * surf_getStepX(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn REAL surf_getStepY(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_getStepY \ref str "surface_name"
     
@@ -760,8 +656,6 @@ vec * surf_getStepX(const char * surface_name = "*");
 vec * surf_getStepY(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn bool surf_undef(REAL new_undef_value, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_undef new_undef_value \ref str "surface_name"
     
@@ -771,8 +665,6 @@ vec * surf_getStepY(const char * surface_name = "*");
 boolvec * surf_undef(REAL new_undef_value, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn void surf_info(const char * surface_name = "*");
-     
     \par Tcl syntax:
     surf_info \ref str "surface_name"
     
@@ -782,8 +674,6 @@ boolvec * surf_undef(REAL new_undef_value, const char * surface_name = "*");
 void surf_info(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn const char * surf_getName(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_getName \ref str "surface_name"
     
@@ -793,8 +683,6 @@ void surf_info(const char * surface_name = "*");
 strvec * surf_getName(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn const char * surf_getNameAt(int pos);
-    
     \par Tcl syntax:
     surf_getNameAt position
 
@@ -804,8 +692,6 @@ strvec * surf_getName(const char * surface_name = "*");
 const char * surf_getNameAt(int pos);
 
 /*! \ingroup tcl_surf_other
-    \fn int surf_getId(const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_getId \ref str "surface_name"
     
@@ -815,8 +701,6 @@ const char * surf_getNameAt(int pos);
 intvec * surf_getId(const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn bool surf_setName(const char * new_name, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_setName "new_name" \ref str "surface_name"
     
@@ -826,8 +710,6 @@ intvec * surf_getId(const char * surface_name = "*");
 boolvec * surf_setName(const char * new_name, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_other
-    \fn int surf_size();
-
     \par Tcl syntax:
     surf_size
     
@@ -837,8 +719,6 @@ boolvec * surf_setName(const char * new_name, const char * surface_name = "*");
 int surf_size();
 
 /*! \ingroup tcl_surf_other
-    \fn void surfs_info();
-
     \par Tcl syntax:
     surfs_info
     
@@ -848,8 +728,6 @@ int surf_size();
 void surfs_info();
 
 /*! \ingroup tcl_surf_other
-    \fn void surf_del(const char * surface_name = "*");
-    
     \par Tcl syntax:
     surf_del \ref str "surface_name"
 
@@ -857,8 +735,6 @@ void surfs_info();
     removes \ref d_surf "surface" from memory
 */
 void surf_del(const char * surface_name = "*");
-
-boolvec * surf_trace_cntr(const char * surface_name = "*", REAL step = FLT_MAX, REAL from = FLT_MAX, REAL to = FLT_MAX);
 
 }; // namespace surfit;
 

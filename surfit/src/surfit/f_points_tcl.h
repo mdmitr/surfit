@@ -25,8 +25,6 @@ namespace surfit {
 class boolvec;
 
 /*! \ingroup tcl_rules_points
-    \fn bool points(const char * points_name = "*");
-    
     \par Tcl syntax:
     points \ref str "points_name"
 
@@ -47,8 +45,6 @@ class boolvec;
 boolvec * points(const char * points_name = "*");
 
 /*! \ingroup tcl_rules_points
-    \fn bool points_add(REAL weight = 1, const char * points_name = "*");
-    
     \par Tcl syntax:
     points_add weight \ref str "points_name"
 
@@ -73,8 +69,6 @@ boolvec * points(const char * points_name = "*");
 boolvec * points_add(REAL weight = 1, const char * points_name = "*");
 
 /*! \ingroup tcl_rules_points
-    \fn bool points_leq(const char * points_name = "*", REAL penalty_factor = 0);
-    
     \par Tcl syntax:
     points_leq \ref str "points_name" penalty_factor
 
@@ -95,8 +89,6 @@ boolvec * points_add(REAL weight = 1, const char * points_name = "*");
 boolvec * points_leq(const char * points_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_points
-    \fn bool points_geq(const char * points_name = "*", REAL penalty_factor = 0);
-    
     \par Tcl syntax:
     points_geq \ref str "points_name" penalty_factor
 

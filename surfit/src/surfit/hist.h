@@ -35,6 +35,9 @@ d_hist * create_hist(REAL ifrom, REAL ito,
 SURFIT_EXPORT
 d_hist * create_hist(const d_hist * ihist);
 
+/*! \class d_hist
+    \brief class for operating with histogram
+*/
 class SURFIT_EXPORT d_hist : public data {
 protected:
 	

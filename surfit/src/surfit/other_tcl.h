@@ -23,8 +23,6 @@
 namespace surfit {
 
 /*! \ingroup tcl_other
-    \fn init_threads(int cnt);
-
     \par Tcl syntax:
     init_threads cnt
 
@@ -34,8 +32,6 @@ namespace surfit {
 void init_threads(int cnt);
 
 /*! \ingroup tcl_other
-    \fn int get_threads();
-
     \par Tcl syntax:
     get_threads
 
@@ -45,8 +41,6 @@ void init_threads(int cnt);
 int get_threads();
 
 /*! \ingroup tcl_other
-    \fn char * file_info(const char * filename);
-
     \par Tcl syntax:
     file_info "filename"
     
@@ -56,8 +50,6 @@ int get_threads();
 char * file_info(const char * filename);
 
 /*! \ingroup tcl_other
-    \fn void file_load(const char * filename);
-
     \par Tcl syntax:
     file_load "filename"
      
@@ -67,8 +59,6 @@ char * file_info(const char * filename);
 void file_load(const char * filename);
 
 /*! \ingroup tcl_other
-    \fn bool file_save(const char * filename);
-
     \par Tcl syntax:
     file_save "filename"
 
@@ -78,8 +68,6 @@ void file_load(const char * filename);
 bool file_save(const char * filename);
 
 /*! \ingroup tcl_other
-    \fn void clear_data();
-
     \par Tcl syntax:
     clear_data
 
@@ -89,8 +77,6 @@ bool file_save(const char * filename);
 void clear_data();
 
 /*! \ingroup tcl_other
-    \fn void mem_info();
-
     \par Tcl syntax:
     mem_info
 
@@ -98,6 +84,37 @@ void clear_data();
     prints information about \ref datatypes "data" in memory
 */
 void mem_info();
+
+/*! \ingroup tcl_other
+    \par Tcl syntax:
+    datafile_mode
+
+    \par Description
+    return current datafile mode. This mode tells how to use surfit datafiles for
+    saving various data in surfit native format. Two modes allowed : \ref datafile_new
+    and \ref datafile_append
+*/
+const char * datafile_mode();
+
+/*! \ingroup tcl_other
+    \par Tcl syntax:
+    datafile_new
+
+    \par Description
+    Sets \ref datafile_mode to "new" mode. This means that each time you saving
+    your data into datafile, the datafile first will be cleaned up and then data will be saved.
+*/
+const char * datafile_new();
+
+/*! \ingroup tcl_other
+    \par Tcl syntax:
+    datafile_append
+
+    \par Description
+    Sets \ref datafile_mode to "append" mode. This means that each time you saving
+    your data into datafile, data will be added to the end of datafile.
+*/
+const char * datafile_append();
 
 };
 

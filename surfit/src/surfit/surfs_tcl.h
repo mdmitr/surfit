@@ -22,8 +22,6 @@ namespace surfit {
 class boolvec;
 
 /*! \ingroup tcl_rules_surfs
-    \fn bool surface(const char * surface_name = "*");
-
     \par Tcl syntax:
     surface "surface_name"
 
@@ -42,8 +40,6 @@ class boolvec;
 boolvec * surface(const char * surface_name = "*");
 
 /*! \ingroup tcl_rules_surfs
-    \fn bool surface_add(REAL weight, const char * surface_name = "*");
-
     \par Tcl syntax:
     surface_add weight "surface_name"
 
@@ -67,8 +63,6 @@ boolvec * surface(const char * surface_name = "*");
 boolvec * surface_add(REAL weight, const char * surface_name = "*");
 
 /*! \ingroup tcl_rules_surfs
-    \fn bool surface_leq(const char * surface_name = "*", REAL penalty_factor = 0);
-
     \par Tcl syntax:
     surface_leq "surface_name" penalty_factor
 
@@ -88,8 +82,6 @@ boolvec * surface_add(REAL weight, const char * surface_name = "*");
 boolvec * surface_leq(const char * surface_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_surfs
-    \fn bool surface_geq(const char * surface_name = "*", REAL penalty_factor = 0);
-
     \par Tcl syntax:
     surface_geq "surface_name" penalty_factor
 
@@ -109,8 +101,6 @@ boolvec * surface_leq(const char * surface_name = "*", REAL penalty_factor = 0);
 boolvec * surface_geq(const char * surface_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_surfs
-    \fn bool trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name = "*");
-
     \par Tcl syntax:
     trend D1 D2 "surface_name"
 
@@ -211,8 +201,6 @@ boolvec * trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name = "*");
 boolvec * trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_name = "*");
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask(const char * val, const char * mask_name = "*");
-
     \par Tcl syntax:
     mask val "surface_name"
 
@@ -234,8 +222,6 @@ boolvec * trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_
 boolvec * mask(const char * val, const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_add(REAL val, REAL weight = 1, const char * mask_name = "*");
-
     \par Tcl syntax:
     mask_add val weight "surface_name"
 
@@ -249,8 +235,6 @@ boolvec * mask(const char * val, const char * mask_name = "*");
 boolvec * mask_add(REAL val, REAL weight = 1, const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_leq(REAL value, const char * mask_name = "*", REAL penalty_factor = 0);
-    
     \par Tcl syntax:
     mask_leq value "mask_name" penalty_factor
 
@@ -272,8 +256,6 @@ boolvec * mask_add(REAL val, REAL weight = 1, const char * mask_name = "*");
 boolvec * mask_leq(REAL value, const char * mask_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_geq(REAL value, const char * mask_name = "*", REAL penalty_factor = 0);
-    
     \par Tcl syntax:
     mask_geq value "mask_name" penalty_factor
 
@@ -297,8 +279,6 @@ boolvec * mask_leq(REAL value, const char * mask_name = "*", REAL penalty_factor
 boolvec * mask_geq(REAL value, const char * mask_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_surf(const char * surf_name = "*", const char * mask_name = "*");
-
     \par Tcl syntax:
     mask_surf "surf_name" mult
 
@@ -320,8 +300,6 @@ boolvec * mask_geq(REAL value, const char * mask_name = "*", REAL penalty_factor
 boolvec * mask_surf(const char * surf_name = "*", const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_surf_add(const char * surf_name = "*", REAL weight = 1, const char * mask_name = "*");
-
     \par Tcl syntax:
     mask_surf_add "surf_name" weight "mask_name"
 
@@ -349,8 +327,6 @@ boolvec * mask_surf(const char * surf_name = "*", const char * mask_name = "*");
 boolvec * mask_surf_add(const char * surf_name = "*", REAL weight = 1, const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_surf_leq(const char * surf_name = "*", const char * mask_name = "*", REAL penalty_factor = 0);
-    
     \par Tcl syntax:
     mask_surf_leq "surf_name" "mask_name" penalty_factor 
 
@@ -368,8 +344,6 @@ boolvec * mask_surf_add(const char * surf_name = "*", REAL weight = 1, const cha
 boolvec * mask_surf_leq(const char * surf_name = "*", const char * mask_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_surf_geq(const char * surf_name = "*", const char * mask_name = "*", REAL penalty_factor = 0);
-    
     \par Tcl syntax:
     mask_surf_geq "surf_name" "mask_name" penalty_factor
 
@@ -387,8 +361,6 @@ boolvec * mask_surf_leq(const char * surf_name = "*", const char * mask_name = "
 boolvec * mask_surf_geq(const char * surf_name = "*", const char * mask_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_mean(REAL mean, const char * mask_name = "*", REAL penalty_factor = -2);
-    
     \par Tcl syntax:
     mask_mean mean_value "mask_name" penalty_factor
 
@@ -406,8 +378,6 @@ boolvec * mask_surf_geq(const char * surf_name = "*", const char * mask_name = "
 boolvec * mask_mean(REAL mean, const char * mask_name = "*", REAL penalty_factor = -2);
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_wmean(REAL mean, const char * mask_name = "*", const char * surf_name = "*", REAL penalty_factor = -2);
-    
     \par Tcl syntax:
     mask_wmean weighted_mean_value "mask_name" "surf_name" penalty_factor
 
@@ -426,14 +396,13 @@ boolvec * mask_mean(REAL mean, const char * mask_name = "*", REAL penalty_factor
 boolvec * mask_wmean(REAL mean, const char * mask_name = "*", const char * surf_name = "*", REAL penalty_factor = -2);
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_completer(const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
-
     \par Tcl syntax:
     mask_completer "mask_name" D1 D2 alpha w 
 
     \par Description
     This rule implements \ref completer rule where \ref d_mask "mask" is true
 
+    \param mask_name \ref d_mask "mask" \ref str "name"
     \param D1 weight coefficient for rule that the resulting surface should tend to constant surface
     \param D2 weight coefficient for rule that the resulting surface should tend to plane surface
     \param alpha anisotropy angle (degrees)
@@ -442,14 +411,14 @@ boolvec * mask_wmean(REAL mean, const char * mask_name = "*", const char * surf_
 boolvec * mask_completer(const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
 /*! \ingroup tcl_rules_masks
-    \fn bool mask_completer_add(REAL weight = 1,const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
-
     \par Tcl syntax:
     mask_completer_add weight "mask_name" D1 D2 alpha w inside
 
     \par Description
     This rule adds rule \ref mask_completer with informational "weight" to the previous rule.
 
+    \param mask_name name of a \ref d_mask "mask" object
+    \param weight informational weight for \ref mask gridding rule
     \param D1 weight coefficient for rule that the resulting surface should tend to constant surface
     \param D2 weight coefficient for rule that the resulting surface should tend to plane surface
     \param alpha anisotropy angle (degrees)

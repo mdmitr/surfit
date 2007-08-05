@@ -25,8 +25,6 @@ namespace surfit {
 class boolvec;
 
 /*! \ingroup tcl_rules_other
-    \fn bool completer(REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
-
     \par Tcl syntax:
     completer D1 D2
 
@@ -79,8 +77,6 @@ class boolvec;
 bool completer(REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
 /*! \ingroup tcl_rules_other
-    \fn bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
-
     \par Tcl syntax:
     completer_add weight D1 D2
 
@@ -91,13 +87,13 @@ bool completer(REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
     \param weight informational weight for this rule
     \param D1 weight coefficient for rule that the resulting surface should tend to constant surface
     \param D2 weight coefficient for rule that the resulting surface should tend to plane surface
+    \param alpha anisotropy angle (degrees)
+    \param w anisotropy factor
 
 */
 bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
 /*! \ingroup tcl_rules_other
-    \fn bool value(const char * value = "undef");
-
     \par Tcl syntax:
     value val
 
@@ -114,11 +110,9 @@ bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, RE
     \Phi(u_{1,1},\ldots,u_{N,M}) = \sum_{i,j} \left( u_{i,j} - z \right)^2,
     \f]
 */
-bool value(const char * value = "undef");
+bool value(const char * val = "undef");
 
 /*! \ingroup tcl_rules_other
-    \fn bool value_add(REAL weight = 1, REAL val = 0);
-
     \par Tcl syntax:
     value_add weight val
 
@@ -142,8 +136,6 @@ bool value(const char * value = "undef");
 bool value_add(REAL weight = 1, REAL val = 0);
 
 /*! \ingroup tcl_rules_other
-    \fn bool mean(REAL value, REAL penalty_factor = -2);
-
     \par Tcl syntax:
     mean value penalty_factor
 
@@ -161,8 +153,6 @@ bool value_add(REAL weight = 1, REAL val = 0);
 bool mean(REAL value, REAL penalty_factor = -2);
 
 /*! \ingroup tcl_rules_other
-    \fn bool wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = -2);
-
     \par Tcl syntax:
     wmean value "surface_name" penalty_factor
 
@@ -181,8 +171,6 @@ bool mean(REAL value, REAL penalty_factor = -2);
 boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = -2);
 
 /*! \ingroup tcl_rules_other
-    \fn bool leq(REAL value, REAL penalty_factor = 0);
-
     \par Tcl syntax:
     leq value penalty_factor
 
@@ -202,8 +190,6 @@ boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor
 bool leq(REAL value, REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_other
-    \fn bool geq(REAL value, REAL penalty_factor = 0);
-
     \par Tcl syntax:
     geq value penalty_factor
 
@@ -223,8 +209,6 @@ bool leq(REAL value, REAL penalty_factor = 0);
 bool geq(REAL value, REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_other
-    \fn bool hist(const char * histogram_name = "*", REAL penalty_factor = -1, size_t treshold = 5);
-
     \par Tcl syntax:
     hist "histogram_name" penalty_factor threshold
 
@@ -233,7 +217,7 @@ bool geq(REAL value, REAL penalty_factor = 0);
     
     \param histogram_name desired \ref d_hist "histogram"
     \param penalty_factor parameter for \ref penalty algorithm
-    \param threshold another parameter for changing if something going wrong :)
+    \param treshold another parameter for changing if something going wrong :)
     
     \par Math:
     This command adds the condition:

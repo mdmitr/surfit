@@ -27,7 +27,6 @@ namespace surfit {
 extern SURFIT_EXPORT bool method_ok;
 
 /*! \ingroup tcl_other
-    \fn void surfit();
     executes gridding procedure. 
 
     \sa \ref surfit
@@ -36,7 +35,6 @@ SURFIT_EXPORT
 void surfit();
 
 /*! \ingroup tcl_other
-    \fn void clear_rules();
     removes all gridding rules
 */    
 SURFIT_EXPORT

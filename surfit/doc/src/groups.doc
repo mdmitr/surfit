@@ -1,143 +1,129 @@
 
-/*! 
-\defgroup surfit_commands surfit commands and variables
-*/
-
 /*!
 \defgroup tcl_rules surfit gridding rules
-\ingroup surfit_commands
 
-\defgroup tcl_rules_points gridding rules for points
+\defgroup tcl_rules_points for points
 \ingroup tcl_rules
 
-\defgroup tcl_rules_areas gridding rules for areas
+\defgroup tcl_rules_areas for areas
 \ingroup tcl_rules
 
-\defgroup tcl_rules_curvs gridding rules for curves
+\defgroup tcl_rules_curvs for curves
 \ingroup tcl_rules
 
-\defgroup tcl_rules_cntrs gridding rules for contours
+\defgroup tcl_rules_cntrs for contours
 \ingroup tcl_rules
 
-\defgroup tcl_rules_surfs gridding rules for surfaces
+\defgroup tcl_rules_surfs for surfaces
 \ingroup tcl_rules
 
-\defgroup tcl_rules_masks gridding rules for masks
+\defgroup tcl_rules_masks for masks
 \ingroup tcl_rules
 
-\defgroup tcl_rules_other other gridding rules
+\defgroup tcl_rules_other other
 \ingroup tcl_rules
 
 */
 
 /*! 
 \defgroup tcl_pnts commands for points
-\ingroup surfit_commands
 
-\defgroup tcl_pnts_save_load commands for points saving and loading
+\defgroup tcl_pnts_save_load save/load
 \ingroup tcl_pnts
 
-\defgroup tcl_pnts_math commands for mathematical operations with points
+\defgroup tcl_pnts_math mathematical operations 
 \ingroup tcl_pnts
 
-\defgroup tcl_pnts_other other commands for points
+\defgroup tcl_pnts_other other
 \ingroup tcl_pnts
 */
 
 /*! 
 \defgroup tcl_area commands for areas
-\ingroup surfit_commands
 
-\defgroup tcl_area_save_load commands for areas saving and loading
+\defgroup tcl_area_save_load save/load
 \ingroup tcl_area
 
-\defgroup tcl_area_other other commands for areas
+\defgroup tcl_area_other other
 \ingroup tcl_area
 */
 
 /*!
 \defgroup tcl_curv commands for curves
-\ingroup surfit_commands
 
-\defgroup tcl_curv_save_load commands for curves saving and loading
+\defgroup tcl_curv_save_load save/load
 \ingroup tcl_curv
 
-\defgroup tcl_curv_other other commands for curves
+\defgroup tcl_curv_other other
 \ingroup tcl_curv
 */
 
 /*!
 \defgroup tcl_cntr commands for contours
-\ingroup surfit_commands
 
-\defgroup tcl_cntr_save_load commands for contours saving and loading
+\defgroup tcl_cntr_save_load save/load
 \ingroup tcl_cntr
 
-\defgroup tcl_cntr_math mathematical commands for contours
+\defgroup tcl_cntr_math mathematical operations
 \ingroup tcl_cntr
 
-\defgroup tcl_cntr_other other commands for contours
+\defgroup tcl_cntr_other other
 \ingroup tcl_cntr
 */
 
 /*! 
 \defgroup tcl_surf commands for surfaces
-\ingroup surfit_commands
 
-\defgroup tcl_surf_save_load commands for surfaces saving and loading
+\defgroup tcl_surf_save_load save/load
 \ingroup tcl_surf
 
-\defgroup tcl_surf_math mathematical commands for surfaces
+\defgroup tcl_surf_math mathematical operations
 \ingroup tcl_surf
 
-\defgroup tcl_surf_math_wavan wavelet commands for surfaces
+\defgroup tcl_surf_math_wavan wavelets analysis
 \ingroup tcl_surf_math
 
-\defgroup tcl_surf_conv commands for converting surfaces
+\defgroup tcl_surf_conv convert
 \ingroup tcl_surf
 
-\defgroup tcl_surf_other other commands for surfaces
+\defgroup tcl_surf_other other 
 \ingroup tcl_surf
 */
 
 /*!
 \defgroup tcl_mask commands for masks
-\ingroup surfit_commands
 
-\defgroup tcl_mask_save_load commands for masks saving and loading
+\defgroup tcl_mask_save_load save/load
 \ingroup tcl_mask
 
-\defgroup tcl_mask_math mathematical commands for masks
+\defgroup tcl_mask_math mathematical operations
 \ingroup tcl_mask
 
-\defgroup tcl_mask_conv commands for converting masks
+\defgroup tcl_mask_conv convert
 \ingroup tcl_mask
 
-\defgroup tcl_mask_other other commands for masks
+\defgroup tcl_mask_other other
 \ingroup tcl_mask
 */
 
 /*!
 \defgroup tcl_grid commands for grid
-\ingroup surfit_commands
 
-\defgroup tcl_grid_save_load commands for grids saving and loading
+\defgroup tcl_grid_save_load save/load
 \ingroup tcl_grid
 
-\defgroup tcl_grid_create commands for creating grids
+\defgroup tcl_grid_create create
 \ingroup tcl_grid
 
-\defgroup tcl_grid_other other commands for grids
+\defgroup tcl_grid_other other
 \ingroup tcl_grid
 */
 
 /*! 
 \defgroup tcl_other other commands
-\ingroup surfit_commands
 */
 
 /*! 
 \defgroup surfit_variables surfit variables
-\ingroup surfit_commands
 */
 

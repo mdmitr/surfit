@@ -30,12 +30,8 @@ class strvec;
 // saving and loading
 
 /*! \ingroup tcl_area_save_load
-    \fn bool area_read(const char * filename, const char * areaname=NULL, 
-	       int col1=1, int col2=2,
-	       const char * delimiters=" ", int skip_lines = 0, int grow_by=250);
-    
     \par Tcl syntax:
-    area_read \ref file "filename" "area_name" first_column_position second_column_position "delimiters" skip_lines
+    area_read \ref file "filename" "area_name" first_column_position second_column_position "delimiters" skip_lines grow_by
 
     \par Description:
     reads \ref d_area "area" from formatted text file and sets its name to "areaname"
@@ -53,11 +49,9 @@ class strvec;
 */
 boolvec * area_read(const char * filename, const char * areaname=NULL	, 
 	       int col1=1, int col2=2,
-	       const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
+	       const char * delimiters=" \t", int skip_lines = 0, int grow_by=250);
 
 /*! \ingroup tcl_area_save_load
-    \fn bool area_load(const char * filename, const char * area_name = NULL);
-    
     \par Tcl syntax:
     area_load \ref file "filename" "area_name"
 
@@ -74,14 +68,13 @@ boolvec * area_read(const char * filename, const char * areaname=NULL	,
 boolvec * area_load(const char * filename, const char * area_name = NULL);
 
 /*! \ingroup tcl_area_save_load
-    \fn bool area_write(const char * filename, const char * area_name, const char * delimiter);
-    
     \par Tcl syntax:
     area_write "filename" \ref str "area_name" "delimiter"
 
     \par Description:
     writes \ref d_area "area" to formatted text file
 
+    \param area_name \ref str "name" of the \ref d_area "area" object
     \param filename text file filename
     \param delimiter delimiter between columns. May be " ", "\t", "," or other symbols
     
@@ -91,8 +84,6 @@ boolvec * area_load(const char * filename, const char * area_name = NULL);
 boolvec * area_write(const char * filename, const char * area_name = "*", const char * delimiter = "\t");
 
 /*! \ingroup tcl_area_save_load
-    \fn bool area_save(const char * filename, const char * area_name = "*");
-    
     \par Tcl syntax:
     area_save "filename" \ref str "area_name"
 
@@ -108,8 +99,6 @@ boolvec * area_save(const char * filename, const char * area_name = "*");
 // other
 
 /*! \ingroup tcl_area_other
-    \fn const char * area_getName(const char * area_name = "*");
-    
     \par Tcl syntax:
     area_getName \ref str "area_name"
 
@@ -119,8 +108,6 @@ boolvec * area_save(const char * filename, const char * area_name = "*");
 strvec * area_getName(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
-    \fn const char * area_getNameAt(int pos);
-    
     \par Tcl syntax:
     area_getNameAt position
 
@@ -130,8 +117,6 @@ strvec * area_getName(const char * area_name = "*");
 const char * area_getNameAt(int pos);
 
 /*! \ingroup tcl_area_other
-    \fn int area_getId(const char * area_name = "*");
-
     \par Tcl syntax:
     area_getId \ref str "area_name"
     
@@ -141,8 +126,6 @@ const char * area_getNameAt(int pos);
 intvec * area_getId(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
-    \fn bool area_setName(const char * new_name, const char * area_name = "*");
-    
     \par Tcl syntax:
     area_setName new_name \ref str "area_name"
 
@@ -152,8 +135,6 @@ intvec * area_getId(const char * area_name = "*");
 boolvec * area_setName(const char * new_name, const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
-    \fn void area_del(const char * area_name = "*");
-        
     \par Tcl syntax:
     area_del \ref str "area_name"
 
@@ -164,8 +145,6 @@ boolvec * area_setName(const char * new_name, const char * area_name = "*");
 void area_del(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
-    \fn int area_size();
-    
     \par Tcl syntax:
     area_size
 
@@ -175,8 +154,6 @@ void area_del(const char * area_name = "*");
 int area_size();
 
 /*! \ingroup tcl_area_other
-    \fn bool area_invert(const char * area_name = "*");
-
     \par Tcl syntax:
     area_invert \ref str "area_name"
 
@@ -186,8 +163,6 @@ int area_size();
 boolvec * area_invert(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
-    \fn void areas_info();
-    
     \par Tcl syntax:
     areas_info
 

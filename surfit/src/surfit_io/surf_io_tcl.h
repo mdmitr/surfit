@@ -22,8 +22,6 @@ namespace surfit {
 class boolvec;
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_load_grd(const char * filename, const char * surfname = 0)
-
     \par Tcl syntax:
     surf_load_grd \ref file "filename" "surfname"
 
@@ -39,8 +37,6 @@ class boolvec;
 boolvec * surf_load_grd(const char * filename, const char * surfname = 0);
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_load_gmt(const char * filename, const char * surfname = 0)
-
     \par Tcl syntax:
     surf_load_gmt \ref file "filename" "surfname"
 
@@ -53,8 +49,6 @@ boolvec * surf_load_grd(const char * filename, const char * surfname = 0);
 boolvec * surf_load_gmt(const char * filename, const char * surfname = 0);
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_load_grass(const char * filename, const char * surfname = 0)
-
     \par Tcl syntax:
     surf_load_grass \ref file "filename" "surfname"
 
@@ -67,10 +61,8 @@ boolvec * surf_load_gmt(const char * filename, const char * surfname = 0);
 boolvec * surf_load_grass(const char * filename, const char * surfname = 0);
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_load_arcgis(const char * filename, const char * surfname = 0)
-
     \par Tcl syntax:
-    surf_load_arcgis \ref "filename" "surfname"
+    surf_load_arcgis \ref file "filename" "surfname"
 
     \par Description:
     loads surface from ArcGIS ASCII file
@@ -81,8 +73,6 @@ boolvec * surf_load_grass(const char * filename, const char * surfname = 0);
 boolvec * surf_load_arcgis(const char * filename, const char * surfname = 0);
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_load_xyz(const char * filename, const char * surfname = 0, bool force = false)
-
     \par Tcl syntax:
     surf_load_xyz \ref file "filename" "surfname"
 
@@ -95,10 +85,6 @@ boolvec * surf_load_arcgis(const char * filename, const char * surfname = 0);
 boolvec * surf_load_xyz(const char * filename, const char * surfname = 0, bool force = false);
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_load_jpg(const char * filename, const char * surfname = 0,
-			   REAL minz = 0, REAL maxz = 0, 
-			   REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1)
-
     \par Tcl syntax:
     surf_load_jpg \ref file "filename" "surfname"
 
@@ -113,10 +99,6 @@ boolvec * surf_load_jpg(const char * filename, const char * surfname = 0,
 		   REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1);
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_load_bmp(const char * filename, const char * surfname = 0,
-			   REAL minz = 0, REAL maxz = 0, 
-			   REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1)
-
     \par Tcl syntax:
     surf_load_bmp \ref file "filename" "surfname" 
 
@@ -141,8 +123,6 @@ boolvec * surf_load_bmp(const char * filename, const char * surfname = 0,
 //
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_grd(const char * filename, const char * surface_name = "*", int format);
-
     \par Tcl syntax:
     surf_save_grd "filename" \ref str "surface_name" format
 
@@ -159,8 +139,6 @@ boolvec * surf_load_bmp(const char * filename, const char * surfname = 0,
 boolvec * surf_save_grd(const char * filename, const char * surface_name = "*", int format = 0);
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_gmt(const char * filename, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_save_gmt "filename" \ref str "surface_name"
 
@@ -173,8 +151,6 @@ boolvec * surf_save_grd(const char * filename, const char * surface_name = "*", 
 boolvec * surf_save_gmt(const char * filename, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_grass(const char * filename, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_save_grass "filename" \ref str "surface_name"
 
@@ -187,8 +163,6 @@ boolvec * surf_save_gmt(const char * filename, const char * surface_name = "*");
 boolvec * surf_save_grass(const char * filename, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_arcgis(const char * filename, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_save_arcgis "filename" \ref str "surface_name"
 
@@ -201,8 +175,6 @@ boolvec * surf_save_grass(const char * filename, const char * surface_name = "*"
 boolvec * surf_save_arcgis(const char * filename, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_xyz(const char * filename, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_save_xyz "filename" \ref str "surface_name"
 
@@ -218,8 +190,6 @@ boolvec * surf_save_arcgis(const char * filename, const char * surface_name = "*
 boolvec * surf_save_xyz(const char * filename, const char * surface_name = "*");
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_jpg(const char * filename, const char * surface_name = "*", int quality = 255);
-
     \par Tcl syntax:
     surf_save_jpg "filename" \ref str "surface_name"
 
@@ -236,8 +206,6 @@ boolvec * surf_save_xyz(const char * filename, const char * surface_name = "*");
 boolvec * surf_save_jpg(const char * filename, const char * surface_name = "*", int quality = 255);
 
 /*! \ingroup tcl_surf_save_load
-    \fn bool surf_save_bmp(const char * filename, const char * surface_name = "*");
-
     \par Tcl syntax:
     surf_save_bmp "filename" \ref str "surface_name"
 

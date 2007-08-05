@@ -31,8 +31,6 @@ class intvec;
 // save and load
 
 /*! \ingroup tcl_cntr_save_load
-    \fn bool cntr_read(const char * filename, const char * cntrname, int col1=1, int col2=2, int col3=3, const char * delimiters = " \t", int skip_lines = 0, int grow_by = 250);
-    
     \par Tcl syntax:
     cntr_read \ref file "filename" "cntrname" columns col1 col2 col3 "delimiters" skip_lines
 
@@ -56,8 +54,6 @@ boolvec * cntr_read(const char * filename, const char * cntrname,
 	       const char * delimiters=" \t", int skip_lines = 0, int grow_by=250);
 
 /*! \ingroup tcl_cntr_save_load
-    \fn bool cntr_load(const char * filename, const char * cntrname = NULL);
-    
     \par Tcl syntax:
     cntr_load \ref file "filename" "cntrname"
 
@@ -70,8 +66,6 @@ boolvec * cntr_read(const char * filename, const char * cntrname,
 boolvec * cntr_load(const char * filename, const char * cntrname = NULL);
 
 /*! \ingroup tcl_cntr_save_load
-    \fn bool cntr_write(const char * filename, const char * cntr_name = "*", const char * delimiter = "\t");
-    
     \par Tcl syntax:
     cntr_write \ref file "filename" \ref str "cntr_name" "delimiter"
 
@@ -84,8 +78,6 @@ boolvec * cntr_load(const char * filename, const char * cntrname = NULL);
 boolvec * cntr_write(const char * filename, const char * cntr_name = "*", const char * delimiter = "\t");
 
 /*! \ingroup tcl_cntr_save_load
-    \fn bool cntr_save(const char * filename, const char * cntr_name = "*");
-    
     \par Tcl syntax:
     cntr_save \ref file "filename" \ref str "cntr_name"
 
@@ -101,8 +93,6 @@ boolvec * cntr_save(const char * filename, const char * cntr_name = "*");
 // math
 
 /*! \ingroup tcl_cntr_math
-    \fn bool cntr_plus_real(REAL value, const char * cntr_name = "*");
-    
     \par Tcl syntax:
     cntr_plus_real value "cntr_name"
 
@@ -112,8 +102,6 @@ boolvec * cntr_save(const char * filename, const char * cntr_name = "*");
 boolvec * cntr_plus_real(REAL value, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_math
-    \fn bool cntr_minus_real(REAL value, const char * cntr_name = "*");
-    
     \par Tcl syntax:
     cntr_minus_real value \ref str "cntr_name"
 
@@ -123,8 +111,6 @@ boolvec * cntr_plus_real(REAL value, const char * cntr_name = "*");
 boolvec * cntr_minus_real(REAL value, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_math
-    \fn bool cntr_mult_real(REAL value, const char * cntr_name = "*");
-    
     \par Tcl syntax:
     cntr_mult_real value \ref str "cntr_name"
 
@@ -134,8 +120,6 @@ boolvec * cntr_minus_real(REAL value, const char * cntr_name = "*");
 boolvec * cntr_mult_real(REAL value, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_math
-    \fn bool cntr_div_real(REAL value, const char * cntr_name = "*");
-    
     \par Tcl syntax:
     cntr_div_real value \ref str "cntr_name"
 
@@ -148,8 +132,6 @@ boolvec * cntr_div_real(REAL value, const char * cntr_name = "*");
 // convers
 
 /*! \ingroup tcl_cntr_conv
-    \fn bool cntr_to_curv(const char * cntr_name = "*");
-    
     \par Tcl syntax:
     cntr_to_curv \ref str "cntr_name"
 
@@ -159,8 +141,6 @@ boolvec * cntr_div_real(REAL value, const char * cntr_name = "*");
 boolvec * cntr_to_curv(const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_conv
-    \fn bool cntr_to_pnts(REAL step, const char * cntr_name = "*");
-    
     \par Tcl syntax:
     cntr_to_pnts \ref str "cntr_name" step
 
@@ -173,8 +153,6 @@ boolvec * cntr_to_pnts(REAL step, const char * cntr_name = "*");
 // other
 
 /*! \ingroup tcl_cntr_other
-    \fn const char * cntr_getName(const char * cntr_name = "*");
-    
     \par Tcl syntax:
     cntr_getName \ref str "cntr_position"
 
@@ -184,8 +162,6 @@ boolvec * cntr_to_pnts(REAL step, const char * cntr_name = "*");
 strvec * cntr_getName(const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_other
-    \fn const char * cntr_getNameAt(int pos);
-    
     \par Tcl syntax:
     cntr_getNameAt position
 
@@ -195,8 +171,6 @@ strvec * cntr_getName(const char * cntr_name = "*");
 const char * cntr_getNameAt(int pos);
 
 /*! \ingroup tcl_cntr_other
-    \fn int cntr_getId(const char * contour_name = "*");
-
     \par Tcl syntax:
     cntr_getId \ref str "contour_name"
     
@@ -206,8 +180,6 @@ const char * cntr_getNameAt(int pos);
 intvec * cntr_getId(const char * contour_name = "*");
 
 /*! \ingroup tcl_cntr_other
-    \fn bool cntr_setName(const char * new_name, const char * cntr_name = "*");
-    
     \par Tcl syntax:
     cntr_setName "new_name" \ref str "cntr_name"
 
@@ -217,8 +189,6 @@ intvec * cntr_getId(const char * contour_name = "*");
 boolvec * cntr_setName(const char * new_name, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_other
-    \fn void cntr_del(const char * cntr_name);
-    
     \par Tcl syntax:
     cntr_del \ref str "cntr_name"
 
@@ -228,8 +198,6 @@ boolvec * cntr_setName(const char * new_name, const char * cntr_name = "*");
 void cntr_del(const char * cntr_name);
 
 /*! \ingroup tcl_cntr_other
-    \fn int cntr_size();
-    
     \par Tcl syntax:
     cntr_size
 
@@ -239,8 +207,6 @@ void cntr_del(const char * cntr_name);
 int cntr_size();
 
 /*! \ingroup tcl_cntr_other
-    \fn void cntrs_info();
-    
     \par Tcl syntax:
     cntrs_info
 
