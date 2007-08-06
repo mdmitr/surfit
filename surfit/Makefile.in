@@ -384,8 +384,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign
 INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/sstuff/ptypes -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io -DANSI_DECLARATORS -DTRILIBRARY
-EXTRA_DIST = vc6/surfit* vc6/sstuff* vc6/freeflow* vc6/globe* vc7/* \
-	vc8/* src/surfit/interface/*.i examples/* \
+EXTRA_DIST = vc8/* src/surfit/interface/*.i examples/* \
 	src/freeflow/interface/*.i src/globe/interface/*.i \
 	src/surfit_io/interface/*.i doc/gallery/* doc/src/* doc/html/* \
 	doc/surfit.cfg doc/make_doc* make_release.bat \

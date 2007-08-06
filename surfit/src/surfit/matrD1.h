@@ -162,7 +162,6 @@ protected:
 
 };
 
-inline
 void sums_points_D1(size_t i, size_t j, 
 		    size_t NN, size_t MM, 
 		    size_t local_NN, size_t local_MM,
