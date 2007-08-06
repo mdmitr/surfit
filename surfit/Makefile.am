@@ -5,12 +5,7 @@ libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
 
 INCLUDES = $(TCLINCLUDE) $(NETCDFINCLUDE) -Isrc/sstuff -Isrc/sstuff/ptypes -Isrc/surfit -Isrc/freeflow -Isrc/surfit_io -DANSI_DECLARATORS -DTRILIBRARY
-EXTRA_DIST = vc6/surfit*
-EXTRA_DIST += vc6/sstuff*
-EXTRA_DIST += vc6/freeflow*
-EXTRA_DIST += vc6/globe*
-EXTRA_DIST += vc7/*
-EXTRA_DIST += vc8/*
+EXTRA_DIST = vc8/*
 EXTRA_DIST += src/surfit/interface/*.i
 EXTRA_DIST += examples/*
 EXTRA_DIST += src/freeflow/interface/*.i
