@@ -117,7 +117,7 @@ FunctionEnd
 
 Function .onInstSuccess
 
-MessageBox MB_YESNO "Do you want to associate .tcl files with tclsh83.exe?" IDNO nodatassoc_tcl
+MessageBox MB_YESNO "Do you want to associate .tcl files with tclsh84.exe?" IDNO nodatassoc_tcl
 ; back up old value of .tcl
 	!define Index "Line${__LINE__}"
 	  ReadRegStr $1 HKCR ".tcl" ""
@@ -130,10 +130,10 @@ MessageBox MB_YESNO "Do you want to associate .tcl files with tclsh83.exe?" IDNO
 	  StrCmp $0 "" 0 "${Index}-Skip"
 		WriteRegStr HKCR "Tcl script" "" "Tcl script"
 		WriteRegStr HKCR "Tcl script\shell" "" "open"
-		WriteRegStr HKCR "Tcl script\DefaultIcon" "" "$INSTDIR\bin\tclsh83.exe,0"
+		WriteRegStr HKCR "Tcl script\DefaultIcon" "" "$INSTDIR\bin\tclsh84.exe,0"
 	"${Index}-Skip:"
 	  WriteRegStr HKCR "Tcl script\shell\open\command" "" \
-	    '$INSTDIR\bin\tclsh83.exe "%1"'
+	    '$INSTDIR\bin\tclsh84.exe "%1"'
 	  WriteRegStr HKCR "Tcl script\shell\edit" "" "Edit Tcl script"
 	  WriteRegStr HKCR "Tcl script\shell\edit\command" "" \
 	    'notepad.exe "%1"'
@@ -246,13 +246,13 @@ binary_done:
  	  File "..\bin\zlib1.dll"
 	  File "..\bin\netcdf.dll"
 
-; Tcl 8.3.5
+; Tcl 8.4.15
 
-	  File /r "..\..\libs\tcl8.3.5\win\Release\tcl83.dll"
-	  File /r "..\..\libs\tcl8.3.5\win\Release\tclsh83.exe"
-;	  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\tclsh83.lnk" "$INSTDIR\bin\tclsh83.exe"
+	  File /r "..\..\libs\tcl8.4.15\win\Release_VC8\tcl84.dll"
+	  File /r "..\..\libs\tcl8.4.15\win\Release_VC8\tclsh84.exe"
+;	  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\tclsh84.lnk" "$INSTDIR\bin\tclsh84.exe"
           SetOutPath "$INSTDIR\library"
-	  File /r "..\..\libs\tcl8.3.5\library\*"
+	  File /r "..\..\libs\tcl8.4.15\library\*"
  
 
 
