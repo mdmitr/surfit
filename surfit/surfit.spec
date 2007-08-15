@@ -104,6 +104,6 @@ rm -rf ${RPM_BUILD_ROOT}
 %{_datadir}/%{name}-%{version}/*
 
 %changelog
-* Mon Jul 23 2007 Mikhail Dmitrievsky <mishadm@mail.ru> 2.2-0
+* Mon Jul 23 2007 Mikhail Dmitrievsky <mishadm@mail.ru> 3.0-0
 - first packaging for Fedora 7
 

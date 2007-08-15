@@ -117,7 +117,7 @@ FunctionEnd
 
 Function .onInstSuccess
 
-MessageBox MB_YESNO "Do you want to associate .tcl files with tclsh84.exe?" IDNO nodatassoc_tcl
+MessageBox MB_YESNO "Do you want to associate .tcl files with surfit?" IDNO nodatassoc_tcl
 ; back up old value of .tcl
 	!define Index "Line${__LINE__}"
 	  ReadRegStr $1 HKCR ".tcl" ""
@@ -130,10 +130,10 @@ MessageBox MB_YESNO "Do you want to associate .tcl files with tclsh84.exe?" IDNO
 	  StrCmp $0 "" 0 "${Index}-Skip"
 		WriteRegStr HKCR "Tcl script" "" "Tcl script"
 		WriteRegStr HKCR "Tcl script\shell" "" "open"
-		WriteRegStr HKCR "Tcl script\DefaultIcon" "" "$INSTDIR\bin\tclsh84.exe,0"
+		WriteRegStr HKCR "Tcl script\DefaultIcon" "" "$INSTDIR\bin\surfit.exe,0"
 	"${Index}-Skip:"
 	  WriteRegStr HKCR "Tcl script\shell\open\command" "" \
-	    '$INSTDIR\bin\tclsh84.exe "%1"'
+	    '$INSTDIR\bin\surfit.exe "%1"'
 	  WriteRegStr HKCR "Tcl script\shell\edit" "" "Edit Tcl script"
 	  WriteRegStr HKCR "Tcl script\shell\edit\command" "" \
 	    'notepad.exe "%1"'
