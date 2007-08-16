@@ -31,11 +31,7 @@ bool init_surfit_lib(Tcl_Interp * interp) {
 	char * lib = NULL; 
 	lib = getenv("SURFIT_LIB");
 	
-#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
-	char libsurfit[] = "libsurfit.dll";
-#else
-	char libsurfit[] = "libsurfit.so";
-#endif
+	char libsurfit[] = "libsurfit[info sharedlibextension]";
 
 	bool libs_loaded = false;
 	char * surfit;
