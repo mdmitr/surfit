@@ -1,6 +1,6 @@
 #! /bin/sh
 
-rm html -rf
+rm -rf html
 mkdir html
 
 cp gallery/*.* html/
