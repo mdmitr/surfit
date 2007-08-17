@@ -49,7 +49,7 @@ Documentation in html format for %{name}
 %setup -q
 
 %build
-./configure --prefix=%{_prefix}
+./configure --prefix=%{_prefix} --libdir=%{_libdir}
 make 
 
 %install

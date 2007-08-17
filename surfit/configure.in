@@ -103,9 +103,13 @@ fi
 # check in a few common install locations
 if test x"${TCLCONFIG}" = x ; then
     for i in `ls -d ${prefix}/lib 2>/dev/null` \
+	     `ls -d ${prefix}/lib64 2>/dev/null` \
              `ls -d /usr/lib 2>/dev/null` \
+	     `ls -d /usr/lib64 2>/dev/null` \
              `ls -d /usr/lib/tcl* 2>/dev/null` \
-	     `ls -d /usr/local/lib 2>/dev/null` ; do
+	     `ls -d /usr/lib64/tcl* 2>/dev/null` \
+	     `ls -d /usr/local/lib 2>/dev/null` \
+	     `ls -d /usr/local/lib64 2>/dev/null ` ; do
 	if test -f "$i/tclConfig.sh" ; then
 	    TCLCONFIG=`(cd $i; pwd)`
 	    break
@@ -155,7 +159,7 @@ fi
 
 AC_MSG_CHECKING(for Tcl library)
 if test -z "$TCLLIB"; then
-dirs="$prefix/lib /usr/local/lib /usr/lib /opt/local/lib"
+dirs="$prefix/lib $prefix/lib64 /usr/local/lib /usr/local/lib64 /usr/lib /usr/lib64 /opt/local/lib /opt/local/lib64"
 for i in $dirs ; do
 	if test -r $i/libtcl.a; then
 	    AC_MSG_RESULT($i)
@@ -204,7 +208,7 @@ fi
 
 AC_MSG_CHECKING(for netcdf library)
 if test -z "$NETCDFLIB"; then
-dirs="$prefix/lib /usr/local/lib /usr/lib /opt/local/lib"
+dirs="$prefix/lib $prefix/lib64 /usr/local/lib /usr/local/lib64 /usr/lib /usr/lib64 /opt/local/lib /opt/local/lib64"
 for i in $dirs ; do
 	if test -r $i/libnetcdf.a; then
 	    AC_MSG_RESULT($i)
