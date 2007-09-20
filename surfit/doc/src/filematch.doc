@@ -1,9 +1,6 @@
-/*! \page file Regular Expression Syntax
+/*! \page file File Name Expression Syntax
 
-Starting from version 3.0 surfit supports regular expressions (regexp). You can use
-regular expressions for specifying set of data objects, gridding rules and etc.
-
-Here you can find regexp syntax:
-http://www.tcl.tk/man/tcl8.3/TclCmd/re_syntax.htm
+Starting from version 3.0 surfit supports wildcards for filenames.
+It works like \ref str "string match" feature.
 
 */
