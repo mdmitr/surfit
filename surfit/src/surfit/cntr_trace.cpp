@@ -864,8 +864,21 @@ std::vector<fiso *> * trace_isos(vec * levels,
         
 	size_t isos_cnt = isos->size();
 	// bottom
-	j = 0;
-try_again:
+	// find appropriate bottom line
+	bool founded = false;
+	for (j = 0; j < mm-1; j++) 
+	{
+		for (i = 0; i < nn-1; i++)
+		{
+			if ( (*data)(i +j*nn) != uval ) {
+				founded = true;
+				break;
+			}
+		}
+		if (founded)
+			break;
+	}
+
 	for (i = 0; i < nn-1; i++) 
 	{
 		update_vals(vals, i, j, info);
@@ -905,12 +918,7 @@ try_again:
 			}
 		}
 	}
-	
-	if (isos->size() == isos_cnt) { // no isolines was added by the whole matrix row
-		j++;
-		if (j < mm)
-			goto try_again;
-	}
+
 
 	// left
 	///*
