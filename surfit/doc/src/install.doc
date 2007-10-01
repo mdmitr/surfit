@@ -1,33 +1,114 @@
-/*! \page install Install instructions
+/*! \page install Installation instructions
 
-<H2>Use installer (Windows only):</H2>
+<H2>WINDOWS:</H2>
+
+<H3>Use installer:</H3>
 It's very simple! :) Just run surfit-3.0-setup.exe.
 
-<H2>Building surfit from sources:</H2>
+<H3>Building surfit from sources:</H3>
 
-First of all you must have installed :
-\li <A HREF="http://tcl.sourceforge.net/">TCL</A> ver >= 8.3 or find ActiveTcl in the Web (for Windows)
-
-<H3>WINDOWS:</H3>
-
-Under Windows surfit can be built with Microsoft VC++ 6.0, vc7 or vc8:
+Under Windows surfit can be built with Microsoft VC++ vc8:
 \li extract archive surfit-3.0.tar.gz
 \li examine directories surfit-3.0/vc6, vc7 and vc8 
 
-Before building make shure that you have TCL library installed!
-May be you'll want to install netCDF library to build libsurfit_io with GMT import/export.
-You can download it from http://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf-3.6.1.tar.gz 
+Before building you need download and install following libraries:
+\li tcl8.4.15
+\li jpeg-6b (optional)
+\li <A HREF="http://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf-3.6.1.tar.gz">netcdf</A> (optional, need for GMT import/export support)
+\li zlib123-dll (optional)
+
 Also you may want to download all libraries necessary for building surfit from 
-<A HREF="http://www.gridding.info/stats/phpmyvisites.php?url=../download/libs.exe&id=1&pagename=FILE:libs.exe">here</A>
+<A HREF="http://www.gridding.info/download/libs.exe">www.gridding.info</A>. This is
+a self-extracting archive, you should extract it near the surfit sources:
 
-<H3>UNIX:</H3>
+<pre>
+ + surfit
+ + libs
+ 	+ acml       
+	 + jpeg-6b    
+	 + mkl        
+	 + netcdf     
+	 + readme.txt 
+	 + stxxl      
+	 + swig       
+	 + tcl8.4.15  
+	 + vc8_redist 
+	 + zlib123-dll
+</pre>
 
+After that you can open projects in "vc8" directory or run make_debug.bat or make_release.bat
+
+<H2>UNIX/Linux/MacOSX:</H2>
+
+<H3>Use installer:</H3>
+With Fedora Linux use surfit-3.0-fc7.rpm.
+
+<H3>Building surfit from sources:</H3>
+
+<H4>Ubuntu:</H4>
+
+\li install tcl
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
 <TD>
 <pre>
-$ gunzip surfit-3.0.tar.gz
-$ tar xvf surfit-3.0.tar
+$ sudo apt-get install tcl8.3
+$ sudo apt-get install tcl8.3-dev
+</pre>
+</TD>
+</TR>
+</TABLE>
+
+\li install zlib
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ sudo wget http://www.zlib.net/zlib-1.2.3.tar.gz
+$ sudo tar -xvf zlib-1.2.3.tar.gz
+$ cd zlib-1.2.3/
+$ ./configure
+$ sudo make
+$ sudo make install
+</pre>
+</TD>
+</TR>
+</TABLE>
+
+\li install libjpeg
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ sudo apt-get install libjpeg-dev
+</pre>
+</TD>
+</TR>
+</TABLE>
+
+\li install netcdf library
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ sudo wget http://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf.tar.gz
+$ sudo tar -xvf netcdf.tar.gz
+$ cd netcdf-3.6.2
+$ ./configure
+$ sudo make
+$ sudo make install
+</pre>
+</TD>
+</TR>
+</TABLE>
+
+\li install surfit
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ sudo wget http://downloads.sourceforge.net/surfit/surfit-3.0.tar.gz
+$ sudo tar -xvf surfit-3.0.tar.gz
 $ cd surfit-3.0
 $ ./configure
 $ make
@@ -37,6 +118,100 @@ $ make install
 </TR>
 </TABLE>
 
-Don't forget to check your LD_LIBRARY_PATH variable. It must include surfit binaries path.
+
+<H4>Others:</H4>
+
+\li install tcl
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ wget http://prdownloads.sourceforge.net/tcl/tcl8.4.15-src.tar.gz
+$ tar -xvf tcl8.4.15-src.tar.gz
+$ cd tcl8.4.15
+$ cd unix
+$ ./configure
+$ make
+$ sudo make install
+</pre>
+</TD>
+</TR>
+</TABLE>
+
+\li install zlib
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ wget http://www.zlib.net/zlib-1.2.3.tar.gz
+$ tar -xvf zlib-1.2.3.tar.gz
+$ cd zlib-1.2.3/
+$ ./configure
+$ make
+$ sudo make install
+</pre>
+</TD>
+</TR>
+</TABLE>
+
+\li install libjpeg
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ wget http://www.ijg.org/files/jpegsrc.v6b.tar.gz
+$ tar -xvf jpegsrc.v6b.tar.gz
+$ cd jpeg-6b
+$ ./configure
+$ make
+$ sudo make install
+</pre>
+</TD>
+</TR>
+</TABLE>
+
+\li install netcdf library
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ sudo wget http://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf.tar.gz
+$ sudo tar -xvf netcdf.tar.gz
+$ cd netcdf-3.6.2
+$ ./configure
+$ sudo make
+$ sudo make install
+</pre>
+</TD>
+</TR>
+</TABLE>
+
+\li install surfit
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ wget http://downloads.sourceforge.net/surfit/surfit-3.0.tar.gz
+$ tar -xvf surfit-3.0.tar.gz
+$ cd surfit-3.0
+$ ./configure
+$ make
+$ make install
+</pre>
+</TD>
+</TR>
+</TABLE>
+
+Don't forget to check your LD_LIBRARY_PATH variable. It must include surfit binaries path. 
+For example use command:
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<pre>
+$ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+</pre>
+</TD>
+</TR>
+</TABLE>
 
 */
