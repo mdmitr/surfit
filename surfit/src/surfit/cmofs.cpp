@@ -28,6 +28,7 @@
 #include "free_elements.h"
 #include "vec.h"
 #include "bitvec.h"
+#include "data_manager.h"
 
 #include <time.h>
 
@@ -49,6 +50,10 @@ void surfit() {
 	if (strlen(map_name) == 0) {
 		free(map_name);
 		map_name = strdup("noname");
+	}
+
+	if (functionals->size() == 0) {
+		surfit_data_manager->auto_functionals();
 	}
 
 	grid_init();

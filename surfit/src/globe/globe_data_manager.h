@@ -41,6 +41,7 @@ public:
 	int data_count() const;
 	const data * data_get(int i) const;
 	const char * getName() const {return "globe";};
+	void auto_functionals(int priority) const;
 };
 
 }; // namespace surfit;

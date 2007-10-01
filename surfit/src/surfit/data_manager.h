@@ -61,6 +61,8 @@ public:
 	virtual bool bounds(REAL & minx, REAL & maxx, REAL & miny, REAL & maxy) const;
 	//! returns manager name
 	virtual const char * getName() const = 0;
+	//! creates functionals from data automatically
+	virtual void auto_functionals(int priority) const {};
 };
 
 /*! \class surfit_manager
@@ -78,6 +80,7 @@ public:
 	char * types_info() const;
 	bool auto_load(const char * filename, const char * first1024, int readed) const;
 	const char * getName() const { return "surfit"; };
+	virtual void auto_functionals(int priority) const;
 };
 
 /*! \class data_manager
@@ -116,7 +119,9 @@ public:
 	//! returns data with specified type, name and id
 	const data * data_get(const char * type, const char * name, int id) const;
 
-	int get_managers_count() const;
+	void auto_functionals() const;
+
+	size_t get_managers_count() const;
 	const manager * get_manager(int pos) const;
 	void add_manager(manager * m);
 	void set_manager(manager * m, int pos);

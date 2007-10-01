@@ -314,7 +314,7 @@ const data * data_manager::data_get(const char * type, const char * name, int id
 	return NULL;
 };
 
-int data_manager::get_managers_count() const {
+size_t data_manager::get_managers_count() const {
 	return managers->size();
 };
 	
@@ -328,6 +328,20 @@ void data_manager::add_manager(manager * m) {
 	
 void data_manager::set_manager(manager * m, int pos) {
 	(*managers)[pos]=m;
+};
+
+void data_manager::auto_functionals() const 
+{
+	int priority;
+	for (priority = 0; priority < 33; priority++)
+	{
+		size_t i;
+		for (i = 0; i < get_managers_count(); i++)
+		{
+			const manager * m = get_manager(i);
+			m->auto_functionals(priority);
+		}
+	}
 };
 
 //////////////////////////////
@@ -729,6 +743,31 @@ const data * surfit_manager::data_get(int i) const {
 	return NULL;
 };
 
+void surfit_manager::auto_functionals(int priority) const
+{
+	switch(priority)
+	{
+	case 0:
+		{
+			Tcl_Eval(interp,"points");
+			Tcl_Eval(interp,"surface");
+			Tcl_Eval(interp,"fault");
+		}
+		break;
+
+	case 31:
+		{
+			Tcl_Eval(interp,"hist");
+		}
+		break;
+	case 32:
+		{
+			Tcl_Eval(interp,"completer");
+			Tcl_Eval(interp,"contours_add 10");
+		}
+		break;
+	};
+};
 
 ///////////////////////
 //

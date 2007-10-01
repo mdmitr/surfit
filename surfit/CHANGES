@@ -1,4 +1,4 @@
-surfit 2.2 changes:
+surfit 3.0 changes:
 
 Bugfixes:
 	* bugfix in pnts_read function. Allows to use various separators
@@ -9,6 +9,8 @@ Bugfixes:
 	* bugfix in trend gridding rule.
 
 New:
+	+ procedure for creation of gridding rules automatically. Just load your data in
+	  surfit and run gridding algorithm with "surfit" command.
 	+ 64-bit platform support
 	+ added pnts_abs function
 	+ added surf_filter_by_mask

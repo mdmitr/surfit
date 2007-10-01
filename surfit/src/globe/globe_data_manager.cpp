@@ -21,6 +21,9 @@
 #include "globe_data_manager.h"
 #include "variables.h"
 #include "boolvec.h"
+#include "interp.h"
+
+#include <tcl.h>
 
 #include "sstuff.h"
 
@@ -180,6 +183,19 @@ exit:
 	sstuff_free_char(name);
 	return res;
 };
+
+void globe_manager::auto_functionals(int priority) const
+{
+	switch(priority)
+	{
+	case 0:
+		{
+			Tcl_Eval(interp,"dem");
+		}
+		break;
+	};
+};
+
 
 }; // namespace surfit;
 
