@@ -2,6 +2,7 @@
 
 <H2>Content</H2>
 \li <A href="#starting">Starting <TT><B>surfit</B></TT></A>
+\li <A href="#auto">How to get results quickly</A>
 \li <A href="#loading">Loading data</A>
 \li <A href="#grid">Creating grid</A>
 \li <A href="#gridding">Gridding</A>
@@ -9,75 +10,54 @@
 \li <A href="#visual">Visualizing results</A>
 
 <H2><A NAME="starting">Starting surfit</A></H2>
-<TT><B>surfit</B></TT> based on Tcl scripting language, so first of all you must
-start tclsh. It means that you must have Tcl installed on your 
-computer. 
-
-After that you can load libsurfit shared library (or dll) with command:
-
-<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
-<TR>
-<TD>
-<pre>
-$ load libsurfit[info sharedlibextension]
-</pre>
-</TD>
-</TR>
-</TABLE>
-
-Under Windows this command can be simplified:
-
-<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
-<TR>
-<TD>
-<pre>
-$ load libsurfit
-</pre>
-</TD>
-</TR>
-</TABLE>
-
-Under Unix you can type
-
-<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
-<TR>
-<TD>
-<pre>
-$ load libsurfit.so
-</pre>
-</TD>
-</TR>
-</TABLE>
-
-If libsurfit was succesfully loaded into memory, you would see the license text:
+To start <TT><B>surfit</B></TT> you could run programm called surfit (surfit.exe under Windows).
+This program is extended Tcl shell application which automatically loads all <TT><B>surfit</B></TT>
+libraries. If <TT><B>surfit</B></TT> was installed correctly, you should see the following:
 
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
 <TD>
 <TT><PRE>
+loading surfit v3.0
 surfit version 3.0, Copyright (c) 2002-2007 M.V.Dmitrievsky & V.N.Kutrunov
 surfit comes with ABSOLUTELY NO WARRANTY; for details type `show_w'.
 This is free software, and you are welcome to redistribute it
 under certain conditions; type `show_c' for details.
+loading module surfit_io v3.0
+loading module globe v3.0
+loading module freeflow v3.0
 </PRE></TT>
 </TD>
 </TR>
 </TABLE>
 
-A common error received by first-time users is the following:
+A common error received by first-time users is:
 
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
 <TD>
 <TT><PRE>
-$ load libsurfit.so
 couldn't load file "libsurfit.so": libsurfit.so: cannot open shared object file:
 No such file or directory
-$
 </PRE></TT>
 </TD>
 </TR>
 </TABLE>
+
+under Unix/Linux, or 
+
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<TT><PRE>
+couldn't load library "libsurfit.dll": this library or a dependent 
+library could not be found in library path
+</PRE></TT>
+</TD>
+</TR>
+</TABLE>
+
+under Windows. Here is solution for this problem:
 
 <H3>Unix environment</H3>
 
@@ -87,13 +67,13 @@ such as /usr/lib and /usr/local/lib. To fix this problem, there are several thin
 First, you can set the LD_LIBRARY_PATH environment variable to include the directory with 
 libsurfit library. If setting LD_LIBRARY_PATH, be aware that setting this variable can introduce 
 a noticeable performance impact on all other applications that you run. 
-To set it only for Tcl, you might want to do this instead: 
+To set it only for surfit, you might want to do this instead: 
 
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
 <TD>
 <TT><PRE>
-$ env LD_LIBRARY_PATH=/home/beazley/projects/lib tclsh
+$ env LD_LIBRARY_PATH=/home/beazley/projects/lib surfit
 </PRE></TT>
 </TD>
 </TR>
@@ -148,15 +128,47 @@ Enter something similar to the following in the Value box:
 <BR>
 <TT>"c:\program files\surfit-3.0\bin"</TT><BR>
 
+
+<H2><A NAME="auto">How to get results quickly</A></H2>
+
+This way is useful for most common task: interpolation of scattered data points or for 
+contours approximation.
+
+You will need only 3 commands: \ref file_load, \ref surfit::surfit "surfit" and \ref file_save.
+Also you may want to use \ref surf_plot command to get results in PostScript file.
+
+<TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
+<TR>
+<TD>
+<TT><PRE>
+$ \ref file_load my_data.txt 
+$ \ref surfit::surfit "surfit"
+$ \ref file_save my_results.dat
+$ \ref surf_plot my_result.ps
+</PRE></TT>
+</TD>
+</TR>
+</TABLE>
+
+First commands loads your data from my_data.txt file. It recognizes most of file format and data types
+supported by surfit. Second command runs \ref surfit "surfit gridding algorithm". Also it automatically
+creates so called "gridding rules" for loaded data and creates \ref grid for that data.
+Third commad saves all data in memory with the surface obtained after gridding 
+into "my_results.dat" file. Last commands plots resulting surface into PostScript file.
+
+
 <H2><A NAME="loading">Loading data to surfit</A></H2>
 
-<H3> Loading from text files </H3>
 
 To examine data, already loaded use \ref mem_info command.
 
+<H4> Automatic file loading </H4>
+
+There is \ref file_load command that tries to recognize file format and load it into surfit memory.
+
 <H4>loading points</H4>
 
-The \ref pnts_read command reads formatted text files containing scattered data points 
+The \ref pnts_read command reads formatted text files containing \ref d_points "scattered data points" 
 coordinates. Text file should be organized as a rectangular table of numbers, separated by blanks, with one row 
 per line, and an equal number of elements in each row.  For example, outside of <TT><B>surfit</B></TT>, create a 
 text file containing these four lines: 

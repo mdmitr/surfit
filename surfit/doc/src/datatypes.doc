@@ -1,4 +1,4 @@
-/*! \page datatypes datatypes supported by surfit
+/*! \page datatypes datatypes supported by libsurfit
 
 \section d_points scattered data points
 
@@ -7,6 +7,16 @@ that the points are randomly distributed over the extent of the map area meaning
 distance between data points is not consistent over the map. When the XYZ data is randomly spaced over 
 the map area, there are many "holes" in the distribution of data points. Surfit fills in the holes 
 by extrapolating or interpolating Z values in those locations where no data exists by applying rules defined by user.
+
+<TABLE border=0 align="center">
+<TR>
+<TD><IMG alt="scattered data points" src="points.jpg" border="0"></TD>
+</TR>
+<TR>
+<TD align="center">Scattered data points</TD>
+</TR>
+</TABLE>
+
 
 \sa 
 \li \ref tcl_rules_points "gridding rules for points"
@@ -18,6 +28,15 @@ by extrapolating or interpolating Z values in those locations where no data exis
 
 Areas are used to represent polygonal regions. 
 
+<TABLE border=0 align="center">
+<TR>
+<TD><IMG alt="Five areas" src="area.gif" border="0"></TD>
+</TR>
+<TR>
+<TD align="center">Five areas</TD>
+</TR>
+</TABLE>
+
 \sa 
 \li \ref tcl_rules_areas "gridding rules for areas"
 \li \ref tcl_area "commands for areas"
@@ -28,6 +47,16 @@ Areas are used to represent polygonal regions.
 
 2D piecewise linear curve.
 
+<TABLE border=0 align="center">
+<TR>
+<TD><IMG alt="Contours (blue) and curves, presenting fault lines (red)" src="curves.gif" border="0"></TD>
+</TR>
+<TR>
+<TD align="center">Contours (blue) and curves, presenting fault lines (red)</TD>
+</TR>
+</TABLE>
+
+
 \sa 
 \li \ref tcl_rules_curvs "gridding rules for curves"
 \li \ref tcl_curv "commands for curves"
@@ -37,9 +66,20 @@ Areas are used to represent polygonal regions.
 \section d_cntr contour
 3D piecewise linear curve.
 
+<TABLE border=0 align="center">
+<TR>
+<TD><IMG alt="contours of Washington mountain" src="contours.gif" border="0"></TD>
+</TR>
+<TR>
+<TD align="center">Contours of Washington mountain</TD>
+</TR>
+</TABLE>
+
+
 \sa 
 \li \ref tcl_rules_cntrs "gridding rules for contours"
 \li \ref tcl_cntr "commands for contours"
+\li <A HREF="http://en.wikipedia.org/wiki/Contour">http://en.wikipedia.org/wiki/Contour</A>
 
 <hr>
 
@@ -47,6 +87,15 @@ Areas are used to represent polygonal regions.
 
 A digital representation of a continuous variable over a two-dimensional surface by a regular 
 array of z values. Surfaces are typically used to represent terrain relief, soil maps, pressure fields and other.
+
+<TABLE border=0 align="center">
+<TR>
+<TD><IMG alt="Surface and scattered data points" src="surface_and_points.jpg" border="0"></TD>
+</TR>
+<TR>
+<TD align="center">Surface and scattered data points</TD>
+</TR>
+</TABLE>
 
 \sa 
 \li \ref tcl_rules_surfs "gridding rules for surfaces"
@@ -80,7 +129,7 @@ rectangular equidistant grid:
 
 \section d_hist histogram
 
-Histogram
+<A HREF=http://en.wikipedia.org/wiki/Histogram>http://en.wikipedia.org/wiki/Histogram</A>
 
 <hr>
 

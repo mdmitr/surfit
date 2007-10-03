@@ -1,5 +1,9 @@
 /*! \page features surfit main features
 
+surfit is a computer program which enables to calculate regular 
+grid from various data (scattered points, curves, surfaces, etc), 
+conditions and inequalities by setting called "gridding rules"
+
 \li Requires little memory for gridding procedure with large grids and large data sets.
 \li Implements very fast gridding algorithm called \ref surfit "CMOFS".
 \li Extends Tcl scripting language with new commands, which enables to describe gridding procedure.

@@ -1,8 +1,8 @@
 /*! \page solvers List of solvers for systems of linear equations used by surfit
 
-\li cg
-\li jcg
-\li rf
-\li ssor
+\li cg (Conjugate Gradients method)
+\li jcg (Jacobi Conjugate Gradients method)
+\li rf 
+\li ssor (Symmetric succesive overrelaxation method)
 
 */
