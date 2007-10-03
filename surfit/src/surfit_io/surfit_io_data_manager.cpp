@@ -90,6 +90,16 @@ bool surfit_io_manager::auto_load(const char * filename, const char * first1024,
 
 	if (ext != NULL) {
 		if (strcmp( uext, ".BLN" ) == 0) {
+			if (columns == 2)
+			{
+				boolvec * vecres = curv_load_bln(filename);
+				if (vecres) {
+					if (vecres->size() == 1)
+						res = (*vecres)(0);
+					vecres->release();
+				}
+			} 
+			else
 			{
 				boolvec * vecres = cntr_load_bln(filename);
 				if (vecres) {
