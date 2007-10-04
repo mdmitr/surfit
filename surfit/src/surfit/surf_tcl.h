@@ -65,7 +65,7 @@ boolvec * surf_save(const char * filename, const char * surface_name = "*");
     \par Description:
     plots surface to PostScript file
 */
-boolvec * surf_plot(const char * filename, const char * surface_name = "*", size_t number_of_levels = 16, bool draw_isos = true, bool draw_labels = true);
+boolvec * surf_plot(const char * filename = NULL, const char * surface_name = "*", size_t number_of_levels = 16, bool draw_isos = true, bool draw_labels = true);
 
 //
 // MATH OPERATIONS

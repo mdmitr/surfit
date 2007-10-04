@@ -216,7 +216,7 @@ bool geq(REAL value, REAL penalty_factor = 0);
     This rule adds the surface condition - "the resulting surface histogram should be equal to given histogram".
     
     \param histogram_name desired \ref d_hist "histogram"
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty 
     \param treshold another parameter for changing if something going wrong :)
     
     \par Math:

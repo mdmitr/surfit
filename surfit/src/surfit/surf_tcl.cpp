@@ -115,7 +115,19 @@ struct match_surf_plot
 	{
 		if ( StringMatch(pos, surf->getName()) )
 		{
-			bool r = _surf_plot(surf, filename, number_of_levels, draw_isos, draw_colorscale);
+			bool r = false;
+			if (filename)
+				r = _surf_plot(surf, filename, number_of_levels, draw_isos, draw_colorscale);
+			else
+			{
+				const char * name = surf->getName();
+				char * Filename = (char*)malloc( strlen(name)+4);
+				strncpy(Filename, surf->getName(), strlen(name));
+				strncpy(Filename+strlen(name),".ps",3);
+				Filename[strlen(name)+3]='\0';
+				r = _surf_plot(surf, Filename, number_of_levels, draw_isos, draw_colorscale);
+				free(Filename);	
+			}
 			if (res == NULL)
 				res = create_boolvec();
 			res->push_back(r);

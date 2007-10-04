@@ -1674,25 +1674,58 @@ bool _surf_plot(const d_surf * srf, const char * filename, size_t number_of_leve
 	size_t q;
 	REAL x,y;
 
+	// find appropriate bottom line
+	bool founded = false;
+	size_t min_j;
+	for (min_j = 0; min_j < MM; min_j++) 
+	{
+		size_t i;
+		for (i = 0; i < NN; i++)
+		{
+			if ( (*(srf->coeff))(i +min_j*NN) != srf->undef_value ) {
+				founded = true;
+				break;
+			}
+		}
+		if (founded)
+			break;
+	}
+
+	if (min_j == MM)
+		return false;
+
 	vec * x_coords = create_vec(NN,0,0);
 	for (q = 0; q < NN; q++) {
 		srf->getCoordNode(q,0,x,y);
 		(*x_coords)(q) = x;
 	}
 
-	vec * y_coords = create_vec(MM,0,0);
-	for (q = 0; q < MM; q++) {
+	vec * y_coords = create_vec(MM-min_j,0,0);
+	for (q = min_j; q < MM; q++) {
 		srf->getCoordNode(0,q,x,y);
-		(*y_coords)(q) = y;
+		(*y_coords)(q-min_j) = y;
 	}
 
-	extvec * data = create_extvec(*(srf->coeff)); // don't fill;
+	extvec * data = NULL;
+	if (min_j == 0)
+		data = create_extvec(*(srf->coeff)); // copy vector
+	else
+	{
+		size_t size = NN*(MM-min_j);
+		data = create_extvec(NN*(MM-min_j),0,false);
+		size_t q;
+		for (q = 0; q < size; q++) {
+			size_t pos = q + NN*min_j;
+			REAL val = (*(srf->coeff))(pos);
+			(*data)(q) = val;
+		}
+	}
 
 	writelog(LOG_MESSAGE,"tracing %d contours from surface \"%s\"", levels_count, srf->getName());
 #if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
 	int tick1 = GetTickCount();
 #endif
-	std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM, srf->undef_value, true);
+	std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM-min_j, srf->undef_value, true);
 #if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
 	int tick2 = GetTickCount();
 	writelog(LOG_MESSAGE, "%d miliseconds elapsed", tick2-tick1);
@@ -1852,8 +1885,10 @@ bool _surf_plot(const d_surf * srf, const char * filename, size_t number_of_leve
 		ps.endPath( CreEPS::STROKE, CAtColor(0, 0, 0));
 	}
 	
-	free_elements(isos->begin(), isos->end());
-	delete isos;
+	if (isos) {
+		free_elements(isos->begin(), isos->end());
+		delete isos;
+	}
 
 	if (draw_colorscale) {
 		int q;

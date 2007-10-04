@@ -365,22 +365,22 @@ void finalize_iso(fiso * iso, REAL level, size_t & i, size_t & j, short & res, t
 			add_left_edge(iso, j, mm-1,info);
 			add_top_edge(iso, 0, nn-1, info);
 			add_right_edge(iso, mm-1, 0, info);
-			add_bottom_edge(iso, nn-1, fi+1, info);
+			add_bottom_edge(iso, nn-1, fi, info);
 		}
 		if (end_side == SIDE_TOP)
 		{
 			add_top_edge(iso, i, nn-1, info);
 			add_right_edge(iso, mm-1, 0, info);
-			add_bottom_edge(iso, nn-1, fi+1, info);
+			add_bottom_edge(iso, nn-1, fi, info);
 		}
 		if (end_side == SIDE_RIGHT)
 		{
 			add_right_edge(iso, j, 0, info);
-			add_bottom_edge(iso, nn-1, fi+1, info);
+			add_bottom_edge(iso, nn-1, fi, info);
 		}
 		if (end_side == SIDE_BOTTOM)
 		{
-			add_bottom_edge(iso, i, fi+1, info);
+			add_bottom_edge(iso, i, fi, info);
 		}
 	}
 	if (begin_side == SIDE_LEFT)
@@ -389,16 +389,16 @@ void finalize_iso(fiso * iso, REAL level, size_t & i, size_t & j, short & res, t
 		{
 			add_right_edge(iso, j, mm-1, info);
 			add_top_edge(iso, nn-1, 0, info);
-			add_left_edge(iso, mm-1, fj+1, info);
+			add_left_edge(iso, mm-1, fj, info);
 		}
 		if (end_side == SIDE_TOP)
 		{
 			add_top_edge(iso, i, 0, info);
-			add_left_edge(iso, mm-1, fj+1, info);
+			add_left_edge(iso, mm-1, fj, info);
 		}
 		if (end_side == SIDE_LEFT)
 		{
-			add_left_edge(iso, j, fj+1, info);
+			add_left_edge(iso, j, fj, info);
 		}
 	}
 	if (begin_side == SIDE_TOP)
@@ -406,18 +406,18 @@ void finalize_iso(fiso * iso, REAL level, size_t & i, size_t & j, short & res, t
 		if (end_side == SIDE_RIGHT)
 		{
 			add_right_edge(iso, j, 0, info);
-			add_top_edge(iso, nn-1, fi+1, info);
+			add_top_edge(iso, nn-1, fi, info);
 		}
 		if (end_side == SIDE_TOP)
 		{
-			add_top_edge(iso, i, fi+1, info);
+			add_top_edge(iso, i, fi, info);
 		}
 	}
 	if (begin_side == SIDE_RIGHT)
 	{
 		if (end_side == SIDE_RIGHT)
 		{
-			add_right_edge(iso, j, fj+1, info);
+			add_right_edge(iso, j, fj, info);
 		}
 	}
 
@@ -866,11 +866,12 @@ std::vector<fiso *> * trace_isos(vec * levels,
 	// bottom
 	// find appropriate bottom line
 	bool founded = false;
-	for (j = 0; j < mm-1; j++) 
+	size_t min_j;
+	for (min_j = 0; min_j < mm-1; min_j++) 
 	{
 		for (i = 0; i < nn-1; i++)
 		{
-			if ( (*data)(i +j*nn) != uval ) {
+			if ( (*data)(i +min_j*nn) != uval ) {
 				founded = true;
 				break;
 			}
@@ -878,7 +879,8 @@ std::vector<fiso *> * trace_isos(vec * levels,
 		if (founded)
 			break;
 	}
-
+	
+	j = min_j;
 	for (i = 0; i < nn-1; i++) 
 	{
 		update_vals(vals, i, j, info);
@@ -923,7 +925,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 	// left
 	///*
 	i = 0;
-	for (j = 0; j < mm-1; j++)
+	for (j = min_j; j < mm-1; j++)
 	{
 		update_vals(vals, i, j, info);
 
@@ -1011,7 +1013,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 	// right
 	///*
 	i = nn-2;
-	for (j = 0; j < mm-1; j++)
+	for (j = min_j; j < mm-1; j++)
 	{
 		update_vals(vals, i, j, info);
 
@@ -1053,7 +1055,7 @@ std::vector<fiso *> * trace_isos(vec * levels,
 	//*/
 	
 	///*
-	for (j = 1; j <= mm-2; j++)
+	for (j = MAX(1,min_j); j <= mm-2; j++)
 	{
 		for (i = 1; i <= nn-2; i++)
 		{
