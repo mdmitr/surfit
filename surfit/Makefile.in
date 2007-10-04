@@ -175,8 +175,8 @@ am_libsurfit_la_OBJECTS = area.lo area_internal.lo area_tcl.lo \
 	f_points_ineq.lo f_points_tcl.lo f_trend.lo f_value.lo \
 	f_wmean.lo f_fault.lo f_method.lo f_triangulate.lo grid.lo \
 	grid_internal.lo grid_line.lo grid_line_internal.lo \
-	grid_line_tcl.lo grid_line_user.lo grid_tcl.lo grid_user.lo \
-	hist.lo hist_internal.lo hist_tcl.lo license.lo mask.lo \
+	grid_line_user.lo grid_tcl.lo grid_user.lo hist.lo \
+	hist_internal.lo hist_tcl.lo license.lo mask.lo \
 	mask_internal.lo mask_tcl.lo matlab.lo matr.lo matrD1.lo \
 	matrD1_aniso.lo matrD1_rect.lo matrD2.lo matrD2_rect.lo \
 	matr_diag.lo matr_eye.lo matr_onesrow.lo matr_cntrs.lo mrf.lo \
@@ -446,7 +446,7 @@ libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/f_fault.cpp src/surfit/f_method.cpp \
 	src/surfit/f_triangulate.cpp src/surfit/grid.cpp \
 	src/surfit/grid_internal.cpp src/surfit/grid_line.cpp \
-	src/surfit/grid_line_internal.cpp src/surfit/grid_line_tcl.cpp \
+	src/surfit/grid_line_internal.cpp \
 	src/surfit/grid_line_user.cpp src/surfit/grid_tcl.cpp \
 	src/surfit/grid_user.cpp src/surfit/hist.cpp \
 	src/surfit/hist_internal.cpp src/surfit/hist_tcl.cpp \
@@ -471,12 +471,12 @@ libsurfit_la_SOURCES = src/surfit/area.cpp \
 	src/surfit/area_tcl.h src/surfit/cntr_tcl.h \
 	src/surfit/curvs_tcl.h src/surfit/curv_tcl.h \
 	src/surfit/f_points_tcl.h src/surfit/f_method.h \
-	src/surfit/f_triangulate.h src/surfit/grid_line_tcl.h \
-	src/surfit/grid_tcl.h src/surfit/hist_tcl.h \
-	src/surfit/mask_tcl.h src/surfit/other_tcl.h \
-	src/surfit/others_tcl.h src/surfit/pnts_tcl.h \
-	src/surfit/surfs_tcl.h src/surfit/surf_tcl.h \
-	src/surfit/surfit_ie.h src/surfit/creeps/CreEPS.h
+	src/surfit/f_triangulate.h src/surfit/grid_tcl.h \
+	src/surfit/hist_tcl.h src/surfit/mask_tcl.h \
+	src/surfit/other_tcl.h src/surfit/others_tcl.h \
+	src/surfit/pnts_tcl.h src/surfit/surfs_tcl.h \
+	src/surfit/surf_tcl.h src/surfit/surfit_ie.h \
+	src/surfit/creeps/CreEPS.h
 #libsurfit_la_HEADERS += src/surfit/matrD2_aniso.h
 libsurfit_la_HEADERS = src/surfit/area.h src/surfit/area_internal.h \
 	src/surfit/cmofs.h src/surfit/cntr.h \
@@ -825,7 +825,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid_internal.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid_line.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid_line_internal.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid_line_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid_line_user.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid_tcl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid_user.Plo@am__quote@
@@ -1747,13 +1746,6 @@ grid_line_internal.lo: src/surfit/grid_line_internal.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/grid_line_internal.cpp' object='grid_line_internal.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o grid_line_internal.lo `test -f 'src/surfit/grid_line_internal.cpp' || echo '$(srcdir)/'`src/surfit/grid_line_internal.cpp
-
-grid_line_tcl.lo: src/surfit/grid_line_tcl.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT grid_line_tcl.lo -MD -MP -MF $(DEPDIR)/grid_line_tcl.Tpo -c -o grid_line_tcl.lo `test -f 'src/surfit/grid_line_tcl.cpp' || echo '$(srcdir)/'`src/surfit/grid_line_tcl.cpp
-@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/grid_line_tcl.Tpo $(DEPDIR)/grid_line_tcl.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/surfit/grid_line_tcl.cpp' object='grid_line_tcl.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o grid_line_tcl.lo `test -f 'src/surfit/grid_line_tcl.cpp' || echo '$(srcdir)/'`src/surfit/grid_line_tcl.cpp
 
 grid_line_user.lo: src/surfit/grid_line_user.cpp
 @am__fastdepCXX_TRUE@	$(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT grid_line_user.lo -MD -MP -MF $(DEPDIR)/grid_line_user.Tpo -c -o grid_line_user.lo `test -f 'src/surfit/grid_line_user.cpp' || echo '$(srcdir)/'`src/surfit/grid_line_user.cpp
