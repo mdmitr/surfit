@@ -66,4 +66,15 @@ and let the solution of this subproblem be \f$x_{k+1}\f$.
 \li Increase the penalty parameter. Set \f$\rho_{k+1}\f$ to a larger value 
 than \f$\rho_k\f$, set k = k + 1 and return to 1.
 
+<H2> About "penalty_factor" parameter </H2>
+
+penalty_factor is a parameter that used for special gridding rules like \ref leq,
+\ref geq, \ref mean, \ref wmean, \ref hist and other of this kind. These gridding
+rules adds some condition and causes surfit for using penalty algorithm. Each of these gridding
+rules have additional parameter called "penalty_factor". This parameter sets how fast the penalty
+parameter \f$\rho\f$ should be changed.
+
+It is recomended to set penalty_factor from -3 to 3, but for most cases the default value for
+penalty_factor should be usable.
+
 */
