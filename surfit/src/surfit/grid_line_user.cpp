@@ -30,26 +30,6 @@
 
 namespace surfit {
 
-grid_line * surfit_grid_line = NULL;
-
-/*! \struct grid_line_garbage
-    \brief struct for deletion of pointers
-*/
-struct grid_line_garbage : public binman {
-	//! inits \ref surfit_grid_line
-	grid_line_garbage() {
-		surfit_grid_line = NULL;
-	}
-	//! removes \ref surfit_grid_line
-	~grid_line_garbage() {
-		if (surfit_grid_line)
-			surfit_grid_line->release();
-		surfit_grid_line = NULL;
-	};
-};
-
-grid_line_garbage grid_line_garb;
-
 void draw_bitvec_matlab(FILE * ff, const d_grid * grd, const bitvec * data, const char * color)
 {
 

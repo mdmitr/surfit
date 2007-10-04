@@ -29,12 +29,6 @@ class bitvec;
 class shortvec;
 class sizetvec;
 
-/*! \ingroup surfit_data_variables
-    \var surfit_grid_line
-    \brief grid based line
-*/
-extern SURFIT_EXPORT grid_line * surfit_grid_line;
-
 //! adds section 
 SURFIT_EXPORT
 void add_sect(sizetvec * nns, 

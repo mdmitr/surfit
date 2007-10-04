@@ -20,7 +20,6 @@
 #include "curv_tcl.h"
 #include "cntr_tcl.h"
 #include "area_tcl.h"
-#include "grid_line_tcl.h"
 
 #include "curvs_tcl.h"
 %}
@@ -65,7 +64,6 @@ surfit::boolvec * contours_add(REAL weight = 50, const char * cntr_name = "*");
 class cntr;
 class curv;
 class area;
-class grid_line;
 
 //
 // Curves
@@ -137,16 +135,6 @@ void area_del(const char * area_name = "*");
 int area_size();
 surfit::boolvec * area_invert(const char * area_name = "*");
 void areas_info();
-
-//
-// Grid lines
-//
-
-bool grid_line_check();
-bool grid_line_write(const char * filename, const char * delimiter = "\t");
-bool grid_line_save(const char * filename, const char * grid_linename = NULL);
-bool grid_line_unload();
-bool trace_grid_line();
 
 }; // namespace surfit
 

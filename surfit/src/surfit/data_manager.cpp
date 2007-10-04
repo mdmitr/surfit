@@ -53,7 +53,6 @@
 #include "area.h"
 #include "area_internal.h"
 #include "area_tcl.h"
-#include "grid_line_tcl.h"
 #include "grid_line_user.h"
 #include "sort_alg.h"
 #include "free_elements.h"
@@ -609,8 +608,6 @@ void surfit_manager::clear_data() const {
 	if (surfit_hists)
 		hist_del("*");
 		
-	grid_line_unload();
-
 	tol = float(1e-5);
 	penalty_max_iter = 99;
 	penalty_weight = 1; //0.0001;

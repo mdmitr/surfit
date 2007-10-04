@@ -26,14 +26,6 @@ class grid_line;
 class d_curv;
 class datafile;
 
-//! checks for \ref surfit_grid_line existance
-SURFIT_EXPORT
-bool _grid_line_check();
-
-//! unloads \ref surfit_grid_line from memory
-SURFIT_EXPORT
-bool _grid_line_unload();
-
 //! writes \ref grid_line to formatted text file. 
 SURFIT_EXPORT
 bool _grid_line_write(const grid_line * contour, d_grid * grd, const char * filename, const char * mask);
@@ -45,14 +37,6 @@ bool _grid_line_save(const grid_line * contour, d_grid * grd, const char * filen
 //! prints some info about \ref grid_line
 SURFIT_EXPORT
 void _grid_line_info(const grid_line * contour);
-
-//! returns \ref surfit_grid_line
-SURFIT_EXPORT
-grid_line * _get_surfit_grid_line();
-
-//! sets \ref surfit_grid_line
-SURFIT_EXPORT
-void _set_surfit_grid_line(grid_line * contour);
 
 //! converts \ref grid_line to \ref d_curv
 SURFIT_EXPORT

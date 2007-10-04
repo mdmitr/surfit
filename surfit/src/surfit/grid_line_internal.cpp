@@ -37,20 +37,6 @@
 
 namespace surfit {
 
-bool _grid_line_check() {
-	return (surfit_grid_line != NULL);
-};
-
-bool _grid_line_unload() {
-	if (_grid_line_check()) {
-		if (surfit_grid_line)
-			surfit_grid_line->release();
-		surfit_grid_line = NULL;
-		return true;
-	} 
-	return false;
-};
-
 bool _grid_line_write(const grid_line * contour, d_grid * grd, const char * filename, const char * mask) {
 	if (!contour)
 		return false;
@@ -77,16 +63,6 @@ void _grid_line_info(const grid_line * contour) {
 		return;
 	}
 	writelog(LOG_MESSAGE,"grid_line (%s)",contour->getName());
-};
-
-grid_line * _get_surfit_grid_line() {
-	return surfit_grid_line;
-};
-
-void _set_surfit_grid_line(grid_line * contour) {
-	if (surfit_grid_line)
-		surfit_grid_line->release();
-	surfit_grid_line = contour;
 };
 
 d_curv * _grid_line_to_curv(const grid_line * grd_line, const d_grid * grd) {

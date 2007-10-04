@@ -3947,72 +3947,6 @@
 							</FileConfiguration>
 						</File>
 						<File
-							RelativePath="..\src\surfit\grid_line_tcl.cpp"
-							>
-							<FileConfiguration
-								Name="Debug|Win32"
-								>
-								<Tool
-									Name="VCCLCompilerTool"
-									Optimization="0"
-									AdditionalIncludeDirectories=""
-									BasicRuntimeChecks="3"
-									BrowseInformation="1"
-								/>
-							</FileConfiguration>
-							<FileConfiguration
-								Name="Release|Win32"
-								>
-								<Tool
-									Name="VCCLCompilerTool"
-									Optimization="2"
-									AdditionalIncludeDirectories=""
-									BrowseInformation="1"
-								/>
-							</FileConfiguration>
-							<FileConfiguration
-								Name="XXL_Debug|Win32"
-								>
-								<Tool
-									Name="VCCLCompilerTool"
-									Optimization="0"
-									AdditionalIncludeDirectories=""
-									BasicRuntimeChecks="3"
-									BrowseInformation="1"
-								/>
-							</FileConfiguration>
-							<FileConfiguration
-								Name="XXL_Release|Win32"
-								>
-								<Tool
-									Name="VCCLCompilerTool"
-									Optimization="2"
-									AdditionalIncludeDirectories=""
-									BrowseInformation="1"
-								/>
-							</FileConfiguration>
-							<FileConfiguration
-								Name="Release_SSE2|Win32"
-								>
-								<Tool
-									Name="VCCLCompilerTool"
-									Optimization="2"
-									AdditionalIncludeDirectories=""
-									BrowseInformation="1"
-								/>
-							</FileConfiguration>
-							<FileConfiguration
-								Name="Release_SSE|Win32"
-								>
-								<Tool
-									Name="VCCLCompilerTool"
-									Optimization="2"
-									AdditionalIncludeDirectories=""
-									BrowseInformation="1"
-								/>
-							</FileConfiguration>
-						</File>
-						<File
 							RelativePath="..\src\surfit\grid_line_user.cpp"
 							>
 							<FileConfiguration
@@ -7033,10 +6967,6 @@
 						</File>
 						<File
 							RelativePath="..\src\surfit\grid_line_internal.h"
-							>
-						</File>
-						<File
-							RelativePath="..\src\surfit\grid_line_tcl.h"
 							>
 						</File>
 						<File
