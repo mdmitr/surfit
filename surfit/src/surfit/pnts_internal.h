@@ -113,11 +113,11 @@ void bind_points_to_grid(d_grid *& old_grid,
 SURFIT_EXPORT
 bool ptr_sub_points_less(sub_points * it1, sub_points * it2);
 
-//! adds \ref d_points to \ref surfit_points
+//! adds \ref d_points to collection
 SURFIT_EXPORT
 void _surfit_pnts_add(d_points * pnts);
 
-//! converts \ref d_points to \ref d_cntr and adds resulting \ref d_cntr to \ref surfit_cntrs
+//! converts \ref d_points to \ref d_cntr and adds resulting \ref d_cntr to collection
 SURFIT_EXPORT
 bool _pnts_to_cntrs(const d_points * pnts);
 

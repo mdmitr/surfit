@@ -52,7 +52,7 @@ d_mask * _mask_load_grd(const char * filename, const char * maskname);
 SURFIT_EXPORT
 d_mask * _mask_by_surf(const d_surf * srf);
 
-//! sets \ref d_surf coefficients to \ref undef_value using \ref d_mask
+//! sets \ref d_surf coefficients to undef_value using \ref d_mask
 SURFIT_EXPORT
 bool _mask_apply_to_surf(const d_mask * msk, d_surf * srf);
 
@@ -60,7 +60,7 @@ bool _mask_apply_to_surf(const d_mask * msk, d_surf * srf);
 SURFIT_EXPORT
 void _mask_info(const d_mask * msk);
 
-//! adds d_mask into \ref surfit_masks
+//! adds \ref d_mask into container
 SURFIT_EXPORT
 void _surfit_mask_add(d_mask * msk);
 

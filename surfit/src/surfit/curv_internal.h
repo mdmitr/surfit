@@ -60,7 +60,7 @@ bool _curv_save_df(const d_curv * contour, datafile * df);
 SURFIT_EXPORT
 void _curv_info(const d_curv * contour);
 
-//! adds \ref d_curv to \ref surfit_curv collection
+//! adds \ref d_curv to collection
 SURFIT_EXPORT
 void _add_surfit_curvs(d_curv * contour);
 

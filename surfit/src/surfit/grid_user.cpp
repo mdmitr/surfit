@@ -251,7 +251,8 @@ d_grid * create_last_grd() {
 // functions for grid sequence
 //
 ////////////////////////////////
-void grid_init() {
+void grid_init() 
+{
 	method_grid = NULL;
 	method_sub_grid = NULL;
 	method_prev_grid = NULL;

@@ -113,11 +113,6 @@ REAL matr_cntrs::element_at(size_t i, size_t j, size_t * next_j) const
 	return at(i, j, next_j);
 };
 	
-REAL matr_cntrs::element_at_transposed(size_t i, size_t j, size_t * next_j) const
-{
-	return element_at(j, i, next_j);
-};
-
 REAL matr_cntrs::at(size_t i, size_t j, size_t * next_j) const
 {
 	if (mask->get(i) == false) {
@@ -226,11 +221,6 @@ REAL matr_cntrs::at(size_t i, size_t j, size_t * next_j) const
 	return REAL(0);
 };
 	
-REAL matr_cntrs::at_transposed(size_t i, size_t j, size_t * next_j) const
-{
-	return at(j, i, next_j);
-};
-		
 REAL matr_cntrs::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end)
 {
 	if (mask->get(J) == false)

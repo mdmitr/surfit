@@ -70,16 +70,23 @@ extern SURFIT_EXPORT bool doubleX;
 extern SURFIT_EXPORT bool doubleY;
 extern SURFIT_EXPORT size_t basis_cnt;
 
+//! constructs grid to the latest calculation phase
 SURFIT_EXPORT
 d_grid * create_last_grd();
 
+//! converts cell number from one grid to another
 SURFIT_EXPORT
 size_t one2one(size_t pos, const d_grid * from, const d_grid * to);
+
+//! converts pair (i,j) from one grid to another
 SURFIT_EXPORT
 void two2two(size_t & n, size_t & m, const d_grid * from, const d_grid * to);
+
+//! converts cell number into pair (i,j)
 SURFIT_EXPORT
 bool one2two(size_t pos, size_t & i, size_t & j, size_t NN, size_t MM);
 
+//! converts pair (i,j) into one number
 inline
 size_t two2one(size_t i, size_t j, size_t NN, size_t MM)
 {
@@ -95,6 +102,7 @@ size_t two2one(size_t i, size_t j, size_t NN, size_t MM)
 	return UINT_MAX;
 };
 
+//! converts triple (i,j,k) into one number
 inline
 size_t three2one(size_t i, size_t j, size_t k, size_t NN, size_t MM, size_t KK)
 {
@@ -109,26 +117,35 @@ size_t three2one(size_t i, size_t j, size_t k, size_t NN, size_t MM, size_t KK)
 	return pos;
 };
 
+//! returns true if cell with pos-number is inside grid with NNxMM cells
 SURFIT_EXPORT
 bool grid_bound(size_t pos, size_t NN, size_t MM);
+
+//! returns true if cell with pair (n,m) is inside grid with NNxMM cells
 SURFIT_EXPORT
 bool grid_bound2(size_t n, size_t m, size_t NN, size_t MM);
 
+//! initializes some global variables
 SURFIT_EXPORT 
 void grid_init();
 
+//! like grid_init
 SURFIT_EXPORT 
 void grid_prepare();
 
+//! calculates grid for the first calculation phase
 SURFIT_EXPORT 
 void grid_begin();
 
+//! performs some operations after the latest phase
 SURFIT_EXPORT 
 void grid_finish();
 
+//! releases some global variables
 SURFIT_EXPORT 
 void grid_release();
 
+//! debug drawing function
 void draw_grid_matlab(FILE * ff, const d_grid * grd, const char * color = "cyan");
 
 }; // namespace surfit;

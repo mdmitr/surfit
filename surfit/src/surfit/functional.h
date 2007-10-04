@@ -195,12 +195,15 @@ protected:
 
 };
 
+//! mark all cells solved except cells already marked as undefined
 SURFIT_EXPORT
 void set_solved(bitvec * mask_solved, bitvec * mask_undefined);
 
+//! mark all cells undefined except cells already marked as solved
 SURFIT_EXPORT
 void set_undefined(bitvec * mask_solved, bitvec * mask_undefined);
 
+//! special function for penalty algorithm
 SURFIT_EXPORT
 REAL get_mult(REAL speed);
 

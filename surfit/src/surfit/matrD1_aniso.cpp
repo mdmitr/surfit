@@ -409,10 +409,6 @@ REAL matrD1_aniso::element_at(size_t i, size_t j, size_t * next_j) const {
 	
 };
 
-REAL matrD1_aniso::element_at_transposed(size_t i, size_t j, size_t * next_j) const {
-	return element_at(i, j, next_j);
-};
-
 REAL matrD1_aniso::at(size_t i, size_t j, size_t * next_j) const {
 
 	bool zero = mask_solved_undefined->get(i);
@@ -471,10 +467,6 @@ REAL matrD1_aniso::at(size_t i, size_t j, size_t * next_j) const {
 
 	return matrator_serve(i, j, b, next_j);
 	
-};
-
-REAL matrD1_aniso::at_transposed(size_t i, size_t j, size_t * next_j) const {
-	return at(i, j, next_j);
 };
 
 REAL matrD1_aniso::mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) {

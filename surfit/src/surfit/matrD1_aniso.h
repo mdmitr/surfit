@@ -29,7 +29,7 @@ class grid_line;
 class bitvec;
 
 /*! \class matrD1_aniso
-    \brief matrix to serve \ref completer functional for \ref completer::D1 > 0 and angle != 0, w != 1
+    \brief matrix to serve \ref f_completer functional 
 */
 class SURFIT_EXPORT matrD1_aniso : public matr {
 public:
@@ -58,9 +58,7 @@ public:
 	virtual ~matrD1_aniso();
 
 	REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
-	REAL element_at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
-	REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 	REAL mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 		
@@ -113,6 +111,7 @@ protected:
 
 };
 
+//! special functions for \ref matrD1_aniso
 inline
 void sums_points_D1_aniso(size_t i, size_t j, 
 			  size_t NN, size_t MM, 

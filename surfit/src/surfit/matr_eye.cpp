@@ -85,11 +85,6 @@ exit:
 	return res;	
 };
 
-REAL matr_eye::element_at_transposed(size_t i, size_t j, size_t * next_j) const 
-{
-	return element_at(i, j, next_j);	
-};
-
 REAL matr_eye::at(size_t i, size_t j, size_t * next_j) const 
 {
 	bool zero = false;
@@ -115,11 +110,6 @@ REAL matr_eye::at(size_t i, size_t j, size_t * next_j) const
 	}
 
 	return element_at(i,j,next_j);
-};
-
-REAL matr_eye::at_transposed(size_t i, size_t j, size_t * next_j) const 
-{
-	return at(i,j,next_j);
 };
 
 REAL matr_eye::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) 

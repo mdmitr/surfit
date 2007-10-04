@@ -24,6 +24,7 @@
 
 namespace surfit {
 
+//! applies wavelet decompositon for vector
 SURFIT_EXPORT
 void _decomp1d(extvec::iterator X_begin, 
 	       size_t N, // amount of elements to process
@@ -32,6 +33,7 @@ void _decomp1d(extvec::iterator X_begin,
 	       bool flag,
 	       extvec * buf); // temporary vector of size N/2
 
+//! applies wavelet decompositon as matrix
 SURFIT_EXPORT
 void _decomp2d(extvec *& X,
 	       extvec *& Xa,
@@ -44,7 +46,7 @@ void _decomp2d(extvec *& X,
 	       REAL undef_value,
 	       bool flag);
 
-
+//! applies wavelet reconstruction for vector
 SURFIT_EXPORT		
 void _recons1d(extvec::iterator X_begin, 
 	       size_t N, // amount of elements to process
@@ -53,6 +55,7 @@ void _recons1d(extvec::iterator X_begin,
 	       bool flag,
 	       extvec * buf); // temporary vector of size N/2
 
+//! applies wavelet reconstruction for matrix
 SURFIT_EXPORT
 void _recons2d(extvec *& X,
 	       const extvec * Xa,

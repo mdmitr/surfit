@@ -25,6 +25,7 @@
 
 namespace surfit {
 
+//! writes vector into matlab file
 SURFIT_EXPORT
 bool matlabWriteVector(const REAL * begin, const REAL * end, const char * filename, const char * name,
 		       const std::vector<int> * zero_rows, bool append_file = true);

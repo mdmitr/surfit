@@ -55,7 +55,7 @@ d_cntr * _cntr_load_df(datafile * df, const char * cntrname);
 SURFIT_EXPORT
 void _cntr_info(const d_cntr * contour);
 
-//! adds d_cntr to \ref surfit_cntr collection
+//! adds \ref d_cntr to collection
 SURFIT_EXPORT
 void _add_surfit_cntrs(d_cntr * contour);
 

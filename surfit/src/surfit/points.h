@@ -189,6 +189,7 @@ public:
 	virtual void push_back(d_points * elem);
 };
 
+//! container of \ref d_points objects
 extern SURFIT_EXPORT pnts_container * surfit_pnts;
 
 /*! \class sub_points
@@ -224,6 +225,7 @@ public:
 	
 };
 
+//! vector of \ref sub_points
 typedef std::vector<sub_points *> sub_pnts;
 
 //! performs points sorting

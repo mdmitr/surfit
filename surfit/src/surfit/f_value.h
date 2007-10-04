@@ -26,6 +26,7 @@ namespace surfit {
 
 class bitvec;
 
+//! resulting surface approximates constant value
 class f_value : public functional {
 public:
 

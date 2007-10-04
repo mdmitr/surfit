@@ -27,6 +27,7 @@ namespace surfit {
 class d_cntr;
 class vec;
 
+//! constructor for \ref d_cntr class
 SURFIT_EXPORT
 d_cntr * create_cntr(vec * iX, vec * iY, vec * iZ,
 	             const char * cntr_name = NULL);
@@ -78,20 +79,25 @@ public:
 class d_points;
 class d_grid;
 
+//! collection of \ref d_cntr objects
 class SURFIT_EXPORT cntrs_container : public objects_container<d_cntr>
 {
 public:
 	virtual void push_back(d_cntr * elem);
 };
 
+//! containter of \ref d_cntr objects
 extern SURFIT_EXPORT cntrs_container * surfit_cntrs;
 
+//! converts \ref d_cntr to \ref d_points (uses 4 directions)
 SURFIT_EXPORT
 d_points * discretize_cntr(const d_cntr * crv, d_grid * grd, const char * pnts_name);
 
+//! converts \ref d_cntr to \ref d_points (uses 8 directions)
 SURFIT_EXPORT
 d_points * discretize_cntr8(const d_cntr * crv, d_grid * grd, const char * pnts_name);
 
+//! converts \ref d_cntr to \ref d_points
 SURFIT_EXPORT
 d_points * discretize_cntr(const d_cntr * crv, REAL step, const char * pnts_name);
 

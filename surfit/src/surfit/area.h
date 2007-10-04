@@ -29,11 +29,13 @@ class d_curv;
 class d_area;
 class boolvec;
 
+//! contructor for \ref d_area
 SURFIT_EXPORT
 d_area * create_area(std::vector<d_curv *> * icurves,
 		     boolvec * iorients,
 		     const char * area_name = NULL);
 
+//! contructor for \ref d_area
 SURFIT_EXPORT
 d_area * create_area(d_curv * crv, bool orient, const char * area_name = NULL);
 
@@ -102,19 +104,22 @@ public:
 
 /*! \ingroup surfit_variables_collections
     \var std::vector<d_area *> * surfit_areas;
-    collection of \ref area objects
+    collection of \ref d_area objects
 */
 //extern SURFIT_EXPORT std::vector<d_area *> * surfit_areas;
 
+//! containter for areas
 class SURFIT_EXPORT areas_container : public objects_container<d_area>
 {
 public:
 	virtual void push_back(d_area * elem);
 };
 
+//! container of \ref d_area objects
 extern SURFIT_EXPORT
 areas_container * surfit_areas;
 
+//! function for debug drawing
 void draw_area_matlab(FILE * ff, const d_area * area, const char * color = "green", short width = 3);
 
 }; // namespace surfit;

@@ -22,6 +22,7 @@
 
 namespace surfit {
 
+//! frees memory using iterators
 template <class it>
 void free_elements(it begin, it end) {
 	if (end-begin == 0)
@@ -32,6 +33,7 @@ void free_elements(it begin, it end) {
 	}
 };
 
+//! releases memory using iterators
 template <class it>
 void release_elements(it begin, it end) {
 	if (end-begin == 0)
@@ -43,9 +45,11 @@ void release_elements(it begin, it end) {
 	}
 };
 
+//! frees array of chars allocated inside libsurfit
 SURFIT_EXPORT
 void surfit_free_char(char * free_me);
 
+//! frees array of REALs allocated inside libsurfit
 SURFIT_EXPORT
 void surfit_free_real(REAL * free_me);
 

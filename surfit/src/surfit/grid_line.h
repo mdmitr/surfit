@@ -35,6 +35,7 @@ class grid_line;
 class d_area;
 class d_curv;
 
+//! struct for comparsion of two numbers
 struct nums_less_compare
 {
 	nums_less_compare(const sizetvec * idata)
@@ -52,11 +53,12 @@ private:
 	const sizetvec * data;
 };
 
+//! constructor for \ref grid_line 
 SURFIT_EXPORT
 grid_line * create_grid_line(size_t iNN, size_t iMM, sizetvec * ifirst, sizetvec * isecond);
 
 /*! \class grid_line
-    \brief \ref grid based line
+    \brief \ref d_grid based line
     This simple class describes lines passing between cells. 
     
 	Each line described with two cells (first and second). To describe cell it is
@@ -102,6 +104,7 @@ public:
 	//! compress :)
 	void compress();
 
+	//! special class for fast cells searching
 	class cell_finder {
 
 	public:
@@ -155,6 +158,7 @@ protected:
 
 };
 
+//! special function for \ref f_completer for taking faults into account
 SURFIT_EXPORT
 void fault_points_D1(size_t n, size_t m, size_t NN, size_t MM, 
 		     const grid_line * fault,
@@ -162,6 +166,7 @@ void fault_points_D1(size_t n, size_t m, size_t NN, size_t MM,
 		     bool & first_y, bool & second_y,
 		     size_t offset_x = 0, size_t offset_y = 0);
 
+//! special function for \ref f_completer for taking faults into account
 SURFIT_EXPORT
 void fault_points_D1_aniso(size_t n, size_t m, size_t NN, size_t MM, 
 			   const grid_line * fault,
@@ -171,6 +176,7 @@ void fault_points_D1_aniso(size_t n, size_t m, size_t NN, size_t MM,
 			   bool & second_xy, bool & second_yx,
 			   size_t offset_x = 0, size_t offset_y = 0);
 
+//! special function for \ref f_completer for taking faults into account
 SURFIT_EXPORT
 void fault_points_D2(size_t n, size_t m, size_t NN, size_t MM, 
 		     const grid_line * fault,
@@ -180,6 +186,7 @@ void fault_points_D2(size_t n, size_t m, size_t NN, size_t MM,
 		     bool & first_y,  bool & second_y,  bool & third_y,
 		     size_t offset_x = 0, size_t offset_y = 0);
 
+//! special function for \ref f_completer for taking faults into account
 SURFIT_EXPORT
 void flood_fill(d_grid * grd,
 		const grid_line * line, 
@@ -188,6 +195,7 @@ void flood_fill(d_grid * grd,
 		short int fill_val,
 		const bitvec * mask_undefined);
 
+//! floodfill algorithm for boolvec
 SURFIT_EXPORT
 void flood_fill_boolvec(d_grid * grd,
 			grid_line * line, 
@@ -195,6 +203,7 @@ void flood_fill_boolvec(d_grid * grd,
 			size_t fill_pos,
 			const bitvec * mask_undefined);
 
+//! floodfill algorithm, fills whole rect
 SURFIT_EXPORT
 void fill_all_areas(shortvec *& flood_areas, 
 		    d_grid * grd, 
@@ -202,15 +211,19 @@ void fill_all_areas(shortvec *& flood_areas,
 		    int & flood_areas_cnt,
 		    const bitvec * mask_undefined);
 
+//! calculates cells inside \ref d_curv
 SURFIT_EXPORT
 bitvec * nodes_in_curv_mask(grid_line * line, const d_grid * grd, const bitvec * mask_undefined = NULL);
 
+//! calculates cells inside \ref d_curv
 SURFIT_EXPORT
 bitvec * nodes_in_curv_mask(const d_curv * crv, d_grid * grd, const bitvec * mask_undefined = NULL);
 
+//! calculates cells inside \ref d_area
 SURFIT_EXPORT
 bitvec * nodes_in_area_mask(const d_area * area, d_grid * grd, const bitvec * mask_undefined = NULL);
 
+//! traces \ref grid_line that lies between cells with normal and undefined values
 SURFIT_EXPORT
 grid_line * trace_undef_grd_line(const bitvec * mask_undefined, size_t NN);
 

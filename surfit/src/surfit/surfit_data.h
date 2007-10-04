@@ -93,68 +93,84 @@ public:
 	virtual ~binman() {};
 };
 
+//! simple template container for objects
 template <class T>
 class objects_container
 {
 public:
+
+	//! constructor
 	objects_container() 
 	{
 		data = new std::vector<T*>();
 	};
 
+	//! destructor
 	~objects_container()
 	{
 		delete data;
 	}
 
+	//! Returns a random-access iterator to the first element in the container.
 	typename std::vector<T*>::iterator begin() 
 	{
 		return data->begin();
 	};
 	
+	//! Returns a constant random-access iterator to the first element in the container.
 	typename std::vector<T*>::const_iterator const_begin()
 	{
 		return data->begin();
 	};
 
+	//! Returns a random-access iterator that points just beyond the end of the vector.
 	typename std::vector<T*>::iterator end()
 	{
 		return data->end();
 	};
 
+	//! Returns a constant random-access iterator that points just beyond the end of the vector.
 	typename std::vector<T*>::const_iterator const_end()
 	{
 		return data->end();
 	};
 	
+	//! Returns a reference to the container element at a specified position.
 	typename std::vector<T*>::reference operator[](typename std::vector<T*>::size_type pos)
 	{
 		return (*data)[pos];
 	};
 
+	//! Returns a constant reference to the container element at a specified position.
 	typename std::vector<T*>::const_reference operator[](typename std::vector<T*>::size_type pos) const
 	{
 		return (*data)[pos];
 	};
 
+	//! Returns the number of elements in the container
 	typename std::vector<T*>::size_type size() const
 	{
 		return data->size();
 	};
 
+	//! Removes an element in a containter from specified positions
 	typename std::vector<T*>::iterator erase(typename std::vector<T*>::iterator _Where)
 	{
 		return data->erase(_Where);
 	};
 
+	//! Specifies a new size for a container.
 	void resize(typename std::vector<T*>::size_type _Newsize)
 	{
 		data->resize(_Newsize);
 	};
 
+	//! Add an element to the end of the container.
 	virtual void push_back(T * elem) = 0;
 
 protected:
+
+	//! real elements container :)
 	std::vector<T*> * data;
 };
 

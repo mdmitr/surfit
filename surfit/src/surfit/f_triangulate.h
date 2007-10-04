@@ -28,6 +28,7 @@ namespace surfit {
 class d_surf;
 class f_surf;
 
+//! implements gridding method called "triangulation"
 class f_triangulate : public f_method
 {
 public:

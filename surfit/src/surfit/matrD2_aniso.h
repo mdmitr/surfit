@@ -30,7 +30,7 @@ class grid_line;
 class bitvec;
 
 /*! \class matrD2_aniso
-    \brief matrix to serve \ref completer functional for \ref completer::D2 > 0 and angle != 0, w != 1
+    \brief matrix to serve \ref f_completer functional 
 */
 class SURFIT_EXPORT matrD2_aniso : public matr {
 public:
@@ -58,9 +58,7 @@ public:
 	virtual ~matrD2_aniso();
 
 	REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
-	REAL element_at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
-	REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end);
 	REAL mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end);
 

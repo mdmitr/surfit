@@ -31,6 +31,7 @@ class bitvec;
 class vec;
 class sizetvec;
 
+//! class for section. One cell consists of 4 sections.
 struct sect
 {
 	//! distance to neighbour cell
@@ -47,6 +48,7 @@ struct sect
 
 };
 
+//! resulting surface smoothly approximates set of contours
 class SURFIT_EXPORT f_cntr_smooth : public functional {
 public:
 	//! constructor
@@ -85,6 +87,7 @@ private:
 
 };
 
+//! calculates sects for \ref matr_cntrs
 bool calc_sects(d_grid *& sects_grid, 
 		std::vector<sect> *& sects,
 		std::vector<const d_cntr *> * contours,

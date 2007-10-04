@@ -26,6 +26,7 @@ namespace surfit {
 
 class bitvec;
 
+//! functional of "conditional" type. Sets inequality for resulting surface
 class f_ineq : public functional {
 public:
 	f_ineq(REAL value, bool ileq, REAL imult);

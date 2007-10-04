@@ -94,6 +94,7 @@ private:
 
 };
 
+//! calculates vector V for the system of linear equations T*X=V
 SURFIT_EXPORT
 size_t calcVecV(size_t size, 
 	        const extvec * X,
@@ -106,6 +107,7 @@ size_t calcVecV(size_t size,
 	        size_t use_y_from = UINT_MAX, size_t use_y_to = UINT_MAX,
 	        const d_surf * trend = NULL);
 
+//! returns solvability of completer system of linear equations
 SURFIT_EXPORT
 bool completer_solvable(int points, REAL D1, REAL D2);
 

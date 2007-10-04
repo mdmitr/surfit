@@ -606,10 +606,6 @@ REAL matrD2::element_at(size_t i, size_t j, size_t * next_j) const {
 
 };
 
-REAL matrD2::element_at_transposed(size_t i, size_t j, size_t * next_j) const {
-	return element_at(i, j, next_j);
-};
-
 REAL matrD2::at(size_t i, size_t j, size_t * next_j) const {
 
 	bool zero = mask_solved_undefined->get(i);
@@ -698,10 +694,6 @@ REAL matrD2::at(size_t i, size_t j, size_t * next_j) const {
 
 	return matrator_serve(i, j, b, next_j);
 
-};
-
-REAL matrD2::at_transposed(size_t i, size_t j, size_t * next_j) const {
-	return at(i, j, next_j);
 };
 
 REAL matrD2::mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) {

@@ -28,6 +28,7 @@ namespace surfit {
 class d_surf;
 class f_surf;
 
+//! interface class for other gridding methods (kriging, triangulation or another)
 class f_method : public functional
 {
 public:

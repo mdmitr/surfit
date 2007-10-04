@@ -43,12 +43,32 @@ public:
 	*/
 	virtual REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const = 0;
 
+	/*! \return i,j-th trasposed matrix element
+	    \param i i-th index
+	    \param j j-th index
+	    \param next_j pointer, where next no-zero element index will be placed
+	*/
+	virtual REAL element_at_transposed(size_t i, size_t j, size_t * next_j = NULL) const
+	{
+		return element_at(i,j,next_j);
+	};
+
 	/*! \return i,j-th matrix element after columns and rows removal
 	    \param i i-th index
 	    \param j j-th index
 	    \param next_j pointer, where next no-zero element index will be placed
 	*/
 	virtual REAL at(size_t i, size_t j, size_t * next_j = NULL) const = 0;
+
+	/*! \return i,j-th transposed matrix element after columns and rows removal
+	    \param i i-th index
+	    \param j j-th index
+	    \param next_j pointer, where next no-zero element index will be placed
+	*/
+	virtual REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const
+	{
+		return at(i,j,next_j);
+	};
 
 	//! returns number of columns in matrix
 	virtual size_t cols() const = 0;
@@ -184,6 +204,7 @@ public:
 //
 ////////////////////////////////////////////
 
+//! interface class for matrices for subgrids
 class SURFIT_EXPORT matr_rect : public matr {
 public:
 	matr_rect(size_t ix_from, size_t ix_to, size_t iy_from, size_t iy_to, size_t in_grid_cols);
@@ -204,6 +225,7 @@ public:
 	size_t y_to;
 };
 
+//! sum of two matr_rect matrices
 class SURFIT_EXPORT matr_rect_sum : public matr_rect {
 public:
 	

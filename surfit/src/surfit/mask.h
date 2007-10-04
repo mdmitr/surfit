@@ -30,8 +30,9 @@ class datafile;
 class bitvec;
 class d_mask;
 
+//! constructor for \ref d_mask
 SURFIT_EXPORT
-d_mask * create_mask(bitvec *icoeff, d_grid *igrd, const char * funcname = 0);
+d_mask * create_mask(bitvec *icoeff, d_grid *igrd, const char * maskname = 0);
 
 /*! \class d_mask
     \brief sets domain for the surface 
@@ -129,16 +130,14 @@ public:
 
 };
 
-/*! \ingroup surfit_variables_collections
-    \var std::vector<d_mask *> * surfit_masks
-    collection of \ref mask objects
-*/
+//! collection of \ref d_mask objects
 class SURFIT_EXPORT masks_container : public objects_container<d_mask>
 {
 public:
 	virtual void push_back(d_mask * elem);
 };
 
+//! container of \ref d_mask objects
 extern SURFIT_EXPORT masks_container * surfit_masks;
 
 }; // namespace surfit

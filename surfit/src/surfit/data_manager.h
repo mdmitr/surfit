@@ -27,10 +27,11 @@ namespace surfit {
 class datafile;
 class data;
 
+//! returns names of supported datatypes
 char * types_info();
 
 /*! \class manager
-    \brief serves \ref file_load, \ref file_save, \ref clear_data and \ref mem_info commands
+    \brief serves file_load, file_save, clear_data and mem_info commands
 */
 class SURFIT_EXPORT manager {
 protected:
@@ -66,7 +67,7 @@ public:
 };
 
 /*! \class surfit_manager
-    \brief serves \ref file_load, \ref file_save, \ref clear_data and \ref mem_info commands for libsurfit
+    \brief serves file_load, file_save, clear_data and mem_info commands for libsurfit
 */
 class surfit_manager : public manager {
 public:

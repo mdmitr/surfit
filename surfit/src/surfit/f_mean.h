@@ -26,6 +26,7 @@ namespace surfit {
 
 class bitvec;
 
+//! Sets mean value for resulting surface
 class f_mean : public functional {
 public:
 

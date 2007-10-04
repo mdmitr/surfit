@@ -19,8 +19,13 @@
 
 namespace surfit {
 
+//! prints license
 void print_license();
+
+//! prints copyrights
 void show_c();
+
+//! prints warranty
 void show_w();
 
 }; // namespace surfit;

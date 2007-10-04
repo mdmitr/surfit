@@ -27,6 +27,7 @@ namespace surfit {
 class d_surf;
 class bitvec;
 
+//! functional of "condition" type. Sets weighted mean value for all resulting surface
 class f_wmean : public functional {
 public:
 

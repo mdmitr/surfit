@@ -27,6 +27,7 @@ namespace surfit {
 class d_hist;
 class bitvec;
 
+//! functional of "condition" type. Sets the following condition: histogram of the resulting surface should be as equal as possible to the given histogram
 class f_hist : public functional {
 public:
 

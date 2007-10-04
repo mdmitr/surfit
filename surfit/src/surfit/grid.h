@@ -28,11 +28,13 @@ namespace surfit {
 class datafile;
 class d_grid;
 
+//! constructor for \ref d_grid
 SURFIT_EXPORT
 d_grid * create_grid(REAL startX, REAL endX, REAL stepX,
 	       REAL startY, REAL endY, REAL stepY,
 	       const char * iname = NULL);
 
+//! constructor for \ref d_grid
 SURFIT_EXPORT
 d_grid * create_grid(const d_grid * igrid, const char * iname = NULL);
 

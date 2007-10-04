@@ -88,11 +88,6 @@ exit:
 	return res;	
 };
 
-REAL matr_diag::element_at_transposed(size_t i, size_t j, size_t * next_j) const 
-{
-	return element_at(i, j, next_j);	
-};
-
 REAL matr_diag::at(size_t i, size_t j, size_t * next_j) const 
 {
 	bool zero = mask->get(j);
@@ -103,11 +98,6 @@ REAL matr_diag::at(size_t i, size_t j, size_t * next_j) const
 		return REAL(0);
 	}
 
-	return element_at(i,j,next_j);
-};
-
-REAL matr_diag::at_transposed(size_t i, size_t j, size_t * next_j) const 
-{
 	return element_at(i,j,next_j);
 };
 

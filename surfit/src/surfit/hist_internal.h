@@ -53,7 +53,7 @@ bool _hist_write(const d_hist * hist, const char * filename, bool three_columns 
 SURFIT_EXPORT
 void _hist_info(const d_hist * hist);
 
-//! adds \ref d_hist to \ref surfit_hists collection
+//! adds \ref d_hist to collection
 SURFIT_EXPORT
 void _add_surfit_hists(d_hist * hist);
 

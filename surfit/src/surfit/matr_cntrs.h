@@ -27,6 +27,7 @@ namespace surfit {
 
 class bitvec;
 
+//! special struct for \ref matr_rect class
 struct cntr_rec {
 	size_t pos1;
 	size_t pos2;
@@ -37,6 +38,7 @@ struct cntr_rec {
 	REAL sum5;
 };
 
+//! special struct for \ref matr_rect class
 struct fast_rec {
 	fast_rec(size_t ipos, 
 		 const cntr_rec * ir1_1, const cntr_rec * ir1_2,
@@ -49,6 +51,7 @@ struct fast_rec {
 	const cntr_rec * r2_2;
 };
 
+//! special matrix for \ref f_cntr_smooth functional
 class SURFIT_EXPORT matr_cntrs : public matr {
 public:
 	//! constructor
@@ -59,9 +62,7 @@ public:
 	virtual ~matr_cntrs();
 
 	REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
-	REAL element_at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
-	REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	
 	REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 	REAL mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);

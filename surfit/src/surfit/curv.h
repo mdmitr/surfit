@@ -27,10 +27,12 @@ namespace surfit {
 class d_curv;
 class vec;
 
+//! constructor for \ref d_curv 
 SURFIT_EXPORT
 d_curv * create_curv(vec * iX, vec * iY,
 		     const char * curv_name = NULL);
 
+//! constructor for \ref d_curv 
 SURFIT_EXPORT
 d_curv * create_curv(const d_curv * src);
 
@@ -103,21 +105,21 @@ public:
 class d_points;
 class d_grid;
 
-/*! \ingroup surfit_variables_collections
-    \var std::vector<d_curv *> * surfit_curvs;
-    collection of \ref curv objects
-*/
+//! collection of \ref d_curv objects
 class SURFIT_EXPORT curvs_container : public objects_container<d_curv>
 {
 public:
 	virtual void push_back(d_curv * elem);
 };
 
+//! container of \ref d_curv objects
 extern SURFIT_EXPORT curvs_container * surfit_curvs;
 
+//! converts \ref d_curv to \ref d_points
 SURFIT_EXPORT
 d_points * discretize_curv(const d_curv * crv, d_grid * grd, REAL value, const char * pnts_name = NULL);
 
+//! debug drawing function
 void draw_curv_matlab(FILE * ff, const d_curv * crv, const char * color="blue", short width = 3, const char * symb = ".");
 
 

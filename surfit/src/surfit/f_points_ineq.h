@@ -27,7 +27,10 @@ namespace surfit {
 
 class d_points;
 class sub_points;
+
+//! vector of \ref sub_points
 typedef std::vector<sub_points *> sub_pnts;
+
 class d_grid;
 class bitvec;
 

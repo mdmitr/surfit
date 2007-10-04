@@ -30,7 +30,7 @@ class grid_line;
 class bitvec;
 
 /*! \class matrD2
-    \brief matrix to serve \ref completer functional for \ref completer::D2 > 0
+    \brief matrix to serve \ref f_completer functional 
 */
 class SURFIT_EXPORT matrD2 : public matr {
 public:
@@ -57,9 +57,7 @@ public:
 	virtual ~matrD2();
 
 	REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
-	REAL element_at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
-	REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 	REAL mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 
@@ -109,7 +107,7 @@ protected:
 
 
 /*! \class matrD2_rect
-    \brief matrix to serve \ref trend functional for trend::D2 > 0
+    \brief matrix to serve \ref f_trend functional 
 */
 class matrD2_rect : public matr_rect, public matrD2 {
 public:
@@ -137,9 +135,7 @@ public:
 	virtual ~matrD2_rect() {};
 
 	REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
-	REAL element_at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
-	REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 	REAL mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 
@@ -166,6 +162,7 @@ protected:
 
 };
 
+//! special functions for \ref matrD2
 void sums_points_D2(size_t i, size_t j, 
 		    size_t NN, size_t MM,
 		    size_t local_NN, size_t local_MM,

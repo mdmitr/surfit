@@ -27,11 +27,13 @@ namespace surfit {
 class d_hist;
 class vec;
 
+//! constructor for \ref d_hist
 SURFIT_EXPORT
 d_hist * create_hist(REAL ifrom, REAL ito,
 		     vec * iZ = NULL,
 		     const char * hist_name = NULL);
 
+//! constructor for \ref d_hist
 SURFIT_EXPORT
 d_hist * create_hist(const d_hist * ihist);
 
@@ -92,12 +94,14 @@ public:
 	
 };
 
+//! collection of \ref d_hist objects
 class SURFIT_EXPORT hists_container : public objects_container<d_hist>
 {
 public:
 	virtual void push_back(d_hist * elem);
 };
 
+//! container of \ref d_hist objects
 extern SURFIT_EXPORT hists_container * surfit_hists;
 
 }; // namespace surfit;

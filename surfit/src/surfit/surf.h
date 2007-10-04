@@ -33,8 +33,11 @@ class d_mask;
 class d_surf;
 class bitvec;
 
+//! constructor for \ref d_surf
 SURFIT_EXPORT
 d_surf * create_surf(extvec *icoeff, d_grid *igrd, const char * surfname = 0);
+
+//! constructor for \ref d_surf
 SURFIT_EXPORT
 d_surf * create_surf_by_mask(d_mask * msk);
 
@@ -258,16 +261,14 @@ public:
 
 };
 
-/*! \ingroup surfit_variables_collections
-    \var std::vector<d_surf *> * surfit_surfs
-    collection of \ref surf objects
-*/
+//! container for \ref d_surf objects
 class SURFIT_EXPORT surfs_container : public objects_container<d_surf>
 {
 public:
 	virtual void push_back(d_surf * elem);
 };
 
+//! container of \ref d_surf objects
 extern SURFIT_EXPORT surfs_container * surfit_surfs;
 
 

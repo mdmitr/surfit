@@ -28,9 +28,7 @@ class d_mask;
 class matr;
 class bitvec;
 
-/*! \class f_mask
-    \brief functional that approximates constant real number in some area, defined by \ref d_mask
-*/
+//! functional that approximates constant real number in some area, defined by \ref d_mask
 class SURFIT_EXPORT f_mask : public functional {
 public:
 	//! constructor

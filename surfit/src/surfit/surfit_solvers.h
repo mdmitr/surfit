@@ -30,6 +30,7 @@ namespace surfit {
 
 #define SOLVER_MAX_ITER          40
 
+//! interface class for RF solver
 struct solver_rf : public solver {
 	solver_rf() {
 		add_solver(this);
@@ -46,7 +47,7 @@ struct solver_rf : public solver {
 	virtual const char * get_long_name() const { return "Richardson's method with Fixed parameter - Optimally Extrapolated"; };
 };
 
-
+//! interface class for Conjugate Gradients method
 struct solver_cg : public solver {
 	solver_cg() {
 		add_solver(this);
@@ -64,6 +65,7 @@ struct solver_cg : public solver {
 	virtual const char * get_long_name() const { return "Conjugate Gradients"; };
 };
 
+//! interface class for Jacobi method
 struct solver_jacobi : public solver {
 	solver_jacobi() {
 		add_solver(this);
@@ -80,6 +82,7 @@ struct solver_jacobi : public solver {
 	virtual const char * get_long_name() const { return "Jacobi"; };
 };
 
+//! interface class for Jacobi-Conjugate Gradients method
 struct solver_jcg : public solver {
 	solver_jcg() {
 		add_solver(this);
@@ -96,6 +99,7 @@ struct solver_jcg : public solver {
 	virtual const char * get_long_name() const { return "Jacobi Conjugate Gradients"; };
 };
 
+//! interface class for SSOR method
 struct solver_ssor : public solver {
 	solver_ssor() {
 		add_solver(this);

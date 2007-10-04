@@ -54,7 +54,7 @@ grid_line * _get_surfit_grid_line();
 SURFIT_EXPORT
 void _set_surfit_grid_line(grid_line * contour);
 
-//! converts \ref grid_line to \ref curv
+//! converts \ref grid_line to \ref d_curv
 SURFIT_EXPORT
 d_curv * _grid_line_to_curv(const grid_line * gline, const d_grid * grd);
 

@@ -86,7 +86,7 @@ REAL _surf_D1(const d_surf * srf);
 SURFIT_EXPORT
 REAL _surf_D2(const d_surf * srf);
 
-//! adds \ref d_surf to \ref surfit_surfs
+//! adds \ref d_surf to collection
 SURFIT_EXPORT
 void _add_surfit_surfs(d_surf * srf);
 
@@ -137,10 +137,6 @@ REAL _surf_sum_area(const d_surf * srf, const d_area * area);
 //! calculates number of cells inside \ref d_area
 SURFIT_EXPORT
 int _surf_cells_in_area(const d_surf * srf, const d_area * crv);
-
-//! adds \ref d_surf to \ref surfit_surfs
-SURFIT_EXPORT
-void _surfit_surf_add(d_surf * srf);
 
 //! calculates \ref d_surf from \ref d_points using triangulation algorithm
 SURFIT_EXPORT

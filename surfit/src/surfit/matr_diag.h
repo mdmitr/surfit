@@ -27,6 +27,7 @@ namespace surfit {
 
 class bitvec;
 
+//! diagonal matrix
 class SURFIT_EXPORT matr_diag : public matr {
 public:
 	//! constructor
@@ -36,9 +37,7 @@ public:
 	virtual ~matr_diag();
 
 	REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
-	REAL element_at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
-	REAL at_transposed(size_t i, size_t j, size_t * next_j = NULL) const;
 	
 	REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 	REAL mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);

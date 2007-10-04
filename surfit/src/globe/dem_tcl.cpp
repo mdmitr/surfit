@@ -910,7 +910,7 @@ struct bool_oper_to_surf : public bool_oper
 
 		srf->setName(dem->getName());
 
-		_surfit_surf_add(srf);
+		_add_surfit_surfs(srf);
 		return true;
 	}
 };
