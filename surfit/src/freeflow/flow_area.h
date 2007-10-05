@@ -26,6 +26,7 @@ namespace surfit {
 
 class d_area;
 
+//! flow throgh area
 class FLOW_EXPORT f_flow_area : public functional {
 public:
 	f_flow_area(REAL ivalue, const d_area * iarea);

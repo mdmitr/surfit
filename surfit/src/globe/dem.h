@@ -32,20 +32,15 @@ class datafile;
 class d_grid;
 class d_dem;
 
+//! constructor for \ref d_dem
 GLOBE_EXPORT
 d_dem * create_dem(shortvec *icoeff, d_grid *igrd, 
 		   const char * demname = 0, short dem_undef_value = SHRT_MAX);
 
-/*! \class dem
-    \brief Digital Elevation Model, based on the equidistant \ref grid with values set at the centers of the cells (see \ref surfit_dem). See \ref tcl_dem "Tcl commands" for \ref dem.
-*/
+//! Digital Elevation Model, based on the equidistant \ref d_grid with values set at the centers of the cells. 
 class GLOBE_EXPORT d_dem : public data {
 protected:
-	/*! constructor
-	    \param igrd uniform 2d-grid
-	    \param icoeff coefficients a_i
-	    \param demname name
-	*/
+	//! constructor
 	d_dem(shortvec *icoeff, d_grid *igrd, 
 	      const char * demname = 0, short dem_undef_value = SHRT_MAX);
 
@@ -54,6 +49,7 @@ protected:
 	
 public:
 
+	//! constructor
 	friend GLOBE_EXPORT
 	d_dem * create_dem(shortvec *icoeff, d_grid *igrd, 
 			   const char * demname, short dem_undef_value);
@@ -64,6 +60,7 @@ public:
 	//! calculates surface value at point (x,y) using bilinear interpolation
 	virtual REAL getInterpValue(REAL x, REAL y) const;
 
+	//! returns DEM value at I,J node
 	virtual short getValueIJ(size_t i, size_t j) const;
 
 	//! calculates surface mean value for rect
@@ -180,8 +177,11 @@ public:
 	//! coefficients for each basis surface
 	shortvec * coeff;
 
+	//! data for wavelets decomposition/reconstruction
 	std::vector<shortvec *> * coeffs_store;
+	//! data for wavelets decomposition/reconstruction
 	std::vector<d_grid *> * grids_store;
+	//! data for wavelets decomposition/reconstruction
 	int store_pos;
 	
 	//! all values in coeff equal to undef_value interprets as undefined
@@ -190,16 +190,14 @@ public:
 
 };
 
-/*! \ingroup surfit_variables_collections
-    \var std::vector<d_dem *> * globe_dems
-    collection of \ref dem objects
-*/
+//! collection of \ref d_dem objects
 class GLOBE_EXPORT dems_container : public objects_container<d_dem>
 {
 public:
 	virtual void push_back(d_dem * elem);
 };
 
+//! storage for dems
 extern GLOBE_EXPORT dems_container * globe_dems;
 
 }; // namespace surfit;

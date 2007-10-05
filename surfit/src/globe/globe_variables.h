@@ -27,12 +27,9 @@ namespace surfit {
 
 #define GLOBE_VERSION "3.0"
 
+//! inits libglobe global variables
 GLOBE_EXPORT
 void globe_init_variables(Tcl_Interp * interp);
-
-class user;
-
-extern GLOBE_EXPORT std::vector<user *> * globe_users;
 
 }; // namespace surfit;
 

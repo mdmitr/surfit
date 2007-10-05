@@ -21,24 +21,20 @@ namespace surfit {
 
 class d_curv;
 
+//! loads curve from surfer BLN file
 SURFIT_IO_EXPORT
 d_curv * _curv_load_bln(FILE * file, int & orient);
 
+//! loads curves from ESRI shape file
 SURFIT_IO_EXPORT
-/*! \ingroup internal_curv
-    \fn bool _curvs_load_shp(const char * filename, const char * curvname = NULL);
-    \brief load curves from ESRI shape file
-*/
 bool _curv_load_shp(const char * filename, const char * curvname = NULL);
 
+//! saves curve to surfer BLN file
 SURFIT_IO_EXPORT
 bool _curv_save_bln(const d_curv * crv, FILE * file, int orient);
 
+//! saves curve to ERSI shape file
 SURFIT_IO_EXPORT
-/*! \ingroup internal_curv
-    \fn bool _curv_save_shp(const d_curv * contour, const char * filename);
-    \brief saves \ref curv to ERSI shape file
-*/
 bool _curv_save_shp(const d_curv * contour, const char * filename);
 
 }; // namespace surfit;

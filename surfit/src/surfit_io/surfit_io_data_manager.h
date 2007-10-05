@@ -24,11 +24,12 @@
 
 namespace surfit {
 
-/*! \class freesurfit_io_manager
-    \brief serves \ref file_load, \ref file_save, \ref clear_data and \ref mem_info commands for libfreesurfit_io
+/*! \class surfit_io_manager
+    \brief serves file_load, file_save, clear_data and mem_info commands for libsurfit_io
 */
 class surfit_io_manager : public manager {
 protected:
+	//! destructor
 	~surfit_io_manager() {};
 public:
 	bool auto_load(const char * filename, const char * first1024, int readed) const;

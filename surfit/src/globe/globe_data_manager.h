@@ -24,9 +24,7 @@
 
 namespace surfit {
 
-/*! \class freeglobe_manager
-    \brief serves \ref file_load, \ref file_save, \ref clear_data and \ref mem_info commands for libfreeglobe
-*/
+//! serves file_load, file_save, clear_data and mem_info commands for libglobe
 class globe_manager : public manager {
 protected:
 	~globe_manager() {};

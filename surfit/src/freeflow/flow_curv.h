@@ -29,6 +29,7 @@ class f_flow_points;
 class d_curv;
 class d_grid;
 
+//! flow throgh curve
 class FLOW_EXPORT f_flow_curv : public functional {
 public:
 	f_flow_curv(REAL ivalue, d_curv * icrv);

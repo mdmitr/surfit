@@ -24,6 +24,7 @@ namespace surfit {
 
 class shortvec;
 
+//! makes wavelets decomposition
 GLOBE_EXPORT
 shortvec * _decomp2d(const shortvec * X,
 		     int N, int M,

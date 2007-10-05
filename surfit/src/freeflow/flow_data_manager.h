@@ -24,9 +24,7 @@
 
 namespace surfit {
 
-/*! \class freeflow_manager
-    \brief serves \ref file_load, \ref file_save, \ref clear_data and \ref mem_info commands for libfreeflow
-*/
+//! serves file_load, file_save, clear_data and mem_info commands for libfreeflow
 class freeflow_manager : public manager {
 public:
 	

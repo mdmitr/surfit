@@ -27,10 +27,7 @@ namespace surfit {
 //
 
 GLOBE_EXPORT
-/*! \ingroup tcl_dem_internal
-    \fn d_dem * _surf_to_dem(d_surf * srf);
-    \brief transforms \ref surf to \ref dem
-*/
+//! transforms \ref d_surf to \ref d_dem
 d_dem * _surf_to_dem(d_surf * srf);
 
 }; // namespace surfit;

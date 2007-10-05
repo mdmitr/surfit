@@ -27,10 +27,13 @@ namespace surfit {
 class d_dem;
 class bitvec;
 
+//! functional for DEM interpolation/approximation
 class GLOBE_EXPORT f_dem : public functional {
 public:
 
+	//! constructor
 	f_dem(d_dem * idem);
+	//! destructor
 	~f_dem();
 
 	const char * getManagerName() const { return "globe"; };
@@ -50,9 +53,13 @@ protected:
 
 private:
 
+	//! very fast optimization
 	bool minimize_only_dem();
 
+	//! functional data
 	const d_dem * dem;
+
+	//! mask for applying functional
 	bitvec * mask;
 	
 };

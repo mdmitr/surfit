@@ -21,134 +21,80 @@ namespace surfit {
 
 class d_surf;
 
+//! loads surface from SURFER grd file (ASCII format)
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_load_grd(const char * filename, const char * surfname)
-    \brief loads surf from SURFER grd file (ASCII format)
-*/
 d_surf * _surf_load_grd(const char * filename, const char * surfname); 
 
+//! loads surface from SURFER grd file (BINARY format)
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_load_grd_bin(const char * filename, const char * surfname)
-    \brief loads surf from SURFER grd file (BINARY format)
-*/
 d_surf * _surf_load_grd_bin(const char * filename, const char * surfname); 
 
+//! loads surface from SURFER grd file (Surfer7 BINARY format)
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_load_grd_bin7(const char * filename, const char * surfname)
-    \brief loads surf from SURFER grd file (Surfer7 BINARY format)
-*/
 d_surf * _surf_load_grd_bin7(const char * filename, const char * surfname); 
 
+//! loads surface from Generic Mapping Tools grd file (CDF format)
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_load_gmt(const char * filename, const char * surfname)
-    \brief loads surf from Generic Mapping Tools grd file (CDF format)
-*/
 d_surf * _surf_load_gmt(const char * filename, const char * surfname); 
 
+//! loads surface from GRASS ASCII file
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_load_grass(const char * filename, const char * surfname)
-    \brief loads surf from GRASS ASCII file
-*/
 d_surf * _surf_load_grass(const char * filename, const char * surfname); 
 
+//! loads surface from ArcGIS ASCII file
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_load_arcgis(const char * filename, const char * surfname)
-    \brief loads surf from ArcGIS ASCII file
-*/
 d_surf * _surf_load_arcgis(const char * filename, const char * surfname); 
 
+//! loads surface from XYZ 3 column text file
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_load_xyz(const char * filename, const char * surfname, bool force = false)
-    \brief loads surf from XYZ 3 column text file
-*/
 d_surf * _surf_load_xyz(const char * filename, const char * surfname, bool force = false); 
 
+//! loads surface from JPEG file
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_load_jpg(const char * filename, const char * surfname, REAL minz = 0, REAL maxz = 0)
-    \brief loads surf from JPEG file
-*/
 d_surf * _surf_load_jpg(const char * filename, const char * surfname, 
 			REAL minz = 0, REAL maxz = 0, 
 			REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1); 
 
+//! loads surface from BMP file
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_load_bmp(const char * filename, const char * surfname, REAL minz = 0, REAL maxz = 0)
-    \brief loads surf from JPEG file
-*/
 d_surf * _surf_load_bmp(const char * filename, const char * surfname, 
 			REAL minz = 0, REAL maxz = 0, 
 			REAL startX = 0, REAL startY = 0, REAL stepX = 1, REAL stepY = 1); 
 
+//! saves surface to SURFER grd file (ASCII format)
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_save_grd(const d_surf * srf, const char * filename); 
-    \brief saves surf to SURFER grd file (ASCII format)
-*/
 bool _surf_save_grd(const d_surf * srf, const char * filename); 
 
+//! saves surface to SURFER grd file (BINARY format)
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_save_grd_bin(const d_surf * srf, const char * filename); 
-    \brief saves surf to SURFER grd file (BINARY format)
-*/
 bool _surf_save_grd_bin(const d_surf * srf, const char * filename); 
 
+//! saves surface to SURFER grd file (Surfer7 BINARY format)
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_save_grd_bin7(const d_surf * srf, const char * filename); 
-    \brief saves surf to SURFER grd file (Surfer7 BINARY format)
-*/
 bool _surf_save_grd_bin7(const d_surf * srf, const char * filename); 
 
+//! saves surface to Generic Mapping Tools grd file (CDF format)
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_save_gmt(const d_surf * srf, const char * filename); 
-    \brief saves surf to Generic Mapping Tools grd file (CDF format)
-*/
 bool _surf_save_gmt(const d_surf * srf, const char * filename); 
 
+//! saves surface to GRASS ASCII file 
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_save_grass(const d_surf * srf, const char * filename); 
-    \brief saves surf to GRASS ASCII file 
-*/
 bool _surf_save_grass(const d_surf * srf, const char * filename); 
 
+//! saves surface to ArcGIS ASCII file 
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_save_arcgis(const d_surf * srf, const char * filename); 
-    \brief saves surf to ArcGIS ASCII file 
-*/
 bool _surf_save_arcgis(const d_surf * srf, const char * filename); 
 
+//! saves surface to XYZ text format
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_save_xyz(const d_surf * srf, const char * filename);
-    \brief saves surf to XYZ text format
-*/
 bool _surf_save_xyz(const d_surf * srf, const char * filename);
 
+//! saves surface to JPEG format
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_save_jpg(const d_surf * srf, const char * filename, int quality);
-    \brief saves surf to JPEG format
-*/
 bool _surf_save_jpg(const d_surf * srf, const char * filename, int quality = 255);
 
+//! saves surface to Windows Bitmap format
 SURFIT_IO_EXPORT
-/*! \ingroup internal_surf
-    \fn bool _surf_save_bmp(const d_surf * srf, const char * filename);
-    \brief saves surf to Windows Bitmap format
-*/
 bool _surf_save_bmp(const d_surf * srf, const char * filename);
 
 }; // namespace surfit;

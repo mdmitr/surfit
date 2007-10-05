@@ -28,6 +28,7 @@ class curv;
 class grid_line;
 class bitvec;
 
+//! Funcitonal that applies Law of conservation of mass 
 class f_lcm_simple : public functional {
 public:
 

@@ -27,12 +27,9 @@ namespace surfit {
 
 #define SURFIT_IO_VERSION "3.0"
 
+//! inits libsurfit_io global variables
 SURFIT_IO_EXPORT
 void surfit_io_init_variables(Tcl_Interp * interp);
-
-class user;
-
-extern SURFIT_IO_EXPORT std::vector<user *> * surfit_io_users;
 
 }; // namespace surfit;
 

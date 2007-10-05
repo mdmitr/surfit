@@ -27,6 +27,7 @@ namespace surfit {
 
 #define FREEFLOW_VERSION "3.0"
 
+//! inits libfreeflow global variables
 FLOW_EXPORT
 void freeflow_init_variables(Tcl_Interp * interp);
 
