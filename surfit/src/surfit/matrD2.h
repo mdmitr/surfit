@@ -59,14 +59,11 @@ public:
 	REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
-	REAL mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
-
+	
 	virtual size_t cols() const;
 	virtual size_t rows() const;
 
 	REAL norm() const;
-
-	virtual void skip(size_t i, size_t j);
 
 protected:
 
@@ -97,6 +94,7 @@ protected:
 
 	//! bit-mask
 	bitvec * mask;
+	//! combined mask (combines mask_solved and mask_undefined)
 	bitvec * mask_solved_undefined;
 
 	//! calls from matrator()
@@ -137,8 +135,7 @@ public:
 	REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
-	REAL mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
-
+	
 	virtual size_t cols() const;
 	virtual size_t rows() const;
 

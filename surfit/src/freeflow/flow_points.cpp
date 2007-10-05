@@ -92,13 +92,13 @@ bool f_flow_points::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec *
 	// avoiding two-times bind_points_to_grid calling for the same grid
 	if (binded_grid) {
 		if (binded_grid->operator ==(method_grid) == false) {
-			bind_points_to_grid(method_sub_grid, f_task, f_sub_tasks, method_grid);
+			bind_points_to_grid(method_prev_grid, f_task, f_sub_tasks, method_grid);
 			if (binded_grid)
 				binded_grid->release();
 			binded_grid = create_grid(method_grid);
 		}
 	} else {
-		bind_points_to_grid(method_sub_grid, f_task, f_sub_tasks, method_grid);
+		bind_points_to_grid(method_prev_grid, f_task, f_sub_tasks, method_grid);
 		if (binded_grid)
 			binded_grid->release();
 		binded_grid = create_grid(method_grid);

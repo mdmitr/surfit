@@ -141,11 +141,6 @@ REAL matr_onesrow::mult_line(size_t J, extvec::const_iterator b_begin, extvec::c
 	return res;
 };
 
-REAL matr_onesrow::mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) 
-{
-	return mult_line(J, b_begin, b_end);
-};
-
 void matr_onesrow::call_after_mult() {
 	if (prev_b_begin)
 		delete prev_b_begin;
@@ -271,11 +266,6 @@ REAL matr_row::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const
 #endif
 		
 	return res*(*values)(J);
-};
-
-REAL matr_row::mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) 
-{
-	return mult_line(J, b_begin, b_end);
 };
 
 void matr_row::call_after_mult() {

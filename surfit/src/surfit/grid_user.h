@@ -29,9 +29,8 @@ namespace surfit {
 
 class bitvec;
 
-/*! \ingroup surfit_data_variables
-    \var surfit_grid
-    \brief equidistant \ref grid, used for \ref surfit_func calculation.
+/*! \var surfit_grid
+    \brief equidistant \ref d_grid
 
     This class describes equidistant rectangular grid (rectangular region comprised of evenly 
 spaced rows and columns), presented with cells (intersection of a rows and columns). Each 
@@ -41,33 +40,36 @@ two neighbour nodes in OX and OY directions (stepX and stepY respectively). On t
 shown with dashed lines, nodes with small circles.
 Gridding generates a Z value at each grid node by interpolating or approximating the \ref data values. 
 
-\image html grid.jpg
-
 \sa
-\li \ref grid
-\li \ref tcl_grid "Tcl commands"
-
+\li \ref d_grid
 */
 extern SURFIT_EXPORT d_grid * surfit_grid;	
 
+//! current \ref d_grid using for gridding calculations
 extern SURFIT_EXPORT d_grid * method_grid;
-extern SURFIT_EXPORT d_grid * method_sub_grid;
+
+//! previous \ref d_grid used for gridding calculations
 extern SURFIT_EXPORT d_grid * method_prev_grid;
+
+//! the solution vector
 extern SURFIT_EXPORT extvec * method_X;
-extern SURFIT_EXPORT bool method_ok;
+
+//! this vector have true values for the cells that already solved
 extern SURFIT_EXPORT bitvec * method_mask_solved;
+
+//! this vector have true values for the cells that are marked as undefined
 extern SURFIT_EXPORT bitvec * method_mask_undefined;
+
+//! grid size in OX direction for the current phase
 extern SURFIT_EXPORT size_t method_basis_cntX;
+
+//! grid size in OY direction for the current phase
 extern SURFIT_EXPORT size_t method_basis_cntY;
+
+//! number of the current phase
 extern SURFIT_EXPORT size_t method_phase_counter;
-extern SURFIT_EXPORT REAL method_scaleX;
-extern SURFIT_EXPORT REAL method_shiftX;
-extern SURFIT_EXPORT REAL method_scaleY;
-extern SURFIT_EXPORT REAL method_shiftY;
-extern SURFIT_EXPORT REAL method_stepX;
-extern SURFIT_EXPORT REAL method_stepY;
-extern SURFIT_EXPORT bool doubleX;
-extern SURFIT_EXPORT bool doubleY;
+
+//! number of cells in each direction for initial (small) grid
 extern SURFIT_EXPORT size_t basis_cnt;
 
 //! constructs grid to the latest calculation phase
@@ -139,7 +141,7 @@ void grid_begin();
 
 //! performs some operations after the latest phase
 SURFIT_EXPORT 
-void grid_finish();
+void grid_finish(bool & method_ok);
 
 //! releases some global variables
 SURFIT_EXPORT 

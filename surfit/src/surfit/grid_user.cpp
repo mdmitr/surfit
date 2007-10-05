@@ -70,24 +70,14 @@ struct grid_garbage : public binman {
 grid_garbage gird_garb;
 
 d_grid * method_grid = NULL;
-d_grid * method_sub_grid = NULL;
 d_grid * method_prev_grid = NULL;
 extvec * method_X = NULL;
-bool method_ok = false;
 bitvec * method_mask_solved = NULL;
 bitvec * method_mask_undefined = NULL;
 size_t basis_cnt = GRID_START_SIZE;
 size_t method_basis_cntX = GRID_START_SIZE;
 size_t method_basis_cntY = GRID_START_SIZE;
 size_t method_phase_counter = 0;
-REAL method_scaleX = FLT_MAX;
-REAL method_shiftX = FLT_MAX;
-REAL method_scaleY = FLT_MAX;
-REAL method_shiftY = FLT_MAX;
-REAL method_stepX = FLT_MAX;
-REAL method_stepY = FLT_MAX;
-bool doubleX = false;
-bool doubleY = false;
 
 /////////////////////////////////////////////////
 //
@@ -254,13 +244,10 @@ d_grid * create_last_grd() {
 void grid_init() 
 {
 	method_grid = NULL;
-	method_sub_grid = NULL;
 	method_prev_grid = NULL;
 	method_X = NULL;
 	method_mask_solved = NULL;
 	method_mask_undefined = NULL;
-	doubleX = false;
-	doubleY = false;
 };
 
 void grid_prepare()
@@ -268,13 +255,6 @@ void grid_prepare()
 	method_basis_cntX = basis_cnt;
 	method_basis_cntY = basis_cnt;
 	method_phase_counter = 0;
-	method_scaleX = 1;
-	method_shiftX = 0;
-	method_scaleY = 1;
-	method_shiftY = 0;
-	method_stepX = 0;
-	method_stepY = 0;
-	method_ok = false;
 
 	if (surfit_grid == NULL) {
 		grid();
@@ -294,7 +274,7 @@ void grid_prepare()
 	endx += surfit_grid->stepX/REAL(2);
 	endy += surfit_grid->stepY/REAL(2);
 	
-	method_sub_grid = create_grid((startx+endx)/REAL(2), (startx+endx)/REAL(2), (endx-startx),
+	method_prev_grid = create_grid((startx+endx)/REAL(2), (startx+endx)/REAL(2), (endx-startx),
 				      (starty+endy)/REAL(2), (starty+endy)/REAL(2), (endy-starty));
 };
 
@@ -334,24 +314,9 @@ void grid_begin() {
 	method_mask_undefined = create_bitvec(matrix_size);
 	method_mask_undefined->init_false();
 
-	method_scaleX = REAL(1)/method_grid->stepX;
-	method_shiftX = method_grid->startX;
-	method_scaleY = REAL(1)/method_grid->stepY;
-	method_shiftY = method_grid->startY;
-	method_stepX = method_grid->stepX;
-	method_stepY = method_grid->stepY;
-	REAL div = method_stepX/method_stepY;
-	if (div > 1) {
-		method_stepX = 1;
-		method_stepY = REAL(1)/div;
-	} else {
-		method_stepX = div;
-		method_stepY = 1;
-	}
-
 };
 
-void grid_finish() {
+void grid_finish(bool & method_ok) {
 
 	if (
 		(method_grid->getCountX() >= surfit_grid->getCountX()) &&
@@ -442,17 +407,12 @@ void grid_finish() {
 		}
 	}
 
-
-	if (method_sub_grid)
-		method_sub_grid->release();
-	method_sub_grid = create_grid(method_grid);
-
 	if (method_prev_grid)
 		method_prev_grid->release();
 	method_prev_grid = create_grid(method_grid);
 	
-	doubleX = false;
-	doubleY = false;
+	bool doubleX = false;
+	bool doubleY = false;
 	bool use_fast_project = true;
 	
 	if (method_grid->getCountX() < surfit_grid->getCountX()) {
@@ -532,12 +492,10 @@ void grid_release() {
 	if (method_mask_undefined)
 		method_mask_undefined->release();
 	method_mask_undefined = NULL;
-	if (method_sub_grid)
-		method_sub_grid->release();
-	method_sub_grid = NULL;
-
+	
 	if (method_prev_grid)
 		method_prev_grid->release();
+	method_prev_grid = NULL;
 	
 	d_surf * res_surf = create_surf(method_X, create_grid(method_grid), map_name);
 	if (method_grid)

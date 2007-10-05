@@ -21,6 +21,7 @@
 
 namespace surfit {
 
+//! increments pointer when matrD* multiplies by vector
 template <class iter>
 inline
 bool incr_ptr(iter & p, size_t i, 
@@ -39,6 +40,7 @@ bool incr_ptr(iter & p, size_t i,
 	return true;
 };
 
+//! increments pointer when matrD* multiplies by vector
 template <class iter>
 inline
 bool incr_ptr(iter & p, size_t i, 

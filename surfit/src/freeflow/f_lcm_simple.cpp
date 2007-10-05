@@ -85,9 +85,10 @@ bool f_lcm_simple::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * 
 	size_t MM = method_grid->getCountY();
 
 	matrD1 * oD1 = new matrD1(matrix_size, NN, 
-		method_stepX, method_stepY,
-		mask_solved, mask_undefined, 
-		gfaults); 
+				  method_grid->stepX, 
+				  method_grid->stepY,
+				  mask_solved, mask_undefined, 
+				  gfaults); 
 	
 	v = create_extvec(matrix_size);
 

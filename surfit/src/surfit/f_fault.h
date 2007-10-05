@@ -50,6 +50,7 @@ public:
 
 	void cleanup();
 
+	//! returns fault line
 	const d_curv * get_fault() const;
 	
 protected:

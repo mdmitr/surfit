@@ -469,10 +469,6 @@ REAL matrD1_aniso::at(size_t i, size_t j, size_t * next_j) const {
 	
 };
 
-REAL matrD1_aniso::mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) {
-	return mult_line(J, b_begin, b_end);
-};
-
 REAL matrD1_aniso::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) {
 
 	if (mask_solved_undefined->get(J))
@@ -704,10 +700,6 @@ size_t matrD1_aniso::cols() const {
 
 size_t matrD1_aniso::rows() const {
 	return N;
-};
-
-void matrD1_aniso::skip(size_t i, size_t j) {
-	mask_solved_undefined->set_true(i + j*NN);
 };
 
 void sums_points_D1_aniso(size_t i, size_t j, 

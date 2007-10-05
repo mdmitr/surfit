@@ -37,6 +37,7 @@ class SURFIT_EXPORT manager {
 protected:
 	~manager() {};
 public:
+	//! automatically loads data from file
 	virtual bool auto_load(const char * filename, const char * first1024, int readed) const = 0;
 	//! loads tag with tag_name from ROFF file (if it is possible)	
 	virtual int load_tag(datafile *df, char * tag_name) const { return 0; }; // -1 = error, 0 = not found, 1 = ok
@@ -95,19 +96,19 @@ public:
 	//! destructor
 	~data_manager();
 
-	//! serves \ref file_load command
+	//! serves file_load command
 	bool auto_load(const char * filename, const char * first1024, int readed) const;
-	//! serves \ref file_load command
+	//! serves file_load command
 	bool load(datafile *df) const;
-	//! serves \ref file_save command
+	//! serves file_save command
 	bool save(datafile *df) const;
-	//! serves \ref clear_data command
+	//! serves clear_data command
 	void clear_data() const;
-	//! serves \ref clear_rules command
+	//! serves clear_rules command
 	void clear_rules() const;
-	//! serves \ref mem_info command
+	//! serves mem_info command
 	void mem_info() const;
-	//! serves \ref types_info command
+	//! serves types_info command
 	char * types_info() const;
 	//! returns maximum and minimum values for Z-coordinate
 	void getMinMaxZ(REAL & minZ, REAL & maxZ) const;
@@ -120,11 +121,19 @@ public:
 	//! returns data with specified type, name and id
 	const data * data_get(const char * type, const char * name, int id) const;
 
+	//! makes functionals automatically by loaded data
 	void auto_functionals() const;
 
+	//! returns number of managers
 	size_t get_managers_count() const;
+
+	//! returns manager by number
 	const manager * get_manager(int pos) const;
+
+	//! adds manager
 	void add_manager(manager * m);
+
+	//! replaces manager
 	void set_manager(manager * m, int pos);
 
 private:

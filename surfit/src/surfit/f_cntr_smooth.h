@@ -70,6 +70,7 @@ public:
 
 	virtual void cleanup();
 
+	//! adds \ref d_cntr "contour" to contours storage
 	void add_contour(const d_cntr * cntr);
 	
 protected:
@@ -77,10 +78,11 @@ protected:
 	int this_get_data_count() const;
 	const data * this_get_data(int pos) const;
 
-	//! contour for approximation
+	//! contours for approximation
 	std::vector<const d_cntr *> * contours;
 
 private:
+
 	d_grid * sects_grid;
 	std::vector<sect> * sects;
 	REAL mult;

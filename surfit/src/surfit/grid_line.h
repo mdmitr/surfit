@@ -38,11 +38,13 @@ class d_curv;
 //! struct for comparsion of two numbers
 struct nums_less_compare
 {
+	//! constructor
 	nums_less_compare(const sizetvec * idata)
 	{
 		data = idata;
 	}
 
+	//! operator for comparsion
 	bool operator ()( size_t left, size_t right )
 	{
 		return ((*data)(left) < (*data)(right));
@@ -50,6 +52,7 @@ struct nums_less_compare
 
 private:
 
+	//! data for comparsion
 	const sizetvec * data;
 };
 
@@ -108,35 +111,60 @@ public:
 	class cell_finder {
 
 	public:
+		//! constructor
 		cell_finder(size_t ipos, const grid_line * grd_line);
+
+		//! returns true if next cell was founded
 		bool find_next(size_t & near_cell);
 
 	private:
-		size_t pos, NN, MM;
+		size_t pos;
+		
+		//! number of grid nodes in OX direction
+		size_t NN;
+		//! number of grid nodes in OY direction
+		size_t MM;
+
+		//! pointer to grid_line's sorted first cells
 		const sizetvec * sorted_first;
+		//! pointer to grid_line's sorted second cells
 		const sizetvec * sorted_second;
 		
+		//! pointer to grid_line's first cells
 		const sizetvec * first;
+		//! pointer to grid_line's second cells
 		const sizetvec * second;
 
 		sizetvec::const_iterator ptr;
+
+		//! pointer for the last founded first cell
 		sizetvec::const_iterator last_first;
+		//! pointer for the last founded second cell
 		sizetvec::const_iterator last_second;
 	};
 
 	friend class cell_finder;
 
+	//! returns structure for fast finding of cells
 	cell_finder get_cell_finder(size_t pos) const;
+
+	//! returns true if given node is a part of grid_line
 	bool check_for_node(size_t pos) const;
+
+	//! returns true if given nodes are a part of grid_line
 	bool check_for_pair(size_t pos1, size_t pos2) const;
 	
+	//! returns rect for grid_line
 	void get_minmax(size_t & min_i, size_t & max_i, 
 			size_t & min_j, size_t & max_j) const;
 	
+	//! moves and resizing grid_line
 	void resize(size_t move_i, size_t move_j, size_t newNN, size_t newMM, 
 		    bool minus_i, bool minus_j);
 
+	//! returns number of the first cell of the grid_line sect
 	size_t get_first_cell(size_t pos) const;
+	//! returns number of the second cell of the grid_line sect
 	size_t get_second_cell(size_t pos) const;
 	
 protected:

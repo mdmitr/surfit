@@ -126,24 +126,28 @@ bool f_completer::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * m
 	//if (false) {
 		if (D1 > 0)
 			oD1 = new matrD1(matrix_size, NN, 
-					 method_stepX, method_stepY,
+					 method_grid->stepX, 
+					 method_grid->stepY,
 					 mask_solved, mask_undefined, 
 					 gfaults);
 		if (D2 > 0)
 			oD2 = new matrD2(matrix_size, NN, 
-					 method_stepX, method_stepY,
+					 method_grid->stepX, 
+					 method_grid->stepY,
 					 mask_solved, mask_undefined, 
 					 gfaults); 
 	} else {
 		if (D1 > 0)
 			oD1 = new matrD1_aniso(matrix_size, NN, 
-					       method_stepX, method_stepY,
+					       method_grid->stepX, 
+					       method_grid->stepY,
 					       mask_solved, mask_undefined, 
 					       gfaults,
 					       angle, w);
 		if (D2 > 0)
 			oD2 = new matrD2(matrix_size, NN,
-					 method_stepX, method_stepY,
+					 method_grid->stepX, 
+					 method_grid->stepY,
 					 mask_solved, mask_undefined, 
 					 gfaults);
 	}

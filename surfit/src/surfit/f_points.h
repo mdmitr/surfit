@@ -110,6 +110,7 @@ class SURFIT_EXPORT f_points_user : public functional
 
 	void cleanup();
 
+	//! returns points to approximate/interpolate
 	virtual d_points * get_points() = 0;
 	
 protected:
@@ -126,6 +127,7 @@ protected:
 	//! points for f_points functional
 	d_points * pnts;
 
+	//! name of functional for printing into log file
 	const char * functional_name;
 
 };

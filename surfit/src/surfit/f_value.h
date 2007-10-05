@@ -48,7 +48,9 @@ public:
 				       bitvec * mask_undefined,
 				       bool i_am_cond);
 
+	//! very fast minimization procedure (used for optimization)
 	bool minimize_alone();
+
 	void cleanup();
 	
 protected:

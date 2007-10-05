@@ -200,10 +200,6 @@ REAL matrD1_rect::at(size_t i, size_t j, size_t * next_j) const {
 	
 };
 
-REAL matrD1_rect::mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) {
-	return mult_line(J, b_begin, b_end);
-};
-
 REAL matrD1_rect::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) {
 		
 	if (mask_solved_undefined->get(J))

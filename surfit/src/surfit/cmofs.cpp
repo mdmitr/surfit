@@ -56,6 +56,7 @@ void surfit() {
 		surfit_data_manager->auto_functionals();
 	}
 
+	bool method_ok = false;
 	grid_init();
 	grid_prepare();
 
@@ -117,7 +118,7 @@ void surfit() {
 		delete Functionals;
 		
 		if (stop_execution != 1)
-			grid_finish();
+			grid_finish(method_ok);
 		else
 			break;
 

@@ -47,6 +47,8 @@ public:
 	    \param imask_solved bit-mask with solved cells
 	    \param imask_undefined bit-mask with undefined cells
 	    \param ifault grid based fault line
+	    \param iangle anisotropy angle
+	    \param iw anisotropy factor
 	*/
 	matrD2_aniso(size_t iN, size_t iNN, 
 		     REAL ihx, REAL ihy,
@@ -60,14 +62,11 @@ public:
 	REAL element_at(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
 	REAL mult_line(size_t J, const REAL * b_begin, const REAL * b_end);
-	REAL mult_transposed_line(size_t J, const REAL * b_begin, const REAL * b_end);
 
 	virtual size_t cols() const;
 	virtual size_t rows() const;
 
 	REAL norm() const;
-
-	virtual void skip(size_t i, size_t j);
 
 protected:
 
@@ -78,9 +77,9 @@ protected:
 	//! rows in geometry
 	size_t MM;
 
-	// anisotropy angle
+	//! anisotropy angle
 	REAL angle;
-	// anisotropy factor
+	//! anisotropy factor
 	REAL w;
 
 	//! grid step by X power of 4
@@ -103,6 +102,7 @@ protected:
 
 	//! bit-mask
 	bitvec * mask;
+	//! combined mask (combines mask_solved and mask_undefined)
 	bitvec * mask_solved_undefined;
 
 	//! calls from matrator()

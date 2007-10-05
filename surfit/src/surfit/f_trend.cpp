@@ -445,13 +445,15 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_
 		
 		if (D1 > 0)
 			oD1 = new matrD1(matrix_size, NN, 
-					 method_stepX, method_stepY,
+					 method_grid->stepX, 
+					 method_grid->stepY,
 					 trend_mask_solved, trend_mask_undefined, 
 					 gfaults); 
 		
 		if (D2 > 0)
 			oD2 = new matrD2(matrix_size, NN, 
-					 method_stepX, method_stepY,
+					 method_grid->stepX, 
+					 method_grid->stepY,
 					 trend_mask_solved, trend_mask_undefined, 
 					 gfaults); 
 
@@ -479,7 +481,8 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_
 		
 		if (D1 > 0)
 			oD1 = new matrD1_rect(matrix_size, NN, 
-					      method_stepX, method_stepY,
+					      method_grid->stepX, 
+					      method_grid->stepY,
 					      aux_X_from, aux_X_to,
 					      aux_Y_from, aux_Y_to,
 					      trend_mask_solved, trend_mask_undefined, 
@@ -487,7 +490,8 @@ bool f_trend::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec * mask_
 		
 		if (D2 > 0)
 			oD2 = new matrD2_rect(matrix_size, NN, 
-					      method_stepX, method_stepY,
+					      method_grid->stepX, 
+					      method_grid->stepY,
 					      aux_X_from, aux_X_to,
 					      aux_Y_from, aux_Y_to,
 					      trend_mask_solved, trend_mask_undefined, 

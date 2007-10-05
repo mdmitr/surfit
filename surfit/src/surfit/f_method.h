@@ -52,7 +52,10 @@ public:
 
 	virtual void cleanup();
 
+	//! returns surface obtianed with implemented gridding method
 	virtual d_surf * get_method_surf() = 0;
+
+	//! returns name of gridding method
 	virtual const char * get_method_name() = 0;
 	
 protected:

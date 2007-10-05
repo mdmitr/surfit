@@ -40,7 +40,6 @@ public:
 	REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
 	
 	REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
-	REAL mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 	
 	virtual size_t cols() const;
 	virtual size_t rows() const;
@@ -49,14 +48,21 @@ public:
 
 protected:
 
+	//! matrix size
 	size_t N;
+
+	//! value for main diagonal
 	REAL val;
+
+	//! mask for applying matrix
 	bitvec * mask;
+
+	//! another mask for applying matrix
 	const bitvec * mask_solved;
+
+	//! another mask for applying matrix
 	const bitvec * mask_undefined;
-
 };
-
 
 }; // namespace surfit;
 

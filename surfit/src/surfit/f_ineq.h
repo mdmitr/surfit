@@ -29,7 +29,10 @@ class bitvec;
 //! functional of "conditional" type. Sets inequality for resulting surface
 class f_ineq : public functional {
 public:
+	//! constructor
 	f_ineq(REAL value, bool ileq, REAL imult);
+
+	//! destructor
 	~f_ineq();
 
 	const char * getManagerName() const { return "surfit"; };
@@ -53,9 +56,16 @@ protected:
 
 protected:
 	
+	//! value for inequality
 	REAL value;
+
+	//! if true, then inequality is leq, else - geq
 	bool leq;
+
+	//! multiplier coefficient
 	REAL mult;
+
+	//! mask where should apply inequality condition
 	bitvec * mask;
 };
 

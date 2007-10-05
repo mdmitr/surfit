@@ -39,11 +39,7 @@ d_mask * create_mask(bitvec *icoeff, d_grid *igrd, const char * maskname = 0);
 */
 class SURFIT_EXPORT d_mask : public data {
 protected:
-	/*! constructor 
-	    \param igrd uniform 2d-grid
-	    \param icoeff coefficients a_i
-	    \param funcname name
-	*/
+	//! constructor
 	d_mask(bitvec *icoeff, d_grid *igrd, const char * newname = 0);
 
 	//! destructor
@@ -120,6 +116,7 @@ public:
 	//! xor operation with another mask
 	virtual void XOR(const d_mask * msk);
 
+	//! converts mask to bitvec
 	bitvec * get_bitvec_mask(const d_grid * grid) const;
 
 	//! equidistant grid for mask

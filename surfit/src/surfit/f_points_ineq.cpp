@@ -103,13 +103,13 @@ bool f_points_ineq::make_matrix_and_vector(matr *& matrix, extvec *& v, bitvec *
 	// avoiding two-times bind_points_to_grid calling for the same grid
 	if (binded_grid) {
 		if (binded_grid->operator ==(method_grid) == false) {
-			bind_points_to_grid(method_sub_grid, pnts, f_sub_pnts, method_grid);
+			bind_points_to_grid(method_prev_grid, pnts, f_sub_pnts, method_grid);
 			if (binded_grid)
 				binded_grid->release();
 			binded_grid = create_grid(method_grid);
 		}
 	} else {
-		bind_points_to_grid(method_sub_grid, pnts, f_sub_pnts, method_grid);
+		bind_points_to_grid(method_prev_grid, pnts, f_sub_pnts, method_grid);
 		if (binded_grid)
 			binded_grid->release();
 		binded_grid = create_grid(method_grid);
@@ -183,13 +183,13 @@ void f_points_ineq::mark_solved_and_undefined(bitvec * mask_solved, bitvec * mas
 	// avoiding two-times bind_points_to_grid calling for the same grid
 	if (binded_grid) {
 		if (binded_grid->operator ==(method_grid) == false) {
-			bind_points_to_grid(method_sub_grid, pnts, f_sub_pnts, method_grid);
+			bind_points_to_grid(method_prev_grid, pnts, f_sub_pnts, method_grid);
 			if (binded_grid)
 				binded_grid->release();
 			binded_grid = create_grid(method_grid);
 		}
 	} else {
-		bind_points_to_grid(method_sub_grid, pnts, f_sub_pnts, method_grid);
+		bind_points_to_grid(method_prev_grid, pnts, f_sub_pnts, method_grid);
 		if (binded_grid)
 			binded_grid->release();
 		binded_grid = create_grid(method_grid);
@@ -237,13 +237,13 @@ bool f_points_ineq::solvable_without_cond(const bitvec * mask_solved,
 	// avoiding two-times bind_points_to_grid calling for the same grid
 	if (binded_grid) {
 		if (binded_grid->operator ==(method_grid) == false) {
-			bind_points_to_grid(method_sub_grid, pnts, f_sub_pnts, method_grid);
+			bind_points_to_grid(method_prev_grid, pnts, f_sub_pnts, method_grid);
 			if (binded_grid)
 				binded_grid->release();
 			binded_grid = create_grid(method_grid);
 		}
 	} else {
-		bind_points_to_grid(method_sub_grid, pnts, f_sub_pnts, method_grid);
+		bind_points_to_grid(method_prev_grid, pnts, f_sub_pnts, method_grid);
 		if (binded_grid)
 			binded_grid->release();
 		binded_grid = create_grid(method_grid);

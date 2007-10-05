@@ -696,10 +696,6 @@ REAL matrD2::at(size_t i, size_t j, size_t * next_j) const {
 
 };
 
-REAL matrD2::mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) {
-	return mult_line(J, b_begin, b_end);
-};
-
 REAL matrD2::mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end) {
 
 	if (mask_solved_undefined->get(J))
@@ -1117,10 +1113,6 @@ size_t matrD2::cols() const {
 
 size_t matrD2::rows() const {
 	return N;
-};
-
-void matrD2::skip(size_t i, size_t j) {
-	mask_solved_undefined->set_true(i + j*NN);
 };
 
 void sums_points_D2(size_t i, size_t j, 

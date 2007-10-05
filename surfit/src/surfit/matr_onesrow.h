@@ -39,7 +39,6 @@ public:
 	virtual REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
 	
 	virtual REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
-	virtual REAL mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 	virtual void call_after_mult();
 	
 	virtual size_t cols() const;
@@ -49,10 +48,19 @@ public:
 
 protected:
 
+	//! matrix size
 	size_t N;
+
+	//! matrix value
 	REAL val;
+
+	//! mask for applying matrix
 	bitvec * mask;
+
+	//! data for optimization
 	extvec::const_iterator * prev_b_begin;
+	
+	//! data for optimization
 	REAL prev_val;
 
 };
@@ -72,7 +80,6 @@ public:
 	virtual REAL at(size_t i, size_t j, size_t * next_j = NULL) const;
 	
 	virtual REAL mult_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
-	virtual REAL mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end);
 	virtual void call_after_mult();
 	
 	virtual size_t cols() const;
@@ -82,10 +89,19 @@ public:
 
 protected:
 
+	//! matrix size
 	size_t N;
+
+	//! values for rows
 	extvec * values;
+
+	//! mask for applying matrix
 	bitvec * mask;
+
+	//! data for optimization
 	extvec::const_iterator * prev_b_begin;
+
+	//! data for optimization
 	REAL prev_val;
 
 };

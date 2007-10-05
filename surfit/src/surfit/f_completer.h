@@ -58,7 +58,10 @@ public:
 				       bitvec * mask_undefined,
 				       bool i_am_cond);
 
+	//! sets area where f_completer should work
 	void set_area(const d_area * iarea, bool iinside);
+
+	//! sets mask where f_completer should work
 	void set_mask(const d_mask * imask);
 
 protected:

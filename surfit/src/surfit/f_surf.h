@@ -56,6 +56,7 @@ public:
 
 	void cleanup();
 
+	//! returns surface
 	const d_surf * get_surf() const;
 	
 protected:

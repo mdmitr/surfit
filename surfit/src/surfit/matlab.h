@@ -66,21 +66,20 @@ http://www.mathworks.com/access/helpdesk/help/pdf_doc/matlab/matfile_format.pdf
 */
 class SURFIT_EXPORT matlabSparseMatrix {
 public:
-	/*! \return col's amount */
+	//! returns number of cols
 	virtual size_t cols() const = 0;
-	/*! \return row's amount */
+	//! returns number of rows
 	virtual size_t rows() const = 0;
-	/*! \return i,j-th matrix element */
+	//! returns i,j-th matrix element
 	virtual REAL element_at(size_t i, size_t j, size_t * next_i = NULL) const = 0;
 
+	//! returns matrix element at i,j position after columns and rows removal
 	virtual REAL at(size_t i, size_t j, size_t * next_i = NULL) const = 0;
 
-	/*! writes matrix to mat file (matlab binary format)
-	    \param filename mat-file filename
-	    \param name matrix name
-	*/
+	//! writes matrix to mat file (matlab binary format)
 	bool writeMAT(const char * filename, const char * name, const std::vector<int> * zero_rows, bool append_file = true);
 
+	//! returns number of rows with all zero elements
 	void get_zero_rows(std::vector<int> & zero_rows); 
 
 };

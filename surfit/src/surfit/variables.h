@@ -25,30 +25,38 @@
 namespace surfit {
 
 	class data_manager;
+
+	//! global data manager - manages all data in surfit
 	extern SURFIT_EXPORT data_manager * surfit_data_manager;
 
 	class manager;
+	
+	//! adds data manager
 	SURFIT_EXPORT
 	bool add_manager(manager * man);
 
+	//! releases data manager
 	SURFIT_EXPORT
 	bool release_manager(manager * man);
 
-	class user;
-	
 	//
 	// Collections
 	//
 
 	class functional;
+
+	//! functionals storage
 	extern SURFIT_EXPORT std::vector<functional*> * functionals;
 
+	//! adds functional to functional storage
 	SURFIT_EXPORT 
 	void functionals_push_back(functional * f);
 
+	//! returns last functional that can be modified
 	SURFIT_EXPORT 
 	functional * get_modifiable_functional();
 
+	//! name of the current solver of systems of linear equations
 	extern char * solver_name;
 
 };

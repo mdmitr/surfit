@@ -129,11 +129,13 @@ public:
 	REAL w1;
 	//! pointer to first matrix
 	matr * T1;
+	//! pointer to first constant matrix
 	matr * cT1;
 	//! weight of second matrix
 	REAL w2;
 	//! pointer to second matrix
 	matr * T2;
+	//! pointer to second	constant matrix
 	matr * cT2;
     
 };
@@ -207,6 +209,7 @@ public:
 //! interface class for matrices for subgrids
 class SURFIT_EXPORT matr_rect : public matr {
 public:
+	//! constructor
 	matr_rect(size_t ix_from, size_t ix_to, size_t iy_from, size_t iy_to, size_t in_grid_cols);
 
 	//! r = T*b
@@ -229,12 +232,7 @@ public:
 class SURFIT_EXPORT matr_rect_sum : public matr_rect {
 public:
 	
-	/*! constructor
-	    \param iw1 weigth of first matrix
-	    \param iT1 first matrix
-	    \param iw2 weigth of second matrix
-	    \param iT2 second matrix
-	*/
+	//! constructor
 	matr_rect_sum(size_t ix_from, size_t ix_to, size_t iy_from, size_t iy_to, size_t in_grid_cols,
 		      REAL iw1, matr_rect *iT1, REAL iw2 = 0, matr_rect *iT2 = NULL);
 		
@@ -260,11 +258,13 @@ public:
 	REAL w1;
 	//! pointer to first matrix
 	matr_rect * T1;
+	//! pointer to first constant matrix
 	matr_rect * cT1;
 	//! weight of second matrix
 	REAL w2;
 	//! pointer to second matrix
 	matr_rect * T2;
+	//! pointer to second constant matrix
 	matr_rect * cT2;
     
 };

@@ -77,7 +77,10 @@ protected:
 	//! reprojected surface (trend)
 	d_surf * tr_srf;
 
+	//! mask for marking solved cells
 	bitvec * trend_mask_solved;
+
+	//! mask for marking undefined cells
 	bitvec * trend_mask_undefined;
 
 	//! calculates surface for limits

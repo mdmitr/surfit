@@ -268,11 +268,6 @@ REAL matr_cntrs::mult_line(size_t J, extvec::const_iterator b_begin, extvec::con
 	return mult*res;
 };
 
-REAL matr_cntrs::mult_transposed_line(size_t J, extvec::const_iterator b_begin, extvec::const_iterator b_end)
-{
-	return mult_line(J, b_begin, b_end);
-};
-
 size_t matr_cntrs::cols() const
 {
 	return N;
