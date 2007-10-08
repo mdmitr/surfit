@@ -1038,7 +1038,7 @@ struct match_contours
 	boolvec * res;
 };
 
-boolvec * contours(const char * pos, REAL penalty_factor) 
+boolvec * smooth_contour(const char * pos, REAL penalty_factor) 
 {
 	match_contours qq(pos, penalty_factor);
 	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);
@@ -1079,7 +1079,7 @@ struct match_contours_add
 	boolvec * res;
 };
 
-boolvec * contours_add(REAL weight, const char * pos)
+boolvec * smooth_contour_add(REAL weight, const char * pos)
 {
 	match_contours_add qq(weight, pos);
 	qq = std::for_each(surfit_cntrs->begin(), surfit_cntrs->end(), qq);

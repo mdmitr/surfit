@@ -55,8 +55,8 @@ surfit::boolvec * contour(const char * cntr_name = "*");
 surfit::boolvec * contour_add(REAL weight, const char * cntr_name = "*");
 surfit::boolvec * contour_leq(const char * cntr_name = "*", REAL penalty_factor = 0);
 surfit::boolvec * contour_geq(const char * cntr_name = "*", REAL penalty_factor = 0);
-surfit::boolvec * contours(const char * cntr_name = "*", REAL penalty_factor = 0);
-surfit::boolvec * contours_add(REAL weight = 50, const char * cntr_name = "*");
+surfit::boolvec * smooth_contour(const char * cntr_name = "*", REAL penalty_factor = 0);
+surfit::boolvec * smooth_contour_add(REAL weight = 50, const char * cntr_name = "*");
 //
 // 2D
 //

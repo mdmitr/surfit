@@ -42,7 +42,7 @@ grid 5 5
 completer 0 1
 
 # add "resulting surface should interpolate contours"
-contours_add 1
+smooth_contour_add 1
 
 ##
 ## run gridding algorithm

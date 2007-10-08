@@ -45,7 +45,7 @@ fault "fault*"
 completer 1 50
 
 # add "resulting surface should interpolate contours"
-contours_add 3 "iso*"
+smooth_contour_add 3 "iso*"
 
 ##
 ## run gridding algorithm
@@ -60,4 +60,4 @@ surfit
 surf_save "saratov.dat" $map_name 
 
 # plot resulting surface in PostScript
-surf_plot "saratov.ps"
+surf_plot "saratov.ps" * 50

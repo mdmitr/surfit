@@ -554,10 +554,10 @@ boolvec * contour(const char * cntr_name = "*");
     where (i,j) - indices of the cells cross with contour, 
     \f$ z_{i,j} \f$ - contour mean value for the (i,j) cell.
 */
-boolvec * contour_add(REAL weight, const char * cntr_name = "*");
+boolvec * contour_add(REAL weight = 50, const char * cntr_name = "*");
 
-boolvec * contours(const char * cntr_name = "*", REAL penalty_factor = 0);
-boolvec * contours_add(REAL weight = 50, const char * cntr_name = "*");
+boolvec * smooth_contour(const char * cntr_name = "*", REAL penalty_factor = 0);
+boolvec * smooth_contour_add(REAL weight = 50, const char * cntr_name = "*");
 
 /*! \ingroup tcl_rules_cntrs
     \par Tcl syntax:

@@ -39008,7 +39008,7 @@ _wrap_contour_geq(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
 
 
 SWIGINTERN int
-_wrap_contours__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_smooth_contour__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   double arg2 ;
   surfit::boolvec *result = 0 ;
@@ -39018,21 +39018,21 @@ _wrap_contours__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:contours cntr_name penalty_factor ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:smooth_contour cntr_name penalty_factor ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "contours" "', argument " "1"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "smooth_contour" "', argument " "1"" of type '" "char const *""'");
   }
   arg1 = buf1;
   ecode2 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[2], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "contours" "', argument " "2"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "smooth_contour" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast<double >(val2);
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (surfit::boolvec *)surfit::contours((char const *)arg1,arg2);
+        result = (surfit::boolvec *)surfit::smooth_contour((char const *)arg1,arg2);
         
       }
     }
@@ -39066,23 +39066,23 @@ fail:
 
 
 SWIGINTERN int
-_wrap_contours__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_smooth_contour__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *arg1 = (char *) 0 ;
   surfit::boolvec *result = 0 ;
   int res1 ;
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:contours cntr_name ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:smooth_contour cntr_name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "contours" "', argument " "1"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "smooth_contour" "', argument " "1"" of type '" "char const *""'");
   }
   arg1 = buf1;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (surfit::boolvec *)surfit::contours((char const *)arg1);
+        result = (surfit::boolvec *)surfit::smooth_contour((char const *)arg1);
         
       }
     }
@@ -39116,14 +39116,14 @@ fail:
 
 
 SWIGINTERN int
-_wrap_contours__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_smooth_contour__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   surfit::boolvec *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,":contours ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":smooth_contour ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (surfit::boolvec *)surfit::contours();
+        result = (surfit::boolvec *)surfit::smooth_contour();
         
       }
     }
@@ -39155,18 +39155,18 @@ fail:
 
 
 SWIGINTERN int
-_wrap_contours(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_smooth_contour(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   Tcl_Obj *CONST *argv = objv+1;
   int argc = objc-1;
   if (argc == 0) {
-    return _wrap_contours__SWIG_2(clientData, interp, objc, argv - 1);
+    return _wrap_smooth_contour__SWIG_2(clientData, interp, objc, argv - 1);
   }
   if (argc == 1) {
     int _v;
     int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_contours__SWIG_1(clientData, interp, objc, argv - 1);
+      return _wrap_smooth_contour__SWIG_1(clientData, interp, objc, argv - 1);
     }
   }
   if (argc == 2) {
@@ -39179,18 +39179,18 @@ _wrap_contours(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, T
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_contours__SWIG_0(clientData, interp, objc, argv - 1);
+        return _wrap_smooth_contour__SWIG_0(clientData, interp, objc, argv - 1);
       }
     }
   }
   
-  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'contours'", TCL_STATIC);
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'smooth_contour'", TCL_STATIC);
   return TCL_ERROR;
 }
 
 
 SWIGINTERN int
-_wrap_contours_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_smooth_contour_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   double arg1 ;
   char *arg2 = (char *) 0 ;
   surfit::boolvec *result = 0 ;
@@ -39200,21 +39200,21 @@ _wrap_contours_add__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:contours_add weight cntr_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:smooth_contour_add weight cntr_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "contours_add" "', argument " "1"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "smooth_contour_add" "', argument " "1"" of type '" "double""'");
   } 
   arg1 = static_cast<double >(val1);
   res2 = SWIG_AsCharPtrAndSize(objv[2], &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "contours_add" "', argument " "2"" of type '" "char const *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "smooth_contour_add" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = buf2;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (surfit::boolvec *)surfit::contours_add(arg1,(char const *)arg2);
+        result = (surfit::boolvec *)surfit::smooth_contour_add(arg1,(char const *)arg2);
         
       }
     }
@@ -39248,22 +39248,22 @@ fail:
 
 
 SWIGINTERN int
-_wrap_contours_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_smooth_contour_add__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   double arg1 ;
   surfit::boolvec *result = 0 ;
   double val1 ;
   int ecode1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:contours_add weight ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:smooth_contour_add weight ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "contours_add" "', argument " "1"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "smooth_contour_add" "', argument " "1"" of type '" "double""'");
   } 
   arg1 = static_cast<double >(val1);
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (surfit::boolvec *)surfit::contours_add(arg1);
+        result = (surfit::boolvec *)surfit::smooth_contour_add(arg1);
         
       }
     }
@@ -39295,14 +39295,14 @@ fail:
 
 
 SWIGINTERN int
-_wrap_contours_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_smooth_contour_add__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   surfit::boolvec *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,":contours_add ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":smooth_contour_add ") == TCL_ERROR) SWIG_fail;
   {
     try {
       if (surfit::stop_execution == 0) {
-        result = (surfit::boolvec *)surfit::contours_add();
+        result = (surfit::boolvec *)surfit::smooth_contour_add();
         
       }
     }
@@ -39334,11 +39334,11 @@ fail:
 
 
 SWIGINTERN int
-_wrap_contours_add(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+_wrap_smooth_contour_add(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   Tcl_Obj *CONST *argv = objv+1;
   int argc = objc-1;
   if (argc == 0) {
-    return _wrap_contours_add__SWIG_2(clientData, interp, objc, argv - 1);
+    return _wrap_smooth_contour_add__SWIG_2(clientData, interp, objc, argv - 1);
   }
   if (argc == 1) {
     int _v;
@@ -39347,7 +39347,7 @@ _wrap_contours_add(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       _v = SWIG_CheckState(res);
     }
     if (_v) {
-      return _wrap_contours_add__SWIG_1(clientData, interp, objc, argv - 1);
+      return _wrap_smooth_contour_add__SWIG_1(clientData, interp, objc, argv - 1);
     }
   }
   if (argc == 2) {
@@ -39360,12 +39360,12 @@ _wrap_contours_add(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
       int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_contours_add__SWIG_0(clientData, interp, objc, argv - 1);
+        return _wrap_smooth_contour_add__SWIG_0(clientData, interp, objc, argv - 1);
       }
     }
   }
   
-  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'contours_add'", TCL_STATIC);
+  Tcl_SetResult(interp,(char *) "No matching function for overloaded 'smooth_contour_add'", TCL_STATIC);
   return TCL_ERROR;
 }
 
@@ -48860,8 +48860,8 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "contour_add", (swig_wrapper_func) _wrap_contour_add, NULL},
     { SWIG_prefix "contour_leq", (swig_wrapper_func) _wrap_contour_leq, NULL},
     { SWIG_prefix "contour_geq", (swig_wrapper_func) _wrap_contour_geq, NULL},
-    { SWIG_prefix "contours", (swig_wrapper_func) _wrap_contours, NULL},
-    { SWIG_prefix "contours_add", (swig_wrapper_func) _wrap_contours_add, NULL},
+    { SWIG_prefix "smooth_contour", (swig_wrapper_func) _wrap_smooth_contour, NULL},
+    { SWIG_prefix "smooth_contour_add", (swig_wrapper_func) _wrap_smooth_contour_add, NULL},
     { SWIG_prefix "curv_read", (swig_wrapper_func) _wrap_curv_read, NULL},
     { SWIG_prefix "curv_load", (swig_wrapper_func) _wrap_curv_load, NULL},
     { SWIG_prefix "curv_write", (swig_wrapper_func) _wrap_curv_write, NULL},
