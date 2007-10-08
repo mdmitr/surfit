@@ -228,13 +228,23 @@ void f_cntr_smooth::mark_solved_and_undefined(bitvec * mask_solved,
 #define DIRECTION_DOWN     3
 #define DIRECTION_LEFT     4
 
+inline REAL distance(REAL x0, REAL y0, REAL x1, REAL y1)
+{
+	return sqrt( (x0-x1)*(x0-x1) + (y0-y1)*(y0-y1) );
+};
+
 inline
 bool eq_points(REAL x0, REAL y0, REAL x1, REAL y1, REAL eps = 1e-12) 
 {
-	if (fabs(x0-x1) < eps)
+	REAL dist = distance(x0,y0,x1,y1);
+	if (dist < eps)
+		return true;
+	/*
+	if (fabs(x0-x1) < eps) 
 		return true;
 	if (fabs(y0-y1) < eps)
 		return true;
+		*/
 	return false;
 };
 
@@ -246,7 +256,6 @@ bool moving(size_t i, size_t j,
 	    d_grid * grd)
 {
 	REAL X0, Y0;
-
 	grd->getCoordNode(i, j, X0, Y0);
 	X0 -= grd->stepX/REAL(2);
 	Y0 -= grd->stepY/REAL(2);
@@ -258,9 +267,10 @@ bool moving(size_t i, size_t j,
 	REAL Y3 = Y2;
 
 	z = z1; //!!!!!!!!!!!!!!!!!!!!!!!
+	REAL eps = 1e-6;
 
 	if (direction != DIRECTION_DOWN) {
-		bool res = intersect(x0, y0, x1, y1, X2, Y2, X3, Y3, x, y);
+		bool res = intersect(x0, y0, x1, y1, X2, Y2, X3, Y3, x, y, eps);
 		res = (res && (eq_points(x0, y0, x, y) == false));
 		if (res) {
 			direction = DIRECTION_UP;
@@ -269,7 +279,7 @@ bool moving(size_t i, size_t j,
 	}
 
 	if (direction != DIRECTION_LEFT) {
-		bool res = intersect(x0, y0, x1, y1, X1, Y1, X2, Y2, x, y);
+		bool res = intersect(x0, y0, x1, y1, X1, Y1, X2, Y2, x, y, eps);
 		res = (res && (eq_points(x0, y0, x, y) == false));
 		if (res) {
 			direction = DIRECTION_RIGHT;
@@ -278,7 +288,7 @@ bool moving(size_t i, size_t j,
 	}
 
 	if (direction != DIRECTION_UP) {
-		bool res = intersect(x0, y0, x1, y1, X0, Y0, X1, Y1, x, y);
+		bool res = intersect(x0, y0, x1, y1, X0, Y0, X1, Y1, x, y, eps);
 		res = (res && (eq_points(x0, y0, x, y) == false));
 		if (res) {
 			direction = DIRECTION_DOWN;
@@ -287,14 +297,14 @@ bool moving(size_t i, size_t j,
 	}
 
 	if (direction != DIRECTION_RIGHT) {
-		bool res = intersect(x0, y0, x1, y1, X0, Y0, X3, Y3, x, y);
+		bool res = intersect(x0, y0, x1, y1, X0, Y0, X3, Y3, x, y, eps);
 		res = (res && (eq_points(x0, y0, x, y) == false));
 		if (res) {
 			direction = DIRECTION_LEFT;
 			goto ret_true;
 		}
 	}
-
+	
 	direction = DIRECTION_UNDEF;
 	return false;
 ret_true:
@@ -401,10 +411,14 @@ bool calc_sects(d_grid *& sects_grid,
 			y1 = (*(cntr->Y))(j+1);
 			z0 = (*(cntr->Z))(j);
 			z1 = (*(cntr->Z))(j+1);
+
+again:
+
 			grd->getCoordPoint(x0, y0, i0, j0);
 			grd->getCoordPoint(x1, y1, i1, j1);
+			
 			if ((i0 == i1) && (j0 == j1))
-				continue;
+				continue; // skip this contour - it is too small
 
 			int direction = DIRECTION_UNDEF;
 			REAL x = x0, y = y0, z = z0;
@@ -465,7 +479,45 @@ bool calc_sects(d_grid *& sects_grid,
 					fprintf(ff,"plot(%g,%g,'.','color','red');\n",x,y);
 #endif
 				
-				
+			}
+
+			int I0 = i0, I1 = i1, J1 = j1, J0 = j0;
+
+			if ( (abs(I0-I1)>1) || (abs(J0-J1)>1) )
+			{
+				REAL X0, Y0;
+				grd->getCoordNode(i0, j0, X0, Y0);
+				X0 -= grd->stepX/REAL(2);
+				Y0 -= grd->stepY/REAL(2);
+				REAL X1 = X0 + grd->stepX;
+				REAL Y1 = Y0;
+				REAL X2 = X1;
+				REAL Y2 = Y0 + grd->stepY;
+				REAL X3 = X0;
+				REAL Y3 = Y2;
+
+				bool res = false;
+				res = point_on_sect(x0,y0,x1,y1,X0,Y0);
+				if (res == true)
+					goto true_res;
+				res = point_on_sect(x0,y0,x1,y1,X1,Y1);
+				if (res == true)
+					goto true_res;
+				res = point_on_sect(x0,y0,x1,y1,X2,Y2);
+				if (res == true)
+					goto true_res;
+				res = point_on_sect(x0,y0,x1,y1,X3,Y3);
+				if (res == true)
+					goto true_res;
+
+
+				continue;
+
+true_res:
+				x0 = X0 + (x1-X0)/1000.;
+				y0 = Y0 + (y1-Y0)/1000.;
+
+				goto again;
 			}
 
 		}

@@ -300,6 +300,14 @@ bool in_region(REAL * p_x, REAL * p_y, int np, REAL x, REAL y)
 				return (test%2 == 1);
 }
 
+bool point_on_sect(REAL x0, REAL y0, REAL x1, REAL y1, REAL x, REAL y, REAL eps)
+{
+	REAL dist0 = sqrt((x-x0)*(x-x0) + (y-y0)*(y-y0));
+	REAL dist1 = sqrt((x-x1)*(x-x1) + (y-y1)*(y-y1));
+	REAL dist = sqrt((x0-x1)*(x0-x1) + (y0-y1)*(y0-y1));
+	bool res = (fabs(dist0+dist1-dist) < eps);
+	return res;
+}
                 
 }; // namespace surfit;
 

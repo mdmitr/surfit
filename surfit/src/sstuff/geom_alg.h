@@ -89,6 +89,10 @@ bool rotate(REAL center_x, REAL center_y, REAL angle,
 SSTUFF_EXPORT
 bool in_region(REAL * p_x, REAL * p_y, int np, REAL x, REAL y);
 
+//! returns true if point is on section
+SSTUFF_EXPORT
+bool point_on_sect(REAL x0, REAL y0, REAL x1, REAL y1, REAL x, REAL y, REAL eps=1e-6);
+
 }; // namespace surfit;
 
 #endif
