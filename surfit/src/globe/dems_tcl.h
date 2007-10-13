@@ -30,7 +30,7 @@ class boolvec;
     \par Description:
     Using this rule the resulting surface approximates \ref d_dem "DEM" in least squares meaning.
 
-    \param dem_name \ref str "name" of \ref d_dem "DEM" dataset, or DEM position number
+    \param dem_name \ref str "name" of \ref d_dem "DEM" dataset
 
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -51,7 +51,7 @@ boolvec * dem(const char * dem_name = "*");
     This function modifies previous (modifiable) rule by adding the \ref dem rule with some weight.
 
     \param weight informational weight for this rule
-    \param dem_name \ref str "name" of \ref d_dem "DEM" dataset, or DEM position number
+    \param dem_name \ref str "name" of \ref d_dem "DEM" dataset
 
     \par Math:
     This command modifies previous functional \f$ \Phi_0 \f$ by adding \f$ \Phi_1 \f$:
