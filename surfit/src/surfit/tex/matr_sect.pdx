@@ -1,9 +1,10 @@
 %!PS-Adobe-3.0 EPSF-3.0
 %%Creator: Mayura Draw, Version 3.6
 %%Title: matr_sect.pdx
-%%CreationDate: Thu Oct 11 09:25:41 2007
+%%CreationDate: Thu Oct 11 09:25:35 2007
 %%BoundingBox: 129 414 302 540
 %%DocumentFonts: ArialMT
+%%Orientation: Portrait
 %%EndComments
 %%BeginProlog
 %%BeginResource: procset MayuraDraw_ops
@@ -617,5 +618,5 @@ S
 _PDX_savepage restore
 %%Trailer
 end
-% showpage
+showpage
 %%EOF

@@ -1,8 +1,8 @@
 \documentclass{article}
 
 \usepackage[dvips]{graphicx}
-\usepackage[cp1251]{inputenc}
-\usepackage[russian]{babel}
+%\usepackage[cp1251]{inputenc}
+%\usepackage[russian]{babel}
 \usepackage{amsmath}
 \usepackage{indentfirst}  % для красной строки
 \usepackage{graphicx}
@@ -13,29 +13,52 @@
 
 \begin{document}
 
+Problem: we need to approximate contour by adjusting cell values. 
+Consider Figure \ref{pic1}. Solid straight lines show cells borders, dot lines connect
+cells centers (black squares), thick black curves shows contours projection on XoY plane. 
+Red points on the figure are intersection points of curves with dot lines. 
+
+\begin{figure}[!htbp]                  
+\begin{center}
+\includegraphics*[]{matr_sect2.eps}
+\end{center}
+\caption{Contour crosses virtual lines between grid nodes.} \label{pic1}
+\end{figure}
+
+Consider the case then the contour crosses one of the cell borders (see Figure \ref{pic2}). 
+On the figure $\overline{p}_0$ and $\overline{p}_1$ are cells centers coordinates (X or Y), 
+$u_0$ and $u_1$ are adjustable values for these cells. Red circles are points where contours cross
+line (dot line on Figure \ref{pic1}) between cells centers. 
+$p_i$ - are points coordinates (X or Y), $z_i$ - Z coordinates.
+
 \begin{figure*}[!htbp]
 \begin{center}
 \includegraphics*[]{matr_sect.eps}
 \end{center}
-%\caption{Карта кровли продуктивного пласта D5.}
+\caption{Contour crosses line between two grid nodes.} \label{pic2}
 \end{figure*}
 
-Problem: we need to approximate isoline with cell values. To do
-this we add specific condition to system of linear equations:
-\begin{equation}\label{phi_0}
-\Phi = \sum\limits_{i=1}^N \left( f(x_i) - y_i \right)^2
-\rightarrow \min,
+For solving our task we write the following functional:
+
+\begin{equation}\label{phi_0_new_terms}
+\Phi = \sum\limits_{i=1}^N \left( f(p_i) - z_i \right)^2
+\rightarrow \min, 
 \end{equation}
-where $x_i$ - are coordinates where isoline cross sect between two
-grid nodes, $y_i$ - isoline value,
-\begin{equation}\label{f_x}
- f(x) = u_0 + (u_1-u_0)
-\frac{x-\overline{x}_0}{\overline{x}_1-\overline{x}_0}.
+where
+\begin{equation}\label{f_p}
+ f(p) = u_0 + (u_1-u_0)
+\frac{p-\overline{p}_0}{\overline{p}_1-\overline{p}_0}.
 \end{equation}
-With respect to \eqref{f_x} we can rewrite \eqref{phi_0}:
+
+Speaking simply, we are trying to approximate $z_i$ values with straight line.
+To solve our problem we should write this functional for each pair of 
+neighbour cells, if at least one of contours lays between them.
+
+
+With respect to \eqref{f_p} we can rewrite \eqref{phi_0_new_terms}:
 \begin{equation}\label{phi}
 \Phi = \sum\limits_{i=1}^N \left( u_0 + (u_1-u_0)
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} - y_i
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} - z_i
 \right)^2 \rightarrow \min.
 \end{equation}
 To find minimum of this functional we should solve the system of
@@ -44,29 +67,29 @@ $$
 \frac{ \partial \Phi } { \partial u_0 } =
 %
 2 \sum_i \left( u_0 + (u_1-u_0)
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} - y_i
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} - y_i
 \right)
 %
 \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} \right) =
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} \right) =
 $$
 $$
 = 2 \sum_i \left( \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} \right)
-u_0 + \frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} u_1
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} \right)
+u_0 + \frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} u_1
 - y_i \right) \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} \right) =
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} \right) =
 $$
 $$
 = 2 u_0 \sum_i \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} \right)^2
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} \right)^2
 %
 + 2 u_1 \sum_i \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} \right)
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0}
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} \right)
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0}
 %
 - 2 \sum_i y_i \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} \right)
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} \right)
 =0
 $$
 
@@ -80,55 +103,55 @@ $$
 \frac{ \partial \Phi } { \partial u_1 } =
 %
 2 \sum_i \left( u_0 + (u_1-u_0)
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} - y_i
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} - y_i
 \right)
 %
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} =
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} =
 $$
 $$
 = 2 \sum_i \left( \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} \right)
-u_0 + \frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} u_1
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} \right)
+u_0 + \frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} u_1
 - y_i \right)
 %
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} =
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} =
 $$
 $$
 = 2 u_0 \sum_i \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} \right)
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0}
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} \right)
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0}
 %
 + 2 u_1 \left(
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} \right)^2
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} \right)^2
 %
 - 2 \sum_i y_i
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} = 0
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} = 0
 $$
 
 $$
 \begin{cases}
 u_0 \underbrace{\sum\limits_i \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0}
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0}
 \right)^2}_{sum1}
 %
 + \, u_1 \underbrace{\sum\limits_i \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} \right)
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0}}_{sum2}
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} \right)
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0}}_{sum2}
 %
 = \, \underbrace{\sum\limits_i y_i \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0}
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0}
 \right)}_{sum4}
 \\
 u_0 \underbrace{\sum\limits_i \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} \right)
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0}}_{sum2}
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} \right)
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0}}_{sum2}
 %
 + u_1 \, \underbrace{\sum\limits_i \left(
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0}
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0}
 \right)^2}_{sum3}
 %
 = \, \underbrace{\sum\limits_i y_i
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0}}_{sum5}
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0}}_{sum5}
 \end{cases}
 $$
 
@@ -136,28 +159,28 @@ System of equations for $u_0$:
 $$
 \begin{cases}
 u_0 \underbrace{\sum\limits_i \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0}
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0}
 \right)^2}_{sum1}
 %
 + \, u_1 \underbrace{\sum\limits_i \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0} \right)
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0}}_{sum2}
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0} \right)
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0}}_{sum2}
 %
 = \underbrace{\sum\limits_i y_i \left( 1 -
-\frac{x_i-\overline{x}_0}{\overline{x}_1-\overline{x}_0}
+\frac{p_i-\overline{p}_0}{\overline{p}_1-\overline{p}_0}
 \right)}_{sum4}
 \\
 u_{-1} \underbrace{\sum\limits_i \left( 1 - \frac {
-x_i-\overline{x}_{-1}}{\overline{x}_0-\overline{x}_{-1}} \right)
-\frac{x_i-\overline{x}_{-1}}{\overline{x}_0-\overline{x}_{-1}}
+p_i-\overline{p}_{-1}}{\overline{p}_0-\overline{p}_{-1}} \right)
+\frac{p_i-\overline{p}_{-1}}{\overline{p}_0-\overline{p}_{-1}}
 }_{sum2}
 %
 + \, u_0 \underbrace{\sum\limits_i \left(
-\frac{x_i-\overline{x}_{-1}}{\overline{x}_0-\overline{x}_{-1}}
+\frac{p_i-\overline{p}_{-1}}{\overline{p}_0-\overline{p}_{-1}}
 \right)^2}_{sum3}
 %
 = \underbrace{\sum\limits_i y_i
-\frac{x_i-\overline{x}_{-1}}{\overline{x}_0-\overline{x}_{-1}}}_{sum5}
+\frac{p_i-\overline{p}_{-1}}{\overline{p}_0-\overline{p}_{-1}}}_{sum5}
 \end{cases}
 $$
 
