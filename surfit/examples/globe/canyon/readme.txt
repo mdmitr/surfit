@@ -1,1 +1,1 @@
-You can download data for this example from here: http://gridding.info/globe
+You can download data for this example from here: http://gridding.info/download/canyon.zip
