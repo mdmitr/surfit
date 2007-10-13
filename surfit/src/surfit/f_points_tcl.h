@@ -32,7 +32,7 @@ class boolvec;
     Using this rule the resulting surface approximates points in least squares meaning.
     If each cell contains no more than one point, resulting surface interpolates points.
 
-    \param points_name \ref str "name" of \ref d_points "points" dataset, or points position number.
+    \param points_name \ref str "name" of \ref d_points "points" dataset
 
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -52,7 +52,7 @@ boolvec * points(const char * points_name = "*");
     This function modifies previous (modifiable) rule by adding the \ref points rule with some weight.
 
     \param weight informational weight for this rule
-    \param points_name \ref str "name" of \ref d_points "points" dataset, or points position number.
+    \param points_name \ref str "name" of \ref d_points "points" dataset
 
     \par Math:
     This command modifies previous functional \f$ \Phi_0 \f$ by adding \f$ \Phi_1 \f$:
@@ -75,8 +75,8 @@ boolvec * points_add(REAL weight = 1, const char * points_name = "*");
     \par Description:
     This rule adds the surface condition - "the surface should be lower than equal to points".
     
-    \param points_name \ref str "name" of \ref d_points "points" dataset, or points position number.
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param points_name \ref str "name" of \ref d_points "points" dataset
+    \param penalty_factor parameter for \ref penalty
 
     \par Math:
     This command adds the condition:
@@ -95,8 +95,8 @@ boolvec * points_leq(const char * points_name = "*", REAL penalty_factor = 0);
     \par Description:
     This rule adds the surface condition - "the surface should be greater than equal to points".
     
-    \param points_name \ref str "name" of \ref d_points "points" dataset, or points position number.
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param points_name \ref str "name" of \ref d_points "points" dataset
+    \param penalty_factor parameter for \ref penalty
 
     \par Math:
     This command adds the condition:

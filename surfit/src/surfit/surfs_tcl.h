@@ -28,7 +28,7 @@ class boolvec;
     \par Description:
     Using this rule the resulting surface approximates other surface in least squares meaning.
 
-    \param surface_name name of \ref d_surf "surface" dataset, or surface position number
+    \param surface_name name of \ref d_surf "surface" dataset
 
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -47,7 +47,7 @@ boolvec * surface(const char * surface_name = "*");
     This function modifies previous (modifiable) rule by adding the \ref surface rule with some weight.
 
     \param weight informational weight for this rule
-    \param surface_name name of \ref d_surf "surface" dataset, or surface position number
+    \param surface_name name of \ref d_surf "surface" dataset
 
     \par Math:
     This command modifies previous functional \f$ \Phi_0 \f$ by adding \f$ \Phi_1 \f$:
@@ -69,8 +69,8 @@ boolvec * surface_add(REAL weight, const char * surface_name = "*");
     \par Description:
     This rule adds the surface condition - "the surface should be lower than equal to other surface".
     
-    \param surface_name name of \ref d_surf "surface" dataset, or surface position number
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param surface_name name of \ref d_surf "surface" dataset
+    \param penalty_factor parameter for \ref penalty
 
     \par Math:
     This command adds the condition:
@@ -88,8 +88,8 @@ boolvec * surface_leq(const char * surface_name = "*", REAL penalty_factor = 0);
     \par Description:
     This rule adds the surface condition - "the surface should be greater than equal to other surface".
     
-    \param surface_name name of \ref d_surf "surface" dataset, or surface position number
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param surface_name name of \ref d_surf "surface" dataset
+    \param penalty_factor parameter for \ref penalty
 
     \par Math:
     This command adds the condition:
@@ -111,7 +111,7 @@ boolvec * surface_geq(const char * surface_name = "*", REAL penalty_factor = 0);
     
     \param D1 informational weight for rule that sounds "resulting surface should have the same gradients as trend surface"
     \param D2 informational weight for rule that sounds "resulting surface should have the same curvature as trend surface"
-    \param surface_name name of \ref d_surf "surface" dataset, or surface position number. This is a trend surface.
+    \param surface_name name of \ref d_surf "surface" dataset. This is a trend surface.
 
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -196,7 +196,7 @@ boolvec * trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name = "*");
     \param weight informational weight for \ref trend rule
     \param D1 informational weight for rule that sounds "resulting surface should have the same gradients as trend surface"
     \param D2 informational weight for rule that sounds "resulting surface should have the same curvature as trend surface"
-    \param surface_name name of \ref d_surf "surface" dataset, or surface position number. This is a trend surface.
+    \param surface_name name of \ref d_surf "surface" dataset. This is a trend surface.
 */	
 boolvec * trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_name = "*");
 
@@ -209,7 +209,7 @@ boolvec * trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_
     In case val is equal to word "undef", resulting surface would have "undefined values" for cells where mask is true.
 
     \param val real number or word "undef" for approximation.
-    \param mask_name name of \ref d_mask "mask" dataset, or mask position number
+    \param mask_name name of \ref d_mask "mask" dataset
 
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -230,7 +230,7 @@ boolvec * mask(const char * val, const char * mask_name = "*");
 
     \param val real number for approximation.
     \param weight informational weight for \ref mask rule
-    \param mask_name name of \ref d_mask "mask" dataset, or mask position number
+    \param mask_name name of \ref d_mask "mask" dataset
 */
 boolvec * mask_add(REAL val, REAL weight = 1, const char * mask_name = "*");
 
@@ -242,8 +242,8 @@ boolvec * mask_add(REAL val, REAL weight = 1, const char * mask_name = "*");
     This rule adds the surface condition - "the resulting surface should be lower than or equal to value where mask is true".
     
     \param value resulting surface values should be lower than or equal to this real number
-    \param mask_name name of \ref d_mask "mask" dataset, or mask position number.
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param mask_name name of \ref d_mask "mask" dataset
+    \param penalty_factor parameter for \ref penalty
     
     \par Math:
     This command adds the condition:
@@ -263,8 +263,8 @@ boolvec * mask_leq(REAL value, const char * mask_name = "*", REAL penalty_factor
     This rule adds the surface condition - "the resulting surface should be greater than or equal to value where mask is true".
     
     \param value resulting surface values should be greater than or equal to this real number
-    \param mask_name name of \ref d_mask "mask" dataset, or mask position number.
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param mask_name name of \ref d_mask "mask" dataset
+    \param penalty_factor parameter for \ref penalty
     
     \par Math:
     This command adds the condition:
@@ -286,8 +286,8 @@ boolvec * mask_geq(REAL value, const char * mask_name = "*", REAL penalty_factor
     Using this rule the resulting surface approximates values taken from the other surface in 
     least squares meaning where mask is "true".
     
-    \param surf_name name of \ref d_surf "surface", or surface position number.
-    \param mask_name name of \ref d_mask "mask" dataset, or mask position number.
+    \param surf_name name of \ref d_surf "surface"
+    \param mask_name name of \ref d_mask "mask" dataset
     
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -308,9 +308,9 @@ boolvec * mask_surf(const char * surf_name = "*", const char * mask_name = "*");
     Using this rule the resulting surface approximates other surface "values" where mask is "true", taking into
     account a previous (modifiable) rule.
 
-    \param surf_name name of \ref d_surf "surface", or surface position number.
+    \param surf_name name of \ref d_surf "surface"
     \param weight informational weight for this rule
-    \param mask_name name of \ref d_mask "mask" dataset, or mask position number.
+    \param mask_name name of \ref d_mask "mask" dataset
     
     \par Math:
     This command modifies previous functional \f$ \Phi_0 \f$ by adding \f$ \Phi_1 \f$:

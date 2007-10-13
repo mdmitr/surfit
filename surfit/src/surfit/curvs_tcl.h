@@ -88,7 +88,7 @@ boolvec * curve_add(REAL value, REAL weight = 1, const char * curv_name = "*");
 
     \param value surface should be lower than or equal to this real number
     \param curv_name \ref d_curv "curve" \ref str "name"
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty
 
     \par Math:
     This command adds the condition:
@@ -108,7 +108,7 @@ boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL penalty_facto
     
     \param value surface should be greater than or equal to this real number
     \param curv_name \ref d_curv "curve" \ref str "name"
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty
     
     \par Math:
     This command adds the condition:
@@ -179,7 +179,7 @@ boolvec * curve_surf_add(const char * surf_name = "*", REAL weight = 1, const ch
     \param surf_name \ref str "name" of \ref d_surf "surface". The
     resulting surface should be lower than or equal to this surface values at curve.
     \param curv_name \ref d_curv "curve" \ref str "name"
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty
 
     \par Math:
     This command adds the condition:
@@ -202,7 +202,7 @@ boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = 
     \param surf_name \ref str "name" of \ref d_surf "surface". The
     resulting surface should be greater than or equal to this surface values at curve.
     \param curv_name \ref d_curv "curve" \ref str "name"
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty
 
     \par Math:
     This command adds the condition:
@@ -224,7 +224,7 @@ boolvec * curve_surf_geq(const char * surf_name = "*", const char * curv_name = 
     the parts of resulting surface between fault curve are independent of each other.
     This rule is very useful in pressure field reconstruction, or structural surfaces modeling.
     
-    \param curv_name \ref d_curv "curve" \ref str "name", or curve position number
+    \param curv_name \ref d_curv "curve" \ref str "name"
 
     \par Gridding rules, modifiable with this rule:
     \li \ref completer
@@ -299,7 +299,7 @@ boolvec * area_add(REAL value, REAL weight, const char * area_name = "*", int in
     
     \param value resulting surface values should be lower than or equal to this real number
     \param area_name \ref str "name" of \ref d_area "area" dataset
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty
     \param inside if inside is equal to 1, then surface values should be lower than or equal to value 
     inside area, else outside
     
@@ -322,7 +322,7 @@ boolvec * area_leq(REAL value, const char * area_name = "*", REAL penalty_factor
     
     \param value resulting surface values should be greater than or equal to this real number
     \param area_name \ref str "name" of \ref d_area "area" dataset
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty
     \param inside if inside is equal to 1, then surface values should be greater than or equal to value 
     inside area, else outside
 
@@ -346,7 +346,7 @@ boolvec * area_geq(REAL value, const char * area_name = "*", REAL penalty_factor
 
     \param surf_name \ref str "name" of \ref d_surf "surface". Resulting surface
     will approximate this surface values inside (or outside) area.
-    \param area_name name of \ref d_area "area" dataset, or area position number.
+    \param area_name name of \ref d_area "area" dataset
     \param inside if inside is equal to 1, then surface will be approximated inside area, else outside
 
     \par Math:
@@ -500,7 +500,7 @@ boolvec * area_completer_add(REAL weight = 1, const char * area_name = "*", REAL
     
     \param area_name \ref str "name" of the area for histogram fitting
     \param histogram_name \ref str "name" of the desired histogram
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty
     \param inside if inside is equal to 1, then area_hist will work inside area, else outside
 */
 boolvec * area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL penalty_factor = -1, int inside = 1);
@@ -540,7 +540,7 @@ boolvec * contour(const char * cntr_name = "*");
     approximates contour taking into account a previous (modifiable) rule.
 
     \param weight informational weight for this rule
-    \param cntr_name \ref d_cntr "contour" \ref str "name", or contour position number.
+    \param cntr_name \ref d_cntr "contour" \ref str "name"
 
     \par Math:
     This command modifies previous functional \f$ \Phi_0 \f$ by adding \f$ \Phi_1 \f$:
@@ -556,7 +556,38 @@ boolvec * contour(const char * cntr_name = "*");
 */
 boolvec * contour_add(REAL weight = 50, const char * cntr_name = "*");
 
+/*! \ingroup tcl_rules_cntrs
+    \par Tcl syntax:
+    smooth_contour \ref str "cntr_name" penalty_factor
+
+    \par Description:
+    This rule tells surfit that resulting surface should approximate contour Z-values.
+    In case of constant Z-values for each contour the result of contours approximation 
+    is that resulting surface isolines should be very similar to given contours.
+    The main difference with \ref contour gridding rule is that resulting surface is
+    more smooth near contours. 
+
+    \param cntr_name \ref d_cntr "contour" \ref str "name"
+    \param penalty_factor parameter for \ref penalty
+
+    \par Math:
+    \image html matr_sect.gif
+
+    \image html matr_sect2.gif
+
+    This command adds the following functional to the functionals sequence:
+
+    \f[
+	\Phi = \sum\limits_{i=1}^N \left( f(x_i,y_i) - z_i \right)^2
+	\rightarrow \min,
+    \f]
+    where \f$ (x_i,y_i) \f$ are the coordinates
+
+
+*/
 boolvec * smooth_contour(const char * cntr_name = "*", REAL penalty_factor = 0);
+
+
 boolvec * smooth_contour_add(REAL weight = 50, const char * cntr_name = "*");
 
 /*! \ingroup tcl_rules_cntrs
@@ -567,8 +598,8 @@ boolvec * smooth_contour_add(REAL weight = 50, const char * cntr_name = "*");
     This rule adds the surface condition - "the resulting surface at contour should be lower than 
     or equal to the contour values". 
 
-    \param cntr_name \ref d_cntr "contour" \ref str "name", or contour position number.
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param cntr_name \ref d_cntr "contour" \ref str "name"
+    \param penalty_factor parameter for \ref penalty
 
     \par Math:
     This command adds the condition:
@@ -587,8 +618,8 @@ boolvec * contour_leq(const char * cntr_name = "*", REAL penalty_factor = 0);
     This rule adds the surface condition - "the resulting surface at contour should be greater than 
     or equal to contour values". 
 
-    \param cntr_name \ref d_cntr "contour" \ref str "name", or contour position number.
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param cntr_name \ref d_cntr "contour" \ref str "name"
+    \param penalty_factor parameter for \ref penalty
 
     \par Math:
     This command adds the condition:

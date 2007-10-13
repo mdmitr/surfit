@@ -178,7 +178,7 @@ boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor
     This rule adds the surface condition - "the resulting surface should be lower than or equal to value".
     
     \param value resulting surface values should be lower than or equal to this real number
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty
     
     \par Math:
     This command adds the condition:
@@ -197,7 +197,7 @@ bool leq(REAL value, REAL penalty_factor = 0);
     This rule adds the surface condition - "the resulting surface should be greater than or equal to value".
     
     \param value resulting surface values should be lower than or equal to this real number
-    \param penalty_factor parameter for \ref penalty algorithm
+    \param penalty_factor parameter for \ref penalty
     
     \par Math:
     This command adds the condition:
