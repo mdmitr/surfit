@@ -22,14 +22,4 @@ source top_D5.tcl
 source top_D5_wo_trend.tcl
 cd ..
 
-cd example5
-source mtWashington.tcl
-cd ..
-
-cd example6
-source peaks.tcl
-cd ..
-
-
-
 
