@@ -356,6 +356,8 @@ class CreEPS
 		void finalize();
 		bool embedEPS( const char* const filename );
 
+		bool file_status();
+
 
 	protected :
 		void initialize( const char* filename, const float startX, const float startY,

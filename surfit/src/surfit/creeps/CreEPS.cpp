@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define  CREEPS_VERSION  "1.32"
 
+#include "../surfit_ie.h"
 #include "CreEPS.h"
 #include <stdlib.h>
 #include <stdarg.h>
@@ -843,6 +844,11 @@ CreEPS::CreEPS( const char* filename, const float width, const float height,
 
 /******************************************************************************/
 
+bool CreEPS::file_status()
+{
+	return (m_FileHandle != NULL);
+};
+
 void CreEPS::initialize( const char* filename,
                          const float startX, const float startY,
                          const float   endX, const float   endY,
@@ -853,7 +859,7 @@ void CreEPS::initialize( const char* filename,
 	m_FileHandle = fopen( filename, "w" );
 	if( ! m_FileHandle ) {
 		::printf( "CreEPS: Could not open output file!\n" );
-		exit( 1 );
+		return;
 	}
 
 	if( latex ) {
@@ -879,8 +885,7 @@ void CreEPS::initialize( const char* filename,
 	         "%%!PS-Adobe-3.0 EPSF-3.0\n"
 	         "%%%%BoundingBox: %d %d %d %d\n"
 	         "%%%%HiResBoundingBox: %g %g %g %g\n"
-	         "%%%%Creator: CreEPS" CREEPS_VERSION "\n"
-	         "%%%%CreationDate: %s"
+	         "%%%%Creator: surfit-" VERSION "\n"
 	         "%%%%EndComments\n"
 	         "%%CreEPS by Uwe Fabricius, http://uwefabricius.de/ &\n"
 	         "%%          Thomas Pohl,   http://thomas-pohl.info/\n"
@@ -926,8 +931,7 @@ void CreEPS::initialize( const char* filename,
 	         "/e {ms 6 1 roll t r sl 1 0 m 0 0 1 0 360 a c ml} bind def\n",
 	         (int)(startX*m_INCH2MM), (int)(startY*m_INCH2MM),
 	         (int)(endX*m_INCH2MM), (int)(endY*m_INCH2MM),
-	         startX*m_INCH2MM, startY*m_INCH2MM, endX*m_INCH2MM, endY*m_INCH2MM,
-	         ctime( &currentTime ));
+	         startX*m_INCH2MM, startY*m_INCH2MM, endX*m_INCH2MM, endY*m_INCH2MM);
 	if( ! m_LatexFileHandle /*|| true*/ ) { //! only for testing
 		fprintf( m_FileHandle,
 		         "/tacwh {x n 0 0 m dup true charpath pathbbox 3 -1 roll 4 2 roll exch sub 3 1 roll y} bind def\n"

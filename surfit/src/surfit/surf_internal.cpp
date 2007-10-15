@@ -1771,6 +1771,14 @@ bool _surf_plot(const d_surf * srf, const char * filename, size_t number_of_leve
 
 	//CreEPS ps(filename, 210, 297); // A4
 	CreEPS ps(filename, 200, 200); 
+	if (ps.file_status() == false)
+	{
+		if (isos) {
+			free_elements(isos->begin(), isos->end());
+			delete isos;
+		}
+		return false;
+	}
 	ps.setAttributes( CAtFont((float)font_size) );
 	ps.setAttributes( CAtLineThickness(0.1f) );
 
