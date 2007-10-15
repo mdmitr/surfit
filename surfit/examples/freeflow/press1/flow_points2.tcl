@@ -60,3 +60,6 @@ grid_unload
 
 # save all to surfit datafile 
 file_save "flow_points2.dat"
+
+# plot resulting surface in PostScript
+surf_plot "flow_points2.ps" $map_name

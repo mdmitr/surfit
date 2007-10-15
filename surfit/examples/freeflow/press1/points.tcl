@@ -55,3 +55,5 @@ grid_unload
 # save all to surfit datafile 
 file_save "points.dat"
 
+# plot resulting surface in PostScript
+surf_plot "points.ps" $map_name

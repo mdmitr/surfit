@@ -43,3 +43,6 @@ surfit
 
 grid_unload
 file_save "map_hor_frac.dat"
+
+# plot resulting surface in PostScript
+surf_plot "map_hor_frac.ps" $map_name

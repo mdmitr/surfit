@@ -29,7 +29,7 @@ dem_load_hgt_zip "N00E006.hgt.zip" N00E006.hgt
 ##
 ## construct grid 
 ##
-grid 0.0005 0.0005 
+grid_get 6.4 6.8 0.0005 0 0.48 0.0005 
  
 ##
 ## create gridding rules
@@ -55,3 +55,6 @@ grid_unload
 
 # save surface to surfit datafile 
 surf_save "dem.dat" 
+
+# plot resulting surface in PostScript
+surf_plot "dem.ps" $map_name

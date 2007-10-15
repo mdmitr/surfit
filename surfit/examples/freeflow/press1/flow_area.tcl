@@ -58,3 +58,5 @@ file_save "flow_area.dat"
 # calculate debit
 puts [concat "Debit : " [ expr 24*3600*[surf_debit_rect -150 -150 150 150 16.4 1 1e-6 ] ] ]
 
+# plot resulting surface in PostScript
+surf_plot "flow_area.ps" $map_name
