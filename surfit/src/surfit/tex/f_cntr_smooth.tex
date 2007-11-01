@@ -13,22 +13,24 @@
 
 \begin{document}
 
-Problem: we need to approximate contour by adjusting cell values. 
-Consider Figure \ref{pic1}. Solid straight lines show cells borders, dot lines connect
-cells centers (black squares), thick black curves shows contours projection on XoY plane. 
-Red points on the figure are intersection points of curves with dot lines. 
+Problem: we need to approximate contours (or isolines with different values) by adjusting 
+cell values. 
+Let consider Figure \ref{pic1}: solid straight lines show cells borders, dot lines connect
+cells centers (black squares), thick black curves shows contours projection to the XoY plane. 
+Red points on the figure are intersections of curves and dot lines. 
 
 \begin{figure}[!htbp]                  
 \begin{center}
 \includegraphics*[]{matr_sect2.eps}
 \end{center}
-\caption{Contour crosses virtual lines between grid nodes.} \label{pic1}
+\caption{Contours cross dot lines between cells centers.} \label{pic1}
 \end{figure}
 
-Consider the case then the contour crosses one of the cell borders (see Figure \ref{pic2}). 
+Consider the case then the contours cross one of the dot lines, i.e. contours lay between
+two cells centers (see Figure \ref{pic2}). 
 On the figure $\overline{p}_0$ and $\overline{p}_1$ are cells centers coordinates (X or Y), 
-$u_0$ and $u_1$ are adjustable values for these cells. Red circles are points where contours cross
-line (dot line on Figure \ref{pic1}) between cells centers. 
+$u_0$ and $u_1$ are adjustable values for those cells. Red circles are points where contours cross
+vertical plane (this plane comes through points $p_0$ and $p_1$). 
 $p_i$ - are points coordinates (X or Y), $z_i$ - Z coordinates.
 
 \begin{figure*}[!htbp]
@@ -38,7 +40,8 @@ $p_i$ - are points coordinates (X or Y), $z_i$ - Z coordinates.
 \caption{Contour crosses line between two grid nodes.} \label{pic2}
 \end{figure*}
 
-For solving our task we write the following functional:
+We are trying to approximate points $(p_i,z_i)$ with straight line. To do
+this we are going to find a minimum of the following functional:
 
 \begin{equation}\label{phi_0_new_terms}
 \Phi = \sum\limits_{i=1}^N \left( f(p_i) - z_i \right)^2
@@ -50,7 +53,6 @@ where
 \frac{p-\overline{p}_0}{\overline{p}_1-\overline{p}_0}.
 \end{equation}
 
-Speaking simply, we are trying to approximate $z_i$ values with straight line.
 To solve our problem we should write this functional for each pair of 
 neighbour cells, if at least one of contours lays between them.
 
