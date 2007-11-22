@@ -562,8 +562,7 @@ boolvec * contour_add(REAL weight = 50, const char * cntr_name = "*");
 
     \par Description:
     This rule tells surfit that resulting surface should approximate contour Z-values.
-    In case of constant Z-values for each contour the result of contours approximation 
-    is that resulting surface isolines should be very similar to given contours.
+    The result of approximation is that resulting surface should be very similar to given contours.
     The main difference with \ref contour gridding rule is that resulting surface is
     more smooth near contours. 
 
@@ -571,18 +570,41 @@ boolvec * contour_add(REAL weight = 50, const char * cntr_name = "*");
     \param penalty_factor parameter for \ref penalty
 
     \par Math:
+
+	Problem: we need to approximate contours (or isolines with different values) by adjusting 
+cell values. 
+Let consider Figure 1: solid straight lines show cells borders, dot lines connect
+cells centers (black squares), thick black curves shows contours projection to the XoY plane. 
+Red points on the figure are intersections of curves and dot lines. 
+
     \image html matr_sect.gif
+
+Consider the case then the contours cross one of the dot lines, i.e. contours lay between
+two cells centers (see Figure 2). 
+On the figure \f$\overline{p}_0\f$ and \f$\overline{p}_1\f$ are cells centers coordinates (X or Y), 
+\f$u_0\f$ and \f$u_1\f$ are adjustable values for those cells. Red circles are points where contours cross
+vertical plane (this plane comes through points \f$p_0\f$ and \f$p_1\f$). 
+\f$p_i\f$ - are points coordinates (X or Y), \f$z_i\f$ - Z coordinates.
 
     \image html matr_sect2.gif
 
-    This command adds the following functional to the functionals sequence:
+We are trying to approximate points \f$(p_i,z_i)\f$ with straight line. To do
+this we are going to find a minimum of the following functional:
 
-    \f[
-	\Phi = \sum\limits_{i=1}^N \left( f(x_i,y_i) - z_i \right)^2
-	\rightarrow \min,
-    \f]
-    where \f$ (x_i,y_i) \f$ are the coordinates
+\f[
+\Phi = \sum\limits_{i=1}^N \left( f(p_i) - z_i \right)^2
+\rightarrow \min, 
+\f]
+where
+\f[
+ f(p) = u_0 + (u_1-u_0)
+\frac{p-\overline{p}_0}{\overline{p}_1-\overline{p}_0}.
+\f]
 
+To solve our problem we should write this functional for each pair of 
+neighbour cells, if at least one of contours lays between them.
+
+For more details see f_cntr_smooth.tex
 
 */
 boolvec * smooth_contour(const char * cntr_name = "*", REAL penalty_factor = 0);
