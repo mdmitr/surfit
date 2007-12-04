@@ -1,0 +1,12 @@
+Source: surfit
+Section: unknown
+Priority: extra
+Maintainer: Mikhail Dmitrievsky <mdmitr@gmail.com>
+Build-Depends: debhelper (>= 5), zlib1g-dev, netcdfg-dev, tcl8.4-dev, libjpeg-dev, autotools-dev
+Standards-Version: 3.7.2
+
+Package: surfit
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
