@@ -1,5 +1,5 @@
 Source: surfit
-Section: math,science,graphics 
+Section: math 
 Priority: extra
 Maintainer: Mikhail Dmitrievsky <mdmitr@gmail.com>
 Build-Depends: debhelper (>= 5), zlib1g-dev, netcdfg-dev, tcl8.4-dev, libjpeg-dev, autotools-dev
