@@ -1,22 +1,19 @@
-This package was debianized by unknown <mdmitr@gmail.com> on
+This package was debianized by Mikhail Dmitrievsky <mdmitr@gmail.com> on
 Mon,  3 Dec 2007 14:57:34 +0900.
 
-It was downloaded from <fill in http/ftp site>
+It was downloaded from http://surfit.sourceforge.net
 
-Upstream Author: <put author(s) name and email here>
+Upstream Author: Mikhail Dmitrievsky <mdmitr@gmail.com>
 
-Copyright: <put the year(s) of the copyright, and the names of the
-            copyright holder(s) here>
+Copyright: M.V.Dmitrievsky & V.N.Kutrunov
 
 License:
 
-<Put the license of the package here>
+GNU Public License
 
 
-The Debian packaging is (C) 2007, unknown <mdmitr@gmail.com> and
+The Debian packaging is (C) 2007, Mikhail Dmitrievsky <mdmitr@gmail.com> and
 is licensed under the GPL, see `/usr/share/common-licenses/GPL'.
 
 
-# Please also look if there are files or directories which have a
-# different copyright/license attached and list them here.
 
