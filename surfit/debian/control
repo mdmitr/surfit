@@ -9,5 +9,5 @@ Package: surfit
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: opensource gridding and contouring software
-surfit is an open source and free gridding and contouring software. surfit can do interpolation/approximation of points, contours and surfaces, can take fault lines and trend surfaces into account, can use inequalities and other conditions. Supports a lot of data types and formats.
+ surfit is an open source and free gridding and contouring software. surfit can do interpolation/approximation of points, contours and surfaces, can take fault lines and trend surfaces into account, can use inequalities and other conditions. Supports a lot of data types and formats.
 
