@@ -2713,7 +2713,8 @@ install-data-hook:
 	rm -rf `find $(DESTDIR)$(datadir)/$(PACKAGE)-$(VERSION) -name "*.ps"`
 	rm -rf `find $(DESTDIR)$(docdir)-${VERSION} -name .svn`
 
-	if test -f /usr/bin/chcon; then \
+	if test -x /usr/bin/chcon -a "`id -u`" -eq 0; then \
+	  echo "chcon system_u:object_r:texrel_shlib_t $(DESTDIR)$(libdir)/libsurfit_io.so" \
 	  chcon system_u:object_r:texrel_shlib_t $(DESTDIR)$(libdir)/libsurfit_io.so; \
 	fi
 
