@@ -404,7 +404,7 @@ char * read_first1024(const char * filename, int & readed)
 	
 };
 
-int calc_columns(const char * Str, int readed, char * seps) 
+int calc_columns(const char * Str, int readed, const char * seps) 
 {
 	char * str = strdup(Str);
 

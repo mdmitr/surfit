@@ -12,8 +12,8 @@ int AppInit(Tcl_Interp *interp)
 	if(Tcl_Init(interp) == TCL_ERROR) 
 		return TCL_ERROR;
 
-	char * new_string = "\n";
-	char * message_on_error = "\n\nSome errors detected while starting surfit!!!\nPlease refer \"Getting started\" documentation page.\n\n";
+	const char * new_string = "\n";
+	const char * message_on_error = "\n\nSome errors detected while starting surfit!!!\nPlease refer \"Getting started\" documentation page.\n\n";
 	Tcl_Channel out = NULL;
 	if (interp) {
 		out = Tcl_GetStdChannel(TCL_STDOUT);

@@ -619,7 +619,7 @@ void surfit_manager::clear_data() const {
 #define SURFIT_TYPES "surfit surf mask pnts curv area cntr grid hist\n"
 
 char * surfit_manager::types_info() const {
-	return SURFIT_TYPES;
+	return (char*)SURFIT_TYPES;
 };
 
 void surfit_manager::mem_info() const {

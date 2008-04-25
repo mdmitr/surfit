@@ -49,7 +49,7 @@ void freeflow_manager::clear_data() const {
 #define FREEFLOW_TYPES "freeflow \n"
 
 char * freeflow_manager::types_info() const {
-	return FREEFLOW_TYPES;
+	return (char*)FREEFLOW_TYPES;
 };
 
 void freeflow_manager::mem_info() const {

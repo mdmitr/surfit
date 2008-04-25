@@ -84,7 +84,7 @@ void globe_manager::clear_data() const {
 #define GLOBE_TYPES "globe dem\n"
 
 char * globe_manager::types_info() const {
-	return GLOBE_TYPES;
+	return (char*)GLOBE_TYPES;
 };
 
 

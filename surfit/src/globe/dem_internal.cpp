@@ -267,7 +267,7 @@ exit:
 	return NULL;
 };
 
-bool read_esri_variable(FILE * f, char * read_buf, char * name, char *& value) {
+bool read_esri_variable(FILE * f, const char * read_buf, const char * name, char *& value) {
 	if (strcmp( read_buf, name) == 0) {
 		fscanf(f, "%s", read_buf);
 		if (value)
@@ -278,7 +278,7 @@ bool read_esri_variable(FILE * f, char * read_buf, char * name, char *& value) {
 	return false;
 };
 
-bool read_esri_variable(FILE * f, char * read_buf, char * name, double & value) {
+bool read_esri_variable(FILE * f, const char * read_buf, const char * name, double & value) {
 	if (strcmp( read_buf, name) == 0) {
 		fscanf(f, "%s", read_buf);
 		value = atof(read_buf);
@@ -287,7 +287,7 @@ bool read_esri_variable(FILE * f, char * read_buf, char * name, double & value) 
 	return false;
 };
 
-bool read_esri_variable(FILE * f, char * read_buf, char * name, int & value) {
+bool read_esri_variable(FILE * f, const char * read_buf, const char * name, int & value) {
 	if (strcmp( read_buf, name) == 0) {
 		fscanf(f, "%s", read_buf);
 		value = atoi(read_buf);
@@ -305,7 +305,7 @@ bool read_esri_variable(FILE * f, char * read_buf, char * name, size_t & value) 
 	return false;
 };
 
-void read_dtm_variable(FILE * f, char * read_buf, char * name, char *& value) {
+void read_dtm_variable(FILE * f, const char * read_buf, const char * name, char *& value) {
 	if (strcmp( read_buf, name) == 0) {
 		fscanf(f, "%s", read_buf);
 		fscanf(f, "%[ ]s", read_buf);
@@ -317,7 +317,7 @@ void read_dtm_variable(FILE * f, char * read_buf, char * name, char *& value) {
 	}
 };
 
-void read_dtm_variable(FILE * f, char * read_buf, char * name, double & value) {
+void read_dtm_variable(FILE * f, const char * read_buf, const char * name, double & value) {
 	if (strcmp( read_buf, name) == 0) {
 		fscanf(f, "%s", read_buf);
 		fscanf(f, "%s", read_buf);
@@ -325,7 +325,7 @@ void read_dtm_variable(FILE * f, char * read_buf, char * name, double & value) {
 	}
 };
 
-void read_dtm_variable(FILE * f, char * read_buf, char * name, int & value) {
+void read_dtm_variable(FILE * f, const char * read_buf, const char * name, int & value) {
 	if (strcmp( read_buf, name) == 0) {
 		fscanf(f, "%s", read_buf);
 		fscanf(f, "%s", read_buf);

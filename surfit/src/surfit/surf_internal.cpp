@@ -1322,7 +1322,7 @@ d_surf * triangulate_points(const d_points * pnts, const d_grid * grid)
 	/*   produce an edge list (e), a Voronoi diagram (v), and a triangle */
 	/*   neighbor list (n).                                              */
 	
-	triangulate("pczAenQ", &in, &mid, (struct triangulateio *) NULL);
+	triangulate((char*)"pczAenQ", &in, &mid, (struct triangulateio *) NULL);
 
 	// get surface bound
 

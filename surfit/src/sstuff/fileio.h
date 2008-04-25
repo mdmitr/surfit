@@ -111,7 +111,7 @@ char * read_first1024(const char * filename, int & readed);
 
 //! calculates number of columns in text file
 SSTUFF_EXPORT
-int calc_columns(const char * Str, int readed, char * seps);
+int calc_columns(const char * Str, int readed, const char * seps);
 
 //! calculates number of rows in text file
 SSTUFF_EXPORT
