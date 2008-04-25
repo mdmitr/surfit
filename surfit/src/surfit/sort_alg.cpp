@@ -25,6 +25,7 @@
 
 #include <math.h>
 #include <float.h>
+#include <limits.h>
 
 namespace surfit {
 

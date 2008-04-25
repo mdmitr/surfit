@@ -28,6 +28,8 @@
 USING_PTYPES
 #endif
 
+#include <limits.h>
+
 namespace surfit {
 
 #ifdef HAVE_THREADS

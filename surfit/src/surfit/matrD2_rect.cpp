@@ -24,6 +24,7 @@
 #include "matrD_incr_ptr.h"
 
 #include <assert.h>
+#include <limits.h>
 
 #ifdef DEBUG
 	#ifdef XXL

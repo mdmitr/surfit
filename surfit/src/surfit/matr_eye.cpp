@@ -22,6 +22,7 @@
 #include "bitvec.h"
 
 #include <math.h>
+#include <limits.h>
 
 namespace surfit {
 

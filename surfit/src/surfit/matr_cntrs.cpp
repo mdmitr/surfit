@@ -24,6 +24,7 @@
 
 #include <algorithm>
 #include <assert.h>
+#include <limits.h>
 
 namespace surfit {
 

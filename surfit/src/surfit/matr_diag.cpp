@@ -26,6 +26,7 @@
 #include "vec_alg.h"
 
 #include <math.h>
+#include <limits.h>
 
 namespace surfit {
 

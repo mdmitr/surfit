@@ -35,6 +35,8 @@
 
 #include "free_elements.h"
 
+#include <string.h>
+
 namespace surfit {
 
 void surfit_io_manager::release() {

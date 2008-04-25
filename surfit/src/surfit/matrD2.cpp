@@ -25,6 +25,7 @@
 
 #include <float.h>
 #include <assert.h>
+#include <limits.h>
 
 #ifdef DEBUG
 	#ifdef XXL

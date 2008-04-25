@@ -21,6 +21,7 @@
 #define __globe__dem__
 
 #include <vector>
+#include <limits.h>
 
 #include "surfit_data.h"
 

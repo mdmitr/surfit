@@ -12,6 +12,8 @@
 #include <float.h>
 #include <errno.h>
 #include <algorithm>
+#include <string.h>
+#include <limits.h>
 
 namespace surfit {
 

@@ -44,9 +44,9 @@
 
 namespace surfit {
 
-char * error = "Error! ";
-char * warning = "Warning! ";
-char * debug = "Debug: ";
+const char * error = "Error! ";
+const char * warning = "Warning! ";
+const char * debug = "Debug: ";
 
 FILE * logfile = NULL;
 char * logfilename = NULL;
@@ -179,7 +179,7 @@ void writelog (int errlevel, const char *tmplt, ...)
 		time_t ltime;
 		time( &ltime );
 		char * stime = ctime( &ltime );
-		char * space = " :  ";
+		const char * space = " :  ";
 		
 		fwrite(tmpbuf, 1, strlen(tmpbuf), logfile);
 		switch (errlevel) {
@@ -277,7 +277,7 @@ void writelog2 (int errlevel, const char *tmplt, ...)
 		time_t ltime;
 		time( &ltime );
 		char * stime = ctime( &ltime );
-		char * space = " :  ";
+		const char * space = " :  ";
 		
 		fwrite(tmpbuf, 1, strlen(tmpbuf), logfile);
 		switch (errlevel) {

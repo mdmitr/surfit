@@ -26,6 +26,7 @@
 #include "free_elements.h"
 
 #include <assert.h>
+#include <limits.h>
 
 namespace surfit {
 

@@ -22,6 +22,7 @@
 
 #include "functional.h"
 #include "vec.h"
+#include <limits.h>
 
 namespace surfit {
 
