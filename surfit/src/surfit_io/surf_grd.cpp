@@ -599,6 +599,11 @@ bool _surf_save_grd(const d_surf * srf, const char * filename) {
 	REAL minZ, maxZ;
 	srf->getMinMaxZ(minZ, maxZ);
 	fprintf(f,"%lf %lf\n", minZ, maxZ);
+	REAL uval = srf->undef_value;
+	if ((minZ > -99999) || (maxZ < -99999))
+		uval = -99999;
+	if ((minZ > -999) || (maxZ < -999))
+		uval = -999;
 
 	// matrix 
 	int iy, ix;
@@ -612,7 +617,17 @@ bool _surf_save_grd(const d_surf * srf, const char * filename) {
 		
 		for(ix=0; ix<nx; ix++)	{
 			val = (*(srf->coeff))( ix + nx*iy );
-			fprintf(f,"%lf ", val);
+			if (val != srf->undef_value)
+				fprintf(f,"%lf ", val);
+			else
+			{
+				if (uval == -999)
+					fprintf(f,"-999 ");
+				else if (uval == -99999)
+					fprintf(f,"-99999 ");
+				else
+					fprintf(f,"%lf ", uval);
+			}
 			if (ncnt>9) { 
 				fprintf(f,"\n");
 				ncnt = 0;
