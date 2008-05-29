@@ -61,7 +61,10 @@ struct grid_garbage : public binman {
 	//! removes \ref surfit_grid
 	~grid_garbage() {
 		if (surfit_grid)
+		{
 			surfit_grid->release();
+			surfit_grid = NULL;
+		}
 	};
 };
 
