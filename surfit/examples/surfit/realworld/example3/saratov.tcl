@@ -24,10 +24,10 @@ set tol 1e-007
 ##
 
 # load isolines from Surfer BLN file
-cntr_load_bln "isolines.bln"
+cntr_load_shp "isolines.bln" * "Z"
 
 # load faults from Surfer BLN file
-curv_load_bln "faults.bln"
+curv_load_shp "faults.shp"
 
 ##
 ## construct grid 
