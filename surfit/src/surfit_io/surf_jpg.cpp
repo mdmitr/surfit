@@ -228,7 +228,8 @@ bool _surf_save_jpg(const d_surf * srf, const char * filename, int quality) {
 	while (cinfo.next_scanline < cinfo.image_height) {
 		// fill row with grayscale colours
 		for (i = 0; i < NN; i++) {
-			REAL val = srf->getValueIJ(NN-1-i, MM-cinfo.next_scanline-1);
+			//REAL val = srf->getValueIJ(NN-1-i, MM-cinfo.next_scanline-1);
+			REAL val = srf->getValueIJ(i, MM-cinfo.next_scanline-1);
 			int color = 0;
 			if (val != srf->undef_value)
 				color = 255 - (int)MAX(0,MIN(254,floor((val-minz)/(maxz-minz)*254+0.5)));
