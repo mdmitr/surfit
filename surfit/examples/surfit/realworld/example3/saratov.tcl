@@ -24,7 +24,7 @@ set tol 1e-007
 ##
 
 # load isolines from Surfer BLN file
-cntr_load_shp "isolines.bln" * "Z"
+cntr_load_shp "isolines.shp" * "Z"
 
 # load faults from Surfer BLN file
 curv_load_shp "faults.shp"
