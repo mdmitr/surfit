@@ -215,6 +215,13 @@ int cntr_size();
 */
 void cntrs_info();
 
+/*! \ingroup tcl_cntr_other
+    \par Tcl syntax:
+    cntr_smooth \ref str "cntr_name" cnt
+
+    \par Description:
+    Adds points into contour line to make contour smoother.
+*/	
 boolvec * cntr_smooth(const char * cntr_name = "*", size_t cnt = 1);
 
 }; // namespace surfit;
