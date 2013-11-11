@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1c8098ff-1ed5-40fa-aed5-355647a45b13}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\data_cpp">
+      <UniqueIdentifier>{ae209608-db2f-4cb9-bc13-beee6ffe840b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\data_cpp\surf_cpp">
+      <UniqueIdentifier>{56f9cd87-851b-4d77-93e3-67f21a6fe0a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\functionals_cpp">
+      <UniqueIdentifier>{f6e3d5a1-c938-42dd-a410-c16dde6d4895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\functionals_cpp\points.cpp">
+      <UniqueIdentifier>{01cedabd-b4c4-4f6f-bf86-93d1b20bf416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\functionals_cpp\curvs.cpp">
+      <UniqueIdentifier>{5f0b7aa6-3ab8-4995-8dc5-bdbadd5260fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\functionals_cpp\global.cpp">
+      <UniqueIdentifier>{a857988e-b098-40f2-b8c6-90079759c5c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{38566faf-0aa3-4c69-be4f-deaee847ff56}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Header Files\data_h">
+      <UniqueIdentifier>{72a64643-adc1-41a5-91b9-101129cb961e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\data_h\surf_h">
+      <UniqueIdentifier>{93c8ac57-ac32-4a7b-ba81-e087bb50bb20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\functionals_h">
+      <UniqueIdentifier>{c5432cc5-029a-48a9-97da-d78123806d50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\functionals_h\points.h">
+      <UniqueIdentifier>{22139714-0a16-4957-852c-b8afaa6b7489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\functionals_h\curvs.h">
+      <UniqueIdentifier>{ac6149b4-8b62-4f07-831d-bea660104522}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\functionals_h\globals.h">
+      <UniqueIdentifier>{c70c66aa-5434-488c-a5ec-56427ea64934}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{fd6ac040-52d4-4a76-a433-aff6a852bf55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deprecated code">
+      <UniqueIdentifier>{b04fc0bf-3cd2-4218-a067-79c76cb59829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Samples">
+      <UniqueIdentifier>{378340c6-1ff5-4fd8-9c24-79cdaf843204}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\freeflow\flow_data_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\freeflow\flow_variables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\freeflow\freeflow_wrap.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\freeflow\flow_surf_internal.cpp">
+      <Filter>Source Files\data_cpp\surf_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\freeflow\flow_surf_tcl.cpp">
+      <Filter>Source Files\data_cpp\surf_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\freeflow\flow_points.cpp">
+      <Filter>Source Files\functionals_cpp\points.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\freeflow\flow_points_tcl.cpp">
+      <Filter>Source Files\functionals_cpp\points.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\freeflow\flow_area.cpp">
+      <Filter>Source Files\functionals_cpp\curvs.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\freeflow\flow_cntr.cpp">
+      <Filter>Source Files\functionals_cpp\curvs.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\freeflow\flow_curv.cpp">
+      <Filter>Source Files\functionals_cpp\curvs.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\freeflow\flow_curvs_tcl.cpp">
+      <Filter>Source Files\functionals_cpp\curvs.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\freeflow\f_lcm_simple.cpp">
+      <Filter>Source Files\functionals_cpp\global.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\freeflow\f_lcm_simple_tcl.cpp">
+      <Filter>Source Files\functionals_cpp\global.cpp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\freeflow\flow_data_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\freeflow\flow_ie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\freeflow\flow_variables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\freeflow\flow_surf_internal.h">
+      <Filter>Header Files\data_h\surf_h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\freeflow\flow_surf_tcl.h">
+      <Filter>Header Files\data_h\surf_h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\freeflow\flow_points.h">
+      <Filter>Header Files\functionals_h\points.h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\freeflow\flow_points_tcl.h">
+      <Filter>Header Files\functionals_h\points.h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\freeflow\flow_area.h">
+      <Filter>Header Files\functionals_h\curvs.h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\freeflow\flow_cntr.h">
+      <Filter>Header Files\functionals_h\curvs.h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\freeflow\flow_curv.h">
+      <Filter>Header Files\functionals_h\curvs.h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\freeflow\flow_curvs_tcl.h">
+      <Filter>Header Files\functionals_h\curvs.h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\freeflow\f_lcm_simple.h">
+      <Filter>Header Files\functionals_h\globals.h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\freeflow\f_lcm_simple_tcl.h">
+      <Filter>Header Files\functionals_h\globals.h</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\freeflow\interface\lcm.i">
+      <Filter>Interface</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\src\freeflow\interface\freeflow.i">
+      <Filter>Interface</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{e09a0f5e-6202-460a-a665-9cc1438baacd}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\data_cpp">
+      <UniqueIdentifier>{0d205b65-ae48-4b17-a5c4-388727e7eb2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\data_cpp\dem_cpp">
+      <UniqueIdentifier>{e09a6e49-f283-4cde-a29b-fd1876f450ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\data_cpp\surf_cpp">
+      <UniqueIdentifier>{9aee7386-8391-420e-ac69-37aaaa7e8d1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\functionals_cpp">
+      <UniqueIdentifier>{bde43119-77d5-4260-bd88-ea2c59d40877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\minizip_c">
+      <UniqueIdentifier>{afe689b9-f7c7-4d05-a29e-dc8272fcb102}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{44eccf8b-a478-46f3-ae26-0931f0537b9b}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Header Files\data_h">
+      <UniqueIdentifier>{6f9d9638-8f0c-4bd0-b4ec-dc776fca4183}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\data_h\dem_h">
+      <UniqueIdentifier>{bf51db05-9e58-4c05-b94e-f18ab646ef37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\data_h\surf_h">
+      <UniqueIdentifier>{7bfaec1b-88f7-4756-a1a0-cfc2589b1ee2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\functionals_h">
+      <UniqueIdentifier>{f6a86536-2c0e-45d8-821a-ca03cbd38597}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\minizip_h">
+      <UniqueIdentifier>{f0451f92-dec8-4e4c-b9d3-9d75919dfde4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{3d688dab-45c6-4412-b3b3-793f8f906f1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{f5a8134b-b2f2-4cc7-a1d9-91c0cc9ebf23}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\globe\globe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\globe\globe_data_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\globe\globe_variables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\globe\globe_wrap.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\globe\shortmrf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\globe\dem.cpp">
+      <Filter>Source Files\data_cpp\dem_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\globe\dem_internal.cpp">
+      <Filter>Source Files\data_cpp\dem_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\globe\dem_tcl.cpp">
+      <Filter>Source Files\data_cpp\dem_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\globe\globe_surf_internal.cpp">
+      <Filter>Source Files\data_cpp\surf_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\globe\globe_surf_tcl.cpp">
+      <Filter>Source Files\data_cpp\surf_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\globe\dems_tcl.cpp">
+      <Filter>Source Files\functionals_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\globe\f_dem.cpp">
+      <Filter>Source Files\functionals_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\globe\minizip\ioapi.c">
+      <Filter>Source Files\minizip_c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\globe\minizip\unzip.c">
+      <Filter>Source Files\minizip_c</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\globe\globe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\globe\globe_data_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\globe\globe_ie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\globe\globe_variables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\globe\shortmrf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\globe\dem.h">
+      <Filter>Header Files\data_h\dem_h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\globe\dem_internal.h">
+      <Filter>Header Files\data_h\dem_h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\globe\dem_tcl.h">
+      <Filter>Header Files\data_h\dem_h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\globe\globe_surf_internal.h">
+      <Filter>Header Files\data_h\surf_h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\globe\globe_surf_tcl.h">
+      <Filter>Header Files\data_h\surf_h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\globe\dems_tcl.h">
+      <Filter>Header Files\functionals_h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\globe\f_dem.h">
+      <Filter>Header Files\functionals_h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\globe\minizip\crypt.h">
+      <Filter>Header Files\minizip_h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\globe\minizip\ioapi.h">
+      <Filter>Header Files\minizip_h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\globe\minizip\unzip.h">
+      <Filter>Header Files\minizip_h</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\src\globe\interface\globe.i">
+      <Filter>Interface</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{781a8f56-e85e-4788-93cb-dead81e69332}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\surf_cpp">
+      <UniqueIdentifier>{332de86a-6c13-4c26-81e5-c2d49bd0255b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EasyBmp">
+      <UniqueIdentifier>{d25f79b7-6ea3-4d3c-b9bf-c5ae0a1f92e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shapelib">
+      <UniqueIdentifier>{830e67f0-23a3-4769-b9b4-54dff1c5dfd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\pnts_cpp">
+      <UniqueIdentifier>{100f4ec9-fb0d-4e91-b763-f169fcc151cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\curv_cpp">
+      <UniqueIdentifier>{593697ea-2308-4fb1-a25c-659c9aa2b696}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\area_cpp">
+      <UniqueIdentifier>{e94414cd-1887-4550-9af5-05773951feda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cntr_cpp">
+      <UniqueIdentifier>{b8798870-7421-431a-b471-e219f6760579}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mask_cpp">
+      <UniqueIdentifier>{233a9f59-5a5b-4add-acb7-c2a037fd6434}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{2df525ab-fa38-456d-9fc3-a01498f4a6bd}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{64911b8d-c689-4c0e-b701-858ccc4733be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{96ce4dc2-fe8f-444f-af82-cf1d8f0f16ad}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\surfit_io\surfit_io.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\surfit_io_data_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\surfit_io_variables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\surfit_io_wrap.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\surf_arcgis.cpp">
+      <Filter>Source Files\surf_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\surf_bmp.cpp">
+      <Filter>Source Files\surf_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\surf_gmt.cpp">
+      <Filter>Source Files\surf_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\surf_grass.cpp">
+      <Filter>Source Files\surf_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\surf_grd.cpp">
+      <Filter>Source Files\surf_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\surf_io_tcl.cpp">
+      <Filter>Source Files\surf_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\surf_jpg.cpp">
+      <Filter>Source Files\surf_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\surf_xyz.cpp">
+      <Filter>Source Files\surf_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\EasyBmp\EasyBMP.cpp">
+      <Filter>Source Files\EasyBmp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\shapelib\dbfopen.c">
+      <Filter>Source Files\shapelib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\shapelib\shpopen.c">
+      <Filter>Source Files\shapelib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\pnts_io_tcl.cpp">
+      <Filter>Source Files\pnts_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\pnts_shp.cpp">
+      <Filter>Source Files\pnts_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\curv_bln.cpp">
+      <Filter>Source Files\curv_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\curv_io_tcl.cpp">
+      <Filter>Source Files\curv_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\curv_shp.cpp">
+      <Filter>Source Files\curv_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\area_bln.cpp">
+      <Filter>Source Files\area_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\area_io_tcl.cpp">
+      <Filter>Source Files\area_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\area_shp.cpp">
+      <Filter>Source Files\area_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\cntr_bln.cpp">
+      <Filter>Source Files\cntr_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\cntr_io_tcl.cpp">
+      <Filter>Source Files\cntr_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\cntr_shp.cpp">
+      <Filter>Source Files\cntr_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\mask_grd.cpp">
+      <Filter>Source Files\mask_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\mask_io_tcl.cpp">
+      <Filter>Source Files\mask_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surfit_io\mask_xyz.cpp">
+      <Filter>Source Files\mask_cpp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\surfit_io\EasyBmp\EasyBMP.h">
+      <Filter>Source Files\EasyBmp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\EasyBmp\EasyBMP_BMP.h">
+      <Filter>Source Files\EasyBmp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\EasyBmp\EasyBMP_DataStructures.h">
+      <Filter>Source Files\EasyBmp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\EasyBmp\EasyBMP_VariousBMPutilities.h">
+      <Filter>Source Files\EasyBmp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\shapelib\shapefil.h">
+      <Filter>Source Files\shapelib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\area_io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\area_io_tcl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\cntr_io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\cntr_io_tcl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\curv_io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\curv_io_tcl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\mask_io_tcl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\pnts_io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\pnts_io_tcl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\surf_io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\surf_io_tcl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\surfit_io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\surfit_io_data_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\surfit_io_ie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\surfit_io\surfit_io_variables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\src\surfit_io\interface\surfit_io.i">
+      <Filter>Interface</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>
