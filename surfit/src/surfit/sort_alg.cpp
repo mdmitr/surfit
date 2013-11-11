@@ -22,6 +22,7 @@
 
 #include <algorithm>
 #include <vector>
+#include <iterator>
 
 #include <math.h>
 #include <float.h>
