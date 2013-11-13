@@ -339,7 +339,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>tcl84.lib;zdll.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../bin/libglobe.dll</OutputFile>
+      <OutputFile>../bin_SSE2/libglobe.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\LIBS\TCL8.4.15\WIN\RELEASE_VC8;..\..\libs\zlib123-dll\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>.\../Release/libglobe.pdb</ProgramDatabaseFile>
@@ -389,7 +389,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>tcl84.lib;zdll.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../bin/libglobe.dll</OutputFile>
+      <OutputFile>../bin_SSE/libglobe.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\LIBS\TCL8.4.15\WIN\RELEASE_VC8;..\..\libs\zlib123-dll\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>.\../Release/libglobe.pdb</ProgramDatabaseFile>

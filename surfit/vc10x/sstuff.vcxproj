@@ -349,7 +349,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>tcl84.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../bin/libsstuff.dll</OutputFile>
+      <OutputFile>../bin_SSE2/libsstuff.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\LIBS\TCL8.4.15\WIN\RELEASE_VC8;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -400,7 +400,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>tcl84.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../bin/libsstuff.dll</OutputFile>
+      <OutputFile>../bin_SSE/libsstuff.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\LIBS\TCL8.4.15\WIN\RELEASE_VC8;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>.\../Release_SSE/libsstuff.pdb</ProgramDatabaseFile>

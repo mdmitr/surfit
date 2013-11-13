@@ -328,7 +328,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>tcl84.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../bin/libfreeflow.dll</OutputFile>
+      <OutputFile>../bin_SSE2/libfreeflow.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\LIBS\TCL8.4.15\WIN\RELEASE_VC8;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>.\../Release/libfreeflow.pdb</ProgramDatabaseFile>
@@ -376,7 +376,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>tcl84.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../bin/libfreeflow.dll</OutputFile>
+      <OutputFile>../bin_SSE/libfreeflow.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\LIBS\TCL8.4.15\WIN\RELEASE_VC8;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>.\../Release/libfreeflow.pdb</ProgramDatabaseFile>

@@ -341,7 +341,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>tcl84.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../bin/libsurfit.dll</OutputFile>
+      <OutputFile>../bin_SSE2/libsurfit.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\LIBS\TCL8.4.15\WIN\RELEASE_VC8;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBC;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -393,7 +393,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>tcl84.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../bin/libsurfit.dll</OutputFile>
+      <OutputFile>../bin_SSE/libsurfit.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\LIBS\TCL8.4.15\WIN\RELEASE_VC8;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBC;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>

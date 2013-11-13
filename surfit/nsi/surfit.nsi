@@ -55,30 +55,6 @@ Function un.RefreshShellIcons
   (${SHCNE_ASSOCCHANGED}, ${SHCNF_IDLIST}, 0, 0)'
 FunctionEnd
 
-Function ConnectInternet
-
-  Push $R0
-    
-    ClearErrors
-    Dialer::AttemptConnect
-    IfErrors noie3
-    
-    Pop $R0
-    StrCmp $R0 "online" connected
-      MessageBox MB_OK|MB_ICONSTOP "Cannot connect to the internet."
-      Quit
-    
-    noie3:
-  
-    ; IE3 not installed
-    MessageBox MB_OK|MB_ICONINFORMATION "Please connect to the internet now."
-    
-    connected:
-  
-  Pop $R0
-  
-FunctionEnd
-
 Function .onInit
 
   InitPluginsDir
@@ -101,17 +77,6 @@ can_continue_install:
   StrCpy $VERSION "3.0"
 
   InitPluginsDir
-
-FunctionEnd
-
-Function DownloadGuiDlg
-
-  Push ${TEMP1}
-
-    InstallOptions::dialog "$PLUGINSDIR\surfit.ini"
-    Pop ${TEMP1}
-  
-  Pop ${TEMP1}
 
 FunctionEnd
 
@@ -162,7 +127,7 @@ FunctionEnd
  
   !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
   !insertmacro MUI_PAGE_INSTFILES
-  Page custom DownloadGuiDlg 
+;  Page custom DownloadGuiDlg 
                                
   !insertmacro MUI_UNPAGE_CONFIRM
   !insertmacro MUI_UNPAGE_INSTFILES
@@ -216,6 +181,7 @@ Section "binaries" SecBinary
 	  File "..\bin_SSE2\libfreeflow.dll"
 	  File "..\bin_SSE2\libglobe.dll"
 	  File "..\bin_SSE2\libsurfit_io.dll"
+	  File "..\bin_SSE2\surfit.exe"
 	  Goto binary_done
 
 check_sse:
@@ -227,6 +193,7 @@ check_sse:
 	  File "..\bin_SSE\libfreeflow.dll"
 	  File "..\bin_SSE\libglobe.dll"
 	  File "..\bin_SSE\libsurfit_io.dll"
+	  File "..\bin_SSE\surfit.exe"
 	  Goto binary_done
 
 usual_install:
@@ -236,15 +203,12 @@ usual_install:
 	  File "..\bin\libfreeflow.dll"
 	  File "..\bin\libglobe.dll"
 	  File "..\bin\libsurfit_io.dll"
+	  File "..\bin\surfit.exe"
 
 binary_done:
 
-	  File "..\bin\surfit.exe"
-	  File "..\..\libs\vc8_redist\msvcr80.dll"
-	  File "..\..\libs\vc8_redist\msvcp80.dll"
-	  File "..\..\libs\vc8_redist\Microsoft.VC80.CRT.manifest"
- 	  File "..\bin\zlib1.dll"
-	  File "..\bin\netcdf.dll"
+ 	  File "..\..\libs\zlib123-dll\zlib1.dll"
+	  File "..\..\libs\netcdf_bin\bin\netcdf.dll"
 
 ; Tcl 8.4.15
 
@@ -258,6 +222,22 @@ binary_done:
 
 SectionEnd
 
+Section 
+
+  SetOutPath "$INSTDIR\Temp"
+
+;
+;
+; install runtime libraries
+;
+
+;    VS2010 runtime libraries
+    File "..\..\libs\vc10_redist\vcredist_x86.exe"
+    ExecWait '$INSTDIR\Temp\vcredist_x86.exe /q'
+
+SectionEnd
+
+
 Section "examples" SecExamples
 
   SetOutPath "$INSTDIR\examples"
@@ -267,32 +247,32 @@ Section "examples" SecExamples
 
 SectionEnd
 
-Section "sources" SecSources
-	  SetOutPath "$INSTDIR\src\sstuff"
-	  File /r /x .svn "..\src\sstuff\*.*"
-	  SetOutPath "$INSTDIR\src\surfit"
-	  File /r /x .svn "..\src\surfit\*.*"
-	  SetOutPath "$INSTDIR\src\freeflow\"
-	  File /r /x .svn "..\src\freeflow\*.*"
-	  SetOutPath "$INSTDIR\src\globe"
-	  File /r /x .svn "..\src\globe\*.*"
-	  SetOutPath "$INSTDIR\src\surfit_io"
-	  File /r /x .svn "..\src\surfit_io\*.*"
-	  SetOutPath "$INSTDIR\vc8"
-	  File /r /x .svn "..\vc8\*.sln"
-	  File /r /x .svn "..\vc8\*.bat"
-	  File /r /x .svn "..\vc8\*.vcproj"
-	  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
-	  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\sources"
-	  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\sources\vc8"
-	  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\sources\vc8\surfit.lnk" "$INSTDIR\vc8\surfit.sln"
-          SetOutPath "$INSTDIR"
-	  File ..\*.*
-SectionEnd
+;Section "sources" SecSources
+;	  SetOutPath "$INSTDIR\src\sstuff"
+;	  File /r /x .svn "..\src\sstuff\*.*"
+;	  SetOutPath "$INSTDIR\src\surfit"
+;	  File /r /x .svn "..\src\surfit\*.*"
+;	  SetOutPath "$INSTDIR\src\freeflow\"
+;	  File /r /x .svn "..\src\freeflow\*.*"
+;	  SetOutPath "$INSTDIR\src\globe"
+;	  File /r /x .svn "..\src\globe\*.*"
+;	  SetOutPath "$INSTDIR\src\surfit_io"
+;	  File /r /x .svn "..\src\surfit_io\*.*"
+;	  SetOutPath "$INSTDIR\vc8"
+;	  File /r /x .svn "..\vc8\*.sln"
+;	  File /r /x .svn "..\vc8\*.bat"
+;	  File /r /x .svn "..\vc8\*.vcproj"
+;	  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
+;	  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\sources"
+;	  CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\sources\vc8"
+;	  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\sources\vc8\surfit.lnk" "$INSTDIR\vc8\surfit.sln"
+;          SetOutPath "$INSTDIR"
+;	  File ..\*.*
+;SectionEnd
 
 Section "documentation" SecDocs
   SetOutPath "$INSTDIR\doc\"
-  File /x .svn "..\bin\surfit.chm"
+  File /r /x .svn "..\doc\html\*.*"
   CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
   CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\surfit_docs.lnk" "$INSTDIR\doc\surfit.chm"
 SectionEnd

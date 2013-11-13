@@ -341,7 +341,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>tcl84.lib;zdll.lib;netcdf.lib;libjpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../bin/libsurfit_io.dll</OutputFile>
+      <OutputFile>../bin_SSE2/libsurfit_io.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\libs\jpeg-6b;..\..\libs\zlib123-dll\lib\;..\..\libs\netcdf\libsrc\;..\..\LIBS\TCL8.4.15\WIN\RELEASE_VC8;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -393,7 +393,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>tcl84.lib;zdll.lib;netcdf.lib;libjpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../bin/libsurfit_io.dll</OutputFile>
+      <OutputFile>../bin_SSE/libsurfit_io.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\libs\jpeg-6b;..\..\libs\zlib123-dll\lib\;..\..\libs\netcdf\libsrc\;..\..\LIBS\TCL8.4.15\WIN\RELEASE_VC8;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBC.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
