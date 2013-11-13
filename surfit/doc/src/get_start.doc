@@ -134,25 +134,25 @@ Enter something similar to the following in the Value box:
 This way is useful for most common task: interpolation of scattered data points or for 
 contours approximation.
 
-You will need only 3 commands: \ref file_load, \ref surfit::surfit "surfit" and \ref file_save.
-Also you may want to use \ref surf_plot command to get results in PostScript file.
+You will need only 3 commands: \ref surfit::file_load "file_load", \ref surfit::surfit "surfit" and \ref surfit::file_save "file_save".
+Also you may want to use \ref surfit::surf_plot "surf_plot" command to get results in PostScript file.
 
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
 <TD>
 <TT><PRE>
-$ \ref file_load my_data.txt 
+$ \ref surfit::file_load "file_load" my_data.txt 
 $ \ref surfit::surfit "surfit"
-$ \ref file_save my_results.dat
-$ \ref surf_plot my_result.ps
+$ \ref surfit::file_save "file_save" my_results.dat
+$ \ref surfit::surf_plot "surf_plot" my_result.ps
 </PRE></TT>
 </TD>
 </TR>
 </TABLE>
 
 First commands loads your data from my_data.txt file. It recognizes most of file format and data types
-supported by surfit. Second command runs \ref surfit "surfit gridding algorithm". Also it automatically
-creates so called "gridding rules" for loaded data and creates \ref grid for that data.
+supported by surfit. Second command runs \ref surfit::surfit "surfit gridding algorithm". Also it automatically
+creates so called "gridding rules" for loaded data and creates \ref surfit::grid "grid" for that data.
 Third commad saves all data in memory with the surface obtained after gridding 
 into "my_results.dat" file. Last commands plots resulting surface into PostScript file.
 
@@ -160,15 +160,15 @@ into "my_results.dat" file. Last commands plots resulting surface into PostScrip
 <H2><A NAME="loading">Loading data to surfit</A></H2>
 
 
-To examine data, already loaded use \ref mem_info command.
+To examine data, already loaded use \ref surfit::mem_info "mem_info" command.
 
 <H4> Automatic file loading </H4>
 
-There is \ref file_load command that tries to recognize file format and load it into surfit memory.
+There is \ref surfit::file_load "file_load" command that tries to recognize file format and load it into surfit memory.
 
 <H4>loading points</H4>
 
-The \ref pnts_read command reads formatted text files containing \ref d_points "scattered data points" 
+The \ref surfit::pnts_read "pnts_read" command reads formatted text files containing \ref d_points "scattered data points" 
 coordinates. Text file should be organized as a rectangular table of numbers, separated by blanks, with one row 
 per line, and an equal number of elements in each row.  For example, outside of <TT><B>surfit</B></TT>, create a 
 text file containing these four lines: 
@@ -192,7 +192,7 @@ Store the file under the name points.txt Then the command
 <TR>
 <TD>
 <TT><PRE>
-$ \ref pnts_read points.txt my_points 4 1 2 3
+$ \ref surfit::pnts_read "pnts_read" points.txt my_points 4 1 2 3
 13/01/05 15:02:52 : reading points "my_points" from file points.txt
 </PRE></TT>
 </TD>
@@ -222,7 +222,7 @@ then the command arguments can be truncated:
 <TR>
 <TD>
 <TT><PRE>
-$ \ref pnts_read points.txt my_points
+$ \ref surfit::pnts_read "pnts_read" points.txt my_points
 13/01/05 15:02:52 : reading points "my_points" from file points.txt
 </PRE></TT>
 </TD>
@@ -236,29 +236,29 @@ You can get some info about \ref d_points "points" datasets with following comma
 <TD>
 <TT><PRE>
 # Get number of \ref d_points "points" dataset:
-$ \ref pnts_size
+$ \ref surfit::pnts_size "pnts_size"
 1
 # If there is no \ref d_points "points" datasets in memory, surfit returns 0.
 #
 # Print \ref d_points "points" name 
-$ \ref pnts_getName 
+$ \ref surfit::pnts_getName "pnts_getName"
 my_points
 #
 # Get number of points in points dataset
-$ \ref pnts_getCount my_points
+$ \ref surfit::pnts_getCount "pnts_getCount" my_points
 4
 $ Minimum and maximum values:
-$ \ref pnts_minx my_points
+$ \ref surfit::pnts_minx "pnts_minx" my_points
 4.0
-$ \ref pnts_maxx my_points
+$ \ref surfit::pnts_maxx "pnts_maxx" my_points
 16.0
-$ \ref pnts_miny my_points
+$ \ref surfit::pnts_miny "pnts_miny" my_points
 3.0
-$ \ref pnts_maxy my_points
+$ \ref surfit::pnts_maxy "pnts_maxy" my_points
 15.0
-$ \ref pnts_minz my_points
+$ \ref surfit::pnts_minz "pnts_minz" my_points
 2.0
-$ \ref pnts_maxz my_points
+$ \ref surfit::pnts_maxz "pnts_maxz" my_points
 14.0
 </PRE></TT>
 </TD>
@@ -314,7 +314,7 @@ To read curve from file curve.txt use command:
 <TR>
 <TD>
 <TT><PRE>
-$ \ref curv_read curve.txt my_curve
+$ \ref surfit::curv_read "curv_read" curve.txt my_curve
 14/01/05 11:00:12 : reading curve "my_curve" from file curve.txt
 1
 </PRE></TT>
@@ -331,7 +331,7 @@ To load surface from Surfer GRD-ASCII file use the command:
 <TR>
 <TD>
 <TT><PRE>
-$ \ref surf_load_grd surface.grd my_surface
+$ \ref surfit::surf_load_grd "surf_load_grd" surface.grd my_surface
 14/01/05 16:32:50 : loading surface from Surfer GRD-ASCII format file surface.grd
 1
 </PRE></TT>
@@ -345,7 +345,7 @@ To load surface from <TT><B>surfit</B></TT> datafile use the command:
 <TR>
 <TD>
 <TT><PRE>
-$ \ref surf_load surface.dat my_surface
+$ \ref surfit::surf_load "surf_load" surface.dat my_surface
 14/01/05 16:33:20 : loading surf "my_surface" from file surface.dat
 1
 </PRE></TT>
@@ -365,26 +365,26 @@ only 6 parameters:
 \li	Y-coordinate of the last node of the grid 	
 \li 	cell size in Y-direction
 
-You can create \ref d_grid "grid" object with \ref grid_get command. For example, command
+You can create \ref d_grid "grid" object with \ref surfit::grid_get "grid_get" command. For example, command
 
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
 <TD>
 <TT><PRE>
-$ \ref grid_get 0 100 10 0 200 20 my_grid
+$ \ref surfit::grid_get "grid_get" 0 100 10 0 200 20 my_grid
 15/01/05 22:38:32 : grid: (0.00 <-> 100.00) / 10.00; (0.00 <-> 200.00) / 20.00.
 </PRE></TT>
 </TD>
 </TR>
 </TABLE>
 
-In most cases you can use \ref grid command with only 2 parameters to specify cell sizes:
+In most cases you can use \ref surfit::grid "grid" command with only 2 parameters to specify cell sizes:
 
 <TABLE BORDER="0" BGCOLOR="#E0E0E0" WIDTH="50%" ID="Table4">
 <TR>
 <TD>
 <TT><PRE>
-$ \ref grid 10 20
+$ \ref surfit::grid "grid" 10 20
 </PRE></TT>
 </TD>
 </TR>
@@ -434,11 +434,11 @@ Here is some examples:
 
 <H2><A NAME="saving">Saving results</A></H2>
 
-After <A href="#gridding">gridding</A> procedure result saves as new \ref d_surf "surface" named with \ref map_name
+After <A href="#gridding">gridding</A> procedure result saves as new \ref d_surf "surface" named with \ref surfit::map_name "map_name"
 variable value. You can export
-it to Surfer GRD-ASCII format with command \ref surf_save_grd or to <TT><B>surfit</B></TT> datafile with command
-\ref surf_save. Also you can save your results into <TT><B>surfit</B></TT> datafile with all other data in 
-memory with command \ref file_save.
+it to Surfer GRD-ASCII format with command \ref surfit::surf_save_grd "surf_save_grd" or to <TT><B>surfit</B></TT> datafile with command
+\ref surfit::surf_save "surf_save". Also you can save your results into <TT><B>surfit</B></TT> datafile with all other data in 
+memory with command \ref surfit::file_save "file_save".
 
 <H2><A NAME="visual">Visualising results</A></H2>
 

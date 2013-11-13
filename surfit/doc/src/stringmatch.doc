@@ -5,11 +5,11 @@ this feature for specifying set of data objects, gridding rules and etc. It work
 pattern for filenames. For example, if you want to see names of all surfaces in memory you
 should use command
 
-\ref surf_getName "surf_getName" "*"
+\ref surfit::surf_getName "surf_getName" "*"
 
 or 
 
-\ref surf_getName "surf_getName" "my_*"
+\ref surfit::surf_getName "surf_getName" "my_*"
 
 for all surfaces with name starting with "my_".
 

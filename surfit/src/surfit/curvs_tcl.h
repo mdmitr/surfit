@@ -241,6 +241,7 @@ boolvec * fault(const char * curv_name = "*");
 ////////////
 
 /*! \ingroup tcl_rules_areas
+    \brief interpolate area value
     \par Tcl syntax:
     area value \ref str "area_name" inside
 

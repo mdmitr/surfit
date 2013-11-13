@@ -173,8 +173,8 @@ A_{i,j} = \frac{1}{2} \overline{F}_{i,j} \cdot \overline{\nu}_{i,j} - Q_{i,j} u_
 \f]
 Differentiation of this expression by \f$ u_{i,j} \f$ leads to law of conservation of mass 
 written for the cell (i,j). <B><TT>freeflow</TT></B> implements the law of conservation of mass
-in the simplest statement : \ref lcm_simple. To represent impermeable lines it is necessary to set zero 
-filtration speed via suitable cell borders. It is effective to use \ref fault gridding rule for that. 
+in the simplest statement : \ref surfit::lcm_simple "lcm_simple". To represent impermeable lines it is necessary to set zero 
+filtration speed via suitable cell borders. It is effective to use \ref surfit::fault "fault" gridding rule for that. 
 
 For each cell we consider three possible situations:
 

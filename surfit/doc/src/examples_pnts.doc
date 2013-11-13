@@ -4,14 +4,14 @@
 We have 13504 interpolation points (file <TT>examples/surfit/points/points.txt</TT>) and equidistant grid 
 with more than 250000 nodes. To produce interpolation evenly sampled \ref d_surf "surface" we do the 
 following things:	
-\li set \ref tol "tolerance"
+\li set \ref surfit::tol "tolerance"
 \li load scattered data points from file
 \li create equidistant grid with 512x512 nodes
 \li create sequecne of \ref tcl_rules "gridding rules" (how to use data points and space between them)
 \li run surfit algorithm
 \li save results to file
 
-\sa \ref points, \ref points_add, \ref completer
+\sa \ref surfit::points "points", \ref surfit::points "points_add", \ref surfit::completer "completer"
 
 Here is the image of the resulting surface:
 
@@ -32,8 +32,8 @@ Here is the image of the resulting surface:
 This result was obtained with <TT>"examples/surfit/points/points_exact.tcl"</TT> script. 
 
 Some comments to script:
-\li \ref map_name variable is used to set name of resulting \ref d_surf "surface"
-\li \ref tol variable is used to manage tolerance of \ref solvers "iterative linear system solver algorithm".
+\li \ref surfit::map_name "map_name" variable is used to set name of resulting \ref d_surf "surface"
+\li \ref surfit::tol "tol" variable is used to manage tolerance of \ref solvers "iterative linear system solver algorithm".
 If this value is too big, an iterative algorithm will make low number of iterations and it will lead to rough result.
 
 */
@@ -46,12 +46,12 @@ with more than 250000 nodes. To approximate points to evenly sampled \b smooth \
 following things:	
 \li load scattered points to the memory
 \li create equidistant grid of 512x512 nodes
-\li set some additional parameters (\ref tol "tolerance", \ref map_name)
+\li set some additional parameters (\ref surfit::tol "tolerance", \ref surfit::map_name "map_name")
 \li create sequence of \ref tcl_rules "gridding rules" (how to use data points and space between them)
 \li run \ref surfit algorithm
 \li save results to file
 
-\sa \ref points, \ref points_add, \ref completer
+\sa \ref surfit::points "points", \ref surfit::points "points_add", \ref surfit::completer "completer"
 
 Here is the image of the resulting \ref d_surf "surface":
 
@@ -70,13 +70,13 @@ Here is the image of the resulting \ref d_surf "surface":
 This result was obtained with <TT>"examples/surfit/points/points_approx.tcl"</TT> script. 
 
 Some comments to script:
-\li \ref map_name variable is used to set name of resulting \ref d_surf "surface"
-\li \ref tol variable is used to manage tolerance of \ref solvers "iterative linear system solver algorithm".
+\li \ref surfit::map_name "map_name" variable is used to set name of resulting \ref d_surf "surface"
+\li \ref surfit::tol "tol" variable is used to manage tolerance of \ref solvers "iterative linear system solver algorithm".
 If this value is too big, an iterative algorithm will make low number of iterations and it will lead to rough result.
-\li \ref grid_unload function call to remove \ref d_grid grid from result file.
-\li to produce more smoother \ref d_surf "surface" you should reduce weight value in \ref points_add command. 
+\li \ref surfit::grid_unload "grid_unload" function call to remove \ref d_grid grid from result file.
+\li to produce more smoother \ref d_surf "surface" you should reduce weight value in \ref surfit::points "points_add" command. 
 To produce more precise approximation (surface tends to interpolation) you should enlarge weight 
-value in \ref points_add command.
+value in \ref surfit::points "points_add" command.
 
 */
 
@@ -86,7 +86,7 @@ This example shows how to use inequality conditions in points to obtain evenly s
 Here we have two set of points: blue (points_geq) and red (points_leq). For blue points \ref d_surf "surface" should
 be greater than or equal to points values, for red "less than or equal".
 
-\sa \ref points_leq, \ref points_geq, \ref completer
+\sa \ref surfit::points "points"_leq, \ref surfit::points "points"_geq, \ref surfit::completer "completer"
 
 Here is the image of the resulting \ref d_surf "surface":
 
@@ -100,8 +100,8 @@ Here is the image of the resulting \ref d_surf "surface":
 This result was obtained with <TT>"examples/surfit/points/points_ineq.tcl"</TT> script. 
 
 Some comments to script:
-\li \ref map_name variable is used to set name of resulting \ref d_surf "surface"
-\li \ref tol variable is used to manage tolerance of \ref solvers "iterative linear system solver algorithm".
+\li \ref surfit::map_name "map_name" variable is used to set name of resulting \ref d_surf "surface"
+\li \ref surfit::tol "tol" variable is used to manage tolerance of \ref solvers "iterative linear system solver algorithm".
 */
 
 /** \example points_triangulate.tcl

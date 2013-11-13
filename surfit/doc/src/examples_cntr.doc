@@ -2,9 +2,9 @@
 
 This example shows how to build \ref d_surf "surface" using \ref d_cntr "contours". In this example
 3 different contours were used. Two of them were (cntr_big_circle, cntr_center) approximated by resulting surface. 
-Another one (cntr_big_circle) was used to modify \ref completer gridding rule with weight.
+Another one (cntr_big_circle) was used to modify \ref surfit::completer "completer" gridding rule with weight.
 
-\sa \ref contour, \ref contour_add, \ref completer
+\sa \ref surfit::contour "contour", \ref surfit::contour_add "contour_add", \ref surfit::completer "completer"
 
 \htmlonly
 Here is the image of the resulting surface:
@@ -26,7 +26,7 @@ This example looks like \ref contour.tcl "contour.tcl" example, but it contains 
 set and "upper" set. Upper set of contours is shifted up at 0.2. The resulting surface is between
 these contours sets.
 
-\sa \ref contour_leq, \ref contour_geq, \ref completer
+\sa \ref surfit::contour_leq "contour_leq", \ref surfit::contour_geq "contour_geq", \ref surfit::completer "completer"
 
 \htmlonly
 Here is the image of the resulting surface:
