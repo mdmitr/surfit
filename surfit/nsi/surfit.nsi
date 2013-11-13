@@ -233,7 +233,7 @@ Section
 
 ;    VS2010 runtime libraries
     File "..\..\libs\vc10_redist\vcredist_x86.exe"
-    ExecWait '$INSTDIR\Temp\vcredist_x86.exe /q'
+    ExecWait '$INSTDIR\Temp\vcredist_x86.exe'
 
 SectionEnd
 
