@@ -31,7 +31,7 @@ public:
 	color_scale(const color_scale & cs);
 
 	//! destructor
-	~color_scale();
+	virtual ~color_scale();
 
 public:
 	//! destructor
