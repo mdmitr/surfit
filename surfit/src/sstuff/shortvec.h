@@ -77,7 +77,7 @@ protected:
 
 private:
 	//! Destructor
-	~shortvec();
+	virtual ~shortvec();
 
 public:
 

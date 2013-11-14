@@ -139,7 +139,7 @@ bool _cntr_save_bln(const d_cntr * crv, FILE * file, int orient) {
 		if ( fprintf(file, "%d,%d \"%s\"\n",size, orient, crv->getName()) <= 0 )
 			goto bad_save_bln;
 	} else {
-		if ( fprintf(file, "%d,%d\n",size, orient, crv->getName()) <= 0 )
+		if ( fprintf(file, "%d,%d\n",size, orient) <= 0 )
 			goto bad_save_bln;
 	}
 

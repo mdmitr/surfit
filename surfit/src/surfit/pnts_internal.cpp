@@ -296,7 +296,9 @@ bool _pnts_save_df(const d_points * pnts, datafile * df) {
 	op = df->writeRealArray("y", pnts->Y); res = (op && res);
 	op = df->writeRealArray("z", pnts->Z); res = (op && res);
 	if (pnts->names)
+	{
 		op = df->writeStringArray("names", pnts->names); res = (op && res);
+	}
 	op = df->writeEndTag();						res = (op && res);
 	
 	return res;

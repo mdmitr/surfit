@@ -80,7 +80,7 @@ public:
 
 private:
 	//! destructor
-	~bitvec();
+	virtual ~bitvec();
 
 public:
 	//! destructor

@@ -126,7 +126,9 @@ bool d_grid::writeTags(datafile *df) const {
     bool res = true; bool op = false;
 	op = df->writeTag("grid");		         res = (op&&res);
     if (getName()) 
+	{
 		op = df->writeString("name",getName());  res = (op && res);
+	}
 	op = df->writeReal("startX",startX);	     res = (op&&res);
 	op = df->writeReal("endX",    endX);	     res = (op&&res);
 	op = df->writeReal("stepX",  stepX);	     res = (op&&res);

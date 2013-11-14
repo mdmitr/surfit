@@ -211,7 +211,7 @@ d_curv * _curv_load_df(datafile * df, const char * curvname) {
 			df->skipTagName();
 
 			if (!_curv_load_df_tag_readed(df, crv)) {
-				if (crv == NULL)
+				if (crv != NULL)
 					crv->release();
 				return NULL;
 			};
