@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NetBox version="2.1">
+    <Sessions>
+        <Session name="mishadm@web.sourceforge.net">
+            <Version>2.1.31</Version>
+            <HostName>web.sourceforge.net:</HostName>
+            <UserName>mishadm</UserName>
+            <FSProtocol>SFTP%20(SCP)</FSProtocol>
+            <RemoteDirectory>/home/project-web/surfit/htdocs</RemoteDirectory>
+            <LookupUserGroups2>0</LookupUserGroups2>
+            <CodePage></CodePage>
+            <LoginType>1</LoginType>
+            <Password>A35C7458EA559BDB31352F343D38312B393E722F33292E3F393A332E3B3972323928660E3A382E3A2C26382E3A6D6E6F204E</Password>
+        </Session>
+    </Sessions>
+</NetBox>
