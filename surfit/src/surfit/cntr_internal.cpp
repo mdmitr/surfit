@@ -117,7 +117,7 @@ d_cntr * _cntr_load_df(datafile * df, const char * cntrname) {
 
 	char error[] = "cntr_load : wrong datafile format";
 
-	d_cntr * cntrline = create_cntr(NULL, NULL, NULL);
+	d_cntr * cntrline = create_cntr(NULL, NULL, (vec*)NULL);
 	
 	bool loaded = false;
 	
@@ -202,7 +202,7 @@ d_cntr * _cntr_load_df(datafile * df, const char * cntrname) {
 						} else {
 							if (cntrline)
 								cntrline->release();
-							cntrline = create_cntr(NULL, NULL, NULL);
+							cntrline = create_cntr(NULL, NULL, (vec*)NULL);
 						}
 					}
 				}
