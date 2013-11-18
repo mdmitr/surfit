@@ -30,6 +30,7 @@
 #include "curv.h"
 #include "curv_tcl.h"
 #include "curv_internal.h"
+#include "cntr.h"
 #include "variables_internal.h"
 #include "free_elements.h"
 
@@ -248,6 +249,23 @@ void curvs_info() {
 		d_curv * a_curv = *(surfit_curvs->begin()+curvs_counter);
 		_curv_info(a_curv);
 	}
+};
+
+boolvec * curv_to_cntr(REAL value, const char * pos) 
+{
+	boolvec * res = create_boolvec();
+	size_t i;
+	for (i = 0; i < surfit_curvs->size(); i++)
+	{
+		d_curv * curv = (*surfit_curvs)[i];
+		if (StringMatch(pos, curv->getName()) == false)
+			continue;
+		writelog(LOG_MESSAGE,"converting curve \"%s\" to contour", curv->getName());
+		d_cntr * cntr = create_cntr(curv, value, curv->getName());
+		surfit_cntrs->push_back(cntr);
+		res->push_back(true);
+	}
+	return res;
 };
 
 }; // namespace surfit;

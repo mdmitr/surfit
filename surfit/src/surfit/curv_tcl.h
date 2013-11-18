@@ -120,7 +120,7 @@ boolvec * curv_setName(const char * new_name, const char * curv_name = "*");
 
 /*! \ingroup tcl_curv_other
     \par Tcl syntax:
-    curv_del "curv_name
+    curv_del "curv_name"
 
     \par Description:
     removes \ref d_curv "curve" at 'curv_name' position from memory
@@ -147,6 +147,18 @@ int curv_size();
     prints information about all \ref d_curv "curves" in memory
 */
 void curvs_info();
+
+///////////////
+// convers
+
+/*! \ingroup tcl_cntr_conv
+    \par Tcl syntax:
+    curv_to_cntr value \ref str "curv_name"
+
+    \par Description:
+    makes \ref d_cntr "contour" with given constant Z-value from \ref d_curv "curve"
+*/
+boolvec * curv_to_cntr(REAL value, const char * curv_name = "*");
 
 }; // namespace surfit;
 

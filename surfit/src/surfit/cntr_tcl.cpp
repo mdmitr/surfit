@@ -29,6 +29,7 @@
 #include "points.h"
 
 #include "cntr.h"
+#include "area.h"
 #include "cntr_tcl.h"
 #include "curv_tcl.h"
 #include "cntr_internal.h"

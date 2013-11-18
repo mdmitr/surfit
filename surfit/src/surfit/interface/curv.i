@@ -78,6 +78,8 @@ surfit::boolvec * curv_load(const char * filename, const char * curvname = NULL)
 surfit::boolvec * curv_write(const char * filename, const char * curv_name = "*", const char * delimiter = "\t");
 surfit::boolvec * curv_save(const char * filename, const char * curv_name = "*");
 
+// convers
+surfit::boolvec * curv_to_cntr(REAL value, const char * curv_name = "*");
 // other
 surfit::strvec * curv_getName(const char * curv_name = "*");
 const char * curv_getNameAt(int pos);

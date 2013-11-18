@@ -32,6 +32,12 @@ SURFIT_EXPORT
 d_cntr * create_cntr(vec * iX, vec * iY, vec * iZ,
 	             const char * cntr_name = NULL);
 
+
+//! constructor for \ref d_cntr class
+SURFIT_EXPORT
+d_cntr * create_cntr(d_curv * crv,  REAL z_value,
+	             const char * cntr_name = NULL);
+
 /*! \class d_cntr
     \brief 3D contour 
 */
@@ -39,6 +45,10 @@ class SURFIT_EXPORT d_cntr : public d_curv {
 protected:
 	//! constructor
 	d_cntr(vec * iX, vec * iY, vec * iZ,
+	       const char * cntr_name = NULL);
+
+	//! constructor
+	d_cntr(d_curv * curve, REAL z_value,
 	       const char * cntr_name = NULL);
 
 	//! destructor
@@ -49,6 +59,11 @@ public:
 	//! constructor
 	friend SURFIT_EXPORT
 	d_cntr * create_cntr(vec * iX, vec * iY, vec * iZ,
+	                     const char * cntr_name);
+
+	//! constructor
+	friend SURFIT_EXPORT
+	d_cntr * create_cntr(d_curv * crv, REAL z_value,
 	                     const char * cntr_name);
 
 	//! Z = Z + value

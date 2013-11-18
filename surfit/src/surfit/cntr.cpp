@@ -36,12 +36,27 @@ d_cntr * create_cntr(vec * iX, vec * iY, vec * iZ,
 	return new d_cntr(iX, iY, iZ, cntr_name);
 };
 
+d_cntr * create_cntr(d_curv * crv, REAL z_value,
+	             const char * cntr_name)
+{
+	return new d_cntr(crv, z_value, cntr_name);
+};
+
+
 d_cntr::d_cntr(vec * iX, vec * iY, vec * iZ,
 	   const char * cntr_name) : 
 d_curv(iX, iY, cntr_name)
 {
 	setType("cntr");
 	Z = iZ;
+};
+
+d_cntr::d_cntr(d_curv * crv, REAL z_value,
+	   const char * cntr_name) : 
+d_curv(create_vec(*(crv->X)), create_vec(*(crv->Y)), cntr_name)
+{
+	setType("cntr");
+	Z = create_vec(size(), z_value);
 };
 
 d_cntr::~d_cntr() {
