@@ -19,8 +19,8 @@
 			<TD>CMOFS</TD>
 			<TD>surfit</TD>
 			<TD>
-				<P>M.V.Dmitrievsky &amp;</P>
-				<P>V.N. Kutrunov</P>
+				<P>Dmitrievskiy Mikhail&amp;</P>
+				<P>Kutrunov Vladimir</P>
 			</TD>
 			<TD><A href="compare_cmofs.gif"><IMG alt="cmofs" src="compare_cmofs_tumb.gif" border="1"></A></TD>
 		</TR>
@@ -105,8 +105,8 @@
 		<TD>5.</TD>
 		<TD><A HREF="surfit.sourceforge.net"><TT>surfit</TT></A></TD>
 		<TD>
-			<P>M.V. Dmitrievsky and	</P>
-			<P>V.N. Kutrunov, freeware</P>
+			<P>Dmitrievskiy Mikhail and </P>
+			<P>Kutrunov Vladimir</P>
 		</TD>
 		<TD>7 sec.</TD>
 		<TD><A HREF="surfit_map.jpg"><IMG alt="gmt" src="surfit_tumb.jpg" border="1"></A></TD>
