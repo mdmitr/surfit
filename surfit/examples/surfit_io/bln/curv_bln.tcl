@@ -22,7 +22,7 @@ curv_read "iso3.xy" "iso3"
 curv_read "iso4.xy" "iso4"  
 
                                
-curv_save_bln "curvs.bln" "iso+"
+curv_save_bln "curvs.bln" "iso*"
 
 clear_data
 
