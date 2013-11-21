@@ -3,6 +3,7 @@
 !define TEMP1 $R0 ;Temp variable
 ReserveFile "${NSISDIR}\Plugins\InstallOptions.dll"
 ReserveFile "surfit.ini"
+!define MSI31_URL "http://download.microsoft.com/download/1/4/7/147ded26-931c-4daf-9095-ec7baf996f46/WindowsInstaller-KB893803-v2-x86.exe"
 
 ;--------------------------------
 ;Include Modern UI
@@ -34,6 +35,7 @@ ReserveFile "surfit.ini"
   Var STARTMENU_FOLDER
   Var VERSION
   Var SURFIT_VERSION
+  Var MSI_UPDATE
 
 ;--------------------------------
 ;Interface Settings
@@ -42,6 +44,68 @@ ReserveFile "surfit.ini"
 
 !define SHCNE_ASSOCCHANGED 0x08000000
 !define SHCNF_IDLIST 0
+
+
+;*********************************************************************
+; UpdateMSIVersion
+;
+; This function will check the version of the installed Windows
+; Installer. This is done by checking the version of the
+; $SYSDIR\MSI.dll (recommended method by the installer team).
+;
+; Usage
+; Call UpdateMSIVersion
+; Pop $MSI_UPDATE ; If $MSI_UPDATE is 1, install latest MSI.
+;*********************************************************************
+Function UpdateMSIVersion
+  GetDllVersion "$SYSDIR\MSI.dll" $R0 $R1
+  IntOp $R2 $R0 / 0x00010000
+  IntOp $R3 $R0 & 0x0000FFFF
+ 
+  IntCmp $R2 3 0 InstallMSI RightMSI
+  IntCmp $R3 1 RightMSI InstallMSI RightMSI
+ 
+  RightMSI:
+    Push 0
+    Goto ExitFunction
+ 
+  InstallMSI:
+    MessageBox MB_OK|MB_ICONEXCLAMATION \
+"Windows Installer 3.1 was not detected; this is required for installation. \
+Setup will install the Windows Installer. This may take awhile, please wait."
+    Push 1
+
+DownloadMSI:
+  DetailPrint "Beginning download of MSI3.1."
+  NSISDL::download ${MSI31_URL} "$TEMP\WindowsInstaller-KB893803-v2-x86.exe"
+  DetailPrint "Completed download."
+  Pop $0
+  ${If} $0 == "cancel"
+    MessageBox MB_YESNO|MB_ICONEXCLAMATION \
+    "Download cancelled.  Continue Installation?" \
+    IDYES NewMSI IDNO GiveUpDotNET
+  ${ElseIf} $0 != "success"
+    MessageBox MB_YESNO|MB_ICONEXCLAMATION \
+    "Download failed:$\n$0$\n$\nContinue Installation?" \
+    IDYES NewMSI IDNO GiveUpDotNET
+  ${EndIf}
+  DetailPrint "Pausing installation while downloaded MSI3.1 installer runs."
+  ExecWait '$TEMP\WindowsInstaller-KB893803-v2-x86.exe /quiet /norestart' $0
+  DetailPrint "Completed MSI3.1 install/update. Exit code = '$0'. Removing MSI3.1 installer."
+  Delete "$TEMP\WindowsInstaller-KB893803-v2-x86.exe"
+  DetailPrint "MSI3.1 installer removed."
+  goto NewMSI
+
+
+GiveUpDotNET:
+  Abort
+
+NewMSI:
+  DetailPrint "MSI3.1 installation done. Proceeding with remainder of installation."
+
+  ExitFunction:
+ 
+FunctionEnd
  
 Function RefreshShellIcons
   ; By jerome tremblay - april 2003
@@ -115,7 +179,7 @@ FunctionEnd
 ;Pages
 
   ;Page custom DownloadGuiDlg 
-  !insertmacro MUI_PAGE_LICENSE "..\copying"
+  !insertmacro MUI_PAGE_LICENSE "..\copying_free"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
 
@@ -142,6 +206,8 @@ FunctionEnd
 ;Installer Sections
 
 Section "binaries" SecBinary
+
+          Call UpdateMSIVersion
 
 	  SetOutPath "$INSTDIR\bin"
 	  SectionIn RO
@@ -233,7 +299,8 @@ Section
 
 ;    VS2010 runtime libraries
     File "..\..\libs\vc10_redist\vcredist_x86.exe"
-    ExecWait '$INSTDIR\Temp\vcredist_x86.exe'
+    ExecWait '$INSTDIR\Temp\vcredist_x86.exe /passive /norestart'
+;    ExecWait '$INSTDIR\Temp\vcredist_x86.exe /q:a /c:"VCREDI~1.EXE /q:a /c:""msiexec /i vcredist.msi /qn"" "'
 
 SectionEnd
 
@@ -274,7 +341,7 @@ Section "documentation" SecDocs
   SetOutPath "$INSTDIR\doc\"
   File /r /x .svn "..\doc\html\*.*"
   CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
-  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\surfit_docs.lnk" "$INSTDIR\doc\surfit.chm"
+  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\surfit_docs.lnk" "$INSTDIR\doc\index.html"
 SectionEnd
 
 
