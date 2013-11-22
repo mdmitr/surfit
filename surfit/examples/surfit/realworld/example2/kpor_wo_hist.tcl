@@ -18,7 +18,7 @@ set tol 1e-6
 
 ##
 ## load initial data 
-##
+##pn
 
 # load points from text file 
 pnts_read "model_prm_2d.txt" "model_prm_2d" 3 4 8 2 "\t" 1
@@ -40,6 +40,10 @@ area undef *
 
 # resulting surface at points = points values 
 points "model_prm_2d"
+
+leq 0.186
+geq 0.065
+mean 0.11
 
 # resulting surface should tend to be constant or plane 
 completer 1 20

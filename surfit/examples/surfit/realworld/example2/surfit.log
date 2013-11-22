@@ -1,0 +1,1270 @@
+loading module surfit_io v3.0
+loading module globe v3.0
+loading module freeflow v3.0
+19/11/13 11:49:42 : reading points "model_prm_2d" from file model_prm_2d.txt
+19/11/13 11:49:44 : reading curve from file zones/1016.ctr0
+19/11/13 11:49:44 : reading curve from file zones/1025.ctr00
+19/11/13 11:49:44 : reading curve from file zones/176.ctr00
+19/11/13 11:49:44 : reading curve from file zones/181.ctr0
+19/11/13 11:49:44 : reading curve from file zones/2122.ctr00
+19/11/13 11:49:45 : reading curve from file zones/3007.ctr0
+19/11/13 11:49:45 : reading curve from file zones/815.ctr0
+19/11/13 11:49:45 : reading curve from file zones/818.ctr00
+19/11/13 11:49:45 : reading curve from file zones/827.ctr0
+19/11/13 11:49:45 : reading curve from file zones/857.ctr0
+19/11/13 11:49:45 : reading curve from file zones/874.ctr0
+19/11/13 11:49:45 : reading curve from file zones/875.ctr0
+19/11/13 11:49:45 : reading curve from file zones/986.ctr0
+19/11/13 11:49:45 : grid: (58710.5 <-> 73460.5) / 50; (28760 <-> 57210) / 50. 296x570
+19/11/13 11:49:45 : creating gridding rule area(undef,"1016")
+19/11/13 11:49:45 : creating gridding rule area(undef,"1025")
+19/11/13 11:49:45 : creating gridding rule area(undef,"176")
+19/11/13 11:49:45 : creating gridding rule area(undef,"181")
+19/11/13 11:49:45 : creating gridding rule area(undef,"2122")
+19/11/13 11:49:45 : creating gridding rule area(undef,"3007")
+19/11/13 11:49:45 : creating gridding rule area(undef,"815")
+19/11/13 11:49:45 : creating gridding rule area(undef,"818")
+19/11/13 11:49:45 : creating gridding rule area(undef,"827")
+19/11/13 11:49:45 : creating gridding rule area(undef,"857")
+19/11/13 11:49:45 : creating gridding rule area(undef,"874")
+19/11/13 11:49:45 : creating gridding rule area(undef,"875")
+19/11/13 11:49:45 : creating gridding rule area(undef,"986")
+19/11/13 11:49:45 : creating gridding rule points("model_prm_2d")
+19/11/13 11:49:45 : creating gridding rule completer(1,20,0,1)
+19/11/13 11:49:45 : 
+19/11/13 11:49:45 : 
+19/11/13 11:49:45 : 
+19/11/13 11:49:45 : *************
+19/11/13 11:49:45 : * Phase 1, grid size = 8 x 8 (kpor_wo_hist)
+19/11/13 11:49:45 : *************
+19/11/13 11:49:45 : area (1016), value = "undef"
+19/11/13 11:49:45 : area (1025), value = "undef"
+19/11/13 11:49:45 : area (176), value = "undef"
+19/11/13 11:49:45 : area (181), value = "undef"
+19/11/13 11:49:45 : area (2122), value = "undef"
+19/11/13 11:49:45 : area (3007), value = "undef"
+19/11/13 11:49:45 : area (815), value = "undef"
+19/11/13 11:49:45 : area (818), value = "undef"
+19/11/13 11:49:45 : area (827), value = "undef"
+19/11/13 11:49:45 : area (857), value = "undef"
+19/11/13 11:49:45 : area (874), value = "undef"
+19/11/13 11:49:45 : area (875), value = "undef"
+19/11/13 11:49:45 : area (986), value = "undef"
+19/11/13 11:49:45 : points : (model_prm_2d)
+19/11/13 11:49:45 : completer : processing...
+19/11/13 11:49:45 : completer : flood_areas_cnt = 2
+19/11/13 11:49:45 : completer : processing each isolated area (2)...
+19/11/13 11:49:45 : completer : isolated area N1
+19/11/13 11:49:45 : completer : isolated area N2
+19/11/13 11:49:45 : cg: (64) ...... iter : 25, error :            0, 0 sec
+19/11/13 11:49:45 : completer : processing whole area
+19/11/13 11:49:45 : cg: (64)  - nothing to do.
+19/11/13 11:49:45 : 
+19/11/13 11:49:45 : *************
+19/11/13 11:49:45 : * Phase 2, grid size = 16 x 16 (kpor_wo_hist)
+19/11/13 11:49:45 : *************
+19/11/13 11:49:45 : area (1016), value = "undef"
+19/11/13 11:49:45 : area (1025), value = "undef"
+19/11/13 11:49:45 : area (176), value = "undef"
+19/11/13 11:49:45 : area (181), value = "undef"
+19/11/13 11:49:45 : area (2122), value = "undef"
+19/11/13 11:49:45 : area (3007), value = "undef"
+19/11/13 11:49:45 : area (815), value = "undef"
+19/11/13 11:49:45 : area (818), value = "undef"
+19/11/13 11:49:45 : area (827), value = "undef"
+19/11/13 11:49:45 : area (857), value = "undef"
+19/11/13 11:49:45 : area (874), value = "undef"
+19/11/13 11:49:45 : area (875), value = "undef"
+19/11/13 11:49:45 : area (986), value = "undef"
+19/11/13 11:49:45 : points : (model_prm_2d)
+19/11/13 11:49:45 : completer : processing...
+19/11/13 11:49:45 : completer : flood_areas_cnt = 2
+19/11/13 11:49:45 : completer : processing each isolated area (2)...
+19/11/13 11:49:45 : completer : isolated area N1
+19/11/13 11:49:45 : completer : isolated area N2
+19/11/13 11:49:45 : cg: (256) ....... iter : 174, error : 2.62657E-007, 0 sec
+19/11/13 11:49:45 : completer : processing whole area
+19/11/13 11:49:45 : cg: (256) ....... iter : 1, error : 1.54829E-007, 0 sec
+19/11/13 11:49:45 : 
+19/11/13 11:49:45 : *************
+19/11/13 11:49:45 : * Phase 3, grid size = 32 x 32 (kpor_wo_hist)
+19/11/13 11:49:45 : *************
+19/11/13 11:49:45 : area (1016), value = "undef"
+19/11/13 11:49:45 : area (1025), value = "undef"
+19/11/13 11:49:45 : area (176), value = "undef"
+19/11/13 11:49:45 : area (181), value = "undef"
+19/11/13 11:49:45 : area (2122), value = "undef"
+19/11/13 11:49:45 : area (3007), value = "undef"
+19/11/13 11:49:45 : area (815), value = "undef"
+19/11/13 11:49:45 : area (818), value = "undef"
+19/11/13 11:49:45 : area (827), value = "undef"
+19/11/13 11:49:45 : area (857), value = "undef"
+19/11/13 11:49:45 : area (874), value = "undef"
+19/11/13 11:49:45 : area (875), value = "undef"
+19/11/13 11:49:45 : area (986), value = "undef"
+19/11/13 11:49:45 : points : (model_prm_2d)
+19/11/13 11:49:45 : completer : processing...
+19/11/13 11:49:45 : completer : flood_areas_cnt = 2
+19/11/13 11:49:45 : completer : processing each isolated area (2)...
+19/11/13 11:49:45 : completer : isolated area N1
+19/11/13 11:49:45 : completer : isolated area N2
+19/11/13 11:49:45 : cg: (1024) ....... iter : 519, error : 7.73454E-007, 0 sec
+19/11/13 11:49:45 : completer : processing whole area
+19/11/13 11:49:45 : cg: (1024) ....... iter : 1, error : 2.47603E-007, 0 sec
+19/11/13 11:49:45 : 
+19/11/13 11:49:45 : *************
+19/11/13 11:49:45 : * Phase 4, grid size = 64 x 64 (kpor_wo_hist)
+19/11/13 11:49:45 : *************
+19/11/13 11:49:45 : area (1016), value = "undef"
+19/11/13 11:49:45 : area (1025), value = "undef"
+19/11/13 11:49:45 : area (176), value = "undef"
+19/11/13 11:49:45 : area (181), value = "undef"
+19/11/13 11:49:45 : area (2122), value = "undef"
+19/11/13 11:49:45 : area (3007), value = "undef"
+19/11/13 11:49:45 : area (815), value = "undef"
+19/11/13 11:49:45 : area (818), value = "undef"
+19/11/13 11:49:45 : area (827), value = "undef"
+19/11/13 11:49:45 : area (857), value = "undef"
+19/11/13 11:49:45 : area (874), value = "undef"
+19/11/13 11:49:45 : area (875), value = "undef"
+19/11/13 11:49:45 : area (986), value = "undef"
+19/11/13 11:49:45 : points : (model_prm_2d)
+19/11/13 11:49:45 : completer : processing...
+19/11/13 11:49:45 : completer : flood_areas_cnt = 2
+19/11/13 11:49:45 : completer : processing each isolated area (2)...
+19/11/13 11:49:45 : completer : isolated area N1
+19/11/13 11:49:45 : completer : isolated area N2
+19/11/13 11:49:45 : cg: (4096) ....... iter : 1246, error : 9.00553E-007, 0 sec
+19/11/13 11:49:45 : completer : processing whole area
+19/11/13 11:49:45 : cg: (4096)  - nothing to do.
+19/11/13 11:49:45 : 
+19/11/13 11:49:45 : *************
+19/11/13 11:49:45 : * Phase 5, grid size = 128 x 128 (kpor_wo_hist)
+19/11/13 11:49:45 : *************
+19/11/13 11:49:45 : area (1016), value = "undef"
+19/11/13 11:49:45 : area (1025), value = "undef"
+19/11/13 11:49:45 : area (176), value = "undef"
+19/11/13 11:49:45 : area (181), value = "undef"
+19/11/13 11:49:45 : area (2122), value = "undef"
+19/11/13 11:49:45 : area (3007), value = "undef"
+19/11/13 11:49:45 : area (815), value = "undef"
+19/11/13 11:49:45 : area (818), value = "undef"
+19/11/13 11:49:45 : area (827), value = "undef"
+19/11/13 11:49:45 : area (857), value = "undef"
+19/11/13 11:49:45 : area (874), value = "undef"
+19/11/13 11:49:45 : area (875), value = "undef"
+19/11/13 11:49:45 : area (986), value = "undef"
+19/11/13 11:49:45 : points : (model_prm_2d)
+19/11/13 11:49:45 : completer : processing...
+19/11/13 11:49:45 : completer : flood_areas_cnt = 2
+19/11/13 11:49:45 : completer : processing each isolated area (2)...
+19/11/13 11:49:45 : completer : isolated area N1
+19/11/13 11:49:45 : completer : isolated area N2
+19/11/13 11:49:45 : cg: (16384) ....... iter : 1012, error : 9.98699E-007, 1 sec
+19/11/13 11:49:46 : completer : processing whole area
+19/11/13 11:49:46 : cg: (16384)  - nothing to do.
+19/11/13 11:49:46 : 
+19/11/13 11:49:46 : *************
+19/11/13 11:49:46 : * Phase 6, grid size = 256 x 256 (kpor_wo_hist)
+19/11/13 11:49:46 : *************
+19/11/13 11:49:46 : area (1016), value = "undef"
+19/11/13 11:49:46 : area (1025), value = "undef"
+19/11/13 11:49:46 : area (176), value = "undef"
+19/11/13 11:49:46 : area (181), value = "undef"
+19/11/13 11:49:46 : area (2122), value = "undef"
+19/11/13 11:49:46 : area (3007), value = "undef"
+19/11/13 11:49:46 : area (815), value = "undef"
+19/11/13 11:49:46 : area (818), value = "undef"
+19/11/13 11:49:46 : area (827), value = "undef"
+19/11/13 11:49:46 : area (857), value = "undef"
+19/11/13 11:49:46 : area (874), value = "undef"
+19/11/13 11:49:46 : area (875), value = "undef"
+19/11/13 11:49:46 : area (986), value = "undef"
+19/11/13 11:49:46 : points : (model_prm_2d)
+19/11/13 11:49:46 : completer : processing...
+19/11/13 11:49:46 : completer : flood_areas_cnt = 2
+19/11/13 11:49:46 : completer : processing each isolated area (2)...
+19/11/13 11:49:46 : completer : isolated area N1
+19/11/13 11:49:46 : completer : isolated area N2
+19/11/13 11:49:46 : cg: (65536) ....... iter : 530, error : 9.97659E-007, 2 sec
+19/11/13 11:49:48 : completer : processing whole area
+19/11/13 11:49:48 : cg: (65536) ....... iter : 1, error : 4.54951E-008, 0 sec
+19/11/13 11:49:48 : Projecting surf "kpor_wo_hist" (256 x 256) => (296 x 512)
+19/11/13 11:49:48 : 
+19/11/13 11:49:48 : *************
+19/11/13 11:49:48 : * Phase 7, grid size = 296 x 512 (kpor_wo_hist)
+19/11/13 11:49:48 : *************
+19/11/13 11:49:48 : area (1016), value = "undef"
+19/11/13 11:49:48 : area (1025), value = "undef"
+19/11/13 11:49:48 : area (176), value = "undef"
+19/11/13 11:49:48 : area (181), value = "undef"
+19/11/13 11:49:48 : area (2122), value = "undef"
+19/11/13 11:49:48 : area (3007), value = "undef"
+19/11/13 11:49:48 : area (815), value = "undef"
+19/11/13 11:49:48 : area (818), value = "undef"
+19/11/13 11:49:48 : area (827), value = "undef"
+19/11/13 11:49:48 : area (857), value = "undef"
+19/11/13 11:49:48 : area (874), value = "undef"
+19/11/13 11:49:48 : area (875), value = "undef"
+19/11/13 11:49:48 : area (986), value = "undef"
+19/11/13 11:49:48 : points : (model_prm_2d)
+19/11/13 11:49:48 : completer : processing...
+19/11/13 11:49:48 : completer : flood_areas_cnt = 2
+19/11/13 11:49:48 : completer : processing each isolated area (2)...
+19/11/13 11:49:48 : completer : isolated area N1
+19/11/13 11:49:48 : completer : isolated area N2
+19/11/13 11:49:48 : cg: (151552) ....... iter : 204, error : 9.96723E-007, 2 sec
+19/11/13 11:49:50 : completer : processing whole area
+19/11/13 11:49:50 : cg: (151552) ....... iter : 1, error : 6.11428E-008, 0 sec
+19/11/13 11:49:50 : Projecting surf "kpor_wo_hist" (296 x 512) => (296 x 570)
+19/11/13 11:49:50 : 
+19/11/13 11:49:50 : *************
+19/11/13 11:49:50 : * Phase 8, grid size = 296 x 570 (kpor_wo_hist)
+19/11/13 11:49:50 : *************
+19/11/13 11:49:50 : area (1016), value = "undef"
+19/11/13 11:49:50 : area (1025), value = "undef"
+19/11/13 11:49:50 : area (176), value = "undef"
+19/11/13 11:49:50 : area (181), value = "undef"
+19/11/13 11:49:50 : area (2122), value = "undef"
+19/11/13 11:49:50 : area (3007), value = "undef"
+19/11/13 11:49:50 : area (815), value = "undef"
+19/11/13 11:49:50 : area (818), value = "undef"
+19/11/13 11:49:50 : area (827), value = "undef"
+19/11/13 11:49:50 : area (857), value = "undef"
+19/11/13 11:49:50 : area (874), value = "undef"
+19/11/13 11:49:50 : area (875), value = "undef"
+19/11/13 11:49:50 : area (986), value = "undef"
+19/11/13 11:49:50 : points : (model_prm_2d)
+19/11/13 11:49:50 : completer : processing...
+19/11/13 11:49:50 : completer : flood_areas_cnt = 2
+19/11/13 11:49:50 : completer : processing each isolated area (2)...
+19/11/13 11:49:50 : completer : isolated area N1
+19/11/13 11:49:50 : completer : isolated area N2
+19/11/13 11:49:50 : cg: (168720) ....... iter : 123, error : 9.86956E-007, 1 sec
+19/11/13 11:49:51 : completer : processing whole area
+19/11/13 11:49:51 : cg: (168720) ....... iter : 1, error : 5.59274E-008, 0 sec
+19/11/13 11:49:51 : Elapsed time 0 minutes 6 seconds
+19/11/13 11:49:52 : saving surf "kpor_wo_hist" to file kpor_wo_hist.dat
+19/11/13 11:49:56 : tracing 14 contours from surface "kpor_wo_hist"
+19/11/13 11:49:56 : 31 miliseconds elapsed
+19/11/13 11:49:56 : Plotting surface "kpor_wo_hist" to file "kpor_wo_hist.ps"
+19/11/13 11:49:59 : Removing surfit_grid from memory.
+19/11/13 11:49:59 : removing surface "kpor_wo_hist" from memory
+19/11/13 11:49:59 : removing points "model_prm_2d" from memory
+19/11/13 11:49:59 : removing area "986" from memory
+19/11/13 11:49:59 : removing area "875" from memory
+19/11/13 11:49:59 : removing area "874" from memory
+19/11/13 11:49:59 : removing area "857" from memory
+19/11/13 11:49:59 : removing area "827" from memory
+19/11/13 11:49:59 : removing area "818" from memory
+19/11/13 11:49:59 : removing area "815" from memory
+19/11/13 11:49:59 : removing area "3007" from memory
+19/11/13 11:49:59 : removing area "2122" from memory
+19/11/13 11:49:59 : removing area "181" from memory
+19/11/13 11:49:59 : removing area "176" from memory
+19/11/13 11:49:59 : removing area "1025" from memory
+19/11/13 11:49:59 : removing area "1016" from memory
+loading module globe v3.0
+loading module surfit_io v3.0
+loading module freeflow v3.0
+19/11/13 11:53:08 : reading points "model_prm_2d" from file model_prm_2d.txt
+19/11/13 11:53:08 : reading curve from file zones/1016.ctr0
+19/11/13 11:53:08 : reading curve from file zones/1025.ctr00
+19/11/13 11:53:08 : reading curve from file zones/176.ctr00
+19/11/13 11:53:08 : reading curve from file zones/181.ctr0
+19/11/13 11:53:08 : reading curve from file zones/2122.ctr00
+19/11/13 11:53:08 : reading curve from file zones/3007.ctr0
+19/11/13 11:53:08 : reading curve from file zones/815.ctr0
+19/11/13 11:53:08 : reading curve from file zones/818.ctr00
+19/11/13 11:53:08 : reading curve from file zones/827.ctr0
+19/11/13 11:53:08 : reading curve from file zones/857.ctr0
+19/11/13 11:53:08 : reading curve from file zones/874.ctr0
+19/11/13 11:53:08 : reading curve from file zones/875.ctr0
+19/11/13 11:53:08 : reading curve from file zones/986.ctr0
+19/11/13 11:53:08 : grid: (58710.5 <-> 73460.5) / 50; (28760 <-> 57210) / 50. 296x570
+19/11/13 11:53:08 : creating gridding rule area(undef,"1016")
+19/11/13 11:53:08 : creating gridding rule area(undef,"1025")
+19/11/13 11:53:08 : creating gridding rule area(undef,"176")
+19/11/13 11:53:08 : creating gridding rule area(undef,"181")
+19/11/13 11:53:08 : creating gridding rule area(undef,"2122")
+19/11/13 11:53:08 : creating gridding rule area(undef,"3007")
+19/11/13 11:53:08 : creating gridding rule area(undef,"815")
+19/11/13 11:53:08 : creating gridding rule area(undef,"818")
+19/11/13 11:53:08 : creating gridding rule area(undef,"827")
+19/11/13 11:53:08 : creating gridding rule area(undef,"857")
+19/11/13 11:53:08 : creating gridding rule area(undef,"874")
+19/11/13 11:53:08 : creating gridding rule area(undef,"875")
+19/11/13 11:53:08 : creating gridding rule area(undef,"986")
+19/11/13 11:53:08 : creating gridding rule points("model_prm_2d")
+19/11/13 11:53:08 : creating gridding rule completer(1,20,0,1)
+19/11/13 11:53:08 : 
+19/11/13 11:53:08 : 
+19/11/13 11:53:08 : 
+19/11/13 11:53:08 : *************
+19/11/13 11:53:08 : * Phase 1, grid size = 8 x 8 (kpor_wo_hist)
+19/11/13 11:53:08 : *************
+19/11/13 11:53:08 : area (1016), value = "undef"
+19/11/13 11:53:08 : area (1025), value = "undef"
+19/11/13 11:53:08 : area (176), value = "undef"
+19/11/13 11:53:08 : area (181), value = "undef"
+19/11/13 11:53:08 : area (2122), value = "undef"
+19/11/13 11:53:08 : area (3007), value = "undef"
+19/11/13 11:53:08 : area (815), value = "undef"
+19/11/13 11:53:08 : area (818), value = "undef"
+19/11/13 11:53:08 : area (827), value = "undef"
+19/11/13 11:53:08 : area (857), value = "undef"
+19/11/13 11:53:08 : area (874), value = "undef"
+19/11/13 11:53:08 : area (875), value = "undef"
+19/11/13 11:53:08 : area (986), value = "undef"
+19/11/13 11:53:08 : points : (model_prm_2d)
+19/11/13 11:53:08 : completer : processing...
+19/11/13 11:53:08 : completer : flood_areas_cnt = 2
+19/11/13 11:53:08 : completer : processing each isolated area (2)...
+19/11/13 11:53:08 : completer : isolated area N1
+19/11/13 11:53:08 : completer : isolated area N2
+19/11/13 11:53:08 : cg: (64) ...... iter : 25, error :            0, 0 sec
+19/11/13 11:53:08 : completer : processing whole area
+19/11/13 11:53:08 : cg: (64)  - nothing to do.
+19/11/13 11:53:08 : 
+19/11/13 11:53:08 : *************
+19/11/13 11:53:08 : * Phase 2, grid size = 16 x 16 (kpor_wo_hist)
+19/11/13 11:53:08 : *************
+19/11/13 11:53:08 : area (1016), value = "undef"
+19/11/13 11:53:08 : area (1025), value = "undef"
+19/11/13 11:53:08 : area (176), value = "undef"
+19/11/13 11:53:08 : area (181), value = "undef"
+19/11/13 11:53:08 : area (2122), value = "undef"
+19/11/13 11:53:08 : area (3007), value = "undef"
+19/11/13 11:53:08 : area (815), value = "undef"
+19/11/13 11:53:08 : area (818), value = "undef"
+19/11/13 11:53:08 : area (827), value = "undef"
+19/11/13 11:53:08 : area (857), value = "undef"
+19/11/13 11:53:08 : area (874), value = "undef"
+19/11/13 11:53:08 : area (875), value = "undef"
+19/11/13 11:53:08 : area (986), value = "undef"
+19/11/13 11:53:08 : points : (model_prm_2d)
+19/11/13 11:53:08 : completer : processing...
+19/11/13 11:53:08 : completer : flood_areas_cnt = 2
+19/11/13 11:53:08 : completer : processing each isolated area (2)...
+19/11/13 11:53:08 : completer : isolated area N1
+19/11/13 11:53:08 : completer : isolated area N2
+19/11/13 11:53:08 : cg: (256) ....... iter : 174, error : 2.62657E-007, 0 sec
+19/11/13 11:53:08 : completer : processing whole area
+19/11/13 11:53:08 : cg: (256) ....... iter : 1, error : 1.54829E-007, 0 sec
+19/11/13 11:53:08 : 
+19/11/13 11:53:08 : *************
+19/11/13 11:53:08 : * Phase 3, grid size = 32 x 32 (kpor_wo_hist)
+19/11/13 11:53:08 : *************
+19/11/13 11:53:08 : area (1016), value = "undef"
+19/11/13 11:53:08 : area (1025), value = "undef"
+19/11/13 11:53:08 : area (176), value = "undef"
+19/11/13 11:53:08 : area (181), value = "undef"
+19/11/13 11:53:08 : area (2122), value = "undef"
+19/11/13 11:53:08 : area (3007), value = "undef"
+19/11/13 11:53:08 : area (815), value = "undef"
+19/11/13 11:53:08 : area (818), value = "undef"
+19/11/13 11:53:08 : area (827), value = "undef"
+19/11/13 11:53:08 : area (857), value = "undef"
+19/11/13 11:53:08 : area (874), value = "undef"
+19/11/13 11:53:08 : area (875), value = "undef"
+19/11/13 11:53:08 : area (986), value = "undef"
+19/11/13 11:53:08 : points : (model_prm_2d)
+19/11/13 11:53:08 : completer : processing...
+19/11/13 11:53:08 : completer : flood_areas_cnt = 2
+19/11/13 11:53:08 : completer : processing each isolated area (2)...
+19/11/13 11:53:08 : completer : isolated area N1
+19/11/13 11:53:08 : completer : isolated area N2
+19/11/13 11:53:08 : cg: (1024) ....... iter : 519, error : 7.73454E-007, 0 sec
+19/11/13 11:53:08 : completer : processing whole area
+19/11/13 11:53:08 : cg: (1024) ....... iter : 1, error : 2.47603E-007, 0 sec
+19/11/13 11:53:08 : 
+19/11/13 11:53:08 : *************
+19/11/13 11:53:08 : * Phase 4, grid size = 64 x 64 (kpor_wo_hist)
+19/11/13 11:53:08 : *************
+19/11/13 11:53:08 : area (1016), value = "undef"
+19/11/13 11:53:08 : area (1025), value = "undef"
+19/11/13 11:53:08 : area (176), value = "undef"
+19/11/13 11:53:08 : area (181), value = "undef"
+19/11/13 11:53:08 : area (2122), value = "undef"
+19/11/13 11:53:08 : area (3007), value = "undef"
+19/11/13 11:53:08 : area (815), value = "undef"
+19/11/13 11:53:08 : area (818), value = "undef"
+19/11/13 11:53:08 : area (827), value = "undef"
+19/11/13 11:53:08 : area (857), value = "undef"
+19/11/13 11:53:08 : area (874), value = "undef"
+19/11/13 11:53:08 : area (875), value = "undef"
+19/11/13 11:53:08 : area (986), value = "undef"
+19/11/13 11:53:08 : points : (model_prm_2d)
+19/11/13 11:53:08 : completer : processing...
+19/11/13 11:53:08 : completer : flood_areas_cnt = 2
+19/11/13 11:53:08 : completer : processing each isolated area (2)...
+19/11/13 11:53:08 : completer : isolated area N1
+19/11/13 11:53:08 : completer : isolated area N2
+19/11/13 11:53:08 : cg: (4096) ....... iter : 1246, error : 9.00553E-007, 1 sec
+19/11/13 11:53:09 : completer : processing whole area
+19/11/13 11:53:09 : cg: (4096)  - nothing to do.
+19/11/13 11:53:09 : 
+19/11/13 11:53:09 : *************
+19/11/13 11:53:09 : * Phase 5, grid size = 128 x 128 (kpor_wo_hist)
+19/11/13 11:53:09 : *************
+19/11/13 11:53:09 : area (1016), value = "undef"
+19/11/13 11:53:09 : area (1025), value = "undef"
+19/11/13 11:53:09 : area (176), value = "undef"
+19/11/13 11:53:09 : area (181), value = "undef"
+19/11/13 11:53:09 : area (2122), value = "undef"
+19/11/13 11:53:09 : area (3007), value = "undef"
+19/11/13 11:53:09 : area (815), value = "undef"
+19/11/13 11:53:09 : area (818), value = "undef"
+19/11/13 11:53:09 : area (827), value = "undef"
+19/11/13 11:53:09 : area (857), value = "undef"
+19/11/13 11:53:09 : area (874), value = "undef"
+19/11/13 11:53:09 : area (875), value = "undef"
+19/11/13 11:53:09 : area (986), value = "undef"
+19/11/13 11:53:09 : points : (model_prm_2d)
+19/11/13 11:53:09 : completer : processing...
+19/11/13 11:53:09 : completer : flood_areas_cnt = 2
+19/11/13 11:53:09 : completer : processing each isolated area (2)...
+19/11/13 11:53:09 : completer : isolated area N1
+19/11/13 11:53:09 : completer : isolated area N2
+19/11/13 11:53:09 : cg: (16384) ....... iter : 1012, error : 9.98699E-007, 0 sec
+19/11/13 11:53:09 : completer : processing whole area
+19/11/13 11:53:09 : cg: (16384)  - nothing to do.
+19/11/13 11:53:09 : 
+19/11/13 11:53:09 : *************
+19/11/13 11:53:09 : * Phase 6, grid size = 256 x 256 (kpor_wo_hist)
+19/11/13 11:53:09 : *************
+19/11/13 11:53:09 : area (1016), value = "undef"
+19/11/13 11:53:09 : area (1025), value = "undef"
+19/11/13 11:53:09 : area (176), value = "undef"
+19/11/13 11:53:09 : area (181), value = "undef"
+19/11/13 11:53:09 : area (2122), value = "undef"
+19/11/13 11:53:09 : area (3007), value = "undef"
+19/11/13 11:53:09 : area (815), value = "undef"
+19/11/13 11:53:09 : area (818), value = "undef"
+19/11/13 11:53:09 : area (827), value = "undef"
+19/11/13 11:53:09 : area (857), value = "undef"
+19/11/13 11:53:09 : area (874), value = "undef"
+19/11/13 11:53:09 : area (875), value = "undef"
+19/11/13 11:53:09 : area (986), value = "undef"
+19/11/13 11:53:09 : points : (model_prm_2d)
+19/11/13 11:53:09 : completer : processing...
+19/11/13 11:53:09 : completer : flood_areas_cnt = 2
+19/11/13 11:53:09 : completer : processing each isolated area (2)...
+19/11/13 11:53:09 : completer : isolated area N1
+19/11/13 11:53:09 : completer : isolated area N2
+19/11/13 11:53:09 : cg: (65536) ....... iter : 530, error : 9.97659E-007, 2 sec
+19/11/13 11:53:11 : completer : processing whole area
+19/11/13 11:53:11 : cg: (65536) ....... iter : 1, error : 4.54951E-008, 0 sec
+19/11/13 11:53:11 : Projecting surf "kpor_wo_hist" (256 x 256) => (296 x 512)
+19/11/13 11:53:11 : 
+19/11/13 11:53:11 : *************
+19/11/13 11:53:11 : * Phase 7, grid size = 296 x 512 (kpor_wo_hist)
+19/11/13 11:53:11 : *************
+19/11/13 11:53:11 : area (1016), value = "undef"
+19/11/13 11:53:11 : area (1025), value = "undef"
+19/11/13 11:53:11 : area (176), value = "undef"
+19/11/13 11:53:11 : area (181), value = "undef"
+19/11/13 11:53:11 : area (2122), value = "undef"
+19/11/13 11:53:11 : area (3007), value = "undef"
+19/11/13 11:53:11 : area (815), value = "undef"
+19/11/13 11:53:11 : area (818), value = "undef"
+19/11/13 11:53:11 : area (827), value = "undef"
+19/11/13 11:53:11 : area (857), value = "undef"
+19/11/13 11:53:11 : area (874), value = "undef"
+19/11/13 11:53:11 : area (875), value = "undef"
+19/11/13 11:53:11 : area (986), value = "undef"
+19/11/13 11:53:11 : points : (model_prm_2d)
+19/11/13 11:53:11 : completer : processing...
+19/11/13 11:53:11 : completer : flood_areas_cnt = 2
+19/11/13 11:53:11 : completer : processing each isolated area (2)...
+19/11/13 11:53:11 : completer : isolated area N1
+19/11/13 11:53:11 : completer : isolated area N2
+19/11/13 11:53:11 : cg: (151552) ....... iter : 204, error : 9.96723E-007, 2 sec
+19/11/13 11:53:13 : completer : processing whole area
+19/11/13 11:53:13 : cg: (151552) ....... iter : 1, error : 6.11428E-008, 0 sec
+19/11/13 11:53:13 : Projecting surf "kpor_wo_hist" (296 x 512) => (296 x 570)
+19/11/13 11:53:13 : 
+19/11/13 11:53:13 : *************
+19/11/13 11:53:13 : * Phase 8, grid size = 296 x 570 (kpor_wo_hist)
+19/11/13 11:53:13 : *************
+19/11/13 11:53:13 : area (1016), value = "undef"
+19/11/13 11:53:13 : area (1025), value = "undef"
+19/11/13 11:53:13 : area (176), value = "undef"
+19/11/13 11:53:13 : area (181), value = "undef"
+19/11/13 11:53:13 : area (2122), value = "undef"
+19/11/13 11:53:13 : area (3007), value = "undef"
+19/11/13 11:53:13 : area (815), value = "undef"
+19/11/13 11:53:13 : area (818), value = "undef"
+19/11/13 11:53:13 : area (827), value = "undef"
+19/11/13 11:53:13 : area (857), value = "undef"
+19/11/13 11:53:13 : area (874), value = "undef"
+19/11/13 11:53:13 : area (875), value = "undef"
+19/11/13 11:53:13 : area (986), value = "undef"
+19/11/13 11:53:13 : points : (model_prm_2d)
+19/11/13 11:53:13 : completer : processing...
+19/11/13 11:53:13 : completer : flood_areas_cnt = 2
+19/11/13 11:53:13 : completer : processing each isolated area (2)...
+19/11/13 11:53:13 : completer : isolated area N1
+19/11/13 11:53:13 : completer : isolated area N2
+19/11/13 11:53:13 : cg: (168720) ....... iter : 123, error : 9.86956E-007, 1 sec
+19/11/13 11:53:14 : completer : processing whole area
+19/11/13 11:53:14 : cg: (168720) ....... iter : 1, error : 5.59274E-008, 0 sec
+19/11/13 11:53:14 : Elapsed time 0 minutes 6 seconds
+19/11/13 11:53:14 : saving surf "kpor_wo_hist" to file kpor_wo_hist.dat
+19/11/13 11:53:14 : tracing 14 contours from surface "kpor_wo_hist"
+19/11/13 11:53:14 : 31 miliseconds elapsed
+19/11/13 11:53:14 : Plotting surface "kpor_wo_hist" to file "kpor_wo_hist.ps"
+19/11/13 11:53:39 : calculating mean for points "model_prm_2d"
+19/11/13 11:54:02 : Removing surfit_grid from memory.
+19/11/13 11:54:02 : removing surface "kpor_wo_hist" from memory
+19/11/13 11:54:02 : removing points "model_prm_2d" from memory
+19/11/13 11:54:02 : removing area "986" from memory
+19/11/13 11:54:02 : removing area "875" from memory
+19/11/13 11:54:02 : removing area "874" from memory
+19/11/13 11:54:02 : removing area "857" from memory
+19/11/13 11:54:02 : removing area "827" from memory
+19/11/13 11:54:02 : removing area "818" from memory
+19/11/13 11:54:02 : removing area "815" from memory
+19/11/13 11:54:02 : removing area "3007" from memory
+19/11/13 11:54:02 : removing area "2122" from memory
+19/11/13 11:54:02 : removing area "181" from memory
+19/11/13 11:54:02 : removing area "176" from memory
+19/11/13 11:54:02 : removing area "1025" from memory
+19/11/13 11:54:02 : removing area "1016" from memory
+19/11/13 11:54:02 : reading points "model_prm_2d" from file model_prm_2d.txt
+19/11/13 11:54:02 : reading curve from file zones/1016.ctr0
+19/11/13 11:54:02 : reading curve from file zones/1025.ctr00
+19/11/13 11:54:02 : reading curve from file zones/176.ctr00
+19/11/13 11:54:02 : reading curve from file zones/181.ctr0
+19/11/13 11:54:02 : reading curve from file zones/2122.ctr00
+19/11/13 11:54:02 : reading curve from file zones/3007.ctr0
+19/11/13 11:54:02 : reading curve from file zones/815.ctr0
+19/11/13 11:54:02 : reading curve from file zones/818.ctr00
+19/11/13 11:54:02 : reading curve from file zones/827.ctr0
+19/11/13 11:54:02 : reading curve from file zones/857.ctr0
+19/11/13 11:54:02 : reading curve from file zones/874.ctr0
+19/11/13 11:54:02 : reading curve from file zones/875.ctr0
+19/11/13 11:54:02 : reading curve from file zones/986.ctr0
+19/11/13 11:54:02 : grid: (58710.5 <-> 73460.5) / 50; (28760 <-> 57210) / 50. 296x570
+19/11/13 11:54:02 : creating gridding rule area(undef,"1016")
+19/11/13 11:54:02 : creating gridding rule area(undef,"1025")
+19/11/13 11:54:02 : creating gridding rule area(undef,"176")
+19/11/13 11:54:02 : creating gridding rule area(undef,"181")
+19/11/13 11:54:02 : creating gridding rule area(undef,"2122")
+19/11/13 11:54:02 : creating gridding rule area(undef,"3007")
+19/11/13 11:54:02 : creating gridding rule area(undef,"815")
+19/11/13 11:54:02 : creating gridding rule area(undef,"818")
+19/11/13 11:54:02 : creating gridding rule area(undef,"827")
+19/11/13 11:54:02 : creating gridding rule area(undef,"857")
+19/11/13 11:54:02 : creating gridding rule area(undef,"874")
+19/11/13 11:54:02 : creating gridding rule area(undef,"875")
+19/11/13 11:54:02 : creating gridding rule area(undef,"986")
+19/11/13 11:54:02 : creating gridding rule points("model_prm_2d")
+19/11/13 11:54:02 : creating gridding rule mean(0.15,0.01)
+19/11/13 11:54:02 : creating gridding rule completer(1,20,0,1)
+19/11/13 11:54:02 : 
+19/11/13 11:54:02 : 
+19/11/13 11:54:02 : 
+19/11/13 11:54:02 : *************
+19/11/13 11:54:02 : * Phase 1, grid size = 8 x 8 (kpor_wo_hist)
+19/11/13 11:54:02 : *************
+19/11/13 11:54:02 : area (1016), value = "undef"
+19/11/13 11:54:02 : area (1025), value = "undef"
+19/11/13 11:54:02 : area (176), value = "undef"
+19/11/13 11:54:02 : area (181), value = "undef"
+19/11/13 11:54:02 : area (2122), value = "undef"
+19/11/13 11:54:02 : area (3007), value = "undef"
+19/11/13 11:54:02 : area (815), value = "undef"
+19/11/13 11:54:02 : area (818), value = "undef"
+19/11/13 11:54:02 : area (827), value = "undef"
+19/11/13 11:54:02 : area (857), value = "undef"
+19/11/13 11:54:02 : area (874), value = "undef"
+19/11/13 11:54:02 : area (875), value = "undef"
+19/11/13 11:54:02 : area (986), value = "undef"
+19/11/13 11:54:02 : points : (model_prm_2d)
+19/11/13 11:54:02 : completer : processing...
+19/11/13 11:54:02 : processing with penalties : 
+19/11/13 11:54:02 : mean value = 0.15 condition
+19/11/13 11:54:02 : penalty algorithm progress : ....... cg: 147 iterations, penalty: 9 iterations, 0 min 0 sec
+19/11/13 11:54:02 : 
+19/11/13 11:54:02 : *************
+19/11/13 11:54:02 : * Phase 2, grid size = 16 x 16 (kpor_wo_hist)
+19/11/13 11:54:02 : *************
+19/11/13 11:54:02 : area (1016), value = "undef"
+19/11/13 11:54:02 : area (1025), value = "undef"
+19/11/13 11:54:02 : area (176), value = "undef"
+19/11/13 11:54:02 : area (181), value = "undef"
+19/11/13 11:54:02 : area (2122), value = "undef"
+19/11/13 11:54:02 : area (3007), value = "undef"
+19/11/13 11:54:02 : area (815), value = "undef"
+19/11/13 11:54:02 : area (818), value = "undef"
+19/11/13 11:54:02 : area (827), value = "undef"
+19/11/13 11:54:02 : area (857), value = "undef"
+19/11/13 11:54:02 : area (874), value = "undef"
+19/11/13 11:54:02 : area (875), value = "undef"
+19/11/13 11:54:02 : area (986), value = "undef"
+19/11/13 11:54:02 : points : (model_prm_2d)
+19/11/13 11:54:02 : completer : processing...
+19/11/13 11:54:02 : processing with penalties : 
+19/11/13 11:54:02 : mean value = 0.15 condition
+19/11/13 11:54:02 : penalty algorithm progress : ....... cg: 455 iterations, penalty: 6 iterations, 0 min 0 sec
+19/11/13 11:54:02 : 
+19/11/13 11:54:02 : *************
+19/11/13 11:54:02 : * Phase 3, grid size = 32 x 32 (kpor_wo_hist)
+19/11/13 11:54:02 : *************
+19/11/13 11:54:02 : area (1016), value = "undef"
+19/11/13 11:54:02 : area (1025), value = "undef"
+19/11/13 11:54:02 : area (176), value = "undef"
+19/11/13 11:54:02 : area (181), value = "undef"
+19/11/13 11:54:02 : area (2122), value = "undef"
+19/11/13 11:54:02 : area (3007), value = "undef"
+19/11/13 11:54:02 : area (815), value = "undef"
+19/11/13 11:54:02 : area (818), value = "undef"
+19/11/13 11:54:02 : area (827), value = "undef"
+19/11/13 11:54:02 : area (857), value = "undef"
+19/11/13 11:54:02 : area (874), value = "undef"
+19/11/13 11:54:02 : area (875), value = "undef"
+19/11/13 11:54:02 : area (986), value = "undef"
+19/11/13 11:54:02 : points : (model_prm_2d)
+19/11/13 11:54:02 : completer : processing...
+19/11/13 11:54:02 : processing with penalties : 
+19/11/13 11:54:02 : mean value = 0.15 condition
+19/11/13 11:54:02 : penalty algorithm progress : ....... cg: 628 iterations, penalty: 5 iterations, 0 min 0 sec
+19/11/13 11:54:02 : 
+19/11/13 11:54:02 : *************
+19/11/13 11:54:02 : * Phase 4, grid size = 64 x 64 (kpor_wo_hist)
+19/11/13 11:54:02 : *************
+19/11/13 11:54:02 : area (1016), value = "undef"
+19/11/13 11:54:02 : area (1025), value = "undef"
+19/11/13 11:54:02 : area (176), value = "undef"
+19/11/13 11:54:02 : area (181), value = "undef"
+19/11/13 11:54:02 : area (2122), value = "undef"
+19/11/13 11:54:02 : area (3007), value = "undef"
+19/11/13 11:54:02 : area (815), value = "undef"
+19/11/13 11:54:02 : area (818), value = "undef"
+19/11/13 11:54:02 : area (827), value = "undef"
+19/11/13 11:54:02 : area (857), value = "undef"
+19/11/13 11:54:02 : area (874), value = "undef"
+19/11/13 11:54:02 : area (875), value = "undef"
+19/11/13 11:54:02 : area (986), value = "undef"
+19/11/13 11:54:02 : points : (model_prm_2d)
+19/11/13 11:54:02 : completer : processing...
+19/11/13 11:54:02 : processing with penalties : 
+19/11/13 11:54:02 : mean value = 0.15 condition
+19/11/13 11:54:02 : penalty algorithm progress : ....... cg: 706 iterations, penalty: 3 iterations, 0 min 0 sec
+19/11/13 11:54:02 : 
+19/11/13 11:54:02 : *************
+19/11/13 11:54:02 : * Phase 5, grid size = 128 x 128 (kpor_wo_hist)
+19/11/13 11:54:02 : *************
+19/11/13 11:54:02 : area (1016), value = "undef"
+19/11/13 11:54:02 : area (1025), value = "undef"
+19/11/13 11:54:02 : area (176), value = "undef"
+19/11/13 11:54:02 : area (181), value = "undef"
+19/11/13 11:54:02 : area (2122), value = "undef"
+19/11/13 11:54:02 : area (3007), value = "undef"
+19/11/13 11:54:02 : area (815), value = "undef"
+19/11/13 11:54:02 : area (818), value = "undef"
+19/11/13 11:54:02 : area (827), value = "undef"
+19/11/13 11:54:02 : area (857), value = "undef"
+19/11/13 11:54:02 : area (874), value = "undef"
+19/11/13 11:54:02 : area (875), value = "undef"
+19/11/13 11:54:02 : area (986), value = "undef"
+19/11/13 11:54:02 : points : (model_prm_2d)
+19/11/13 11:54:02 : completer : processing...
+19/11/13 11:54:02 : processing with penalties : 
+19/11/13 11:54:02 : mean value = 0.15 condition
+19/11/13 11:54:02 : penalty algorithm progress :  cg: 1387 iterations, penalty: 2 iterations, 0 min 2 sec
+19/11/13 11:54:04 : 
+19/11/13 11:54:04 : *************
+19/11/13 11:54:04 : * Phase 6, grid size = 256 x 256 (kpor_wo_hist)
+19/11/13 11:54:04 : *************
+19/11/13 11:54:04 : area (1016), value = "undef"
+19/11/13 11:54:04 : area (1025), value = "undef"
+19/11/13 11:54:04 : area (176), value = "undef"
+19/11/13 11:54:04 : area (181), value = "undef"
+19/11/13 11:54:04 : area (2122), value = "undef"
+19/11/13 11:54:04 : area (3007), value = "undef"
+19/11/13 11:54:04 : area (815), value = "undef"
+19/11/13 11:54:04 : area (818), value = "undef"
+19/11/13 11:54:04 : area (827), value = "undef"
+19/11/13 11:54:04 : area (857), value = "undef"
+19/11/13 11:54:04 : area (874), value = "undef"
+19/11/13 11:54:04 : area (875), value = "undef"
+19/11/13 11:54:04 : area (986), value = "undef"
+19/11/13 11:54:04 : points : (model_prm_2d)
+19/11/13 11:54:04 : completer : processing...
+19/11/13 11:54:04 : processing with penalties : 
+19/11/13 11:54:04 : mean value = 0.15 condition
+19/11/13 11:54:04 : penalty algorithm progress :  cg: 395 iterations, penalty: 2 iterations, 0 min 2 sec
+19/11/13 11:54:06 : Projecting surf "kpor_wo_hist" (256 x 256) => (296 x 512)
+19/11/13 11:54:06 : 
+19/11/13 11:54:06 : *************
+19/11/13 11:54:06 : * Phase 7, grid size = 296 x 512 (kpor_wo_hist)
+19/11/13 11:54:06 : *************
+19/11/13 11:54:06 : area (1016), value = "undef"
+19/11/13 11:54:06 : area (1025), value = "undef"
+19/11/13 11:54:06 : area (176), value = "undef"
+19/11/13 11:54:06 : area (181), value = "undef"
+19/11/13 11:54:06 : area (2122), value = "undef"
+19/11/13 11:54:06 : area (3007), value = "undef"
+19/11/13 11:54:06 : area (815), value = "undef"
+19/11/13 11:54:06 : area (818), value = "undef"
+19/11/13 11:54:06 : area (827), value = "undef"
+19/11/13 11:54:06 : area (857), value = "undef"
+19/11/13 11:54:06 : area (874), value = "undef"
+19/11/13 11:54:06 : area (875), value = "undef"
+19/11/13 11:54:06 : area (986), value = "undef"
+19/11/13 11:54:06 : points : (model_prm_2d)
+19/11/13 11:54:06 : completer : processing...
+19/11/13 11:54:06 : processing with penalties : 
+19/11/13 11:54:06 : mean value = 0.15 condition
+19/11/13 11:54:06 : penalty algorithm progress :  cg: 192 iterations, penalty: 2 iterations, 0 min 2 sec
+19/11/13 11:54:08 : Projecting surf "kpor_wo_hist" (296 x 512) => (296 x 570)
+19/11/13 11:54:08 : 
+19/11/13 11:54:08 : *************
+19/11/13 11:54:08 : * Phase 8, grid size = 296 x 570 (kpor_wo_hist)
+19/11/13 11:54:08 : *************
+19/11/13 11:54:08 : area (1016), value = "undef"
+19/11/13 11:54:08 : area (1025), value = "undef"
+19/11/13 11:54:08 : area (176), value = "undef"
+19/11/13 11:54:08 : area (181), value = "undef"
+19/11/13 11:54:08 : area (2122), value = "undef"
+19/11/13 11:54:08 : area (3007), value = "undef"
+19/11/13 11:54:08 : area (815), value = "undef"
+19/11/13 11:54:08 : area (818), value = "undef"
+19/11/13 11:54:08 : area (827), value = "undef"
+19/11/13 11:54:08 : area (857), value = "undef"
+19/11/13 11:54:08 : area (874), value = "undef"
+19/11/13 11:54:08 : area (875), value = "undef"
+19/11/13 11:54:08 : area (986), value = "undef"
+19/11/13 11:54:08 : points : (model_prm_2d)
+19/11/13 11:54:08 : completer : processing...
+19/11/13 11:54:08 : processing with penalties : 
+19/11/13 11:54:08 : mean value = 0.15 condition
+19/11/13 11:54:08 : penalty algorithm progress :  cg: 99 iterations, penalty: 2 iterations, 0 min 1 sec
+19/11/13 11:54:09 : Elapsed time 0 minutes 7 seconds
+19/11/13 11:54:09 : saving surf "kpor_wo_hist" to file kpor_wo_hist.dat
+19/11/13 11:54:09 : tracing 18 contours from surface "kpor_wo_hist"
+19/11/13 11:54:09 : 31 miliseconds elapsed
+19/11/13 11:54:09 : Plotting surface "kpor_wo_hist" to file "kpor_wo_hist.ps"
+19/11/13 11:55:01 : calculating minz for points "model_prm_2d"
+19/11/13 11:55:07 : calculating maxz for points "model_prm_2d"
+19/11/13 11:55:36 : Removing surfit_grid from memory.
+19/11/13 11:55:36 : removing surface "kpor_wo_hist" from memory
+19/11/13 11:55:36 : removing points "model_prm_2d" from memory
+19/11/13 11:55:36 : removing area "986" from memory
+19/11/13 11:55:36 : removing area "875" from memory
+19/11/13 11:55:36 : removing area "874" from memory
+19/11/13 11:55:36 : removing area "857" from memory
+19/11/13 11:55:36 : removing area "827" from memory
+19/11/13 11:55:36 : removing area "818" from memory
+19/11/13 11:55:36 : removing area "815" from memory
+19/11/13 11:55:36 : removing area "3007" from memory
+19/11/13 11:55:36 : removing area "2122" from memory
+19/11/13 11:55:36 : removing area "181" from memory
+19/11/13 11:55:36 : removing area "176" from memory
+19/11/13 11:55:36 : removing area "1025" from memory
+19/11/13 11:55:36 : removing area "1016" from memory
+19/11/13 11:55:36 : reading points "model_prm_2d" from file model_prm_2d.txt
+19/11/13 11:55:36 : reading curve from file zones/1016.ctr0
+19/11/13 11:55:36 : reading curve from file zones/1025.ctr00
+19/11/13 11:55:36 : reading curve from file zones/176.ctr00
+19/11/13 11:55:36 : reading curve from file zones/181.ctr0
+19/11/13 11:55:36 : reading curve from file zones/2122.ctr00
+19/11/13 11:55:36 : reading curve from file zones/3007.ctr0
+19/11/13 11:55:36 : reading curve from file zones/815.ctr0
+19/11/13 11:55:36 : reading curve from file zones/818.ctr00
+19/11/13 11:55:36 : reading curve from file zones/827.ctr0
+19/11/13 11:55:36 : reading curve from file zones/857.ctr0
+19/11/13 11:55:36 : reading curve from file zones/874.ctr0
+19/11/13 11:55:36 : reading curve from file zones/875.ctr0
+19/11/13 11:55:36 : reading curve from file zones/986.ctr0
+19/11/13 11:55:36 : grid: (58710.5 <-> 73460.5) / 50; (28760 <-> 57210) / 50. 296x570
+19/11/13 11:55:36 : creating gridding rule area(undef,"1016")
+19/11/13 11:55:36 : creating gridding rule area(undef,"1025")
+19/11/13 11:55:36 : creating gridding rule area(undef,"176")
+19/11/13 11:55:36 : creating gridding rule area(undef,"181")
+19/11/13 11:55:36 : creating gridding rule area(undef,"2122")
+19/11/13 11:55:36 : creating gridding rule area(undef,"3007")
+19/11/13 11:55:36 : creating gridding rule area(undef,"815")
+19/11/13 11:55:36 : creating gridding rule area(undef,"818")
+19/11/13 11:55:36 : creating gridding rule area(undef,"827")
+19/11/13 11:55:36 : creating gridding rule area(undef,"857")
+19/11/13 11:55:36 : creating gridding rule area(undef,"874")
+19/11/13 11:55:36 : creating gridding rule area(undef,"875")
+19/11/13 11:55:36 : creating gridding rule area(undef,"986")
+19/11/13 11:55:36 : creating gridding rule points("model_prm_2d")
+19/11/13 11:55:36 : creating gridding rule leq(0.186,1)
+19/11/13 11:55:36 : creating gridding rule geq(0.065,1)
+19/11/13 11:55:36 : creating gridding rule mean(0.15,0.01)
+19/11/13 11:55:36 : creating gridding rule completer(1,20,0,1)
+19/11/13 11:55:36 : 
+19/11/13 11:55:36 : 
+19/11/13 11:55:36 : 
+19/11/13 11:55:36 : *************
+19/11/13 11:55:36 : * Phase 1, grid size = 8 x 8 (kpor_wo_hist)
+19/11/13 11:55:36 : *************
+19/11/13 11:55:36 : area (1016), value = "undef"
+19/11/13 11:55:36 : area (1025), value = "undef"
+19/11/13 11:55:36 : area (176), value = "undef"
+19/11/13 11:55:36 : area (181), value = "undef"
+19/11/13 11:55:36 : area (2122), value = "undef"
+19/11/13 11:55:36 : area (3007), value = "undef"
+19/11/13 11:55:36 : area (815), value = "undef"
+19/11/13 11:55:36 : area (818), value = "undef"
+19/11/13 11:55:36 : area (827), value = "undef"
+19/11/13 11:55:36 : area (857), value = "undef"
+19/11/13 11:55:36 : area (874), value = "undef"
+19/11/13 11:55:36 : area (875), value = "undef"
+19/11/13 11:55:36 : area (986), value = "undef"
+19/11/13 11:55:36 : points : (model_prm_2d)
+19/11/13 11:55:36 : completer : processing...
+19/11/13 11:55:36 : processing with penalties : 
+19/11/13 11:55:36 : mean value = 0.15 condition
+19/11/13 11:55:36 : inequality geq 0.065
+19/11/13 11:55:36 : inequality leq 0.186
+19/11/13 11:55:36 : penalty algorithm progress : ....... cg: 144 iterations, penalty: 9 iterations, 0 min 0 sec
+19/11/13 11:55:36 : 
+19/11/13 11:55:36 : *************
+19/11/13 11:55:36 : * Phase 2, grid size = 16 x 16 (kpor_wo_hist)
+19/11/13 11:55:36 : *************
+19/11/13 11:55:36 : area (1016), value = "undef"
+19/11/13 11:55:36 : area (1025), value = "undef"
+19/11/13 11:55:36 : area (176), value = "undef"
+19/11/13 11:55:36 : area (181), value = "undef"
+19/11/13 11:55:36 : area (2122), value = "undef"
+19/11/13 11:55:36 : area (3007), value = "undef"
+19/11/13 11:55:36 : area (815), value = "undef"
+19/11/13 11:55:36 : area (818), value = "undef"
+19/11/13 11:55:36 : area (827), value = "undef"
+19/11/13 11:55:36 : area (857), value = "undef"
+19/11/13 11:55:36 : area (874), value = "undef"
+19/11/13 11:55:36 : area (875), value = "undef"
+19/11/13 11:55:36 : area (986), value = "undef"
+19/11/13 11:55:36 : points : (model_prm_2d)
+19/11/13 11:55:36 : completer : processing...
+19/11/13 11:55:36 : processing with penalties : 
+19/11/13 11:55:36 : mean value = 0.15 condition
+19/11/13 11:55:36 : inequality geq 0.065
+19/11/13 11:55:36 : inequality leq 0.186
+19/11/13 11:55:36 : penalty algorithm progress : ....... cg: 485 iterations, penalty: 8 iterations, 0 min 0 sec
+19/11/13 11:55:36 : 
+19/11/13 11:55:36 : *************
+19/11/13 11:55:36 : * Phase 3, grid size = 32 x 32 (kpor_wo_hist)
+19/11/13 11:55:36 : *************
+19/11/13 11:55:36 : area (1016), value = "undef"
+19/11/13 11:55:36 : area (1025), value = "undef"
+19/11/13 11:55:36 : area (176), value = "undef"
+19/11/13 11:55:36 : area (181), value = "undef"
+19/11/13 11:55:36 : area (2122), value = "undef"
+19/11/13 11:55:36 : area (3007), value = "undef"
+19/11/13 11:55:36 : area (815), value = "undef"
+19/11/13 11:55:36 : area (818), value = "undef"
+19/11/13 11:55:36 : area (827), value = "undef"
+19/11/13 11:55:36 : area (857), value = "undef"
+19/11/13 11:55:36 : area (874), value = "undef"
+19/11/13 11:55:36 : area (875), value = "undef"
+19/11/13 11:55:36 : area (986), value = "undef"
+19/11/13 11:55:36 : points : (model_prm_2d)
+19/11/13 11:55:36 : completer : processing...
+19/11/13 11:55:36 : processing with penalties : 
+19/11/13 11:55:36 : mean value = 0.15 condition
+19/11/13 11:55:36 : inequality geq 0.065
+19/11/13 11:55:36 : inequality leq 0.186
+19/11/13 11:55:36 : penalty algorithm progress : ....... cg: 821 iterations, penalty: 7 iterations, 0 min 0 sec
+19/11/13 11:55:36 : 
+19/11/13 11:55:36 : *************
+19/11/13 11:55:36 : * Phase 4, grid size = 64 x 64 (kpor_wo_hist)
+19/11/13 11:55:36 : *************
+19/11/13 11:55:36 : area (1016), value = "undef"
+19/11/13 11:55:36 : area (1025), value = "undef"
+19/11/13 11:55:36 : area (176), value = "undef"
+19/11/13 11:55:36 : area (181), value = "undef"
+19/11/13 11:55:36 : area (2122), value = "undef"
+19/11/13 11:55:36 : area (3007), value = "undef"
+19/11/13 11:55:36 : area (815), value = "undef"
+19/11/13 11:55:36 : area (818), value = "undef"
+19/11/13 11:55:36 : area (827), value = "undef"
+19/11/13 11:55:36 : area (857), value = "undef"
+19/11/13 11:55:36 : area (874), value = "undef"
+19/11/13 11:55:36 : area (875), value = "undef"
+19/11/13 11:55:36 : area (986), value = "undef"
+19/11/13 11:55:36 : points : (model_prm_2d)
+19/11/13 11:55:36 : completer : processing...
+19/11/13 11:55:36 : processing with penalties : 
+19/11/13 11:55:36 : mean value = 0.15 condition
+19/11/13 11:55:36 : inequality geq 0.065
+19/11/13 11:55:36 : inequality leq 0.186
+19/11/13 11:55:36 : penalty algorithm progress : ....... cg: 817 iterations, penalty: 6 iterations, 0 min 0 sec
+19/11/13 11:55:36 : 
+19/11/13 11:55:36 : *************
+19/11/13 11:55:36 : * Phase 5, grid size = 128 x 128 (kpor_wo_hist)
+19/11/13 11:55:36 : *************
+19/11/13 11:55:36 : area (1016), value = "undef"
+19/11/13 11:55:36 : area (1025), value = "undef"
+19/11/13 11:55:36 : area (176), value = "undef"
+19/11/13 11:55:36 : area (181), value = "undef"
+19/11/13 11:55:36 : area (2122), value = "undef"
+19/11/13 11:55:36 : area (3007), value = "undef"
+19/11/13 11:55:36 : area (815), value = "undef"
+19/11/13 11:55:36 : area (818), value = "undef"
+19/11/13 11:55:36 : area (827), value = "undef"
+19/11/13 11:55:36 : area (857), value = "undef"
+19/11/13 11:55:36 : area (874), value = "undef"
+19/11/13 11:55:36 : area (875), value = "undef"
+19/11/13 11:55:36 : area (986), value = "undef"
+19/11/13 11:55:36 : points : (model_prm_2d)
+19/11/13 11:55:36 : completer : processing...
+19/11/13 11:55:36 : processing with penalties : 
+19/11/13 11:55:36 : mean value = 0.15 condition
+19/11/13 11:55:36 : inequality geq 0.065
+19/11/13 11:55:36 : inequality leq 0.186
+19/11/13 11:55:36 : penalty algorithm progress : ....... cg: 986 iterations, penalty: 3 iterations, 0 min 1 sec
+19/11/13 11:55:37 : 
+19/11/13 11:55:37 : *************
+19/11/13 11:55:37 : * Phase 6, grid size = 256 x 256 (kpor_wo_hist)
+19/11/13 11:55:37 : *************
+19/11/13 11:55:37 : area (1016), value = "undef"
+19/11/13 11:55:37 : area (1025), value = "undef"
+19/11/13 11:55:37 : area (176), value = "undef"
+19/11/13 11:55:37 : area (181), value = "undef"
+19/11/13 11:55:37 : area (2122), value = "undef"
+19/11/13 11:55:37 : area (3007), value = "undef"
+19/11/13 11:55:37 : area (815), value = "undef"
+19/11/13 11:55:37 : area (818), value = "undef"
+19/11/13 11:55:37 : area (827), value = "undef"
+19/11/13 11:55:37 : area (857), value = "undef"
+19/11/13 11:55:37 : area (874), value = "undef"
+19/11/13 11:55:37 : area (875), value = "undef"
+19/11/13 11:55:37 : area (986), value = "undef"
+19/11/13 11:55:37 : points : (model_prm_2d)
+19/11/13 11:55:37 : completer : processing...
+19/11/13 11:55:37 : processing with penalties : 
+19/11/13 11:55:37 : mean value = 0.15 condition
+19/11/13 11:55:37 : inequality geq 0.065
+19/11/13 11:55:37 : inequality leq 0.186
+19/11/13 11:55:37 : penalty algorithm progress :  cg: 396 iterations, penalty: 2 iterations, 0 min 2 sec
+19/11/13 11:55:39 : Projecting surf "kpor_wo_hist" (256 x 256) => (296 x 512)
+19/11/13 11:55:39 : 
+19/11/13 11:55:39 : *************
+19/11/13 11:55:39 : * Phase 7, grid size = 296 x 512 (kpor_wo_hist)
+19/11/13 11:55:39 : *************
+19/11/13 11:55:39 : area (1016), value = "undef"
+19/11/13 11:55:39 : area (1025), value = "undef"
+19/11/13 11:55:39 : area (176), value = "undef"
+19/11/13 11:55:39 : area (181), value = "undef"
+19/11/13 11:55:39 : area (2122), value = "undef"
+19/11/13 11:55:39 : area (3007), value = "undef"
+19/11/13 11:55:39 : area (815), value = "undef"
+19/11/13 11:55:39 : area (818), value = "undef"
+19/11/13 11:55:39 : area (827), value = "undef"
+19/11/13 11:55:39 : area (857), value = "undef"
+19/11/13 11:55:39 : area (874), value = "undef"
+19/11/13 11:55:39 : area (875), value = "undef"
+19/11/13 11:55:39 : area (986), value = "undef"
+19/11/13 11:55:39 : points : (model_prm_2d)
+19/11/13 11:55:39 : completer : processing...
+19/11/13 11:55:39 : processing with penalties : 
+19/11/13 11:55:39 : mean value = 0.15 condition
+19/11/13 11:55:39 : inequality geq 0.065
+19/11/13 11:55:39 : inequality leq 0.186
+19/11/13 11:55:39 : penalty algorithm progress :  cg: 192 iterations, penalty: 2 iterations, 0 min 2 sec
+19/11/13 11:55:41 : Projecting surf "kpor_wo_hist" (296 x 512) => (296 x 570)
+19/11/13 11:55:41 : 
+19/11/13 11:55:41 : *************
+19/11/13 11:55:41 : * Phase 8, grid size = 296 x 570 (kpor_wo_hist)
+19/11/13 11:55:41 : *************
+19/11/13 11:55:41 : area (1016), value = "undef"
+19/11/13 11:55:41 : area (1025), value = "undef"
+19/11/13 11:55:41 : area (176), value = "undef"
+19/11/13 11:55:41 : area (181), value = "undef"
+19/11/13 11:55:41 : area (2122), value = "undef"
+19/11/13 11:55:41 : area (3007), value = "undef"
+19/11/13 11:55:41 : area (815), value = "undef"
+19/11/13 11:55:41 : area (818), value = "undef"
+19/11/13 11:55:41 : area (827), value = "undef"
+19/11/13 11:55:41 : area (857), value = "undef"
+19/11/13 11:55:41 : area (874), value = "undef"
+19/11/13 11:55:41 : area (875), value = "undef"
+19/11/13 11:55:41 : area (986), value = "undef"
+19/11/13 11:55:41 : points : (model_prm_2d)
+19/11/13 11:55:41 : completer : processing...
+19/11/13 11:55:41 : processing with penalties : 
+19/11/13 11:55:41 : mean value = 0.15 condition
+19/11/13 11:55:41 : inequality geq 0.065
+19/11/13 11:55:41 : inequality leq 0.186
+19/11/13 11:55:41 : penalty algorithm progress :  cg: 100 iterations, penalty: 2 iterations, 0 min 2 sec
+19/11/13 11:55:43 : Elapsed time 0 minutes 7 seconds
+19/11/13 11:55:43 : saving surf "kpor_wo_hist" to file kpor_wo_hist.dat
+19/11/13 11:55:43 : tracing 14 contours from surface "kpor_wo_hist"
+19/11/13 11:55:43 : 16 miliseconds elapsed
+19/11/13 11:55:43 : Plotting surface "kpor_wo_hist" to file "kpor_wo_hist.ps"
+19/11/13 11:56:14 : Removing surfit_grid from memory.
+19/11/13 11:56:14 : removing surface "kpor_wo_hist" from memory
+19/11/13 11:56:14 : removing points "model_prm_2d" from memory
+19/11/13 11:56:14 : removing area "986" from memory
+19/11/13 11:56:14 : removing area "875" from memory
+19/11/13 11:56:14 : removing area "874" from memory
+19/11/13 11:56:14 : removing area "857" from memory
+19/11/13 11:56:14 : removing area "827" from memory
+19/11/13 11:56:14 : removing area "818" from memory
+19/11/13 11:56:14 : removing area "815" from memory
+19/11/13 11:56:14 : removing area "3007" from memory
+19/11/13 11:56:14 : removing area "2122" from memory
+19/11/13 11:56:14 : removing area "181" from memory
+19/11/13 11:56:14 : removing area "176" from memory
+19/11/13 11:56:14 : removing area "1025" from memory
+19/11/13 11:56:14 : removing area "1016" from memory
+loading module globe v3.0
+loading module surfit_io v3.0
+loading module freeflow v3.0
+19/11/13 11:56:39 : reading points "model_prm_2d" from file model_prm_2d.txt
+19/11/13 11:56:39 : reading curve from file zones/1016.ctr0
+19/11/13 11:56:39 : reading curve from file zones/1025.ctr00
+19/11/13 11:56:39 : reading curve from file zones/176.ctr00
+19/11/13 11:56:39 : reading curve from file zones/181.ctr0
+19/11/13 11:56:39 : reading curve from file zones/2122.ctr00
+19/11/13 11:56:39 : reading curve from file zones/3007.ctr0
+19/11/13 11:56:39 : reading curve from file zones/815.ctr0
+19/11/13 11:56:39 : reading curve from file zones/818.ctr00
+19/11/13 11:56:39 : reading curve from file zones/827.ctr0
+19/11/13 11:56:39 : reading curve from file zones/857.ctr0
+19/11/13 11:56:39 : reading curve from file zones/874.ctr0
+19/11/13 11:56:39 : reading curve from file zones/875.ctr0
+19/11/13 11:56:39 : reading curve from file zones/986.ctr0
+19/11/13 11:56:39 : grid: (58710.5 <-> 73460.5) / 50; (28760 <-> 57210) / 50. 296x570
+19/11/13 11:56:39 : creating gridding rule area(undef,"1016")
+19/11/13 11:56:39 : creating gridding rule area(undef,"1025")
+19/11/13 11:56:39 : creating gridding rule area(undef,"176")
+19/11/13 11:56:39 : creating gridding rule area(undef,"181")
+19/11/13 11:56:39 : creating gridding rule area(undef,"2122")
+19/11/13 11:56:39 : creating gridding rule area(undef,"3007")
+19/11/13 11:56:39 : creating gridding rule area(undef,"815")
+19/11/13 11:56:39 : creating gridding rule area(undef,"818")
+19/11/13 11:56:39 : creating gridding rule area(undef,"827")
+19/11/13 11:56:39 : creating gridding rule area(undef,"857")
+19/11/13 11:56:39 : creating gridding rule area(undef,"874")
+19/11/13 11:56:39 : creating gridding rule area(undef,"875")
+19/11/13 11:56:39 : creating gridding rule area(undef,"986")
+19/11/13 11:56:39 : creating gridding rule points("model_prm_2d")
+19/11/13 11:56:39 : creating gridding rule leq(0.186,1)
+19/11/13 11:56:39 : creating gridding rule geq(0.065,1)
+19/11/13 11:56:39 : creating gridding rule mean(0.11,0.01)
+19/11/13 11:56:39 : creating gridding rule completer(1,20,0,1)
+19/11/13 11:56:39 : 
+19/11/13 11:56:39 : 
+19/11/13 11:56:39 : 
+19/11/13 11:56:39 : *************
+19/11/13 11:56:39 : * Phase 1, grid size = 8 x 8 (kpor_wo_hist)
+19/11/13 11:56:39 : *************
+19/11/13 11:56:39 : area (1016), value = "undef"
+19/11/13 11:56:39 : area (1025), value = "undef"
+19/11/13 11:56:39 : area (176), value = "undef"
+19/11/13 11:56:39 : area (181), value = "undef"
+19/11/13 11:56:39 : area (2122), value = "undef"
+19/11/13 11:56:39 : area (3007), value = "undef"
+19/11/13 11:56:39 : area (815), value = "undef"
+19/11/13 11:56:39 : area (818), value = "undef"
+19/11/13 11:56:39 : area (827), value = "undef"
+19/11/13 11:56:39 : area (857), value = "undef"
+19/11/13 11:56:39 : area (874), value = "undef"
+19/11/13 11:56:39 : area (875), value = "undef"
+19/11/13 11:56:39 : area (986), value = "undef"
+19/11/13 11:56:39 : points : (model_prm_2d)
+19/11/13 11:56:39 : completer : processing...
+19/11/13 11:56:39 : processing with penalties : 
+19/11/13 11:56:39 : mean value = 0.11 condition
+19/11/13 11:56:39 : inequality geq 0.065
+19/11/13 11:56:39 : inequality leq 0.186
+19/11/13 11:56:39 : penalty algorithm progress : ....... cg: 136 iterations, penalty: 8 iterations, 0 min 0 sec
+19/11/13 11:56:39 : 
+19/11/13 11:56:39 : *************
+19/11/13 11:56:39 : * Phase 2, grid size = 16 x 16 (kpor_wo_hist)
+19/11/13 11:56:39 : *************
+19/11/13 11:56:39 : area (1016), value = "undef"
+19/11/13 11:56:39 : area (1025), value = "undef"
+19/11/13 11:56:39 : area (176), value = "undef"
+19/11/13 11:56:39 : area (181), value = "undef"
+19/11/13 11:56:39 : area (2122), value = "undef"
+19/11/13 11:56:39 : area (3007), value = "undef"
+19/11/13 11:56:39 : area (815), value = "undef"
+19/11/13 11:56:39 : area (818), value = "undef"
+19/11/13 11:56:39 : area (827), value = "undef"
+19/11/13 11:56:39 : area (857), value = "undef"
+19/11/13 11:56:39 : area (874), value = "undef"
+19/11/13 11:56:39 : area (875), value = "undef"
+19/11/13 11:56:39 : area (986), value = "undef"
+19/11/13 11:56:39 : points : (model_prm_2d)
+19/11/13 11:56:39 : completer : processing...
+19/11/13 11:56:39 : processing with penalties : 
+19/11/13 11:56:39 : mean value = 0.11 condition
+19/11/13 11:56:39 : inequality geq 0.065
+19/11/13 11:56:39 : inequality leq 0.186
+19/11/13 11:56:39 : penalty algorithm progress : ....... cg: 690 iterations, penalty: 7 iterations, 0 min 0 sec
+19/11/13 11:56:39 : 
+19/11/13 11:56:39 : *************
+19/11/13 11:56:39 : * Phase 3, grid size = 32 x 32 (kpor_wo_hist)
+19/11/13 11:56:39 : *************
+19/11/13 11:56:39 : area (1016), value = "undef"
+19/11/13 11:56:39 : area (1025), value = "undef"
+19/11/13 11:56:39 : area (176), value = "undef"
+19/11/13 11:56:39 : area (181), value = "undef"
+19/11/13 11:56:39 : area (2122), value = "undef"
+19/11/13 11:56:39 : area (3007), value = "undef"
+19/11/13 11:56:39 : area (815), value = "undef"
+19/11/13 11:56:39 : area (818), value = "undef"
+19/11/13 11:56:39 : area (827), value = "undef"
+19/11/13 11:56:39 : area (857), value = "undef"
+19/11/13 11:56:39 : area (874), value = "undef"
+19/11/13 11:56:39 : area (875), value = "undef"
+19/11/13 11:56:39 : area (986), value = "undef"
+19/11/13 11:56:39 : points : (model_prm_2d)
+19/11/13 11:56:39 : completer : processing...
+19/11/13 11:56:39 : processing with penalties : 
+19/11/13 11:56:39 : mean value = 0.11 condition
+19/11/13 11:56:39 : inequality geq 0.065
+19/11/13 11:56:39 : inequality leq 0.186
+19/11/13 11:56:39 : penalty algorithm progress : ....... cg: 1311 iterations, penalty: 7 iterations, 0 min 0 sec
+19/11/13 11:56:39 : 
+19/11/13 11:56:39 : *************
+19/11/13 11:56:39 : * Phase 4, grid size = 64 x 64 (kpor_wo_hist)
+19/11/13 11:56:39 : *************
+19/11/13 11:56:39 : area (1016), value = "undef"
+19/11/13 11:56:39 : area (1025), value = "undef"
+19/11/13 11:56:39 : area (176), value = "undef"
+19/11/13 11:56:39 : area (181), value = "undef"
+19/11/13 11:56:39 : area (2122), value = "undef"
+19/11/13 11:56:39 : area (3007), value = "undef"
+19/11/13 11:56:39 : area (815), value = "undef"
+19/11/13 11:56:39 : area (818), value = "undef"
+19/11/13 11:56:39 : area (827), value = "undef"
+19/11/13 11:56:39 : area (857), value = "undef"
+19/11/13 11:56:39 : area (874), value = "undef"
+19/11/13 11:56:39 : area (875), value = "undef"
+19/11/13 11:56:39 : area (986), value = "undef"
+19/11/13 11:56:39 : points : (model_prm_2d)
+19/11/13 11:56:39 : completer : processing...
+19/11/13 11:56:39 : processing with penalties : 
+19/11/13 11:56:39 : mean value = 0.11 condition
+19/11/13 11:56:39 : inequality geq 0.065
+19/11/13 11:56:39 : inequality leq 0.186
+19/11/13 11:56:39 : penalty algorithm progress : ....... cg: 1536 iterations, penalty: 7 iterations, 0 min 1 sec
+19/11/13 11:56:40 : 
+19/11/13 11:56:40 : *************
+19/11/13 11:56:40 : * Phase 5, grid size = 128 x 128 (kpor_wo_hist)
+19/11/13 11:56:40 : *************
+19/11/13 11:56:40 : area (1016), value = "undef"
+19/11/13 11:56:40 : area (1025), value = "undef"
+19/11/13 11:56:40 : area (176), value = "undef"
+19/11/13 11:56:40 : area (181), value = "undef"
+19/11/13 11:56:40 : area (2122), value = "undef"
+19/11/13 11:56:40 : area (3007), value = "undef"
+19/11/13 11:56:40 : area (815), value = "undef"
+19/11/13 11:56:40 : area (818), value = "undef"
+19/11/13 11:56:40 : area (827), value = "undef"
+19/11/13 11:56:40 : area (857), value = "undef"
+19/11/13 11:56:40 : area (874), value = "undef"
+19/11/13 11:56:40 : area (875), value = "undef"
+19/11/13 11:56:40 : area (986), value = "undef"
+19/11/13 11:56:40 : points : (model_prm_2d)
+19/11/13 11:56:40 : completer : processing...
+19/11/13 11:56:40 : processing with penalties : 
+19/11/13 11:56:40 : mean value = 0.11 condition
+19/11/13 11:56:40 : inequality geq 0.065
+19/11/13 11:56:40 : inequality leq 0.186
+19/11/13 11:56:40 : penalty algorithm progress : ....... cg: 1706 iterations, penalty: 3 iterations, 0 min 2 sec
+19/11/13 11:56:42 : 
+19/11/13 11:56:42 : *************
+19/11/13 11:56:42 : * Phase 6, grid size = 256 x 256 (kpor_wo_hist)
+19/11/13 11:56:42 : *************
+19/11/13 11:56:42 : area (1016), value = "undef"
+19/11/13 11:56:42 : area (1025), value = "undef"
+19/11/13 11:56:42 : area (176), value = "undef"
+19/11/13 11:56:42 : area (181), value = "undef"
+19/11/13 11:56:42 : area (2122), value = "undef"
+19/11/13 11:56:42 : area (3007), value = "undef"
+19/11/13 11:56:42 : area (815), value = "undef"
+19/11/13 11:56:42 : area (818), value = "undef"
+19/11/13 11:56:42 : area (827), value = "undef"
+19/11/13 11:56:42 : area (857), value = "undef"
+19/11/13 11:56:42 : area (874), value = "undef"
+19/11/13 11:56:42 : area (875), value = "undef"
+19/11/13 11:56:42 : area (986), value = "undef"
+19/11/13 11:56:42 : points : (model_prm_2d)
+19/11/13 11:56:42 : completer : processing...
+19/11/13 11:56:42 : processing with penalties : 
+19/11/13 11:56:42 : mean value = 0.11 condition
+19/11/13 11:56:42 : inequality geq 0.065
+19/11/13 11:56:42 : inequality leq 0.186
+19/11/13 11:56:42 : penalty algorithm progress :  cg: 512 iterations, penalty: 2 iterations, 0 min 2 sec
+19/11/13 11:56:44 : Projecting surf "kpor_wo_hist" (256 x 256) => (296 x 512)
+19/11/13 11:56:44 : 
+19/11/13 11:56:44 : *************
+19/11/13 11:56:44 : * Phase 7, grid size = 296 x 512 (kpor_wo_hist)
+19/11/13 11:56:44 : *************
+19/11/13 11:56:44 : area (1016), value = "undef"
+19/11/13 11:56:44 : area (1025), value = "undef"
+19/11/13 11:56:44 : area (176), value = "undef"
+19/11/13 11:56:44 : area (181), value = "undef"
+19/11/13 11:56:44 : area (2122), value = "undef"
+19/11/13 11:56:44 : area (3007), value = "undef"
+19/11/13 11:56:44 : area (815), value = "undef"
+19/11/13 11:56:44 : area (818), value = "undef"
+19/11/13 11:56:44 : area (827), value = "undef"
+19/11/13 11:56:44 : area (857), value = "undef"
+19/11/13 11:56:44 : area (874), value = "undef"
+19/11/13 11:56:44 : area (875), value = "undef"
+19/11/13 11:56:44 : area (986), value = "undef"
+19/11/13 11:56:44 : points : (model_prm_2d)
+19/11/13 11:56:44 : completer : processing...
+19/11/13 11:56:44 : processing with penalties : 
+19/11/13 11:56:44 : mean value = 0.11 condition
+19/11/13 11:56:44 : inequality geq 0.065
+19/11/13 11:56:44 : inequality leq 0.186
+19/11/13 11:56:44 : penalty algorithm progress :  cg: 199 iterations, penalty: 2 iterations, 0 min 3 sec
+19/11/13 11:56:47 : Projecting surf "kpor_wo_hist" (296 x 512) => (296 x 570)
+19/11/13 11:56:47 : 
+19/11/13 11:56:47 : *************
+19/11/13 11:56:47 : * Phase 8, grid size = 296 x 570 (kpor_wo_hist)
+19/11/13 11:56:47 : *************
+19/11/13 11:56:47 : area (1016), value = "undef"
+19/11/13 11:56:47 : area (1025), value = "undef"
+19/11/13 11:56:47 : area (176), value = "undef"
+19/11/13 11:56:47 : area (181), value = "undef"
+19/11/13 11:56:47 : area (2122), value = "undef"
+19/11/13 11:56:47 : area (3007), value = "undef"
+19/11/13 11:56:47 : area (815), value = "undef"
+19/11/13 11:56:47 : area (818), value = "undef"
+19/11/13 11:56:47 : area (827), value = "undef"
+19/11/13 11:56:47 : area (857), value = "undef"
+19/11/13 11:56:47 : area (874), value = "undef"
+19/11/13 11:56:47 : area (875), value = "undef"
+19/11/13 11:56:47 : area (986), value = "undef"
+19/11/13 11:56:47 : points : (model_prm_2d)
+19/11/13 11:56:47 : completer : processing...
+19/11/13 11:56:47 : processing with penalties : 
+19/11/13 11:56:47 : mean value = 0.11 condition
+19/11/13 11:56:47 : inequality geq 0.065
+19/11/13 11:56:47 : inequality leq 0.186
+19/11/13 11:56:47 : penalty algorithm progress :  cg: 121 iterations, penalty: 2 iterations, 0 min 1 sec
+19/11/13 11:56:48 : Elapsed time 0 minutes 9 seconds
+19/11/13 11:56:48 : saving surf "kpor_wo_hist" to file kpor_wo_hist.dat
+19/11/13 11:56:49 : tracing 14 contours from surface "kpor_wo_hist"
+19/11/13 11:56:49 : 32 miliseconds elapsed
+19/11/13 11:56:49 : Plotting surface "kpor_wo_hist" to file "kpor_wo_hist.ps"
+19/11/13 11:57:08 : Removing surfit_grid from memory.
+19/11/13 11:57:08 : removing surface "kpor_wo_hist" from memory
+19/11/13 11:57:08 : removing points "model_prm_2d" from memory
+19/11/13 11:57:08 : removing area "986" from memory
+19/11/13 11:57:08 : removing area "875" from memory
+19/11/13 11:57:08 : removing area "874" from memory
+19/11/13 11:57:08 : removing area "857" from memory
+19/11/13 11:57:08 : removing area "827" from memory
+19/11/13 11:57:08 : removing area "818" from memory
+19/11/13 11:57:08 : removing area "815" from memory
+19/11/13 11:57:08 : removing area "3007" from memory
+19/11/13 11:57:08 : removing area "2122" from memory
+19/11/13 11:57:08 : removing area "181" from memory
+19/11/13 11:57:08 : removing area "176" from memory
+19/11/13 11:57:08 : removing area "1025" from memory
+19/11/13 11:57:08 : removing area "1016" from memory

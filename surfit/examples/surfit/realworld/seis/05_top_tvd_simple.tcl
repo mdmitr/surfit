@@ -11,7 +11,7 @@ load libsurfit_io[info sharedlibextension]
 clear_data 
 
 # set name of surface
-set map_name "aoup_simple" 
+set map_name "top_tvd_simple" 
 
 # set solver
 set_solver "cg" 
@@ -24,7 +24,7 @@ set tol 1e-007
 ##
  
 # load points from text file 
-pnts_read "aoup.xyz" "aoup"  
+pnts_read "top_tvd.xyz" "top_tvd"  
  
 ##
 ## construct grid 
@@ -36,7 +36,7 @@ grid
 ##
 
 # resulting surface at points = points values 
-points "aoup" 
+points "top_tvd" 
 
 # resulting surface should tend to be constant or plane 
 completer 1 6
@@ -54,4 +54,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "aoup_simple.dat" "aoup_simple" 
+surf_save "top_tvd_simple.dat" "top_tvd_simple" 

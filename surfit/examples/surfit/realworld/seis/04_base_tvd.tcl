@@ -11,7 +11,7 @@ load libsurfit_io[info sharedlibextension]
 clear_data 
 
 # set name of surface
-set map_name "aobt" 
+set map_name "base_tvd" 
 
 # set solver
 set_solver "cg" 
@@ -24,10 +24,10 @@ set tol 1e-007
 ##
  
 # load points from text file 
-pnts_read "aobt.xyz" "aobt"  
+pnts_read "base_tvd.xyz" "base_tvd"  
  
 # load surface from surfit datafile 
-surf_load "aoup.dat" "aoup"  
+surf_load "top_tvd.dat" "top_tvd"  
  
 ##
 ## construct grid 
@@ -39,10 +39,10 @@ grid 25 25
 ##
 
 # resulting surface at points = points values 
-points "aobt" 
+points "base_tvd" 
 
 # resulting surface looks like trend surface 
-trend 1 3 "aoup" 
+trend 1 3 "base_tvd" 
 
 # resulting surface should tend to be constant or plane 
 completer 
@@ -60,4 +60,4 @@ surfit
 grid_unload 
 
 # save surface to surfit datafile 
-surf_save "aobt.dat" "aobt" 
+surf_save "base_tvd.dat" "base_tvd" 
