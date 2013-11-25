@@ -27,15 +27,10 @@ and zero otherwise.
 
 Consider the equality-constrained problem:
 
-minimize \f$f(x)\f$
-
-subject to \f$c(x) = 0\f$
-
-where \f$c(x)\f$ is an m-dimensional vector whose j-th component is \f$c_j(x)\f$. 
+minimize \f$f(x)\f$ subject to \f$c(x) = 0\f$ where \f$c(x)\f$ is an m-dimensional vector whose j-th component is \f$c_j(x)\f$. 
 We assume that all functions are twice continuously differentiable.
 
-We require a penalty for constraint violation to be a continuous function \f$\phi\f$ with 
-the following properties
+We require a penalty for constraint violation to be a continuous function \f$\phi\f$ with the following properties
 
 \f$\phi(x) = 0\f$ if \f$x\f$ is feasible
 
@@ -52,18 +47,14 @@ The quadratic penalty function is defined as
 
 <H4>Algorithm:</H4>
 
-\li Check termination conditions. if \f$x_k\f$ satisfies the optimality conditions, he algorithm
+-# Check termination conditions. if \f$x_k\f$ satisfies the optimality conditions, he algorithm
 terminates successfully.
 
-\li Minimize the penalty function. With \f$x_k\f$ as the starting point, execute an algorithm to
+-# Minimize the penalty function. With \f$x_k\f$ as the starting point, execute an algorithm to
 solve the unconstrained subproblem
+minimize \f$\pi(x, \rho_k)\f$ w.r.t. \f$ x \in R \f$ and let the solution of this subproblem be \f$x_{k+1}\f$.
 
-minimize \f$\pi(x, \rho_k)\f$
-
-w.r.t. x
-
-and let the solution of this subproblem be \f$x_{k+1}\f$.
-\li Increase the penalty parameter. Set \f$\rho_{k+1}\f$ to a larger value 
+-# Increase the penalty parameter. Set \f$\rho_{k+1}\f$ to a larger value 
 than \f$\rho_k\f$, set k = k + 1 and return to 1.
 
 <H2> About "penalty_factor" parameter </H2>

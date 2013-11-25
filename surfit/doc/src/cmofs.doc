@@ -8,7 +8,7 @@ To process data with CMOFS algorithm it is necessary to create so-called <A HREF
 Gridding rule is a functional that describes how to use data in gridding.
 The order of gridding rules defines the priority levels for each data. 
 For example, we can think, what data given in scattered 
-points are most precise and must be taken first. Information about the resulting surface 
+points is most precise and must be taken first. Information about the resulting surface 
 behavior between scattered points is less reliable and we should use it at the last 
 step. 
 </P>
@@ -40,25 +40,26 @@ Here is the breif scheme of CMOFS algorithm:
 \Phi_1(u_1,\ldots,u_N),\Phi_2(u_1,\ldots,u_N),\ldots,\Phi_K(u_1,\ldots,u_N).
 \f] 
 These functionals describe the way of taking the data 
-into account. Functionals order must corresponds to data confidence level, determined by user.
+into account. Functionals order must correspond to data confidence level, determined by user.
 Resulting surface is founded from functionals minimization.
 
 Then minimizing i-th functional, two situations are possible:
-\par Unconstrained extremum is being searched.
+- Unconstrained extremum is being searched.
 The system of linear equations is being analyzed:
 \f[ 
 \frac {\partial \Phi_i(u_1,\ldots,u_N)} {\partial u_j} = 0, 
 \f]
 where \f$ j=1,\ldots,N\f$ except of numbers of cells with already solved (founded) values. 
 There are two variants under consideration:
-\li The SLE have only one solution.
-Unknown values \f$ u_j \f$ are being determined from solution of this system of 
-linear equations.
-\li The SLE have many solutions, or have no solution at all.
-The SLE isn't being solved. Instead of this, the conditional extremum problem
-is being solved then i+1'th functional is being minimized.
+	-# The SLE have only one solution.
+	Unknown values \f$ u_j \f$ are being determined from solution of this system of 
+	linear equations.
 
-\par Constrained extremum is being searched.
+	-# The SLE have many solutions, or have no solution at all.
+	The SLE isn't being solved. Instead of this, the conditional extremum problem
+	is being solved then i+1'th functional is being minimized.
+
+- Constrained extremum is being searched.
 This situation appears if previous functional minimization was impossible, or
 if additional conditions or inequalities are set. For searching of constrained extremum
 the \ref penalty "penalty algorithm" is being used.
