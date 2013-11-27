@@ -4,10 +4,10 @@ surface with taking fault curves into account. In this sample we have 11 scatter
 points to interpolate (file examples/surfit/curvs/11points.txt) and 4 fault curves, 
 which are divide whole surface domain into 3 independent subdomains. The main idea
 of fault curves is that parts of resulting surface between fault curve are independent 
-of each other. \b Important! You should place \ref surfit::fault "fault" rule only after \ref surfit::fault "fault"
+of each other. \b Important! You should place \ref fault() "fault" rule only after \ref fault() "fault"
 "fault modifiable" rules! 
 
-\sa \ref surfit::fault "fault"
+\sa \ref fault() "fault"
 
 \htmlonly
 Here is the image of the resulting surface:
@@ -27,10 +27,10 @@ surface with taking fault curves into account. In this sample we have 11 scatter
 points to approximate (file examples/surfit/curvs/11points.txt) and 4 fault curves, 
 which are divide whole surface domain into 3 independent subdomains. The main idea
 of fault curves is that parts of resulting surface between fault curve are independent 
-of each other. \b Important! You should place \ref surfit::fault "fault" rule only after \ref surfit::fault "fault"
+of each other. \b Important! You should place \ref fault() "fault" rule only after \ref fault() "fault"
 "fault modifiable" rules! 
 
-\sa \ref surfit::fault "fault"
+\sa \ref fault() "fault"
 
 \htmlonly
 Here is the image of the resulting surface:
@@ -46,10 +46,10 @@ This result was obtained with <TT>"examples/surfit/curvs/fault_approx.tcl"</TT> 
 
 
 /*! \example fault_aniso.tcl
-This example looks like fault.tcl example. The only difference is the \ref surfit::completer "completer"
-parameters: in this example anisotropy was added to \ref surfit::completer "completer".
+This example looks like fault.tcl example. The only difference is the \ref completer() "completer"
+parameters: in this example anisotropy was added to \ref completer() "completer".
 
-\sa \ref surfit::fault "fault"
+\sa \ref fault() "fault"
 
 \htmlonly
 Here is the image of the resulting surface:

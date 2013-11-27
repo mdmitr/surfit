@@ -402,7 +402,7 @@ boolvec * dem_decomp(const char * dem_name = "*");
     dem_auto_decomp eps \ref str "dem_name"
 
     \par Description:
-    calls \ref dem_decomp until difference between original DEM norm and decomposed DEM norm
+    calls \ref dem_decomp() "dem_decomp" until difference between original DEM norm and decomposed DEM norm
     will be lower than eps
 */
 boolvec * dem_auto_decomp(REAL eps, const char * dem_name = "*");

@@ -10,66 +10,66 @@
 <TR>
     <TD rowspan = 9> \ref d_surf "Surfaces (grids)" </TD>
     <TD> surfit native </TD> 
-    <TD> \ref surfit::surf_load "surf_load"</TD> 
-    <TD> \ref surfit::surf_save "surf_save"</TD>
+    <TD> \ref surf_load() "surf_load"</TD> 
+    <TD> \ref surf_save() "surf_save"</TD>
 </TR>
 <TR>
     <TD> Surfer ASCII-grd </TD>
-    <TD> \ref surfit::surf_load_grd "surf_load_grd"</TD>
-    <TD> \ref surfit::surf_save_grd "surf_save_grd"</TD>
+    <TD> \ref surf_load_grd() "surf_load_grd"</TD>
+    <TD> \ref surf_save_grd() "surf_save_grd"</TD>
 </TR>
 <TR>
     <TD> Surfer binary formats (v6, v7) </TD>
-    <TD> \ref surfit::surf_load_grd "surf_load_grd"</TD>
-    <TD> \ref surfit::surf_save_grd "surf_save_grd"</TD>
+    <TD> \ref surf_load_grd() "surf_load_grd"</TD>
+    <TD> \ref surf_save_grd() "surf_save_grd"</TD>
 </TR>
 <TR>
     <TD> Three columns XYZ files </TD>
-    <TD> \ref surfit::surf_load_xyz "surf_load_xyz"</TD>
-    <TD> \ref surfit::surf_save_xyz "surf_save_xyz"</TD>
+    <TD> \ref surf_load_xyz() "surf_load_xyz"</TD>
+    <TD> \ref surf_save_xyz() "surf_save_xyz"</TD>
 </TR>
 <TR>
     <TD> General Mapping Tools format </TD>
-    <TD> \ref surfit::surf_load_gmt "surf_load_gmt"</TD>
-    <TD> \ref surfit::surf_save_gmt "surf_save_gmt"</TD>
+    <TD> \ref surf_load_gmt() "surf_load_gmt"</TD>
+    <TD> \ref surf_save_gmt() "surf_save_gmt"</TD>
 </TR>
 <TR>
     <TD> Grass GIS ASCII format </TD>
-    <TD> \ref surfit::surf_load_grass "surf_load_grass"</TD>
-    <TD> \ref surfit::surf_save_grass "surf_save_grass"</TD>
+    <TD> \ref surf_load_grass() "surf_load_grass"</TD>
+    <TD> \ref surf_save_grass() "surf_save_grass"</TD>
 </TR>
 <TR>
     <TD> ArcGis ASCII grids </TD>
-    <TD> \ref surfit::surf_load_arcgis "surf_load_arcgis"</TD>
-    <TD> \ref surfit::surf_save_arcgis "surf_save_arcgis"</TD>
+    <TD> \ref surf_load_arcgis() "surf_load_arcgis"</TD>
+    <TD> \ref surf_save_arcgis() "surf_save_arcgis"</TD>
 </TR>
 <TR>
     <TD> JPG files </TD>
-    <TD> \ref surfit::surf_load_jpg "surf_load_jpg"</TD>
-    <TD> \ref surfit::surf_save_jpg "surf_save_jpg"</TD>
+    <TD> \ref surf_load_jpg() "surf_load_jpg"</TD>
+    <TD> \ref surf_save_jpg() "surf_save_jpg"</TD>
 </TR>
 <TR>
     <TD> BMP files </TD>
-    <TD> \ref surfit::surf_load_bmp "surf_load_bmp"</TD>
-    <TD> \ref surfit::surf_save_bmp "surf_save_bmp"</TD>
+    <TD> \ref surf_load_bmp() "surf_load_bmp"</TD>
+    <TD> \ref surf_save_bmp() "surf_save_bmp"</TD>
 </TR>
 
 
 <TR>
     <TD rowspan=3> \ref d_points "Scattered points" </TD>
     <TD> surfit native </TD>
-    <TD> \ref surfit::pnts_load "pnts_load"</TD>
-    <TD> \ref surfit::pnts_save "pnts_save"</TD>
+    <TD> \ref pnts_load() "pnts_load"</TD>
+    <TD> \ref pnts_save() "pnts_save"</TD>
 </TR>
 <TR>
     <TD> columned text files </TD>
-    <TD> \ref surfit::pnts_read "pnts_read"</TD>
-    <TD> \ref surfit::pnts_write "pnts_write"</TD> 
+    <TD> \ref pnts_read() "pnts_read"</TD>
+    <TD> \ref pnts_write() "pnts_write"</TD> 
 </TR>
 <TR>
     <TD> ESRI shape files (shp) </TD>
-    <TD> \ref surfit::pnts_load_shp "pnts_load_shp"</TD>
-    <TD> \ref surfit::pnts_save_shp "pnts_save_shp"</TD> 
+    <TD> \ref pnts_load_shp() "pnts_load_shp"</TD>
+    <TD> \ref pnts_save_shp() "pnts_save_shp"</TD> 
 </TR>
 
 
@@ -78,106 +78,106 @@
 <TR>
     <TD rowspan=4> \ref d_curv "2D curves" </TD>
     <TD> surfit native </TD>
-    <TD> \ref surfit::curv_load "curv_load"</TD>
-    <TD> \ref surfit::curv_save "curv_save"</TD>
+    <TD> \ref curv_load() "curv_load"</TD>
+    <TD> \ref curv_save() "curv_save"</TD>
 </TR>
 <TR>
     <TD> columned text files </TD>
-    <TD> \ref surfit::curv_read "curv_read"</TD>
-    <TD> \ref surfit::curv_write "curv_write"</TD>
+    <TD> \ref curv_read() "curv_read"</TD>
+    <TD> \ref curv_write() "curv_write"</TD>
 </TR>
 <TR>
     <TD> Surfer BLN files </TD>
-    <TD> \ref surfit::curv_load_bln "curv_load_bln"</TD>
-    <TD> \ref surfit::curv_save_bln "curv_save_bln"</TD>
+    <TD> \ref curv_load_bln() "curv_load_bln"</TD>
+    <TD> \ref curv_save_bln() "curv_save_bln"</TD>
 </TR>
 <TR>
     <TD> ESRI shape files (shp) </TD>
-    <TD> \ref surfit::curv_load_shp "curv_load_shp"</TD>
-    <TD> \ref surfit::curv_save_shp "curv_save_shp"</TD>
+    <TD> \ref curv_load_shp() "curv_load_shp"</TD>
+    <TD> \ref curv_save_shp() "curv_save_shp"</TD>
 </TR>
 
 
 <TR>
     <TD rowspan=4> \ref d_cntr "3D curves (contours)" </TD>
     <TD> surfit native </TD>
-    <TD> \ref surfit::cntr_load "cntr_load"</TD>
-    <TD> \ref surfit::cntr_save "cntr_save"</TD>
+    <TD> \ref cntr_load() "cntr_load"</TD>
+    <TD> \ref cntr_save() "cntr_save"</TD>
 </TR>
 <TR>
     <TD> columned text files </TD>
-    <TD> \ref surfit::cntr_read "cntr_read"</TD>
-    <TD> \ref surfit::cntr_write "cntr_write"</TD>
+    <TD> \ref cntr_read() "cntr_read"</TD>
+    <TD> \ref cntr_write() "cntr_write"</TD>
 </TR>
 <TR>
     <TD> Surfer BLN files </TD>
-    <TD> \ref surfit::cntr_load_bln "cntr_load_bln"</TD>
-    <TD> \ref surfit::cntr_save_bln "cntr_save_bln"</TD>
+    <TD> \ref cntr_load_bln() "cntr_load_bln"</TD>
+    <TD> \ref cntr_save_bln() "cntr_save_bln"</TD>
 </TR>
 <TR>
     <TD> ESRI shape files (shp) </TD>
-    <TD> \ref surfit::cntr_load_shp "cntr_load_shp"</TD>
-    <TD> \ref surfit::cntr_save_shp "cntr_save_shp"</TD>
+    <TD> \ref cntr_load_shp() "cntr_load_shp"</TD>
+    <TD> \ref cntr_save_shp() "cntr_save_shp"</TD>
 </TR>
 
 <TR>
     <TD rowspan=4> \ref d_area "Areas (polygons)" </TD>
     <TD> surfit native </TD>
-    <TD> \ref surfit::area_load "area_load"</TD>
-    <TD> \ref surfit::area_save "area_save"</TD>
+    <TD> \ref area_load() "area_load"</TD>
+    <TD> \ref area_save() "area_save"</TD>
 </TR>
 <TR>
     <TD> columned text files </TD>
-    <TD> \ref surfit::area_read "area_read"</TD>
-    <TD> \ref surfit::area_write "area_write"</TD>
+    <TD> \ref area_read() "area_read"</TD>
+    <TD> \ref area_write() "area_write"</TD>
 </TR>
 <TR>
     <TD> Surfer BLN files </TD>
-    <TD> \ref surfit::area_load_bln "area_load_bln"</TD>
-    <TD> \ref surfit::area_save_bln "area_save_bln"</TD>
+    <TD> \ref area_load_bln() "area_load_bln"</TD>
+    <TD> \ref area_save_bln() "area_save_bln"</TD>
 </TR>
 <TR>
     <TD> ESRI shape files (shp) </TD>
-    <TD> \ref surfit::area_load_shp "area_load_shp"</TD>
-    <TD> \ref surfit::area_save_shp "area_save_shp"</TD>
+    <TD> \ref area_load_shp() "area_load_shp"</TD>
+    <TD> \ref area_save_shp() "area_save_shp"</TD>
 </TR>
 
 
 <TR>
     <TD rowspan=7> \ref d_dem "DEMs" </TD>
     <TD> surfit native </TD>
-    <TD> \ref surfit::dem_load "dem_load"</TD>
-    <TD> \ref surfit::dem_save "dem_save"</TD>
+    <TD> \ref dem_load() "dem_load"</TD>
+    <TD> \ref dem_save() "dem_save"</TD>
 </TR>
 <TR>
     <TD> Surfer ASCII-grd </TD>
-    <TD> \ref surfit::dem_load_grd "dem_load_grd"</TD>
-    <TD> \ref surfit::dem_save_grd "dem_save_grd"</TD>
+    <TD> \ref dem_load_grd() "dem_load_grd"</TD>
+    <TD> \ref dem_save_grd() "dem_save_grd"</TD>
 </TR>
 <TR>
     <TD> DTM </TD>
-    <TD> \ref surfit::dem_load_dtm "dem_load_dtm"</TD>
-    <TD> \ref surfit::dem_save_dtm "dem_save_dtm"</TD>
+    <TD> \ref dem_load_dtm() "dem_load_dtm"</TD>
+    <TD> \ref dem_save_dtm() "dem_save_dtm"</TD>
 </TR>
 <TR>
     <TD> HGT files (Shuttle Radar Topographic Mission files) </TD>
-    <TD> \ref surfit::dem_load_hgt "dem_load_hgt"</TD>
+    <TD> \ref dem_load_hgt() "dem_load_hgt"</TD>
     <TD>  </TD>
 </TR>
 <TR>
     <TD> zipped HGT files </TD>
-    <TD> \ref surfit::dem_load_hgt_zip "dem_load_hgt_zip"</TD>
+    <TD> \ref dem_load_hgt_zip() "dem_load_hgt_zip"</TD>
     <TD>  </TD>
 </TR>
 <TR>
     <TD> GTOPO30/GLOBE files </TD>
-    <TD> \ref surfit::dem_load_globe "dem_load_globe"</TD>
+    <TD> \ref dem_load_globe() "dem_load_globe"</TD>
     <TD>  </TD>
 </TR>
 <TR>
     <TD> Three columns XYZ files </TD>
     <TD>  </TD>
-    <TD> \ref surfit::dem_save_xyz "dem_save_xyz"</TD>
+    <TD> \ref dem_save_xyz() "dem_save_xyz"</TD>
 </TR>
 
 

@@ -81,7 +81,7 @@ bool completer(REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
     completer_add weight D1 D2
 
     \par Description:
-    This function modifies previous (modifiable) rule by adding the \ref completer rule with some weight.
+    This function modifies previous (modifiable) rule by adding the \ref completer() "completer" rule with some weight.
     This rule applies to whole resulting surface.
 
     \param weight informational weight for this rule
@@ -102,7 +102,7 @@ bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, RE
     This rule applies to whole resulting surface.
 
     \param val real number for surface approximation. Also you may set val to "undef" 
-    string to fill surface with \ref undef_value values.
+    string to fill surface with \ref undef_value() "undef_value" values.
 
     \par Math:
     This command adds the following functional to the functional sequence:
@@ -117,7 +117,7 @@ bool value(const char * val = "undef");
     value_add weight val
 
     \par Description:
-    This function modifies previous (modifiable) rule by adding the \ref value rule with some weight.
+    This function modifies previous (modifiable) rule by adding the \ref value() "value" rule with some weight.
     This rule applies to whole resulting surface.
 
     \param weight informational weight for this rule

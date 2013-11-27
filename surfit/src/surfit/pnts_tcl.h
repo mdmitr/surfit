@@ -113,7 +113,7 @@ boolvec * pnts_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, con
     pnts_inverse_transfort shiftX scaleX shiftY scaleY \ref str "points_name"
 
     \par Description:
-    makes inverse to \ref pnts_transform operation
+    makes inverse to \ref pnts_transform() "pnts_transform" operation
 */
 boolvec * pnts_inverse_transform(REAL shiftX, REAL scaleX, REAL shiftY, REAL scaleY, const char * points_name = "*");
 

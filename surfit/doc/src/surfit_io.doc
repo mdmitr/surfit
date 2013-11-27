@@ -6,27 +6,27 @@ formats for <B><TT>surfit</TT></B>
 Here is a list of supported formats and commands:
 
 \ref d_surf "surface" :
-\li import/export of SURFER surface (GRD-ASCII format) : \ref surfit::surf_load_grd "surf_load_grd", \ref surfit::surf_save_grd "surf_save_grd"
-\li import/export of surfaces from XYZ text files : \ref surfit::surf_load_xyz "surf_load_xyz", \ref surfit::surf_save_xyz "surf_save_xyz"
-\li import/export of GMT surfaces (CDF format) : \ref surfit::surf_load_gmt "surf_load_gmt", \ref surfit::surf_save_gmt "surf_save_gmt"
-\li import/export of GRASS surfaces (ASCII format) : \ref surfit::surf_load_grass "surf_load_grass", \ref surfit::surf_save_grass "surf_save_grass"
-\li import/export of ArcGIS surfaces (ASCII format) : \ref surfit::surf_load_arcgis "surf_load_arcgis", \ref surfit::surf_save_arcgis "surf_save_arcgis"
-\li import/export of JPEG images (export in grayscale colormap) : \ref surfit::surf_load_jpg "surf_load_jpg", \ref surfit::surf_save_jpg "surf_save_jpg"
-\li import/export of BMP images (export in grayscale colormap) : \ref surfit::surf_load_bmp "surf_load_bmp", \ref surfit::surf_save_bmp "surf_save_bmp"
+\li import/export of SURFER surface (GRD-ASCII format) : \ref surf_load_grd() "surf_load_grd", \ref surf_save_grd() "surf_save_grd"
+\li import/export of surfaces from XYZ text files : \ref surf_load_xyz() "surf_load_xyz", \ref surf_save_xyz() "surf_save_xyz"
+\li import/export of GMT surfaces (CDF format) : \ref surf_load_gmt() "surf_load_gmt", \ref surf_save_gmt() "surf_save_gmt"
+\li import/export of GRASS surfaces (ASCII format) : \ref surf_load_grass() "surf_load_grass", \ref surf_save_grass() "surf_save_grass"
+\li import/export of ArcGIS surfaces (ASCII format) : \ref surf_load_arcgis() "surf_load_arcgis", \ref surf_save_arcgis() "surf_save_arcgis"
+\li import/export of JPEG images (export in grayscale colormap) : \ref surf_load_jpg() "surf_load_jpg", \ref surf_save_jpg() "surf_save_jpg"
+\li import/export of BMP images (export in grayscale colormap) : \ref surf_load_bmp() "surf_load_bmp", \ref surf_save_bmp() "surf_save_bmp"
 
 \ref d_points "points" :
-\li import/export of ERSI shapfiles : \ref surfit::pnts_load_shp "pnts_load_shp", \ref surfit::pnts_save_shp "pnts_save_shp"
+\li import/export of ERSI shapfiles : \ref pnts_load_shp() "pnts_load_shp", \ref pnts_save_shp() "pnts_save_shp"
 
 \ref d_curv "curve" :
-\li import/export of Surfer BLN files : \ref surfit::curv_load_bln "curv_load_bln", \ref surfit::curv_save_bln "curv_save_bln"
-\li import/export of ERSI shapfiles : \ref surfit::curv_load_shp "curv_load_shp", \ref surfit::curv_save_shp "curv_save_shp"
+\li import/export of Surfer BLN files : \ref curv_load_bln() "curv_load_bln", \ref curv_save_bln() "curv_save_bln"
+\li import/export of ERSI shapfiles : \ref curv_load_shp() "curv_load_shp", \ref curv_save_shp() "curv_save_shp"
 
 \ref d_area "area" :
-\li import/export of Surfer BLN files : \ref surfit::area_load_bln "area_load_bln", \ref surfit::area_save_bln "area_save_bln"
-\li import/export of ERSI shapfiles : \ref surfit::area_load_shp "area_load_shp", \ref surfit::area_save_shp "area_save_shp"
+\li import/export of Surfer BLN files : \ref area_load_bln() "area_load_bln", \ref area_save_bln() "area_save_bln"
+\li import/export of ERSI shapfiles : \ref area_load_shp() "area_load_shp", \ref area_save_shp() "area_save_shp"
 
 \ref d_cntr "contour" :
-\li import/export of ERSI shapfiles : \ref surfit::cntr_load_shp "cntr_load_shp", \ref surfit::cntr_save_shp "cntr_save_shp"
+\li import/export of ERSI shapfiles : \ref cntr_load_shp() "cntr_load_shp", \ref cntr_save_shp() "cntr_save_shp"
 
 */
 

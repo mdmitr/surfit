@@ -44,7 +44,7 @@ boolvec * surface(const char * surface_name = "*");
     surface_add weight "surface_name"
 
     \par Description:
-    This function modifies previous (modifiable) rule by adding the \ref surface rule with some weight.
+    This function modifies previous (modifiable) rule by adding the \ref surface() rule with some weight.
 
     \param weight informational weight for this rule
     \param surface_name name of \ref d_surf "surface" dataset
@@ -191,9 +191,9 @@ boolvec * trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name = "*");
     trend_add weight D1 D2 "surface_name"
 
     \par Description:
-    This function modifies previous (modifiable) rule by adding the \ref trend rule with some weight.
+    This function modifies previous (modifiable) rule by adding the \ref trend() "trend" rule with some weight.
 
-    \param weight informational weight for \ref trend rule
+    \param weight informational weight for \ref trend() "trend" rule
     \param D1 informational weight for rule that sounds "resulting surface should have the same gradients as trend surface"
     \param D2 informational weight for rule that sounds "resulting surface should have the same curvature as trend surface"
     \param surface_name name of \ref d_surf "surface" dataset. This is a trend surface.
@@ -226,10 +226,10 @@ boolvec * mask(const char * val, const char * mask_name = "*");
     mask_add val weight "surface_name"
 
     \par Description:
-    This function modifies previous (modifiable) rule by adding the \ref mask rule with some weight.
+    This function modifies previous (modifiable) rule by adding the \ref mask() "mask" rule with some weight.
 
     \param val real number for approximation.
-    \param weight informational weight for \ref mask rule
+    \param weight informational weight for \ref mask() "mask" rule
     \param mask_name name of \ref d_mask "mask" dataset
 */
 boolvec * mask_add(REAL val, REAL weight = 1, const char * mask_name = "*");
@@ -304,7 +304,7 @@ boolvec * mask_surf(const char * surf_name = "*", const char * mask_name = "*");
     mask_surf_add "surf_name" weight "mask_name"
 
     \par Description:
-    This function modifies previous (modifiable) rule by adding the \ref mask_surf rule with some weight. 
+    This function modifies previous (modifiable) rule by adding the \ref mask_surf() "mask_surf" rule with some weight. 
     Using this rule the resulting surface approximates other surface "values" where mask is "true", taking into
     account a previous (modifiable) rule.
 
@@ -400,7 +400,7 @@ boolvec * mask_wmean(REAL mean, const char * mask_name = "*", const char * surf_
     mask_completer "mask_name" D1 D2 alpha w 
 
     \par Description
-    This rule implements \ref completer rule where \ref d_mask "mask" is true
+    This rule implements \ref completer() "completer" rule where \ref d_mask "mask" is true
 
     \param mask_name \ref d_mask "mask" \ref str "name"
     \param D1 weight coefficient for rule that the resulting surface should tend to constant surface
@@ -415,10 +415,10 @@ boolvec * mask_completer(const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2,
     mask_completer_add weight "mask_name" D1 D2 alpha w inside
 
     \par Description
-    This rule adds rule \ref mask_completer with informational "weight" to the previous rule.
+    This rule adds rule \ref mask_completer() "mask_completer" with informational "weight" to the previous rule.
 
     \param mask_name name of a \ref d_mask "mask" object
-    \param weight informational weight for \ref mask gridding rule
+    \param weight informational weight for \ref mask() "mask" gridding rule
     \param D1 weight coefficient for rule that the resulting surface should tend to constant surface
     \param D2 weight coefficient for rule that the resulting surface should tend to plane surface
     \param alpha anisotropy angle (degrees)

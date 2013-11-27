@@ -86,7 +86,7 @@ namespace surfit {
 	extern REAL penalty_weight;
 
 	/*! \ingroup surfit_variables
-	    multiplication factor for \ref penalty_weight
+	    multiplication factor for \ref penalty_weight() "penalty_weight"
         */
 	extern REAL penalty_weight_mult;
 

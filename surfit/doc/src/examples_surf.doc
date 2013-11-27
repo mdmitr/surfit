@@ -91,7 +91,7 @@ This result was obtained with <TT>"examples/surfit/surfs/mask.tcl"</TT> script.
 
 /*! \example mask_add.tcl
 
-This example shows how to add gridding rule \ref surfit::value "value" with respect to \ref d_mask "mask".
+This example shows how to add gridding rule \ref value() "value" with respect to \ref d_mask "mask".
 
 Here is the image of the resulting \ref d_surf "surface":
 

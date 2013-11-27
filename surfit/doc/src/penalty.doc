@@ -59,8 +59,8 @@ than \f$\rho_k\f$, set k = k + 1 and return to 1.
 
 <H2> About "penalty_factor" parameter </H2>
 
-penalty_factor is a parameter that used for special gridding rules like \ref surfit::leq "leq",
-\ref surfit::geq "geq", \ref surfit::mean "mean", \ref surfit::wmean "wmean", \ref surfit::hist "hist"
+penalty_factor is a parameter that used for special gridding rules like \ref leq() "leq",
+\ref geq() "geq", \ref mean() "mean", \ref wmean() "wmean", \ref hist() "hist"
 and other of this kind. These gridding
 rules adds some condition and causes surfit for using penalty algorithm. Each of these gridding
 rules have additional parameter called "penalty_factor". This parameter sets how fast the penalty

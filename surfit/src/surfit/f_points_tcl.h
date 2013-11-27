@@ -49,7 +49,7 @@ boolvec * points(const char * points_name = "*");
     points_add weight \ref str "points_name"
 
     \par Description:
-    This function modifies previous (modifiable) rule by adding the \ref points rule with some weight.
+    This function modifies previous (modifiable) rule by adding the \ref points() "points" rule with some weight.
 
     \param weight informational weight for this rule
     \param points_name \ref str "name" of \ref d_points "points" dataset

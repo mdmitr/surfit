@@ -48,7 +48,7 @@ boolvec * dem(const char * dem_name = "*");
     dem_add weight \ref str "dem_name"
 
     \par Description:
-    This function modifies previous (modifiable) rule by adding the \ref dem rule with some weight.
+    This function modifies previous (modifiable) rule by adding the \ref dem() "dem" rule with some weight.
 
     \param weight informational weight for this rule
     \param dem_name \ref str "name" of \ref d_dem "DEM" dataset

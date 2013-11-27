@@ -56,13 +56,13 @@ boolvec * curve(REAL value, const char * curv_name = "*");
     curve_add value weight \ref str "curv_name"
 
     \par Description:
-    This rule modifies a previous (modifiable) rule by adding the \ref curve rule with 
+    This rule modifies a previous (modifiable) rule by adding the \ref curve() "curve" rule with 
     some weight. Use this rule if you don't know "value" exactly. 
     Using this rule the resulting surface approximates the curve with "value", taking into 
     account a previous (modifiable) rule.
 
     \param value real number for surface approximation at curve
-    \param weight informational weight for \ref curve gridding rule
+    \param weight informational weight for \ref curve() "curve" gridding rule
     \param curv_name \ref d_curv "curve" \ref str "name"
 
     \par Math:
@@ -145,7 +145,7 @@ boolvec * curve_surf(const char * surf_name = "*", const char * curv_name = "*")
     curve_surf_add \ref str "surf_name" weight \ref str "curv_name"
 
     \par Description:
-    This function modifies previous (modifiable) rule by adding the \ref curve_surf rule with some weight. 
+    This function modifies previous (modifiable) rule by adding the \ref curve_surf() "curve_surf" rule with some weight. 
     Using this rule, the resulting surface approximates curve with other surface "values" taking into 
     account a previous (modifiable) rule.
     
@@ -227,9 +227,9 @@ boolvec * curve_surf_geq(const char * surf_name = "*", const char * curv_name = 
     \param curv_name \ref d_curv "curve" \ref str "name"
 
     \par Gridding rules, modifiable with this rule:
-    \li \ref completer
-    \li \ref trend
-    \li \ref lcm_simple
+    \li \ref completer() "completer"
+    \li \ref trend() "trend"
+    \li \ref lcm_simple() "lcm_simple"
 
 */
 boolvec * fault(const char * curv_name = "*");
@@ -268,7 +268,7 @@ boolvec * area(const char * value="undef", const char * area_name = "*", int ins
     area_add value weight \ref str "area_name" inside
 
     \par Description:
-    This function modifies previous (modifiable) rule by adding the \ref area rule with some weight. Use this rule
+    This function modifies previous (modifiable) rule by adding the \ref area() "area" rule with some weight. Use this rule
     if you don't know "value" exactly. Using this rule the resulting surface approximates area with "value" 
     taking into account a previous (modifiable) rule.
 
@@ -365,7 +365,7 @@ boolvec * area_surf(const char * surf_name = "*", const char * area_name = "*", 
     area_surf_add \ref str "surf_name" weight \ref str "area_name" inside
 
     \par Description:
-    This function modifies previous (modifiable) rule by adding the \ref area_surf rule with some weight. 
+    This function modifies previous (modifiable) rule by adding the \ref area_surf() "area_surf" rule with some weight. 
     Using this rule the resulting surface approximates area with other surface "values" taking into
     account a previous (modifiable) rule.
 
@@ -463,7 +463,7 @@ boolvec * area_wmean(REAL mean, const char * area_name = "*", const char * surf_
     area_completer \ref str "area_name" D1 D2 alpha w inside
 
     \par Description
-    This rule implements \ref completer rule inside or outside \ref d_area "area"
+    This rule implements \ref completer() "completer" rule inside or outside \ref d_area "area"
 
     \param area_name \ref d_area "area" \ref str "name"
     \param D1 weight coefficient for rule that the resulting surface should tend to constant surface
@@ -479,7 +479,7 @@ boolvec * area_completer(const char * area_name = "*", REAL D1 = 1, REAL D2 = 2,
     area_completer_add weight \ref str "area_name" D1 D2 alpha w inside
 
     \par Description
-    This rule adds rule \ref area_completer with informational "weight" to the previous rule.
+    This rule adds rule \ref area_completer() "area_completer" with informational "weight" to the previous rule.
 
     \param weight weight coefficient. This gridding rule will be added with this weight coefficient to previous gridding rule.
     \param area_name \ref d_area "area" \ref str "name"
@@ -536,7 +536,7 @@ boolvec * contour(const char * cntr_name = "*");
     contour_add weight \ref str "cntr_name"
 
     \par Description:
-    This rule modifies a previous (modifiable) rule by adding the \ref contour rule with some weight. 
+    This rule modifies a previous (modifiable) rule by adding the \ref contour() "contour" rule with some weight. 
     Use this rule if you don't know contour values exactly. Using this rule the resulting surface 
     approximates contour taking into account a previous (modifiable) rule.
 

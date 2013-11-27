@@ -91,8 +91,8 @@ void mem_info();
 
     \par Description
     return current datafile mode. This mode tells how to use surfit datafiles for
-    saving various data in surfit native format. Two modes allowed : \ref datafile_new
-    and \ref datafile_append
+    saving various data in surfit native format. Two modes allowed : \ref datafile_new() "datafile_new"
+    and \ref datafile_append() "datafile_append"
 */
 const char * datafile_mode();
 
@@ -101,7 +101,7 @@ const char * datafile_mode();
     datafile_new
 
     \par Description
-    Sets \ref datafile_mode to "new" mode. This means that each time you saving
+    Sets \ref datafile_mode() "datafile_mode" to "new" mode. This means that each time you saving
     your data into datafile, the datafile first will be cleaned up and then data will be saved.
 */
 const char * datafile_new();
@@ -111,7 +111,7 @@ const char * datafile_new();
     datafile_append
 
     \par Description
-    Sets \ref datafile_mode to "append" mode. This means that each time you saving
+    Sets \ref datafile_mode() "datafile_mode" to "append" mode. This means that each time you saving
     your data into datafile, data will be added to the end of datafile.
 */
 const char * datafile_append();

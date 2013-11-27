@@ -555,7 +555,7 @@ boolvec * surf_decomp(const char * surface_name = "*");
     surf_auto_decomp eps \ref str "surface_name"
 
     \par Description:
-    calls \ref surf_decomp until difference between original surface norm and decomposed surface norm
+    calls \ref surf_decomp() "surf_decomp" until difference between original surface norm and decomposed surface norm
     will be lower than eps
 */
 boolvec * surf_auto_decomp(REAL eps, const char * surface_name = "*");
