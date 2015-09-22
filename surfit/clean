@@ -1,8 +1,0 @@
-#! /bin/sh
-rm -rfv `find -name "*.log"`
-rm -rfv `find -name "*.ps"`
-rm -rfv `find -name "*.dat"`
-rm -rfv `find -name "core*"`
-rm -rfv `find -name "*.grd"`
-rm -rfv `find -name "*hist_result.txt"`
-rm -rfv `find -name "*hist_src.txt"`
