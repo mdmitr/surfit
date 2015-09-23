@@ -20,11 +20,15 @@
 #ifndef __surfit__ie__included__
 #define __surfit__ie__included__
 
+#include "config.h"
+
+/*
 #ifdef _MSC_VER
 #include "config.h"
 #else
 #include "../../config.h"
 #endif
+*/
 
 #ifdef _MSC_VER
 #pragma warning(disable : 4786)

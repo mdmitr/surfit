@@ -1497,14 +1497,7 @@ std::vector<d_cntr *> * _surf_trace_cntrs(const d_surf * surf, REAL from, REAL t
 	extvec * data = create_extvec(*(surf->coeff)); // don't fill;
 
 	writelog(LOG_MESSAGE,"tracing %d contours from surface \"%s\"", levels_count, surf->getName());
-#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-	int tick1 = GetTickCount();
-#endif
 	std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM, surf->undef_value, closed);
-#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-	int tick2 = GetTickCount();
-	writelog(LOG_MESSAGE, "%d miliseconds elapsed", tick2-tick1);
-#endif
 
 	levels->release();
 	x_coords->release();
@@ -1718,14 +1711,7 @@ bool _surf_plot(const d_surf * srf, const char * filename, size_t number_of_leve
 	}
 
 	writelog(LOG_MESSAGE,"tracing %d contours from surface \"%s\"", levels_count, srf->getName());
-#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-	int tick1 = GetTickCount();
-#endif
 	std::vector<fiso *> * isos = trace_isos(levels, x_coords, y_coords, data, NN, MM-min_j, srf->undef_value, true);
-#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-	int tick2 = GetTickCount();
-	writelog(LOG_MESSAGE, "%d miliseconds elapsed", tick2-tick1);
-#endif
 
 	levels->release();
 	x_coords->release();

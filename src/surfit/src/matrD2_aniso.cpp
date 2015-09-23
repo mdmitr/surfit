@@ -19,6 +19,7 @@
 
 #include "surfit_ie.h"
 #include "matrD2_aniso.h"
+#include "matrD2.h"
 #include "grid_line.h"
 #include "bitvec.h"
 #include "matrD_incr_ptr.h"

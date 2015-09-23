@@ -20,11 +20,15 @@
 #ifndef __sstuff__ie__included__
 #define __sstuff__ie__included__
 
+/*
 #ifdef _MSC_VER
 #include "config.h"
 #else
 #include "../../config.h"
 #endif
+*/
+
+#include "config.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable : 4786)
