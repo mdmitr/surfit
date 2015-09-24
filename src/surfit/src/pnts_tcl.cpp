@@ -403,7 +403,7 @@ boolvec * pnts_filter_out_area(const char * pnts_pos, const char * area_pos)
 
 struct match_fpfia2
 {
-	match_fpfia2(d_points * ipnts, const char * iarea_pos) : pnts(ipnts), area_pos(iarea_pos), res(false) {};
+	match_fpfia2(d_points * ipnts, const char * iarea_pos) : pnts(ipnts), area_pos(iarea_pos), res(NULL) {};
 	void operator()(d_area * area)
 	{
 		if ( StringMatch(area_pos, area->getName()) )
@@ -451,7 +451,7 @@ struct match_fpfia2
 
 struct match_fpfia
 {
-	match_fpfia(const char * ipnts_pos, const char * iarea_pos) : pnts_pos(ipnts_pos), area_pos(iarea_pos), res(false) {};
+	match_fpfia(const char * ipnts_pos, const char * iarea_pos) : pnts_pos(ipnts_pos), area_pos(iarea_pos), res(NULL) {};
 	void operator()(d_points * pnts)
 	{
 		if ( StringMatch(pnts_pos, pnts->getName()) )

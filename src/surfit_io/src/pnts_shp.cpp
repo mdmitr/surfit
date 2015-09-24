@@ -123,7 +123,7 @@ bool _pnts_save_shp(const d_points * pnts, const char * filename) {
 		if (pnts->names)
 			DBFWriteStringAttribute(hDBF, pos, name_field, (*(pnts->names))(i) );
 		else {
-			sprintf(buf,"%d",i);
+			sprintf(buf,"%d",(int)i);
 			DBFWriteStringAttribute(hDBF, pos, name_field, buf );
 		}
 

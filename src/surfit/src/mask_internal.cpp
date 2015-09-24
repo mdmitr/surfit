@@ -142,7 +142,7 @@ cont:
 			if (grd)
 				grd->release();
 			free(name);
-			return false;
+			return NULL;
 		}
 		
 		msk = create_mask(icoeff, grd, name);

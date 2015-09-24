@@ -188,7 +188,7 @@ void functionals_push_back(functional * f) {
 functional * get_modifiable_functional() {
 	if (functionals->size() == 0) {
 		writelog(LOG_ERROR,"No gridding rule to modify!");
-		return false;
+		return NULL;
 	}
 	functional * srf = *(functionals->end()-1);
 

@@ -1180,7 +1180,7 @@ cont:
 			if (grd)
 				grd->release();
 			free(name);
-			return false;
+			return NULL;
 		}
 		
 		srf = create_surf(coeff, grd, name);

@@ -53,7 +53,7 @@ int f_surf_ineq::this_get_data_count() const {
 const data * f_surf_ineq::this_get_data(int pos) const {
 	if (pos == 0)
 		return srf;
-	return false;
+	return NULL;
 };
 
 bool f_surf_ineq::minimize() {

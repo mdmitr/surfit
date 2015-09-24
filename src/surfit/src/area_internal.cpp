@@ -178,7 +178,7 @@ cont:
 				
 		if (err) {
 			free(name);
-			return false;
+			return NULL;
 		}
 		
 		area = create_area(area_data, orients, name);

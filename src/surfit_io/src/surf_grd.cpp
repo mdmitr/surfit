@@ -478,7 +478,7 @@ d_surf * _surf_load_grd_bin7(const char * filename, const char * surfname)
 					
 					vec * X = create_vec(nPnts,0,0); // don't fill
 					vec * Y = create_vec(nPnts,0,0); // don't fill
-					sprintf(buf,"%s_%d",name, i+1);
+					sprintf(buf,"%s_%d",name, (int)(i+1));
 					d_curv * curve = create_curv(X, Y, buf);
 
 					faults.push_back(curve);

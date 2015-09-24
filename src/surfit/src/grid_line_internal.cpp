@@ -68,7 +68,7 @@ void _grid_line_info(const grid_line * contour) {
 d_curv * _grid_line_to_curv(const grid_line * grd_line, const d_grid * grd) {
 
 	if (!grd)
-		return false;
+		return NULL;
 
 	size_t N = grd_line->size();
 	

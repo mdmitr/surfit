@@ -76,12 +76,12 @@ d_area * _area_load_bln(const char * filename, const char * areaname) {
 	FILE * file = fopen(filename, "r");
 	if (!file) {
 		writelog(LOG_ERROR, "The file %s was not opened: %s",filename,strerror( errno ));
-		return false;
+		return NULL;
 	}
 	if (ferror(file) != 0) {
 		writelog(LOG_ERROR, "loading from BLN: file error.");
 		fclose(file);
-		return false;
+		return NULL;
 	}
 
 	bool res = false;
