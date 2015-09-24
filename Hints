@@ -10,3 +10,19 @@ change line N287 in zconf.h
 to 
 
 #if HAVE_UNISTD_H
+
+
+
+
+UBUNTU:
+
+use Tcl8.5 instead of Tcl8.6 (bug with loading shared libraries)
+
+Packages to build:
+build-essential
+tcl8.5
+tcl8.5-dev
+tk8.65dev (don't know why)
+
+LD_LIBRARY_PATH=/usr/local/lib
+export LD_LIBRARY_PATH
