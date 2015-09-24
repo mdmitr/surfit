@@ -10,7 +10,7 @@ SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 # Widgets finds its own dependencies.
 find_package(TCL REQUIRED)
 
-find_package(zlib)
+find_package(ZLIB)
 
 # ----------------------------------
 # projects
