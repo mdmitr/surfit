@@ -1,6 +1,9 @@
 
 #include <tcl.h>
+
+#ifdef HAVE_STRING_H
 #include <string.h>
+#endif
 
 #ifdef _MSC_VER
 #pragma warning(disable : 4786)

@@ -22,14 +22,6 @@
 
 #include "config.h"
 
-/*
-#ifdef _MSC_VER
-#include "config.h"
-#else
-#include "../../config.h"
-#endif
-*/
-
 #ifdef _MSC_VER
 #pragma warning(disable : 4786)
 #pragma warning(disable : 4996)

@@ -20,11 +20,7 @@
 #ifndef __surfit_flow_ie__included__
 #define __surfit_flow_ie__included__
 
-#ifdef _MSC_VER
 #include "config.h"
-#else
-#include "../../config.h"
-#endif
 
 #ifdef _MSC_VER
 #pragma warning(disable : 4786)
