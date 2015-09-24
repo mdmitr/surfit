@@ -23,3 +23,7 @@ target_link_libraries(${PROJ_NAME}
 ${TCL_LIBRARY}
 )
 
+set_target_properties( ${PROJ_NAME} PROPERTIES PREFIX "" )
+
+install(TARGETS ${PROJ_NAME} DESTINATION lib)
+

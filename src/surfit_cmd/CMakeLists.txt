@@ -1,4 +1,4 @@
-SET( PROJ_NAME surfit_cmd ) 
+SET( PROJ_NAME surfit ) 
 
 PROJECT( ${PROJ_NAME} )
 
@@ -19,4 +19,5 @@ target_link_libraries(${PROJ_NAME}
 ${TCL_LIBRARY}
 )
 
+install(TARGETS ${PROJ_NAME} DESTINATION bin)
 

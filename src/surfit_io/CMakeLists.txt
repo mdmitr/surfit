@@ -23,3 +23,6 @@ target_link_libraries(${PROJ_NAME}
 	libsurfit
 )
 
+set_target_properties( ${PROJ_NAME} PROPERTIES PREFIX "" )
+
+install(TARGETS ${PROJ_NAME} DESTINATION lib)

@@ -13,7 +13,7 @@ include_directories(
 	../sstuff/src
 	../surfit/src
 )
-                       
+
 add_library(${PROJ_NAME} SHARED ${srcs_cpp} ${hdrs})
 
 target_link_libraries(${PROJ_NAME}
@@ -21,4 +21,8 @@ target_link_libraries(${PROJ_NAME}
 	libsstuff
 	libsurfit
 )
+
+set_target_properties( ${PROJ_NAME} PROPERTIES PREFIX "" )
+
+install(TARGETS ${PROJ_NAME} DESTINATION lib)
 
