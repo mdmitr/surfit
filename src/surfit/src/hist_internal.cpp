@@ -56,6 +56,8 @@ REAL get_eq_value(const vec * T, const vec * Z, REAL val,
 		  REAL surf_minz, REAL surf_maxz,
 		  REAL dest_minz, REAL dest_maxz)
 {
+	if (surf_maxz == surf_minz)
+		return 0.;
 	val = (val - surf_minz)/(surf_maxz-surf_minz);
 
 	size_t T_size = T->size();
