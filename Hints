@@ -24,5 +24,8 @@ tcl8.5
 tcl8.5-dev
 tk8.65dev (don't know why)
 
+libjpeg8-dev
+libnetcdf-dev
+
 LD_LIBRARY_PATH=/usr/local/lib
 export LD_LIBRARY_PATH

@@ -6,24 +6,20 @@ project(surfit)
 
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 # Widgets finds its own dependencies.
 find_package(TCL REQUIRED)
 
 find_package(ZLIB)
 find_package(JPEG)
+find_package(NetCDF)
 
+set(HAVE_THREADS 1)
 
 # ----------------------------------
 # projects
 # ----------------------------------
-
-if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
-	set(PLATFORM "x64")
-else()
-	set(PLATFORM "Win32")
-endif()
-
 
 #config
 set(VERSION "3.1")
@@ -33,8 +29,12 @@ CHECK_INCLUDE_FILE(unistd.h  HAVE_UNISTD_H)
 
 if (JPEG_FOUND)
 	SET(HAVE_LIBJPEG 1)
-	
 endif (JPEG_FOUND)
+
+if (NETCDF_FOUND)
+	SET(HAVE_NETCDF 1)
+endif (NETCDF_FOUND)
+
 
 configure_file(config.h.in config.h)
 

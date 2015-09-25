@@ -18,7 +18,12 @@ set (INCL_DIRS 	${TCL_INCLUDE_PATH}
 
 if (JPEG_FOUND)
 	set(INCL_DIRS ${INCL_DIRS} ${JPEG_INCLUDE_DIR})
-endif()
+endif(JPEG_FOUND)
+
+if (NETCDF_FOUND)
+	set(INCL_DIRS ${INCL_DIRS} ${NETCDF_INCLUDES})
+endif(NETCDF_FOUND)
+
 
 include_directories( ${INCL_DIRS} )
 
@@ -32,6 +37,10 @@ set(LINK_LIBS ${PROJ_NAME} ${TCL_LIBRARY} libsstuff libsurfit)
 
 if (JPEG_FOUND)
 	set(LINK_LIBS ${LINK_LIBS} ${JPEG_LIBRARY})
+endif()
+
+if (NETCDF_FOUND)
+	set(LINK_LIBS ${LINK_LIBS} ${NETCDF_LIBRARIES})
 endif()
 
 target_link_libraries(${LINK_LIBS})

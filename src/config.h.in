@@ -2,4 +2,6 @@
 #cmakedefine HAVE_STDLIB_H
 #cmakedefine HAVE_UNISTD_H
 #cmakedefine HAVE_LIBJPEG
+#cmakedefine HAVE_NETCDF
+#cmakedefine HAVE_THREADS
 #cmakedefine VERSION "@VERSION@"

@@ -12,6 +12,7 @@ include_directories(
 	src
 	${CMAKE_BINARY_DIR}
 	../sstuff/src
+	../sstuff/src/ptypes
 )
 
 #definitions for triangulation library
