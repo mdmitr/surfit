@@ -11,6 +11,8 @@ SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 find_package(TCL REQUIRED)
 
 find_package(ZLIB)
+find_package(JPEG)
+
 
 # ----------------------------------
 # projects
@@ -28,6 +30,11 @@ set(VERSION "3.1")
 CHECK_INCLUDE_FILE(string.h  HAVE_STRING_H)
 CHECK_INCLUDE_FILE(stdlib.h  HAVE_STDLIB_H)
 CHECK_INCLUDE_FILE(unistd.h  HAVE_UNISTD_H)
+
+if (JPEG_FOUND)
+	SET(HAVE_LIBJPEG 1)
+	
+endif (JPEG_FOUND)
 
 configure_file(config.h.in config.h)
 
