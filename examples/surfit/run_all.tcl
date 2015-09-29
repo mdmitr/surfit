@@ -1,4 +1,4 @@
-load libsurfit[info sharedlibextension]
+load libtclsurfit[info sharedlibextension]
 
 cd tests
 

@@ -1,7 +1,7 @@
 # 
 # load plugins
 # 
-load libsurfit[info sharedlibextension]
+load libtclsurfit[info sharedlibextension]
 load libsurfit_io[info sharedlibextension]
 
 # load contour from text file 

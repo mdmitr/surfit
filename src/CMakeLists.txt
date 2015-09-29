@@ -47,7 +47,7 @@ configure_file(config.h.in config.h)
 # Libraries
 add_subdirectory(sstuff)
 add_subdirectory(surfit)
-#add_subdirectory(tclsurfit)
+add_subdirectory(tclsurfit)
 add_subdirectory(surfit_io)
 
 if (ZLIB_FOUND)

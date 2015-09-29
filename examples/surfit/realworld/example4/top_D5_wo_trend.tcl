@@ -4,7 +4,7 @@
 # 
 # load modules
 # 
-load libsurfit[info sharedlibextension]
+load libtclsurfit[info sharedlibextension]
 load libsurfit_io[info sharedlibextension]
 #load libacmlbooster[info sharedlibextension]
 

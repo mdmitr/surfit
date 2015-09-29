@@ -2,7 +2,7 @@
 # 
 # load plugins
 # 
-load libsurfit[info sharedlibextension]
+load libtclsurfit[info sharedlibextension]
 
 # remove all previous data and gridding rules
 clear_data

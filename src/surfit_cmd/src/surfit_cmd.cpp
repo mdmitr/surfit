@@ -32,7 +32,7 @@ int AppInit(Tcl_Interp *interp)
 	Tcl_Eval(interp, "info sharedlibextension");
 	const char * res = Tcl_GetStringResult(interp);
 	char buf[256];
-	sprintf(buf, "load libsurfit_tcl%s", res);
+	sprintf(buf, "load libtclsurfit%s", res);
 	int result = Tcl_Eval(interp, buf);
 	if (result != TCL_OK) {
 		errors_on_loading = true;

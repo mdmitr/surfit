@@ -1,4 +1,4 @@
-load libsurfit[info sharedlibextension]
+load libtclsurfit[info sharedlibextension]
 
 cd example1
 source points_approx.tcl

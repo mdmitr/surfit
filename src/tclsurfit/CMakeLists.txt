@@ -1,5 +1,5 @@
 PROJECT(libtclsurfit)
-SET(MODULE_NAME libstclsurfit)
+SET(MODULE_NAME libtclsurfit)
 SET(INTERFACE_FILES src/surfit.i)
 
 INCLUDE_DIRECTORIES(${TCL_INCLUDE_PATH})
@@ -13,3 +13,10 @@ SET_SOURCE_FILES_PROPERTIES(${INTERFACE_FILES} PROPERTIES CMAKE_SWIG_FLAGS "-inc
 SWIG_ADD_MODULE(${MODULE_NAME} tcl ${INTERFACE_FILES})
 SWIG_LINK_LIBRARIES(${MODULE_NAME} ${TCL_LIBRARY} libsstuff libsurfit)
 
+set_target_properties( ${PROJ_NAME} PROPERTIES PREFIX "" )
+
+#
+# Install section
+#
+
+install(TARGETS libtclsurfit DESTINATION lib)
