@@ -57,7 +57,7 @@ void surfit() {
 	}
 
 	bool method_ok = false;
-	//grid_init();
+	grid_init();
 	grid_prepare();
 
 	if (surfit_grid == NULL) {
