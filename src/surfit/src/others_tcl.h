@@ -74,6 +74,7 @@ class boolvec;
     \f]
 
 */
+SURFIT_EXPORT
 bool completer(REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
 /*! \ingroup tcl_rules_other
@@ -91,6 +92,7 @@ bool completer(REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
     \param w anisotropy factor
 
 */
+SURFIT_EXPORT
 bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
 /*! \ingroup tcl_rules_other
@@ -110,6 +112,7 @@ bool completer_add(REAL weight = 1, REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, RE
     \Phi(u_{1,1},\ldots,u_{N,M}) = \sum_{i,j} \left( u_{i,j} - z \right)^2,
     \f]
 */
+SURFIT_EXPORT
 bool value(const char * val = "undef");
 
 /*! \ingroup tcl_rules_other
@@ -133,6 +136,7 @@ bool value(const char * val = "undef");
     \Phi_1(u_{1,1},\ldots,u_{N,M}) = \sum_{i,j} \left( u_{i,j} - z \right)^2,
     \f]
 */
+SURFIT_EXPORT
 bool value_add(REAL weight = 1, REAL val = 0);
 
 /*! \ingroup tcl_rules_other
@@ -150,6 +154,7 @@ bool value_add(REAL weight = 1, REAL val = 0);
     \f]
     where (i,j) - indices of the cells, Q - total number of cells, m - desired mean value
 */
+SURFIT_EXPORT
 bool mean(REAL value, REAL penalty_factor = -2);
 
 /*! \ingroup tcl_rules_other
@@ -168,6 +173,7 @@ bool mean(REAL value, REAL penalty_factor = -2);
     where (i,j) - indices of the cells, \f$z(x_i,y_j)\f$ - weighted surface value for the (i,j) cell,
     m - desired weighted mean value
 */
+SURFIT_EXPORT
 boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor = -2);
 
 /*! \ingroup tcl_rules_other
@@ -187,6 +193,7 @@ boolvec * wmean(REAL value, const char * surface_name = "*", REAL penalty_factor
     \f]
     where (i,j) - indices of the cells, z - constant value
 */
+SURFIT_EXPORT
 bool leq(REAL value, REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_other
@@ -206,6 +213,7 @@ bool leq(REAL value, REAL penalty_factor = 0);
     \f]
     where (i,j) - indices of the cells, z - constant value
 */
+SURFIT_EXPORT
 bool geq(REAL value, REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_other
@@ -228,8 +236,10 @@ bool geq(REAL value, REAL penalty_factor = 0);
     R. Gonzalez and R. Woods Digital Image Processing, Addison-Wesley Publishing Company, 1992, Chap. 4.
     
 */
+SURFIT_EXPORT
 boolvec * hist(const char * histogram_name = "*", REAL penalty_factor = -1, size_t treshold = 5);
 
+SURFIT_EXPORT
 bool triangulate();
 
 }; // namespace surfit;

@@ -11,6 +11,11 @@ SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 # Widgets finds its own dependencies.
 find_package(TCL REQUIRED)
 
+find_package(SWIG REQUIRED)
+INCLUDE(${SWIG_USE_FILE})
+SET(CMAKE_SWIG_FLAGS "-c++")
+message(${SWIG_EXECUTABLE})
+
 find_package(ZLIB)
 find_package(JPEG)
 find_package(NetCDF)
@@ -42,6 +47,7 @@ configure_file(config.h.in config.h)
 # Libraries
 add_subdirectory(sstuff)
 add_subdirectory(surfit)
+#add_subdirectory(tclsurfit)
 add_subdirectory(surfit_io)
 
 if (ZLIB_FOUND)

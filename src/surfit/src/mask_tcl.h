@@ -42,6 +42,7 @@ class strvec;
     \param filename surfit datafile
     \param mask_name name for mask (optional)
 */
+SURFIT_EXPORT
 boolvec * mask_load(const char * filename, const char * mask_name = NULL);
 
 /*! \ingroup tcl_mask_save_load
@@ -51,6 +52,7 @@ boolvec * mask_load(const char * filename, const char * mask_name = NULL);
     \par Description:
     saves first \ref d_mask "masks" with name matching \ref str "mask_name" to surfit datafile
 */
+SURFIT_EXPORT
 boolvec * mask_save(const char * filename, const char * mask_name = "*");
 
 //
@@ -64,6 +66,7 @@ boolvec * mask_save(const char * filename, const char * mask_name = "*");
     \par Description:
     calculates \ref d_mask "mask" value at point (x,y) for the first \ref d_mask "mask" with name matching \ref str "mask_name"
 */
+SURFIT_EXPORT
 boolvec * mask_getValue(REAL x, REAL y, const char * mask_name = "*");
 
 /*! \ingroup tcl_mask_math
@@ -74,6 +77,7 @@ boolvec * mask_getValue(REAL x, REAL y, const char * mask_name = "*");
     makes AND operation:
     mask1 = mask1 AND mask2 
 */
+SURFIT_EXPORT
 void mask_and(const char * mask1_name = "*", const char * mask2_name = "*");
 
 /*! \ingroup tcl_mask_math
@@ -84,6 +88,7 @@ void mask_and(const char * mask1_name = "*", const char * mask2_name = "*");
     makes NOT operation:
     mask1 = NOT mask2
 */
+SURFIT_EXPORT
 void mask_not(const char * mask1_name = "*", const char * mask2_name = "*");
 
 /*! \ingroup tcl_mask_math
@@ -94,6 +99,7 @@ void mask_not(const char * mask1_name = "*", const char * mask2_name = "*");
     makes OR operation:
     mask1 = mask1 OR mask2
 */
+SURFIT_EXPORT
 void mask_or(const char * mask1_name = "*", const char * mask2_name = "*");
 
 /*! \ingroup tcl_mask_math
@@ -104,6 +110,7 @@ void mask_or(const char * mask1_name = "*", const char * mask2_name = "*");
     makes XOR operation:
     mask1 = mask1 XOR mask2
 */
+SURFIT_EXPORT
 void mask_xor(const char * mask1_name = "*", const char * mask2_name = "*");
 
 //
@@ -117,6 +124,7 @@ void mask_xor(const char * mask1_name = "*", const char * mask2_name = "*");
     \par Description:
     makes \ref d_surf "surface" from \ref d_mask "mask"
 */
+SURFIT_EXPORT
 void mask_to_surf(const char * mask_name = "*");
 
 //
@@ -131,6 +139,7 @@ void mask_to_surf(const char * mask_name = "*");
     makes \ref d_mask "mask" from \ref d_surf "surface". Resulting mask will have
     false values for all cells, where surface have undefined values.
 */
+SURFIT_EXPORT
 void mask_from_surf(const char * surface_name = "*");
 
 /*! \ingroup tcl_mask_other
@@ -140,6 +149,7 @@ void mask_from_surf(const char * surface_name = "*");
     \par Description:
     sets undefined values for all  \ref d_surf "surface" cells where \ref d_mask "mask" have false values.
 */
+SURFIT_EXPORT
 boolvec * mask_apply_to_surf(const char * mask_name = "*", const char * surface_name = "*");
 
 /*! \ingroup tcl_mask_other
@@ -149,6 +159,7 @@ boolvec * mask_apply_to_surf(const char * mask_name = "*", const char * surface_
     \par Description:
     returns name of the \ref d_mask "mask"
 */
+SURFIT_EXPORT
 strvec * mask_getName(const char * mask_name = "*");
 
 /*! \ingroup tcl_mask_other
@@ -158,6 +169,7 @@ strvec * mask_getName(const char * mask_name = "*");
     \par Description:
     returns name of \ref d_mask at position "pos"
 */
+SURFIT_EXPORT
 const char * mask_getNameAt(int pos);
 
 /*! \ingroup tcl_mask_other
@@ -167,6 +179,7 @@ const char * mask_getNameAt(int pos);
     \par Description:
     returns unique \ref d_mask "mask" identificator
 */
+SURFIT_EXPORT
 intvec * mask_getId(const char * mask_name = "*");
 
 /*! \ingroup tcl_mask_other
@@ -176,6 +189,7 @@ intvec * mask_getId(const char * mask_name = "*");
     \par Description:
     sets name for the \ref d_mask "mask"
 */
+SURFIT_EXPORT
 void mask_setName(const char * new_name, const char * mask_name = "*");
 
 /*! \ingroup tcl_mask_other
@@ -185,6 +199,7 @@ void mask_setName(const char * new_name, const char * mask_name = "*");
     \par Description:
     removes \ref d_mask mask from memory
 */
+SURFIT_EXPORT
 void mask_del(const char * mask_name = "*");
 
 /*! \ingroup tcl_mask_other
@@ -194,6 +209,7 @@ void mask_del(const char * mask_name = "*");
     \par Description:
     returns number of \ref d_mask masks in memory
 */
+SURFIT_EXPORT
 int mask_size();
 
 /*! \ingroup tcl_mask_other
@@ -203,6 +219,7 @@ int mask_size();
     \par Description:
     prints information about \ref d_mask masks in memory
 */
+SURFIT_EXPORT
 void mask_info(const char * mask_name = "*");
 
 }; // namespace surfit

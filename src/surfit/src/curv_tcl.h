@@ -48,6 +48,7 @@ class intvec;
     curv_read "C:\\curv.txt" my_curv
     curv_read "C:\\curv2.txt" my_curv2 2 3 "\t"
 */
+SURFIT_EXPORT
 boolvec * curv_read(const char * filename, const char * curvname=NULL	, 
     		    int col1=1, int col2=2, 
 		    const char * delimiter=" \t", int skip_lines = 0, int grow_by=250);
@@ -59,6 +60,7 @@ boolvec * curv_read(const char * filename, const char * curvname=NULL	,
     \par Description:
     loads \ref d_curv "curve" from surfit datafile
 */
+SURFIT_EXPORT
 boolvec * curv_load(const char * filename, const char * curvname = NULL);
 
 /*! \ingroup tcl_curv_save_load
@@ -68,6 +70,7 @@ boolvec * curv_load(const char * filename, const char * curvname = NULL);
     \par Description:
     saves \ref d_curv "curve" to formatted text file.
 */
+SURFIT_EXPORT
 boolvec * curv_write(const char * filename, const char * curv_name = "*", const char * delimiter = "\t");
 
 /*! \ingroup tcl_curv_save_load
@@ -77,6 +80,7 @@ boolvec * curv_write(const char * filename, const char * curv_name = "*", const 
     \par Description:
     saves \ref d_curv "curve" to surfit datafile
 */
+SURFIT_EXPORT
 boolvec * curv_save(const char * filename, const char * curv_name = "*");
 
 //////////////
@@ -89,6 +93,7 @@ boolvec * curv_save(const char * filename, const char * curv_name = "*");
     \par Description:
     returns name of \ref d_curv "curve"
 */
+SURFIT_EXPORT
 strvec * curv_getName(const char * curv_name = "*");
 
 /*! \ingroup tcl_curv_other
@@ -98,6 +103,7 @@ strvec * curv_getName(const char * curv_name = "*");
     \par Description:
     returns name of \ref d_curv at position "pos"
 */
+SURFIT_EXPORT
 const char * curv_getNameAt(int pos);
 
 /*! \ingroup tcl_surf_other
@@ -107,6 +113,7 @@ const char * curv_getNameAt(int pos);
     \par Description:
     returns unique curve identificator 
 */
+SURFIT_EXPORT
 intvec * curv_getId(const char * curv_name = "*");
 
 /*! \ingroup tcl_curv_other
@@ -116,6 +123,7 @@ intvec * curv_getId(const char * curv_name = "*");
     \par Description:
     sets name of \ref d_curv "curve"
 */
+SURFIT_EXPORT
 boolvec * curv_setName(const char * new_name, const char * curv_name = "*");
 
 /*! \ingroup tcl_curv_other
@@ -128,6 +136,7 @@ boolvec * curv_setName(const char * new_name, const char * curv_name = "*");
     \par Example:
     curv_del "my_curve"
 */
+SURFIT_EXPORT
 void curv_del(const char * curv_name = "*");
 
 /*! \ingroup tcl_curv_other
@@ -137,6 +146,7 @@ void curv_del(const char * curv_name = "*");
     \par Description:
     returns number of curvs in memory
 */
+SURFIT_EXPORT
 int curv_size();
 
 /*! \ingroup tcl_curv_other
@@ -146,6 +156,7 @@ int curv_size();
     \par Description:
     prints information about all \ref d_curv "curves" in memory
 */
+SURFIT_EXPORT
 void curvs_info();
 
 ///////////////
@@ -158,6 +169,7 @@ void curvs_info();
     \par Description:
     makes \ref d_cntr "contour" with given constant Z-value from \ref d_curv "curve"
 */
+SURFIT_EXPORT
 boolvec * curv_to_cntr(REAL value, const char * curv_name = "*");
 
 }; // namespace surfit;

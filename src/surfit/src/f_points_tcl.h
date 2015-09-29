@@ -42,6 +42,7 @@ class boolvec;
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
+SURFIT_EXPORT
 boolvec * points(const char * points_name = "*");
 
 /*! \ingroup tcl_rules_points
@@ -66,6 +67,7 @@ boolvec * points(const char * points_name = "*");
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
+SURFIT_EXPORT
 boolvec * points_add(REAL weight = 1, const char * points_name = "*");
 
 /*! \ingroup tcl_rules_points
@@ -86,6 +88,7 @@ boolvec * points_add(REAL weight = 1, const char * points_name = "*");
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
+SURFIT_EXPORT
 boolvec * points_leq(const char * points_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_points
@@ -106,6 +109,7 @@ boolvec * points_leq(const char * points_name = "*", REAL penalty_factor = 0);
     where points with coordinates \f$ (x_p, y_p) \f$ are belong to the cells (i,j)
 
 */
+SURFIT_EXPORT
 boolvec * points_geq(const char * points_name = "*", REAL penalty_factor = 0);
 
 }; // namespace surfit;

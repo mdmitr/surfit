@@ -49,6 +49,7 @@ class intvec;
     \par Example:
     cntr_read "C:\\my_cntr.txt" "my_cntr"
 */
+SURFIT_EXPORT
 boolvec * cntr_read(const char * filename, const char * cntrname, 
     	       int col1=1, int col2=2, int col3=3,
 	       const char * delimiters=" \t", int skip_lines = 0, int grow_by=250);
@@ -63,6 +64,7 @@ boolvec * cntr_read(const char * filename, const char * cntrname,
     \par Example:
     cntr_load "C:\\my_cntr.dat" "my_cntr"
 */
+SURFIT_EXPORT
 boolvec * cntr_load(const char * filename, const char * cntrname = NULL);
 
 /*! \ingroup tcl_cntr_save_load
@@ -75,6 +77,7 @@ boolvec * cntr_load(const char * filename, const char * cntrname = NULL);
     \par Example:
     cntr_write "C:\\my_cntr.txt" "my_cntr"
 */
+SURFIT_EXPORT
 boolvec * cntr_write(const char * filename, const char * cntr_name = "*", const char * delimiter = "\t");
 
 /*! \ingroup tcl_cntr_save_load
@@ -87,6 +90,7 @@ boolvec * cntr_write(const char * filename, const char * cntr_name = "*", const 
     \par Example:
     cntr_save "C:\\my_cntr.dat" "my_cntr"
 */
+SURFIT_EXPORT
 boolvec * cntr_save(const char * filename, const char * cntr_name = "*");
 
 ///////////////
@@ -99,6 +103,7 @@ boolvec * cntr_save(const char * filename, const char * cntr_name = "*");
     \par Description:
     adds real value to \ref d_cntr "contour" values
 */
+SURFIT_EXPORT
 boolvec * cntr_plus_real(REAL value, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_math
@@ -108,6 +113,7 @@ boolvec * cntr_plus_real(REAL value, const char * cntr_name = "*");
     \par Description:
     deducts real value from \ref d_cntr "contour" values
 */
+SURFIT_EXPORT
 boolvec * cntr_minus_real(REAL value, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_math
@@ -117,6 +123,7 @@ boolvec * cntr_minus_real(REAL value, const char * cntr_name = "*");
     \par Description:
     multiplies \ref d_cntr "contour" values with real value
 */
+SURFIT_EXPORT
 boolvec * cntr_mult_real(REAL value, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_math
@@ -126,6 +133,7 @@ boolvec * cntr_mult_real(REAL value, const char * cntr_name = "*");
     \par Description:
     divides \ref d_cntr "contour" values with real value
 */
+SURFIT_EXPORT
 boolvec * cntr_div_real(REAL value, const char * cntr_name = "*");
 
 ///////////////
@@ -138,6 +146,7 @@ boolvec * cntr_div_real(REAL value, const char * cntr_name = "*");
     \par Description:
     makes \ref d_curv "curve" from \ref d_cntr "contour"
 */
+SURFIT_EXPORT
 boolvec * cntr_to_curv(const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_conv
@@ -147,6 +156,7 @@ boolvec * cntr_to_curv(const char * cntr_name = "*");
     \par Description:
     makes \ref d_points "points" from \ref d_cntr "contour" 
 */
+SURFIT_EXPORT
 boolvec * cntr_to_pnts(REAL step, const char * cntr_name = "*");
 
 ///////////////
@@ -159,6 +169,7 @@ boolvec * cntr_to_pnts(REAL step, const char * cntr_name = "*");
     \par Description:
     returns name of \ref d_cntr "contour"
 */
+SURFIT_EXPORT
 strvec * cntr_getName(const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_other
@@ -168,6 +179,7 @@ strvec * cntr_getName(const char * cntr_name = "*");
     \par Description:
     returns name of \ref d_cntr at position "pos"
 */
+SURFIT_EXPORT
 const char * cntr_getNameAt(int pos);
 
 /*! \ingroup tcl_cntr_other
@@ -177,6 +189,7 @@ const char * cntr_getNameAt(int pos);
     \par Description:
     returns unique contour identificator 
 */
+SURFIT_EXPORT
 intvec * cntr_getId(const char * contour_name = "*");
 
 /*! \ingroup tcl_cntr_other
@@ -186,6 +199,7 @@ intvec * cntr_getId(const char * contour_name = "*");
     \par Description:
     sets name of \ref d_cntr "contour"
 */
+SURFIT_EXPORT
 boolvec * cntr_setName(const char * new_name, const char * cntr_name = "*");
 
 /*! \ingroup tcl_cntr_other
@@ -195,6 +209,7 @@ boolvec * cntr_setName(const char * new_name, const char * cntr_name = "*");
     \par Description:
     removes \ref d_cntr "contour" from memory
 */
+SURFIT_EXPORT
 void cntr_del(const char * cntr_name);
 
 /*! \ingroup tcl_cntr_other
@@ -204,6 +219,7 @@ void cntr_del(const char * cntr_name);
     \par Description:
     returns number of \ref d_cntr "contours" in memory
 */
+SURFIT_EXPORT
 int cntr_size();
 
 /*! \ingroup tcl_cntr_other
@@ -213,6 +229,7 @@ int cntr_size();
     \par Description:
     prints information about all \ref d_cntr "contours" in memory
 */
+SURFIT_EXPORT
 void cntrs_info();
 
 /*! \ingroup tcl_cntr_other
@@ -222,6 +239,7 @@ void cntrs_info();
     \par Description:
     Adds points into contour line to make contour smoother.
 */	
+SURFIT_EXPORT
 boolvec * cntr_smooth(const char * cntr_name = "*", size_t cnt = 1);
 
 }; // namespace surfit;

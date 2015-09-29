@@ -28,6 +28,7 @@ class datafile;
 class data;
 
 //! returns names of supported datatypes
+SURFIT_EXPORT
 char * types_info();
 
 /*! \class manager

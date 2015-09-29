@@ -41,24 +41,24 @@ namespace surfit {
 	/*! \ingroup surfit_variables
 	    parameter for SOR method
 	*/
-	extern REAL sor_omega;
+	extern SURFIT_EXPORT REAL sor_omega;
 
 	/*! \ingroup surfit_variables
 	    parameter for SSOR method
 	*/
-	extern REAL ssor_omega;
+	extern SURFIT_EXPORT REAL ssor_omega;
 
 	/*! \ingroup surfit_variables
 	    if write_mat=1, then surfit dumps matrices to file surfit.mat
 	*/
-	extern bool write_mat;
+	extern SURFIT_EXPORT bool write_mat;
 
 	#define SURFIT_MAT "surfit.mat"
 
 	/*! \ingroup surfit_variables
 	    this name prints in solve procedure
 	*/
-	extern char * map_name;
+	extern SURFIT_EXPORT char * map_name;
 
 	/*! \ingroup surfit_variables
 	    enables/disables reprojecting with faults
@@ -78,17 +78,17 @@ namespace surfit {
 	/*! \ingroup surfit_variables
 	    number of maximum iterations for \ref penalty "penalty algorithm"
 	*/
-	extern size_t penalty_max_iter;
+	extern SURFIT_EXPORT size_t penalty_max_iter;
 
 	/*! \ingroup surfit_variables
 	    starting weight in \ref penalty "penalty algorithm"
 	*/
-	extern REAL penalty_weight;
+	extern SURFIT_EXPORT REAL penalty_weight;
 
 	/*! \ingroup surfit_variables
 	    multiplication factor for \ref penalty_weight() "penalty_weight"
         */
-	extern REAL penalty_weight_mult;
+	extern SURFIT_EXPORT REAL penalty_weight_mult;
 
 }; // namespace surfit
 

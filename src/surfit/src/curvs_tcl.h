@@ -49,6 +49,7 @@ class boolvec;
     z - value for curve approximation.  
     
 */
+SURFIT_EXPORT
 boolvec * curve(REAL value, const char * curv_name = "*");
 
 /*! \ingroup tcl_rules_curvs
@@ -77,6 +78,7 @@ boolvec * curve(REAL value, const char * curv_name = "*");
     where (i,j) - indices of the cells cross with curve, 
     z - value for curve approximation.  
 */
+SURFIT_EXPORT
 boolvec * curve_add(REAL value, REAL weight = 1, const char * curv_name = "*");
 
 /*! \ingroup tcl_rules_curvs
@@ -97,6 +99,7 @@ boolvec * curve_add(REAL value, REAL weight = 1, const char * curv_name = "*");
     \f]
     where (i,j) - indices of the cells cross with curve, z - constant value
 */
+SURFIT_EXPORT
 boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_curvs
@@ -117,6 +120,7 @@ boolvec * curve_leq(REAL value, const char * curv_name = "*", REAL penalty_facto
     \f]
     where (i,j) - indices of the cells cross with curve, z - constant value
 */
+SURFIT_EXPORT
 boolvec * curve_geq(REAL value, const char * curv_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_curvs
@@ -138,6 +142,7 @@ boolvec * curve_geq(REAL value, const char * curv_name = "*", REAL penalty_facto
     where (i,j) - indices of the cells cross with curve, 
     f(x_i,y_j) - value for curve approximation, calculated as surface value at center of the (i,j) cell.
 */
+SURFIT_EXPORT
 boolvec * curve_surf(const char * surf_name = "*", const char * curv_name = "*");
 
 /*! \ingroup tcl_rules_curvs
@@ -166,6 +171,7 @@ boolvec * curve_surf(const char * surf_name = "*", const char * curv_name = "*")
     where (i,j) - indices of the cells cross with curve, 
     f(x_i,y_j) - value for curve approximation, calculated as surface value at center of the (i,j) cell.
 */
+SURFIT_EXPORT
 boolvec * curve_surf_add(const char * surf_name = "*", REAL weight = 1, const char * curv_name = "*");
 
 /*! \ingroup tcl_rules_curvs
@@ -189,6 +195,7 @@ boolvec * curve_surf_add(const char * surf_name = "*", REAL weight = 1, const ch
     where (i,j) - indices of the cells cross with curve, 
     f(x_i,y_j) - value for curve approximation, calculated as surface value at center of the (i,j) cell.
 */
+SURFIT_EXPORT
 boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_curvs
@@ -212,6 +219,7 @@ boolvec * curve_surf_leq(const char * surf_name = "*", const char * curv_name = 
     where (i,j) - indices of the cells cross with curve, 
     f(x_i,y_j) - value for curve approximation, calculated as surface value at center of the (i,j) cell.
 */
+SURFIT_EXPORT
 boolvec * curve_surf_geq(const char * surf_name = "*", const char * curv_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_curvs
@@ -232,6 +240,7 @@ boolvec * curve_surf_geq(const char * surf_name = "*", const char * curv_name = 
     \li \ref lcm_simple() "lcm_simple"
 
 */
+SURFIT_EXPORT
 boolvec * fault(const char * curv_name = "*");
 
 ////////////
@@ -261,6 +270,7 @@ boolvec * fault(const char * curv_name = "*");
     where (i,j) - indices of the cells in area, z - constant value
 
 */
+SURFIT_EXPORT
 boolvec * area(const char * value="undef", const char * area_name = "*", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -289,6 +299,7 @@ boolvec * area(const char * value="undef", const char * area_name = "*", int ins
     where (i,j) - indices of the cells in area, z - constant value
 
 */
+SURFIT_EXPORT
 boolvec * area_add(REAL value, REAL weight, const char * area_name = "*", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -312,6 +323,7 @@ boolvec * area_add(REAL value, REAL weight, const char * area_name = "*", int in
     where (i,j) - indices of the cells in area, z - constant value
 
 */
+SURFIT_EXPORT
 boolvec * area_leq(REAL value, const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -335,6 +347,7 @@ boolvec * area_leq(REAL value, const char * area_name = "*", REAL penalty_factor
     where (i,j) - indices of the cells in area, z - constant value
 
 */
+SURFIT_EXPORT
 boolvec * area_geq(REAL value, const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -358,6 +371,7 @@ boolvec * area_geq(REAL value, const char * area_name = "*", REAL penalty_factor
     where (i,j) - indices of the cells in area, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 
 */
+SURFIT_EXPORT
 boolvec * area_surf(const char * surf_name = "*", const char * area_name = "*", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -387,6 +401,7 @@ boolvec * area_surf(const char * surf_name = "*", const char * area_name = "*", 
     where (i,j) - indices of the cells in area, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 
 */
+SURFIT_EXPORT
 boolvec * area_surf_add(const char * surf_name = "*", REAL weight = 1, const char * area_name = "*", int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -404,6 +419,7 @@ boolvec * area_surf_add(const char * surf_name = "*", REAL weight = 1, const cha
     where (i,j) - indices of the cells in area, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
 
 */
+SURFIT_EXPORT
 boolvec * area_surf_leq(const char * surf_name = "*", const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -421,6 +437,7 @@ boolvec * area_surf_leq(const char * surf_name = "*", const char * area_name = "
     where (i,j) - indices of the cells in area, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
 
 */
+SURFIT_EXPORT
 boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "*", REAL penalty_factor = 0, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -438,6 +455,7 @@ boolvec * area_surf_geq(const char * surf_name = "*", const char * area_name = "
     \f]
     where (i,j) - indices of the cells in area, Q - number of cells in area, m - desired mean value
 */
+SURFIT_EXPORT
 boolvec * area_mean(REAL mean, const char * area_name = "*", REAL penalty_factor = -2, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -456,6 +474,7 @@ boolvec * area_mean(REAL mean, const char * area_name = "*", REAL penalty_factor
     where (i,j) - indices of the cells in area, \f$z(x_i,y_j)\f$ - weighted surface value for the (i,j) cell,
     m - desired weighted mean value
 */
+SURFIT_EXPORT
 boolvec * area_wmean(REAL mean, const char * area_name = "*", const char * surf_name = "*", REAL penalty_factor = -2, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -472,6 +491,7 @@ boolvec * area_wmean(REAL mean, const char * area_name = "*", const char * surf_
     \param w anisotropy factor
     \param inside if inside is equal to 1, then area_completer will work inside area, else outside
 */
+SURFIT_EXPORT
 boolvec * area_completer(const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -489,6 +509,7 @@ boolvec * area_completer(const char * area_name = "*", REAL D1 = 1, REAL D2 = 2,
     \param w anisotropy factor
     \param inside if inside is equal to 1, then area_completer will work inside area, else outside
 */
+SURFIT_EXPORT
 boolvec * area_completer_add(REAL weight = 1, const char * area_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1, int inside = 1);
 
 /*! \ingroup tcl_rules_areas
@@ -504,6 +525,7 @@ boolvec * area_completer_add(REAL weight = 1, const char * area_name = "*", REAL
     \param penalty_factor parameter for \ref penalty
     \param inside if inside is equal to 1, then area_hist will work inside area, else outside
 */
+SURFIT_EXPORT
 boolvec * area_hist(const char * area_name = "*", const char * histogram_name = "*", REAL penalty_factor = -1, int inside = 1);
 
 //////////////
@@ -529,6 +551,7 @@ boolvec * area_hist(const char * area_name = "*", const char * histogram_name = 
     where (i,j) - indices of the cells cross with contour, 
     \f$ z_{i,j} \f$ - contour mean value for the (i,j) cell.
 */
+SURFIT_EXPORT
 boolvec * contour(const char * cntr_name = "*");
 
 /*! \ingroup tcl_rules_cntrs
@@ -555,6 +578,7 @@ boolvec * contour(const char * cntr_name = "*");
     where (i,j) - indices of the cells cross with contour, 
     \f$ z_{i,j} \f$ - contour mean value for the (i,j) cell.
 */
+SURFIT_EXPORT
 boolvec * contour_add(REAL weight = 50, const char * cntr_name = "*");
 
 /*! \ingroup tcl_rules_cntrs
@@ -608,9 +632,10 @@ neighbour cells, if at least one of contours lays between them.
 For more details see f_cntr_smooth.tex
 
 */
+SURFIT_EXPORT
 boolvec * smooth_contour(const char * cntr_name = "*", REAL penalty_factor = 0);
 
-
+SURFIT_EXPORT
 boolvec * smooth_contour_add(REAL weight = 50, const char * cntr_name = "*");
 
 /*! \ingroup tcl_rules_cntrs
@@ -631,6 +656,7 @@ boolvec * smooth_contour_add(REAL weight = 50, const char * cntr_name = "*");
     \f]
     where (i,j) - indices of the cells cross with contour, \f$z_{i,j}\f$ - contour mean value for the (i,j) cell
 */
+SURFIT_EXPORT
 boolvec * contour_leq(const char * cntr_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_cntrs
@@ -651,6 +677,7 @@ boolvec * contour_leq(const char * cntr_name = "*", REAL penalty_factor = 0);
     \f]
     where (i,j) - indices of the cells cross with contour, \f$z_{i,j}\f$ - contour mean value for the (i,j) cell
 */
+SURFIT_EXPORT
 boolvec * contour_geq(const char * cntr_name = "*", REAL penalty_factor = 0);
 
 }; // namespace surfit;

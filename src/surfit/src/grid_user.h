@@ -128,8 +128,8 @@ SURFIT_EXPORT
 bool grid_bound2(size_t n, size_t m, size_t NN, size_t MM);
 
 //! initializes some global variables
-SURFIT_EXPORT 
-void grid_init();
+//SURFIT_EXPORT 
+//void grid_init();
 
 //! like grid_init
 SURFIT_EXPORT 

@@ -47,6 +47,7 @@ class strvec;
     area_read "C:\\area.txt" my_area
     area_read "C:\\area2.txt" my_area2 2 3 "\t"
 */
+SURFIT_EXPORT
 boolvec * area_read(const char * filename, const char * areaname=NULL	, 
 	       int col1=1, int col2=2,
 	       const char * delimiters=" \t", int skip_lines = 0, int grow_by=250);
@@ -65,6 +66,7 @@ boolvec * area_read(const char * filename, const char * areaname=NULL	,
     \par Example
     area_load "C:\\area.dat" my_area
 */
+SURFIT_EXPORT
 boolvec * area_load(const char * filename, const char * area_name = NULL);
 
 /*! \ingroup tcl_area_save_load
@@ -81,6 +83,7 @@ boolvec * area_load(const char * filename, const char * area_name = NULL);
     \par Example
     area_write "C:\\area.txt" my_area
 */
+SURFIT_EXPORT
 boolvec * area_write(const char * filename, const char * area_name = "*", const char * delimiter = "\t");
 
 /*! \ingroup tcl_area_save_load
@@ -93,6 +96,7 @@ boolvec * area_write(const char * filename, const char * area_name = "*", const 
     \par Example
     area_save "C:\\area.dat" my_area
 */
+SURFIT_EXPORT
 boolvec * area_save(const char * filename, const char * area_name = "*");
 
 //////////////
@@ -105,6 +109,7 @@ boolvec * area_save(const char * filename, const char * area_name = "*");
     \par Description:
     returns name of \ref d_area 
 */
+SURFIT_EXPORT
 strvec * area_getName(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
@@ -114,6 +119,7 @@ strvec * area_getName(const char * area_name = "*");
     \par Description:
     returns name of \ref d_area at position "pos"
 */
+SURFIT_EXPORT
 const char * area_getNameAt(int pos);
 
 /*! \ingroup tcl_area_other
@@ -123,6 +129,7 @@ const char * area_getNameAt(int pos);
     \par Description:
     returns unique area identificator 
 */
+SURFIT_EXPORT
 intvec * area_getId(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
@@ -132,6 +139,7 @@ intvec * area_getId(const char * area_name = "*");
     \par Description:
     sets name of \ref d_area 
 */
+SURFIT_EXPORT
 boolvec * area_setName(const char * new_name, const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
@@ -142,6 +150,7 @@ boolvec * area_setName(const char * new_name, const char * area_name = "*");
     removes \ref d_area from at 'area_name' position
 
 */
+SURFIT_EXPORT
 void area_del(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
@@ -151,6 +160,7 @@ void area_del(const char * area_name = "*");
     \par Description:
     returns number of areas in memory 
 */
+SURFIT_EXPORT
 int area_size();
 
 /*! \ingroup tcl_area_other
@@ -160,6 +170,7 @@ int area_size();
     \par Description:
     changes area interior inside or outside area
 */
+SURFIT_EXPORT
 boolvec * area_invert(const char * area_name = "*");
 
 /*! \ingroup tcl_area_other
@@ -169,6 +180,7 @@ boolvec * area_invert(const char * area_name = "*");
     \par Description:
     prints information about all areas  
 */
+SURFIT_EXPORT
 void areas_info();
 
 }; // namespace surfit;

@@ -21,7 +21,7 @@
  *	Contact info: surfit.sourceforge.net
  *----------------------------------------------------------------------------*/
 
-#include "surfit_ie.h"
+#include "surfit_wrap_ie.h"
 
 #include "real.h"
 #include "fileio.h"
@@ -132,7 +132,7 @@ namespace surfit {
 	}
 }
 
-%include "../../src/sstuff/real.h"
+%include "real.h"
 
 extern bool stop_execution;
 
@@ -183,10 +183,10 @@ void show_c();
 
 }; // namespace surfit;
 
-%include "interface/fileio.i"
-%include "interface/task.i"
-%include "interface/geom.i"
-%include "interface/solve.i"
-%include "interface/func.i"
-%include "interface/curv.i"	
-%include "interface/hist.i"	
+%include "fileio.i"
+%include "task.i"
+%include "geom.i"
+%include "solve.i"
+%include "func.i"
+%include "curv.i"	
+%include "hist.i"	

@@ -29,6 +29,7 @@ namespace surfit {
     \par Description:
     sets max number of threads to execute
 */
+SURFIT_EXPORT
 void init_threads(int cnt);
 
 /*! \ingroup tcl_other
@@ -38,6 +39,7 @@ void init_threads(int cnt);
     \par Description:
     returns max number of threads to execute
 */
+SURFIT_EXPORT
 int get_threads();
 
 /*! \ingroup tcl_other
@@ -47,6 +49,7 @@ int get_threads();
     \par Description:
     prints info about surfit datafile contents
 */
+SURFIT_EXPORT
 char * file_info(const char * filename);
 
 /*! \ingroup tcl_other
@@ -56,6 +59,7 @@ char * file_info(const char * filename);
     \par Description:
     automatically recognizes file format and loads data
 */
+SURFIT_EXPORT
 void file_load(const char * filename);
 
 /*! \ingroup tcl_other
@@ -65,6 +69,7 @@ void file_load(const char * filename);
     \par Description:
     saves all \ref datatypes "data" to surfit datafile
 */
+SURFIT_EXPORT
 bool file_save(const char * filename);
 
 /*! \ingroup tcl_other
@@ -74,6 +79,7 @@ bool file_save(const char * filename);
     \par Description:
     removes all data from memory
 */
+SURFIT_EXPORT
 void clear_data();
 
 /*! \ingroup tcl_other
@@ -83,6 +89,7 @@ void clear_data();
     \par Description:
     prints information about \ref datatypes "data" in memory
 */
+SURFIT_EXPORT
 void mem_info();
 
 /*! \ingroup tcl_other
@@ -94,6 +101,7 @@ void mem_info();
     saving various data in surfit native format. Two modes allowed : \ref datafile_new() "datafile_new"
     and \ref datafile_append() "datafile_append"
 */
+SURFIT_EXPORT
 const char * datafile_mode();
 
 /*! \ingroup tcl_other
@@ -104,6 +112,7 @@ const char * datafile_mode();
     Sets \ref datafile_mode() "datafile_mode" to "new" mode. This means that each time you saving
     your data into datafile, the datafile first will be cleaned up and then data will be saved.
 */
+SURFIT_EXPORT
 const char * datafile_new();
 
 /*! \ingroup tcl_other
@@ -114,6 +123,7 @@ const char * datafile_new();
     Sets \ref datafile_mode() "datafile_mode" to "append" mode. This means that each time you saving
     your data into datafile, data will be added to the end of datafile.
 */
+SURFIT_EXPORT
 const char * datafile_append();
 
 };

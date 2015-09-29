@@ -38,6 +38,7 @@ class datafile;
 
     \param filename surfit datafile
 */
+SURFIT_EXPORT
 bool grid_save(const char * filename);
 
 /*! \ingroup tcl_grid_save_load
@@ -53,6 +54,7 @@ bool grid_save(const char * filename);
     \param filename surfit datafile
     \param gridname name of \ref d_grid "grid"
 */
+SURFIT_EXPORT
 bool grid_load(const char * filename, const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_save_load
@@ -64,6 +66,7 @@ bool grid_load(const char * filename, const char * gridname = NULL);
     \par Description:
     unloads \ref d_grid "grid" from memory
 */
+SURFIT_EXPORT
 void grid_unload();
 
 ///////////////////
@@ -84,6 +87,7 @@ void grid_unload();
     \param percent border length in percent
     \param gridname name of \ref d_grid "grid"
 */
+SURFIT_EXPORT
 bool grid(REAL stepX = 0, REAL stepY = 0, REAL percent = 2, const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_create
@@ -103,6 +107,7 @@ bool grid(REAL stepX = 0, REAL stepY = 0, REAL percent = 2, const char * gridnam
     \param percent border length in percent
     \param gridname name of \ref d_grid "grid"
 */
+SURFIT_EXPORT
 bool grid2(REAL stepX=0, REAL stepY=0, REAL percent = 2, const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_create
@@ -124,6 +129,7 @@ bool grid2(REAL stepX=0, REAL stepY=0, REAL percent = 2, const char * gridname =
     \param stepY  distance between two neighbour Y-nodes 
     \param gridname   name for grid (optional)
 */
+SURFIT_EXPORT
 bool grid_get(REAL startX, REAL endX, REAL stepX,
               REAL startY, REAL endY, REAL stepY,
               const char * gridname = NULL);
@@ -149,6 +155,7 @@ bool grid_get(REAL startX, REAL endX, REAL stepX,
     \param stepY  distance between two neighbour Y-nodes 
     \param gridname   name for grid (optional)
 */
+SURFIT_EXPORT
 bool grid_get2(REAL startX, REAL endX, REAL stepX,
                REAL startY, REAL endY, REAL stepY,
                const char * gridname = NULL);
@@ -162,6 +169,7 @@ bool grid_get2(REAL startX, REAL endX, REAL stepX,
     \par Description:
     constructs \ref d_grid "grid" which covers \ref d_points "points", and consists of Xnodes*Ynodes nodes. 
 */
+SURFIT_EXPORT
 bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * points_name = "*", const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_create
@@ -174,6 +182,7 @@ bool grid_get_for_pnts(int Xnodes, int Ynodes, const char * points_name = "*", c
     constructs \ref d_grid "grid" with cell size stepX and stepY. Resulting grid will
     cover \ref d_points "points" dataset. 
 */
+SURFIT_EXPORT
 bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * points_name = "*", const char * gridname = NULL);
 
 /*! \ingroup tcl_grid_create
@@ -185,6 +194,7 @@ bool grid_get_for_pnts_step(REAL stepX, REAL stepY, const char * points_name = "
     \par Description:
     constructs \ref d_grid "grid" equal to \ref d_surf "surface" grid
 */
+SURFIT_EXPORT
 bool grid_get_from_surf(const char * surface_name = "*", const char * gridname = NULL);
 
 /////////////////
@@ -199,6 +209,7 @@ bool grid_get_from_surf(const char * surface_name = "*", const char * gridname =
     \par Description:
     checks for \ref d_grid "grid" existance 
 */
+SURFIT_EXPORT
 bool grid_check();
 
 /*! \ingroup tcl_grid_other
@@ -210,6 +221,7 @@ bool grid_check();
     \par Description:
     prints \ref d_grid "grid" parametes
 */
+SURFIT_EXPORT
 void grid_info();
 
 /*! \ingroup tcl_grid_other
@@ -221,6 +233,7 @@ void grid_info();
     \par Description:
     returns the number of X-nodes for \ref d_grid "grid"
 */
+SURFIT_EXPORT
 int grid_getCountX();
 
 /*! \ingroup tcl_grid_other
@@ -232,6 +245,7 @@ int grid_getCountX();
     \par Description:
     sets the number of X-nodes for \ref d_grid "grid"
 */
+SURFIT_EXPORT
 bool grid_setCountX(int countX);
 
 /*! \ingroup tcl_grid_other
@@ -243,6 +257,7 @@ bool grid_setCountX(int countX);
     \par Description:
     returns the amount of Y-nodes for \ref d_grid "grid"
 */
+SURFIT_EXPORT
 int grid_getCountY();
 
 /*! \ingroup tcl_grid_other
@@ -254,6 +269,7 @@ int grid_getCountY();
     \par Description:
     sets the amount of Y-nodes for \ref d_grid "grid"
 */
+SURFIT_EXPORT
 bool grid_setCountY(int countY);
 
 /*! \ingroup tcl_grid_other
@@ -265,6 +281,7 @@ bool grid_setCountY(int countY);
     \par Description:
     returns X-coordinate of i-th node for \ref d_grid "grid"
 */
+SURFIT_EXPORT
 REAL grid_getCoordNodeX(int i);
 
 /*! \ingroup tcl_grid_other
@@ -276,6 +293,7 @@ REAL grid_getCoordNodeX(int i);
     \par Description:
     returns Y-coordinate of j-th node for \ref d_grid "grid"
 */
+SURFIT_EXPORT
 REAL grid_getCoordNodeY(int j);
 
 /*! \ingroup tcl_grid_other
@@ -287,6 +305,7 @@ REAL grid_getCoordNodeY(int j);
     \par Description:
     returns X-step of \ref d_grid "grid"
 */
+SURFIT_EXPORT
 REAL grid_getStepX();
 
 /*! \ingroup tcl_grid_other
@@ -298,6 +317,7 @@ REAL grid_getStepX();
     \par Description:
     returns Y-step of \ref d_grid "grid"
 */
+SURFIT_EXPORT
 REAL grid_getStepY();
  
 }; // namespace surfit;

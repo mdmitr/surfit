@@ -18,7 +18,7 @@
  *----------------------------------------------------------------------------*/
 
 #include "surfit_ie.h"
-
+#include "license.h"
 #include "fileio.h"
 
 namespace surfit {

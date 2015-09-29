@@ -46,6 +46,7 @@ namespace surfit {
     \par Examples:
     \li hist_read "C:\\hist.txt" "my_hist" 0 256 
 */
+SURFIT_EXPORT
 boolvec * hist_read(const char * filename, REAL minz, REAL maxz, const char * histname = NULL, 
 		int col1 = 1, const char * delimiter = " \t", int skip_lines = 0, int grow_by = 250);
 
@@ -56,15 +57,19 @@ boolvec * hist_read(const char * filename, REAL minz, REAL maxz, const char * hi
     \par Description:
     saves \ref d_hist "histogram" to formatted text file. Writes histogram interval bounds if three_columns is 1
 */
+SURFIT_EXPORT
 boolvec * hist_write(const char * filename, const char * hist_name = "*", bool three_columns = true);
 
 //////////////
 // other
 
+SURFIT_EXPORT
 boolvec * hist_from_surf(const char * surface_name = "*", size_t intervs = 64, REAL from = FLT_MAX, REAL to = FLT_MAX, const char * histname = NULL);
 
+SURFIT_EXPORT
 boolvec * hist_from_pnts(const char * points_name = "*", size_t intervs = 64, REAL from = FLT_MAX, REAL to = FLT_MAX, const char * histname = NULL);
 
+SURFIT_EXPORT
 strvec * hist_getName(const char * pos = "*");
 
 /*! \ingroup tcl_hist_other
@@ -74,16 +79,22 @@ strvec * hist_getName(const char * pos = "*");
     \par Description:
     returns name of \ref d_hist at position "pos"
 */
+SURFIT_EXPORT
 const char * hist_getNameAt(int pos);
 
+SURFIT_EXPORT
 boolvec * hist_setName(const char * new_name, const char * pos = "*");
 
+SURFIT_EXPORT
 void hist_del(const char * pos = "*");
 
+SURFIT_EXPORT
 int hist_size();
 
+SURFIT_EXPORT
 void hists_info();
 
+SURFIT_EXPORT
 boolvec * surf_adj_hist(const char * surface_name = "*", const char * histogram_name = NULL);
 
 }; // namespace surfit;

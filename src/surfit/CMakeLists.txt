@@ -18,7 +18,6 @@ include_directories(
 #definitions for triangulation library
 add_definitions(-DANSI_DECLARATORS -DNO_TIMER -DTRILIBRARY)
 
-
 add_library(${PROJ_NAME} SHARED ${srcs_cpp} ${hdrs})
 
 target_link_libraries(${PROJ_NAME}
@@ -28,5 +27,8 @@ target_link_libraries(${PROJ_NAME}
 
 set_target_properties( ${PROJ_NAME} PROPERTIES PREFIX "" )
 
-install(TARGETS ${PROJ_NAME} DESTINATION lib)
+#
+# Install section
+#
 
+install(TARGETS ${PROJ_NAME} DESTINATION lib)

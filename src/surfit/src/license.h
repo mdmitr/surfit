@@ -20,13 +20,13 @@
 namespace surfit {
 
 //! prints license
-void print_license();
+SURFIT_EXPORT void print_license();
 
 //! prints copyrights
-void show_c();
+SURFIT_EXPORT void show_c();
 
 //! prints warranty
-void show_w();
+SURFIT_EXPORT void show_w();
 
 }; // namespace surfit;
 

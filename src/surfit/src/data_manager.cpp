@@ -63,6 +63,7 @@
 #include "cmofs.h"
 #include "hist.h"
 #include "hist_tcl.h"
+#include "other_tcl.h"
 
 namespace surfit {
 

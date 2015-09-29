@@ -37,6 +37,7 @@ class boolvec;
     \f]
     where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 */
+SURFIT_EXPORT
 boolvec * surface(const char * surface_name = "*");
 
 /*! \ingroup tcl_rules_surfs
@@ -60,6 +61,7 @@ boolvec * surface(const char * surface_name = "*");
     \f]
     where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 */
+SURFIT_EXPORT
 boolvec * surface_add(REAL weight, const char * surface_name = "*");
 
 /*! \ingroup tcl_rules_surfs
@@ -79,6 +81,7 @@ boolvec * surface_add(REAL weight, const char * surface_name = "*");
     \f]
     where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 */
+SURFIT_EXPORT
 boolvec * surface_leq(const char * surface_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_surfs
@@ -98,6 +101,7 @@ boolvec * surface_leq(const char * surface_name = "*", REAL penalty_factor = 0);
     \f]
     where (i,j) - indices of the cells, \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 */
+SURFIT_EXPORT
 boolvec * surface_geq(const char * surface_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_surfs
@@ -182,6 +186,7 @@ boolvec * surface_geq(const char * surface_name = "*", REAL penalty_factor = 0);
 \f]
 
 */
+SURFIT_EXPORT
 boolvec * trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name = "*");
 
 /*! \ingroup tcl_rules_surfs
@@ -198,6 +203,7 @@ boolvec * trend(REAL D1 = 1, REAL D2 = 2, const char * surface_name = "*");
     \param D2 informational weight for rule that sounds "resulting surface should have the same curvature as trend surface"
     \param surface_name name of \ref d_surf "surface" dataset. This is a trend surface.
 */	
+SURFIT_EXPORT
 boolvec * trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_name = "*");
 
 /*! \ingroup tcl_rules_masks
@@ -219,6 +225,7 @@ boolvec * trend_add(REAL weight, REAL D1 = 1, REAL D2 = 0, const char * surface_
     where (i,j) - indices of the cells where mask is true, z - constant real number.
 
 */
+SURFIT_EXPORT
 boolvec * mask(const char * val, const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
@@ -232,6 +239,7 @@ boolvec * mask(const char * val, const char * mask_name = "*");
     \param weight informational weight for \ref mask() "mask" rule
     \param mask_name name of \ref d_mask "mask" dataset
 */
+SURFIT_EXPORT
 boolvec * mask_add(REAL val, REAL weight = 1, const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
@@ -253,6 +261,7 @@ boolvec * mask_add(REAL val, REAL weight = 1, const char * mask_name = "*");
     where (i,j) - indices of the cells where mask is true, z - constant value
 
 */
+SURFIT_EXPORT
 boolvec * mask_leq(REAL value, const char * mask_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_masks
@@ -276,6 +285,7 @@ boolvec * mask_leq(REAL value, const char * mask_name = "*", REAL penalty_factor
     \sa mask_leq area_leq area_geq
 
 */
+SURFIT_EXPORT
 boolvec * mask_geq(REAL value, const char * mask_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_masks
@@ -297,6 +307,7 @@ boolvec * mask_geq(REAL value, const char * mask_name = "*", REAL penalty_factor
     where (i,j) - indices of the cells, where mask is "true", \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 
 */
+SURFIT_EXPORT
 boolvec * mask_surf(const char * surf_name = "*", const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
@@ -324,6 +335,7 @@ boolvec * mask_surf(const char * surf_name = "*", const char * mask_name = "*");
     where (i,j) - indices of the cells where mask is "true", \f$z(x_i, y_j)\f$ - surface value for the (i,j) cell.
 
 */
+SURFIT_EXPORT
 boolvec * mask_surf_add(const char * surf_name = "*", REAL weight = 1, const char * mask_name = "*");
 
 /*! \ingroup tcl_rules_masks
@@ -341,6 +353,7 @@ boolvec * mask_surf_add(const char * surf_name = "*", REAL weight = 1, const cha
     where (i,j) - indices of the cells where mask is true, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
 
 */
+SURFIT_EXPORT
 boolvec * mask_surf_leq(const char * surf_name = "*", const char * mask_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_masks
@@ -358,6 +371,7 @@ boolvec * mask_surf_leq(const char * surf_name = "*", const char * mask_name = "
     where (i,j) - indices of the cells where mask is true, \f$f(x_{u_i},y_{u_j})\f$ - \ref d_surf "surface" value in the center of the cell.
 
 */
+SURFIT_EXPORT
 boolvec * mask_surf_geq(const char * surf_name = "*", const char * mask_name = "*", REAL penalty_factor = 0);
 
 /*! \ingroup tcl_rules_masks
@@ -375,6 +389,7 @@ boolvec * mask_surf_geq(const char * surf_name = "*", const char * mask_name = "
     \f]
     where (i,j) - indices of the cells where mask is true, Q - number of cells in mask, m - desired mean value
 */
+SURFIT_EXPORT
 boolvec * mask_mean(REAL mean, const char * mask_name = "*", REAL penalty_factor = -2);
 
 /*! \ingroup tcl_rules_masks
@@ -393,6 +408,7 @@ boolvec * mask_mean(REAL mean, const char * mask_name = "*", REAL penalty_factor
     where (i,j) - indices of the cells where mask is true, \f$z(x_i,y_j)\f$ - weighted surface value for the (i,j) cell,
     m - desired weighted mean value
 */
+SURFIT_EXPORT
 boolvec * mask_wmean(REAL mean, const char * mask_name = "*", const char * surf_name = "*", REAL penalty_factor = -2);
 
 /*! \ingroup tcl_rules_masks
@@ -408,6 +424,7 @@ boolvec * mask_wmean(REAL mean, const char * mask_name = "*", const char * surf_
     \param alpha anisotropy angle (degrees)
     \param w anisotropy factor
 */
+SURFIT_EXPORT
 boolvec * mask_completer(const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);
 
 /*! \ingroup tcl_rules_masks
@@ -424,6 +441,7 @@ boolvec * mask_completer(const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2,
     \param alpha anisotropy angle (degrees)
     \param w anisotropy factor
 */
+SURFIT_EXPORT
 boolvec * mask_completer_add(REAL weight = 1, const char * mask_name = "*", REAL D1 = 1, REAL D2 = 2, REAL alpha = 0, REAL w = 1);	
 
 }; // namespace surfit;
