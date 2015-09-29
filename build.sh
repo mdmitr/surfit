@@ -4,7 +4,7 @@ if [ ! -d "build" ]; then
 fi
 
 cd build
-cmake ../src/
-make
+cmake ../src/ || exit 1
+make || exit 1
 sudo make install
 
