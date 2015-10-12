@@ -48,13 +48,14 @@ configure_file(config.h.in config.h)
 add_subdirectory(sstuff)
 add_subdirectory(surfit)
 add_subdirectory(tclsurfit)
-add_subdirectory(surfit_io)
 
-if (ZLIB_FOUND)
-	add_subdirectory(globe)
-endif(ZLIB_FOUND)
-
-add_subdirectory(freeflow)
+#add_subdirectory(surfit_io)
+#
+#if (ZLIB_FOUND)
+#	add_subdirectory(globe)
+#endif(ZLIB_FOUND)
+#
+#add_subdirectory(freeflow)
 
 # Executabels
 add_subdirectory(surfit_cmd)
