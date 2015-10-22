@@ -96,7 +96,7 @@ typedef int*            pint;
 #endif
 
 
-#if defined(_MSC_VER) || defined(__BORLANDC__)
+#if (defined(_MSC_VER) && (_MSC_VER < 1900)) || defined(__BORLANDC__)
 #  define strcasecmp stricmp
 #  define snprintf _snprintf
 #  define atoll _atoi64
