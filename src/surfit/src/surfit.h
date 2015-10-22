@@ -25,8 +25,8 @@ struct Tcl_Interp;
 namespace surfit {
 
 //! main initialization function
-SURFIT_EXPORT
-bool init_surfit_lib(Tcl_Interp * interp);
+//SURFIT_EXPORT
+//bool init_surfit_lib(Tcl_Interp * interp);
 
 };// namespace surfit;
 

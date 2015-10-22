@@ -29,7 +29,6 @@
 
 #include <string.h>
 #include <float.h>
-#include <tcl.h>
 
 #include "grid_internal.h"
 #include "grid.h"
@@ -743,6 +742,7 @@ const data * surfit_manager::data_get(int i) const {
 
 void surfit_manager::auto_functionals(int priority) const
 {
+	/*
 	switch(priority)
 	{
 	case 0:
@@ -765,6 +765,7 @@ void surfit_manager::auto_functionals(int priority) const
 		}
 		break;
 	};
+	*/
 };
 
 ///////////////////////

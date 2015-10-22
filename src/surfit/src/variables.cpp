@@ -41,7 +41,6 @@
 
 #include <vector>
 #include <float.h>
-#include <tcl.h>
 
 #ifdef WIN32
 #include "windows.h"
@@ -101,12 +100,14 @@ struct garbage : public binman {
 
 garbage garb;
 
+/*
 static void
 data_cleanup(ClientData clientData)
 {
 	init_interp(NULL);
 	clear_data();
 };
+*/
 
 void surfit_init_all() {
 
@@ -126,7 +127,7 @@ void surfit_init_all() {
 	surfit_data_manager = new data_manager;
 	add_manager(new surfit_manager);
 
-	Tcl_CreateThreadExitHandler(data_cleanup, NULL);
+//	Tcl_CreateThreadExitHandler(data_cleanup, NULL);
 #ifdef HAVE_THREADS
 #ifdef WIN32
 	SYSTEM_INFO info;
@@ -161,13 +162,10 @@ int get_threads() {
 
 };
 
-void surfit_init_variables(Tcl_Interp * iinterp) {
+void surfit_init_variables() {
 
-	// 2d
-	init_interp(iinterp);
 	print_license();
 	log_open();
-
 	//init_all();
 };
 

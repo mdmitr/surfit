@@ -19,12 +19,12 @@
 
 #include "surfit_ie.h"
 #include "surfit.h"
-#include "tcl.h"
 
 #include <string.h>
 
 namespace surfit {
 
+	/*
 bool init_surfit_lib(Tcl_Interp * interp) {
 
 
@@ -75,7 +75,7 @@ bool init_surfit_lib(Tcl_Interp * interp) {
 	
 	return libs_loaded;
 };
-
+*/
 
 }; // namespace surfit;
 

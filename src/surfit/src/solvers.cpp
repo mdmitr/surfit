@@ -123,7 +123,7 @@ void solvers_info() {
 		solver * slvr = solvers[i];
 		const char * short_name = slvr->get_short_name();
 		const char * long_name = slvr->get_long_name();
-		Tcl_printf("%s : \t %s\n", long_name, short_name);				
+		log_printf("%s : \t %s\n", long_name, short_name);				
 	}
 };
 
