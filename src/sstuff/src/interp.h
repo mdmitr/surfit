@@ -24,14 +24,14 @@
     \brief declaration of functions connected with using of Tcl interpretator
 */
 
-struct Tcl_Interp;
+//struct Tcl_Interp;
 
 //! Tcl scripting language interpretator
-extern SSTUFF_EXPORT Tcl_Interp * interp;
+//extern SSTUFF_EXPORT Tcl_Interp * interp;
 
 //! initializes interp variable
-SSTUFF_EXPORT
-void init_interp(Tcl_Interp * iinterp);
+//SSTUFF_EXPORT
+//void init_interp(Tcl_Interp * iinterp);
 
 //! Compares two strings, where the first is a string mask
 SSTUFF_EXPORT

@@ -19,26 +19,29 @@
 
 #include "sstuff_ie.h"
 #include "interp.h"
-#include <tcl.h>
 #include "fileio.h"
 
 #include <string.h>
 
-Tcl_Interp * interp = NULL;
+//Tcl_Interp * interp = NULL;
 
+/*
 void init_interp(Tcl_Interp * iinterp) {
 	interp = iinterp;
 };
+*/
 
 bool StringMatch(const char * match, const char * str)
 {
 	char * reg = strdup(match);
 	char * s = strdup(str);
 	int res = 0;
+/*
 	if (reg)
 		res = Tcl_StringMatch(s, reg);
 	else 
 		res = Tcl_StringMatch(s, "*");
+		*/
 	free(reg);
 	free(s);
 	if (res == -1) 

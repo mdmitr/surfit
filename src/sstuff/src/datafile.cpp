@@ -40,8 +40,6 @@
 
 #include <float.h>
 
-#include <tcl.h>
-
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
@@ -372,7 +370,7 @@ bool datafile::skipChar(bool print_name, bool skip_name, char * name) {
 	if ( isWord("name") ) {
 		bool res = readWord();
 		if (print_name) {
-			Tcl_printf("%s",word);
+			log_printf("%s",word);
 		}
 		if ((name != NULL) && (print_name)) {
 			add_word(name, " ");
@@ -997,10 +995,10 @@ void datafile::file_info(char *& contents) {
 	while ( strcmp(tagname,"eof") != 0 ) {
 		
 		add_word(contents, tagname);
-		Tcl_printf("%s ",tagname);
+		log_printf("%s ",tagname);
 		if ( ! skipTag(true, contents, false) ) 
 			return;
-		Tcl_printf("\n");
+		log_printf("\n");
 		add_new_line(contents);
 	
 

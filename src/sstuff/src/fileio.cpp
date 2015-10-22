@@ -25,7 +25,6 @@
 #include <string.h>
 #endif
 
-#include <tcl.h>
 #include <time.h>
 #include <errno.h>
 
@@ -77,29 +76,15 @@ void log_printf(const char *tmplt, ...)
 {
 	if (loglevel == LOG_SILENT)
 		return;
-	Tcl_Channel out;
-	if (interp) {
-		out = Tcl_GetStdChannel(TCL_STDOUT);
-		if (out == NULL)
-			return;
-	}
-
+	
 	va_list ap;
 	va_start (ap, tmplt);
 
 	// console output
-	if (interp) {
-
-		char buf[2048];
-		int written = vsprintf(buf,tmplt, ap);
-		va_end(ap);
-		va_start(ap,tmplt);
-		if (written > 2048) 
-			writelog(LOG_WARNING,"Too large error message. ");
-		Tcl_WriteChars(out, buf, written);
-		Tcl_Flush(out);
-	}
-
+	vprintf(tmplt, ap);
+	va_end(ap);
+	va_start(ap, tmplt);
+	
 	// logfile output
 	if ( (logfile) && (ferror(logfile) == 0) ) 
 		vfprintf (logfile, tmplt, ap);
@@ -119,31 +104,23 @@ void writelog (int errlevel, const char *tmplt, ...)
 	if (errlevel > loglevel) 
 		return;
 
-	Tcl_Channel out;
-	if (interp) {
-		out = Tcl_GetStdChannel(TCL_STDOUT);
-		if (out == NULL)
-			return;
-	}
 	char enter = '\n';
 
 	struct tm * newtime;
 	time_t aclock;
 
-
-	time( &aclock );   // Get time in seconds
+time( &aclock );   // Get time in seconds
 	newtime = localtime( &aclock );   // Convert time to struct tm form 
 
 	// Print local time as a string
 	char tmpbuf[128];
 	strftime(tmpbuf, 128, "%d/%m/%y %H:%M:%S : ", newtime);
-	Tcl_printf("%s", tmpbuf);
+	printf("%s", tmpbuf);
 	
 	va_list ap;
 	va_start (ap, tmplt);
 	
 	// console output
-	if (interp) {
 
 		switch (errlevel) {
 
@@ -151,28 +128,24 @@ void writelog (int errlevel, const char *tmplt, ...)
 			break;
 		case LOG_ERROR: 
 		case LOG_ERROR_TCL:
-			Tcl_WriteChars(out, error, strlen(error));
+			printf("%s", error);
 			break;
 		case LOG_WARNING:
-				Tcl_WriteChars(out, warning, strlen(warning));
+			printf("%s", warning);
 			break;
 		case LOG_DEBUG:
-				Tcl_WriteChars(out, debug, strlen(debug));
+			printf("%s", debug);
 			break;
 		};
-
+		
 		char buf[2048];
 		int written = vsprintf(buf,tmplt, ap);
 		va_end(ap);
 		va_start (ap, tmplt);
 		if (written > 2048) 
 			writelog(LOG_WARNING,"Too large error message. ");
-		Tcl_WriteChars(out, buf, written);
-		Tcl_WriteChars(out, &enter, 1);
-		Tcl_Flush(out);
-
-	}
-
+		printf("%s\r\n", buf);
+		
 	// logfile output
 	if ( (logfile) && (ferror(logfile) == 0) ) {
 		
@@ -219,12 +192,14 @@ void writelog2 (int errlevel, const char *tmplt, ...)
 	if (errlevel > loglevel) 
 		return;
 
+	/*
 	Tcl_Channel out;
 	if (interp) {
 		out = Tcl_GetStdChannel(TCL_STDOUT);
 		if (out == NULL)
 			return;
 	}
+	*/
 	
 	struct tm * newtime;
 	time_t aclock;
@@ -236,12 +211,13 @@ void writelog2 (int errlevel, const char *tmplt, ...)
 	// Print local time as a string 
 	char tmpbuf[128];
 	strftime(tmpbuf, 128, "%d/%m/%y %H:%M:%S : ", newtime);
-	Tcl_printf("%s", tmpbuf);
+	log_printf("%s", tmpbuf);
 	
 	va_list ap;
 	va_start (ap, tmplt);
 
 	// console output
+	/*
 	if (interp) {
 
 		switch (errlevel) {
@@ -268,8 +244,8 @@ void writelog2 (int errlevel, const char *tmplt, ...)
 			writelog(LOG_WARNING,"Too large error message. ");
 		Tcl_WriteChars(out, buf, written);
 		Tcl_Flush(out);
-
 	}
+	*/
 
 	// logfile output
 	if ( (logfile) && (ferror(logfile) == 0) ) {
@@ -304,33 +280,6 @@ void writelog2 (int errlevel, const char *tmplt, ...)
 		if (errlevel == LOG_ERROR) 
 			throw "Execution stopped";
 	}
-};
-
-void Tcl_printf (const char *tmplt, ...) 
-{
-	// don't print any messages in LOG_SILENT mode
-	if (loglevel == LOG_SILENT)
-		return;
-
-	if (!interp)
-		return;
-
-	Tcl_Channel out = Tcl_GetStdChannel(TCL_STDOUT);
-	if (out == NULL)
-		return;
-	
-	va_list ap;
-	va_start (ap, tmplt);
-
-	// console output		
-	char buf[2048];
-	int written = vsprintf(buf,tmplt, ap);
-	if (written > 2048) 
-		writelog(LOG_WARNING,"Too large message. ");
-	Tcl_WriteChars(out, buf, written);
-	
-	va_end (ap);
-
 };
 
 int log_open(int level, const char * logname) 

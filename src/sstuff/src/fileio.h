@@ -79,10 +79,6 @@ void writelog2 (int errlevel, const char *tmplt, ...);
 SSTUFF_EXPORT
 void log_printf (const char *tmplt, ...);
 
-//! Prints text to Tcl-console
-SSTUFF_EXPORT
-void Tcl_printf (const char *tmplt, ...);
-
 //! prints contents of surfit datafile
 SSTUFF_EXPORT
 void _file_info(const char * filename, char **& contents);
