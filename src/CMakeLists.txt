@@ -9,12 +9,11 @@ SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 # Widgets finds its own dependencies.
-find_package(TCL REQUIRED)
+find_package(PYTHONLIBS REQUIRED)
 
 find_package(SWIG REQUIRED)
 INCLUDE(${SWIG_USE_FILE})
 SET(CMAKE_SWIG_FLAGS "-c++")
-message(${SWIG_EXECUTABLE})
 
 find_package(ZLIB)
 find_package(JPEG)
@@ -47,7 +46,7 @@ configure_file(config.h.in config.h)
 # Libraries
 add_subdirectory(sstuff)
 add_subdirectory(surfit)
-add_subdirectory(tclsurfit)
+add_subdirectory(pysurfit)
 
 #add_subdirectory(surfit_io)
 #
@@ -58,7 +57,7 @@ add_subdirectory(tclsurfit)
 #add_subdirectory(freeflow)
 
 # Executabels
-add_subdirectory(surfit_cmd)
+#add_subdirectory(surfit_cmd)
 
 
 # uninstall target
